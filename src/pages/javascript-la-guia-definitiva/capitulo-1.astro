@@ -1,0 +1,187 @@
+---
+import Layoutbook from "../../layouts/Layoutbook.astro"
+---
+<Layoutbook title="JavaScript: La guia definitiva">
+
+  <p class="font-khand font-bold text-2xl py-4 sm:text-3xl md:text-4xl text-right">Capitulo 1</p>
+  <hr class="border-gray-300 border-2" />
+  <section class="mb-4" >
+    <h1 class="font-khand font-bold text-3xl px-0 sm:px-8 py-4 sm:py-10 sm:text-4xl md:text-5xl text-right">Introducción a JavaScript</h1>
+    <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">JavaScript es el lenguaje de programación de la web. La inmensa mayoría de los sitios web utilizan JavaScript, y todos los navegadores web modernos -de sobremesa, tabletas y teléfonos- incluyen intérpretes de JavaScript, lo que lo convierte en el lenguaje de programación más utilizado de la historia. En la última década, Node.js ha hecho posible la programación en JavaScript fuera de los navegadores web, y el espectacular éxito de Node significa que JavaScript es ahora también el lenguaje de programación más utilizado entre los desarrolladores de software. Tanto si empiezas desde cero como si ya utilizas JavaScript profesionalmente, este libro te ayudará a dominar el lenguaje.
+      </p>
+    <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Si ya está familiarizado con otros lenguajes de programación, puede resultarle útil saber que JavaScript es un lenguaje de programación interpretado, dinámico y de alto nivel que se adapta bien a los estilos de programación funcional y orientada a objetos. Las variables de JavaScript no están tipadas. Su sintaxis está vagamente basada en Java, pero por lo demás los lenguajes no están relacionados. JavaScript deriva sus funciones de primera clase de Scheme y su herencia basada en prototipos del poco conocido lenguaje Self. Pero no es necesario conocer ninguno de esos lenguajes, ni estar familiarizado con esos términos, para utilizar este libro y aprender JavaScript.
+      </p>
+    <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">El nombre "JavaScript" es bastante engañoso. Salvo por un parecido sintáctico superficial, JavaScript es completamente distinto del lenguaje de programación Java. Además, hace tiempo que JavaScript superó sus raíces de lenguaje de scripting para convertirse en un lenguaje robusto y eficiente de propósito general, adecuado para la ingeniería de software seria y proyectos con enormes bases de código.</p>
+    <article class="border-4 p-8 border-zinc-500 my-4">
+      <h2 class="font-semibold text-xl sm:text-2xl md:text-3xl text-center">JavaScript: Nombres, versiones y modos</h2>
+      <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">JavaScript se creó en Netscape en los primeros días de la web y, técnicamente, "Java- Script" es una marca comercial con licencia de Sun Microsystems (ahora Oracle) utilizada para describir la implementación del lenguaje por parte de Netscape (ahora Mozilla). Netscape sometió el lenguaje a la estandarización de la ECMA (Asociación Europea de Fabricantes de Ordenadores) y, por cuestiones de marca, la versión estandarizada del lenguaje se quedó con el incómodo nombre de "ECMAScript". En la práctica, todo el mundo llama JavaScript al lenguaje. Este libro utiliza el nombre "ECMAScript" y la abreviatura "ES" para referirse al estándar del lenguaje y a las versiones de ese estándar.</p>
+      <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Durante la mayor parte de la década de 2010, la versión 5 del estándar ECMAScript ha sido compatible con todos los navegadores web. Este libro trata ES5 como la línea base de compatibilidad y ya no discute versiones anteriores del lenguaje. ES6 se publicó en 2015 y añadió nuevas características importantes -incluyendo la sintaxis de clases y módulos- que cambiaron JavaScript de un lenguaje de scripting a un lenguaje serio y de propósito general adecuado para la ingeniería de software a gran escala. Desde ES6, la especificación ECMAScript ha pasado a tener una cadencia de publicación anual, y las versiones del lenguaje (ES2016, ES2017, ES2018, ES2019 y ES2020) se identifican ahora por el año de publicación.</p>
+      <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">A medida que JavaScript evolucionaba, los diseñadores del lenguaje intentaron corregir los fallos de las primeras versiones (anteriores a la versión ES5). Para mantener la compatibilidad con versiones anteriores, no es posible eliminar las características heredadas, por muy defectuosas que sean. Pero en ES5 y versiones posteriores, los programas pueden optar por el modo estricto de JavaScript, en el que se han corregido varios de los primeros errores del lenguaje. El mecanismo para ello es la directiva "use strict" descrita en §5.6.3. Esa sección también resume las diferencias entre JavaScript heredado y JavaScript estricto. En ES6 y posteriores, el uso de nuevas características del lenguaje a menudo invoca implícitamente el modo estricto. Por ejemplo, si usas la palabra clave class de ES6 o creas un módulo ES6, entonces todo el código dentro de la clase
+        o módulo es automáticamente estricto, y las antiguas características defectuosas no están disponibles en esos contextos. Este libro cubrirá las características heredadas de JavaScript, pero tiene cuidado de señalar que no están disponibles en modo estricto.</p>
+    </article>
+    <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Para ser útil, cada lenguaje debe tener una plataforma, o biblioteca estándar, para realizar cosas como entrada y salida básicas. El núcleo del lenguaje JavaScript define una mini API para trabajar con números, texto, matrices, conjuntos, mapas, etc., pero no incluye ninguna funcionalidad de entrada o salida. La entrada y la salida (así como otras funciones más sofisticadas, como la conexión en red, el almacenamiento y los gráficos) son responsabilidad del "entorno anfitrión" en el que se inserta JavaScript.</p>
+    <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">El entorno anfitrión original para JavaScript fue un navegador web, y éste sigue siendo el entorno de ejecución más común para el código JavaScript. El entorno del navegador web permite que el código JavaScript obtenga información del ratón y el teclado del usuario y mediante peticiones HTTP. Y permite que el código JavaScript muestre la salida al usuario con HTML y CSS.
+    </p>
+    <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Desde 2010, existe otro entorno de host para el código JavaScript. En lugar de limitar JavaScript a trabajar con las API proporcionadas por un navegador web, Node da acceso a JavaScript a todo el sistema operativo, lo que permite a los programas JavaScript leer y escribir archivos, enviar y recibir datos a través de la red, y hacer y servir peticiones HTTP. Node es una opción popular para implementar servidores web y también una herramienta conveniente para escribir scripts de utilidades simples como alternativa a los scripts shell.</p>
+    <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">La mayor parte de este libro se centra en el propio lenguaje JavaScript. El <a class="no-underline text-orange-500" href="javascript-la-guia-definitiva/capitulo-11" target="_blank" rel="noopener noreferrer">Capítulo 11</a> documenta la biblioteca estándar de JavaScript, el <a class="no-underline text-orange-500" href="javascript-la-guia-definitiva/capitulo-15" target="_blank" rel="noopener noreferrer">Capítulo 15</a> presenta el entorno host del navegador web y el <a class="no-underline text-orange-500" href="javascript-la-guia-definitiva/capitulo-16" target="_blank" rel="noopener noreferrer">Capítulo 16</a> presenta el entorno host de Node.</p>
+    <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Este libro trata primero los fundamentos de bajo nivel y, a partir de ahí, desarrolla abstracciones más avanzadas y de más alto nivel. Los capítulos están pensados para leerse más o menos en orden. Pero aprender un nuevo lenguaje de programación nunca es un proceso lineal, y describir un lenguaje tampoco lo es: cada característica del lenguaje está relacionada con otras, y este libro está lleno de referencias cruzadas - a veces hacia atrás y a veces hacia delante- a material relacionado. Este capítulo introductorio hace una rápida primera pasada por el lenguaje, introduciendo características clave que facilitarán la comprensión del tratamiento en profundidad de los capítulos siguientes. Si ya eres un programador Java-Script en activo, probablemente puedas saltarte este capítulo. (Aunque puede que disfrutes leyendo el Ejemplo 1-1 al final del capítulo antes de seguir adelante).</p>
+  </section>
+  <h2 class="font-khand font-bold text-3xl px-0 sm:px-8 sm:py-4 sm:text-4xl md:text-5xl">1.1 Explorar JavaScript</h2>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Cuando aprendes un nuevo lenguaje de programación, es importante que pruebes los ejemplos del libro, los modifiques y los vuelvas a probar para comprobar tu comprensión del lenguaje. Para ello, necesitas un intérprete de JavaScript.</p>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">La forma más sencilla de probar algunas líneas de JavaScript es abrir las herramientas de desarrollo web en tu navegador (con F12, Ctrl-Mayúsculas-I o Comando-Opción- I) y seleccionar la pestaña Consola. A continuación, puedes escribir código y ver los resultados a medida que escribes. Las herramientas de desarrollo del navegador suelen aparecer como paneles en la parte inferior o derecha de la ventana del navegador, pero normalmente puedes separarlas como ventanas independientes (como se muestra en la Figura 1-1), lo que suele ser bastante cómodo.</p>
+  <figure>
+    <img src="/public/figure11.png" alt="imagen de consola">
+    <figcaption class="italic">Figura 1-1. La consola JavaScript en las herramientas de desarrollo de Firefox</figcaption>
+  </figure>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Otra forma de probar el código JavaScript es descargar e instalar Node desde <a class="no-underline text-orange-500" href="https://nodejs.org" target="_blank" rel="noopener noreferrer">https://nodejs.org</a>. Una vez instalado Node en tu sistema, sólo tienes que abrir una ventana de Terminal y escribir <strong>node</strong> para iniciar una sesión interactiva de JavaScript como ésta:</p>
+  <pre>
+    <code class="language-js">
+      $ node
+      Welcome to Node.js v12.13.0.
+      Type ".help" for more information.
+      > .help
+      .break Sometimes you get stuck, this gets you out
+      .clear Alias for .break
+      .editor Enter editor mode
+      .exit Exit the repl
+      .help Print this help message
+      .load Load JS from a file into the REPL session
+      .save Save all evaluated commands in this REPL session to a file
+      <br>
+      Press ^C to abort current expression, ^D to exit the repl
+      > let x = 2, y = 3;
+      undefined
+      5
+      > x + y
+      > (x === 2) && (y === 3)
+      true
+      > (x > 3) || (y &lt; 3)
+      false
+    </code>
+  </pre>
+  <h2 class="font-khand font-bold text-3xl px-0 sm:px-8 sm:py-4 sm:text-4xl md:text-5xl">1.2 Hola Mundo</h2>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Cuando estés listo para empezar a experimentar con trozos más largos de código, estos entornos interactivos línea por línea pueden dejar de ser adecuados, y probablemente prefieras escribir tu código en un editor de texto. Desde ahí, puedes copiar y pegar en la consola Java Script o en una sesión Node. O puede guardar su código en un archivo (la extensión de nombre de archivo tradicional para el código JavaScript es <em class="italic">.js</em>) y luego ejecutar ese archivo de código JavaScript con Node:</p>
+  <pre>
+    <code class="language-js">$ nodo snippet.js</code>
+  </pre>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Si utilizas Node de una manera no interactiva como ésta, no imprimirá automáticamente el valor de todo el código que ejecutes, así que tendrás que hacerlo tú mismo. Puedes utilizar la función <code class="language-js">console.log()</code> para mostrar texto y otros valores de JavaScript en la ventana de tu terminal o en la consola de herramientas de desarrollador de un navegador. Así, por ejemplo, si creas un archivo <em class="italic">hello.js</em> que contenga esta línea de código:</p>
+  <pre>
+    <code class="language-js">console.log("¡Hola Mundo!");</code>
+  </pre>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">y ejecute el archivo con <code>node hello.js</code>, verá impreso el mensaje "Hello World!".</p>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Si quieres ver ese mismo mensaje impreso en la consola JavaScript de un navegador web, crea un nuevo archivo llamado <em class="italic">hello.html</em>, y pon este texto en él:</p>
+  <pre>
+    <code class="language-js">&lt;script src="hola.js">&lt;/script></code>
+  </pre>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">A continuación, carga <em class="italic">hello.html</em> en tu navegador web utilizando una URL <code>file://</code> como ésta:</p>
+  <pre>
+    <code class="language-js">file:///Usuarios/nombredeusuario/javascript/hello.html</code>
+  </pre>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Abra la ventana de herramientas de desarrollador para ver el saludo en la consola.</p>
+  <h2 class="font-khand font-bold text-3xl px-0 sm:px-8 sm:py-4 sm:text-4xl md:text-5xl">1.3 Un recorrido por JavaScript</h2>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Esta sección presenta una introducción rápida, mediante ejemplos de código, al lenguaje JavaScript. Después de este capítulo introductorio, nos sumergimos en JavaScript en el nivel más bajo: El <a class="no-underline text-orange-500" href="javascript-la-guia-definitiva/capitulo-2" target="_blank" rel="noopener noreferrer">Capítulo 2</a> explica cosas como los comentarios de JavaScript, el punto y coma y el conjunto de caracteres Unicode. El <a class="no-underline text-orange-500" href="javascript-la-guia-definitiva/capitulo-3" target="_blank" rel="noopener noreferrer">Capítulo 3</a> empieza a ponerse más interesante: explica las variables de JavaScript y los valores que se pueden asignar a esas variables.</p>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">He aquí algunos ejemplos de código para ilustrar los aspectos más destacados de esos dos capítulos:</p>
+  <pre>
+    <code class="language-js">
+      // Todo lo que siga a dobles barras es un comentario.
+      // Lee atentamente los comentarios: explican el código JavaScript.
+      // Una variable es un nombre simbólico para un valor.
+      // Las variables se declaran con la palabra clave let:
+      let x;            // Declara una variable llamada x.
+      // Se pueden asignar valores a variables con un signo =.
+      x = 0;            // Ahora la variable x tiene el valor 0
+      x                 // => 0: Una variable se evalúa a su valor.
+      // JavaScript admite varios tipos de valores
+      x = 1;            // Números.
+      x = 0.01;         // Los números pueden ser enteros o reales.
+      x = "hola mundo"; // Cadenas de texto entre comillas.
+      x = 'JavaScript'; // Las comillas simples también delimitan cadenas.
+      x = true;         // Un valor booleano.
+      x = false;        // El otro valor booleano.
+      x = null;         // Null es un valor especial que significa "sin valor".
+      x = undefined;;   // Undefined es otro valor especial como null.
+    </code>
+  </pre>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Otros dos tipos muy importantes que los programas JavaScript pueden manipular son los objetos y los arrays. Estos son los temas de los capítulos 6 y 7, pero son tan importantes que los verás muchas veces antes de llegar a esos capítulos:</p>
+  <pre>
+    <code class="language-js">
+      // El tipo de datos más importante de JavaScript es el objeto.
+      // Un objeto es una colección de pares nombre/valor, o un mapa de cadena a valor.
+      let book = &#123          // Los objetos se encierran entre llaves.
+        topic: "JavaScript",    // La propiedad "topic" tiene valor "JavaScript".
+        edition: 7&#125         // La propiedad "edition" tiene valor 7
+      &#125;                    // La llave marca el final del objeto.
+
+      // Accede a las propiedades de un objeto con . o []:
+      book.topic                // => "JavaScript"
+      book&#91"edition"&#93     // => 7: otra forma de acceder a los valores.
+      book.author = "Flanagan"; // Crear nuevas propiedades por asignación.
+      book.contents = &#123 &#125 ; // &#123 &#125 es un objeto vacío sin propiedades.
+
+      // Acceso condicional a propiedades con ? (ES2020):
+      book.contents?.ch01?.sect1 // => undefined: book.contents no tiene la propiedad ch01.
+
+      // JavaScript también soporta arrays (listas indexadas numéricamente) de valores:
+      let primes = [2, 3, 5, 7&#93; // Un array de 4 valores, delimitados con [ y ].
+      primes[0&#93              // => 2: el primer elemento (índice 0) del array.
+      primes.length             // => 4: cuántos elementos hay en el array.
+      primes&#91primes.length-1&#93 // => 7: the last element of the array.
+      primes[4&#93 = 9;         // Añade un nuevo elemento por asignación.
+      primes[4&#93 = 11;        // O alterar un elemento existente por asignación.
+      let empty = &#91&#93;     // &#91&#93 es un array vacío sin elementos.
+      empty.length              // => 0
+
+      // Los arrays y objetos pueden contener otros arrays y objetos:
+      let points = &#91         // Un array con 2 elementos.
+        &#123x: 0, y: 0&#125 ,    // Cada elemento es un objeto.
+        &#123x: 1, y: 1&#125 
+      &#93;;
+      let data = &#123          // Un objeto con 2 propiedades.
+        trial1: &#91[1,2&#93, [3,4&#93&#93, // El valor de cada propiedad es un array.
+        trial2: &#91[2,3&#93, [4,5&#93&#93, // Los elementos de las matrices son matrices.
+      &#125;;
+    </code>
+  </pre>
+  <article class="border-4 p-8 border-zinc-500 my-4">
+    <h2 class="font-semibold text-xl sm:text-2xl md:text-3xl text-center">Sintaxis de comentarios en ejemplos de código</h2>
+    <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Habrás notado en el código anterior que algunos de los comentarios comienzan con una flecha (<code>=></code>). Estos muestran el valor producido por el código antes del comentario y son mi intento de emular un entorno interactivo JavaScript como una consola de navegador web en un libro impreso.</p>
+    <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Esos comentarios <code>// =></code> también sirven como <em class="italic">aserción</em>, y he escrito una herramienta que prueba el código y verifica que produce el valor especificado en el comentario. Esto debería ayudar, espero, a reducir los errores en el libro.</p>
+    <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Hay dos estilos relacionados de comentario/afirmación. Si ves un comentario de la forma <code>// a == 42</code>, significa que después de que se ejecute el código antes del comentario, la variable a tendrá el valor 42. Si ves un comentario de la forma <code>//</code>, !, significaqueelcódigo delalíneaanterioralcomentariolanzaunaexcepción(yel resto del comentario después del signo de exclamación suele explicar qué tipo de excepción se lanza).</p>
+    <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Verá que estos comentarios se utilizan a lo largo de todo el libro.</p>
+  </article>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">La sintaxis ilustrada aquí para listar elementos de array dentro de llaves cuadradas o mapear nombres de propiedades de objetos a valores de propiedades dentro de llaves rizadas se conoce como una expresión inicializadora, y es sólo uno de los temas del Capítulo 4. Una expresión es una frase de JavaScript que puede evaluarse para producir un valor. Por ejemplo, el uso de . y [] para referirse al valor de una propiedad de objeto o elemento de matriz es una expresión.</p>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Una de las formas más comunes de formar expresiones en JavaScript es utilizar operadores:</p>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Si las expresiones de JavaScript son como frases, las sentencias de JavaScript son como sen- tencias completas. Las sentencias son el tema del Capítulo 5. A grandes rasgos, una expresión es algo que calcula un valor pero no hace nada: no altera el estado del programa de ninguna manera. Las sentencias, por otro lado, no tienen un valor, pero alteran el estado. Ya has visto declaraciones de variables y sentencias de asignación. La otra gran categoría de sentencias son las estructuras de control, como las condicionales y los bucles. Verás ejemplos más adelante, después de que cubramos las funciones.</p>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Una función es un bloque de código JavaScript con nombre y parámetros que se define una vez y se puede invocar una y otra vez. Las funciones no se tratan formalmente hasta el capítulo 8, pero al igual que los objetos y las matrices, las verás muchas veces antes de llegar a ese capítulo. He aquí algunos ejemplos sencillos:</p>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">En ES6 y posteriores, existe una sintaxis abreviada para definir funciones. Esta sintaxis concisa utiliza => para separar la lista de argumentos del cuerpo de la función, por lo que las funciones definidas de este modo se conocen como funciones flecha. Las funciones en flecha se utilizan normalmente cuando se desea pasar una función sin nombre como argumento a otra función. El código anterior tiene este aspecto cuando se reescribe para utilizar funciones de flecha:</p>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Cuando utilizamos funciones con objetos, obtenemos métodos:</p>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Ahora, como prometí, aquí hay algunas funciones cuyos cuerpos demuestran declaraciones comunes de la estructura de control de Java-Script:</p>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">JavaScript soporta un estilo de programación orientado a objetos, pero es significativamente diferente de los lenguajes de programación orientados a objetos "clásicos". El capítulo 9 cubre en detalle la programación orientada a objetos en JavaScript, con muchos ejemplos. Aquí hay un ejemplo muy simple que demuestra cómo definir una clase JavaScript para representar puntos geométricos 2D. Los objetos que son instancias de esta clase tienen un único método, llamado distance(), que calcula la distancia del punto desde el origen:</p>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Este recorrido introductorio por la sintaxis y las capacidades fundamentales de JavaScript termina aquí, pero el libro continúa con capítulos autoconclusivos que cubren características adicionales del lenguaje:</p>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Muestra cómo el código JavaScript de un archivo o script puede utilizar funciones y clases JavaScript definidas en otros archivos o scripts.</p>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Cubre las funciones y clases incorporadas que están disponibles para todos los programas JavaScript. Esto incluye estructuras de datos importantes como mapas y conjuntos, una función para la concordancia de patrones textuales, funciones para serializar estructuras de datos JavaScript y mucho más.</p>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Explica cómo funciona el bucle for/of y cómo puedes hacer tus propias clases iterables con for/of. También cubre las funciones generadoras y la sentencia yield.</p>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Este capítulo es una exploración en profundidad de la programación asíncrona en Java-Script, cubriendo callbacks y eventos, APIs basadas en promesas, y las palabras clave async y await. Aunque el núcleo del lenguaje JavaScript no es asíncrono, las APIs asíncronas son las predeterminadas tanto en los navegadores web como en Node, y este capítulo explica las técnicas para trabajar con esas APIs.</p>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Presenta una serie de características avanzadas de JavaScript que pueden ser de interés para los programadores que escriben bibliotecas de código para que las utilicen otros programadores de JavaScript.</p>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Presenta el entorno del navegador, explica cómo los navegadores ejecutan el código JavaScript y cubre las API más importantes definidas por los navegadores. Este es, con diferencia, el capítulo más largo del libro.</p>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Introduce el entorno host Node, cubriendo el modelo de programación fundamental y las estructuras de datos y APIs que es más importante entender.</p>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Cubre herramientas y extensiones del lenguaje que merece la pena conocer porque se utilizan ampliamente y pueden convertirle en un programador más productivo.</p>
+  
+  <h2 class="font-khand font-bold text-3xl px-0 sm:px-8 sm:py-4 sm:text-4xl md:text-5xl">1.4 Ejemplo: Histogramas de frecuencia de caracteres</h2>
+  <pre>
+    <code class="language-js">
+      // This one final line of code is the main body of the program.
+      // It makes a Histogram object from standard input, then prints the histogram.
+    </code>
+  </pre>
+  <h2 class="font-khand font-bold text-3xl px-0 sm:px-8 sm:py-4 sm:text-4xl md:text-5xl">1.5 Resumen</h2>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Este libro explica JavaScript de abajo arriba. Esto significa que empezamos con detalles de bajo nivel como comentarios, identificadores, variables y tipos; luego pasamos a expresiones, sentencias, objetos y funciones; y finalmente cubrimos las abstracciones de alto nivel del lenguaje como clases y módulos. Me tomo muy en serio la palabra "definitivo" que aparece en el título de este libro, y los capítulos siguientes explican el lenguaje con un nivel de detalle que, al principio, puede parecer desconcertante. Sin embargo, el verdadero dominio de JavaScript requiere una comprensión de los detalles, y espero que dedique tiempo a leer este libro de principio a fin. Pero, por favor, no sienta que tiene que hacerlo en su primera lectura. Si se siente atascado en una sección, simplemente pase a la siguiente. Podrá volver y dominar los detalles una vez que tenga un conocimiento práctico de la lengua en su conjunto.</p>
+  <hr class="border-gray-300 border-2" />
+  <section class="flex justify-end">
+    <a class="font-khand font-bold text-3xl py-4 sm:py-8 md:py-12 sm:text-4xl md:text-5xl" href="javascript-la-guia-definitiva/capitulo-2">
+      <div class="transition-all text-nowrap relative ease-linear duration-500 w-28 sm:w-40 md:w-52
+      hover:w-36 sm:hover:w-48 md:hover:w-56  hover:text-sky-500
+      after:content-['↦'] after:text-red-500 after:transition-all after:ease-linear after:duration-500 after:opacity-0 after:relative after:-left-3 
+      hover:after:content-['↦'] hover:after:transition-all hover:after:ease-linear hover:after:duration-500 hover:after:opacity-100 hover:after:left-3"> Capitulo 2</div></a>
+  </section>
+</Layoutbook>

@@ -1,0 +1,22 @@
+---
+const { title } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Astro description" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="stylesheet" href="./prism.css">
+		<title>{title}</title>
+	</head>
+	<body class="relative font-khand text-xl text-gray-800 p-4 sm:p-5 md:p-8 lg:px-20 max-w-screen-xl mx-auto">
+    <div class="bg-[url('/public/patterns.jpg')] bg-[size:360px] fixed top-0 bottom-0 right-0 left-0 -z-10 opacity-40"></div>
+    <slot />
+		<script src="./prism.js"></script>
+	</body>
+</html>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=BenchNine:wght@300;400;700&family=Khand:wght@300;400;500;600;700&family=Poppins:wght@300;400&display=swap');
+</style>
