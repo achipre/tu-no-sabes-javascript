@@ -4,7 +4,10 @@ export default {
 	theme: {
 		extend: {
 			fontFamily: {
-				oswald: "Oswald"
+				oswald: "Oswald",
+				bench: "BenchNine",
+				khand: ["Khand", "sans-serif"],
+				poppins: ["Poppins", "sans-serif"]
 			},
 			screens: {
 				xs: "320px"
