@@ -24,17 +24,17 @@ import Layoutbook from "../../layouts/Layoutbook.astro"
     </p>
     <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Desde 2010, existe otro entorno de host para el código JavaScript. En lugar de limitar JavaScript a trabajar con las API proporcionadas por un navegador web, Node da acceso a JavaScript a todo el sistema operativo, lo que permite a los programas JavaScript leer y escribir archivos, enviar y recibir datos a través de la red, y hacer y servir peticiones HTTP. Node es una opción popular para implementar servidores web y también una herramienta conveniente para escribir scripts de utilidades simples como alternativa a los scripts shell.</p>
     <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">La mayor parte de este libro se centra en el propio lenguaje JavaScript. El <a class="no-underline text-orange-500" href="javascript-la-guia-definitiva/capitulo-11" target="_blank" rel="noopener noreferrer">Capítulo 11</a> documenta la biblioteca estándar de JavaScript, el <a class="no-underline text-orange-500" href="javascript-la-guia-definitiva/capitulo-15" target="_blank" rel="noopener noreferrer">Capítulo 15</a> presenta el entorno host del navegador web y el <a class="no-underline text-orange-500" href="javascript-la-guia-definitiva/capitulo-16" target="_blank" rel="noopener noreferrer">Capítulo 16</a> presenta el entorno host de Node.</p>
-    <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Este libro trata primero los fundamentos de bajo nivel y, a partir de ahí, desarrolla abstracciones más avanzadas y de más alto nivel. Los capítulos están pensados para leerse más o menos en orden. Pero aprender un nuevo lenguaje de programación nunca es un proceso lineal, y describir un lenguaje tampoco lo es: cada característica del lenguaje está relacionada con otras, y este libro está lleno de referencias cruzadas - a veces hacia atrás y a veces hacia delante- a material relacionado. Este capítulo introductorio hace una rápida primera pasada por el lenguaje, introduciendo características clave que facilitarán la comprensión del tratamiento en profundidad de los capítulos siguientes. Si ya eres un programador Java-Script en activo, probablemente puedas saltarte este capítulo. (Aunque puede que disfrutes leyendo el Ejemplo 1-1 al final del capítulo antes de seguir adelante).</p>
+    <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Este libro trata primero los fundamentos de bajo nivel y, a partir de ahí, desarrolla abstracciones más avanzadas y de más alto nivel. Los capítulos están pensados para leerse más o menos en orden. Pero aprender un nuevo lenguaje de programación nunca es un proceso lineal, y describir un lenguaje tampoco lo es: cada característica del lenguaje está relacionada con otras, y este libro está lleno de referencias cruzadas - a veces hacia atrás y a veces hacia delante- a material relacionado. Este capítulo introductorio hace una rápida primera pasada por el lenguaje, introduciendo características clave que facilitarán la comprensión del tratamiento en profundidad de los capítulos siguientes. Si ya eres un programador Java-Script en activo, probablemente puedas saltarte este capítulo. (Aunque puede que disfrutes leyendo el <a class="no-underline text-orange-500" href="#figure11">Ejemplo 1-1</a> al final del capítulo antes de seguir adelante).</p>
   </section>
   <h2 class="font-khand font-bold text-3xl px-0 sm:px-8 sm:py-4 sm:text-4xl md:text-5xl">1.1 Explorar JavaScript</h2>
   <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Cuando aprendes un nuevo lenguaje de programación, es importante que pruebes los ejemplos del libro, los modifiques y los vuelvas a probar para comprobar tu comprensión del lenguaje. Para ello, necesitas un intérprete de JavaScript.</p>
-  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">La forma más sencilla de probar algunas líneas de JavaScript es abrir las herramientas de desarrollo web en tu navegador (con F12, Ctrl-Mayúsculas-I o Comando-Opción- I) y seleccionar la pestaña Consola. A continuación, puedes escribir código y ver los resultados a medida que escribes. Las herramientas de desarrollo del navegador suelen aparecer como paneles en la parte inferior o derecha de la ventana del navegador, pero normalmente puedes separarlas como ventanas independientes (como se muestra en la Figura 1-1), lo que suele ser bastante cómodo.</p>
-  <figure>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">La forma más sencilla de probar algunas líneas de JavaScript es abrir las herramientas de desarrollo web en tu navegador (con F12, Ctrl-Shift-I o Command-Option-I) y seleccionar la pestaña Consola. A continuación, puedes escribir código y ver los resultados a medida que escribes. Las herramientas de desarrollo del navegador suelen aparecer como paneles en la parte inferior o derecha de la ventana del navegador, pero normalmente puedes separarlas como ventanas independientes (como se muestra en la <a class="no-underline text-orange-500" href="#figure11">Figura 1-1</a>), lo que suele ser bastante cómodo.</p>
+  <figure id="figure11">
     <img src="/public/figure11.png" alt="imagen de consola">
-    <figcaption class="italic">Figura 1-1. La consola JavaScript en las herramientas de desarrollo de Firefox</figcaption>
+    <figcaption class="italic text-lg leading-6 py-4 sm:text-xl md:text-2xl">Figura 1-1. La consola JavaScript en las herramientas de desarrollo de Firefox</figcaption>
   </figure>
   <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Otra forma de probar el código JavaScript es descargar e instalar Node desde <a class="no-underline text-orange-500" href="https://nodejs.org" target="_blank" rel="noopener noreferrer">https://nodejs.org</a>. Una vez instalado Node en tu sistema, sólo tienes que abrir una ventana de Terminal y escribir <strong>node</strong> para iniciar una sesión interactiva de JavaScript como ésta:</p>
-  <pre>
+  <pre class="language-js">
     <code class="language-js">
       $ node
       Welcome to Node.js v12.13.0.
@@ -64,16 +64,16 @@ import Layoutbook from "../../layouts/Layoutbook.astro"
   <pre>
     <code class="language-js">$ nodo snippet.js</code>
   </pre>
-  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Si utilizas Node de una manera no interactiva como ésta, no imprimirá automáticamente el valor de todo el código que ejecutes, así que tendrás que hacerlo tú mismo. Puedes utilizar la función <code class="language-js">console.log()</code> para mostrar texto y otros valores de JavaScript en la ventana de tu terminal o en la consola de herramientas de desarrollador de un navegador. Así, por ejemplo, si creas un archivo <em class="italic">hello.js</em> que contenga esta línea de código:</p>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Si utilizas Node de una manera no interactiva como ésta, no imprimirá automáticamente el valor de todo el código que ejecutes, así que tendrás que hacerlo tú mismo. Puedes utilizar la función <code class="language-js text-xl">console.log()</code> para mostrar texto y otros valores de JavaScript en la ventana de tu terminal o en la consola de herramientas de desarrollador de un navegador. Así, por ejemplo, si creas un archivo <em class="italic">hello.js</em> que contenga esta línea de código:</p>
   <pre>
     <code class="language-js">console.log("¡Hola Mundo!");</code>
   </pre>
-  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">y ejecute el archivo con <code>node hello.js</code>, verá impreso el mensaje "Hello World!".</p>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">y ejecute el archivo con <code class="language-js text-xl">node hello.js</code>, verá impreso el mensaje "Hello World!".</p>
   <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Si quieres ver ese mismo mensaje impreso en la consola JavaScript de un navegador web, crea un nuevo archivo llamado <em class="italic">hello.html</em>, y pon este texto en él:</p>
   <pre>
     <code class="language-js">&lt;script src="hola.js">&lt;/script></code>
   </pre>
-  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">A continuación, carga <em class="italic">hello.html</em> en tu navegador web utilizando una URL <code>file://</code> como ésta:</p>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">A continuación, carga <em class="italic">hello.html</em> en tu navegador web utilizando una URL <code class="language-js text-xl">file://</code> como ésta:</p>
   <pre>
     <code class="language-js">file:///Usuarios/nombredeusuario/javascript/hello.html</code>
   </pre>
@@ -102,41 +102,41 @@ import Layoutbook from "../../layouts/Layoutbook.astro"
       x = undefined;;   // Undefined es otro valor especial como null.
     </code>
   </pre>
-  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Otros dos tipos muy importantes que los programas JavaScript pueden manipular son los objetos y los arrays. Estos son los temas de los capítulos 6 y 7, pero son tan importantes que los verás muchas veces antes de llegar a esos capítulos:</p>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Otros dos tipos muy importantes que los programas JavaScript pueden manipular son los objetos y los arrays. Estos son los temas de los capítulos <a class="no-underline text-orange-500" href="javascript-la-guia-definitiva/capitulo-6" target="_blank" rel="noopener noreferrer">6</a> y <a class="no-underline text-orange-500" href="javascript-la-guia-definitiva/capitulo-7" target="_blank" rel="noopener noreferrer">7</a>, pero son tan importantes que los verás muchas veces antes de llegar a esos capítulos:</p>
   <pre>
     <code class="language-js">
       // El tipo de datos más importante de JavaScript es el objeto.
       // Un objeto es una colección de pares nombre/valor, o un mapa de cadena a valor.
-      let book = &#123          // Los objetos se encierran entre llaves.
-        topic: "JavaScript",    // La propiedad "topic" tiene valor "JavaScript".
-        edition: 7&#125         // La propiedad "edition" tiene valor 7
-      &#125;                    // La llave marca el final del objeto.
+      let book = &#123            // Los objetos se encierran entre llaves.
+        topic: "JavaScript",  // La propiedad "topic" tiene valor "JavaScript".
+        edition: 7&#125           // La propiedad "edition" tiene valor 7
+      &#125;                       // La llave marca el final del objeto.
 
       // Accede a las propiedades de un objeto con . o []:
       book.topic                // => "JavaScript"
-      book&#91"edition"&#93     // => 7: otra forma de acceder a los valores.
+      book&#91"edition"&#93           // => 7: otra forma de acceder a los valores.
       book.author = "Flanagan"; // Crear nuevas propiedades por asignación.
-      book.contents = &#123 &#125 ; // &#123 &#125 es un objeto vacío sin propiedades.
+      book.contents = &#123 &#125;       // &#123 &#125 es un objeto vacío sin propiedades.
 
       // Acceso condicional a propiedades con ? (ES2020):
       book.contents?.ch01?.sect1 // => undefined: book.contents no tiene la propiedad ch01.
 
       // JavaScript también soporta arrays (listas indexadas numéricamente) de valores:
       let primes = [2, 3, 5, 7&#93; // Un array de 4 valores, delimitados con [ y ].
-      primes[0&#93              // => 2: el primer elemento (índice 0) del array.
+      primes[0&#93                 // => 2: el primer elemento (índice 0) del array.
       primes.length             // => 4: cuántos elementos hay en el array.
-      primes&#91primes.length-1&#93 // => 7: the last element of the array.
-      primes[4&#93 = 9;         // Añade un nuevo elemento por asignación.
-      primes[4&#93 = 11;        // O alterar un elemento existente por asignación.
-      let empty = &#91&#93;     // &#91&#93 es un array vacío sin elementos.
+      primes&#91primes.length-1&#93   // => 7: the last element of the array.
+      primes[4&#93 = 9;            // Añade un nuevo elemento por asignación.
+      primes[4&#93 = 11;           // O alterar un elemento existente por asignación.
+      let empty = &#91&#93;            // &#91&#93 es un array vacío sin elementos.
       empty.length              // => 0
 
       // Los arrays y objetos pueden contener otros arrays y objetos:
-      let points = &#91         // Un array con 2 elementos.
-        &#123x: 0, y: 0&#125 ,    // Cada elemento es un objeto.
+      let points = &#91           // Un array con 2 elementos.
+        &#123x: 0, y: 0&#125 ,         // Cada elemento es un objeto.
         &#123x: 1, y: 1&#125 
       &#93;;
-      let data = &#123          // Un objeto con 2 propiedades.
+      let data = &#123              // Un objeto con 2 propiedades.
         trial1: &#91[1,2&#93, [3,4&#93&#93, // El valor de cada propiedad es un array.
         trial2: &#91[2,3&#93, [4,5&#93&#93, // Los elementos de las matrices son matrices.
       &#125;;
@@ -144,13 +144,52 @@ import Layoutbook from "../../layouts/Layoutbook.astro"
   </pre>
   <article class="border-4 p-8 border-zinc-500 my-4">
     <h2 class="font-semibold text-xl sm:text-2xl md:text-3xl text-center">Sintaxis de comentarios en ejemplos de código</h2>
-    <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Habrás notado en el código anterior que algunos de los comentarios comienzan con una flecha (<code>=></code>). Estos muestran el valor producido por el código antes del comentario y son mi intento de emular un entorno interactivo JavaScript como una consola de navegador web en un libro impreso.</p>
-    <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Esos comentarios <code>// =></code> también sirven como <em class="italic">aserción</em>, y he escrito una herramienta que prueba el código y verifica que produce el valor especificado en el comentario. Esto debería ayudar, espero, a reducir los errores en el libro.</p>
-    <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Hay dos estilos relacionados de comentario/afirmación. Si ves un comentario de la forma <code>// a == 42</code>, significa que después de que se ejecute el código antes del comentario, la variable a tendrá el valor 42. Si ves un comentario de la forma <code>//</code>, !, significaqueelcódigo delalíneaanterioralcomentariolanzaunaexcepción(yel resto del comentario después del signo de exclamación suele explicar qué tipo de excepción se lanza).</p>
+    <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Habrás notado en el código anterior que algunos de los comentarios comienzan con una flecha (<code class="language-js text-xl">=></code>). Estos muestran el valor producido por el código antes del comentario y son mi intento de emular un entorno interactivo JavaScript como una consola de navegador web en un libro impreso.</p>
+    <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Esos comentarios <code class="language-js text-xl">// =></code> también sirven como <em class="italic">aserción</em>, y he escrito una herramienta que prueba el código y verifica que produce el valor especificado en el comentario. Esto debería ayudar, espero, a reducir los errores en el libro.</p>
+    <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Hay dos estilos relacionados de comentario/afirmación. Si ves un comentario de la forma <code class="language-js text-xl">// a == 42</code>, significa que después de que se ejecute el código antes del comentario, la variable a tendrá el valor 42. Si ves un comentario de la forma <code class="language-js text-xl">// !</code>, significaqueelcódigo de la línea anterior al comentario lanza una excepción (y el resto del comentario después del signo de exclamación suele explicar qué tipo de excepción se lanza).</p>
     <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Verá que estos comentarios se utilizan a lo largo de todo el libro.</p>
   </article>
-  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">La sintaxis ilustrada aquí para listar elementos de array dentro de llaves cuadradas o mapear nombres de propiedades de objetos a valores de propiedades dentro de llaves rizadas se conoce como una expresión inicializadora, y es sólo uno de los temas del Capítulo 4. Una expresión es una frase de JavaScript que puede evaluarse para producir un valor. Por ejemplo, el uso de . y [] para referirse al valor de una propiedad de objeto o elemento de matriz es una expresión.</p>
-  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Una de las formas más comunes de formar expresiones en JavaScript es utilizar operadores:</p>
+  <p>La sintaxis ilustrada aquí para listar elementos de array dentro de llaves cuadradas o mapear nombres de propiedades de objetos a valores de propiedades dentro de llaves rizadas se conoce como una <em>expresión inicializadora</em>, y es sólo uno de los temas del <a href="javascript-la-guia-definitiva/capitulo-4" target="_blank" rel="noopener noreferrer">Capítulo 4</a>. Una <em>expresión</em> es una frase de JavaScript que puede <em>evaluarse</em> para producir un valor. Por ejemplo, el uso de . y <code class="language-js">[]</code> para referirse al valor de una propiedad de objeto o elemento de matriz es una expresión.</p>
+  <p>Una de las formas más comunes de formar expresiones en JavaScript es utilizar operadores:</p>
+  <pre>
+    <code class="language-js">
+      // Los operadores actúan sobre valores (los operandos) para producir un nuevo valor. 
+      // Los operadores aritméticos son de los más sencillos:
+      3 + 2                     // => 5: suma
+      3 - 2                     // => 1: resta
+      3 * 2                     // => 6: multiplicación
+      3 / 2                     // => 1.5: división
+      points[1].x - points[0].x // => 1: operandos más complicados también funcionan
+      "3" + "2"                 // => "32": + suma números, concatena cadenas
+
+      //JavaScript define algunos operadores aritméticos abreviados
+      let count = 0;            // Definir una variable
+      count++;                  // Incrementa la variable
+      count--;                  // Disminuye la variable
+      count += 2;               // Añadir 2: igual que count = count + 2;
+      count *= 3;               // Multiplicar por 3: igual que count = count * 3;
+      count                     // => 6: los nombres de las variables también son expresiones.
+
+      // Los operadores de igualdad y relacionales comprueban si dos valores son iguales,
+      // desigual, menor que, mayor que, etcétera. Se evalúan como verdadero o falso.
+      let x = 2, y = 3;         // These = signs are assignment, not equality tests
+      x === y                   // => false: igualdad
+      x !== y                   // => true: desigualdad
+      x &lt; y                     // => true: menor que
+      x &lt;= y                    // => true: menor que o igual
+      x > y                     // => false: mayor que
+      x >= y                    // => false: mayor que o igual
+      "two" === "three"         // => false: las dos cadenas de texto son diferentes
+      "two" > "three"           // => true: "tw" es alfabéticamente mayor que "th"
+      false === (x > y)         // => true: falso es igual a falso.
+      
+      // Los operadores lógicos combinan o invierten valores booleanos
+      (x === 2) && (y === 3)    // => true: ambas comparaciones son verdaderas. && es AND
+      (x > 3) || (y &lt; 3)        // => false: ninguna de las comparaciones es verdadera. || es OR
+      !(x === y)                // => true: ! invierte un valor booleano
+    </code>
+  </pre>
+  
   <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Si las expresiones de JavaScript son como frases, las sentencias de JavaScript son como sen- tencias completas. Las sentencias son el tema del Capítulo 5. A grandes rasgos, una expresión es algo que calcula un valor pero no hace nada: no altera el estado del programa de ninguna manera. Las sentencias, por otro lado, no tienen un valor, pero alteran el estado. Ya has visto declaraciones de variables y sentencias de asignación. La otra gran categoría de sentencias son las estructuras de control, como las condicionales y los bucles. Verás ejemplos más adelante, después de que cubramos las funciones.</p>
   <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Una función es un bloque de código JavaScript con nombre y parámetros que se define una vez y se puede invocar una y otra vez. Las funciones no se tratan formalmente hasta el capítulo 8, pero al igual que los objetos y las matrices, las verás muchas veces antes de llegar a ese capítulo. He aquí algunos ejemplos sencillos:</p>
   <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">En ES6 y posteriores, existe una sintaxis abreviada para definir funciones. Esta sintaxis concisa utiliza => para separar la lista de argumentos del cuerpo de la función, por lo que las funciones definidas de este modo se conocen como funciones flecha. Las funciones en flecha se utilizan normalmente cuando se desea pasar una función sin nombre como argumento a otra función. El código anterior tiene este aspecto cuando se reescribe para utilizar funciones de flecha:</p>
@@ -168,6 +207,9 @@ import Layoutbook from "../../layouts/Layoutbook.astro"
   <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Cubre herramientas y extensiones del lenguaje que merece la pena conocer porque se utilizan ampliamente y pueden convertirle en un programador más productivo.</p>
   
   <h2 class="font-khand font-bold text-3xl px-0 sm:px-8 sm:py-4 sm:text-4xl md:text-5xl">1.4 Ejemplo: Histogramas de frecuencia de caracteres</h2>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Este capítulo concluye con un programa JavaScript corto pero no trivial. El Ejemplo 1-1 es un programa Node que lee texto de la entrada estándar, calcula un histograma de frecuencia de caracteres a partir de ese texto, y luego imprime el histograma. Usted podría invocar el programa así para analizar la frecuencia de caracteres de su propio código fuente:</p>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Este ejemplo utiliza una serie de funciones avanzadas de JavaScript y pretende demostrar cómo pueden ser los programas JavaScript del mundo real. No debe esperar entender todo el código todavía, pero tenga la seguridad de que todo se explicará en los capítulos siguientes.</p>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Ejemplo 1-1. Cálculo de histogramas de frecuencia de caracteres con JavaScript</p>
   <pre>
     <code class="language-js">
       // This one final line of code is the main body of the program.

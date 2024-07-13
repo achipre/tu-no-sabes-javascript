@@ -2,13 +2,13 @@
 const { title } = Astro.props;
 ---
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content="Astro description" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="stylesheet" href="./prism.css">
+		<link rel="stylesheet" href="/src/layouts/prism.css">
 		<title>{title}</title>
 	</head>
 	<body class="relative font-khand text-xl text-gray-800 p-4 sm:p-5 md:p-8 lg:px-20 max-w-screen-xl mx-auto">
@@ -17,6 +17,20 @@ const { title } = Astro.props;
 		<script src="./prism.js"></script>
 	</body>
 </html>
-<style>
+<style is:global>
   @import url('https://fonts.googleapis.com/css2?family=BenchNine:wght@300;400;700&family=Khand:wght@300;400;500;600;700&family=Poppins:wght@300;400&display=swap');
+	@layer {
+		em {
+			@apply italic text-[#2E236C]
+		}
+		a {
+			@apply !text-orange-500
+		}
+		code {
+			@apply text-xl
+		}
+		p {
+			@apply max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl
+		}
+	}
 </style>

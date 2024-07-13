@@ -7,7 +7,8 @@ export default {
 				oswald: "Oswald",
 				bench: "BenchNine",
 				khand: ["Khand", "sans-serif"],
-				poppins: ["Poppins", "sans-serif"]
+				poppins: ["Poppins", "sans-serif"],
+				victor: ["Victor Mono", "monospace"]
 			},
 			screens: {
 				xs: "320px"
