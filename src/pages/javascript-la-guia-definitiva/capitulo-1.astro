@@ -190,37 +190,251 @@ import Layoutbook from "../../layouts/Layoutbook.astro"
     </code>
   </pre>
   
-  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Si las expresiones de JavaScript son como frases, las sentencias de JavaScript son como sen- tencias completas. Las sentencias son el tema del Capítulo 5. A grandes rasgos, una expresión es algo que calcula un valor pero no hace nada: no altera el estado del programa de ninguna manera. Las sentencias, por otro lado, no tienen un valor, pero alteran el estado. Ya has visto declaraciones de variables y sentencias de asignación. La otra gran categoría de sentencias son las estructuras de control, como las condicionales y los bucles. Verás ejemplos más adelante, después de que cubramos las funciones.</p>
-  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Una función es un bloque de código JavaScript con nombre y parámetros que se define una vez y se puede invocar una y otra vez. Las funciones no se tratan formalmente hasta el capítulo 8, pero al igual que los objetos y las matrices, las verás muchas veces antes de llegar a ese capítulo. He aquí algunos ejemplos sencillos:</p>
-  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">En ES6 y posteriores, existe una sintaxis abreviada para definir funciones. Esta sintaxis concisa utiliza => para separar la lista de argumentos del cuerpo de la función, por lo que las funciones definidas de este modo se conocen como funciones flecha. Las funciones en flecha se utilizan normalmente cuando se desea pasar una función sin nombre como argumento a otra función. El código anterior tiene este aspecto cuando se reescribe para utilizar funciones de flecha:</p>
-  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Cuando utilizamos funciones con objetos, obtenemos métodos:</p>
-  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Ahora, como prometí, aquí hay algunas funciones cuyos cuerpos demuestran declaraciones comunes de la estructura de control de Java-Script:</p>
-  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">JavaScript soporta un estilo de programación orientado a objetos, pero es significativamente diferente de los lenguajes de programación orientados a objetos "clásicos". El capítulo 9 cubre en detalle la programación orientada a objetos en JavaScript, con muchos ejemplos. Aquí hay un ejemplo muy simple que demuestra cómo definir una clase JavaScript para representar puntos geométricos 2D. Los objetos que son instancias de esta clase tienen un único método, llamado distance(), que calcula la distancia del punto desde el origen:</p>
-  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Este recorrido introductorio por la sintaxis y las capacidades fundamentales de JavaScript termina aquí, pero el libro continúa con capítulos autoconclusivos que cubren características adicionales del lenguaje:</p>
-  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Muestra cómo el código JavaScript de un archivo o script puede utilizar funciones y clases JavaScript definidas en otros archivos o scripts.</p>
-  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Cubre las funciones y clases incorporadas que están disponibles para todos los programas JavaScript. Esto incluye estructuras de datos importantes como mapas y conjuntos, una función para la concordancia de patrones textuales, funciones para serializar estructuras de datos JavaScript y mucho más.</p>
-  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Explica cómo funciona el bucle for/of y cómo puedes hacer tus propias clases iterables con for/of. También cubre las funciones generadoras y la sentencia yield.</p>
-  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Este capítulo es una exploración en profundidad de la programación asíncrona en Java-Script, cubriendo callbacks y eventos, APIs basadas en promesas, y las palabras clave async y await. Aunque el núcleo del lenguaje JavaScript no es asíncrono, las APIs asíncronas son las predeterminadas tanto en los navegadores web como en Node, y este capítulo explica las técnicas para trabajar con esas APIs.</p>
-  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Presenta una serie de características avanzadas de JavaScript que pueden ser de interés para los programadores que escriben bibliotecas de código para que las utilicen otros programadores de JavaScript.</p>
-  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Presenta el entorno del navegador, explica cómo los navegadores ejecutan el código JavaScript y cubre las API más importantes definidas por los navegadores. Este es, con diferencia, el capítulo más largo del libro.</p>
-  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Introduce el entorno host Node, cubriendo el modelo de programación fundamental y las estructuras de datos y APIs que es más importante entender.</p>
-  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Cubre herramientas y extensiones del lenguaje que merece la pena conocer porque se utilizan ampliamente y pueden convertirle en un programador más productivo.</p>
-  
-  <h2 class="font-khand font-bold text-3xl px-0 sm:px-8 sm:py-4 sm:text-4xl md:text-5xl">1.4 Ejemplo: Histogramas de frecuencia de caracteres</h2>
-  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Este capítulo concluye con un programa JavaScript corto pero no trivial. El Ejemplo 1-1 es un programa Node que lee texto de la entrada estándar, calcula un histograma de frecuencia de caracteres a partir de ese texto, y luego imprime el histograma. Usted podría invocar el programa así para analizar la frecuencia de caracteres de su propio código fuente:</p>
-  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Este ejemplo utiliza una serie de funciones avanzadas de JavaScript y pretende demostrar cómo pueden ser los programas JavaScript del mundo real. No debe esperar entender todo el código todavía, pero tenga la seguridad de que todo se explicará en los capítulos siguientes.</p>
-  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Ejemplo 1-1. Cálculo de histogramas de frecuencia de caracteres con JavaScript</p>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Si las expresiones de JavaScript son como frases, las <em>sentencias</em> de JavaScript son como sentencias completas. Las sentencias son el tema del <a href="javascript-la-guia-definitiva/capitulo-5" target="_blank" rel="noopener noreferrer">Capítulo 5</a>. A grandes rasgos, una expresión es algo que calcula un valor pero no hace nada: no altera el estado del programa de ninguna manera. Las sentencias, por otro lado, no tienen un valor, pero alteran el estado. Ya has visto declaraciones de variables y sentencias de asignación. La otra gran categoría de sentencias son las <em>estructuras de control</em>, como las condicionales y los bucles. Verás ejemplos más adelante, después de que cubramos las funciones.</p>
+  <p>Una <em>función</em> es un bloque de código JavaScript con nombre y parámetros que se define una vez y se puede invocar una y otra vez. Las funciones no se tratan formalmente hasta el <a href="javascript-la-guia-definitiva/capitulo-8" target="_blank" rel="noopener noreferrer">Capítulo 8</a>, pero al igual que los objetos y las matrices, las verás muchas veces antes de llegar a ese capítulo. He aquí algunos ejemplos sencillos:</p>
   <pre>
     <code class="language-js">
-      // This one final line of code is the main body of the program.
-      // It makes a Histogram object from standard input, then prints the histogram.
+      // Las funciones son bloques parametrizados de código JavaScript que podemos invocar
+      function plus1(x) &#123          // Define una función llamada "plus1" con el parámetro "x"
+      return x + 1;                // Devuelve un valor uno mayor que el valor pasado
+      }                            // Las funciones se encierran entre llaves
+      plus1(y)                     // => 4: y es 3, por lo que esta invocación devuelve 3+1
+      let square = function(x) &#123   // Las funciones son valores y pueden asignarse a vars
+      return x * x;                // Calcula el valor de la función
+      };                           // El punto y coma marca el final de la asignación
+      square(plus1(y))             // => 16: invocar dos funciones en una expresión
+    </code>
+  </pre>
+  <p>En ES6 y posteriores, existe una sintaxis abreviada para definir funciones. Esta sintaxis concisa utiliza <code class="language-js">=></code>  para separar la lista de argumentos del cuerpo de la función, por lo que las funciones definidas de este modo se conocen como <em>funciones flecha</em>. Las funciones en flecha se utilizan normalmente cuando se desea pasar una función sin nombre como argumento a otra función. El código anterior tiene este aspecto cuando se reescribe para utilizar funciones de flecha:</p>
+  <pre>
+    <code class="language-js">
+      const plus1 = x => x + 1;   // La entrada x se asigna a la salida x + 1
+      const square = x => x * x;  // // La entrada x corresponde a la salida x * x
+      plus1(y)                    // => 4: la invocación de la función es la misma
+      square(plus1(y))            // => 16
+    </code>
+  </pre>
+  <p>Cuando utilizamos funciones con objetos, obtenemos <em>métodos</em>:</p>
+  <pre>
+    <code class="language-js">
+      // Cuando se asignan funciones a las propiedades de un objeto, llamamos a
+      // los "métodos". Todos los objetos JavaScript (incluidos los arrays) tienen métodos:
+      let a = [];                 // Crear un array vacío
+      a.push(1,2,3);              // El método push() añade elementos a un array
+      a.reverse();                // Otro método: invertir el orden de los elementos
+      // También podemos definir nuestros propios métodos. La palabra clave "this" se refiere al objeto
+      // sobre el que se define el método: en este caso, el array de puntos de antes.
+      points.dist = function() &#123  // Definir un método para calcular la distancia entre puntos
+        let p1 = this[0];         // Primer elemento del array sobre el que se invoca
+        let p2 = this[1];         // Segundo elemento del objeto "this
+        let a = p2.x-p1.x;        // Diferencia en coordenadas x
+        let b = p2.y-p1.y;        // Diferencia en coordenadas y
+        return Math.sqrt(a*a +    // Teorema de Pitágoras
+                          b*b);   // Math.sqrt() calcula la raíz cuadrada
+      };
+      points.dist()               // => Math.sqrt(2): distancia entre nuestros 2 puntos
+    </code>
+  </pre>
+  <p>Ahora, como prometí, aquí hay algunas funciones cuyos cuerpos demuestran declaraciones comunes de la estructura de control de Java-Script:</p>
+  <pre>
+    <code class="language-js">
+      // JavaScript incluyen condicionales y bucles utilizando la sintaxis 
+      // de C, C++, Java y otros lenguajes.
+      function abs(x) &#123       // Una función para calcular el valor absoluto.
+        if (x >= 0) &#123         // La sentencia if...
+          return x;           // ejecuta este código si la comparación es verdadera.
+        }                     // Este es el final de la cláusula if.
+        else &#123                // La cláusula opcional else se ejecuta su código si
+          return -x;          // la comparación es falsa.
+        }                     // las llaves son opcionales cuando hay una sentencia
+      }                       // Observe las sentencias return anidadas dentro de if/else.
+      abs(-10) === abs(10)    // => true
+      function sum(array) &#123   // Calcula la suma de los elementos de un array
+        let sum = 0;          // Empezar con una suma inicial de 0.
+        for(let x of array) &#123 // Recorre el array, asignando cada elemento a x.
+          sum += x;           // Añade el valor del elemento a la suma.
+        }                     // Este es el final del bucle.
+        return sum;           // Devuelve la suma
+      }
+      sum(primes)             // => 28: suma de los 5 primeros primos 2+3+5+7+11
+      function factorial(n) &#123 // Una función para calcular factoriales
+        let product = 1;      // Empezar con un producto de 1
+        while(n > 1) &#123        // Repite las sentencias en &#123} mientras expr en () sea
+          product *= n;       // Atajo para product = product * n;
+          n--;                // Atajo para n = n- 1
+        }                     // Fin del bucle
+        return product;       // Devuelve el product
+      }
+      factorial(4)            // => 24: 1*4*3*2
+      function factorial2(n) &#123// Otra versión utilizando un bucle diferente
+        let i, product = 1;   // Empieza con 1
+        for(i=2; i &lt;= n; i++) // Incrementa automáticamente i de 2 hasta n
+          product *= i;       // Haz esto cada vez. &#123} no es necesario para bucles de 1 línea
+        return product;       // Devuelve el factorial
+      }
+      factorial2(5)           // => 120: 1*2*3*4*5
+    </code>
+  </pre>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">JavaScript soporta un estilo de programación orientado a objetos, pero es significativamente diferente de los lenguajes de programación orientados a objetos "clásicos". El <a href="javascript-la-guia-definitiva/capitulo-9" target="_blank" rel="noopener noreferrer">Capítulo 9</a> cubre en detalle la programación orientada a objetos en JavaScript, con muchos ejemplos. Aquí hay un ejemplo muy simple que demuestra cómo definir una clase JavaScript para representar puntos geométricos 2D. Los objetos que son instancias de esta clase tienen un único método, llamado <code class="language-js">distance()</code>, que calcula la distancia del punto desde el origen:</p>
+  <pre>
+    <code class="language-js">
+      class Point &#123             // Por convención, los nombres de las clases se escriben en mayúsculas.
+        constructor(x, y) &#123     // Función constructora para inicializar nuevas instancias.
+          this.x = x;           // Esta palabra clave es el nuevo objeto que se inicializa.
+          this.y = y;           // Almacena los argumentos de la función como propiedades del objeto.
+        }                       // No es necesario el retorno en las funciones constructoras.
+        distance() &#123            // Método para calcular la distancia del origen al punto.
+          return Math.sqrt(     // Devuelve la raíz cuadrada de x2 + y2.
+            this.x * this.x +   // esto se refiere al objeto Punto sobre el cual
+            this.y * this.y     // se invoca el método de distancia.
+            );
+          }
+        }
+        // Utiliza la función constructora Point() con "new" para crear objetos Point
+        let p = new Point(1, 1);// El punto geométrico (1,1).
+        // Ahora utiliza un método del objeto Punto p
+        p.distance()            // => Math.SQRT2
+    </code>
+  </pre>
+  <p>Este recorrido introductorio por la sintaxis y las capacidades fundamentales de JavaScript termina aquí, pero el libro continúa con capítulos autoconclusivos que cubren características adicionales del lenguaje:</p>
+  <p class="pb-0 italic"><a href="javascript-la-guia-definitiva/capitulo-10" target="_blank" rel="noopener noreferrer">Capítulo 10, Módulos</a></p>
+  <p class="pt-0 ml-8">Muestra cómo el código JavaScript de un archivo o script puede utilizar funciones y clases JavaScript definidas en otros archivos o scripts.</p>
+  <p class="pb-0 italic"><a href="javascript-la-guia-definitiva/capitulo-11" target="_blank" rel="noopener noreferrer">Capítulo 11, La biblioteca estándar de JavaScript</a></p>
+  <p class="pt-0 ml-8">Cubre las funciones y clases incorporadas que están disponibles para todos los programas JavaScript. Esto incluye estructuras de datos importantes como mapas y conjuntos, una función para la concordancia de patrones textuales, funciones para serializar estructuras de datos JavaScript y mucho más.</p>
+  <p class="pb-0 italic"><a href="javascript-la-guia-definitiva/capitulo-12" target="_blank" rel="noopener noreferrer">Capítulo 12, Iteradores y generadores</a></p>
+  <p class="pt-0 ml-8">Explica cómo funciona el bucle <code class="language-js">for/of</code> y cómo puedes hacer tus propias clases iterables con <code class="language-js">for/of</code>. También cubre las funciones generadoras y la sentencia <code class="language-js">yield</code>.</p>
+  <p class="pb-0 italic"><a href="javascript-la-guia-definitiva/capitulo-13" target="_blank" rel="noopener noreferrer">Capítulo 13, JavaScript asíncrono</a></p>
+  <p class="pt-0 ml-8">Este capítulo es una exploración en profundidad de la programación asíncrona en Java-Script, cubriendo callbacks y eventos, APIs basadas en promesas, y las palabras clave <code class="language-js">async</code> y <code class="language-js">await</code>. Aunque el núcleo del lenguaje JavaScript no es asíncrono, las APIs asíncronas son las predeterminadas tanto en los navegadores web como en Node, y este capítulo explica las técnicas para trabajar con esas APIs.</p>
+  <p class="pb-0 italic"><a href="javascript-la-guia-definitiva/capitulo-14" target="_blank" rel="noopener noreferrer">Capítulo 14, Metaprogramación</a></p>
+  <p class="pt-0 ml-8">Presenta una serie de características avanzadas de JavaScript que pueden ser de interés para los programadores que escriben bibliotecas de código para que las utilicen otros programadores de JavaScript.</p>
+  <p class="pb-0 italic"><a href="javascript-la-guia-definitiva/capitulo-15" target="_blank" rel="noopener noreferrer">Capítulo 15, JavaScript en los navegadores web</a></p>
+  <p class="pt-0 ml-8">Presenta el entorno del navegador, explica cómo los navegadores ejecutan el código JavaScript y cubre las API más importantes definidas por los navegadores. Este es, con diferencia, el capítulo más largo del libro.</p>
+  <p class="pb-0 italic"><a href="javascript-la-guia-definitiva/capitulo-16" target="_blank" rel="noopener noreferrer">Capítulo 16, JavaScript del lado del servidor con Node</a></p>
+  <p class="pt-0 ml-8">Introduce el entorno host Node, cubriendo el modelo de programación fundamental y las estructuras de datos y APIs que es más importante entender.</p>
+  <p class="pb-0 italic"><a href="javascript-la-guia-definitiva/capitulo-17" target="_blank" rel="noopener noreferrer">Capítulo 17, Herramientas y extensiones de JavaScript</a></p>
+  <p class="pt-0 ml-8">Cubre herramientas y extensiones del lenguaje que merece la pena conocer porque se utilizan ampliamente y pueden convertirle en un programador más productivo.</p>
+  
+  <h2 class="font-khand font-bold text-3xl px-0 sm:px-8 sm:py-4 sm:text-4xl md:text-5xl">1.4 Ejemplo: Histogramas de frecuencia de caracteres</h2>
+  <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Este capítulo concluye con un programa JavaScript corto pero no trivial. El <a href="#example11">Ejemplo 1-1</a> es un programa Node que lee texto de la entrada estándar, calcula un histograma de frecuencia de caracteres a partir de ese texto, y luego imprime el histograma. Usted podría invocar el programa así para analizar la frecuencia de caracteres de su propio código fuente:</p>
+  <pre>
+    <code class="language-js font-victor">
+      $ node charfreq.js &lt; charfreq.js
+      T: ########### 11.22%
+      E: ########## 10.15%
+      R: ####### 6.68%
+      S: ###### 6.44%
+      A: ###### 6.16%
+      N: ###### 5.81%
+      O: ##### 5.45%
+      I: ##### 4.54%
+      H: #### 4.07%
+      C: ### 3.36%
+      L: ### 3.20%
+      U: ### 3.08%
+      /: ### 2.88%
+    </code>
+  </pre>
+  <p>Este ejemplo utiliza una serie de funciones avanzadas de JavaScript y pretende demostrar cómo pueden ser los programas JavaScript del mundo real. No debe esperar entender todo el código todavía, pero tenga la seguridad de que todo se explicará en los capítulos siguientes.</p>
+  <p id="example11" class="italic">Ejemplo 1-1. Cálculo de histogramas de frecuencia de caracteres con JavaScript</p>
+  <pre>
+    <code class="language-js">
+      /**
+        * Este programa Node lee texto de la entrada estándar, calcula la frecuencia
+        * de cada letra de ese texto, y muestra un histograma de las letras más
+        * frecuente. Requiere Nodo 12 o superior para funcionar.
+        *
+        * En un entorno de tipo Unix, puede invocar el programa de la siguiente manera:
+        * node charfreq.js &lt; corpus.txt
+        */
+      // Esta clase extiende Map de forma que el método get() devuelve el objeto especificado
+      // en lugar de null cuando la clave no está en el mapa
+      class DefaultMap extends Map &#123
+        constructor(defaultValue) &#123
+          super();                          // Invocar el constructor de la superclase
+          this.defaultValue = defaultValue; // Recordar el valor por defecto
+        }
+
+        get(key) &#123
+          if (this.has(key)) &#123              // Si la key ya está en el Map
+            return super.get(key);          // devuelve su valor desde la superclase.
+          }
+          else &#123
+            return this.defaultValue;       // En caso contrario devuelve el valor por defecto
+          }
+        }
+      }
+      // Esta clase calcula y muestra histogramas de frecuencia de letras
+      class Histogram &#123
+        constructor() &#123
+          this.letterCounts = new DefaultMap(0); // Map de letras a cuentas
+          this.totalLetters = 0;                 // Cuántas letras en total
+        }
+
+        // Esta función actualiza el histograma con las letras del texto.
+        add(text) &#123
+          // Elimina los espacios en blanco del texto y conviértelo a mayúsculas.
+          text = text.replace(/\s/g, "").toUpperCase();
+          // Ahora recorre los caracteres del texto
+          for(let character of text) &#123
+            let count = this.letterCounts.get(character); // Obtener la cuenta antigua
+            this.letterCounts.set(character, count+1);    // Incrementarla
+            this.totalLetters++;
+          }
+        }
+
+        // Convertir el histograma en una cadena que muestre un gráfico ASCII
+        toString() &#123
+          // Convertir el Map en una matriz de matrices [clave,valor]
+          let entries = [...this.letterCounts];
+
+          // Ordena el array por conteo, luego alfabéticamente
+          entries.sort((a,b) => &#123   // Una función para definir el orden de clasificación.
+            if (a[1] === b[1]) &#123    // Si los recuentos son iguales
+              return a[0] &lt; b[0] ? -1 : 1; // ordena alfabéticamente.
+            } else &#123                // Si los recuentos difieren
+              return b[1] - a[1];   // ordenar por el mayor número.
+            }
+          }
+        });
+
+        // Convertir los recuentos en porcentajes
+        for(let entry of entries) &#123
+          entry[1] = entry[1] / this.totalLetters*100;
+        }
+
+        // Elimine las entradas inferiores al 1%.
+        entries = entries.filter(entry => entry[1] >= 1);
+
+        // Ahora convierte cada entrada en una línea de texto
+        let lines = entries.map(
+          ([l,n]) => `$&#123l}: $&#123"#".repeat(Math.round(n))} $&#123n.toFixed(2)}%`
+        );
+
+        // Y devuelve las líneas concatenadas, separadas por caracteres de nueva línea.
+        return lines.join("\n");
+        }
+      }
+      // Esta función async (Promise-returning) crea un objeto Histograma,
+      // lee asíncronamente trozos de texto de la entrada estándar, y añade esos trozos a 
+      // el histograma. Cuando llega al final del flujo, devuelve este histograma
+      async function histogramFromStdin() &#123
+        process.stdin.setEncoding("utf-8"); // Leer cadenas Unicode, no bytes
+        let histogram = new Histogram();
+        for await (let chunk of process.stdin) &#123
+          histogram.add(chunk);
+        }
+        return histogram;
+      }
+      // Esta última línea de código es el cuerpo principal del programa.
+      // Crea un objeto Histograma a partir de la entrada estándar, luego imprime el histograma.
+      histogramFromStdin().then(histogram => &#123 console.log(histogram.toString()); });
     </code>
   </pre>
   <h2 class="font-khand font-bold text-3xl px-0 sm:px-8 sm:py-4 sm:text-4xl md:text-5xl">1.5 Resumen</h2>
   <p class="max-w-screen-2xl text-lg leading-6 py-4 sm:text-xl md:text-2xl">Este libro explica JavaScript de abajo arriba. Esto significa que empezamos con detalles de bajo nivel como comentarios, identificadores, variables y tipos; luego pasamos a expresiones, sentencias, objetos y funciones; y finalmente cubrimos las abstracciones de alto nivel del lenguaje como clases y módulos. Me tomo muy en serio la palabra "definitivo" que aparece en el título de este libro, y los capítulos siguientes explican el lenguaje con un nivel de detalle que, al principio, puede parecer desconcertante. Sin embargo, el verdadero dominio de JavaScript requiere una comprensión de los detalles, y espero que dedique tiempo a leer este libro de principio a fin. Pero, por favor, no sienta que tiene que hacerlo en su primera lectura. Si se siente atascado en una sección, simplemente pase a la siguiente. Podrá volver y dominar los detalles una vez que tenga un conocimiento práctico de la lengua en su conjunto.</p>
   <hr class="border-gray-300 border-2" />
   <section class="flex justify-end">
-    <a class="font-khand font-bold text-3xl py-4 sm:py-8 md:py-12 sm:text-4xl md:text-5xl" href="javascript-la-guia-definitiva/capitulo-2">
+    <a class="font-khand font-bold text-3xl py-4 sm:py-8 md:py-12 sm:text-4xl md:text-5xl" href="capitulo-2">
       <div class="transition-all text-nowrap relative ease-linear duration-500 w-28 sm:w-40 md:w-52
       hover:w-36 sm:hover:w-48 md:hover:w-56  hover:text-sky-500
       after:content-['↦'] after:text-red-500 after:transition-all after:ease-linear after:duration-500 after:opacity-0 after:relative after:-left-3 

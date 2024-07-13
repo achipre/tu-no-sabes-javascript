@@ -1,0 +1,66 @@
+---
+import Layoutbook from "../../layouts/Layoutbook.astro"
+---
+<Layoutbook title="JavaScript: La guia definitiva">
+
+  <p class="font-khand font-bold text-2xl py-4 sm:text-3xl md:text-4xl text-right">Capitulo 2</p>
+  <hr class="border-gray-300 border-2" />
+  <section class="mb-4" >
+    <h1 class="font-khand font-bold text-3xl px-0 sm:px-8 py-4 sm:py-10 sm:text-4xl md:text-5xl text-right">Estructura léxica</h1>
+    <p>La estructura léxica de un lenguaje de programación es el conjunto de reglas elementales que especifican cómo se escriben los programas en ese lenguaje. Es la sintaxis de más bajo nivel de un lenguaje: especifica qué aspecto tienen los nombres de las variables, los caracteres delimitadores de las comunicaciones y cómo se separa una sentencia del programa de la siguiente, por ejemplo. Este breve capítulo documenta la estructura léxica de JavaScript. Abarca:</p>
+    <ul class="max-w-screen-2xl text-lg leading-6 py-4 font-medium list-disc sm:text-xl md:text-2xl">
+      <li class="my-2 ml-4">Distinción entre mayúsculas y minúsculas, espacios y saltos de línea</li>
+      <li class="my-2 ml-4">Comentarios</li>
+      <li class="my-2 ml-4">Literales</li>
+      <li class="my-2 ml-4">Identificadores y palabras reservadas</li>
+      <li class="my-2 ml-4">Unicode</li>
+      <li class="my-2 ml-4">Punto y coma opcional</li>
+    </ul>
+
+    <h2 class="font-khand font-bold text-3xl px-0 sm:px-8 sm:py-4 sm:text-4xl md:text-5xl">2.1 El texto de un programa JavaScript</h2>
+    <p>JavaScript es un lenguaje que distingue entre mayúsculas y minúsculas. Esto significa que las palabras clave, variables, nombres de funciones y otros identificadores del lenguaje deben escribirse siempre con mayúsculas y minúsculas. La palabra clave while, por ejemplo, debe escribirse "while", no "While" o "WHILE". Del mismo modo, online, Online, OnLine y ONLINE son cuatro nombres de variable distintos.</p>
+    <p>JavaScript ignora los espacios que aparecen entre los tokens de los programas. En su mayor parte, JavaScript también ignora los saltos de línea (pero vea §2.6 para una excepción). Dado que puede utilizar espacios y saltos de línea libremente en sus programas, puede formatear y aplicar sangrías a sus programas de una forma ordenada y coherente que facilite la lectura y comprensión del código.</p>
+    <p>Además del carácter de espacio normal (\u0020), JavaScript también reconoce tabuladores, diversos caracteres de control ASCII y varios caracteres de espacio Unicode como espacio en blanco. JavaScript reconoce las nuevas líneas, los retornos de carro y una secuencia de retorno de carro/salto de línea como terminadores de línea.</p>
+    <h2 class="font-khand font-bold text-3xl px-0 sm:px-8 sm:py-4 sm:text-4xl md:text-5xl">2.2 Comentarios</h2>
+    <p>JavaScript admite dos estilos de comentarios. Cualquier texto entre // y el final de una línea se trata como un comentario y JavaScript lo ignora. Cualquier texto entre los caracteres /* y */ también se trata como un comentario; estos comentarios pueden abarcar varias líneas pero no pueden anidarse. Las siguientes líneas de código son comentarios JavaScript legales:
+    </p>
+
+    <pre>
+      <code class="language-js">
+        // Este es un comentario de una sola línea.
+        /* Esto también es un comentario */ // y aquí hay otro comentario.
+        /*
+         * Se trata de un comentario de varias líneas. Los caracteres * adicionales al principio de 
+         * de cada línea no son una parte obligatoria de la sintaxis; ¡sólo tienen un aspecto atractivo! 
+         */
+      </code>
+    </pre>
+
+    <h2 class="font-khand font-bold text-3xl px-0 sm:px-8 sm:py-4 sm:text-4xl md:text-5xl">2.3 Literales</h2>
+    <p>Un literal es un valor de datos que aparece directamente en un programa. Los siguientes son todos literales:</p>
+    <pre>
+      <code class="language-js">
+        12                // El número doce
+        1.2               // El número uno punto dos
+        "hola mundo"      // Una cadena de texto
+        'Hola'            // Otra cadena
+        true              // Un valor booleano
+        false             // El otro valor booleano
+        null              // Ausencia de objeto
+      </code>
+    </pre>
+    <p>Encontrará información detallada sobre los literales numéricos y de cadena en el capítulo 3.</p>
+
+    <h2 class="font-khand font-bold text-3xl px-0 sm:px-8 sm:py-4 sm:text-4xl md:text-5xl">2.4 Identificadores y palabras reservadas</h2>
+    <p>Un identificador es simplemente un nombre. En JavaScript, los identificadores se utilizan para nombrar constantes, variables, propiedades, funciones y clases y para proporcionar etiquetas para ciertos bucles en el código JavaScript. Un identificador JavaScript debe comenzar con una letra, un guión bajo (_) o un signo de dólar ($). Los caracteres siguientes pueden ser letras, dígitos, guiones bajos o signos de dólar. (Los dígitos no están permitidos como primer carácter para que JavaScript pueda distinguir fácilmente los identificadores de los números). Todos estos son identificadores legales:</p>
+
+
+  <hr class="border-gray-300 border-2" />
+  <section class="flex justify-end">
+    <a class="font-khand font-bold text-3xl py-4 sm:py-8 md:py-12 sm:text-4xl md:text-5xl" href="javascript-la-guia-definitiva/capitulo-3">
+      <div class="transition-all text-nowrap relative ease-linear duration-500 w-28 sm:w-40 md:w-52
+      hover:w-36 sm:hover:w-48 md:hover:w-56  hover:text-sky-500
+      after:content-['↦'] after:text-red-500 after:transition-all after:ease-linear after:duration-500 after:opacity-0 after:relative after:-left-3 
+      hover:after:content-['↦'] hover:after:transition-all hover:after:ease-linear hover:after:duration-500 hover:after:opacity-100 hover:after:left-3"> Capitulo 3</div></a>
+  </section>
+</Layoutbook>
