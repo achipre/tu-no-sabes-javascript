@@ -6,19 +6,240 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
   <h2>Big O</h2>
   <article>
     <p>
-      La mayoría de las empresas realizan sus entrevistas de forma muy similar. Le ofreceremos una visión general de cómo entrevistan las empresas y qué es lo que buscan. Esta información debería orientar su preparación para la entrevista y sus reacciones durante y después de la misma.
+      Se trata de un concepto tan importante que le dedicamos un capítulo entero (log!).
     </p>
     <p>
-      Cuando le seleccionan para una entrevista, suele pasar por una entrevista de preselección. Suele realizarse por teléfono. Los candidatos universitarios que asisten a las mejores escuelas pueden tener estas entrevistas en persona.
+      El tiempo Big O es el lenguaje y la métrica que utilizamos para describir la eficiencia de los algoritmos. No entenderlo bien puede perjudicarte a la hora de desarrollar un algoritmo. No sólo podrías ser juzgado duramente por no entender realmente el big 0, sino que también te costará juzgar cuándo tu algoritmo se está volviendo más rápido o más lento.
     </p>
     <p>
-      No se deje engañar por el nombre: la entrevista de "preselección" suele incluir preguntas sobre codificación y algoritmos, y el listón puede estar tan alto como en las entrevistas en persona. Si no está seguro de si la entrevista será técnica o no, pregunte a su coordinador de contratación qué puesto ocupa su entrevistador (o qué podría cubrir la entrevista). Por lo general, un ingeniero realizará una entrevista técnica.
+      Domina este concepto.
+    </p>
+  </article>
+  <article>
+    <h3>► Una analogía</h3>
+    <p>
+      Imagina el siguiente escenario: Tienes un archivo en un disco duro y necesitas enviárselo a tu amigo que vive al otro lado del país. Tienes que enviárselo lo antes posible. ¿Cómo se lo envías?
     </p>
     <p>
-      Muchas empresas han aprovechado los editores de documentos sincronizados en línea, pero otras esperarán que escriba código en papel y se lo lea por teléfono. Algunos entrevistadores pueden incluso darte "trabajo para casa" para que lo resuelvas después de colgar el teléfono o simplemente pedirte que les envíes por correo electrónico el código que has escrito.
+      Lo primero que piensa la mayoría de la gente es en el correo electrónico, el FTP o cualquier otro medio de transferencia electrónica. Es una idea razonable, pero correcta a medias.
     </p>
     <p>
-      Lo normal es hacer una o dos entrevistas de preselección antes de que te lleven al lugar de trabajo.
+      Si se trata de un archivo pequeño, sin duda tiene razón. Tardarías entre 5 y 10 horas en llegar a un aeropuerto, coger un vuelo y entregárselo a tu amigo.
+    </p>
+    <p>
+      Pero, ¿y si el archivo fuera muy, muy grande? ¿Es posible que sea más rápido enviarlo físicamente en avión?
+    </p>
+    <p>
+      Pues sí. Un archivo de un terabyte (1 TB) podría tardar más de un día en transferirse electrónicamente. Sería mucho más rápido cruzar el país en avión. Si su archivo es tan urgente (y el coste no es un problema), tal vez le convenga hacerlo así.
+    </p>
+    <p>
+      ¿Y si no hubiera vuelos y tuvieras que atravesar el país en coche? Incluso en ese caso, para un archivo realmente enorme, sería más rápido conducir.
+    </p>
+  </article>
+  <article>
+    <h3>► Complejidad temporal</h3>
+    <p>
+      Esto es lo que significa el concepto de tiempo de ejecución asintótico, o tiempo big O. Podríamos describir el tiempo de ejecución del «algoritmo» de transferencia de datos como:
+    </p>
+    <ul>
+      <li>Transferencia electrónica: <code>O(s)</code> , donde s es el tamaño del fichero. Esto significa que el tiempo para transferir el archivo aumenta linealmente con el tamaño del archivo. (Sí, esto es una simplificación, pero está bien para estos fines).</li>
+      <li>Transferencia por avión: <code>O(1)</code>con respecto al tamaño del archivo. A medida que aumente el tamaño del archivo, no tardará más en llegarle a tu amigo. El tiempo es constante.</li>
+    </ul>
+    <div class="relative w-52 h-44 border-l-2 border-b-2 border-black">
+      <div class="h-20 w-full absolute flex justify-center items-end top-0 border-black border-b-2 border-dashed">
+        <p class="">O(1)</p>
+
+      </div>
+      <div class="h-20 w-60 -rotate-[30deg] absolute flex justify-center items-start bottom-0 border-black border-t-2 border-dotted">
+        <p class="">O(s)</p>
+
+      </div>
+    </div>
+    <p>
+      No importa lo grande que sea la constante y lo lento que sea el incremento lineal, en algún momento lo lineal superará a lo constante.
+    </p>
+    <p>
+      Hay muchos más tiempos de ejecución que éste. Algunos de los más comunes son <code>O(log N)</code>, <code>O(N)</code>, <code>O(N<sup>2</sup>)</code> y <code>0(2<sup>N</sup>)</code>. Sin embargo, no hay una lista fija de posibles tiempos de ejecución.
+    </p>
+    <p>
+      También puedes tener múltiples variables en tu tiempo de ejecución. Por ejemplo, el tiempo para pintar una valla de w metros de ancho y h metros de alto podría describirse como <code>O(wh)</code>. Si necesitas p capas de pintura, entonces podrías decir que el tiempo es <code>O(whp)</code>.
+    </p>
+  </article>
+  <article>
+    <p><strong>Big O, Big Theta y Big Omega</strong></p>
+    <p>
+      Si nunca has trabajado con la gran O en un entorno académico, probablemente puedas saltarte esta subsección. Puede confundirte más de lo que te ayuda. Este «FYI» es sobre todo aquí para aclarar la ambigüedad en la redacción para las personas que han aprendido gran O antes, para que no digan: "Pero pensé que gran O significaba ...:"
+    </p>
+    <p>
+      Los académicos utilizan big 0, big &theta; (theta) y big Ω (omega) para describir los tiempos de ejecución.
+    </p>
+    <ul>
+      <li><strong>O (big 0):</strong>
+        En el mundo académico, big O describe un límite superior en el tiempo. Un algoritmo que imprime todos los valores de una matriz podría describirse como <code>O(N)</code>, pero también podría describirse como <code>O(N<sup>2</sup>)</code>, <code>O(N<sup>3</sup>)</code> o <code>0(2<sup>N</sup>)</code> (o muchos otros tiempos big O). El algoritmo es al menos tan rápido como cada uno de ellos, por lo que son límites superiores del tiempo de ejecución. Esto es similar a una relación menor-que-o-igual-a. Si Bob tiene X años (voy a suponer que nadie vive más de 130 años), entonces se podría decir <code class="language-js">X <= 130</code>. También sería correcto decir que <code class="language-js">X <= 1000</code> o <code class="language-js">X <= 1'000.000</code>. Es técnicamente cierto (aunque no terriblemente útil). Del mismo modo, un algoritmo sencillo para imprimir los valores de una matriz es <code>O(N)</code>, así como <code class="laguage-js">O(N<sup>3</sup>)</code> o cualquier tiempo de ejecución mayor que <code>O(N)</code>.
+      </li>
+      <li><strong>Ω (big omega):</strong>
+        En el mundo académico, Ω es el concepto equivalente pero para el límite inferior. Imprimir los valores de una matriz es <code>Ω(N)</code>, así como <code>Ω(log N)</code> y <code>Ω(1)</code>. Después de todo, sabes que no será más rápido que esos tiempos de ejecución.
+      </li>
+      <li><strong>&theta; (big theta):</strong>
+        En el mundo académico, &theta; significa tanto O como Ω. Es decir, un algoritmo es <code>&theta;(N)</code> si es tanto <code>O(N)</code> como <code>Ω(N)</code>. &theta; ofrece un límite estricto del tiempo de ejecución.
+      </li>
+    </ul>
+    <p>
+      En la industria (y, por tanto, en las entrevistas), la gente parece haber fusionado &theta; y O. El significado industrial de O grande se acerca más a lo que los académicos entienden por &theta;, en el sentido de que sería incorrecto describir la impresión de una matriz como <code>O(N<sup>2</sup>)</code>. La industria diría simplemente que es <code>O(N)</code>.
+    </p>
+    <p>
+      Para este libro, utilizaremos big O de la forma en que la industria tiende a utilizarlo: Intentando siempre ofrecer la descripción más ajustada del tiempo de ejecución.
+    </p>
+  </article>
+  <article>
+    <p><strong>Mejor caso, peor caso y caso esperado</strong>
+    </p>
+    <p>
+      En realidad, podemos describir el tiempo de ejecución de un algoritmo de tres formas distintas.
+    </p>
+    <p>
+      Veámoslo desde la perspectiva de la ordenación rápida. La ordenación rápida elige un elemento aleatorio como «pivote» y luego intercambia valores en la matriz de forma que los elementos menores que el pivote aparecen antes que los elementos mayores que el pivote. Así se obtiene una «ordenación parcial». A continuación, ordena recursivamente los lados izquierdo y derecho mediante un proceso similar.
+    </p>
+    <ul>
+      <li><strong>Mejor caso:</strong>
+        Si todos los elementos son iguales, entonces la ordenación rápida, de media, sólo recorrerá el array una vez. Esto es <code>O(N)</code>. (En realidad, esto depende ligeramente de la implementación de la ordenación rápida. Hay implementaciones, sin embargo, que se ejecutarán muy rápidamente en un array ordenado).
+      </li>
+      <li><strong>El peor de los casos:</strong>
+        ¿Qué pasa si tenemos muy mala suerte y el pivote es repetidamente el elemento más grande de la matriz? (En realidad, esto puede ocurrir fácilmente. Si el pivote se elige para que sea el primer elemento de la submatriz y la matriz se ordena en orden inverso, tendremos esta situación). En este caso, nuestra recursión no divide el array por la mitad y recursa en cada mitad. Sólo reduce la submatriz en un elemento. Esto degenerará en un tiempo de ejecución de <code>O(N<sup>2</sup>)</code>.
+      </li>
+      <li><strong>Caso esperado:</strong>
+        Normalmente, sin embargo, estas situaciones maravillosas o terribles no ocurrirán. Claro, a veces el pivote será muy bajo o muy alto, pero no sucederá una y otra vez. Podemos esperar un tiempo de ejecución de <code>O(N log N)</code>.
+      </li>
+    </ul>
+    <p>
+      Rara vez hablamos de la complejidad temporal en el mejor de los casos, porque no es un concepto muy útil. Después de todo, podríamos tomar esencialmente cualquier algoritmo, caso especial de alguna entrada, y luego obtener un tiempo <code>O(1)</code> en el mejor de los casos.
+    </p>
+    <p>
+      Para muchos -probablemente la mayoría- de los algoritmos, el peor caso y el caso esperado son el mismo. Sin embargo, a veces son diferentes y necesitamos describir ambos tiempos de ejecución.
+    </p>
+    <p><em>
+      ¿Cuál es la relación entre el mejor/peor/caso esperado y el big O/theta/omega?</em>
+    </p>
+    <p>
+      Es fácil que los candidatos confundan estos conceptos (probablemente porque ambos tienen algunos conceptos de «superior»: «inferior» y “exactamente correcto”), pero no hay ninguna relación particular entre los conceptos.
+    </p>
+    <p>
+      Los casos mejor, peor y esperado describen el tiempo big O (o big theta) para entradas o escenarios particulares. 
+    </p>
+    <p>
+      Big 0, big omega y big theta describen los límites superior, inferior y estrecho del tiempo de ejecución.
+    </p>
+  </article>
+  <article>
+    <h3>► Complejidad espacial</h3>
+    <p>
+      El tiempo no es lo único que importa en un algoritmo. También nos puede importar la cantidad de memoria o espacio que requiere un algoritmo.
+    </p>
+    <p>
+      La complejidad espacial es un concepto paralelo a la complejidad temporal. Si necesitamos crear una matriz de tamaño n, necesitaremos <code>O(n)</code> de espacio. Si necesitamos una matriz bidimensional de tamaño nxn, necesitaremos <code>O(n<sup>2</sup>)</code> de espacio.
+    </p>
+    <p>
+      El espacio de pila en las llamadas recursivas también cuenta. Por ejemplo, un código como éste requeriría <code>O(n)</code> de tiempo y <code>O(n)</code> de espacio.
+    </p>
+    <pre>
+      <code class="language-js">
+        int sum(int n) &#123/*Ex 1.*/
+          if (n &#60= 0) &#123
+            return 0;
+          }
+          return n + sum(n-1);
+        }
+      </code>
+    </pre>
+    <p>
+      Cada llamada añade un nivel a la pila.
+    </p>
+    <pre>
+      <code class="language-js">
+        sum(4)
+        -> sum(3)
+          -> sum(2)
+            -> sum(l)
+              -> sum(0)
+      </code>
+    </pre>
+    <p>
+      Cada una de estas llamadas se añade a la pila de llamadas y ocupa memoria real.
+    </p>
+    <p>
+      Sin embargo, que haya un total de n llamadas no significa que se necesite <code>O(n)</code> espacio. Considere la siguiente función, que añade elementos adyacentes entre O y n:
+    </p>
+    <pre>
+      <code class="language-js">
+        int pairSumSequence(int n) &#123/* Ex 2.*/
+          int sum = 0;
+          for (int i= 0; i &#60 n; i++) &#123
+            sum += pairSum(i, i + 1);
+          }
+          return sum;
+        }
+        int pairSum(int a, int b) &#123
+          return a + b;
+        }
+      </code>
+    </pre>
+    <p>
+      Habrá aproximadamente <code>O(n)</code> llamadas a pairSum. Sin embargo, esas llamadas no existen simultáneamente en la pila de llamadas, por lo que sólo necesita <code>O(1)</code> espacio.
+    </p>
+  </article>
+  <article>
+    <h3>► Eliminar las constantes
+    </h3>
+    <p>
+      Es muy posible que el código <code>O(N)</code> se ejecute más rápido que el código <code>0(1)</code> para entradas específicas. La O grande sólo describe la tasa de incremento.
+    </p>
+    <p>
+      Por esta razón, eliminamos las constantes en tiempo de ejecución. Un algoritmo que uno podría haber descrito como <code>0(2N)</code> es en realidad <code>O(N)</code>.
+    </p>
+    <p>
+      Mucha gente se resiste a hacer esto. Verán código que tiene dos bucles for (no anidados) y continuarán este <code>0(2N)</code>. Piensan que están siendo más «precisos:'No lo son.
+    </p>
+    <p>
+      Considere el siguiente código:
+    </p>
+    <div class="flex gap-12">
+      <div class="flex-grow">
+        <p class="font-bold">Minimo y Maximo 1</p>
+        <pre class="pb-12">
+          <code class="language-js">
+            int min = Integer.MAX_VALUE;
+            int max = Integer.MIN_VALUE; 
+            for (int x : array) &#123
+            if (x &#60 min) min x; 
+            if (x > max) max = x;
+          }
+          </code>
+        </pre>
+      </div>
+      <div class="flex-grow">
+        <p class="font-bold">Minimo y Maximo 2</p>
+        <pre>
+          <code class="language-js">
+            int min = Integer.MAX_VALUE;
+            int max = Integer.MIN_VALUE;
+            for (int x : array) &#123
+              if (x &#60 min) min = x;
+            }
+            for (int x : array) &#123
+              if (x > max) max = x;
+            }
+          </code>
+        </pre>
+      </div>
+    </div>
+    <p>
+      ¿Cuál es más rápido? El primero hace un bucle for y el otro hace dos bucles for. Pero entonces, la primera solución tiene dos líneas de código por bucle for en lugar de una.
+    </p>
+    <p>
+      Si vas a contar el número de instrucciones, tendrías que ir al nivel de ensamblador y tener en cuenta que la multiplicación requiere más instrucciones que la suma, cómo optimizaría algo el compilador y todo tipo de detalles.
+    </p>
+    <p>
+      Esto sería terriblemente complicado, así que ni se te ocurra empezar por ahí. Big O nos permite expresar cómo se escala el tiempo de ejecución. Sólo tenemos que aceptar que no significa que <code>O(N)</code> sea siempre mejor que <code>O(N<sup>2</sup>)</code>.
     </p>
   </article>
   <footer class="flex justify-end">
