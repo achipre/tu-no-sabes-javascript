@@ -6,19 +6,718 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
   <h2>Preguntas técnicas</h2>
   <article>
     <p>
-      La mayoría de las empresas realizan sus entrevistas de forma muy similar. Le ofreceremos una visión general de cómo entrevistan las empresas y qué es lo que buscan. Esta información debería orientar su preparación para la entrevista y sus reacciones durante y después de la misma.
+      Las preguntas técnicas son la base de las entrevistas de muchas de las principales empresas tecnológicas. Muchos candidatos se sienten intimidados por la dificultad de estas preguntas, pero hay formas lógicas de abordarlas.
+    </p>
+  </article>
+  <article>
+    <h3>►
+      Cómo prepararse
+    </h3>
+    <p>
+      Muchos candidatos se limitan a leer los problemas y las soluciones. Eso es como intentar aprender cálculo leyendo un problema y su respuesta. Hay que practicar la resolución de problemas. Memorizar las soluciones no te ayudará mucho.
     </p>
     <p>
-      Cuando le seleccionan para una entrevista, suele pasar por una entrevista de preselección. Suele realizarse por teléfono. Los candidatos universitarios que asisten a las mejores escuelas pueden tener estas entrevistas en persona.
+      Haga lo siguiente con cada problema de este libro (y con cualquier otro problema que se le plantee):
+    </p>
+    <ol>
+      <li><em>Intente resolver el problema por su cuenta.</em>
+        Al final de este libro encontrará algunas pistas, pero esfuércese por desarrollar una solución con la menor ayuda posible. Muchas preguntas están diseñadas para ser difíciles, ¡no pasa nada! Cuando estés resolviendo un problema, asegúrate de pensar en la eficiencia de espacio y tiempo.
+      </li>
+      <li><em>Escribe el código en papel.</em>
+        Codificar en un ordenador ofrece lujos como el resaltado de sintaxis, la compleción del código y la depuración rápida. Codificar en papel no. Acostúmbrate a esto -y a lo lento que es escribir y editar código- codificando en papel.
+      </li>
+      <li><em>Prueba tu código en papel.</em>
+        Esto significa probar los casos generales, los casos base, los casos de error, etcétera. Tendrás que hacerlo durante la entrevista, así que es mejor que lo practiques con antelación.
+      </li>
+      <li><em>Escribe tu código en papel tal cual en un ordenador.</em>
+        Probablemente cometerás un montón de errores. Haz una lista de todos los errores que cometas para tenerlos en cuenta durante la entrevista.
+      </li>
+    </ol>
+    <p>Además, intenta hacer tantos simulacros de entrevista como puedas. Tú y un amigo podéis turnaros para haceros entrevistas de prueba. Aunque tu amigo no sea un entrevistador experto, puede guiarte a través de un problema de codificación o algoritmo. También aprenderás mucho experimentando lo que es ser entrevistador.</p>
+  </article>
+  <article>
+    <h3>► Lo que necesitas saber</h3>
+    <p>
+      Los tipos de preguntas sobre estructuras de datos y algoritmos en los que se centran muchas empresas no son pruebas de conocimientos. Sin embargo, presuponen unos conocimientos básicos.
+    </p>
+  </article>
+  <article>
+    <p><strong>Estructuras de datos, algoritmos y conceptos básicos</strong></p>
+    <p>
+      La mayoría de los entrevistadores no preguntarán sobre algoritmos específicos para equilibrar árboles binarios u otros algoritmos complejos. Francamente, al llevar varios años fuera de la escuela, probablemente tampoco recuerden estos algoritmos.
     </p>
     <p>
-      No se deje engañar por el nombre: la entrevista de "preselección" suele incluir preguntas sobre codificación y algoritmos, y el listón puede estar tan alto como en las entrevistas en persona. Si no está seguro de si la entrevista será técnica o no, pregunte a su coordinador de contratación qué puesto ocupa su entrevistador (o qué podría cubrir la entrevista). Por lo general, un ingeniero realizará una entrevista técnica.
+      Por lo general, sólo se espera que conozcas lo básico. Aquí tienes una lista de conocimientos imprescindibles:
     </p>
     <p>
-      Muchas empresas han aprovechado los editores de documentos sincronizados en línea, pero otras esperarán que escriba código en papel y se lo lea por teléfono. Algunos entrevistadores pueden incluso darte "trabajo para casa" para que lo resuelvas después de colgar el teléfono o simplemente pedirte que les envíes por correo electrónico el código que has escrito.
+      Para cada uno de estos temas, asegúrate de que entiendes cómo utilizarlos e implementarlos y, en su caso, la complejidad espacial y temporal.
     </p>
     <p>
-      Lo normal es hacer una o dos entrevistas de preselección antes de que te lleven al lugar de trabajo.
+      Practicar la implementación de las estructuras de datos y el algoritmo (en papel, y luego en un ordenador) también es un gran ejercicio. Te ayudará a aprender cómo funciona el interior de las estructuras de datos, lo que es importante para muchas entrevistas.
+    </p>
+    <p>
+      ¿Te has perdido este párrafo? Es muy importante. Si no te sientes muy, muy cómodo con cada una de las estructuras de datos y algoritmos listados, practica implementándolos desde cero
+    </p>
+    <p>
+      En particular, las tablas hash son un tema extremadamente importante. Asegúrate de que te sientes muy cómodo con esta estructura de datos.
+    </p>
+  </article>
+  <article>
+    <p><strong>Tabla de Potencias de 2</strong></p>
+    <p>
+      La tabla de abajo es útil para muchas preguntas que involucran escalabilidad o cualquier tipo de limitación de memoria. Memo rizar esta tabla no es estrictamente necesario, pero puede ser útil. Al menos debería sentirse cómodo derivándola.
+    </p>
+    <p>
+      Por ejemplo, puedes usar esta tabla para calcular rápidamente que un vector de bits que asigna cada entero de 32 bits a un valor booleano puede caber en la memoria de una máquina típica. Dado que cada entero ocupa un bit en este vector de bits, necesitamos 232 bits (o 229 bytes) para almacenar esta asignación, lo que equivale aproximadamente a medio giga byte de memoria, que puede almacenarse fácilmente en una máquina normal.
+    </p>
+    <p>
+      Si va a realizar una entrevista telefónica con una empresa que opera a través de Internet, puede resultarle útil tener esta tabla a mano.
+    </p>
+  </article>
+  <article>
+    <h3>► Recorrido del problema</h3>
+    <p>
+      El siguiente mapa/diagrama de flujo te guía a través de la resolución de un problema. Utilícelo en sus prácticas. Puedes descargar este manual y otros más en CrackingTheCodinglnterview.com.
+    </p>
+    Un diagrama de flujo de resolución de problemas
+
+    Si va a realizar una entrevista telefónica con una empresa que opera a través de Internet, puede resultarle útil tener este cuadro delante.
+
+    Escuche
+
+    Presta mucha dosis de atención a toda la información de la descripción del problema. Probablemente la necesites toda para un algoritmo óptimo.
+
+    Ejemplo
+
+    La mayoría de los ejemplos son demasiado pequeños o son casos especiales. Depura tu ejemplo. ¿Es un caso especial? ¿Es lo suficientemente grande?
+
+    Fuerza bruta
+
+    Consigue una solución de fuerza bruta lo antes posible. No te preocupes por desarrollar un algoritmo eficiente todavía. Establece un algoritmo ingenuo y su tiempo de ejecución, luego optimiza a partir de ahí. Pero no codifique todavía'.
+
+    Optimiza
+
+    Repasa tu fuerza bruta con la optimización BUD o prueba algunas de estas ideas:
+
+    Busca cualquier información no utilizada. Normalmente necesitas toda la información de un problema.
+
+    Resuélvelo manualmente en un ejemplo, luego haz ingeniería inversa de tu proceso de pensamiento. ¿Cómo lo resolviste?
+
+    Resuélvelo «incorrectamente» y piensa por qué falla el algoritmo. ¿Puedes solucionar esos problemas?
+
+    Haz una tabla de tiempos y espacios. ¡Las tablas hash son especialmente útiles!
+
+    Recorrido
+
+    Ahora que tiene una solución óptima, repase su planteamiento en detalle. Asegúrate de que entiendes todos los detalles antes de empezar a programar.
+
+    Implementar
+
+    Tu objetivo es escribir un código atractivo. Modulariza tu código desde el principio y refactoriza para limpiar todo lo que no sea bonito.
+
+    Sigue hablando Tu entrevistador quiere saber cómo enfocas el problema.
+
+    Prueba
+
+    Haz las pruebas en este orden:
+
+    Prueba conceptual. Recorre el código como lo harías en una revisión detallada.
+
+    Código inusual o no estándar.
+
+    Puntos calientes, como nodos aritméticos y nulos.
+
+    Pequeños casos de prueba. Es mucho más rápido que un caso de prueba grande e igual de eficaz.
+
+    Casos especiales y casos extremos.
+
+    Y cuando encuentres errores, ¡arréglalos con cuidado!
+
+    BUD Optimización Cuellos de botella Trabajo innecesario Trabajo duplicado
+    <p>
+      Repasaremos este organigrama con más detalle.
+    </p>
+  </article>
+  <article>
+    <p><strong>Qué esperar</strong>
+    </p>
+    <p>
+      Se supone que las entrevistas son difíciles. Si no obtienes todas -o ninguna- respuesta inmediatamente, ¡no pasa nada! Es lo normal y no está mal.
+    </p>
+    <p>
+      Escucha las indicaciones del entrevistador. El entrevistador puede desempeñar un papel más o menos activo en la resolución del problema. El nivel de participación del entrevistador dependerá de tu rendimiento, de la dificultad de la pregunta, de lo que el entrevistador esté buscando y de la propia personalidad del entrevistador.
+    </p>
+    <p>
+      Cuando le planteen un problema (o cuando esté practicando), resuelva el problema siguiendo el planteamiento que se expone a continuación.
+    </p>
+  </article>
+  <article>
+    <p><strong>1. Escuche con atención</strong>
+    </p>
+    <p>
+      Es probable que hayas oído este consejo antes, pero te digo algo más que el consejo estándar de «asegúrate de que oyes el problema correctamente».
+    </p>
+    <p>
+      Sí, tienes que escuchar el problema y asegurarte de que lo has oído bien. También debes preguntar todo aquello sobre lo que no estés seguro.
+    </p>
+    <p>
+      Pero digo algo más que eso.
+    </p>
+    <p>
+      Escucha atentamente el problema y asegúrate de haber registrado mentalmente cualquier información exclusiva que contenga.
+    </p>
+    <p>
+      Por ejemplo, supongamos que una pregunta empieza con una de las siguientes líneas. Es razonable suponer que la información está ahí por alguna razón.
+    </p>
+    <ul>
+      <li>
+        «Dados dos arrays que están ordenados, hallar ..:
+        <p>
+          Probablemente necesites saber que los datos están ordenados. El algoritmo óptimo para la situación ordenada es probablemente diferente del algoritmo óptimo para la situación sin ordenar.
+        </p>
+      </li>
+      <li>
+        «Diseñar un algoritmo para ser ejecutado repetidamente en un servidor que ...»
+        <p>
+          La situación del servidor que se ejecuta repetidamente es diferente de la situación en la que se ejecuta una sola vez. ¿Quizás esto signifique que se almacenan datos en caché? ¿O quizás justifique algún cálculo previo razonable sobre el conjunto de datos inicial?
+        </p>
+      </li>
+    </ul>
+    <p>
+      Es poco probable (aunque no imposible) que tu entrevistador te dé esta información si no afecta al algoritmo.
+    </p>
+    <p>
+      Muchos candidatos escucharán el problema correctamente. Pero a los diez minutos de desarrollar un algoritmo, se han olvidado de algunos de los detalles clave del problema. Ahora se encuentran en una situación en la que realmente no pueden resolver el problema de forma óptima.
+    </p>
+    <p>
+      Su primer algoritmo no necesita utilizar esa información. Pero si te encuentras atascado, o sigues trabajando para desarrollar algo más óptimo, pregúntate si has utilizado toda la información del problema.
+    </p>
+    <p>
+      Puede que incluso te resulte útil escribir la información pertinente en la pizarra.
+    </p>
+  </article>
+  <article>
+    <p><strong>
+      2. Dibuje un ejemplo
+      </strong></p>
+    <p>
+      Un ejemplo puede mejorar drásticamente tu capacidad para resolver una pregunta de una entrevista y, sin embargo, muchos candidatos se limitan a intentar resolver la pregunta mentalmente.
+    </p>
+    <p>
+      Cuando oigas una pregunta, levántate de la silla, ve a la pizarra y dibuja un ejemplo. 
+    </p>
+    <p>
+      Pero dibujar un ejemplo es todo un arte. Quieres un buen ejemplo.
+    </p>
+    <p>
+      Normalmente, un candidato puede dibujar algo como esto para un ejemplo de un árbol de búsqueda binario:
+    </p>
+    <p>
+      Este es un mal ejemplo por varias razones. Primero, es demasiado pequeño. Tendrás problemas para encontrar un patrón en un ejemplo tan pequeño. Segundo, no es específico. Un árbol de búsqueda binario tiene valores. ¿Y si los números te dicen algo sobre cómo enfocar el problema? Tercero, en realidad es un caso especial. No es sólo un árbol equilibrado, sino también un hermoso y perfecto árbol en el que cada nodo que no sea la hoja tiene dos hijos. Los casos especiales pueden ser muy engañosos.
+    </p>
+    <p>
+      En su lugar, desea crear un ejemplo que es:
+    </p>
+    <ul>
+      <li>
+        Específico. Debe utilizar números reales o cadenas (si es aplicable al problema).
+      </li>
+      <li>
+        Suficientemente grande. La mayoría de los ejemplos son demasiado pequeños, aproximadamente un 50%.
+      </li>
+      <li>
+        No sea un caso especial. Tenga cuidado. Es muy fácil dibujar inadvertidamente un caso especial. Si hay alguna forma de que tu ejemplo sea un caso especial (incluso si crees que probablemente no será un gran problema), deberías arreglarlo.
+      </li>
+    </ul>
+    <p>
+      Intenta hacer el mejor ejemplo que puedas. Si más tarde resulta que tu ejemplo no es del todo correcto, puedes y debes arreglarlo.
+    </p>
+  </article>
+  <article>
+    <p><strong>Enunciar una fuerza bruta</strong>
+    </p>
+    <p>
+      Una vez que tengas un ejemplo hecho (en realidad, puedes cambiar el orden de los pasos 2 y 3 en algunos problemas), plantea una fuerza bruta. Está bien y es de esperar que tu algoritmo inicial no sea muy óptimo.
+    </p>
+    <p>
+      Algunos candidatos no indican la fuerza bruta porque piensan que es obvio y terrible. Pero aquí está la cosa: Incluso si es obvio para ti, no es necesariamente obvio para todos los candidatos. No querrás que tu inter-espectador piense que te cuesta ver incluso la solución fácil.
+    </p>
+    <p>
+      No pasa nada porque esta solución inicial sea terrible. Explica cuál es la complejidad espacial y temporal, y luego sumérgete en las mejoras.
+    </p>
+    <p>
+      A pesar de ser posiblemente lento, un algoritmo de fuerza bruta es valioso para discutir. Es un punto de partida para las optimizaciones y te ayuda a entender el problema.
+    </p>
+  </article>
+  <article>
+    <p><strong>Optimice</strong>
+    </p>
+    <p>
+      Una vez que tengas un algoritmo de fuerza bruta, deberías trabajar en su optimización. Algunas técnicas que funcionan bien son:
+    </p>
+    <ol>
+      <li>
+        Busca cualquier información que no utilices. ¿Te dijo tu entrevistador que la matriz estaba ordenada? ¿Cómo puedes aprovechar esa información?
+      </li>
+      <li>
+        Utiliza un ejemplo nuevo. A veces, el simple hecho de ver un ejemplo diferente te despejará la mente o te ayudará a ver un patrón en el problema.
+      </li>
+      <li>
+        Resuélvelo «incorrectamente»: al igual que tener una solución ineficiente puede ayudarte a encontrar una solución eficiente, tener una solución incorrecta puede ayudarte a encontrar una solución correcta. Por ejemplo, si te piden que generes un valor aleatorio a partir de un conjunto en el que todos los valores tengan la misma probabilidad, una solución incorrecta podría ser la que devuelve un valor semialeatorio: Se puede obtener cualquier valor, pero algunos son más probables que otros. Entonces puedes pensar por qué esa solución no es perfectamente aleatoria. ¿Puedes reequilibrar las probabilidades?
+      </li>
+      <li>
+        Compensa tiempo y espacio. A veces, almacenar información adicional sobre el problema puede ayudar a optimizar el tiempo de ejecución.
+      </li>
+      <li>
+        Precalcular la información. ¿Hay alguna forma de reorganizar los datos (ordenación, etc.) o de calcular algunos valores por adelantado que ayude a ahorrar tiempo a largo plazo?
+      </li>
+      <li>
+        Utiliza una tabla hash. Las tablas hash se utilizan mucho en las preguntas de las entrevistas y deberían estar en tu mente.
+      </li>
+      <li>
+        Piensa en el mejor tiempo de ejecución concebible (discutido en la pagina 72).
+      </li>
+    </ol>
+    <p>
+      Recorre la fuerza bruta con estas ideas en mente y busca BUD (página 67).
+    </p>
+    <p>
+
+    </p>
+  </article>
+  <article>
+    <p><strong>5. Recorrido</strong></p>
+    <p>
+      Una vez que hayas dado con un algoritmo óptimo, no te lances a codificarlo. Tómate un momento para consolidar tu comprensión del algoritmo.
+    </p>
+    <p>
+      La codificación en pizarra es lenta, muy lenta. También lo es probar el código y corregirlo. Como resultado, necesitas asegurarte de que lo tienes lo más cerca posible de «perfecto» al principio.
+    </p>
+    <p>
+      Recorre tu algoritmo y hazte una idea de la estructura del código. Sepa cuáles son las variables y cuándo cambian.
+    </p>
+    <p>
+      ¿Y el pseudocódigo? Puedes escribir pseudocódigo si quieres. Ten cuidado con lo que escribes. Pasos básicos ("(1) Buscar matriz. (2) Buscar el mayor. (3) Insertar en el montón:«) o una lógica breve (»si p &#60 q, mueve p. si no, mueve q") pueden ser valiosos. Pero cuando tu pseudocódigo empieza a tener bucles for que están escritos en inglés sencillo, entonces estás esencialmente escribiendo código descuidado. Probablemente sería más rápido simplemente escribir el código
+    </p>
+    <p>
+      Si no entiendes exactamente lo que vas a escribir, te costará codificarlo. Te llevará más tiempo terminar el código y es más probable que cometas errores importantes.
+    </p>
+  </article>
+  <article>
+    <p><strong>6. Implementa</strong>
+    </p>
+    <p>
+      Ahora que tienes un algoritmo óptimo y sabes exactamente lo que vas a escribir, sigue adelante e impleméntalo.
+    </p>
+    <p>
+      Empieza a codificar en la esquina superior izquierda de la pizarra (necesitarás espacio). Evita el «salto de línea» (cada línea de código se escribe con una inclinación extraña). Esto hace que tu código parezca desordenado y puede ser muy confuso cuando se trabaja en un lenguaje sensible al espacio en blanco, como Python.
+    </p>
+    <p>
+      Recuerda que sólo tienes una pequeña cantidad de código para demostrar que eres un gran desarrollador. Cada cosa cuenta. Escribe código bonito.
+    </p>
+    <p>
+      Código bonito significa
+    </p>
+    <ul>
+      <li>
+        Código modularizado. Esto demuestra un buen estilo de codificación. También hace las cosas más fáciles para usted. Si su algoritmo utiliza una matriz inicializada a &#123&#1231, 2, 3}, &#1234, 5, 6}, ...}, no pierda su tiempo escribiendo este código de inicialización. Simplemente imagine que tiene una función initlncrementalMatrix(int size). Rellena los detalles más tarde si lo necesitas.
+      </li>
+      <li>
+        Comprobación de errores. Algunos entrevistadores se preocupan mucho por esto, mientras que otros no. Un buen compromiso aquí es añadir un todo y luego simplemente explicar en voz alta lo que le gustaría probar.
+      </li>
+      <li>
+        Utiliza otras clases/estructuras cuando sea apropiado. Si necesita devolver una lista de puntos iniciales y finales de una función, puede hacerlo como una matriz bidimensional. Sin embargo, es mejor hacerlo como una lista de objetos StartEndPair (o posiblemente Range). No es necesario rellenar los detalles de la clase. Haz como si existiera y ocúpate de los detalles más adelante si tienes tiempo.
+      </li>
+      <li>
+        Buenos nombres de variables. El código que utiliza variables de una sola letra en todas partes es difícil de leer. Eso no quiere decir que haya nada malo en usar i y j, cuando sea apropiado (como en un bucle for básico que recorre un array). Sin embargo, tenga cuidado con dónde lo hace. Si escribes algo como int i = startOfChild ( array), puede que haya un nombre mejor para esta variable, como startChild.
+        <p>
+          Los nombres de variables largos también pueden ser lentos de escribir. Un buen compromiso con el que la mayoría de los entrevistadores estarán de acuerdo es abreviarlo después del primer uso. Puedes usar startChild la primera vez, y luego explicar a tu entrevistador que lo abreviarás como sc después de esto.
+        </p>
+      </li>
+    </ul>
+    <p>
+      Los detalles de lo que constituye un buen código varían según los entrevistadores y los candidatos, y según el problema en sí. Céntrate en escribir código bonito, sea lo que sea lo que eso signifique para ti.
+    </p>
+    <p>
+      Si ves algo que puedes refactorizar más adelante, explícaselo a tu entrevistador y decide si merece la pena dedicarle tiempo. Normalmente sí, pero no siempre.
+    </p>
+    <p>
+      Si te confundes (algo habitual), vuelve al ejemplo y repásalo.
+    </p>
+  </article>
+  <article>
+    <p><strong>Prueba</strong>
+    </p>
+    <p>
+      En el mundo real no registrarías código sin probarlo, y tampoco deberías «enviar» código en una vista interna sin probarlo.
+    </p>
+    <p>
+      Hay formas inteligentes y no tan inteligentes de probar el código.
+    </p>
+    <p>
+      Lo que hacen muchos candidatos es tomar su ejemplo anterior y probarlo con su código. Eso puede descubrir errores, pero llevará mucho tiempo hacerlo. Las pruebas manuales son muy lentas. Si realmente usaste un ejemplo grande y bonito para desarrollar tu algoritmo, entonces te llevará mucho tiempo encontrar ese pequeño error al final de tu código.
+    </p>
+    <p>
+      En su lugar, prueba este enfoque:
+    </p>
+    <ul>
+      <li>
+        Empieza con una prueba «conceptual». Una prueba conceptual significa simplemente leer y analizar lo que hace cada línea de código. Piénsalo como si estuvieras explicando las líneas de código a un revisor de código. ¿Hace el código lo que crees que debería hacer?
+      </li>
+      <li>
+        Código de aspecto extraño. Comprueba dos veces esa línea de código que dice x = longitud - 2. Investiga ese bucle for que empieza en i = Aunque sin duda lo hiciste por alguna razón, es muy fácil equivocarse ligeramente.
+      </li>
+      <li>
+        Puntos calientes. Has codificado lo suficiente como para saber qué cosas pueden causar problemas. Casos base en código recursivo. División entera. Nodos nulos en árboles binarios. El inicio y el final de la iteración a través de una lista enlazada. Comprueba dos veces esas cosas.
+      </li>
+      <li>
+        Pequeños casos de prueba. Esta es la primera vez que usamos un caso de prueba real y específico para probar el código. No utilices ese gran array de 8 elementos de la parte del algoritmo. En su lugar, utilice una matriz de 3 o 4 elementos. Es probable que descubra los mismos errores, pero será mucho más rápido hacerlo.
+      </li>
+      <li>
+        Casos especiales. Pruebe su código contra valores nulos o de un solo elemento, los casos extremos y otros casos especiales.
+      </li>
+    </ul>
+    <p>
+      Cuando encuentres errores (y probablemente los encuentres), por supuesto que debes corregirlos. Pero no te limites a hacer la primera corrección que se te ocurra. En lugar de eso, analiza detenidamente por qué se ha producido el fallo y asegúrate de que tu solución es la mejor.
+    </p>
+  </article>
+  <article>
+    <h3>► Optimizar y solucionar Técnica nº 1: Buscar BUD
+    </h3>
+    <p>
+      Este es quizás el enfoque más útil que he encontrado para optimizar problemas. «BUD» es un acrónimo tonto de
+    </p>
+    <ul>
+      <li>
+        Cuellos de botella
+      </li>
+      <li>
+        Trabajo innecesario
+      </li>
+      <li>
+        Trabajo duplicado
+      </li>
+    </ul>
+    <p>
+      Estas son tres de las cosas más comunes que un algoritmo puede «perder» el tiempo haciendo. Puedes recorrer tu fuerza bruta en busca de estas cosas. Cuando encuentres una de ellas, puedes centrarte en deshacerte de ella.
+    </p>
+    <p>
+      Si sigue sin ser óptimo, puedes repetir este enfoque en tu mejor algoritmo actual.
+    </p>
+  </article>
+  <article>
+    <p><strong>Cuellos de botella</strong></p>
+    <p>
+      Un cuello de botella es una parte del algoritmo que ralentiza el tiempo de ejecución global. Esto suele ocurrir de dos maneras:
+    </p>
+    <ul>
+      <li>
+        Tienes un trabajo de una sola vez que ralentiza tu algoritmo. Por ejemplo, supongamos que tienes un algoritmo de dos pasos en el que primero ordenas el array y luego encuentras los elementos con una propiedad concreta. El primer paso esO(N log N) y el segundo esO(N). Tal vez se podría reducir el segundo paso aO(log N) o 0(1), pero ¿importaría? No demasiado. Desde luego, no es una prioridad, ya queO(N log N) es el cuello de botella. Si no optimizas el primer paso, todo el algoritmo seráO(N log N).
+      </li>
+      <li>
+        Hay una parte del trabajo que se hace repetidamente, como la búsqueda. Quizá puedas reducirlo deO(N) aO(log N)oincluso0(1), lo que acelerará enormemente el tiempo de ejecución de todo el proceso.
+      </li>
+    </ul>
+    <p>
+      Optimizar un cuello de botella puede suponer una gran diferencia en el tiempo de ejecución total.
+    </p>
+    <p>
+      Ejemplo: Dada una matriz de valores enteros distintos, cuente el número de pares de enteros que tienen diferencia k. Por ejemplo, dada la matriz &#1231, 7, 5, 9, 2, 12, 3} y la diferencia k = 2, hay cuatro pares con diferencia2: (1, 3), (3, 5), (5, 7), (7, 9).
+    </p>
+    <p>
+      Un algoritmo de fuerza bruta consiste en recorrer la matriz, empezando por el primer elemento, y luego buscar entre los elementos restantes (que formarán el otro lado del par). Para cada par, calcule la diferencia. Si la diferencia es igual a k, incrementar un contador de la diferencia.
+    </p>
+    <p>
+      El cuello de botella aquí es la búsqueda repetida del «otro lado» del par. Por tanto, es lo principal que hay que optimizar.
+    </p>
+    <p>
+      ¿Cómo podemos encontrar más rápidamente el «otro lado» correcto? Bueno, en realidad conocemos el otro lado de (x, ? ). Es x + k o x - k. Si ordenamos la matriz, podríamos encontrar el otro lado para cada uno de los N elementos en tiempoO(log N) haciendo una búsqueda binaria.
+    </p>
+    <p>
+      Ahora tenemos un algoritmo de dos pasos, donde ambos pasos tomanO(N log N) tiempo. Ahora, la ordenación es el nuevo cuello de botella. Optimizar el segundo paso no ayudará porque el primer paso nos está ralentizando de todos modos.
+    </p>
+    <p>
+      Sólo tenemos que deshacernos por completo del primer paso y operar sobre una matriz sin ordenar. ¿Cómo podemos encontrar cosas rápidamente en un array sin ordenar? Con una tabla hash.
+    </p>
+    <p>
+      Tirar todo en la matriz en la tabla hash. Luego, para saber si x + k o x - k existen en la matriz, sólo tenemos que buscarlo en la tabla hash. Podemos hacer esto en tiempo O(N).
+    </p>
+  </article>
+  <article>
+    <p><strong>Trabajo innecesario</strong></p>
+    <p>
+      Ejemplo: Imprimir todas las soluciones enteras positivas de la ecuación a3 + b3 c3 + d3 donde a, b, c, y d son enteros entre 1 y 1000.
+    </p>
+    <p>
+      Una solución de fuerza bruta sólo tendrá cuatro bucles for anidados. Algo como:
+    </p>
+    <p>
+      Este algoritmo itera a través de todos los valores posibles de a, b, c, y d y comprueba si esa combinación resulta funcionar.
+    </p>
+    <p>
+      Es necesario seguir buscando otros posibles valores de d. Sólo uno podría funcionar. Al menos deberíamos hacer una pausa después de encontrar una solución válida.
+    </p>
+    <p>
+      Esto no supondrá un cambio significativo en el tiempo de ejecución -nuestro algoritmo sigue siendo O(N4)- pero es una buena solución rápida para hacer que
+    </p>
+    <p>
+      ¿Hay algo que no sea necesario? Sí. Si sólo hay un valor válido para cada (a, b, c), podemos calcularlo. Es simple matemática.
+    </p>
+    <p>
+      La sentencia if de la línea 6 es importante. La línea 5 siempre encontrará un valor para d, pero tenemos que comprobar que es el valor entero correcto.
+    </p>
+    <p>
+      Esto reducirá nuestro tiempo de ejecución de O(N4 ) a O(N3 ).
+    </p>
+  </article>
+  <article>
+    <p>
+      <strong>Trabajo duplicado</strong>
+    </p>
+    <p>
+      Utilizando el mismo problema y algoritmo de fuerza bruta que antes, busquemos esta vez el trabajo duplicado.
+    </p>
+    <p>
+      El algoritmo funciona esencialmente iterando a través de todos los pares (a, b) y luego buscando en todos los pares (c, d) para encontrar si hay alguna coincidencia con ese par (a, b).
+    </p>
+    <p>
+      ¿Por qué seguimos calculando todos los pares (c, d) para cada par (a, b)? Deberíamos crear la lista de pares ( c, d) una sola vez y, cuando tengamos un par (a, b), buscar las coincidencias en la lista ( c, d). Podemos localizar rápidamente las coincidencias insertando cada par ( c,d) en una tabla hash que mapee desde la suma hasta el par (o, mejor dicho, la lista de pares que tienen esa suma).
+    </p>
+    <p>
+      En realidad, una vez que tenemos el mapa de todos los pares ( c,d), podemos utilizarlo directamente. No necesitamos generar los pares (a, b). Cada (a, b) ya estará en el mapa.
+    </p>
+    <p>
+      Esto reducirá nuestro tiempo de ejecución a O(N2).
+    </p>
+  </article>
+  <article>
+    <h3>► Optimizar y resolver Técnica #2: DIY (Do It Yourself)</h3>
+    <p>
+      La primera vez que oíste hablar de cómo encontrar un elemento en una matriz ordenada (antes de que te enseñaran la búsqueda binaria), probablemente no dijiste: «Ah, ja, compararemos el elemento objetivo con el punto medio y luego recurriremos a la mitad apropiada».
+    </p>
+    <p>
+      Y, sin embargo, se puede dar a alguien que no tenga conocimientos de informática una pila ordenada alfabéticamente de trabajos de estudiantes y es probable que implemente algo como la búsqueda binaria para localizar el trabajo de un estudiante. Probablemente dirá, «Dios, ¿Peter Smith? Estará en algún lugar al final de la pila». Escogerán un trabajo al azar en el medio (más o menos), compararán el nombre con “Peter Smith” y luego continuarán este proceso con el resto de los trabajos. Aunque no tienen conocimientos de búsqueda binaria, lo entienden intuitivamente.
+    </p>
+    <p>
+      Nuestros cerebros son así de curiosos. Si decimos «Diseña un algoritmo», la gente se hace un lío. Pero si se les da un ejemplo real, ya sea de los datos (por ejemplo, una matriz) o de la vida real paralela (por ejemplo, una pila de papeles), su intuición les da un algoritmo muy bueno.
+    </p>
+    <p>
+      He visto esto ocurrir innumerables veces con candidatos.Su algoritmo informático es extraordinariamente lento, pero cuando se les pide que resuelvan el mismo problema manualmente, inmediatamente hacen algo bastante rápido. (Y no es demasiado sorprendente, en cierto sentido.Las cosas que son lentas para un ordenador suelen ser lentas a mano.¿Por qué ibas a someterte a un trabajo extra?).
+    </p>
+    <p>
+      Por eso, cuando tengas una duda, intenta resolverla intuitivamente con un ejemplo real. A menudo, un ejemplo más grande será más fácil.
+    </p>
+    <p>
+      Ejemplo: Dadas una cadena más pequeña y una cadena más grande b, diseña un algoritmo para encontrar todas las permutaciones de la cadena más corta dentro de la más larga.
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+  </article>
+  <article>
+    <h3></h3>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+  </article>
+  <article>
+    <h3></h3>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+  </article>
+  <article>
+    <h3></h3>
+    <p>
+    </p>
+    <p>
+    </p>
+    <ul>
+      <li>
+      </li>
+      <li>
+      </li>
+      <li>
+      </li>
+      <li>
+      </li>
+    </ul>
+    <p>
+    </p>
+  </article>
+  <article>
+    <h3></h3>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+  </article>
+  <article>
+    <p>
+      <strong></strong>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+  </article>
+  <article>
+    <h3></h3>
+    <p>
+    </p>
+    <p>
+    </p>
+  </article>
+  <article>
+    <h3></h3>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p><strong></strong>
+    </p>
+    <p>
+    </p>
+    <p><strong></strong>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p><strong></strong>
+    </p>
+    <p>
+    </p>
+    <p><strong></strong>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p><strong></strong>
+    </p>
+    <p>
+    </p>
+    <p>
     </p>
   </article>
   <footer class="flex justify-end">
@@ -29,4 +728,3 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       hover:after:content-['↦'] hover:after:transition-all hover:after:ease-linear hover:after:duration-500 hover:after:opacity-100 hover:after:left-3">Parte VIII</div>
     </a>
   </footer>
-</Layoutcracking>
