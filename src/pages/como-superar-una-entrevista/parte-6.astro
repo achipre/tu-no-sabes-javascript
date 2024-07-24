@@ -247,49 +247,99 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
   <article>
     <h3>► Eliminar los términos no dominantes</h3>
     <p>
-      ¿Qué hacer con un a expresión comoO(N2 + N)? La segunda N no es exactamente una constante. Pero no es especialmente importante.
+      ¿Qué hacer con un a expresión como <code>O(N<sup>2</sup> + N)</code>? La segunda N no es exactamente una constante. Pero no es especialmente importante.
     </p>
     <p>
-      Por lo tanto, 0(N2 + N2) sería O(N2 ). Si no nos importa ese último término N2, ¿por qué nos importaría N? No nos importa.
+      Ya dijimos que eliminamos constantes. Por lo tanto, <code>O(N<sup>2</sup> + N<sup>2</sup>)</code> sería <code>O(N<sup>2</sup>)</code>. Si no nos importa ese último término <code>N2</code>, ¿por qué nos importaría <code>N</code>? No nos importa.
     </p>
     <p>
       Deberías eliminar los términos no dominantes.
     </p>
     <ul>
-      <li>O(N2 + N) se convierte en O(N2).</li>
-      <li>O(N + log N) se convierte en O(N).</li>
-      <li>O(5*2N + 1000N100 ) se convierte en0(2N ).</li>
+      <li><code>O(N<sup>2</sup> + N)</code> se convierte en <code>O(N<sup>2</sup>)</code>.</li>
+      <li><code>O(N + log N)</code> se convierte en <code>O(N)</code>.</li>
+      <li><code>O(5*2<sup>N</sup> + 1000N<sup>100</sup>)</code> se convierte en <code>O(2<sup>N</sup>)</code>.</li>
     </ul>
     <p>
-      Todavía podemos tener una suma en un tiempo de ejecución. Por ejemplo, la expresión0(82 + A) no se puede reducir (sin algún conocimiento especial de A y B).
+      Todavía podemos tener una suma en un tiempo de ejecución. Por ejemplo, la expresión <code>O(B<sup>2</sup> + A)</code> no se puede reducir (sin algún conocimiento especial de A y B).
     </p>
     <p>
       El siguiente gráfico representa la tasa de incremento para algunos de los tiempos grandes O comunes.
     </p>
+    <div class="w-full flex justify-center">
+      <div class="relative w-52 sm:w-64 md:w-80 h-44 sm:h-52 md:h-72 border-l-2 border-b-2 border-black">
+
+        <div class="w-full absolute flex origin-bottom-left -rotate-6 justify-end items-end bottom-0 border-neutral-700 border-b-2">
+          <p class="">O(log x)</p>
+        </div>
+        <div class="w-full absolute flex origin-bottom-left -rotate-45  justify-end items-end bottom-0 border-neutral-700 border-b-2">
+          <p class="">O(x)</p>
+        </div>
+        <div class="w-full absolute flex origin-bottom-left -rotate-[55deg]  justify-end items-end bottom-0 border-neutral-700 border-b-2">
+          <p class="leading-3">O(x log x)</p>
+        </div>
+        <div class="w-full absolute flex origin-bottom-left -rotate-[65deg]  justify-end items-end bottom-0 border-neutral-700 border-b-2">
+          <p class="leading-3">O(x<sup>2</sup>)</p>
+        </div>
+        <div class="w-[95%] absolute flex origin-bottom-left -rotate-[75deg]  justify-end items-end bottom-0 border-neutral-700 border-b-2">
+          <p class="leading-3">O(2<sup>x</sup>)</p>
+        </div>
+        <div class="w-[90%] absolute flex origin-bottom-left -rotate-[82deg]  justify-end items-end bottom-0 border-neutral-700 border-b-2">
+          <p class="leading-3">O(x!)</p>
+        </div>
+      </div>
+    </div>
     <p>
-      Como puede ver, 0(x2) es mucho peor que O(x), pero no es tan malo como O(2x) u O(x!). También hay muchos tiempos de ejecución peores que 0(x!), como O(xx) o 0(2x * x!).
+      Como puede ver, <code>O(x<sup>2</sup>)</code> es mucho peor que <code>O(x)</code>, pero no es tan malo como <code>O(2<sup>x</sup>)</code> u <code>O(x!)</code>. También hay muchos tiempos de ejecución peores que <code>O(x!)</code>, como <code>O(x<sup>x</sup>)</code> o <code>O(2<sup>x</sup> * x!)</code>.
     </p>
   </article>
   <article>
-    <h3>► Algoritmos multiparte: Suma frente a multiplicación</h3>
+    <h3>► Algoritmos multiparte: Suma vs. multiplicación</h3>
     <p>
       Supongamos que tenemos un algoritmo que tiene dos pasos. ¿Cuándo se multiplican los tiempos de ejecución y cuándo se suman?
     </p>
     <p>
       Esta es una fuente común de confusión para los candidatos.
     </p>
+    <div class="flex gap-12">
+      <div class="flex-grow">
+        <p class="font-bold">Suma en Tiempo de Ejecución: O(A + B)</p>
+        <pre class="">
+          <code class="language-js">
+            for (int a : arrA) &#123 
+              print(a);
+            }
+            for (int b : arrB) &#123
+              print(b);
+            }   
+          </code>
+        </pre>
+      </div>
+      <div class="flex-grow">
+        <p class="font-bold">Multiplicación en Runtime: O(A * B)</p>
+        <pre>
+          <code class="language-js">
+            for (int a : arrA) &#123
+              for (int b : arrB) &#123
+                print(a + "," + b);
+              }
+            }
+          </code>
+        </pre>
+      </div>
+    </div>
     <p>
-      En el ejemplo de la izquierda, hacemos A trozos de trabajo y luego B trozos de trabajo. Por lo tanto, la cantidad total de trabajo es O(A + B).
+      En el ejemplo de la izquierda, hacemos A trozos de trabajo y luego B trozos de trabajo. Por lo tanto, la cantidad total de trabajo es <code>O(A + B)</code>.
     </p>
     <p>
-      En el ejemplo de la derecha, hacemos B trozos de trabajo por cada elemento de A. Por lo tanto, la cantidad total de trabajo es O(A * B).
+      En el ejemplo de la derecha, hacemos B trozos de trabajo por cada elemento de A. Por lo tanto, la cantidad total de trabajo es <code>O(A * B)</code>.
     </p>
     <p>
       Dicho de otro modo:
     </p>
     <ul>
-      <li>Si tu algoritmo tiene la forma «haz esto, luego, cuando hayas terminado, haz aquello »entonces suma los tiempos de ejecución.</li>
-      <li>Si tu algoritmo es del tipo «haz esto cada vez que hagas aquello», multiplica los tiempos de ejecución.</li>
+      <li>Si tu algoritmo tiene la forma "haz esto, luego, cuando hayas terminado, haz aquello" entonces suma los tiempos de ejecución.</li>
+      <li>Si tu algoritmo es del tipo "haz esto cada vez que hagas aquello", multiplica los tiempos de ejecución.</li>
     </ul>
     <p>
       Es muy fácil meter la pata en una entrevista, así que ten cuidado.
@@ -298,19 +348,19 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
   <article>
     <h3>► Tiempo amortizado</h3>
     <p>
-      Un ArrayList, o un array que cambia de tamaño dinámicamente, te permite tener los beneficios de un array a la vez que te ofrece flexibilidad en el tamaño. No te quedarás sin espacio en el Arraylist ya que su capacidad crecerá a medida que insertes elementos.
+      Un <code>ArrayList</code>, o un array que cambia de tamaño dinámicamente, te permite tener los beneficios de un array a la vez que te ofrece flexibilidad en el tamaño. No te quedarás sin espacio en el <code>ArrayList</code> ya que su capacidad crecerá a medida que insertes elementos.
     </p>
     <p>
-      Un Arraylist se implementa con un array. Cuando el array alcanza su capacidad, la clase Arraylist creará un nuevo array con el doble de capacidad y copiará todos los elementos al nuevo array.
+      Un Arraylist se implementa con un array. Cuando el array alcanza su capacidad, la clase <code>ArrayList</code> creará un nuevo array con el doble de capacidad y copiará todos los elementos al nuevo array.
     </p>
     <p>
       ¿Cómo se describe el tiempo de ejecución de la inserción? Es una pregunta delicada.
     </p>
     <p>
-      El array puede estar lleno. Si la matriz contiene N elementos, insertar un nuevo elemento llevaráO(N) tiempo. Tendrás que crear un nuevo array de tamaño 2N y luego copiar N elementos. Esta inserción llevaráO(N) tiempo.
+      El array puede estar lleno. Si la matriz contiene <code>N</code> elementos, insertar un nuevo elemento llevará <code>O(N)</code> tiempo. Tendrás que crear un nuevo array de tamaño <code>2N</code> y luego copiar <code>N</code> elementos. Esta inserción llevará <code>O(N)</code> tiempo.
     </p>
     <p>
-      Sin embargo, también sabemos que esto no ocurre muy a menudo. La inmensa mayoría de las veces la inserción se hará en tiempo O(l).
+      Sin embargo, también sabemos que esto no ocurre muy a menudo. La inmensa mayoría de las veces la inserción se hará en tiempo <code>O(1)</code>.
     </p>
     <p>
       Necesitamos un concepto que tenga en cuenta ambas cosas. Esto es lo que hace el tiempo amortizado. Nos permite describir que, sí, este peor caso ocurre de vez en cuando. Pero una vez que ocurre, no volverá a ocurrir durante tanto tiempo que el coste está «amortizado».
@@ -319,46 +369,81 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       En este caso, ¿cuál es el tiempo amortizado?
     </p>
     <p>
-      A medida que insertamos elementos, duplicamos la capacidad cuando el tamaño de la matriz es una potencia de 2. Así, después de X elementos, duplicamos la capacidad con tamaños de matriz 1, 2, 4, 8, 16, ..., X. Esa duplicación requiere, respectivamente, 1, 2, 4, 8, 16, 32, 64, ..., X copias.
+      A medida que insertamos elementos, duplicamos la capacidad cuando el tamaño de la matriz es una potencia de 2. Así, después de X elementos, duplicamos la capacidad con tamaños de matriz <code>1, 2, 4, 8, 16, ..., X</code>. Esa duplicación requiere, respectivamente, <code>1, 2, 4, 8, 16, 32, 64, ..., X</code> copias.
     </p>
     <p>
-      ¿Cuál es la suma de 1 + 2 + 4 + 8 + 16 + ... + X? Si lees esta suma de izquierda a derecha, empieza por 1 y se duplica hasta llegar a X. Si lees de derecha a izquierda, empieza por X y se reduce a la mitad hasta llegar a 1.
+      ¿Cuál es la suma de <code>1 + 2 + 4 + 8 + 16 + ... + X</code>? Si lees esta suma de izquierda a derecha, empieza por 1 y se duplica hasta llegar a X. Si lees de derecha a izquierda, empieza por X y se reduce a la mitad hasta llegar a 1.
     </p>
     <p>
-      ¿Cuál es entonces la suma de X+ X+ X+ X+...+1? Es aproximadamente 2X.
+      ¿Cuál es entonces la suma de <code> X + <sup>x</sup>&frasl;<sub>2</sub> + <sup>x</sup>&frasl;<sub>4</sub> + <sup>x</sup>&frasl;<sub>8</sub> + ... + 1</code>? Es aproximadamente <code>2X</code>.
     </p>
     <p>
-      El tiempo amortizado de cada inserción es 0(1).
+      Por lo tanto, las inserciones de X toman <code>O(2X)</code> de tiempo. El tiempo amortizado de cada inserción es <code>O(1)</code>.
     </p>
   </article>
   <article>
     <h3>► Tiempos de ejecución Log N
     </h3>
     <p>
-      Es habitual ver tiempos de ejecución O(log N). ¿De dónde viene esto?
+      Es habitual ver tiempos de ejecución <code>O(log N)</code>. ¿De dónde viene esto?
     </p>
     <p>
-      Veamos un ejemplo: la búsqueda binaria. En la búsqueda binaria, buscamos un ejemplo x en una matriz ordenada de N elementos. Primero comparamos x con el punto medio de la matriz. Si x == medio, volvemos. Si x &#60 medio, buscamos en el lado izquierdo de la matriz. Si x > medio, buscamos en el lado derecho de la matriz.
+      Veamos un ejemplo: la búsqueda binaria. En la búsqueda binaria, buscamos un ejemplo x en una matriz ordenada de N elementos. Primero comparamos x con el punto medio de la matriz. <code class="language-js">If x &#60 middle</code>, entonces retornamos. <code class="language-js">If x &#60 middle</code>, buscamos en el lado izquierdo de la matriz. Si x > medio, buscamos en el lado derecho de la matriz.
     </p>
+    <pre>
+      <code class="language-js">
+        search 9 within &#123 1, 5, 8, 9, 11, 13, 15, 19, 21 } 
+          compare 9 to 11 -> smaller.
+          search 9 within &#123 1, 5, 8, 9, 11 }
+            compare 9 to 8 -> bigger
+            search 9 within &#123 9, 11 }
+              compare 9 to 9
+              return
+      </code>
+    </pre>
     <p>
-      Empezamos con una matriz de N elementos para buscar. Entonces, después de un solo paso, nos quedamos con Yi elementos. Un paso más, y estamos hasta % elementos. Nos detenemos cuando encontramos el valor o nos quedamos con un solo elemento.
+      Empezamos con una matriz de N-elementos para buscar. Entonces, después de un solo paso, nos quedamos con <sup>N</sup>&frasl;<sub>2</sub> elementos. Un paso más, y estamos hasta <sup>N</sup>&frasl;<sub>4</sub> elementos. Nos detenemos cuando encontramos el valor o nos quedamos con un solo elemento.
     </p>
     <p>
       El tiempo de ejecución total es entonces una cuestión de cuántos pasos (dividiendo N por 2 cada vez) podemos tomar hasta que N se convierte en 1.
     </p>
+    <pre>
+      <code class="language-js">
+        N = 16 
+        N = 8         /* divide by 2 */
+        N = 4         /* divide by 2 */
+        N = 2         /* divide by 2 */
+        N = 1         /* divide by 2 */
+      </code>
+    </pre>
     <p>
       Podríamos verlo a la inversa (yendo de 1 a 16 en lugar de 16 a 1). ¿Cuántas veces podemos multiplicar 1 por 2 hasta obtener N?
     </p>
+    <pre>
+      <code class="language-js">
+        N = 1         /* multiply by 2 */
+        N = 2         /* multiply by 2 */
+        N = 4         /* multiply by 2 */
+        N = 8         /* multiply by 2 */
+        N = 16 
+      </code>
+    </pre>
     <p>
-      ¿Qué es kin la expresión 2k = N? Esto es exactamente lo que expresa log.
+      ¿Qué es kin la expresión <code>2<sup>k</sup> = N</code>? Esto es exactamente lo que expresa <code>log</code>.
+    </p>
+    <pre>
+      <code>
+        2<sup>4</sup> = 16 -> log<sub>2</sub>16 = 4
+        log<sub>2</sub>N = k -> 2<sup>k</sup> = N
+      </code>
+    </pre>
+    <p>
+      Este es un buen aprendizaje para ti. Cuando veas un problema en el que el número de elementos en el espacio del problema se reduce a la mitad cada vez, probablemente será un tiempo de ejecución <code>O(log N)</code>.
     </p>
     <p>
-      Este es un buen aprendizaje para ti. Cuando veas un problema en el que el número de elementos en el espacio del problema se reduce a la mitad cada vez, probablemente será un tiempo de ejecución 0(log N).
+      Esta es la misma razón por la que encontrar un elemento en un árbol de búsqueda binario equilibrado es <code>O(log N)</code>. Con cada comparación, vamos a la izquierda o a la derecha. La mitad de los nodos están en cada lado, así que reducimos el espacio del problema a la mitad cada vez.
     </p>
-    <p>
-      Esta es la misma razón por la que encontrar un elemento en un árbol de búsqueda binario equilibrado es O(log N). Con cada comparación, vamos a la izquierda o a la derecha. La mitad de los nodos están en cada lado, así que reducimos el espacio del problema a la mitad cada vez.
-    </p>
-    <p>
+    <p class="pl-4 sm:pl-6 md:pl-8 border-l-2 sm:border-l-4 md:border-l-8 border-black">
       ¿Cuál es la base del tronco? Es una pregunta excelente. La respuesta corta es que no importa a efectos del gran 0. La explicación más larga se encuentra en «Bases de troncos», en la página 630.
     </p>
   </article>
@@ -367,29 +452,95 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       Esta es una pregunta complicada. ¿Cuál es el tiempo de ejecución de este código?
     </p>
+    <pre>
+      <code class="language-js">
+        int f(int n) &#123
+          if (n &#60= 1) &#123
+            return 1;
+          }
+          return f(n - 1) + f(n - 1);
+        }
+      </code>
+    </pre>
     <p>
-      Mucha gente, por alguna razón, ve las dos llamadas a f y salta a 0(N ). Esto es completamente incorrecto.
+      Mucha gente, por alguna razón, ve las dos llamadas a f y salta a <code>O(N<sup>2</sup>)</code>. Esto es completamente incorrecto.
     </p>
     <p>
-      En lugar de hacer suposiciones, deduzcamos el tiempo de ejecución recorriendo el código. Supongamos que llamamos a f(4). Esto llama a f(3) dos veces. Cada una de esas llamadas a f(3) llama a f(2), hasta que llegamos a f(1).
+      En lugar de hacer suposiciones, deduzcamos el tiempo de ejecución recorriendo el código. Supongamos que llamamos a <code>f(4)</code>. Esto llama a <code>f(3)</code> dos veces. Cada una de esas llamadas a <code>f(3)</code> llama a <code>f(2)</code>, hasta que llegamos a <code>f(1)</code>.
     </p>
+    <div class="flex flex-col justify-center items-center gap-y-2 my-8">
+      <div><code>f(4)</code></div>
+      <div class="flex gap-4"><div class="w-16 -rotate-12 border-b-2 border-black"></div><div class="w-16 rotate-12 border-b-2 border-black"></div></div>
+      
+      <div class="flex flex-row gap-32"><code>f(3)</code><code>f(3)</code></div>
+      <div class="flex gap-14"><div class="w-8 -rotate-45 border-b-2 border-black"></div><div class="w-8 rotate-45 border-b-2 border-black"></div><div class="w-8 -rotate-45 border-b-2 border-black"></div><div class="w-8 rotate-45 border-b-2 border-black"></div></div>
+      
+      <div class="flex flex-row gap-12"><code>f(2)</code><code>f(2)</code><code>f(2)</code><code>f(2)</code></div>
+      <div class="flex gap-4"><div class="w-8 -rotate-45 border-b-2 border-black"></div><div class="w-8 rotate-45 border-b-2 border-black"></div><div class="w-8 -rotate-45 border-b-2 border-black"></div><div class="w-8 rotate-45 border-b-2 border-black"></div><div class="w-8 -rotate-45 border-b-2 border-black"></div><div class="w-8 rotate-45 border-b-2 border-black"></div><div class="w-8 -rotate-45 border-b-2 border-black"></div><div class="w-8 rotate-45 border-b-2 border-black"></div></div>
+      
+      <div><code>f(1)</code><code>f(1)</code><code>f(1)</code><code>f(1)</code><code>f(1)</code><code>f(1)</code><code>f(1)</code><code>f(1)</code></div>
+    </div>
     <p>
       ¿Cuántas llamadas hay en este árbol? (¡No las cuentes!)
     </p>
     <p>
       El árbol tendrá una profundidad N. Cada nodo (es decir, llamada a una función) tiene dos hijos. Por lo tanto, cada nivel tendrá el doble de llamadas que el anterior.El número de nodos en cada nivel es:
     </p>
+    <div class="w-full flex justify-center my-8">
+      <table class="font-poppins">
+        <thead>
+          <tr>
+            <td>Level</td>
+            <td># Nodes</td>
+            <td>Also expressed as...</td>
+            <td>O...</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0</td>
+            <td>1</td>
+            <td></td>
+            <td>2<sup>0</sup></td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>2 * previous level = 2</td>
+            <td>2<sup>1</sup></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>4</td>
+            <td>2 * previous level = 2 * 2<sup>1</sup> = 2<sup>2</sup></td>
+            <td>2<sup>2</sup></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>8</td>
+            <td>2 * previous level = 2 * 2<sup>2</sup> = 2<sup>3</sup></td>
+            <td>2<sup>3</sup></td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>16</td>
+            <td>2 * previous level = 2 * 2<sup>3</sup> = 2<sup>4</sup></td>
+            <td>2<sup>4</sup></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <p>
-      Por lo tanto, habrá 2°+21 + 22 + 23 + 24 + .-. + 2N (que es 2N-1 - 1) nodos.(Ver «Suma de Potencias de 2» en la página 630.)
+      Por lo tanto, habrá <code>2<sup>0</sup> + 2<sup>1</sup> + 2<sup>2</sup> + 2<sup>3</sup> + 2<sup>4</sup> + ... + 2<sup>N</sup></code> (que es <code>2<sup>N+1</sup> - 1</code>) nodos.(Ver «Suma de Potencias de 2» en la página 630.)
     </p>
     <p>
-      Trate de recordar este patrón. Cuando tienes una función recursiva que hace múltiples llamadas, el tiempo de ejecución a menudo (pero no siempre) se parecerá a O(branches depth), donde branches es el número de veces que cada llamada recursiva se ramifica. En este caso, nos da O(2N).
+      Trate de recordar este patrón. Cuando tienes una función recursiva que hace múltiples llamadas, el tiempo de ejecución a menudo (pero no siempre) se parecerá a <code>O(branches<sup>depth</sup>)</code>, donde branches es el número de veces que cada llamada recursiva se ramifica. En este caso, nos da <code>O(2<sup>N</sup>)</code>.
+    </p>
+    <p class="pl-4 sm:pl-6 md:pl-8 border-l-2 sm:border-l-4 md:border-l-8 border-black">
+      Como recordarás, la base de un logaritmo no importa para big O, ya que los logaritmos de bases diferentes sólo difieren en un factor constante. Sin embargo, esto no se aplica a los exponentes. La base de un exponente sí importa. Compara <code>2<sup>n</sup></code> y <code>8<sup>n</sup></code>. Si expandes <code>8<sup>n</sup></code>, obtienes <code>(2<sup>3</sup>)<sup>n</sup></code>, que es igual a <code>2<sup>3n</sup></code>, que es igual <code>2<sup>2n</sup> * 2<sup>n</sup></code>. Como puedes ver, <code>8<sup>n</sup></code> y <code>2<sup>n</sup></code> son diferentes por un factor de <code>2<sup>2n</sup></code>. Esto no es un factor constante.
     </p>
     <p>
-      Como recordarás, la base de un logaritmo no importa para O grande, ya que los logaritmos de bases diferentes sólo difieren en un factor constante. Sin embargo, esto no se aplica a los exponentes. La base de un exponente sí importa. Compara 2« y 8». Si expandes 8«, obtienes (23)», que es igual a 23«, que es igual a 22» * 2». Como puedes ver, 8« y 2° son diferentes por un factor de 22». Esto no es un factor constante.
-    </p>
-    <p>
-      La complejidad espacial de este algoritmo será O(N). Aunque tengamos 0(2N) nodos en el árbol en total, sólo O(N) existen en un momento dado. Por lo tanto, sólo necesitaríamos tener O(N) de memoria disponible.
+      La complejidad espacial de este algoritmo será <code>O(N)</code>. Aunque tengamos <code>O(2<sup>N</sup>)</code> nodos en el árbol en total, sólo <code>O(N)</code> existen en un momento dado. Por lo tanto, sólo necesitaríamos tener <code>O(N)</code> de memoria disponible.
     </p>
   </article>
   <article>
@@ -400,164 +551,253 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       Empezaremos por lo fácil y nos iremos complicando progresivamente.
     </p>
+    <p><strong>
+      Ejemplo 1</strong>
+    </p>
     <p>
-      Ejemplo 1
+      ¿Cuál es el tiempo de ejecución del siguiente código?
+    </p>
+    <pre>
+      <code class="language-js">
+        void foo(int[] array) &#123
+          int sum = 0;
+          int product = 1;
+          for (int i = 0; i  &#60 array.length; i++) &#123
+            sum += array[i);
+          }
+          for (int i = 0; i  &#60 array.length; i++) &#123
+            product *= array[i];
+          }
+          System.out.println(sum + ", " + product);
+        }
+      </code>
+    </pre>
+    <p>
+      Esto llevará <code>O(N)</code> tiempo. El hecho de que iteremos a través del array dos veces no importa.
+    </p>
+    <p>
+      <strong>Ejemplo 2</strong>
     </p>
     <p>
       ¿Cuál es el tiempo de ejecución del siguiente código?
     </p>
     <p>
-      Esto llevará O(N) tiempo. El hecho de que iteremos a través del array dos veces no importa.
+      El bucle for interno tiene <code>O(N)</code> iteraciones y es llamado <code>N</code> veces. Por lo tanto, el tiempo de ejecución es <code>O(N<sup>2</sup>)</code>.
     </p>
     <p>
-      Ejemplo 2
+      Otra forma de ver esto es inspeccionando cuál es el «significado» del código. Está imprimiendo todos los pares (secuencias de dos elementos). Hay <code>O(N<sup>2</sup>)</code> pares; por lo tanto, el tiempo de ejecución es <code>O(N<sup>2</sup>)</code>.
     </p>
     <p>
-      ¿Cuál es el tiempo de ejecución del siguiente código?
+      <strong>Ejemplo 3</strong>
     </p>
     <p>
-      El bucle for interno tiene O(N) iteraciones y es llamado N veces. Por lo tanto, el tiempo de ejecución es O(N2).
+      Se trata de un código muy similar al del ejemplo anterior, pero ahora el bucle for interior comienza en <code>i + 1</code>.
     </p>
-    <p>
-      Otra forma de ver esto es inspeccionando cuál es el «significado» del código. Está imprimiendo todos los pares (secuencias de dos elementos). Hay O(N2 ) pares; por lo tanto, el tiempo de ejecución es O(N2 ).
-    </p>
-    <p>
-      Ejemplo 3
-    </p>
-    <p>
-      Se trata de un código muy similar al del ejemplo anterior, pero ahora el bucle for interior comienza en i + 1.
-    </p>
+    <pre>
+      <code class="language-js">
+        void printUnorderedPairs(int[] array) &#123
+          for (int i = 0; i &#60 array.length; i++) &#123
+            for (int j = i + 1; j &#60 array.length; j++) &#123
+              System.out.println(array[i] + "," + array[j]);
+            }
+          }
+        }
+      </code>
+    </pre>
     <p>
       Podemos obtener el tiempo de ejecución de varias maneras.
     </p>
-    <p>
+    <p class="pl-4 sm:pl-6 md:pl-8 border-l-2 sm:border-l-4 md:border-l-8 border-black">
       Este patrón de bucle for es muy común. Es importante que conozcas el tiempo de ejecución y que lo entiendas en profundidad. No puedes confiar sólo en memorizar tiempos de ejecución comunes. La comprensión profunda es importante.
     </p>
-    <p>
-      Recuento de las iteraciones
+    <p><em>Recuento de las iteraciones</em>
     </p>
     <p>
-      La primera vez a través de j se ejecuta durante N-1 pasos. La segunda vez, son N-2 pasos. Luego N-3 pasos. Y así sucesivamente. 
+      La primera vez a través de j se ejecuta durante <code>N-1</code> pasos. La segunda vez, son <code>N-2</code> pasos. Luego <code>N-3</code> pasos. Y así sucesivamente. 
     </p>
     <p>
       Por lo tanto, el número total de pasos es:
     </p>
+    <pre>
+      <code class="language-js">
+        (N-1) + (N-2) + (N-3) + ... + 2 + 1
+            = 1 + 2 + 3 + ... + N-1
+            = sum of 1 through N-1
+      </code>
+    </pre>
     <p>
-      La suma de 1 a N-1 es --2 (ver «Suma de Enteros 1 a N en la página 630), por lo que el tiempo de ejecución será O(N2). 
+      La suma de 1 a <code>N-1</code> es <span class="relative w-12 px-4 leading-3"><sup class="absolute w-12 h-2 border-b-2 text-center border-black">N(N-1)</sup><sub class="ml-4 mr-4 leading-3">2</sub></span> (ver "Suma de Enteros 1 a N" en la página 630), por lo que el tiempo de ejecución será <code>O(N<sup>2</sup>)</code>. 
+    </p>
+    <p><em>Qué significa</em>
     </p>
     <p>
-      Qué significa
+      Alternativamente, podemos calcular el tiempo de ejecución pensando en lo que «significa» el código: Recorre cada par de valores para <code>(i, j)</code> donde <code>j</code> es mayor que <code>i</code>. 
     </p>
     <p>
-      Alternativamente, podemos calcular el tiempo de ejecución pensando en lo que «significa» el código: Recorre cada par de valores para ( i, j) donde j es mayor que i. Hay N2 pares en total.
+      Hay <code>N<sup>2</sup></code> pares en total. Aproximadamente la mitad de ellos tendrán <code>i &#60 j</code> y la otra mitad tendrán <code>i > j</code>. Este código recorre aproximadamente <sup>N<sup>2</sup></sup>&frasl;<sub>x</sub> pares por lo que hace <code>O(N<sup>2</sup>)</code> trabajo.
+    </p>
+    <p><em>Visualización de lo que hace</em>
     </p>
     <p>
-      Hay N2 pares en total. Aproximadamente la mitad de ellos tendrán i &#60 j y la otra mitad tendrán i > j. Este código recorre aproximadamente Nx pares por lo que hace O(N2) trabajo.
+      El código itera a través de los siguientes pares <code>(i, j)</code> cuando <code>N = 8</code>:
     </p>
+    <pre>
+      <code class="language-js">
+        (0, 1) (0, 2) (0, 3) (0, 4) (0, 5) (0, 6) (0, 7) 
+               (1, 2) (1, 3) (1, 4) (1, 5) (1, 6) (1,'7) 
+                      (2, 3) (2, 4) (2, 5) (2, 6) (2, 7) 
+                             (3, 4) (3, 5) (3, 6) (3, 7) 
+                                    (4, 5) (4, 6) (4, 7) 
+                                           (5, 6) (5, 7) 
+                                                  (6, 7)
+      </code>
+    </pre>
     <p>
-      Visualización de lo que hace
+      Esto parece la mitad de una matriz NxN, que tiene tamaño (aproximadamente) <sup>N<sup>2</sup></sup>&frasl;<sub>x</sub>. Por lo tanto, lleva <code>O(N<sup>2</sup>)</code> tiempo.
     </p>
-    <p>
-      El código itera a través de los siguientes pares (i, j) cuando N = 8:
-    </p>
-    <p>
-      Esto parece la mitad de una matriz NxN , que tiene tamaño (aproximadamente) N/i. Por lo tanto, lleva O(N2) tiempo.
-    </p>
-    <p>
-      Trabajo medio
+    <p><em>Trabajo medio</em>
     </p>
     <p>
       Sabemos que el bucle exterior se ejecuta N veces. ¿Cuánto trabajo hace el bucle interior? Varía a lo largo de las iteraciones, pero podemos pensar en la iteración media.
     </p>
     <p>
-      ¿Cuál es el valor medio de 1, 2, 3, 4, 5, 6, 7, 8, 9, 10? El valor medio estará en el medio, así que será aproximadamente 5. (Podríamos dar una respuesta más precisa, por supuesto, pero no lo necesitamos para bigO).
+      ¿Cuál es el valor medio de <code> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10</code>? El valor medio estará en el medio, así que será <em>aproximadamente</em> 5. (Podríamos dar una respuesta más precisa, por supuesto, pero no lo necesitamos para bigO).
     </p>
     <p>
-      ¿Y para 1, 2, 3, ... , N? El valor medio en esta secuencia es N/ 2. 
+      ¿Y para <code> 1, 2, 3, ... , N</code>? El valor medio en esta secuencia es <code>N/2</code>. 
     </p>
     <p>
-      Por lo tanto, como el bucle interno hace trabajo en promedio y se ejecuta N veces, el trabajo total es N/i, que es O(N2 ).
+      Por lo tanto, como el bucle interno hace <code><sup>N</sup>&frasl;<sub>x</sub></code> trabajo en promedio y se ejecuta <code>N</code> veces, el trabajo total es <code><sup>N<sup>2</sup></sup>&frasl;<sub>x</sub></code>, que es <code>O(N<sup>2</sup>)</code>.
     </p>
     <p>
-      Ejemplo 4
+      <strong>Ejemplo 4</strong>
     </p>
     <p>
       Es similar al anterior, pero ahora tenemos dos matrices diferentes.
     </p>
+    <pre>
+      <code class="language-js">
+        void printUnorderedPairs(int[] arrayA, int[] arrayB) &#123
+          for (int i = 0; i &#60 arrayA.length; i++) &#123
+            for (int j = 0; j &#60 arrayB.length; j++) &#123
+              if (arrayA[i] &#60 arrayB[j]) &#123
+                System.out.println(arrayA[i] + "," + arrayB[j]);
+              }
+            }
+          }
+        }
+      </code>
+    </pre>
     <p>
-      Podemos dividir este análisis. La sentencia if dentro del bucle for de j es de tiempo 0(1) ya que es sólo una secuencia de sentencias de tiempo constante.
+      Podemos dividir este análisis. La sentencia if dentro del bucle for de j es de tiempo <code>O(1)</code> ya que es sólo una secuencia de sentencias de tiempo constante.
     </p>
     <p>
       Ahora tenemos esto:
     </p>
+    <pre>
+      <code class="language-js">
+        void printUnorderedPairs(int[] arrayA, int[] arrayB) &#123
+          for (int i= 0; i &#60 arrayA.length; i++) &#123
+            for (int j = 0; j &#60 arrayB.length; j++) &#123
+              /* 0(1) work*/
+            }
+          }
+        }
+      </code>
+    </pre>
     <p>
-      Por cada elemento de la matriz A, el bucle for interior pasa por b iteraciones, donde b = longitud de la matriz B. Si a = longitud de la matriz A, entonces el tiempo de ejecución esO(ab).
+      Por cada elemento de la <code>arrayA</code>, el bucle for interior pasa por b iteraciones, donde <code>b = arrayB.length</code>. <code>If a = arrayA.length</code>, entonces el tiempo de ejecución es <code>O(ab)</code>.
     </p>
     <p>
-      Si dijisteO( N2), recuerda tu error para el futuro. No esO(N2 ) porque hay dos entradas diferentes. Ambas importan. Este es un error extremadamente común.
+      Si dijiste <code>O(N<sup>2</sup>)</code>, recuerda tu error para el futuro. No es <code>O(N<sup>2</sup>)</code> porque hay dos entradas diferentes. Ambas importan. Este es un error extremadamente común.
     </p>
     <p>
-      Ejemplos 5
+      <strong>Ejemplo 5</strong>
     </p>
     <p>
       ¿Qué pasa con este extraño trozo de código?
     </p>
+    <pre>
+      <code class="language-js">
+        void printUnorderedPairs(int[] arrayA, int[] arrayB) &#123
+          for (int i = 0; i &#60 arrayA.length; i++) &#123
+            for (int j = 0; j &#60 arrayB.length; j++) &#123
+              for (int k= 0; k &#60 100000; k++) &#123
+                System.out.println(arrayA[i] + "," + arrayB[j]);
+              }
+            }
+          }
+        }
+      </code>
+    </pre>
     <p>
-      Aquí no ha cambiado nada. 100.000 unidades de trabajo siguen siendo constantes, por lo que el tiempo de ejecución es 0(ab).
+      Aquí no ha cambiado nada. 100.000 unidades de trabajo siguen siendo constantes, por lo que el tiempo de ejecución es <code>0(ab)</code>.
     </p>
     <p>
-      Ejemplo 6
+      <strong>Ejemplo 6</strong>
     </p>
     <p>
       El siguiente código invierte una matriz. ¿Cuál es su tiempo de ejecución?
     </p>
+    <pre>
+      <code class="language-js">
+        void reverse(int[] array) &#123
+          for (int i= 0; i &#60 array.length / 2; i++) &#123
+            int other = array.length - i - 1;
+            int temp = array[i];
+            array[i] = array[other];
+            array[other] = temp;
+          }
+        }
+      </code>
+    </pre>
     <p>
-      Este algoritmo se ejecuta en tiempoO( N). El hecho de que sólo recorra la mitad de la matriz (en términos de iteraciones) no afecta al tiempo O grande.
+      Este algoritmo se ejecuta en tiempo <code>O(N)</code>. El hecho de que sólo recorra la mitad de la matriz (en términos de iteraciones) no afecta al tiempo O grande.
     </p>
     <p>
-      Ejemplo 7
+      <strong>Ejemplo 7</strong>
     </p>
     <p>
-      ¿Cuáles de los siguientes algoritmos son equivalentes aO(N)? ¿Por qué?
+      ¿Cuáles de los siguientes algoritmos son equivalentes a <code>O(N)</code>? ¿Por qué?
     </p>
     <ul>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
+      <li><code>O(N + P)</code>, donde <code>P &#60 <sup>N</sup>&frasl;<sub>2</sub></code>.</li>
+      <li><code>O(2N)</code></li>
+      <li><code>O(N + log N)</code></li>
+      <li><code>O(N + M)</code></li>
     </ul>
     <p>
       Vamos a repasarlas.
     </p>
     <ul>
-      <li>Si P &#60 X, entonces sabemos que N es el término dominante por lo que podemos eliminar el 0(P).</li>
-      <li>0(2N) es O(N) ya que eliminamos las constantes.</li>
-      <li>O(N) domina a O(log N), por lo que podemos eliminar O(log N).</li>
-      <li>No hay una relación establecida entre N y M, así que tenemos que mantener ambas variables.</li>
+      <li>Si <code>P &#60 <sup>N</sup>&frasl;<sub>2</sub></code>, entonces sabemos que N es el término dominante por lo que podemos eliminar el <code>O(P)</code>.</li>
+      <li><code>O(2N)</code> es <code>O(N)</code> ya que eliminamos las constantes.</li>
+      <li><code>O(N)</code> domina a <code>O(log N)</code>, por lo que podemos eliminar <code>O(log N)</code>.</li>
+      <li>No hay una relación establecida entre <code>N</code> y <code>M</code>, así que tenemos que mantener ambas variables.</li>
     </ul>
     <p>
-      Por tanto, todos menos el último son equivalentes a O(N).
+      Por tanto, todos menos el último son equivalentes a <code>O(N)</code>.
     </p>
     <p>
-      Ejemplo 8
+      <strong>Ejemplo 8</strong>
     </p>
     <p>
       Supongamos que tenemos un algoritmo que toma un array de cadenas, ordena cada cadena y luego ordena el array completo. ¿Cuál sería el tiempo de ejecución?
     </p>
     <p>
-      Muchos candidatos razonarán lo siguiente: ordenar cada cadena es O(N log N) y tenemos que hacerlo para cada cadena, así que eso es O(N*N log N). También tenemos que ordenar esta matriz, por lo que es un trabajo adicional O(N log N). Por lo tanto, el tiempo total de ejecución es O(N2 log N + N log N), que es sólo 0(N2 log N).
+      Muchos candidatos razonarán lo siguiente: ordenar cada cadena es <code>O(N log N)</code> y tenemos que hacerlo para cada cadena, así que eso es <code>O(N * N log N)</code>. También tenemos que ordenar esta matriz, por lo que es un trabajo adicional <code>O(N log N)</code>. Por lo tanto, el tiempo total de ejecución es <code>O(N2 log N + N log N)</code>, que es sólo <code>0(N<sup>2</sup> log N)</code>.
     </p>
     <p>
       Esto es completamente incorrecto. ¿Has detectado el error?
     </p>
     <p>
-      El problema es que hemos utilizado N de dos formas distintas. En un caso, es la longitud de la cadena (¿qué cadena?). Y en otro caso, es la longitud de la matriz.
+      El problema es que hemos utilizado <code>N</code> de dos formas distintas. En un caso, es la longitud de la cadena (¿qué cadena?). Y en otro caso, es la longitud de la matriz.
     </p>
     <p>
-      En tus entrevistas, puedes evitar este error no utilizando la variable «N» en absoluto, o utilizándola sólo cuando no haya ambigüedad en cuanto a lo que N podría representar.
+      En tus entrevistas, puedes evitar este error no utilizando la variable «N» en absoluto, o utilizándola sólo cuando no haya ambigüedad en cuanto a lo que <code>N</code> podría representar.
     </p>
     <p>
-      De hecho, yo ni siquiera usaría a y b aquí, o m y n. Es demasiado fácil olvidar cuál es cuál y confundirlas. Un tiempo de ejecución O (a2 ) es completamente diferente de un tiempo de ejecuciónO(a*b).
+      De hecho, yo ni siquiera usaría a y b aquí, o m y n. Es demasiado fácil olvidar cuál es cuál y confundirlas. Un tiempo de ejecución <code>O(a<sup>2</sup>)</code> es completamente diferente de un tiempo de ejecución <code>O(a*b)</code>.
     </p>
     <p>
       Definamos nuevos términos y utilicemos nombres lógicos.
@@ -570,47 +810,53 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       Ahora podemos trabajar por partes:
     </p>
     <ul>
-      <li>Ordenar cada cadena es0(s log s).</li>
-      <li>Tenemos que hacer esto para cada cadena (y hay una cadena), por lo que es0 (a*s log s).</li>
-      <li>Ahora tenemos que cortar las cuerdas. Hay cuerdas, así que puede que te sientas inclinado a decir que se tarda O(a log a) tiempo. Esto es lo que dirían la mayoría de los candidatos. También hay que tener en cuenta que hay que comparar las cadenas. Cada comparación de cadenas llevaO(s)tiempo.HayO(a log a)comparaciones, por lo que esto llevará 0(a*s log a) tiempo.</li>
+      <li>Ordenar cada cadena es <code>0(s log s)</code>.</li>
+      <li>Tenemos que hacer esto para cada cadena (y hay una cadena), por lo que es <code>0(a*s log s)</code>.</li>
+      <li>Ahora tenemos que cortar las cuerdas. Hay cuerdas, así que puede que te sientas inclinado a decir que se tarda <code>O(a log a)</code> tiempo. Esto es lo que dirían la mayoría de los candidatos. También hay que tener en cuenta que hay que comparar las cadenas. Cada comparación de cadenas lleva <code>O(s)</code> tiempo.Hay <code>O(a log a)</code> comparaciones, por lo que esto llevará <code>0(a*s log a)</code> tiempo.</li>
     </ul>
     <p>
-      Si sumas estas dos partes, obtienes 0(a*s(log a + log s)). 
+      Si sumas estas dos partes, obtienes <code>0(a*s(log a + log s)). 
     </p>
     <p>
       No hay forma de reducirlo más.
     </p>
     <p>
-      Ejemplo 9
+      <strong>Ejemplo 9</strong>
     </p>
     <p>
       El siguiente código simple suma los valores de todos los nodos de un árbol de búsqueda binario equilibrado. ¿Cuál es su tiempo de ejecución?
     </p>
+    <pre>
+      <code class="language-js">
+        int sum(Node node) &#123
+          if (node == null) &#123
+            return 0;
+          }
+          return sum(node.left) + node.value + sum(node.right)
+        }
+      </code>
+    </pre>
     <p>
       Que sea un árbol de búsqueda binario no significa que haya un registro en él.
     </p>
     <p>
       Podemos verlo de dos maneras.
     </p>
-    <p>
-      Qué significa
+    <p><em>Qué significa</em>
     </p>
     <p>
       La forma más directa es pensar en lo que esto significa. Este código toca cada nodo del árbol una vez y hace una cantidad de trabajo constante en el tiempo con cada «toque» (excluyendo las llamadas recursivas).
     </p>
     <p>
-      Por tanto, el tiempo de ejecución será lineal en función del número de nodos. Si hayN nodos, el tiempo de ejecución esO(N).
+      Por tanto, el tiempo de ejecución será lineal en función del número de nodos. Si hayN nodos, el tiempo de ejecución es <code>O(N)</code>.
     </p>
-    <p>
-      Patrón recursivo
+    <p><em>Patrón recursivo</em>
     </p>
     <p>
       En la página 44, discutimos un patrón para el tiempo de ejecución de funciones recursivas que tienen múltiples ramas. Intentemos ese enfoque aquí.
     </p>
     <p>
-
-
-      Dijimos que el tiempo de ejecución de una función recursiva con múltiples ramas es típicamenteO(profundidad de ramas). Hay dos ramas en cada llamada, así que estamos buscando 0(2 profundidad).
+      Dijimos que el tiempo de ejecución de una función recursiva con múltiples ramas es típicamente <code>O(branches<sup>depth</sup>)</code>. Hay dos ramas en cada llamada, así que estamos buscando <code>O(2<sup>depth</sup>)</code>.
     </p>
     <p>
       Llegados a este punto, mucha gente podría suponer que algo ha ido mal, ya que tenemos un algoritmo exponencial: que algo en nuestra lógica es erróneo o que hemos creado sin querer un algoritmo de tiempo exponencial (¡caramba!).
@@ -619,25 +865,35 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       La segunda afirmación es correcta. Tenemos un algoritmo de tiempo exponencial, pero no es tan malo como uno podría pensar. Considere qué variable es exponencial con respecto a.
     </p>
     <p>
-      ¿Qué es la profundidad? El árbol es un árbol de búsqueda binario equilibrado. Por lo tanto, si hay N nodos totales, entonces la profundidad es aproximadamente log N.
+      ¿Qué es la profundidad? El árbol es un árbol de búsqueda binario equilibrado. Por lo tanto, si hay <code>N</code> nodos totales, entonces <code>depth</code> es aproximadamente <code>log N</code>.
     </p>
     <p>
-      Por la ecuación anterior, obtenemosO(2log N).
+      Por la ecuación anterior, obtenemos <code>O(2<sup>1og N</sup>)</code>.
     </p>
     <p>
-      Recordemos lo que significa log2:
+      Recordemos lo que significa <code>log2</code>:
+    </p>
+    <code>2<sup>P</sup> = Q -> log<sup>2</sup>Q = P</code>
+    <p>
+      ¿Qué es <code>2<sup>log N</sup></code>? Existe una relación entre 2 y log, así que deberíamos poder simplificar esto.
     </p>
     <p>
-      ¿Qué es 210g N? Existe una relación entre 2 y log, así que deberíamos poder simplificar esto.
+      Let <code>P = 2<sup>log N</sup></code>. Por la definición de <code>log<sub>2</sub></code>, podemos escribirlo como <code>log<sub>2</sub>P = log<sub>2</sub>N</code>. Esto significa que <code>P = N</code>.
+
+    </p>
+    <pre>
+      <code>
+        Let P = 2<sup>log N</sup> 
+            -> log<sub>2</sub>P = log<sub>2</sub>N 
+            -> P = N 
+            -> 2<sup>log N</sup> = N
+      </code>
+    </pre>
+    <p>
+      Por lo tanto, el tiempo de ejecución de este código es <code>O(N)</code>, donde <code>N</code> es el número de nodos.
     </p>
     <p>
-      Let P = 210gN. Por la definición de log 2, podemos escribirlo como log 2P = log2N. Esto significa que P N.
-    </p>
-    <p>
-      Por lo tanto, el tiempo de ejecución de este código es O(N), donde N es el número de nodos.
-    </p>
-    <p>
-      Ejemplo 10
+      <strong>Ejemplo 10</strong>
     </p>
     <p>
       El siguiente método comprueba si un número es primo verificando la divisibilidad en números menores que él. Sólo necesita llegar hasta la raíz cuadrada de n porque si n es divisible por un número mayor que su raíz cuadrada entonces es divisible por algo menor que él.
@@ -664,7 +920,7 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       Se ejecuta en tiempo O( vn).
     </p>
     <p>
-      Ejemplo 11
+      <strong>Ejemplo 11</strong>
     </p>
     <p>
       ¡El siguiente código calcula n ! (n factorial). ¿Cuál es su complejidad temporal?
@@ -673,7 +929,7 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       Esto es sólo una recursión directa de n a n-1 a n-2 hasta 1. Tomará O(n) tiempo.
     </p>
     <p>
-      Ejemplo 12
+      <strong>Ejemplo 12</strong>
     </p>
     <p>
       Este código cuenta todas las permutaciones de una cadena.
@@ -721,7 +977,7 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       A través de matemáticas más complejas, podemos obtener una ecuación de tiempo de ejecución más estricta (aunque no necesariamente una buena expresión de forma cerrada). Es casi seguro que esto quedaría fuera del alcance de cualquier entrevista normal.
     </p>
     <p>
-      Ejemplo 13
+      <strong>Ejemplo 13</strong>
     </p>
     <p>
       El siguiente código calcula el enésimo número de Fibonacci.
@@ -739,7 +995,7 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       En general, cuando se ve un algoritmo con múltiples llamadas recursivas, se está ante un tiempo de ejecución exponencial.
     </p>
     <p>
-      Ejemplo 14
+      <strong>Ejemplo 14</strong>
     </p>
     <p>
       El siguiente código imprime todos los números Fibonacci desde O hasta n. ¿Cuál es su complejidad temporal?
@@ -763,7 +1019,7 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       Como mostramos en la página 44, es 2°+1. Por lo tanto, el tiempo de ejecución para calcular los primeros n números Fibonacci (usando este terrible algoritmo) sigue siendo O(2°).
     </p>
     <p>
-      Ejemplo 15
+      <strong>Ejemplo 15</strong>
     </p>
     <p>
       El siguiente código imprime todos los números Fibonacci de O a n. Sin embargo, esta vez, almacena (es decir, guarda en caché) los valores calculados previamente en una matriz de enteros. Si ya se ha calculado, sólo devuelve la caché. ¿Cuál es su tiempo de ejecución?
@@ -781,7 +1037,7 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       Esta técnica, llamada memoización, es muy común para optimizar algoritmos recursivos de tiempo exponencial.
     </p>
     <p>
-      Ejemplo 16
+      <strong>Ejemplo 16</strong>
     </p>
     <p>
       La siguiente función imprime las potencias de 2 desde 1 hasta n (inclusive). Por ejemplo, si n es 4, imprimiría 1, 2 y 4. ¿Cuál es su tiempo de ejecución?
