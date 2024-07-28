@@ -45,7 +45,7 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       <li>Transferencia electrónica: <code>O(s)</code> , donde s es el tamaño del fichero. Esto significa que el tiempo para transferir el archivo aumenta linealmente con el tamaño del archivo. (Sí, esto es una simplificación, pero está bien para estos fines).</li>
       <li>Transferencia por avión: <code>O(1)</code>con respecto al tamaño del archivo. A medida que aumente el tamaño del archivo, no tardará más en llegarle a tu amigo. El tiempo es constante.</li>
     </ul>
-    <div class="w-full flex justify-center">
+    <div class="w-full flex my-4 md:my-8 justify-center">
       <div class="relative w-52 sm:w-64 md:w-80 h-44 sm:h-52 md:h-72 border-l-2 border-b-2 border-black">
         <div class="h-20 md:h-28 w-full absolute flex justify-center items-end top-0 border-black border-b-2 border-dashed">
           <p class="">O(1)</p>
@@ -388,7 +388,7 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       Es habitual ver tiempos de ejecución <code>O(log N)</code>. ¿De dónde viene esto?
     </p>
     <p>
-      Veamos un ejemplo: la búsqueda binaria. En la búsqueda binaria, buscamos un ejemplo x en una matriz ordenada de N elementos. Primero comparamos x con el punto medio de la matriz. <code class="language-js">If x &#60 middle</code>, entonces retornamos. <code class="language-js">If x &#60 middle</code>, buscamos en el lado izquierdo de la matriz. Si x > medio, buscamos en el lado derecho de la matriz.
+      Veamos un ejemplo: la búsqueda binaria. En la búsqueda binaria, buscamos un ejemplo x en una matriz ordenada de N-elementos. Primero comparamos x con el punto medio de la matriz. <code class="language-js">If x == middle</code>, entonces retornamos. <code class="language-js">If x &#60 middle</code>, buscamos en el lado izquierdo de la matriz. <code class="language-js">If x > middle</code>, buscamos en el lado derecho de la matriz.
     </p>
     <pre>
       <code class="language-js">
@@ -421,11 +421,11 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     </p>
     <pre>
       <code class="language-js">
-        N = 1         /* multiply by 2 */
+        N = 1         
         N = 2         /* multiply by 2 */
         N = 4         /* multiply by 2 */
         N = 8         /* multiply by 2 */
-        N = 16 
+        N = 16        /* multiply by 2 */
       </code>
     </pre>
     <p>
@@ -581,6 +581,17 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       ¿Cuál es el tiempo de ejecución del siguiente código?
     </p>
+    <pre>
+      <code class="language-js">
+        void printPairs(int[] array) &#123
+          for (int i = 0; i &#60 array.length; i++) &#123
+            for (int j = 0; j &#60 array.length; j++) &#123
+              System.out.println(array[i] + "," + array[j]);
+            }
+          }
+        }
+      </code>
+    </pre>
     <p>
       El bucle for interno tiene <code>O(N)</code> iteraciones y es llamado <code>N</code> veces. Por lo tanto, el tiempo de ejecución es <code>O(N<sup>2</sup>)</code>.
     </p>
