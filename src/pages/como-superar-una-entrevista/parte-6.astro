@@ -934,7 +934,7 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       El trabajo dentro del bucle for es constante. Por lo tanto, sólo necesitamos saber cuántas iteraciones realiza el bucle for en el peor de los casos.
     </p>
     <p>
-      El bucle for empezará cuando x = 2 y terminará cuando x * x = n. O, en otras palabras, terminará cuando x=vn (cuando x es igual a la raíz cuadrada de n).
+      El bucle for empezará cuando <code>x = 2</code> y terminará cuando <code>x * x = n</code>. O, en otras palabras, terminará cuando <code>x = ✔︎n</code> (cuando x es igual a la raíz cuadrada de n).
     </p>
     <p>
       Este bucle for es realmente algo como esto
@@ -958,7 +958,7 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       <strong>Ejemplo 11</strong>
     </p>
     <p>
-      ¡El siguiente código calcula n ! (n factorial). ¿Cuál es su complejidad temporal?
+      ¡El siguiente código calcula <code>n!</code> (n factorial). ¿Cuál es su complejidad temporal?
     </p>
     <pre>
       <code class="language-js">
@@ -1010,7 +1010,7 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       Si tuviéramos que generar una permutación, tendríamos que elegir caracteres para cada «ranura»: Supongamos que tenemos 7 caracteres en la cadena. En la primera ranura, tenemos 7 opciones. Una vez elegida la letra, tenemos 6 opciones para el siguiente espacio. (Tenga en cuenta que se trata de 6 opciones <em>for each</em> una de las 7 opciones anteriores.) A continuación, 5 opciones para la siguiente ranura, y así sucesivamente.
     </p>
     <p>
-      Por lo tanto, el número total de opciones es <code>7 * 6 * 5 * 4 * 3 * 2 * 1</code>,que también se expresa como 7! (factorial 7).
+      Por lo tanto, el número total de opciones es <code>7 * 6 * 5 * 4 * 3 * 2 * 1</code>, que también se expresa como 7! (factorial 7).
     </p>
     <p>
       Esto nos dice que hay n! permutaciones. Por lo tanto, la <code>permutación</code> se llama <code>n!</code> veces en su caso base (cuando el <code>prefix</code> es la permutación completa).
@@ -1055,7 +1055,8 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       <code class="language-js">
         int fib(int n) &#123
           if (n &#60= 0) return 0;
-          else if (n == 1) return 1; return fib(n - 1) + fib(n - 2);
+          else if (n == 1) return 1; 
+          return fib(n - 1) + fib(n - 2);
         }
       </code>
     </pre>
@@ -1078,7 +1079,7 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       El siguiente código imprime todos los números Fibonacci desde O hasta n. ¿Cuál es su complejidad temporal?
     </p>
     <pre>
-      <code>
+      <code class="language-js">
         void allFib(int n) &#123
           for (int i= 0; i &#60 n; i++) &#123 
             System.out.println(i + ": "+ fib(i))
@@ -1138,6 +1139,7 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
           if (n &#60= 0) return 0;
           else if (n== 1) return 1;
           else if (memo[n] > 0) return memo[n];
+
           memo[n]= fib(n - 1, memo)+ fib(n - 2, memo);
           return memo[n];
         }
@@ -1147,10 +1149,10 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       Veamos lo que hace este algoritmo.
     </p>
     <pre>
-      <code class="language-">
+      <code class="language-js">
         fib(1) -> return 1
         fib(2)
-          fib(l) -> return 1 
+          fib(1) -> return 1 
           fib(0) -> return 0 
           store 1 at memo[2]
         fib(3)
@@ -1161,17 +1163,17 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
           fib(3) -> lookup memo[3] -> return 2 
           fib(2) -> lookup memo[2] -> return 1 
           store 3 at memo[4]
-        fib(S)
+        fib(5)
           fib(4) -> lookup memo[4] -> return 3
           fib(3) -> lookup memo[3] -> return 2
-          store 5 at memo[S]
+          store 5 at memo[5]
       </code>
     </pre>
     <p>
-      En cada llamada a fib(i), ya hemos calculado y almacenado los valores de fib(i-1) y fib(i-2). Simplemente buscamos esos valores, los sumamos, almacenamos el nuevo resultado y volvemos. Esto lleva una cantidad constante de tiempo.
+      En cada llamada a <code>fib(i)</code>, ya hemos calculado y almacenado los valores de <code>fib(i-1)</code> y <code>fib(i-2)</code>. Simplemente buscamos esos valores, los sumamos, almacenamos el nuevo resultado y volvemos. Esto lleva una cantidad constante de tiempo.
     </p>
     <p>
-      Estamos haciendo una cantidad constante de trabajo N veces, por lo que este es O ( n) tiempo.
+      Estamos haciendo una cantidad constante de trabajo <code>N</code> veces, por lo que este es <code>O(n)</code> tiempo.
     </p>
     <p>
       Esta técnica, llamada memoización, es muy común para optimizar algoritmos recursivos de tiempo exponencial.
@@ -1182,6 +1184,23 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       La siguiente función imprime las potencias de 2 desde 1 hasta n (inclusive). Por ejemplo, si n es 4, imprimiría 1, 2 y 4. ¿Cuál es su tiempo de ejecución?
     </p>
+    <pre>
+      <code class="language-js">
+        int powers0f2(int n) &#123
+          if (n &#60 1) &#123
+            return 0;
+          } else if (n == 1) &#123
+            System.out.println(l);
+            return 1;
+          } else &#123
+            int prev = powers0f2(n / 2);
+            int curr = prev * 2; 
+            System.out.println(curr); 
+            return curr;
+          } 
+        }
+      </code>
+    </pre>
     <p>
       Hay varias formas de calcular este tiempo de ejecución.
     </p>
@@ -1189,50 +1208,68 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       Qué hace
     </p>
     <p>
-      Recorramos una llamada como powers0f2 (50).
+      Recorramos una llamada como <code>powersOf2(50)</code>.
     </p>
+    <pre>
+      <code class="language-js">
+        powers0f2(50)
+          -> powers0f2(25)
+            -> powers0f2(12)
+              -> powers0f2(6)
+                -> powers0f2(3)
+                  -> powersOf2(1)
+                    -> print & return 1 
+                  print & return 2
+                print & return 4
+              print & return 8
+            print & return 16
+          print & return 32
+      </code>
+    </pre>
     <p>
-      El tiempo de ejecución, entonces, es el número de veces que podemos dividir 50 (o n) por 2 hasta llegar al caso base (1). Como vimos en la página 44, el número de veces que podemos dividir n por la mitad hasta llegar a 1 es O(log n).
+      El tiempo de ejecución, entonces, es el número de veces que podemos dividir 50 (o n) por 2 hasta llegar al caso base (1). Como vimos en la página 44, el número de veces que podemos dividir n por la mitad hasta llegar a 1 es <code>O(log n)</code>.
     </p>
-    <p>
+    <p><em>
       Qué significa
+    </em>
     </p>
     <p>
       También podemos aproximarnos al tiempo de ejecución pensando en lo que se supone que está haciendo el código. Se supone que está calculando las potencias de 2 de 1 a n.
     </p>
     <p>
-      Cada llamada a potencias0f2 resulta en exactamente un número impreso y devuelto (excluyendo lo que sucede en las llamadas recursivas). Así que si el algoritmo imprime 13 valores al final, entonces powers0f2 fue llamado 13 veces.
+      Cada llamada a <code>powers0f2</code> resulta en exactamente un número impreso y devuelto (excluyendo lo que sucede en las llamadas recursivas). Así que si el algoritmo imprime 13 valores al final, entonces <code>powers0f2</code> fue llamado 13 veces.
     </p>
     <p>
-      En este caso, se nos dice que imprime todas las potencias de 2 entre 1 y n. Por lo tanto, el número de veces que se llama a la función (que será su tiempo de ejecución) debe ser igual al número de potencias de 2 entre 1 y n. Hay log N potencias de 2 entre 1 y n. Por lo tanto, el tiempo de ejecución es 0(log n).
+      En este caso, se nos dice que imprime todas las potencias de 2 entre 1 y n. Por lo tanto, el número de veces que se llama a la función (que será su tiempo de ejecución) debe ser igual al número de potencias de 2 entre 1 y n. Hay log N potencias de 2 entre 1 y n. Por lo tanto, el tiempo de ejecución es <code>O(log n)</code>.
     </p>
     <p>
       Hay log N potencias de 2 entre 1 y n. Por tanto, el tiempo de ejecución es 0(log n).
     </p>
-    <p>
+    <p><em>
       Tasa de incremento
+    </em>
     </p>
     <p>
       Una última forma de abordar el tiempo de ejecución es pensar en cómo cambia el tiempo de ejecución a medida que n aumenta. Después de todo, esto es exactamente lo que significa tiempo O grande.
     </p>
     <p>
-      Si N pasa de P a P+l, el número de llamadas a powersOfTwo podría no cambiar en absoluto. ¿Cuándo aumentará el número de llamadas a powersOfTwo? Aumentará en 1 cada vez que n duplique su tamaño.
+      Si N pasa de <code>P</code> a <code>P+1</code>, el número de llamadas a <code>powersOfTwo</code> podría no cambiar en absoluto. ¿Cuándo aumentará el número de llamadas a <code>powersOfTwo</code>? Aumentará en 1 cada vez que n duplique su tamaño.
     </p>
     <p>
-      Entonces, cada vez que n se duplica, el número de llamadas a potenciasDos aumenta en 1. Por lo tanto, el número de llamadas a potenciasDos es el número de veces que puedes duplicar 1 hasta obtener n. Es x en la ecuación 2x = n.
+      Entonces, cada vez que n se duplica, el número de llamadas a <code>powersOfTwo</code> aumenta en 1. Por lo tanto, el número de llamadas a <code>powersOfTwo</code> es el número de veces que puedes duplicar 1 hasta obtener n. Es x en la ecuación <code>2<sup>x</sup> = n</code>.
     </p>
     <p>
-      ¿Qué es x? El valor de x es log n. Esto es exactamente lo que significa x log n. 
+      ¿Qué es x? El valor de x es <code>log n</code>. Esto es exactamente lo que significa <code>x = log n</code>. 
     </p>
     <p>
-      Por lo tanto, el tiempo de ejecución es O(log n).
+      Por lo tanto, el tiempo de ejecución es <code>O(log n)</code>.
     </p>
-    <h3>
+    <h3 class="border-black border-y-2">
       Problemas adicionales
     </h3>
     <ol>
-      <li>
-        El siguiente código calcula el producto de a y b. ¿Cuál es su tiempo de ejecución?
+      <li class="font-semibold">
+        El siguiente código calcula el producto de <code class="font-light">a</code> y <code class="font-light">b</code>. ¿Cuál es su tiempo de ejecución?
       </li>
       <li>
         El siguiente código calcula ab. ¿Cuál es su tiempo de ejecución?
