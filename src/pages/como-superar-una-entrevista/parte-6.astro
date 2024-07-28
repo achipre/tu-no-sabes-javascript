@@ -1066,7 +1066,7 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       Hay 2 ramas por llamada, y vamos tan profundo como <code>N</code>, por lo tanto el tiempo de ejecución es <code>O(2<sup>N</sup>)</code>.
     </p>
-    <p>
+    <p class="pl-4 sm:pl-6 md:pl-8 border-l-2 sm:border-l-4 md:border-l-8 border-black">
       A través de algunas matemáticas muy complicadas, en realidad podemos obtener un tiempo de ejecución más ajustado. En efecto, el tiempo es exponencial, pero en realidad está más cerca de <code>0(1.6<sup>N</sup>)</code>. La razón de que no sea exactamente <code>0(2<sup>N</sup>)</code> es que, en la parte inferior de la pila de llamadas, a veces sólo hay una llamada. Resulta que muchos de los nodos están en la parte inferior (como ocurre en la mayoría de los árboles), por lo que esta llamada única frente a la doble supone una gran diferencia. Decir <code>0(2<sup>N</sup>)</code> sería suficiente para el ámbito de una entrevista, sin embargo (y sigue siendo técnicamente correcto, si usted lee la nota sobre big theta en la página 39). Podrías conseguir «puntos extra» si eres capaz de reconocer que en realidad será menos que eso.
     </p>
     <p>

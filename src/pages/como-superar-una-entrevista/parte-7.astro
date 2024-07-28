@@ -49,13 +49,56 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       Por lo general, sólo se espera que conozcas lo básico. Aquí tienes una lista de conocimientos imprescindibles:
     </p>
+    <div class="w-full flex justify-center my-8">
+      <table class="font-poppins">
+        <thead>
+          <tr>
+            <td>Estructura de Datos</td>
+            <td>Algoritmos</td>
+            <td>Conceptos</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Listas enlazadas</td>
+            <td>Búsqueda exhaustiva</td>
+            <td>Manipulación de bits</td>
+          </tr>
+          <tr>
+            <td>Árboles, Pruebas y Gráficos</td>
+            <td>Búsqueda en profundidad</td>
+            <td>Memoria (pila vs. montón)</td>
+          </tr>
+          <tr>
+            <td>Pilas y colas</td>
+            <td>Búsqueda binaria</td>
+            <td>Recursión</td>
+          </tr>
+          <tr>
+            <td>Montones</td>
+            <td>Ordenación combinada</td>
+            <td>Programación dinámica</td>
+          </tr>
+          <tr>
+            <td>Vectores y listas array</td>
+            <td>Ordenación rápida</td>
+            <td>Tiempo y espacio Big O</td>
+          </tr>
+          <tr>
+            <td>Tablas hash</td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <p>
       Para cada uno de estos temas, asegúrate de que entiendes cómo utilizarlos e implementarlos y, en su caso, la complejidad espacial y temporal.
     </p>
     <p>
       Practicar la implementación de las estructuras de datos y el algoritmo (en papel, y luego en un ordenador) también es un gran ejercicio. Te ayudará a aprender cómo funciona el interior de las estructuras de datos, lo que es importante para muchas entrevistas.
     </p>
-    <p>
+    <p class="pl-4 sm:pl-6 md:pl-8 border-l-2 sm:border-l-4 md:border-l-8 border-black">
       ¿Te has perdido este párrafo? Es muy importante. Si no te sientes muy, muy cómodo con cada una de las estructuras de datos y algoritmos listados, practica implementándolos desde cero
     </p>
     <p>
@@ -67,8 +110,70 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       La tabla de abajo es útil para muchas preguntas que involucran escalabilidad o cualquier tipo de limitación de memoria. Memo rizar esta tabla no es estrictamente necesario, pero puede ser útil. Al menos debería sentirse cómodo derivándola.
     </p>
+    <div class="w-full flex justify-center my-8">
+      <table class="font-poppins">
+        <thead  class="text-center">
+          <tr>
+            <td>Power of 2</td>
+            <td>Exact Value (x)</td>
+            <td>Approx. Value</td>
+            <td>X Bytes into MB, GB, etc.</td>
+          </tr>
+        </thead>
+        <tbody class="text-center">
+          <tr>
+            <td>7</td>
+            <td>128</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>256</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td>1024</td>
+            <td>1 thousand</td>
+            <td>1 KB</td>
+          </tr>
+          <tr>
+            <td>16</td>
+            <td>65,536</td>
+            <td></td>
+            <td>64 KB</td>
+          </tr>
+          <tr>
+            <td>20</td>
+            <td>1,048,576</td>
+            <td>1 million</td>
+            <td>1 M</td>
+          </tr>
+          <tr>
+            <td>30</td>
+            <td>1,073,741,824</td>
+            <td>1 billion</td>
+            <td>1 GB</td>
+          </tr>
+          <tr>
+            <td>32</td>
+            <td>4,294,967,296</td>
+            <td></td>
+            <td>4 GB</td>
+          </tr>
+          <tr>
+            <td>40</td>
+            <td>l,099,511,627,776</td>
+            <td>1 trillion</td>
+            <td>1 TB</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <p>
-      Por ejemplo, puedes usar esta tabla para calcular rápidamente que un vector de bits que asigna cada entero de 32 bits a un valor booleano puede caber en la memoria de una máquina típica. Dado que cada entero ocupa un bit en este vector de bits, necesitamos 232 bits (o 229 bytes) para almacenar esta asignación, lo que equivale aproximadamente a medio giga byte de memoria, que puede almacenarse fácilmente en una máquina normal.
+      Por ejemplo, puedes usar esta tabla para calcular rápidamente que un vector de bits que asigna cada entero de 32 bits a un valor booleano puede caber en la memoria de una máquina típica. Hay 2<sup>32</sup> números enteros. Dado que cada entero ocupa un bit en este vector de bits, necesitamos 2<sup>32</sup> bits (o 2<sup>29</sup> bytes) para almacenar esta asignación, lo que equivale aproximadamente a medio giga byte de memoria, que puede almacenarse fácilmente en una máquina normal.
     </p>
     <p>
       Si va a realizar una entrevista telefónica con una empresa que opera a través de Internet, puede resultarle útil tener esta tabla a mano.
@@ -79,61 +184,129 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       El siguiente mapa/diagrama de flujo te guía a través de la resolución de un problema. Utilícelo en sus prácticas. Puedes descargar este manual y otros más en CrackingTheCodinglnterview.com.
     </p>
-    Un diagrama de flujo de resolución de problemas
+    <p class="font-light italic text-center sm:text-2xl md:text-3xl">
+      Un diagrama de flujo de resolución de problemas
+    </p>
+    <div>
+      <p class="text-3xl"><span class="bg-red-400 w-4 sm:w-8 md:w-12 h-4 sm:h-8 md:h-12 inline-block rounded-lg text-pink-100 font-bold text-center text-lg sm:text-xl md:text-3xl !leading-[3rem]">1</span>
+        Escuche
+      </p>
+      <p>
+        <strong>Presta mucha dosis de atención</strong> a toda la información de la descripción del problema. Probablemente la necesites toda para un algoritmo óptimo.
+      </p>
+    </div>
+    <div>
+      <p class="text-3xl"><span class="bg-red-400 w-4 sm:w-8 md:w-12 h-4 sm:h-8 md:h-12 inline-block rounded-lg text-pink-100 font-bold text-center text-lg sm:text-xl md:text-3xl !leading-[3rem]">2</span>
+        Ejemplo
+      </p>
+      <p>
+        La mayoría de los ejemplos son demasiado pequeños o son casos especiales. <strong>Depura tu ejemplo</strong>. ¿Es un caso especial? ¿Es lo suficientemente grande?
+      </p>
+    </div>
+    <div>
+      <p class="text-3xl"><span class="bg-red-400 w-4 sm:w-8 md:w-12 h-4 sm:h-8 md:h-12 inline-block rounded-lg text-pink-100 font-bold text-center text-lg sm:text-xl md:text-3xl !leading-[3rem]">3</span>
+        Fuerza bruta
+      </p>
+      <p>
+        Consigue una solución de fuerza bruta lo antes posible. No te preocupes por desarrollar un algoritmo eficiente todavía. Establece un algoritmo ingenuo y su tiempo de ejecución, luego optimiza a partir de ahí. Pero no codifique todavía'.
+      </p>
+    </div>
+    <div>
+      <p class="text-3xl"><span class="bg-red-400 w-4 sm:w-8 md:w-12 h-4 sm:h-8 md:h-12 inline-block rounded-lg text-pink-100 font-bold text-center text-lg sm:text-xl md:text-3xl !leading-[3rem]">4</span>
+        Optimiza
+      </p>
+      <p>
+        Repasa tu fuerza bruta con la <strong>optimización BUD</strong> o prueba algunas de estas ideas:
+      </p>
+      <ol>
+        <li>
+          Busca cualquier información no utilizada. Normalmente necesitas toda la información de un problema.
+        </li>
+        <li>
+          Resuélvelo manualmente en un ejemplo, luego haz ingeniería inversa de tu proceso de pensamiento. ¿Cómo lo resolviste?
+        </li>
+        <li>
+          Resuélvelo «incorrectamente» y piensa por qué falla el algoritmo. ¿Puedes solucionar esos problemas?
+        </li>
+        <li>
+          Haz una tabla de tiempos vs. espacios. ¡Las tablas hash son especialmente útiles!
+        </li>
+        <li>
+        </li>
+      </ol>
+    </div>
+    <div>
+      <p class="text-3xl"><span class="bg-red-400 w-4 sm:w-8 md:w-12 h-4 sm:h-8 md:h-12 inline-block rounded-lg text-pink-100 font-bold text-center text-lg sm:text-xl md:text-3xl !leading-[3rem]">5</span>
+        Recorrido
+      </p>
+      <p>
+        Ahora que tiene una solución óptima, <strong>repase su planteamiento en detalle</strong>. Asegúrate de que entiendes todos los detalles antes de empezar a programar.
+      </p>
+    </div>
+    <div>
+      <p class="text-3xl"><span class="bg-red-400 w-4 sm:w-8 md:w-12 h-4 sm:h-8 md:h-12 inline-block rounded-lg text-pink-100 font-bold text-center text-lg sm:text-xl md:text-3xl !leading-[3rem]">6</span>
+        Implementar
+      </p>
+      <p>
+        Tu objetivo es escribir un <strong>código atractivo</strong>. Modulariza tu código desde el principio y refactoriza para limpiar todo lo que no sea bonito.
+      </p>
+      <p class="bg-red-200">
+        <strong>Sigue hablando</strong> Tu entrevistador quiere saber cómo enfocas el problema.
+      </p>
+    </div>
+    <div>
+      <p class="text-3xl"><span class="bg-red-400 w-4 sm:w-8 md:w-12 h-4 sm:h-8 md:h-12 inline-block rounded-lg text-pink-100 font-bold text-center text-lg sm:text-xl md:text-3xl !leading-[3rem]">7</span>
+        Prueba
+      </p>
+      <p>
+        Haz las pruebas en este orden:
+      </p>
+      <ol>
+        <li>
+          Prueba conceptual. Recorre el código como lo harías en una revisión detallada.
+        </li>
+        <li>
+          Código inusual o no estándar.
+        </li>
+        <li>
+          Puntos calientes, como nodos aritméticos y nulos.
+        </li>
+        <li>
+          Pequeños casos de prueba. Es mucho más rápido que un caso de prueba grande e igual de eficaz.
+        </li>
+        <li>
+          Casos especiales y casos extremos.
+        </li>
+      </ol>
+      <p>
+        Y cuando encuentres errores, <strong>¡arréglalos con cuidado!</strong>
+      </p>
+    </div>
+    <div class="bg-red-200 p-6 rounded-lg">
+      <p class="text-2xl">
+        BUD Optimización 
+      </p>
+      <p>
+        Cuellos de botella 
+      </p>
+      <p>
+        Trabajo innecesario 
+      </p>
+      <p>
+        Trabajo duplicado
+      </p>
 
-    Si va a realizar una entrevista telefónica con una empresa que opera a través de Internet, puede resultarle útil tener este cuadro delante.
+    </div>
 
-    Escuche
 
-    Presta mucha dosis de atención a toda la información de la descripción del problema. Probablemente la necesites toda para un algoritmo óptimo.
+    
 
-    Ejemplo
 
-    La mayoría de los ejemplos son demasiado pequeños o son casos especiales. Depura tu ejemplo. ¿Es un caso especial? ¿Es lo suficientemente grande?
 
-    Fuerza bruta
 
-    Consigue una solución de fuerza bruta lo antes posible. No te preocupes por desarrollar un algoritmo eficiente todavía. Establece un algoritmo ingenuo y su tiempo de ejecución, luego optimiza a partir de ahí. Pero no codifique todavía'.
 
-    Optimiza
 
-    Repasa tu fuerza bruta con la optimización BUD o prueba algunas de estas ideas:
 
-    Busca cualquier información no utilizada. Normalmente necesitas toda la información de un problema.
-
-    Resuélvelo manualmente en un ejemplo, luego haz ingeniería inversa de tu proceso de pensamiento. ¿Cómo lo resolviste?
-
-    Resuélvelo «incorrectamente» y piensa por qué falla el algoritmo. ¿Puedes solucionar esos problemas?
-
-    Haz una tabla de tiempos y espacios. ¡Las tablas hash son especialmente útiles!
-
-    Recorrido
-
-    Ahora que tiene una solución óptima, repase su planteamiento en detalle. Asegúrate de que entiendes todos los detalles antes de empezar a programar.
-
-    Implementar
-
-    Tu objetivo es escribir un código atractivo. Modulariza tu código desde el principio y refactoriza para limpiar todo lo que no sea bonito.
-
-    Sigue hablando Tu entrevistador quiere saber cómo enfocas el problema.
-
-    Prueba
-
-    Haz las pruebas en este orden:
-
-    Prueba conceptual. Recorre el código como lo harías en una revisión detallada.
-
-    Código inusual o no estándar.
-
-    Puntos calientes, como nodos aritméticos y nulos.
-
-    Pequeños casos de prueba. Es mucho más rápido que un caso de prueba grande e igual de eficaz.
-
-    Casos especiales y casos extremos.
-
-    Y cuando encuentres errores, ¡arréglalos con cuidado!
-
-    BUD Optimización Cuellos de botella Trabajo innecesario Trabajo duplicado
     <p>
       Repasaremos este organigrama con más detalle.
     </p>
