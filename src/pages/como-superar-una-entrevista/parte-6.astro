@@ -1268,83 +1268,240 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       Problemas adicionales
     </h3>
     <ol>
-      <li class="font-semibold">
-        El siguiente código calcula el producto de <code class="font-light">a</code> y <code class="font-light">b</code>. ¿Cuál es su tiempo de ejecución?
+      <li class="font-semibold list-none">
+        Vl.1 El siguiente código calcula el producto de <code class="font-light">a</code> y <code class="font-light">b</code>. ¿Cuál es su tiempo de ejecución?
       </li>
-      <li>
-        El siguiente código calcula ab. ¿Cuál es su tiempo de ejecución?
+      <pre>
+        <code class="language-js">
+          int product(int a, int b) &#123
+            int sum = 0;
+            for (int i= 0; i &#60 b; i++) &#123
+              sum += a;
+            }
+            return sum;
+          }
+        </code>
+      </pre>
+      <li class="font-semibold list-none">
+        Vl.2 El siguiente código calcula <code class="font-light">a<sup>b</sup></code>. ¿Cuál es su tiempo de ejecución?
       </li>
-      <li>
-        El siguiente código calcula a % b. ¿Cuál es su tiempo de ejecución?
+      <pre>
+        <code class="language-js">
+          int power(int a, int b) &#123
+            if (b &#60 0) &#123
+              return 0; // error
+            } else if (b == 0) &#123
+              return 1;
+            } else &#123
+              return a * power(a, b - 1); 
+            }
+          }
+        </code>
+      </pre>
+      <li class="font-semibold list-none">
+        Vl.3 El siguiente código calcula <code class="font-light">a % b</code>. ¿Cuál es su tiempo de ejecución?
       </li>
-      <li>
-        El siguiente código realiza la división de enteros. ¿Cuál es su tiempo de ejecución (suponiendo que a y b son ambos positivos)?
+      <pre>
+        <code class="language-js">
+          int mod(int a, int b) &#123 
+            if (b &#60= 0) &#123
+              return -1;
+            }
+            int div = a I b;
+            return a - div * b;
+          }
+        </code>
+      </pre>
+      <li class="font-semibold list-none">
+        Vl.4 El siguiente código realiza la división de enteros. ¿Cuál es su tiempo de ejecución (suponiendo que a y b son ambos positivos)?
       </li>
-      <li>
-        El siguiente código calcula la raíz cuadrada [entera] de un número. Si el número no es un cuadrado perfecto (no hay raíz cuadrada entera), entonces devuelve -1. Lo hace por conjeturas sucesivas. Si n es 100, primero adivina SO. ¿Demasiado alto? Prueba con algo más bajo, a medio camino entre 1 y SO. ¿Cuál es su tiempo de ejecución?
+      <pre>
+        <code class="language-js">
+          int div(int a, int b) &#123
+            int count = 0;
+            int sum = b;
+            while (sum &#123= a) &#123
+              sum += b;
+              count++;
+            }
+            return count;
+          }
+        </code>
+      </pre>
+      <li class="font-semibold list-none">
+        Vl.5 El siguiente código calcula la raíz cuadrada [entera] de un número. Si el número no es un cuadrado perfecto (no hay raíz cuadrada entera), entonces devuelve -1. Lo hace por conjeturas sucesivas. Si n es 100, primero adivina SO. ¿Demasiado alto? Prueba con algo más bajo, a medio camino entre 1 y SO. ¿Cuál es su tiempo de ejecución?
       </li>
-      <li>
-        El siguiente código calcula la raíz cuadrada [entera] de un número. Si el número no es cuadrado perfecto (no hay raíz cuadrada entera), entonces devuelve -1. Lo hace probando con números cada vez más grandes hasta que encuentra el valor correcto (o es demasiado alto). ¿Cuál es su tiempo de ejecución?
+      <pre>
+        <code class="language-js">
+          int sqrt(int n) &#123
+            return sqrt_helper(n, 1, n);
+          }
+          int sqrt_helper(int n, int min, int max) &#123
+            if (max &#60 min) return -1; // no square root
+
+            int guess = (min + max) / 2·,
+            if (guess * guess == n) &#123 // found it!
+              return guess;
+            } else if (guess *guess &#60 n) &#123 // too low
+              return sqrt_helper(n, guess + 1, max); // try higher 
+            } else &#123 // too high
+              return sqrt_helper(n, min, guess - 1); // try lower
+            }
+          }
+        </code>
+      </pre>
+      <li class="font-semibold list-none">
+        Vl.6 El siguiente código calcula la raíz cuadrada [entera] de un número. Si el número no es cuadrado perfecto (no hay raíz cuadrada entera), entonces devuelve -1. Lo hace probando con números cada vez más grandes hasta que encuentra el valor correcto (o es demasiado alto). ¿Cuál es su tiempo de ejecución?
       </li>
-      <li>
-        Si un árbol de búsqueda binario no está equilibrado, ¿cuánto tiempo puede tardar (en el peor de los casos) en encontrar un elemento?
+      <pre>
+        <code class="language-js">
+          int sqrt(int n) &#123
+            for (int guess = 1; guess * guess &#60= n; guess++) &#123
+              if (guess * guess == n) &#123
+                return guess;
+              }
+            }
+            return -1;
+          }
+        </code>
+      </pre>
+      <li class="font-semibold list-none">
+        Vl.7 Si un árbol de búsqueda binario no está equilibrado, ¿cuánto tiempo puede tardar (en el peor de los casos) en encontrar un elemento?
       </li>
-      <li>
-        Estás buscando un valor específico en un árbol binario, pero el árbol no es un árbol de búsqueda binario. ¿Cuál es su complejidad temporal?
+      <li class="font-semibold list-none">
+        Vl.8 Estás buscando un valor específico en un árbol binario, pero el árbol no es un árbol de búsqueda binario. ¿Cuál es su complejidad temporal?
       </li>
-      <li>
-        El método appendToNew añade un valor a un array creando un nuevo array más largo y devolviendo este array más largo. Has utilizado el método appendToNew para crear una función copyArray que llama repetidamente a appendToNew. ¿Cuánto tarda en copiarse un array?
+      <li class="font-semibold list-none">
+        Vl.9 El método <code class="font-light">appendToNew</code> añade un valor a un array creando un nuevo array más largo y devolviendo este array más largo. Has utilizado el método <code class="font-light">appendToNew</code> para crear una función <code class="font-light">copyArray</code> que llama repetidamente a <code class="font-light">appendToNew</code>. ¿Cuánto tarda en copiarse un array?
       </li>
-      <li>
-        El siguiente código suma los dígitos de un número. ¿Cuál es su tiempo O grande?
+      <pre>
+        <code class="language-js">
+          int[] copyArray(int[] array) &#123
+            int[] copy= new int[0];
+            for (int value : array) &#123
+              copy = appendToNew(copy, value); 
+            }
+            return copy;
+          }
+          int[] appendToNew(int[] array, int value) &#123 
+            // copy all elements over to new array 
+            int[] bigger= new int[array.length + 1]; 
+            for (int i = 0; i &#60 array.length; i++) &#123
+              bigger[i] = array[i];
+            }
+            // add new element 
+            bigger[bigger.length - 1] = value
+            return bigger;
+          }
+        </code>
+      </pre>
+      <li class="font-semibold list-none">
+        Vl.10 El siguiente código suma los dígitos de un número. ¿Cuál es su tiempo O grande?
       </li>
-      <li>
-        El siguiente código imprime todas las cadenas de longitud k en las que los caracteres están ordenados. Para ello, genera todas las cadenas de longitud k y comprueba si cada una está ordenada. ¿Cuál es su tiempo de ejecución?
+      <pre>
+        <code class="language-js">
+          int sumDigits(int n) &#123
+            int sum = 0;
+            while (n > 0) &#123
+              sum += n % 10;
+              n /= 10; return sum;
+            }
+          }
+        </code>
+      </pre>
+      <li class="font-semibold list-none">
+        Vl.11 El siguiente código imprime todas las cadenas de longitud k en las que los caracteres están ordenados. Para ello, genera todas las cadenas de longitud k y comprueba si cada una está ordenada. ¿Cuál es su tiempo de ejecución?
       </li>
-      <li>
-        El siguiente código calcula la intersección (el número de elementos en común) de dos matrices. Asume que ninguna de las dos matrices tiene duplicados. Calcula la intersección ordenando una matriz (matriz b) y luego iterando a través de la matriz a comprobando (mediante búsqueda binaria) si cada valor está en b. ¿Cuál es su tiempo de ejecución?
+      <pre>
+        <code class="language-js">
+          int numChars = 26;
+          void printSortedStrings(int remaining) &#123
+            printSortedStrings(remaining, "");
+          }
+          void printSortedStrings(int remaining, String prefix) &#123 
+            if (remaining== 0) &#123
+              if (isinOrder(prefix)) &#123
+                System.out.println(prefix);
+              }
+            } else &#123
+              for (int i= 0; i &#60 numchars; i++) &#123
+                char c = ithletter(i);
+                printSortedStrings(remaining - 1, prefix + c);
+              }
+            }
+          }
+          boolean isinOrder(String s) &#123
+            for (int i= 1; i &#60 s.length(); i++) &#123
+              int prev ithLetter(s.charAt(i - 1));
+              int curr = ithLetter(s.charAt(i));
+              if (prev > curr) &#123
+                return false;
+              }
+            }
+            return true;
+          }
+          char ithLetter(int i) &#123
+            return (char) (((int) 'a') + i);
+          }
+        </code>
+      </pre>
+      <li class="font-semibold list-none">
+        Vl.12 El siguiente código calcula la intersección (el número de elementos en común) de dos matrices. Asume que ninguna de las dos matrices tiene duplicados. Calcula la intersección ordenando una matriz (matriz <code class="font-light">b</code>) y luego iterando a través de la matriz a comprobando (mediante búsqueda binaria) si cada valor está en b. ¿Cuál es su tiempo de ejecución?
       </li>
+      <pre>
+        <code class="language-js">
+          int intersection(int[] a, int[] b) &#123 
+            mergesort(b);
+              int intersect = 0;
+            
+              for (int x : a) &#123 x) >= 0) &#123 
+                if (binarySearch(b, x) >= 0) &#123
+                  intersect++;
+                } 
+              }
+              return intersect;
+            }
+        </code>
+      </pre>
     </ol>
     
-    <h3>Soluciones</h3>
+    <h3 class="border-black border-y-2">Soluciones</h3>
     <ol>
       <li>
-        1. O(b). El bucle for sólo itera a través de b.
+        <code>O(b)</code>. El bucle for sólo itera a través de <code>b</code>.
       </li>
       <li>
-        2. 0(b). El código recursivo itera a través de b llamadas, ya que resta uno en cada nivel.
+        <code>O(b)</code>. El código recursivo itera a través de <code>b</code> llamadas, ya que resta uno en cada nivel.
       </li>
       <li>
-        3. 0(1). Hace una cantidad constante de trabajo.
+        <code>O(1)</code>. Hace una cantidad constante de trabajo.
       </li>
       <li>
-        4. 0( X ). La variable count eventualmente será igual a X. El bucle while itera count veces. Por lo tanto, itera X veces.
+        <code>O(<sup>a</sup>&frasl;<sub>b</sub>)</code>. La variable count eventualmente será igual a <code>O<sup>a</sup>&frasl;<sub>b</sub></code>. El bucle while itera count veces. Por lo tanto, itera <code>O<sup>a</sup>&frasl;<sub>b</sub></code> veces.
       </li>
       <li>
-        5. 0(log n). Este algoritmo es esencialmente hacer una búsqueda binaria para encontrar la raíz cuadrada. Por lo tanto, el tiempo de ejecución es O(log n).
+        <code>O(log n)</code>. Este algoritmo es esencialmente hacer una búsqueda binaria para encontrar la raíz cuadrada. Por lo tanto, el tiempo de ejecución es <code>O(log n)</code>.
       </li>
       <li>
-        6. O(sqrt(n)). Esto es sólo un bucle directo que se detiene cuando guess*guess > n (o, en otras palabras, cuando guess > sqrt(n)).
+        <code>O(sqrt(n))</code>. Esto es sólo un bucle directo que se detiene cuando <code>guess*guess > n</code> (o, en otras palabras, cuando <code>guess > sqrt(n))</code>.
       </li>
       <li>
-        7. O(n), donde n es el número de nodos del árbol. El tiempo máximo para encontrar un elemento es la profundidad árbol.El árbol podría ser una lista recta hacia abajo y tienen profundidad n.
+        <code>O(n)</code>, donde n es el número de nodos del árbol. El tiempo máximo para encontrar un elemento es la profundidad árbol.El árbol podría ser una lista recta hacia abajo y tienen profundidad n.
       </li>
       <li>
-        8. O(n). Sin ninguna propiedad de ordenación en los nodos, podríamos tener que buscar a través de todos los nodos.
+        <code>O(n)</code>. Sin ninguna propiedad de ordenación en los nodos, podríamos tener que buscar a través de todos los nodos.
       </li>
       <li>
-        9. O(n2), donde n es el número de elementos de la matriz. La primera llamada a append To New requiere 1 copia, la segunda 2 copias, la tercera 3 copias y así sucesivamente. El tiempo total será la suma de 1 a n, que es O(n2).
+        <code>O(n<sup>2</sup>)</code>, donde n es el número de elementos de la matriz. La primera llamada a <code>appendToNew</code> requiere 1 copia, la segunda 2 copias, la tercera 3 copias y así sucesivamente. El tiempo total será la suma de 1 a n, que es <code>O(n<sup>2</sup>)</code>.
       </li>
       <li>
-        10. El tiempo de ejecución será el número de dígitos del número. Un número con d dígitos puede tener un valor de hasta 10d. Si n = 10d, entonces d = log n. Por lo tanto, el tiempo de ejecución es 0(log n).
+        <code>O(log n)</code>. El tiempo de ejecución será el número de dígitos del número. Un número con d dígitos puede tener un valor de hasta <code>10<sup>d</sup>. If n = 10<sup>d</sup></code>, entonces <code>d = log n</code>. Por lo tanto, el tiempo de ejecución es <code>O(log n)</code>.
       </li>
       <li>
-        11. 0(kck), siendo k la longitud de la cadena y c el número de caracteres del alfabeto. Se tarda 0(c k) de tiempo en generar cada cadena. Luego, hay que comprobar que cada una de ellas está ordenada, lo que lleva O(k) tiempo.
+        <code>O(kc<sup>k</sup>)</code>, siendo k la longitud de la cadena y c el número de caracteres del alfabeto. Se tarda <code>O(c<sup>k</sup>)</code> de tiempo en generar cada cadena. Luego, hay que comprobar que cada una de ellas está ordenada, lo que lleva <code>O(k)</code> tiempo.
       </li>
       <li>
-        12. 0(b log b + a log b).Primero, tenemos que ordenar el array b, lo que lleva O(b log b) tiempo. Luego, para cada elemento de a, hacemos una búsqueda binaria en tiempo 0(log b). La segunda parte tarda O(a log b).
-      </li>
-      <li>
+        <code>O(b log b + a log b)</code>.Primero, tenemos que ordenar el array b, lo que lleva <code>O(b log b)</code> tiempo. Luego, para cada elemento de a, hacemos una búsqueda binaria en tiempo <code>O(log b)</code>. La segunda parte tarda <code>O(a log b)</code>.
       </li>
     </ol>
   </article>
