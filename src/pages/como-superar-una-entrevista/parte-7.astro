@@ -187,126 +187,154 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p class="font-light italic text-center sm:text-2xl md:text-3xl">
       Un diagrama de flujo de resolución de problemas
     </p>
-    <div>
-      <p class="text-3xl"><span class="bg-red-400 w-4 sm:w-8 md:w-12 h-4 sm:h-8 md:h-12 inline-block rounded-lg text-pink-100 font-bold text-center text-lg sm:text-xl md:text-3xl !leading-[3rem]">1</span>
-        Escuche
-      </p>
-      <p>
-        <strong>Presta mucha dosis de atención</strong> a toda la información de la descripción del problema. Probablemente la necesites toda para un algoritmo óptimo.
-      </p>
-    </div>
-    <div>
-      <p class="text-3xl"><span class="bg-red-400 w-4 sm:w-8 md:w-12 h-4 sm:h-8 md:h-12 inline-block rounded-lg text-pink-100 font-bold text-center text-lg sm:text-xl md:text-3xl !leading-[3rem]">2</span>
-        Ejemplo
-      </p>
-      <p>
-        La mayoría de los ejemplos son demasiado pequeños o son casos especiales. <strong>Depura tu ejemplo</strong>. ¿Es un caso especial? ¿Es lo suficientemente grande?
-      </p>
-    </div>
-    <div>
-      <p class="text-3xl"><span class="bg-red-400 w-4 sm:w-8 md:w-12 h-4 sm:h-8 md:h-12 inline-block rounded-lg text-pink-100 font-bold text-center text-lg sm:text-xl md:text-3xl !leading-[3rem]">3</span>
-        Fuerza bruta
-      </p>
-      <p>
-        Consigue una solución de fuerza bruta lo antes posible. No te preocupes por desarrollar un algoritmo eficiente todavía. Establece un algoritmo ingenuo y su tiempo de ejecución, luego optimiza a partir de ahí. Pero no codifique todavía'.
-      </p>
-    </div>
-    <div>
-      <p class="text-3xl"><span class="bg-red-400 w-4 sm:w-8 md:w-12 h-4 sm:h-8 md:h-12 inline-block rounded-lg text-pink-100 font-bold text-center text-lg sm:text-xl md:text-3xl !leading-[3rem]">4</span>
-        Optimiza
-      </p>
-      <p>
-        Repasa tu fuerza bruta con la <strong>optimización BUD</strong> o prueba algunas de estas ideas:
-      </p>
-      <ol>
-        <li>
-          Busca cualquier información no utilizada. Normalmente necesitas toda la información de un problema.
-        </li>
-        <li>
-          Resuélvelo manualmente en un ejemplo, luego haz ingeniería inversa de tu proceso de pensamiento. ¿Cómo lo resolviste?
-        </li>
-        <li>
-          Resuélvelo «incorrectamente» y piensa por qué falla el algoritmo. ¿Puedes solucionar esos problemas?
-        </li>
-        <li>
-          Haz una tabla de tiempos vs. espacios. ¡Las tablas hash son especialmente útiles!
-        </li>
-        <li>
-        </li>
-      </ol>
-    </div>
-    <div>
-      <p class="text-3xl"><span class="bg-red-400 w-4 sm:w-8 md:w-12 h-4 sm:h-8 md:h-12 inline-block rounded-lg text-pink-100 font-bold text-center text-lg sm:text-xl md:text-3xl !leading-[3rem]">5</span>
-        Recorrido
-      </p>
-      <p>
-        Ahora que tiene una solución óptima, <strong>repase su planteamiento en detalle</strong>. Asegúrate de que entiendes todos los detalles antes de empezar a programar.
-      </p>
-    </div>
-    <div>
-      <p class="text-3xl"><span class="bg-red-400 w-4 sm:w-8 md:w-12 h-4 sm:h-8 md:h-12 inline-block rounded-lg text-pink-100 font-bold text-center text-lg sm:text-xl md:text-3xl !leading-[3rem]">6</span>
-        Implementar
-      </p>
-      <p>
-        Tu objetivo es escribir un <strong>código atractivo</strong>. Modulariza tu código desde el principio y refactoriza para limpiar todo lo que no sea bonito.
-      </p>
-      <p class="bg-red-200">
-        <strong>Sigue hablando</strong> Tu entrevistador quiere saber cómo enfocas el problema.
-      </p>
-    </div>
-    <div>
-      <p class="text-3xl"><span class="bg-red-400 w-4 sm:w-8 md:w-12 h-4 sm:h-8 md:h-12 inline-block rounded-lg text-pink-100 font-bold text-center text-lg sm:text-xl md:text-3xl !leading-[3rem]">7</span>
-        Prueba
-      </p>
-      <p>
-        Haz las pruebas en este orden:
-      </p>
-      <ol>
-        <li>
-          Prueba conceptual. Recorre el código como lo harías en una revisión detallada.
-        </li>
-        <li>
-          Código inusual o no estándar.
-        </li>
-        <li>
-          Puntos calientes, como nodos aritméticos y nulos.
-        </li>
-        <li>
-          Pequeños casos de prueba. Es mucho más rápido que un caso de prueba grande e igual de eficaz.
-        </li>
-        <li>
-          Casos especiales y casos extremos.
-        </li>
-      </ol>
-      <p>
-        Y cuando encuentres errores, <strong>¡arréglalos con cuidado!</strong>
-      </p>
-    </div>
-    <div class="bg-red-200 p-6 rounded-lg">
-      <p class="text-2xl">
-        BUD Optimización 
-      </p>
-      <p>
-        Cuellos de botella 
-      </p>
-      <p>
-        Trabajo innecesario 
-      </p>
-      <p>
-        Trabajo duplicado
-      </p>
-
-    </div>
-
-
+    <div class="flex gap-8">
+      <div class="left w-1/2">
+        <div class="relative">
+          <p class="text-3xl relative">
+            <span class="bg-red-400 w-4 sm:w-8 md:w-12 h-4 sm:h-8 md:h-12 inline-block rounded-lg text-pink-100 font-bold text-center text-lg sm:text-xl md:text-3xl !leading-[3rem]">1</span>
+            Escuche
+          </p>
+          <div class="flex items-center absolute top-5 -right-5">
+            <span class="w-60 border-b-4 border-dashed border-black"></span><span>►</span>
+          </div>
+          <p class="w-4/5">
+            <strong>Presta mucha dosis de atención</strong> a toda la información de la descripción del problema. Probablemente la necesites toda para un algoritmo óptimo.
+          </p>
+        </div>
+        <div class="bg-red-200 p-6 rounded-lg w-4/5">
+          <p class="text-2xl">
+            BUD Optimización 
+          </p>
+          <p>
+            Cuellos de botella 
+          </p>
+          <p>
+            Trabajo innecesario 
+          </p>
+          <p>
+            Trabajo duplicado
+          </p>
     
-
-
-
-
-
-
-
+        </div>
+        <div class="relative">
+          <p class="text-3xl"><span class="bg-red-400 w-4 sm:w-8 md:w-12 h-4 sm:h-8 md:h-12 inline-block rounded-lg text-pink-100 font-bold text-center text-lg sm:text-xl md:text-3xl !leading-[3rem]">7</span>
+            Prueba
+          </p>
+          <div class="flex items-center absolute top-5 -left-5">
+            <span class="w-2 border-b-4 border-dashed border-black"></span><span>►</span>
+          </div>
+          <div class="absolute h-full border-l-4  border-black  top-8 -left-5">
+          </div>
+          <p>
+            Haz las pruebas en este orden:
+          </p>
+          <ol>
+            <li>
+              Prueba conceptual. Recorre el código como lo harías en una revisión detallada.
+            </li>
+            <li>
+              Código inusual o no estándar.
+            </li>
+            <li>
+              Puntos calientes, como nodos aritméticos y nulos.
+            </li>
+            <li>
+              Pequeños casos de prueba. Es mucho más rápido que un caso de prueba grande e igual de eficaz.
+            </li>
+            <li>
+              Casos especiales y casos extremos.
+            </li>
+          </ol>
+          <p>
+            Y cuando encuentres errores, <strong>¡arréglalos con cuidado!</strong>
+          </p>
+        </div>
+        <div class="relative" >
+          <p class="text-3xl"><span class="bg-red-400 w-4 sm:w-8 md:w-12 h-4 sm:h-8 md:h-12 inline-block rounded-lg text-pink-100 font-bold text-center text-lg sm:text-xl md:text-3xl !leading-[3rem]">6</span>
+            Implementar
+          </p>
+          <div class="absolute top-8 -left-5 w-4 border-b-4 border-dashed border-black">
+          </div>
+          <div class="flex items-center absolute top-2 -right-5">
+            <span>◀︎</span><span class="w-24 border-b-4 border-dashed border-black"></span>
+          </div>
+          <p class="w-3/4">
+            Tu objetivo es escribir un <strong>código atractivo</strong>. Modulariza tu código desde el principio y refactoriza para limpiar todo lo que no sea bonito.
+          </p>
+          <p class="bg-red-200 p-4 rounded-lg w-5/6">
+            <strong>Sigue hablando</strong> Tu entrevistador quiere saber cómo enfocas el problema.
+          </p>
+        </div>
+      </div>
+      <div class="righ w-1/2">
+        <div class="relative" >
+          <p class="text-3xl"><span class="bg-red-400 w-4 sm:w-8 md:w-12 h-4 sm:h-8 md:h-12 inline-block rounded-lg text-pink-100 font-bold text-center text-lg sm:text-xl md:text-3xl !leading-[3rem]">2</span>
+            Ejemplo
+          </p>
+          <div class="absolute top-8 -right-5 w-72 border-b-4 border-black">
+          </div>
+          <div class="absolute top-8 -right-6 h-full w-2 border-l-4 border-black">
+          </div>
+          <p>
+            La mayoría de los ejemplos son demasiado pequeños o son casos especiales. <strong>Depura tu ejemplo</strong>. ¿Es un caso especial? ¿Es lo suficientemente grande?
+          </p>
+        </div>
+        <div class="relative">
+          <p class="text-3xl"><span class="bg-red-400 w-4 sm:w-8 md:w-12 h-4 sm:h-8 md:h-12 inline-block rounded-lg text-pink-100 font-bold text-center text-lg sm:text-xl md:text-3xl !leading-[3rem]">3</span>
+            Fuerza bruta
+          </p>
+          <div class="absolute top-8 -left-12 w-10 border-b-4 border-black">
+          </div>
+          <div class="absolute h-full border-l-4 border-black  top-8 -left-12"></div>
+          <div class="flex items-center absolute top-4 -right-5">
+            <span>◀︎</span><span class="w-48 border-b-4 border-dashed border-black"></span>
+          </div>
+          <p>
+            Consigue una solución de fuerza bruta lo antes posible. No te preocupes por desarrollar un algoritmo eficiente todavía. Establece un algoritmo ingenuo y su tiempo de ejecución, luego optimiza a partir de ahí. Pero no codifique todavía'.
+          </p>
+        </div>
+        <div class="relative"> 
+          <p class="text-3xl"><span class="bg-red-400 w-4 sm:w-8 md:w-12 h-4 sm:h-8 md:h-12 inline-block rounded-lg text-pink-100 font-bold text-center text-lg sm:text-xl md:text-3xl !leading-[3rem]">4</span>
+            Optimiza
+          </p>
+          <div class="flex items-center absolute top-5 -left-12">
+            <span class="w-6 border-b-4 border-dashed border-black"></span><span>►</span>
+          </div>
+          <div class="absolute top-8 -right-5 w-72 border-b-4 border-black">
+          </div>
+          <div class="absolute top-8 -right-6 h-full w-2 border-l-4 border-black">
+          </div>
+          <p>
+            Repasa tu fuerza bruta con la <strong>optimización BUD</strong> o prueba algunas de estas ideas:
+          </p>
+          <ol>
+            <li>
+              Busca cualquier información no utilizada. Normalmente necesitas toda la información de un problema.
+            </li>
+            <li>
+              Resuélvelo manualmente en un ejemplo, luego haz ingeniería inversa de tu proceso de pensamiento. ¿Cómo lo resolviste?
+            </li>
+            <li>
+              Resuélvelo «incorrectamente» y piensa por qué falla el algoritmo. ¿Puedes solucionar esos problemas?
+            </li>
+            <li>
+              Haz una tabla de tiempos vs. espacios. ¡Las tablas hash son especialmente útiles!
+            </li>
+          </ol>
+        </div>
+        <div class="relative">
+          <p class="text-3xl"><span class="bg-red-400 w-4 sm:w-8 md:w-12 h-4 sm:h-8 md:h-12 inline-block rounded-lg text-pink-100 font-bold text-center text-lg sm:text-xl md:text-3xl !leading-[3rem]">5</span>
+            Recorrido
+          </p>
+          <div class="flex items-center absolute top-4 -right-5">
+            <span>◀︎</span><span class="w-24 border-b-4 border-dashed border-black"></span>
+          </div>
+          <p>
+            Ahora que tiene una solución óptima, <strong>repase su planteamiento en detalle</strong>. Asegúrate de que entiendes todos los detalles antes de empezar a programar.
+          </p>
+        </div>
+      </div>
+    </div>
     <p>
       Repasaremos este organigrama con más detalle.
     </p>
@@ -337,7 +365,7 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       Pero digo algo más que eso.
     </p>
     <p>
-      Escucha atentamente el problema y asegúrate de haber registrado mentalmente cualquier información exclusiva que contenga.
+      Escucha atentamente el problema y asegúrate de haber registrado mentalmente cualquier información <em>exclusiva</em> que contenga.
     </p>
     <p>
       Por ejemplo, supongamos que una pregunta empieza con una de las siguientes líneas. Es razonable suponer que la información está ahí por alguna razón.
@@ -385,6 +413,18 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       Normalmente, un candidato puede dibujar algo como esto para un ejemplo de un árbol de búsqueda binario:
     </p>
+    <div class="flex flex-col items-center">
+      <div class="w-12 h-12 border-black rounded-full border-4"></div>
+      <div class="-mt-1 flex gap-8">
+        <div class="h-10 w-1 rotate-[24deg] bg-black"></div>
+        <div class="h-10 w-1 -rotate-[24deg] bg-black"></div>
+      </div>
+      <div class="-mt-1 flex gap-4">
+        <div class="w-12 h-12 border-black rounded-full border-4"></div>
+        <div class="w-12 h-12 border-black rounded-full border-4"></div>
+      </div>
+
+    </div>
     <p>
       Este es un mal ejemplo por varias razones. Primero, es demasiado pequeño. Tendrás problemas para encontrar un patrón en un ejemplo tan pequeño. Segundo, no es específico. Un árbol de búsqueda binario tiene valores. ¿Y si los números te dicen algo sobre cómo enfocar el problema? Tercero, en realidad es un caso especial. No es sólo un árbol equilibrado, sino también un hermoso y perfecto árbol en el que cada nodo que no sea la hoja tiene dos hijos. Los casos especiales pueden ser muy engañosos.
     </p>
@@ -463,13 +503,14 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       Una vez que hayas dado con un algoritmo óptimo, no te lances a codificarlo. Tómate un momento para consolidar tu comprensión del algoritmo.
     </p>
+    
     <p>
       La codificación en pizarra es lenta, muy lenta. También lo es probar el código y corregirlo. Como resultado, necesitas asegurarte de que lo tienes lo más cerca posible de «perfecto» al principio.
     </p>
     <p>
       Recorre tu algoritmo y hazte una idea de la estructura del código. Sepa cuáles son las variables y cuándo cambian.
     </p>
-    <p>
+    <p class="pl-4 sm:pl-6 md:pl-8 border-l-2 sm:border-l-4 md:border-l-8 border-black">
       ¿Y el pseudocódigo? Puedes escribir pseudocódigo si quieres. Ten cuidado con lo que escribes. Pasos básicos ("(1) Buscar matriz. (2) Buscar el mayor. (3) Insertar en el montón:«) o una lógica breve (»si p &#60 q, mueve p. si no, mueve q") pueden ser valiosos. Pero cuando tu pseudocódigo empieza a tener bucles for que están escritos en inglés sencillo, entonces estás esencialmente escribiendo código descuidado. Probablemente sería más rápido simplemente escribir el código
     </p>
     <p>
@@ -493,18 +534,18 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     </p>
     <ul>
       <li>
-        Código modularizado. Esto demuestra un buen estilo de codificación. También hace las cosas más fáciles para usted. Si su algoritmo utiliza una matriz inicializada a &#123&#1231, 2, 3}, &#1234, 5, 6}, ...}, no pierda su tiempo escribiendo este código de inicialización. Simplemente imagine que tiene una función initlncrementalMatrix(int size). Rellena los detalles más tarde si lo necesitas.
+        Código modularizado. Esto demuestra un buen estilo de codificación. También hace las cosas más fáciles para usted. Si su algoritmo utiliza una matriz inicializada a <code> &#123&#123 1, 2, 3 }, &#123 4, 5, 6 }, ...}</code> no pierda su tiempo escribiendo este código de inicialización. Simplemente imagine que tiene una función <code>initlncrementalMatrix(int size)</code>. Rellena los detalles más tarde si lo necesitas.
       </li>
       <li>
         Comprobación de errores. Algunos entrevistadores se preocupan mucho por esto, mientras que otros no. Un buen compromiso aquí es añadir un todo y luego simplemente explicar en voz alta lo que le gustaría probar.
       </li>
       <li>
-        Utiliza otras clases/estructuras cuando sea apropiado. Si necesita devolver una lista de puntos iniciales y finales de una función, puede hacerlo como una matriz bidimensional. Sin embargo, es mejor hacerlo como una lista de objetos StartEndPair (o posiblemente Range). No es necesario rellenar los detalles de la clase. Haz como si existiera y ocúpate de los detalles más adelante si tienes tiempo.
+        Utiliza otras clases/estructuras cuando sea apropiado. Si necesita devolver una lista de puntos iniciales y finales de una función, puede hacerlo como una matriz bidimensional. Sin embargo, es mejor hacerlo como una lista de objetos <code>StartEndPair</code> (o posiblemente Range). No es necesario rellenar los detalles de la clase. Haz como si existiera y ocúpate de los detalles más adelante si tienes tiempo.
       </li>
       <li>
-        Buenos nombres de variables. El código que utiliza variables de una sola letra en todas partes es difícil de leer. Eso no quiere decir que haya nada malo en usar i y j, cuando sea apropiado (como en un bucle for básico que recorre un array). Sin embargo, tenga cuidado con dónde lo hace. Si escribes algo como int i = startOfChild ( array), puede que haya un nombre mejor para esta variable, como startChild.
+        Buenos nombres de variables. El código que utiliza variables de una sola letra en todas partes es difícil de leer. Eso no quiere decir que haya nada malo en usar <code>i</code> y <code>j</code>, cuando sea apropiado (como en un bucle for básico que recorre un array). Sin embargo, tenga cuidado con dónde lo hace. Si escribes algo como <code>int i = startOfChild(array)</code>, puede que haya un nombre mejor para esta variable, como <code>startChild</code>.
         <p>
-          Los nombres de variables largos también pueden ser lentos de escribir. Un buen compromiso con el que la mayoría de los entrevistadores estarán de acuerdo es abreviarlo después del primer uso. Puedes usar startChild la primera vez, y luego explicar a tu entrevistador que lo abreviarás como sc después de esto.
+          Los nombres de variables largos también pueden ser lentos de escribir. Un buen compromiso con el que la mayoría de los entrevistadores estarán de acuerdo es abreviarlo después del primer uso. Puedes usar <code>startChild</code> la primera vez, y luego explicar a tu entrevistador que lo abreviarás como sc después de esto.
         </p>
       </li>
     </ul>
@@ -538,7 +579,7 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
         Empieza con una prueba «conceptual». Una prueba conceptual significa simplemente leer y analizar lo que hace cada línea de código. Piénsalo como si estuvieras explicando las líneas de código a un revisor de código. ¿Hace el código lo que crees que debería hacer?
       </li>
       <li>
-        Código de aspecto extraño. Comprueba dos veces esa línea de código que dice x = longitud - 2. Investiga ese bucle for que empieza en i = Aunque sin duda lo hiciste por alguna razón, es muy fácil equivocarse ligeramente.
+        Código de aspecto extraño. Comprueba dos veces esa línea de código que dice <code>x = longitud - 2</code>. Investiga ese bucle for que empieza en <code> i = 1 </code>. Aunque sin duda lo hiciste por alguna razón, es muy fácil equivocarse ligeramente.
       </li>
       <li>
         Puntos calientes. Has codificado lo suficiente como para saber qué cosas pueden causar problemas. Casos base en código recursivo. División entera. Nodos nulos en árboles binarios. El inicio y el final de la iteración a través de una lista enlazada. Comprueba dos veces esas cosas.
@@ -555,20 +596,20 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     </p>
   </article>
   <article>
-    <h3>► Optimizar y solucionar Técnica nº 1: Buscar BUD
+    <h3>► Técnica #1 - Optimizar y solucionar: Buscar BUD
     </h3>
     <p>
       Este es quizás el enfoque más útil que he encontrado para optimizar problemas. «BUD» es un acrónimo tonto de
     </p>
     <ul>
       <li>
-        Cuellos de botella
+        <span class="font-bold underline">B</span>ottlenecks (Cuellos de botella)
       </li>
       <li>
-        Trabajo innecesario
+        <span class="font-bold underline">U</span>nnecessary work (Trabajo innecesario)
       </li>
       <li>
-        Trabajo duplicado
+        <span class="font-bold underline">D</span>uplicated work (Trabajo duplicado)
       </li>
     </ul>
     <p>
@@ -585,7 +626,7 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     </p>
     <ul>
       <li>
-        Tienes un trabajo de una sola vez que ralentiza tu algoritmo. Por ejemplo, supongamos que tienes un algoritmo de dos pasos en el que primero ordenas el array y luego encuentras los elementos con una propiedad concreta. El primer paso esO(N log N) y el segundo esO(N). Tal vez se podría reducir el segundo paso aO(log N) o 0(1), pero ¿importaría? No demasiado. Desde luego, no es una prioridad, ya queO(N log N) es el cuello de botella. Si no optimizas el primer paso, todo el algoritmo seráO(N log N).
+        Tienes un trabajo de una sola vez que ralentiza tu algoritmo. Por ejemplo, supongamos que tienes un algoritmo de dos pasos en el que primero ordenas el array y luego encuentras los elementos con una propiedad concreta. El primer paso es <code>O(N log N)</code> y el segundo es <code>O(N)</code>. Tal vez se podría reducir el segundo paso a <code>O(log N)</code> o <code>O(1)</code>, pero ¿importaría? No demasiado. Desde luego, no es una prioridad, ya que <code>O(N log N)</code> es el cuello de botella. Si no optimizas el primer paso, todo el algoritmo será <code>O(N log N)</code>.
       </li>
       <li>
         Hay una parte del trabajo que se hace repetidamente, como la búsqueda. Quizá puedas reducirlo deO(N) aO(log N)oincluso0(1), lo que acelerará enormemente el tiempo de ejecución de todo el proceso.
@@ -594,8 +635,8 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       Optimizar un cuello de botella puede suponer una gran diferencia en el tiempo de ejecución total.
     </p>
-    <p>
-      Ejemplo: Dada una matriz de valores enteros distintos, cuente el número de pares de enteros que tienen diferencia k. Por ejemplo, dada la matriz &#1231, 7, 5, 9, 2, 12, 3} y la diferencia k = 2, hay cuatro pares con diferencia2: (1, 3), (3, 5), (5, 7), (7, 9).
+    <p class="pl-4 sm:pl-6 md:pl-8 border-l-2 sm:border-l-4 md:border-l-8 border-black">
+      Ejemplo: Dada una matriz de valores enteros distintos, cuente el número de pares de enteros que tienen diferencia k. Por ejemplo, dada la matriz <code> &#123 1, 7, 5, 9, 2, 12, 3}</code> y la diferencia <code>k = 2</code>, hay cuatro pares con diferencia <code>2: (1, 3), (3, 5), (5, 7), (7, 9)</code>.
     </p>
     <p>
       Un algoritmo de fuerza bruta consiste en recorrer la matriz, empezando por el primer elemento, y luego buscar entre los elementos restantes (que formarán el otro lado del par). Para cada par, calcule la diferencia. Si la diferencia es igual a k, incrementar un contador de la diferencia.
@@ -604,43 +645,78 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       El cuello de botella aquí es la búsqueda repetida del «otro lado» del par. Por tanto, es lo principal que hay que optimizar.
     </p>
     <p>
-      ¿Cómo podemos encontrar más rápidamente el «otro lado» correcto? Bueno, en realidad conocemos el otro lado de (x, ? ). Es x + k o x - k. Si ordenamos la matriz, podríamos encontrar el otro lado para cada uno de los N elementos en tiempoO(log N) haciendo una búsqueda binaria.
+      ¿Cómo podemos encontrar más rápidamente el «otro lado» correcto? Bueno, en realidad conocemos el otro lado de <code>(x, ?)</code>. Es <code> x + k </code> o <code> x - k </code>. Si ordenamos la matriz, podríamos encontrar el otro lado para cada uno de los N elementos en tiempo <code>O(log N) </code> haciendo una búsqueda binaria.
     </p>
     <p>
-      Ahora tenemos un algoritmo de dos pasos, donde ambos pasos tomanO(N log N) tiempo. Ahora, la ordenación es el nuevo cuello de botella. Optimizar el segundo paso no ayudará porque el primer paso nos está ralentizando de todos modos.
+      Ahora tenemos un algoritmo de dos pasos, donde ambos pasos toman <code>O(N log N)</code> tiempo. Ahora, la ordenación es el nuevo cuello de botella. Optimizar el segundo paso no ayudará porque el primer paso nos está ralentizando de todos modos.
     </p>
     <p>
       Sólo tenemos que deshacernos por completo del primer paso y operar sobre una matriz sin ordenar. ¿Cómo podemos encontrar cosas rápidamente en un array sin ordenar? Con una tabla hash.
     </p>
     <p>
-      Tirar todo en la matriz en la tabla hash. Luego, para saber si x + k o x - k existen en la matriz, sólo tenemos que buscarlo en la tabla hash. Podemos hacer esto en tiempo O(N).
+      Tirar todo en la matriz en la tabla hash. Luego, para saber si <code> x + k </code> o <code> x - k </code> existen en la matriz, sólo tenemos que buscarlo en la tabla hash. Podemos hacer esto en tiempo <code> O(N)</code>.
     </p>
   </article>
   <article>
     <p><strong>Trabajo innecesario</strong></p>
-    <p>
-      Ejemplo: Imprimir todas las soluciones enteras positivas de la ecuación a3 + b3 c3 + d3 donde a, b, c, y d son enteros entre 1 y 1000.
+    <p class="pl-4 sm:pl-6 md:pl-8 border-l-2 sm:border-l-4 md:border-l-8 border-black">
+      Ejemplo: Imprimir todas las soluciones enteras positivas de la ecuación <code> a<sup>3</sup> + b<sup>3</sup> c<sup>3</sup> + d<sup>3</sup> </code> donde a, b, c, y d son enteros entre 1 y 1000.
     </p>
     <p>
       Una solución de fuerza bruta sólo tendrá cuatro bucles for anidados. Algo como:
     </p>
+    <pre>
+      <code class="language-js">
+        n = 1000
+        for a from 1 to n
+          for b from 1 to n
+            for c from 1 to n
+              for d from 1 to n
+                if a<sup>3</sup> + b<sup>3</sup> == c<sup>3</sup> + d<sup>3</sup>
+                  print a, b, c,d
+      </code>
+    </pre>
+    
     <p>
       Este algoritmo itera a través de todos los valores posibles de a, b, c, y d y comprueba si esa combinación resulta funcionar.
     </p>
     <p>
-      Es necesario seguir buscando otros posibles valores de d. Sólo uno podría funcionar. Al menos deberíamos hacer una pausa después de encontrar una solución válida.
+      Es innecesario seguir buscando otros posibles valores de d. Sólo uno podría funcionar. Al menos deberíamos hacer una pausa después de encontrar una solución válida.
+    </p>
+    <pre>
+      <code class="language-js">
+        n = 1000
+        for a from 1 to n
+          for b from 1 to n
+            for c from 1 to n
+              for d from 1 to n
+                if a<sup>3</sup> + b<sup>3</sup> == c<sup>3</sup> + d<sup>3</sup>
+                  print a, b, c,d
+                  break // break out of d's loop
+      </code>
+    </pre>
+    <p>
+      Esto no supondrá un cambio significativo en el tiempo de ejecución -nuestro algoritmo sigue siendo <code> O(N<sup>4</sup>)</code>- pero es una buena solución rápida para arreglarlo
     </p>
     <p>
-      Esto no supondrá un cambio significativo en el tiempo de ejecución -nuestro algoritmo sigue siendo O(N4)- pero es una buena solución rápida para hacer que
+      ¿Hay algo que no sea innecesario? Sí. Si sólo hay un valor válido para cada (a, b, c), podemos calcularlo. Es simple matemática: <code>d = ∛<span class="border-t-2 border-black">a<sup>3</sup> + b<sup>3</sup> - c<sup>3</sup></span></code>.
     </p>
-    <p>
-      ¿Hay algo que no sea necesario? Sí. Si sólo hay un valor válido para cada (a, b, c), podemos calcularlo. Es simple matemática.
-    </p>
+    <pre>
+      <code class="language-js">
+        n = 1000
+        for a from 1 to n
+          for b from 1 to n
+            for c from 1 to n
+              d = pow(a<sup>3</sup> + b<sup>3</sup> - c<sup>3</sup>, 1/3) // Se redondeará a int
+                if a<sup>3</sup> + b<sup>3</sup> == c<sup>3</sup> + d<sup>3</sup>  // Validar que el valor funciona
+                  print a, b, c, d
+      </code>
+    </pre>
     <p>
       La sentencia if de la línea 6 es importante. La línea 5 siempre encontrará un valor para d, pero tenemos que comprobar que es el valor entero correcto.
     </p>
     <p>
-      Esto reducirá nuestro tiempo de ejecución de O(N4 ) a O(N3 ).
+      Esto reducirá nuestro tiempo de ejecución de <code>O(N<sup>4</sup>)</code> a <code>O(N<sup>3</sup>)</code>.
     </p>
   </article>
   <article>
@@ -651,20 +727,48 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       Utilizando el mismo problema y algoritmo de fuerza bruta que antes, busquemos esta vez el trabajo duplicado.
     </p>
     <p>
-      El algoritmo funciona esencialmente iterando a través de todos los pares (a, b) y luego buscando en todos los pares (c, d) para encontrar si hay alguna coincidencia con ese par (a, b).
+      El algoritmo funciona esencialmente iterando a través de todos los pares <code>(a, b)</code> y luego buscando en todos los pares <code>(c, d)</code> para encontrar si hay alguna coincidencia con ese par <code>(a, b)</code>.
     </p>
     <p>
-      ¿Por qué seguimos calculando todos los pares (c, d) para cada par (a, b)? Deberíamos crear la lista de pares ( c, d) una sola vez y, cuando tengamos un par (a, b), buscar las coincidencias en la lista ( c, d). Podemos localizar rápidamente las coincidencias insertando cada par ( c,d) en una tabla hash que mapee desde la suma hasta el par (o, mejor dicho, la lista de pares que tienen esa suma).
+      ¿Por qué seguimos calculando todos los pares <code>(c, d)</code> para cada par <code>(a, b)</code>? Deberíamos crear la lista de pares <code>(c, d)</code> una sola vez y, cuando tengamos un par <code>(a, b)</code>, buscar las coincidencias en la lista <code>(c, d)</code>. Podemos localizar rápidamente las coincidencias insertando cada par <code>(c, d)</code> en una tabla hash que mapee desde la suma hasta el par (o, mejor dicho, la lista de pares que tienen esa suma).
     </p>
+    <pre>
+      <code>
+        n = 1000
+        for c from 1 to n
+          for d from 1 to n
+            result = c<sup>3</sup> + d<sup>3</sup>
+            append (c, d) to list at value map[result]
+        for a from 1 to n
+          for b from 1 to n
+            result= a<sup>3</sup> + b<sup>3</sup>
+            list = map.get(result)
+            for each pair in list
+              print a, b, pair
+      </code>
+    </pre>
     <p>
-      En realidad, una vez que tenemos el mapa de todos los pares ( c,d), podemos utilizarlo directamente. No necesitamos generar los pares (a, b). Cada (a, b) ya estará en el mapa.
+      En realidad, una vez que tenemos el mapa de todos los pares <code>(c, d)</code>, podemos utilizarlo directamente. No necesitamos generar los pares <code>(a, b)</code>. Cada <code>(a, b)</code> ya estará en el mapa.
     </p>
+    <pre>
+      <code>
+        n = 1000
+        for c from 1 to n
+          fordfrom 1 to n
+            result = c<sup>3</sup> + d<sup>3</sup>
+            append (c, d) to list at value map[result]
+        for each result, list in map 
+          for each pairl in list
+            for each pair2 in list
+              print pairl, pair2
+      </code>
+    </pre>
     <p>
-      Esto reducirá nuestro tiempo de ejecución a O(N2).
+      Esto reducirá nuestro tiempo de ejecución a <code>O(N<sup>2</sup>)</code>.
     </p>
   </article>
   <article>
-    <h3>► Optimizar y resolver Técnica #2: DIY (Do It Yourself)</h3>
+    <h3>► Técnica #2 - Optimizar y resolver: DIY (Do It Yourself)</h3>
     <p>
       La primera vez que oíste hablar de cómo encontrar un elemento en una matriz ordenada (antes de que te enseñaran la búsqueda binaria), probablemente no dijiste: «Ah, ja, compararemos el elemento objetivo con el punto medio y luego recurriremos a la mitad apropiada».
     </p>
@@ -680,14 +784,14 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       Por eso, cuando tengas una duda, intenta resolverla intuitivamente con un ejemplo real. A menudo, un ejemplo más grande será más fácil.
     </p>
-    <p>
+    <p class="pl-4 sm:pl-6 md:pl-8 border-l-2 sm:border-l-4 md:border-l-8 border-black">
       Ejemplo: Dadas una cadena más pequeña y una cadena más grande b, diseña un algoritmo para encontrar todas las permutaciones de la cadena más corta dentro de la más larga.
     </p>
     <p>
       Piensa por un momento cómo resolverías este problema. Ten en cuenta que las permutaciones son reorganizaciones de la cadena, por lo que los caracteres de s pueden aparecer en cualquier orden en b. Sin embargo, deben ser contiguos (no estar separados por otros caracteres).
     </p>
     <p>
-      Si eres como la mayoría de los candidatos, probablemente pensaste en algo como Generar todas las permutaciones de s y luego buscar cada una de ellas en b. Como hay S! permutaciones, esto llevaráO(S ! * B) tiempo, dondeS es la longitud de s y B es la longitud de b.
+      Si eres como la mayoría de los candidatos, probablemente pensaste en algo como Generar todas las permutaciones de s y luego buscar cada una de ellas en b. Como hay S! permutaciones, esto llevará <code>O(S ! * B)</code> tiempo, dondeS es la longitud de s y B es la longitud de b.
     </p>
     <p>
       Esto funciona, pero es un algoritmo extraordinariamente lento. De hecho, es peor que un algoritmo exponencial. Si s tiene 14 caracteres, son más de 87 mil millones de permutaciones. Añade un carácter más a s y tendremos 15 veces más permutaciones.
@@ -696,8 +800,8 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       Enfocado de otra manera, podrías desarrollar un algoritmo decente con bastante facilidad. Ponte un ejemplo grande, como este:
     </p>
     <p>
-      <p>s: abbc</p>
-      <p>b: cbabadcbbabbcbabaabccbabc</p>
+      <p class="ml-12">s: abbc</p>
+      <p class="ml-12">b: cbabadcbbabbcbabaabccbabc</p>
     </p>
     <p>
       ¿Dónde están las permutaciones de s dentro de b? No te preocupes por cómo lo haces. Sólo encuéntralas. ¡Hasta un niño de 12 años podría hacerlo!
@@ -708,16 +812,18 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       He subrayado debajo cada permutación.
     </p>
-      <p>s: abbc</p>
-      <p>b: cbabadcbbabbcbabaabccbabc</p>
-      <p><span>---</span><span>---</span><span>---</span></p>
-      <p><span>---</span><span>---</span><span>---</span></p>
-      <p><span>---</span></p>
+    <p class="ml-12">s: abbc</p>
+    <p class="ml-12">b: cbabadcbbabbcbabaabccbabc</p>
+    <div class="w-96 flex flex-col items-end">
+      <p class="flex gap-8"><span class="w-16 h-[2px] bg-black pr-4"></span><span class="w-16 h-[2px] bg-black"></span><span class="w-16 h-[2px] bg-black"></span><span></span></p>
+      <p class="flex gap-8"><span class="w-12 h-[2px] bg-black"></span><span class="w-16 h-[2px] bg-black"></span><span class="w-16 h-[2px] bg-black"></span></p>
+      <p class="flex gap-8"><span class="w-14 h-[2px] bg-black"></span><span class="w-20"></span></p>
+    </div>
     <p>
       ¿Los has encontrado? ¿Cómo?
     </p>
     <p>
-      ¡Pocas personas -incluso las que antes dieron con las 0(5 ! algoritmos generan realmente todos los permutaciones de abbc para localizar esas permutaciones en b.Casi todo el mundo adopta uno de dos enfoques(muy similares):
+      ¡Pocas personas -incluso las que antes dieron con las <code>O(S! * B)</code> algoritmos generan realmente todos los permutaciones de abbc para localizar esas permutaciones en b.Casi todo el mundo adopta uno de dos enfoques(muy similares):
     </p>
     <ol>
       <li>
@@ -728,25 +834,25 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       </li>
     </ol>
     <p>
-      Dependiendo de la implementación exacta de la parte «es una permutación», probablemente obtendrás un tiempo de ejecución de O(B *S), O(B *SlogS) u O(B *52). Ninguno de estos algoritmos es el óptimo (existe un algoritmo 0( B)), pero es mucho mejor que lo que teníamos antes.
+      Dependiendo de la implementación exacta de la parte «es una permutación», probablemente obtendrás un tiempo de ejecución de <code>O(B * S)</code>, <code>O(B * S log S)</code> u <code>O(B * S<sup>2</sup>)</code>. Ninguno de estos algoritmos es el óptimo (existe un algoritmo <code>O(B))</code>, pero es mucho mejor que lo que teníamos antes.
     </p>
     <p>
       Prueba este método cuando resuelvas preguntas. Utiliza un ejemplo grande y bonito, y resuélvelo intuitivamente -es decir, manualmente- para el ejemplo concreto.
     </p>
     <p>
-      Presta especial atención a cualquier «optimización» que hayas hecho de forma intuitiva o automática. Por ejemplo, al resolver este problema, puede que te hayas saltado la ventana deslizante con «d» porque «d» no está en abbc. Esa es una optimización que hizo tu cerebro, y es algo que al menos deberías tener en cuenta en tu algoritmo.
+      Presta especial atención a cualquier «optimización» que hayas hecho de forma intuitiva o automática. Por ejemplo, al resolver este problema, puede que te hayas saltado la ventana deslizante con <code>d</code> porque <code>d</code> no está en abbc. Esa es una optimización que hizo tu cerebro, y es algo que al menos deberías tener en cuenta en tu algoritmo.
     </p>
   </article>
   <article>
-    <h3>► Optimizar y resolver Técnica nº 3: Simplificar y generalizar</h3>
+    <h3>► Técnica #3 - Optimizar y resolver: Simplificar y generalizar</h3>
     <p>
       Con Simplificar y Generalizar, aplicamos un enfoque de varios pasos. Primero simplificamos o ajustamos alguna restricción, como el tipo de datos. A continuación, resolvemos esta nueva versión simplificada del problema. Por último, una vez que tenemos un algoritmo para el problema simplificado, intentamos adaptarlo para la versión más compleja.
     </p>
-    <p>
+    <p class="pl-4 sm:pl-6 md:pl-8 border-l-2 sm:border-l-4 md:border-l-8 border-black">
       Ejemplo: Se puede formar una nota de rescate recortando palabras de una revista para formar una nueva frase. Cómo averiguar si una nota de rescate (representada como una cadena) puede formarse a partir de una revista dada (cadena)?
     </p>
     <p>
-      Para simplificar el problema, podemos modificarlo de modo que estemos recortando caracteres de una revista en lugar de palabras enteras.
+      Para simplificar el problema, podemos modificarlo de modo que estemos recortando <em>caracteres</em> de una revista en lugar de palabras enteras.
     </p>
     <p>
       Podemos resolver el problema simplificado de la nota de rescate con caracteres simplemente creando una matriz y contando los caracteres. Cada punto de la matriz corresponde a una letra. En primer lugar, contamos el número de veces que aparece cada carácter en la nota de rescate y, a continuación, revisamos la revista para ver si tenemos todos esos caracteres.
@@ -756,37 +862,47 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     </p>
   </article>
   <article>
-    <h3>► Optimizar y resolver Técnica 4: Caso base y construcción</h3>
+    <h3>► Técnica 4 - Optimizar y resolver: Caso base y construcción</h3>
     <p>
       Con Caso base y construir, resolvemos el problema primero para un caso base (por ejemplo, n = 1) y luego tratamos de construir a partir de ahí. Cuando llegamos a casos más complejos o interesantes (a menudo n = 3 o n = 4), intentamos construirlos utilizando las soluciones anteriores.
     </p>
-    <p>
+    <p class="pl-4 sm:pl-6 md:pl-8 border-l-2 sm:border-l-4 md:border-l-8 border-black">
       Ejemplo: Diseñe un algoritmo para imprimir todas las permutaciones de una cadena. Para simplificar, suponga que todas las cadenas son únicas.
     </p>
     <p>
       Considere una cadena de prueba abcdefg.
     </p>
-    <p>
-      <p>Case "a" --> &#123"a"}</p>
-      <p>Case "ab" --> &#123"ab", "ba"}</p>
-      <p>Case "abc" --> ?</p>
-    </p>
+    <pre>
+      <code class="language-js">
+        Case "a" --> &#123"a"}
+        Case "ab" --> &#123"ab", "ba"}
+        Case "abc" --> ?
+      </code>
+    </pre>
     <p>
       Este es el primer caso «interesante». Si tuviéramos la respuesta a P («ab»), ¿cómo podríamos generar P («abc»)? Bueno, la letra adicional es «c», así que podemos meter c en todos los puntos posibles. Es decir:
     </p>
+    <pre>
+      <code class="language-js">
+        P("abc") = insert "c" into all locations of all strings in P("ab") 
+        P("abc") = insert "c" into all locations of all strings in &#123"ab","ba"} 
+        P("abc") = merge(&#123"cab", "acb", "abc"}, &#123"cba", "abca", "bac"})
+        P("abc") = &#123"cab", "acb", "abc", "cba", "bca", "bac"}
+      </code>
+    </pre>
     <p>
-      Ahora que entendemos el patrón, podemos desarrollar un algoritmo general recursivo1: Generamos todas las permutaciones de s1- - -sn «cortando» el último carácter y generando todas las permutaciones de s1- - - sn_1. Una vez que tenemos la lista de todas las permutaciones de s1- - - sn_1, iteramos a través de esta lista. Una vez que tenemos la lista de todas las permutaciones de s1 - - - sn_1, iteramos por ella. Para cada cadena, insertamos Sn en cada posición de la cadena.
+      Ahora que entendemos el patrón, podemos desarrollar un algoritmo general recursivo1: Generamos todas las permutaciones de <code>s<sub>1</sub>... s<sub>n</sub></code> «cortando» el último carácter y generando todas las permutaciones de <code>s<sub>1</sub>... s<sub>n-1</sub></code> . Una vez que tenemos la lista de todas las permutaciones de <code>s<sub>1</sub>... s<sub>n-1</sub></code> , iteramos a través de esta lista. Una vez que tenemos la lista de todas las permutaciones de <code>s<sub>n</sub></code> , iteramos por ella. Para cada cadena, insertamos Sn en cada posición de la cadena.
     </p>
     <p>
       Los algoritmos Base Case y Build suelen dar lugar a algoritmos recursivos naturales.
     </p>
   </article>
   <article>
-    <h3>► Optimizar y resolver Técnica nº 5: Lluvia de ideas sobre la estructura de datos</h3>
+    <h3>► Técnica #5 - Optimizar y resolver: Lluvia de ideas sobre la estructura de datos</h3>
     <p>
       Este enfoque es ciertamente complicado, pero a menudo funciona. Podemos simplemente recorrer una lista de estructuras de datos e intentar aplicar cada una de ellas. Este enfoque es útil porque resolver un problema puede ser trivial una vez que se nos ocurre utilizar, por ejemplo, un árbol.
     </p>
-    <p>
+    <p class="pl-4 sm:pl-6 md:pl-8 border-l-2 sm:border-l-4 md:border-l-8 border-black">
       Ejemplo: Los números se generan aleatoriamente y se almacenan en una matriz (en expansión). ¿Cómo se puede saber la mediana?
     </p>
     <p>
@@ -819,18 +935,18 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       The best conceivable runtime is, literally, the best runtime you could conceive of a solution to a problem having. You can easily prove that there is no way you could beat the BCR.
     </p>
     <p>
-      For example, suppose you want to compute the number of elements that two arrays (of length A and B) have in common. You immediately know that you can't do that in better than O(A + B) time because you have to "touch" each element in each array. O(A + B) is the BCR.
+      For example, suppose you want to compute the number of elements that two arrays (of length A and B) have in common. You immediately know that you can't do that in better than <code>O(A + B)</code> time because you have to "touch" each element in each array. <code>O(A + B)</code> is the BCR.
     </p>
     <p>
-      Or, suppose you want to print all pairs of values within an array. You know you can't do that in better than 0(N2) time because there are N2 pairs to print.
+      Or, suppose you want to print all pairs of values within an array. You know you can't do that in better than <code>O(N<sup>2</sup>)</code> time because there are <code>N<sup>2</sup></code> pairs to print.
     </p>
     <p>
-      Be careful though! Suppose your interviewer asks you to find all pairs with sum k within an array (assuming all distinct elements). Some candidates who have not fully mastered the concept of BCR will say that the BCR is O(N2 ) because you have to look at N2 pairs.
+      Be careful though! Suppose your interviewer asks you to find all pairs with sum k within an array (assuming all distinct elements). Some candidates who have not fully mastered the concept of BCR will say that the BCR is <code>O(N<sup>2</sup>)</code> because you have to look at <code>N<sup>2</sup></code> pairs.
     </p>
     <p>
       Eso no es cierto. Que quiera todos los pares con una suma determinada no significa que tenga que mirar todos los pares. De hecho, no es necesario.
     </p>
-    <p>
+    <p class="pl-4 sm:pl-6 md:pl-8 border-l-2 sm:border-l-4 md:border-l-8 border-black">
       ¿Cuál es la relación entre el mejor tiempo de ejecución concebible y el mejor tiempo de ejecución del caso? Ninguna. El mejor tiempo de ejecución concebible es para un problema y es en gran medida una función de las entradas y salidas. No tiene ninguna relación particular con un algoritmo específico. De hecho, si calculas el Mejor Tiempo de Ejecución Concebible pensando en lo que hace tu algoritmo, probablemente estés haciendo algo mal. El Mejor Caso de Tiempo de Ejecución es para un algoritmo específico (y es un valor casi inútil).
     </p>
     <p>
@@ -847,64 +963,76 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       Empecemos con un buen ejemplo. Subrayaremos los elementos en común.
     </p>
-    <p>A: 13 27 35 40 49 55 59</p>
-    <p>B: 17 35 39 40 55 58 60</p>
+    <p><code>A: 13 27 <span class="underline" >35 40</span> 49 <span class="underline" >55</span> 59</code></p>
+    <p><code>B: 17 <span class="underline" >35</span> 39 <span class="underline" >40 55</span> 58 60</code></p>
     <p>
-      Un algoritmo de fuerza bruta para este problema es empezar con cada elemento en A y buscarlo en B. Esto lleva O(N2) tiempo ya que para cada uno de N elementos en A, necesitamos hacer unaO(N) búsqueda en B.
+      Un algoritmo de fuerza bruta para este problema es empezar con cada elemento en A y buscarlo en B. Esto lleva <code>O(N<sup>2</sup>)</code> tiempo ya que para cada uno de <code>N</code> elementos en <code>A</code>, necesitamos hacer una <code>O(N)</code> búsqueda en B.
     </p>
     <p>
-      El BCR esO(N), porque sabemos que tendremos que mirar cada elemento al menos una vez y hay 2N elementos en total. (Si nos saltamos un elemento, entonces el valor de ese elemento podría cambiar el resultado. Por ejemplo, si nunca miramos el último valor de B, entonces ese 60 podría ser un 59).
+      El BCR es <code>O(N)</code>, porque sabemos que tendremos que mirar cada elemento al menos una vez y hay <code>2N</code> elementos en total. (Si nos saltamos un elemento, entonces el valor de ese elemento podría cambiar el resultado. Por ejemplo, si nunca miramos el último valor de B, entonces ese 60 podría ser un 59).
     </p>
     <p>
-      Pensemos en dónde estamos ahora. Tenemos un algoritmoO(N2) y queremos hacerlo mejor, potencialmente, pero no necesariamente, tan rápido comoO(N). Fuerza bruta: O(N2) Algoritmo óptimo: ? BCR: O(N)
+      Pensemos en dónde estamos ahora. Tenemos un algoritmo <code>O(N<sup>2</sup>)</code> y queremos hacerlo mejor, potencialmente, pero no necesariamente, tan rápido como <code>O(N)</code>. 
+    </p>
+    <pre>
+      <code>
+        Fuerza bruta:         O(N<sup>2</sup>) 
+        Algoritmo óptimo:     ? 
+        BCR:                  O(N)
+      </code>
+    </pre>
+    <p>
+      ¿Qué hay entre <code>O(N<sup>2</sup>)</code> y <code>O(N)</code>? Muchas cosas. Infinitas cosas en realidad. Teóricamente podríamos tener un algoritmo que fuera <code>O(N log(log(log(log(N)))))</code>. Sin embargo, tanto en las entrevistas como en la vida real, ese tiempo de ejecución no se menciona mucho.
+    </p>
+    <p class="pl-4 sm:pl-6 md:pl-8 border-l-2 sm:border-l-4 md:border-l-8 border-black">
+      Intenta recordarlo en tu entrevista, porque despista a mucha gente. El tiempo de ejecución no es una pregunta de respuesta múltiple. Sí, es muy común tener un tiempo de ejecución que sea <code>O(log N)</code>, <code>O(N)</code>, <code>O(N log N)</code>, <code>O(N<sup>2</sup>)</code> o <code>O(2<sup>N</sup>)</code>. Pero no hay que asumir que algo tiene un tiempo de ejecución aparticular por puro proceso de eliminación. De hecho, esas veces en las que estás confuso sobre el tiempo de ejecución y quieres hacer conjeturas, son las más probables de tener un tiempo de ejecución no obvio y menos común. Puede que el tiempo de ejecución sea <code>O(N<sup>2</sup>K)</code>, donde <code>N</code> es el tamaño de la matriz y <code>K</code> es el número de pares. Deriva, no adivines.
     </p>
     <p>
-      ¿Qué hay entre O(N2) y O(N)? Muchas cosas. Infinitas cosas en realidad. Teóricamente podríamos tener un algoritmo que fueraO(N log(log(log(log(N))))). Sin embargo, tanto en las entrevistas como en la vida real, ese tiempo de ejecución no se menciona mucho.
+      Lo más probable es que nos dirijamos hacia un algoritmo <code>O(N)</code> o un algoritmo <code>O(N log N)</code>. ¿Qué nos dice esto? Si imaginamos el tiempo de ejecución de nuestro algoritmo actual como <code>O(N x N)</code>, llegar a <code>O(N)</code> u <code>O(N x log N)</code> podría significar reducir ese segundo <code>O(N)</code> de la ecuación a <code>O(1)</code> o <code>O(log N)</code>.
     </p>
-    <p>
-      Intenta recordarlo en tu entrevista, porque despista a mucha gente. El tiempo de ejecución no es una pregunta de respuesta múltiple. Sí, es muy común tener un tiempo de ejecución que sea O(log N), O(N), O(N log N), O(N2) o O(2N). Pero no hay que asumir que algo tiene un tiempo de ejecución aparticular por puro proceso de eliminación. De hecho, esas veces en las que estás confuso sobre el tiempo de ejecución y quieres hacer conjeturas, son las más probables de tener un tiempo de ejecución no obvio y menos común. Puede que el tiempo de ejecución sea 0(N2 K), donde N es el tamaño de la matriz y K es el número de pares. Deriva, no adivines.
-    </p>
-    <p>
-      Lo más probable es que nos dirijamos hacia un algoritmoO(N) o un algoritmoO(N log N). ¿Qué nos dice esto? Si imaginamos el tiempo de ejecución de nuestro algoritmo actual como O(N x N), llegar a O(N) u O(N x log N) podría significar reducir ese segundo O(N) de la ecuación a O(1)o0(log N).
-    </p>
-    <p>
+    <p class="pl-4 sm:pl-6 md:pl-8 border-l-2 sm:border-l-4 md:border-l-8 border-black">
       Esta es una de las utilidades de BCR. Podemos utilizar los tiempos de ejecución para obtener una «pista» de lo que tenemos que reducir.
     </p>
     <p>
-      El segundo 0(N) proviene de la búsqueda. La matriz está ordenada. ¿Podemos buscar en un array ordenado en un tiempo más rápido que O(N)?
+      El segundo <code>O(N)</code> proviene de la búsqueda. La matriz está ordenada. ¿Podemos buscar en un array ordenado en un tiempo más rápido que <code>O(N)</code>?
     </p>
     <p>
-      Pues sí. Podemos usar la búsqueda binaria para encontrar un elemento en un array ordenado en tiempo O(log N).
+      Pues sí. Podemos usar la búsqueda binaria para encontrar un elemento en un array ordenado en tiempo <code>O(log N)</code>.
     </p>
     <p>
-      Ahora tenemos un algoritmo mejorado: O(N log N).
+      Ahora tenemos un algoritmo mejorado: <code>O(N log N)</code>.
+    </p>
+    <pre>
+      <code>
+        Fuerza bruta:         O(N<sup>2</sup>) 
+        Improved Algorithm:   O(N log N)
+        Algoritmo óptimo:     ? 
+        BCR:                  O(N)
+      </code>
+    </pre>
+    <p>
+      ¿Podemos hacerlo aún mejor? Hacerlo mejor probablemente signifique reducir ese <code>O(log N)</code> a <code>O(1)</code>.
     </p>
     <p>
-      Fuerza bruta: O(N2)\n Algoritmo mejorado: O(N log N)\n Algoritmo óptimo: ?\n BCR: O(N) 
+      En general, no podemos buscar en una matriz -incluso en una matriz ordenada- en un tiempo mejor que <code>O(log N)</code>. Sin embargo, este no es el caso general. Estamos haciendo esta búsqueda una y otra vez.
     </p>
     <p>
-      ¿Podemos hacerlo aún mejor? Hacerlo mejor probablemente signifique reducir ese O(log N)a0(1).
-    </p>
-    <p>
-      En general, no podemos buscar en una matriz -incluso en una matriz ordenada- en un tiempo mejor que O(log N). Sin embargo, este no es el caso general. Estamos haciendo esta búsqueda una y otra vez.
-    </p>
-    <p>
-      El BCR nos dice que nunca tendremos un algoritmo más rápido que O(N). Por lo tanto, cualquier trabajo que hagamos en tiempo O(N) es un «regalo»: no afectará a nuestro tiempo de ejecución.
+      El BCR nos dice que nunca tendremos un algoritmo más rápido que <code>O(N)</code>. Por lo tanto, cualquier trabajo que hagamos en tiempo <code>O(N)</code> es un «regalo»: no afectará a nuestro tiempo de ejecución.
     </p>
     <p>
       Vuelve a leer la lista de consejos de optimización de la página 64. ¿Hay algo que pueda ayudarnos?
     </p>
     <p>
-      Uno de los consejos sugiere precomputar o hacer trabajo por adelantado. Cualquier trabajo previo que hagamos en tiempo O(N) es gratis. No afectará a nuestro tiempo de ejecución.
+      Uno de los consejos sugiere precomputar o hacer trabajo por adelantado. Cualquier trabajo previo que hagamos en tiempo <code>O(N)</code> es gratis. No afectará a nuestro tiempo de ejecución.
     </p>
     <p>
       Este es otro lugar donde BCR puede ser útil. Cualquier trabajo que hagas que sea menor o igual que el BCR es «gratis», en el sentido de que no afectará a tu tiempo de ejecución. Puede que incluso quieras eliminarlo, pero todavía no es una prioridad.
     </p>
     <p>
-      Nuestro objetivo sigue siendo reducir la búsqueda de O(log N) a 0(1). Cualquier precomputación que sea O(N) o menos es «gratis».
+      Nuestro objetivo sigue siendo reducir la búsqueda de <code>O(log N)</code> a <code>O(1)</code>. Cualquier precomputación que sea <code>O(N)</code> o menos es «gratis».
     </p>
     <p>
-      En este caso, podemos meter todo lo que hay en B en una tabla hash. Esto tomará O(N) tiempo. A continuación, sólo tenemos que ir a través de A y buscar cada elemento en la tabla hash. Esta consulta (o búsqueda) es 0(1), por lo que nuestro tiempo de ejecución es O(N).
+      En este caso, podemos meter todo lo que hay en B en una tabla hash. Esto tomará <code>O(N)</code> tiempo. A continuación, sólo tenemos que ir a través de A y buscar cada elemento en la tabla hash. Esta consulta (o búsqueda) es <code>O(1)</code>, por lo que nuestro tiempo de ejecución es <code>O(N)</code>.
     </p>
     <p>
       Supongamos que nuestro entrevistador nos hace una pregunta que nos pone los pelos de punta: ¿Podemos hacerlo mejor?
@@ -912,7 +1040,7 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       No, no en términos de tiempo de ejecución. Hemos conseguido el tiempo de ejecución más rápido posible, por lo que no podemos optimizar el tiempo O grande. Podríamos optimizar la complejidad espacial.
     </p>
-    <p>
+    <p class="pl-4 sm:pl-6 md:pl-8 border-l-2 sm:border-l-4 md:border-l-8 border-black">
       Este es otro punto en el que BCR resulta útil. Nos dice que ya hemos «terminado» de optimizar el tiempo de ejecución y que, por tanto, deberíamos centrar nuestros esfuerzos en la complejidad espacial.
     </p>
     <p>
@@ -921,17 +1049,17 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       Volvamos a nuestro ejemplo.
     </p>
-    <p>A: 13 27 35 40 49 55 59</p>
-    <p>B: 17 35 39 40 55 58 60</p>
+    <p><code>A: 13 27 <span class="underline" >35 40</span> 49 <span class="underline" >55</span> 59</code></p>
+    <p><code>B: 17 <span class="underline" >35</span> 39 <span class="underline" >40 55</span> 58 60</code></p>
     <p>
       Ahora estamos buscando un algoritmo que:
     </p>
     <ul>
       <li>
-        Opere en el espacio 0(1) (probablemente). Ya tenemos un algoritmo de espacio O(N) con tiempo de ejecución óptimo. Si queremos utilizar menos espacio adicional, eso probablemente significa que no hay espacio adicional. Por lo tanto, necesitamos eliminar la tabla hash.
+        Opere en el espacio <code>O(1)</code> (probablemente). Ya tenemos un algoritmo de espacio <code>O(N)</code> con tiempo de ejecución óptimo. Si queremos utilizar menos espacio adicional, eso probablemente significa que no hay espacio adicional. Por lo tanto, necesitamos eliminar la tabla hash.
       </li>
       <li>
-        Opera en tiempo o(N) (probablemente). Probablemente querremos al menos igualar el mejor tiempo de ejecución actual, y sabemos que no podemos superarlo.
+        Opera en tiempo <code>O(N)</code> (probablemente). Probablemente querremos al menos igualar el mejor tiempo de ejecución actual, y sabemos que no podemos superarlo.
       </li>
       <li>
         Utiliza el hecho de que las matrices están ordenadas.
@@ -948,7 +1076,7 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
         Do a binary search in B for A[ 1] = 27. Not found.
       </li>
       <li>
-        Do a binary search in B for A[2] = 35. Found a tB[l].
+        Do a binary search in B for A[2] = 35. Found at B[1].
       </li>
       <li>
         Do a binary search in B for A[3] = 40. Found at B[5].
@@ -963,7 +1091,7 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       Piensa enBUD. El cuello de botella es la búsqueda. ¿Hay algo innecesario o duplicado?
     </p>
     <p>
-      Es innecesario que A[3] = 40 haya buscado en todoB.Sabemos que acabamos de encontrar 35 enB[1], así que 40 seguramente no estará antes que 35.
+      Es innecesario que <code>A[3] = 40</code> haya buscado en todoB.Sabemos que acabamos de encontrar 35 en <code>B[1]</code>, así que 40 seguramente no estará antes que 35.
     </p>
     <p>
       Cada búsqueda binaria debe empezar donde terminó la anterior.
@@ -973,31 +1101,31 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     </p>
     <ol>
       <li>
-        Do a binary search in B for A[0] = 13. Not found.
+        Do a binary search in B for A[0] = 13. Start at B[0] = 17. Stop at B[0] = 17. Not found.
       </li>
       <li>
-        Do a binary search in B for A[ 1] = 27. Not found.
+        Do a binary search in B for A[ 1] = 27. Start at B[0] = 17. Stop at B[1] = 35. Not found.
       </li>
       <li>
-        Do a binary search in B for A[2] = 35. Found a tB[l].
+        Do a binary search in B for A[2] = 35. Start at B[1] = 35. Stop at B[1] = 35. Found.
       </li>
       <li>
-        Do a binary search in B for A[3] = 40. Found at B[5].
+        Do a binary search in B for A[3] = 39. Start at B[2] = 39. Stop at B[3] = 40. Found.
       </li>
       <li>
-        Do a binary search in B for A[4] = 49. Not found.
+        Do a binary search in B for A[4] = 40. Start at B[3] = 40. Stop at B[4] = 55. Found.
       </li>
       <li>...
       </li>
     </ol>
     <p>
-      Este algoritmo es muy similar a la fusión de dos matrices ordenadas. Funciona en tiempo O(N) y espacio 0(1).
+      Este algoritmo es muy similar a la fusión de dos matrices ordenadas. Funciona en tiempo <code>O(N)</code> y espacio <code>O(1)</code>.
     </p>
     <p>
       Ahora hemos alcanzado el BCR y tenemos un espacio mínimo. Sabemos que no podemos hacerlo mejor.
     </p>
-    <p>
-      Esta es otra form a de utilizarBCR. Si alguna vez alcanzas elBCR y tienes 0(1) espacio adicional, entonces sabes que no puedes optimizar el gran O de tiempo o espacio
+    <p class="pl-4 sm:pl-6 md:pl-8 border-l-2 sm:border-l-4 md:border-l-8 border-black">
+      Esta es otra form a de utilizar BCR. Si alguna vez alcanzas elBCR y tienes <code>O(1)</code> espacio adicional, entonces sabes que no puedes optimizar el gran O de tiempo o espacio
     </p>
     <p>
       El mejor tiempo de ejecución concebible no es un concepto de algoritmo «real», en el sentido de que no lo encontrarás en los libros de texto de algoritmos. Pero a mí personalmente me ha resultado muy útil, tanto para resolver problemas como para ayudar a otras personas a resolverlos.
@@ -1015,7 +1143,7 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       En primer lugar, las respuestas a las preguntas de la entrevista no deben considerarse «correctas» o «incorrectas»: cuando evalúo la actuación de alguien en una entrevista, nunca pienso: «¿Cuántas preguntas ha acertado?». No es una evaluación binaria. Se trata más bien de ver cómo de óptima era su solución final, cuánto tardaron en llegar a ella, cuánta ayuda necesitaron y cómo de limpio era su código. Hay una serie de factores.
     </p>
     <p>
-      En segundo lugar, tu rendimiento se evalúa en comparación con el de otros candidatos. Por ejemplo, si resuelves una pregunta de forma óptima en 15 minutos y otra persona resuelve una pregunta más fácil en cinco minutos, ¿esa persona lo hizo mejor que tú? Puede que sí, pero puede que no. Si se le plantean preguntas muy fáciles, cabe esperar que obtenga soluciones óptimas muy rápidamente. Pero si las preguntas son difíciles, entonces es de esperar que cometa una serie de errores.
+      En segundo lugar, tu rendimiento se evalúa <em>en comparación con el de otros candidatos</em>. Por ejemplo, si resuelves una pregunta de forma óptima en 15 minutos y otra persona resuelve una pregunta más fácil en cinco minutos, ¿esa persona lo hizo mejor que tú? Puede que sí, pero puede que no. Si se le plantean preguntas muy fáciles, cabe esperar que obtenga soluciones óptimas muy rápidamente. Pero si las preguntas son difíciles, entonces es de esperar que cometa una serie de errores.
     </p>
     <p>
       En tercer lugar, muchas -posiblemente la mayoría- de las preguntas son demasiado difíciles como para esperar que incluso un buen candidato obtenga inmediatamente el algoritmo óptimo. Las preguntas que suelo plantear suelen llevar entre 20 y 30 minutos a los candidatos fuertes.
@@ -1150,7 +1278,7 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
   <article>
     <p><strong>Utilizar generosamente las estructuras de datos</strong></p>
     <p>
-      Supongamos que se le pide que escriba una función para sumar dos expresiones matemáticas simples que son de la forma (donde los coeficientes y exponentes pueden ser cualquier número real positivo o negativo). Es decir, la expresión es una secuencia de términos, donde cada término es simplemente una constante multiplicada por un exponente. La entrevistadora también añade que no quiere que tengas que analizar cadenas, así que puedes utilizar cualquier estructura de datos que desees para guardar las expresiones.
+      Supongamos que se le pide que escriba una función para sumar dos expresiones matemáticas simples que son de la forma <code>Ax<sup>a</sup>• + Bx<sup>b</sup> + ...</code> (donde los coeficientes y exponentes pueden ser cualquier número real positivo o negativo). Es decir, la expresión es una secuencia de términos, donde cada término es simplemente una constante multiplicada por un exponente. La entrevistadora también añade que no quiere que tengas que analizar cadenas, así que puedes utilizar cualquier estructura de datos que desees para guardar las expresiones.
     </p>
     <p>
       Hay varias formas de ponerlo en práctica.
@@ -1160,7 +1288,7 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     </em>
     </p>
     <p>
-      Una mala implementación sería almacenar la expresión como una única matriz de dobles, donde el k-ésimo elemento corresponde al coeficiente del término xk en la expresión. Esta estructura es problemática porque no podría soportar expresiones con exponentes negativos o no enteros. También requeriría una matriz de 1000 elementos para almacenar sólo la expresión x1000.
+      Una mala implementación sería almacenar la expresión como una única matriz de dobles, donde el k⁰ elemento corresponde al coeficiente del término  <code>x<sup>k</sup></code> en la expresión. Esta estructura es problemática porque no podría soportar expresiones con exponentes negativos o no enteros. También requeriría una matriz de 1000 elementos para almacenar sólo la expresión <code>x<sup>1000</sup></code>.
     </p>
     <pre>
       <code class="language-js">
@@ -1174,10 +1302,10 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     </em>
     </p>
     <p>
-      Una implementación ligeramente menos mala sería almacenar la expresión como un conjunto de dos matrices, coeficientes y exponentes. Bajo este enfoque, los términos de la expresión se almacenan en cualquier orden, pero «emparejados» de tal manera que el término ith de la expresión está representada por 
+      Una implementación ligeramente menos mala sería almacenar la expresión como un conjunto de dos matrices, <code>coeficientes</code> y <code>exponentes</code>. Bajo este enfoque, los términos de la expresión se almacenan en cualquier orden, pero «emparejados» de tal manera que el término ith de la expresión está representada por <code>coefficients[i] * x<sup>exponents[i]</sup></code>.
     </p>
     <p>
-      Bajo esta implementación, si los coeficientes [ p] = k y los exponentes [ p] = m, entonces el término p es kxm. Aunque esto no tiene las mismas limitaciones que la solución anterior, sigue siendo muy complicado. Necesitas llevar la cuenta de dos matrices para una sola expresión. Las expresiones podrían tener valores «indefinidos» si las matrices tuvieran longitudes diferentes. Y devolver una expresión es molesto porque necesitas devolver dos arrays.
+      Bajo esta implementación, <code>coefficients[p] = k and exponents[p] = m</code>, entonces el término p es <code>kx<sup>m</sup></code>. Aunque esto no tiene las mismas limitaciones que la solución anterior, sigue siendo muy complicado. Necesitas llevar la cuenta de dos matrices para una sola expresión. Las expresiones podrían tener valores «indefinidos» si las matrices tuvieran longitudes diferentes. Y devolver una expresión es molesto porque necesitas devolver dos arrays.
     </p>
     <pre>
       <code class="language-js">
@@ -1216,8 +1344,36 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       Una implementación elegante de este problema aprovecha la reutilización de código.
     </p>
+    <pre>
+      <code class="language-js">
+        boolean compareBinToHex(String binary, String hex) &#123
+          int nl convertFromBase(binary, 2);
+          int n2 = convertFromBase(hex, 16);
+          if (nl &#60 0 || n2 &#60 0) &#123 
+            return false;
+          }
+          return n1 == n2;
+        }
+
+        int convertFromBase(String number, int base) &#123
+          if (base &#60 2 || (base > 10 && base != 16)) return -1; 
+          int value = 0;
+          for (int i = number.length() - 1; i >= 0; i--) &#123
+            int digit = digitToValue(number.charAt(i));
+            if (digit &#60 0 I I digit >= base) &#123 
+              return -1;
+            }
+            int exp= number.length() - 1 - i;
+            value += digit * Math.pow(base, exp);
+          }
+          return value
+        }
+
+        int digitToValue(char c) &#123 ... }
+      </code>
+    </pre>
     <p>
-      Podríamos haber implementado código separado para convertir un número binario y un código hexadecimal, pero esto sólo hace que nuestro código sea más difícil de escribir y más difícil de mantener. En su lugar, reutilizamos el código escribiendo un método convertFromBase y un método digitToValue.
+      Podríamos haber implementado código separado para convertir un número binario y un código hexadecimal, pero esto sólo hace que nuestro código sea más difícil de escribir y más difícil de mantener. En su lugar, reutilizamos el código escribiendo un método <code>convertFromBase</code> y un método <code>digitToValue</code>.
     </p>
   </article>
   <article>
@@ -1258,9 +1414,10 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
           int minindex= getMinindex(array);
           int maxindex= getMaxindex(array);
           swap(array, minindex, maxindex);
-            int getMinindex(int[] array) &#123 ... }
-            int getMaxindex(int[] array) &#123 ... }
-            void swap(int[] array, int m, int n) &#123 ... }
+        }
+        int getMinindex(int[] array) &#123 ... }
+        int getMaxindex(int[] array) &#123 ... }
+        void swap(int[] array, int m, int n) &#123 ... }
 
       </code>
     </pre>
@@ -1271,7 +1428,7 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
   <article>
     <p><strong>Flexible y robusto</strong></p>
     <p>
-      Que tu entrevistador sólo te pida que escribas código para comprobar si un tablero de tres en raya normal tiene un ganador, no significa que debas asumir que se trata de un tablero de 3x3. ¿Por qué no escribir el código de una forma más general que lo implemente para un tablero NxN?
+      Que tu entrevistador sólo te pida que escribas código para comprobar si un tablero de tres en raya normal tiene un ganador, no significa que debas asumir que se trata de un tablero de 3x3. ¿Por qué no escribir el código de una forma más general que lo implemente para un tablero <code>NxN</code>?
     </p>
     <p>
       Escribir código flexible y de propósito general también puede significar usar variables en lugar de valores codificados o usar plantillas/génicos para resolver un problema. Si podemos escribir nuestro código para resolver un problema más general, deberíamos hacerlo.
@@ -1283,11 +1440,28 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
   <article>
     <p><strong>Comprobación de errores</strong></p>
     <p>
-      Un signo de un programador cuidadoso es que no hace suposiciones sobre la entrada. En su lugar, valida que la entrada es lo que debería ser, ya sea mediante declaraciones ASSERT o declaraciones if.
+      Un signo de un programador cuidadoso es que no hace suposiciones sobre la entrada. En su lugar, valida que la entrada es lo que debería ser, ya sea mediante declaraciones <code>ASSERT</code> o declaraciones if.
     </p>
     <p>
-      Por ejemplo, recuerde el código anterior para convertir un número de su representación de base i (p. ej., base 2 o base 16) a un int.
+      Por ejemplo, recuerde el código anterior para convertir un número de su representación de base <code>i</code> (p. ej., base 2 o base 16) a un <code>int</code>.
     </p>
+    <pre>
+      <code class="language-js">
+        int convertToBase(String number, int base) &#123
+          if (base &#60 2 || (base > 10 && base != 16)) return -1; 
+          int value = 0;
+          for (int i= number.length() - 1; i >= 0; i--) &#123
+            int digit = digitToValue(number.charAt(i))
+            if (digit &#60 0 || digit >= base) &#123
+              return -1;
+            }
+            int exp = number.length() - 1 - i;
+            value += digit * Math.pow(base, exp);
+          }
+          return value;
+        }
+      </code>
+    </pre>
     <p>
       En la línea 2, comprobamos que la base es válida (asumimos que las bases mayores que 10, distintas de la base 16, no tienen representación estándar en forma de cadena). En la línea 6, hacemos otra comprobación de errores: nos aseguramos de que cada dígito está dentro del rango permitido.
     </p>
