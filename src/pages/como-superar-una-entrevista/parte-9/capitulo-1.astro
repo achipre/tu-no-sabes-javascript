@@ -1,0 +1,149 @@
+---
+import Layoutcracking from "../../../layouts/Layoutcracking.astro"
+---
+<Layoutcracking title="Como superar una entrevista de codificación">
+  <h1>Capitulo 1</h1>
+  <h2>Arrays y Strings</h2>
+  <article>
+    <p>
+      Esperemos que todos los lectores de este libro estén familiarizados con los arrays y las cadenas, por lo que no les aburriremos con estos detalles. En su lugar, nos centraremos en algunas de las técnicas y problemas más comunes con estas estructuras de datos.
+    </p>
+    <p>
+      Tenga en cuenta que las preguntas sobre arrays y las preguntas sobre cadenas suelen ser intercambiables. Es decir, una pregunta que este libro plantea utilizando un array puede plantearse en su lugar como una pregunta de cadena, y viceversa.
+    </p>
+  </article>
+  <article>
+    <h3>► Tablas hash</h3>
+    <p>
+      Una tabla hash es una estructura de datos que asigna claves a valores para una búsqueda altamente eficiente. Existen varias formas de implementarla. Aquí describiremos una implementación simple pero común.
+    </p>
+    <p>
+      En esta implementación sencilla, utilizamos una matriz de listas enlazadas y una función de código hash. Para insertar una clave (que puede ser una cadena o cualquier otro tipo de dato) y un valor, hacemos lo siguiente:
+    </p>
+    <ol>
+      <li>
+        Primero, calculamos el código hash de la clave, que normalmente será un int o un long. Tenga en cuenta que dos claves diferentes pueden tener el mismo código hash, ya que puede haber un número infinito de claves y un número finito de enteros.
+      </li>
+      <li>
+        A continuación, asigna el código hash a un índice del array. Esto podría hacerse con algo como hash (clave) % longitud_array. Dos códigos hash diferentes podrían, por supuesto, asignarse al mismo índice.
+      </li>
+      <li>
+        En este índice hay una lista enlazada de claves y valores. Almacena la clave y el valor en este índice. Debemos utilizar una lista enlazada debido a las colisiones: podrías tener dos claves diferentes con el mismo código hash, o dos códigos hash diferentes que se asignan al mismo índice.
+      </li>
+    </ol>
+    <p>
+      Para recuperar el par de valores por su clave, repite este proceso. Calcula el código hash a partir de la clave y, a continuación, calcula el índice a partir del código hash. A continuación, busque en la lista enlazada el valor con esta clave.
+    </p>
+    <p>
+      Si el número de colisiones es muy alto, el tiempo de ejecución en el peor de los casos es O(N), donde N es el número de claves. Sin embargo, generalmente asumimos una buena implementación que mantiene las colisiones al mínimo, en cuyo caso el tiempo de búsqueda es 0(1).
+    </p>
+    <div class="flex h-72">
+      <pre class="relative">
+        <code class="px-2">
+          "hi"
+          "abc"
+
+          "aa"
+          "qs"
+
+          "pl"
+        </code>
+      </pre>
+      <pre class="relative">
+        <code>
+          10320
+          980
+
+          897
+          897
+
+          63
+        </code>
+        <div class="absolute top-7 left-2 flex items-center">
+          <div class="mt-1 w-24 h-1 bg-black"></div><span>►</span>
+        </div>
+        <div class="absolute top-12 left-2 flex items-center">
+          <div class="mt-1 w-24 h-1 bg-black"></div><span>►</span>
+        </div>
+        <div class="absolute top-[118px] -left-2 flex items-center">
+          <div class="mt-1 w-28 h-1 bg-black"></div><span>►</span>
+        </div>
+        <div class="absolute top-[136px] -left-2 flex items-center">
+          <div class="mt-1 w-28 h-1 bg-black"></div><span>►</span>
+        </div>
+        <div class="absolute top-48 -left-2 flex items-center">
+          <div class="mt-1 w-28 h-1 bg-black"></div><span>►</span>
+        </div>
+      </pre>
+      
+      <pre class="relative">
+        <code>
+          <span class="p-4 py-2 inline-block border-black border-2">0</span>
+          <span class="p-4 py-2 inline-block border-black border-2">1</span>
+          <span class="p-4 py-2 inline-block border-black border-2">2</span>
+          <span class="p-4 py-2 inline-block border-black border-2">3</span>
+          <span class="p-4 py-2 inline-block border-black border-2">4</span>
+        </code>
+        <div class="absolute top-7 left-2 rotate-6 flex items-center">
+          <div class="mt-1 w-24 h-1 bg-black"></div><span>►</span>
+        </div>
+        <div class="absolute top-12 left-2 -rotate-6 flex items-center">
+          <div class="mt-1 w-24 h-1 bg-black"></div><span>►</span>
+        </div>
+        <div class="absolute top-[118px] -left-2 rotate-6 flex items-center">
+          <div class="mt-1 w-28 h-1 bg-black"></div><span>►</span>
+        </div>
+        <div class="absolute top-[136px] -left-2 rotate-3 flex items-center">
+          <div class="mt-1 w-28 h-1 bg-black"></div><span>►</span>
+        </div>
+        <div class="absolute top-[182px] -rotate-6 -left-6 flex items-center">
+          <div class="mt-1 w-32 h-1 bg-black"></div><span>►</span>
+        </div>
+      </pre>
+      <pre class="relative">
+        <code>
+          <span class="p-4 py-2 inline-block border-black border-2">hi</span>
+          <span class="p-4 py-2 inline-block border-black border-2">aa</span>
+          
+
+          <span class="p-4 py-2 -mt-4 inline-block border-black border-2">pl</span>
+        </code>
+        <div class="absolute top-8 left-2 flex items-center">
+          <div class="mt-1 w-24 h-1 bg-black"></div><span>►</span>
+        </div>
+        <div class="absolute top-20 left-2 flex items-center">
+          <div class="mt-1 w-24 h-1 bg-black"></div><span>►</span>
+        </div>
+        <div class="absolute top-44 left-2 flex items-center">
+          <div class="mt-1 w-24 h-1 bg-black"></div><span>►</span>
+        </div>
+      </pre>
+      <pre class="relative">
+        <code>
+          <span class="p-4 py-2 inline-block border-black border-2">abc</span>
+          
+
+
+          <span class="p-4 py-2 inline-block border-black border-2">qs</span>
+        </code>
+        <div class="absolute top-8 left-2 flex items-center">
+          <div class="mt-1 w-24 h-1 bg-black"></div><span>►</span>
+        </div>
+        <div class="absolute top-44 left-2 flex items-center">
+          <div class="mt-1 w-24 h-1 bg-black"></div><span>►</span>
+        </div>
+      </pre>
+    </div>
+    <p>
+      Como alternativa, podemos implementar la tabla hash con un árbol de búsqueda binario equilibrado. Esto nos da un tiempo de búsqueda O(log N). La ventaja de esto es que potencialmente se utiliza menos espacio, ya que no se asigna una gran matriz. También podemos iterar a través de las claves en orden, lo que puede ser útil a veces.
+    </p>
+  </article>
+  <footer class="flex justify-end">
+    <a class="font-khand font-bold text-3xl py-4 sm:py-8 md:py-12 sm:text-4xl md:text-5xl" href="parte-11">
+      <div class="transition-all text-nowrap relative ease-linear duration-500 w-28 sm:w-40 md:w-52
+      hover:w-36 sm:hover:w-48 md:hover:w-56  hover:text-sky-500
+      after:content-['↦'] after:text-red-500 after:transition-all after:ease-linear after:duration-500 after:opacity-0 after:relative after:-left-3 
+      hover:after:content-['↦'] hover:after:transition-all hover:after:ease-linear hover:after:duration-500 hover:after:opacity-100 hover:after:left-3"> Parte XI</div>
+    </a>
+  </footer>
+</Layoutcracking>
