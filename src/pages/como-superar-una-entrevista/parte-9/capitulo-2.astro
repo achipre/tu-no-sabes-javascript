@@ -1,0 +1,249 @@
+---
+import Layoutcracking from "../../../layouts/Layoutcracking.astro"
+---
+<Layoutcracking title="Como superar una entrevista de codificación">
+  <h1>Capitulo 2</h1>
+  <h2>Listas Enlazadas</h2>
+  <article>
+    <p>
+      Una lista enlazada es una estructura de datos que representa una secuencia de nodos. En una lista enlazada simple, cada nodo apunta al siguiente nodo de la lista. En una lista doblemente enlazada, cada nodo apunta tanto al nodo siguiente como al anterior.
+    </p>
+    <p>
+      El siguiente diagrama muestra una lista doblemente enlazada:
+    </p>
+    <div class="flex justify-center my-8">
+      <p class="px-4 py-1 border-black border-2">1</p>
+      <div class="flex flex-col">
+        <div class="w-12 h-5 flex items-center">
+            <span class="w-full bg-black h-1"></span><span class="-ml-1">►</span>
+        </div>
+        <div class="w-12 h-5 flex items-center">
+          <span class="-mr-1">◀︎</span><span class="w-full bg-black h-1"></span>
+        </div>
+      </div>
+      <p class="px-4 py-1 border-black border-2">5</p>
+      <div class="flex flex-col">
+        <div class="w-12 h-5 flex items-center">
+            <span class="w-full bg-black h-1"></span><span class="-ml-1">►</span>
+        </div>
+        <div class="w-12 h-5 flex items-center">
+          <span class="-mr-1">◀︎</span><span class="w-full bg-black h-1"></span>
+        </div>
+      </div>
+      <p class="px-4 py-1 border-black border-2">2</p>
+      <div class="flex flex-col">
+        <div class="w-12 h-5 flex items-center">
+            <span class="w-full bg-black h-1"></span><span class="-ml-1">►</span>
+        </div>
+        <div class="w-12 h-5 flex items-center">
+          <span class="-mr-1">◀︎</span><span class="w-full bg-black h-1"></span>
+        </div>
+      </div>
+      <p class="px-4 py-1 border-black border-2">13</p>
+      <div class="flex flex-col">
+        <div class="w-12 h-5 flex items-center">
+            <span class="w-full bg-black h-1"></span><span class="-ml-1">►</span>
+        </div>
+        <div class="w-12 h-5 flex items-center">
+          <span class="-mr-1">◀︎</span><span class="w-full bg-black h-1"></span>
+        </div>
+      </div>
+      <p class="px-4 py-1 border-black border-2">7</p>
+      <div class="flex flex-col">
+        <div class="w-12 h-5 flex items-center">
+            <span class="w-full bg-black h-1"></span><span class="-ml-1">►</span>
+        </div>
+        <div class="w-12 h-5 flex items-center">
+          <span class="-mr-1">◀︎</span><span class="w-full bg-black h-1"></span>
+        </div>
+      </div>
+      <p class="px-4 py-1 border-black border-2">3</p>
+    </div>
+    <p>
+      A diferencia de un array, una lista enlazada no proporciona acceso en tiempo constante a un «índice» concreto dentro de la lista. Esto significa que si desea encontrar el Kº elemento de la lista, tendrá que iterar a través de K elementos.
+    </p>
+    <p>
+      La ventaja de una lista enlazada es que permite añadir y eliminar elementos del principio de la lista en tiempo constante. Para aplicaciones específicas, esto puede ser útil.
+    </p>
+  </article>
+  <article>
+    <h3>► Creación de una lista enlazada</h3>
+    <p>
+      El siguiente código implementa una lista enlazada simple muy básica.
+    </p>
+    <pre>
+      <code class="language-js">
+        class Node &#123
+          Node next= null; 
+          int data;
+
+          public Node(int d) &#123
+            data = d;
+          }
+
+          void appendToTail(int d) &#123
+            Node end = new Node(d); 
+            Node n = this;
+            while (n.next != null) &#123
+              n = n.next;
+            }
+            n.next= end;
+          }
+        }
+      </code>
+    </pre>
+    <p>
+      En esta implementación, no tenemos una estructura de datos <code>LinkedList</code>. Accedemos a la lista enlazada a través de una referencia al <code>Node</code> cabeza de la lista enlazada. Cuando se implementa la lista enlazada de esta manera, hay que tener un poco de cuidado. ¿Qué pasa si varios objetos necesitan una referencia a la lista enlazada, y luego la cabeza de la lista enlazada cambia? Puede que algunos objetos sigan apuntando a la cabeza anterior.
+    </p>
+    <p>
+      Podríamos, si queremos, implementar una clase <code>LinkedList</code> que envuelva a la clase <code>Node</code>. Esta clase tendría esencialmente una única variable miembro: el <code>Node</code> cabeza. Esto resolvería en gran medida el problema anterior.
+    </p>
+    <p>
+      Recuerda que cuando estés discutiendo una lista enlazada en una entrevista, debes entender si es una lista enlazada simple o una lista enlazada doble.
+    </p>
+  </article>
+  <article>
+    <h3>► Borrar un nodo de una lista enlazada simple</h3>
+    <p>
+      Eliminar un nodo de una lista enlazada es bastante sencillo. Dado un nodo n, buscamos el nodo anterior prev y establecemos prev.next igual a n.next. Si la lista está doblemente enlazada, también debemos actualizar n.next para que n.next.prev sea igual a n.prev. Lo importante es recordar (1) comprobar si hay un puntero nulo y (2) actualizar los punteros head o tail según sea necesario.
+    </p>
+    <p>
+      Además, si implementas este código en C, C++ u otro lenguaje que requiera que el desarrollador haga gestión de memoria, debes considerar si el nodo eliminado debe ser reasignado.
+    </p>
+  </article>
+  <article>
+    <h3>► La técnica del "corredor"</h3>
+    <p>
+      La técnica del «corredor» (o segundo puntero) se utiliza en muchos problemas de listas enlazadas. La técnica del corredor consiste en recorrer la lista enlazada con dos punteros simultáneamente, uno por delante del otro. El nodo «rápido» puede ir por delante en una cantidad fija, o puede ir saltando varios nodos por cada nodo que recorre el nodo «lento».
+    </p>
+    <p>
+      Por ejemplo, supongamos que tenemos una lista enlazada a1->a2 y queremos reorganizarla en a1 ->b1. Usted no sabe la longitud de la lista enlazada (pero sí sabe que la longitud es un número par).
+    </p>
+    <p>
+      Podrías hacer que un puntero p1 (el puntero rápido) se mueva cada dos elementos por cada movimiento que haga p2. Cuando pl llegue al final de la lista enlazada, p2 estará en el punto medio. Entonces, mueve p1 de nuevo al frente y comienza a «tejer» los elementos. En cada iteración, p2 selecciona un elemento y lo inserta después de pl.
+    </p>
+  </article>
+  <article>
+    <h3>► Problemas recursivos</h3>
+    <p>
+      Varios problemas de listas enlazadas se basan en la recursividad. Si tienes problemas resolviendo un problema de listas enlazadas, deberías explorar si un enfoque recursivo funcionará. No entraremos en profundidad en la recursividad aquí, ya que un capítulo posterior está dedicado a ella.
+    </p>
+    <p>
+      Sin embargo, debes recordar que los algoritmos recursivos ocupan al menos O ( n) de espacio, donde n es la profundidad de la llamada recursiva. Todos los algoritmos recursivos pueden implementarse iterativamente, aunque pueden ser mucho más complejos.
+    </p>
+  </article>
+  <article>
+    <h3 class="border-y-2 border-black">Preguntas de la entrevista</h3>
+    <ul>
+      <li class="list-none">
+        <strong>2.1 Eliminar duplicados:</strong>
+        Escribe código para eliminar duplicados de una lista enlazada sin ordenar.
+        <p>SIGUE</p>
+        <p>¿Cómo resolverías este problema si no se permite un buffer temporal?</p>
+        <p><em>Pistas: #9, #40</em> <strong>pg208</strong> 
+        </p>
+      </li>
+      <li class="list-none">
+        <strong>2.2 Devuelve el Kth al último:</strong>
+        Implementa un algoritmo para encontrar el k-ésimo al último elemento de una lista enlazada simple.
+        <p><em>Pistas:#8, #25, #41, #67, #126</em>
+        </p>
+      </li>
+      <li class="list-none">
+        <strong>2.3 Borrar Nodo Medio:</strong>
+        Implementa un algoritmo para borrar un nodo en el medio (es decir, cualquier nodo excepto el primero y el último, no necesariamente el medio exacto) de una lista ligada simple, dado sólo el acceso a ese nodo.
+        <p>EJEMPLO</p>
+        <p>
+          Input: el nodo c de la lista enlazad <code>a->b->c->d->e->f</code>.
+        </p>
+        <p>
+          Resultado: no se devuelve nada, pero la nueva lista enlazada se parece <code>a->b->d->e->f</code>
+        </p>
+        <p><em>Pistas: #72</em></p>
+      </li>
+      <li class="list-none">
+        <strong>2.4 Partición:</strong>
+        Escribe código para particionar una lista enlazada alrededor de un valor x, de forma que todos los nodos menores que x vayan antes que todos los nodos mayores o iguales que x. Si x está contenido dentro de la lista, los valores de x sólo tienen que ir después de los elementos menores que x (ver más abajo). El elemento de partición x puede aparecer en cualquier lugar de la «partición derecha»; no es necesario que aparezca entre las particiones izquierda y derecha.
+        <p>EJEMPLO</p>
+        <pre>
+          <code>
+            Input: 3 -> 5 -> 8 -> 5 -> 10 -> 2 -> 1[partition=5]
+            Output: 3 -> 1 -> 2 -> 10 -> 5 -> 5 -> 8
+          </code>
+        </pre>
+        <p><em>Pistas: #3, #24</em></p>
+        </p>
+      </li>
+      <li class="list-none">
+        <strong>2.5 Listas de sumas:</strong>
+        Usted tiene dos números representados por una lista enlazada, donde cada nodo contiene un solo dígito. Los dígitos se almacenan en orden inverso, de tal manera que el dígito 1 's está en la cabeza de la lista. Escribe una función que sume los dos números y devuelva la suma como una lista enlazada.
+        <p>EJEMPLO</p>
+        <pre>
+          <code>
+            Input:  (7-> 1 -> 6) + (5 -> 9 -> 2). That is, 617 + 295.
+            Output: 2 -> 1 -> 9. That is, 912.
+          </code>
+        </pre>
+        <p>SEGUIMIENTO</p>
+        <p>
+          Supongamos que los dígitos se almacenan en orden ascendente. Repita el problema anterior.
+        </p>
+        <p>EJEMPLO</p>
+        <pre>
+          <code>
+            Input:  (6 -> 1 -> 7) + (2 -> 9 -> 5). That is, 617 + 295.
+            Output: 9 -> 1 -> 2. That is, 912.
+          </code>
+        </pre>
+        <p><em>Pistas: #7, #30, #71, #95, #109</em>
+        </p>
+      </li>
+      <li class="list-none">
+        <strong>2.6 Palíndromo:</strong>
+        Implementa una función para comprobar si una lista enlazada es un palíndromo. 
+        <p><em>Pistas:#5, #13, #29, #61, #101</em>
+        </p>
+      </li>
+      <li class="list-none">
+        <strong>2.7 Intersección:</strong>
+        Dadas dos listas enlazadas (una a una), determina si las dos listas se intersecan. Devuelve el nodo de intersección. Es decir, si el nodo k de la primera lista enlazada es exactamente el mismo nodo (por referencia) que el nodo j de la segunda lista enlazada, entonces se intersecan.
+        <p><em>Pistas: #20, #45, #55, #65, #76, #93, #111, #120, #129</em>
+        </p>
+      </li>
+      <li class="list-none">
+        <strong>2.8 Lista enlazada circular:</strong>
+        Dada una lista enlazada circular, implementar un algoritmo que devuelva el nodo alprincipio del bucle.
+        Lista enlazada (corrupta) en la que el siguiente puntero de un nodo apunta a un nodo anterior, de forma que se forma un bucle en la lista enlazada.
+        <p>
+          DEFINICIÓN
+        </p>
+        <p>
+          Lista enlazada circular: Lista enlazada (corrupta) en la que el siguiente puntero de un nodo apunta a un nodo anterior, de forma que se crea un bucle en la lista enlazada.
+        </p>
+        <p>EJEMPLO</p>
+        <pre>
+          <code>
+            Input:  A -> B -> C -> D -> E -> C [thesameCasearlier]
+            Output: C
+          </code>
+        </pre>
+        <p><em>Pistas: #50, #69, #83, #90</em>
+        </p>
+      </li>
+    </ul>
+    <p>
+      Preguntas adicionales: Árboles y grafos (#4.3), Diseño orientado a objetos (#7.12), Diseño de sistemas y escalabilidad (#9.5), Problemas moderados (#16.25), Problemas difíciles (#17.12). 
+    </p>
+    <p>
+      Las pistas comienzan en la página 653.
+    </p>
+  </article>
+  <footer class="flex justify-end">
+    <a class="font-khand font-bold text-3xl py-4 sm:py-8 md:py-12 sm:text-4xl md:text-5xl" href="capitulo-3">
+      <div class="transition-all text-nowrap relative ease-linear duration-500 w-28 sm:w-40 md:w-52
+      hover:w-36 sm:hover:w-48 md:hover:w-56  hover:text-sky-500
+      after:content-['↦'] after:text-red-500 after:transition-all after:ease-linear after:duration-500 after:opacity-0 after:relative after:-left-3 
+      hover:after:content-['↦'] hover:after:transition-all hover:after:ease-linear hover:after:duration-500 hover:after:opacity-100 hover:after:left-3"> Capitulo 3</div>
+    </a>
+  </footer>
+</Layoutcracking>
