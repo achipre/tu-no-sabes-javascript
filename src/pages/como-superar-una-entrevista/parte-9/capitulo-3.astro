@@ -6,6 +6,237 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
   <h2>Stacks and Queues</h2>
   <article>
     <p>
+      Las preguntas sobre pilas y colas serán mucho más fáciles de manejar si te sientes cómodo con los entresijos de la estructura de datos. Sin embargo, los problemas pueden ser bastante complicados. Mientras que algunos problemas pueden ser ligeras modificaciones de la estructura de datos original, otros presentan retos mucho más complejos.
+    </p>
+  </article>
+  <article>
+    <h3>► Implementar una Stack</h3>
+    <p>
+      La estructura de datos pila es precisamente lo que parece: una pila de datos. En ciertos tipos de problemas, puede ser favorable almacenar los datos en una pila en lugar de en un array.
+    </p>
+    <p>
+      Una pila utiliza el orden LIFO (último en entrar, primero en salir). Es decir, como en una pila de platos, el último elemento añadido a la pila es el primero en ser eliminado.
+    </p>
+    <p>
+      Utiliza las siguientes operaciones:
+    </p>
+    <ul>
+      <li><code>pop(): </code>
+        Elimina el elemento superior de la pila. 
+      </li>
+      <li><code>push(item): </code>
+        Añade un elemento al principio de la pila. 
+      </li>
+      <li><code>peek(): </code>
+        Devuelve la parte superior de la pila.
+      </li>
+      <li><code>isEmpty(): </code>
+        Devuelve true si y sólo si la pila está vacía.
+      </li>
+    </ul>
+    <p>
+      A diferencia de las matrices, la pila no permite acceder en tiempo constante al elemento i-ésimo. Sin embargo, sí permite añadir y eliminar elementos en tiempo constante, ya que no es necesario desplazarlos.
+    </p>
+    <p>
+      Hemos proporcionado un ejemplo de código sencillo para implementar una pila. Tenga en cuenta que una pila también se puede implementar utilizando una lista enlazada, si los elementos se añaden y eliminan desde el mismo lado.
+    </p>
+    <pre>
+      <code class="language-js"> 
+        public class MyStack&#60T> &#123
+          private static class StackNode&#60T> &#123
+            private T data;
+            private StackNode&#60T> next;
+
+            public StackNode(T data) &#123 
+              this.data = data;
+            }
+          }
+          private StackNode&#60T> top;
+
+          public T pop() &#123
+            if (top == null) throw new EmptystackException();
+            T item = top.data;
+            top = top.next; 
+            return item;
+          }
+          public void push(T item) &#123 
+            StackNode&#60T> t = new StackNode&#60T>(item); 
+            t.next = top;
+            top = t;
+          public T peek() &#123 
+            if (top== null) throw new EmptyStackException();
+            return top.data;
+          }
+          public boolean isEmpty() &#123 
+            return top == null;
+          }
+        }
+      </code>
+    </pre>
+    <p>
+      Un caso en el que las pilas suelen ser útiles es en ciertos algoritmos recursivos. A veces es necesario introducir datos temporales en una pila mientras se recursa, pero luego eliminarlos cuando se retrocede (por ejemplo, porque falló la comprobación recursiva). Una pila ofrece una forma intuitiva de hacerlo.
+    </p>
+    <p>
+      Una pila también se puede utilizar para implementar un algoritmo recursivo de forma iterativa. (¡Es un buen ejercicio! Tome un algoritmo recursivo simple e impleméntelo iterativamente).
+    </p>
+  </article>
+  <article>
+    <h3>► Implementación de una cola</h3>
+    <p>
+      Una cola implementa el orden FIFO (primero en entrar, primero en salir). Al igual que en una fila o cola en un puesto de venta de entradas, los elementos se eliminan de la estructura de datos en el mismo orden en que se añaden.
+    </p>
+    <p>
+      Utiliza las operaciones
+    </p>
+    <ul>
+      <li><code>add(item): </code>
+        Añade un elemento al final de la lista.
+      </li>
+      <li><code>remove(): </code>
+        Elimina el primer elemento de la lista.
+      </li>
+      <li><code>peek(): </code>
+        Devuelve el primer elemento de la cola.
+      </li>
+      <li><code>isEmpty(): </code>
+        Devuelve true si y sólo si la cola está vacía.
+      </li>
+    </ul>
+    <p>
+      Una cola también puede implementarse con una lista enlazada. De hecho, son esencialmente la misma cosa, siempre y cuando los elementos se añaden y eliminan de los lados opuestos.
+    </p>
+    <pre>
+      <code class="language-js">
+        public class MyQueue&#60T> &#123
+          private static class QueueNode&#60T> &#123
+            private T data;
+            private QueueNode&#60T> next;
+
+            public QueueNode(T data) &#123 
+              this.data = data;
+            }
+          }
+
+          private QueueNode&#60T> first; 
+          private QueueNode&#60T> last;
+
+          public void add(T item) &#123 
+            QueueNode&#60T> t = new QueueNode&#60T>(item); 
+            if (last != null) &#123
+              last.next= t;
+            }
+            last = t;
+            if (first == null) &#123  
+              first = last;
+            }
+          }
+
+          public T remove() &#123 
+            if (first== null) throw new NoSuchElementException(); 
+            T data= first.data;
+            first= first.next;
+            if (first == null) &#123 
+              last= null;
+            }
+            return data;
+          }
+
+          public T peek() &#123 
+            if (first== null) throw new NoSuchElementException(); 
+            return first.data;
+          }
+
+          public boolean isEmpty() &#123 
+            return first== null;
+          }
+        }
+      </code>
+    </pre>
+    <p>
+      Es especialmente fácil confundir la actualización del primer y último nodo de una cola. Asegúrate de comprobarlo dos veces.
+    </p>
+    <p>
+      Un lugar donde las colas se utilizan a menudo es en la búsqueda breadth-first o en la implementación de una caché.
+    </p>
+    <p>
+      En la búsqueda breadth-first, por ejemplo, utilizamos una cola para almacenar una lista de los nodos que necesitamos procesar. Cada vez que procesamos un nodo, añadimos sus nodos adyacentes al final de la cola. Esto nos permite procesar los nodos en el orden en que son vistos.
+    </p>
+  </article>
+  <article>
+    <h3 class="border-y-2 border-black">Preguntas de la entrevista</h3>
+    <ul>
+      <li class="list-none">
+        <strong>3.1 Tres en uno: </strong>
+        Describe cómo podrías utilizar una única matriz para implementar tres pilas.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #2, #72, #38, #58</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 227</strong> </p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>3.2 Pila Minima: </strong>
+        ¿Cómo diseñarías una pila que, además de push y pop, tuviera una función min que devolviera el elemento mínimo? Push, pop y min deben operar en tiempo <code>O(1)</code>.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: </em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 232</strong> </p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>3.3 Pila de platos: </strong>
+        Imagina una pila (literal) de platos. Si la pila es demasiado alta, podría caerse. Por lo tanto, en la vida real, es probable que se inicie una nueva pila cuando la pila anterior supere algún umbral. Implemente una estructura de datos <code>SetOfStacks</code> que imite esto. <code></code> debería estar compuesta por varias pilas y debería crear una nueva pila una vez que la anterior supere su capacidad. <code>SetOfStacks.push()</code> y <code>SetOfStacks.pop()</code> deben comportarse de forma idéntica a una sola pila (es decir, <code>pop()</code> debe devolver los mismos valores que devolvería si hubiera una sola pila).
+        <p>
+          SEGUIR
+        </p>
+        <p>
+          Implementar una función <code>popAt(int index)</code> que realice una operación pop en una subpila específica.
+        </p>
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #64, #87</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 233</strong> </p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>3.4 Cola mediante pilas: </strong>
+        Implementa una class <code>MyQueue</code> que implemente una cola mediante 
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #98, #7 74</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 236</strong> </p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>3.5 Ordenar Pila: </strong>
+        Escribe un programa para ordenar una pila de forma que los elementos más pequeños estén en la parte superior. Puedes utilizar una pila temporal adicional, pero no puedes copiar los elementos en ninguna otra estructura de datos (como un array). La pila soporta las siguientes operaciones: <code>push</code>, <code>pop</code>, <code>peek</code>, e <code>isEmpty</code>.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: # 15, #32, #43</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 237</strong> </p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>3.6 Refugio de animales: </strong>
+        Un refugio de animales, que sólo alberga perros y gatos, funciona estrictamente sobre la base de "primero en entrar, primero en salir". Las personas deben adoptar el animal "más viejo" (según la hora de llegada) de todos los que hay en el refugio, o pueden elegir si prefieren un perro o un gato (y recibirán el animal más viejo de ese tipo). No pueden seleccionar el animal concreto que desean. Crea las estructuras de datos para mantener este sistema e implementar operaciones como <code>enqueue</code>, <code>dequeueAny</code>, <code>dequeueDog</code>, y <code>dequeueCat</code>. Puedes utilizar la estructura de datos de <code>LinkedList</code> incorporada.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #22, #56, #63</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 239</strong> </p>
+        </div>
+      </li>
+    </ul>
+    <p>
+      Preguntas adicionales: Listas Enlazadas (#2.6 , Problemas Moderados (#16.26), Problemas Difíciles (#17.9).
+    </p>
+    <p>
+        Las pistas comienzan en la página 653.
     </p>
   </article>
   <footer class="flex justify-end">
@@ -13,7 +244,7 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
       <div class="transition-all text-nowrap relative ease-linear duration-500 w-28 sm:w-40 md:w-52
       hover:w-36 sm:hover:w-48 md:hover:w-56  hover:text-sky-500
       after:content-['↦'] after:text-red-500 after:transition-all after:ease-linear after:duration-500 after:opacity-0 after:relative after:-left-3 
-      hover:after:content-['↦'] hover:after:transition-all hover:after:ease-linear hover:after:duration-500 hover:after:opacity-100 hover:after:left-3"> Capitulo 3</div>
+      hover:after:content-['↦'] hover:after:transition-all hover:after:ease-linear hover:after:duration-500 hover:after:opacity-100 hover:after:left-3"> Capitulo 4</div>
     </a>
   </footer>
 </Layoutcracking>

@@ -74,7 +74,7 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
     <pre>
       <code class="language-js">
         class Node &#123
-          Node next= null; 
+          Node next = null; 
           int data;
 
           public Node(int d) &#123
@@ -105,11 +105,31 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
   <article>
     <h3>► Borrar un nodo de una lista enlazada simple</h3>
     <p>
-      Eliminar un nodo de una lista enlazada es bastante sencillo. Dado un nodo n, buscamos el nodo anterior prev y establecemos prev.next igual a n.next. Si la lista está doblemente enlazada, también debemos actualizar n.next para que n.next.prev sea igual a n.prev. Lo importante es recordar (1) comprobar si hay un puntero nulo y (2) actualizar los punteros head o tail según sea necesario.
+      Eliminar un nodo de una lista enlazada es bastante sencillo. Dado un nodo n, buscamos el nodo anterior <code>prev</code> y establecemos <code>prev.next</code> igual a <code>n.next</code>. Si la lista está doblemente enlazada, también debemos actualizar <code>n.next</code> para que <code>n.next.prev</code> sea igual a <code>n.prev</code>. Lo importante es recordar (1) comprobar si hay un puntero nulo y (2) actualizar los punteros head o tail según sea necesario.
     </p>
     <p>
       Además, si implementas este código en C, C++ u otro lenguaje que requiera que el desarrollador haga gestión de memoria, debes considerar si el nodo eliminado debe ser reasignado.
     </p>
+    <pre>
+      <code class="language-js">
+        Node deleteNode(Node head, int d) &#123
+          Node n = head;
+
+          if (n.data == d) &#123
+            return head.next; /* moved head */
+          }
+
+          while (n.next != null) &#123
+            if (n.next.data == d) &#123
+              n.next = n.next.next;
+              return head; /* head didn't change */
+            }
+            n = n.next;
+          }
+          return head;
+        }
+      </code>
+    </pre>
   </article>
   <article>
     <h3>► La técnica del "corredor"</h3>
@@ -117,10 +137,10 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
       La técnica del «corredor» (o segundo puntero) se utiliza en muchos problemas de listas enlazadas. La técnica del corredor consiste en recorrer la lista enlazada con dos punteros simultáneamente, uno por delante del otro. El nodo «rápido» puede ir por delante en una cantidad fija, o puede ir saltando varios nodos por cada nodo que recorre el nodo «lento».
     </p>
     <p>
-      Por ejemplo, supongamos que tenemos una lista enlazada a1->a2 y queremos reorganizarla en a1 ->b1. Usted no sabe la longitud de la lista enlazada (pero sí sabe que la longitud es un número par).
+      Por ejemplo, supongamos que tenemos una lista enlazada <code>a<sub>1</sub>->a<sub>2</sub>->•••->a<sub>n</sub>->b<sub>1</sub>->b<sub>2</sub>->•••->b<sub>n</sub></code> y queremos reorganizarla en <code>a<sub>1</sub>->b<sub>1</sub>->a<sub>2</sub>->b<sub>2</sub>->•••->a<sub>n</sub>->b<sub>n</sub></code>. Usted no sabe la longitud de la lista enlazada (pero sí sabe que la longitud es un número par).
     </p>
     <p>
-      Podrías hacer que un puntero p1 (el puntero rápido) se mueva cada dos elementos por cada movimiento que haga p2. Cuando pl llegue al final de la lista enlazada, p2 estará en el punto medio. Entonces, mueve p1 de nuevo al frente y comienza a «tejer» los elementos. En cada iteración, p2 selecciona un elemento y lo inserta después de pl.
+      Podrías hacer que un puntero <code>p1</code> (el puntero rápido) se mueva cada dos elementos por cada movimiento que haga <code>p2</code>. Cuando <code>p1</code> llegue al final de la lista enlazada, <code>p2</code> estará en el punto medio. Entonces, mueve <code>p1</code> de nuevo al frente y comienza a «tejer» los elementos. En cada iteración, <code>p2</code> selecciona un elemento y lo inserta después de <code>p1</code>.
     </p>
   </article>
   <article>
@@ -129,7 +149,7 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
       Varios problemas de listas enlazadas se basan en la recursividad. Si tienes problemas resolviendo un problema de listas enlazadas, deberías explorar si un enfoque recursivo funcionará. No entraremos en profundidad en la recursividad aquí, ya que un capítulo posterior está dedicado a ella.
     </p>
     <p>
-      Sin embargo, debes recordar que los algoritmos recursivos ocupan al menos O ( n) de espacio, donde n es la profundidad de la llamada recursiva. Todos los algoritmos recursivos pueden implementarse iterativamente, aunque pueden ser mucho más complejos.
+      Sin embargo, debes recordar que los algoritmos recursivos ocupan al menos <code>O(n)</code> de espacio, donde n es la profundidad de la llamada recursiva. Todos los algoritmos recursivos pueden implementarse iterativamente, aunque pueden ser mucho más complejos.
     </p>
   </article>
   <article>
@@ -140,14 +160,22 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
         Escribe código para eliminar duplicados de una lista enlazada sin ordenar.
         <p>SIGUE</p>
         <p>¿Cómo resolverías este problema si no se permite un buffer temporal?</p>
-        <p><em>Pistas: #9, #40</em> <strong>pg208</strong> 
-        </p>
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #9, #40</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 208</strong> </p>
+        </div>
       </li>
       <li class="list-none">
         <strong>2.2 Devuelve el Kth al último:</strong>
         Implementa un algoritmo para encontrar el k-ésimo al último elemento de una lista enlazada simple.
-        <p><em>Pistas:#8, #25, #41, #67, #126</em>
-        </p>
+        <div class="flex justify-between items-end gap-2">
+          <p><em>istas:#8, #25, #41, #67, #126</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 209</strong> </p>
+        </div>
       </li>
       <li class="list-none">
         <strong>2.3 Borrar Nodo Medio:</strong>
@@ -159,11 +187,16 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
         <p>
           Resultado: no se devuelve nada, pero la nueva lista enlazada se parece <code>a->b->d->e->f</code>
         </p>
-        <p><em>Pistas: #72</em></p>
+        <div class="flex justify-between items-end gap-2">
+          <p><em>istas:#72</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 211</strong> </p>
+        </div>
       </li>
       <li class="list-none">
         <strong>2.4 Partición:</strong>
-        Escribe código para particionar una lista enlazada alrededor de un valor x, de forma que todos los nodos menores que x vayan antes que todos los nodos mayores o iguales que x. Si x está contenido dentro de la lista, los valores de x sólo tienen que ir después de los elementos menores que x (ver más abajo). El elemento de partición x puede aparecer en cualquier lugar de la «partición derecha»; no es necesario que aparezca entre las particiones izquierda y derecha.
+        Escribe código para particionar una lista enlazada alrededor de un valor <code>x</code>, de forma que todos los nodos menores que <code>x</code> vayan antes que todos los nodos mayores o iguales que <code>x</code>. Si <code>x</code> está contenido dentro de la lista, los valores de <code>x</code> sólo tienen que ir después de los elementos menores que <code>x</code> (ver más abajo). El elemento de partición <code>x</code> puede aparecer en cualquier lugar de la «partición derecha»; no es necesario que aparezca entre las particiones izquierda y derecha.
         <p>EJEMPLO</p>
         <pre>
           <code>
@@ -171,12 +204,16 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
             Output: 3 -> 1 -> 2 -> 10 -> 5 -> 5 -> 8
           </code>
         </pre>
-        <p><em>Pistas: #3, #24</em></p>
-        </p>
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #3, #24</em></p>
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 212</strong> </p>
+        </div>
       </li>
       <li class="list-none">
         <strong>2.5 Listas de sumas:</strong>
-        Usted tiene dos números representados por una lista enlazada, donde cada nodo contiene un solo dígito. Los dígitos se almacenan en orden inverso, de tal manera que el dígito 1 's está en la cabeza de la lista. Escribe una función que sume los dos números y devuelva la suma como una lista enlazada.
+        Usted tiene dos números representados por una lista enlazada, donde cada nodo contiene un solo dígito. Los dígitos se almacenan en orden <em>inverso</em>, de tal manera que el dígito 1 's está en la cabeza de la lista. Escribe una función que sume los dos números y devuelva la suma como una lista enlazada.
         <p>EJEMPLO</p>
         <pre>
           <code>
@@ -195,20 +232,33 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
             Output: 9 -> 1 -> 2. That is, 912.
           </code>
         </pre>
-        <p><em>Pistas: #7, #30, #71, #95, #109</em>
-        </p>
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #7, #30, #71, #95, #109</em>
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 214</strong> </p>
+        </div>
       </li>
       <li class="list-none">
         <strong>2.6 Palíndromo:</strong>
         Implementa una función para comprobar si una lista enlazada es un palíndromo. 
-        <p><em>Pistas:#5, #13, #29, #61, #101</em>
-        </p>
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #5, #13, #29, #61, #101</em></p>
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 216</strong> </p>
+        </div>
       </li>
       <li class="list-none">
         <strong>2.7 Intersección:</strong>
         Dadas dos listas enlazadas (una a una), determina si las dos listas se intersecan. Devuelve el nodo de intersección. Es decir, si el nodo k de la primera lista enlazada es exactamente el mismo nodo (por referencia) que el nodo j de la segunda lista enlazada, entonces se intersecan.
-        <p><em>Pistas: #20, #45, #55, #65, #76, #93, #111, #120, #129</em>
-        </p>
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #20, #45, #55, #65, #76, #93, #111, #120, #129</em>
+          </p>
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 221</strong> </p>
+        </div>
       </li>
       <li class="list-none">
         <strong>2.8 Lista enlazada circular:</strong>
@@ -223,12 +273,17 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
         <p>EJEMPLO</p>
         <pre>
           <code>
-            Input:  A -> B -> C -> D -> E -> C [thesameCasearlier]
+            Input:  A -> B -> C -> D -> E -> C [the same C as earlier]
             Output: C
           </code>
         </pre>
-        <p><em>Pistas: #50, #69, #83, #90</em>
-        </p>
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #50, #69, #83, #90</em>
+          </p>
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 223</strong> </p>
+        </div>
       </li>
     </ul>
     <p>

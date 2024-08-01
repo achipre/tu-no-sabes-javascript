@@ -6,7 +6,549 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
   <h2>Árboles y grafos</h2>
   <article>
     <p>
+      Muchos entrevistados consideran que los problemas de árboles y grafos son algunos de los más complicados. Buscar en un árbol es más complicado que hacerlo en una estructura de datos organizada linealmente, como una matriz o una lista enlazada. Además, el tiempo en el peor de los casos y en el caso medio puede variar enormemente, por lo que debemos evaluar ambos aspectos de cualquier algoritmo. La fluidez a la hora de implementar un árbol o un grafo desde cero resultará esencial.
     </p>
+    <p>
+      Como la mayoría de la gente está más familiarizada con los árboles que con los grafos (y son un poco más sencillos), hablaremos primero de los árboles. Esto es un poco fuera de orden, sin embargo, como un árbol es en realidad un tipo de gráfico.
+    </p>
+    <p class="pl-4 sm:pl-6 md:pl-8 border-l-2 sm:border-l-4 md:border-l-8 border-black">
+      Nota: Algunos de los términos de este capítulo pueden variar ligeramente según los libros de texto y otras fuentes. Si estás acostumbrado a una definición diferente, no pasa nada. Asegúrate de aclarar cualquier ambigüedad con tu entrevistador.
+    </p>
+  </article>
+  <article>
+    <h3>► Tipos de árboles</h3>
+    <p>
+      Una buena forma de entender un árbol es mediante una explicación recursiva. Un árbol es una estructura de datos compuesta por nodos.
+    </p>
+    <ul>
+      <li>
+        Cada árbol tiene un nodo raíz. (En realidad, esto no es estrictamente necesario en teoría de grafos, pero suele ser la forma en que utilizamos los árboles en programación, y especialmente en las entrevistas de programación).
+      </li>
+      <li>
+        El nodo raíz tiene cero o más nodos hijos.
+      </li>
+      <li>
+        Cada nodo hijo tiene cero o más nodos hijos, y así sucesivamente.
+      </li>
+    </ul>
+    <p>
+      El árbol no puede contener ciclos. Los nodos pueden o no estar en un orden particular, pueden tener cualquier tipo de datos como valores, y pueden o no tener enlaces a sus nodos padres.
+    </p>
+    <p>
+      Una definición de clase muy simple para Node es:
+    </p>
+    <pre>
+      <code class="language-js">
+        class Node &#123
+          public String name;
+          public Node[] children:
+        }
+      </code>
+    </pre>
+    <p>
+      También puede tener una clase Árbol para envolver este nodo. Para las preguntas de la entrevista, normalmente no utilizamos una clase Árbol. Puedes hacerlo si crees que simplifica o mejora tu código, pero rara vez es así.
+    </p>
+    <pre>
+      <code class="language-js">
+        class Tree &#123
+          public Node root;
+        }
+      </code>
+    </pre>
+    <p>
+      En las preguntas sobre árboles y gráficos abundan los detalles ambiguos y las suposiciones incorrectas. Tenga cuidado las siguientes cuestiones y busque aclaraciones cuando sea necesario.
+    </p>
+  </article>
+  <article>
+    <p><strong>Árboles vs. Árboles binarios</strong></p>
+    <p>
+      Un árbol binario es un árbol en el que cada nodo tiene hasta dos hijos. No todos los árboles son binarios. Por ejemplo, este árbol no es binario. Podría llamarse árbol ternario.
+    </p>
+    <div class="flex flex-col items-center">
+      <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">8</div>
+      <div class="flex gap-8">
+        <div class="-mt-4 h-12 w-1 rotate-45 bg-black"></div>
+        <div class="h-5 w-1 bg-black"></div>
+        <div class="-mt-4 h-12 w-1 -rotate-45 bg-black"></div>
+      </div>
+      <div class="-mt-3 flex gap-4">
+        <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">4</div>
+        <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">6</div>
+        <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">10</div>
+      </div>
+      <div class="flex gap-8">
+        <div class="h-9 -mt-2 w-1 rotate-45 bg-black"></div>
+        <div class="h-10 -mt-2 w-1 -rotate-45 bg-black mr-24"></div>
+        <div class="h-10 -mt-2 w-1 -rotate-45 bg-black"></div>
+      </div>
+      <div class="-mt-3 flex gap-4">
+        <div class="w-12 h-12 ml-2 mr-4 border-black rounded-full border-4 flex justify-center items-center">2</div>
+        <div class="w-12 h-12 mr-[60px] border-black rounded-full border-4 flex justify-center items-center">1</div>
+        <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">20</div>
+      </div>
+    </div>
+    <p>
+      Hay ocasiones en las que puedes tener un árbol que no sea binario. Por ejemplo, supongamos que utilizamos un árbol para representar un grupo de números de teléfono. En este caso, podrías utilizar un árbol de 10 árboles, en el que cada nodo tiene hasta 10 hijos (uno por cada dígito).
+    </p>
+    <p>
+      Un nodo se denomina "hoja" si no tiene hijos.
+    </p>
+  </article>
+  <article>
+    <p><strong>Árbol binario frente a árbol de búsqueda binario</strong></p>
+    <p>
+      Un árbol de búsqueda binario es un árbol binario en el que cada nodo se ajusta a una propiedad de ordenación específica: todos los descendientes izquierdos &#60= n &#60 todos los descendientes derechos. Esto debe ser cierto para cada nodo n.
+    </p>
+    <p>
+      La definición de un árbol de búsqueda binario puede variar ligeramente con respecto a la igualdad. En algunas definiciones, el árbol no puede tener valores duplicados. En otras, los valores duplicados estarán a la derecha o pueden estar a ambos lados. Todas son definiciones válidas, pero debes aclararlo con tu entrevistador
+    </p>
+    <p>
+      Tenga en cuenta que esta desigualdad debe ser cierta para todos los descendientes de un nodo, no sólo para sus hijos inmediatos. El siguiente árbol de la izquierda es un árbol de búsqueda binario. El árbol de la derecha no lo es, ya que 12 está a la izquierda de 8.
+    </p>
+    <div class="flex justify-center gap-4">
+      <div class="flex flex-col items-center">
+        <p class="font-bold">Un árbol de búsqueda binario.</p>
+        <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">8</div>
+        <div class="flex gap-8">
+          <div class="-mt-2 h-8 w-1 rotate-45 bg-black"></div>
+          <div class="-mt-2 h-8 w-1 -rotate-45 bg-black"></div>
+        </div>
+        <div class="-mt-2 flex gap-4">
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">4</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">10</div>
+        </div>
+        <div class="flex gap-8">
+          <div class="h-8 -mt-4 w-1 rotate-[40deg] bg-black"></div>
+          <div class="h-8 -mt-3 w-1 ml-4 -rotate-[40deg] bg-black"></div>
+          <div class="h-9 -mt-4 w-1 ml-8 -rotate-[40deg] bg-black"></div>
+        </div>
+        <div class="-mt-2 flex gap-4">
+          <div class="w-12 h-12 ml-2 mr-4 border-black rounded-full border-4 flex justify-center items-center">2</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">6</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">20</div>
+        </div>
+      </div>
+      <div class="flex flex-col items-center">
+        <p class="font-bold">No es un árbol de búsqueda binario.</p>
+        <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">8</div>
+        <div class="flex gap-8">
+          <div class="-mt-2 h-8 w-1 rotate-45 bg-black"></div>
+          <div class="-mt-2 h-8 w-1 -rotate-45 bg-black"></div>
+        </div>
+        <div class="-mt-2 flex gap-4">
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">4</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">10</div>
+        </div>
+        <div class="flex gap-8">
+          <div class="h-8 -mt-4 w-1 rotate-[40deg] bg-black"></div>
+          <div class="h-8 -mt-3 w-1 ml-4 -rotate-[40deg] bg-black"></div>
+          <div class="h-9 -mt-4 w-1 ml-8 -rotate-[40deg] bg-black"></div>
+        </div>
+        <div class="-mt-2 flex gap-4">
+          <div class="w-12 h-12 ml-2 mr-4 border-black rounded-full border-4 flex justify-center items-center">2</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">12</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">20</div>
+        </div>
+      </div>
+    </div>
+    <p>
+      Ante una pregunta sobre un árbol, muchos candidatos suponen que el entrevistador se refiere a un árbol de búsqueda binario. Asegúrese de preguntar. Un árbol de búsqueda binaria impone la condición de que, para cada nodo, sus descendientes izquierdos sean menores o iguales que el nodo actual, que es menor que los descendientes derechos.
+    </p>
+  </article>
+  <article>
+    <p><strong>Equilibrado vs. desequilibrado</strong></p>
+    <p>
+      Aunque muchos árboles están equilibrados, no todos lo están. Pida a su entrevistador que se lo aclare. Ten en cuenta que equilibrar un árbol no significa que los subárboles izquierdo y derecho tengan exactamente el mismo tamaño (como se ve en "árboles binarios perfectos" en el siguiente diagrama).
+    </p>
+    <p>
+      Una forma de verlo es que un árbol "equilibrado" significa algo más como "no terriblemente desequilibrado": "Está lo suficientemente equilibrado como para garantizar 0(log n) veces para insertar y buscar, pero no está necesariamente tan equilibrado como podría estarlo".
+    </p>
+    <p>
+      Dos tipos comunes de árboles equilibrados son los árboles rojo-negro (pág. 639) y los árboles AVL (pág. 637). Estos se discuten con más detalle en la sección de Temas Avanzados.
+    </p>
+  </article>
+  <article>
+    <p><strong>Árboles Binarios Completos</strong></p>
+    <p>
+      Un árbol binario completo es un árbol binario en el que cada nivel del árbol está completamente lleno, excepto quizás el último nivel. En la medida en que el último nivel está lleno, se llena de izquierda a derecha.
+    </p>
+  </article>
+  <article>
+    <p><strong>Árboles binarios completos</strong></p>
+    <p>
+      Un árbol binario completo es un árbol binario en el que cada nodo tiene cero o dos hijos. Es decir, ningún nodo tiene un solo hijo.
+    </p>
+  </article>
+  <article>
+    <p><strong>Árboles binarios perfectos</strong></p>
+    <p>
+      Un árbol binario perfecto es un árbol completo. Todos los nodos hoja estarán en el mismo nivel, y este nivel tiene el máximo número de nodos.
+    </p>
+    <p>
+      Tenga en cuenta que los árboles perfectos son poco frecuentes en las entrevistas y en la vida real, ya que un árbol perfecto debe tener exactamente 2k - 1 nodos (donde k es el número de niveles). En una entrevista, no suponga que un árbol binario es perfecto.
+    </p>
+  </article>
+  <article>
+    <h3>► Árbol binario transversal</h3>
+    <p>
+      Antes de su entrevista, usted debe estar cómodo implementando en-orden, post-orden, y pre-orden transversal. El más común es el recorrido dentro del orden.
+    </p>
+  </article>
+  <article>
+    <p><strong>Recorrido en orden</strong></p>
+    <p>
+      El recorrido dentro del orden significa "visitar" (a menudo, imprimir) la rama izquierda, luego el nodo actual y, por último, la rama derecha.
+    </p>
+    <p>
+      Cuando se realiza en un árbol de búsqueda binario, visita los nodos en orden ascendente (de ahí el nombre "en-orden").
+    </p>
+  </article>
+  <article>
+    <p><strong>Recorrido de preorden</strong></p>
+    <p>
+      El recorrido preordenado visita el nodo actual antes que sus nodos hijos (de ahí el nombre "preordenado").
+    </p>
+    <p>
+      En un recorrido preordenado, la raíz es siempre el primer nodo visitado.
+    </p>
+  </article>
+  <article>
+    <p><strong>Recorrido post-orden</strong></p>
+    <p>
+      El recorrido post-orden visita el nodo actual después de sus nodos hijos (de ahí el nombre "post-orden").
+    </p>
+    <p>
+      En un recorrido post-orden, la raíz es siempre el último nodo visitado.
+    </p>
+  </article>
+  <article>
+    <h3>► Heaps binarios (Min-Heaps y Max-Heaps)</h3>
+    <p>
+      Aquí sólo hablaremos de los min-heaps. Los Max-heaps son esencialmente equivalentes, pero los elementos están en orden descendente en lugar de ascendente.
+    </p>
+    <p>
+      Un minicúmulo es un árbol binario completo (es decir, totalmente lleno salvo los elementos situados más a la derecha en el último nivel) en el que cada nodo es más pequeño que sus hijos. La raíz, por tanto, es el elemento mínimo del árbol.
+    </p>
+    <p>
+      Tenemos dos operaciones clave en un minicúmulo: insertar y extraer_min.
+    </p>
+    <p><em>Insertar</em>
+    </p>
+    <p>
+      Cuando insertamos en un miniapil, siempre empezamos insertando el elemento que está más abajo. Insertamos en el punto más a la derecha para mantener la propiedad de árbol completo.
+    </p>
+    <p>
+      A continuación, "arreglamos" el árbol intercambiando el nuevo elemento con su padre, hasta que encontremos un lugar apropiado para el elemento. Esencialmente, burbujeamos el elemento mínimo.
+    </p>
+    <p>
+      Esto lleva un tiempo O(log n), donde n es el número de nodos del montón.
+    </p>
+    <p>
+      <em>Extraer el elemento mínimo</em>
+    </p>
+    <p>
+      Encontrar el elemento mínimo de un miniapilamiento es fácil: siempre está en la parte superior. Lo difícil es eliminarlo. (En realidad, no es tan complicado).
+    </p>
+    <p>
+      En primer lugar, eliminamos el elemento mínimo y lo cambiamos por el último elemento del montón (el elemento situado más a la derecha). A continuación, hacemos una burbuja hacia abajo de este elemento, intercambiándolo con uno de sus hijos hasta que se restablezca la propiedad min-heap.
+    </p>
+    <p>
+      ¿Lo intercambiamos con el hijo izquierdo o con el derecho? Depende de sus valores. No hay un orden inherente entre el elemento izquierdo y el derecho, pero tendrás que tomar el más pequeño para mantener el orden de miniapilación.
+    </p>
+    <p>
+      Este algoritmo también tardará 0(log n) veces.
+    </p>
+  </article>
+  <article>
+    <h3>► Trios (árboles prefijados)</h3>
+    <p>
+      Un trie (a veces llamado árbol prefijo) es una curiosa estructura de datos. Aparece mucho en las preguntas de las entrevistas, pero los libros de texto de algoritmos no dedican mucho tiempo a esta estructura de datos.
+    </p>
+    <p>
+      Un trie es una variante de un árbol n-ario en el que se almacenan caracteres en cada nodo. Cada camino del árbol puede representar una palabra.
+    </p>
+    <p>
+      Los nodos * (a veces llamados "nodos nulos") se utilizan a menudo para indicar palabras completas. Por ejemplo, el hecho de que haya un nodo * debajo de MUCHO indica que MUCHO es una palabra completa. La existencia de la ruta MA indica que hay palabras que empiezan por MA.
+    </p>
+    <p>
+      La implementación real de estos * nodos podría ser un tipo especial de hijo (como un TerminatingTrieNode, que hereda de TrieNode). O bien, podríamos utilizar sólo una bandera booleana termina dentro del nodo "padre".
+    </p>
+    <p>
+      Un nodo en un trie podría tener en cualquier lugar de 1 a ALPHABET_SIZE + 1 hijos (o, 0 a ALPHABET_SIZE si una bandera booleana se utiliza en lugar de un nodo *).
+    </p>
+    <p>
+      Normalmente, un trie se utiliza para almacenar todo el idioma (inglés) para búsquedas rápidas de prefijos. Mientras que una tabla hash puede buscar rápidamente si una cadena es una palabra válida, no puede decirnos si una cadena es un prefijo de cualquier palabra válida. Un trie puede hacerlo muy rápidamente.
+    </p>
+    <p>
+      ¿Con qué rapidez? Un trie puede comprobar si una cadena es un prefijo válido en tiempo 0(K), donde K es la longitud de la cadena. En realidad, es el mismo tiempo de ejecución que tarda una tabla hash. Aunque a menudo nos referimos a las búsquedas en una tabla hash como un tiempo 0(1), esto no es del todo cierto. Una tabla hash debe leer todos los caracteres de la entrada, lo que requiere un tiempo O(K) en el caso de una búsqueda de palabras.
+    </p>
+    <p>
+      Muchos problemas que implican listas de palabras válidas aprovechan un trie como optimización. En situaciones en las que buscamos repetidamente en el árbol prefijos relacionados (por ejemplo, buscando M, luego MA, luego MAN, luego MANY), podemos pasar una referencia al nodo actual del árbol. Esto nos permitirá comprobar simplemente si Y es hijo de MAN, en lugar de empezar desde la raíz cada vez.
+    </p>
+  </article>
+  <article>
+    <h3>► Graphs</h3>
+    <p>
+      En realidad, un árbol es un tipo de grafo, pero no todos los grafos son árboles. En pocas palabras, un árbol es un grafo conectado sin ciclos.
+    </p>
+    <p>
+      Un grafo es simplemente una colección de nodos con aristas entre (algunos de) ellos.
+    </p>
+    <ul>
+      <li>Los grafos pueden ser dirigidos (como el siguiente) o no dirigidos. Mientras que las aristas dirigidas son unidireccionales, las no dirigidas son bidireccionales.</li>
+      <li>El grafo puede estar formado por varios subgrafos aislados. Si existe un camino entre cada par de vértices, se denomina "grafo conexo".</li>
+      <li>El grafo también puede tener ciclos (o no). Un "grafo acíclico" es un grafo sin ciclos.</li>
+    </ul>
+    <p>
+      Visualmente, se puede dibujar un grafo como éste:
+    </p>
+    <p>
+      En términos de programación, hay dos formas habituales de representar un grafo.
+    </p>
+  </article>
+  <article>
+    <p><strong>Lista de adyacencia</strong></p>
+    <p>
+      Es la forma más habitual de representar un grafo. Cada vértice (o nodo) almacena una lista de vértices adyacentes. En un grafo no dirigido, una arista como (a, b) se almacenaría dos veces: una en los vértices adyacentes de a y otra en los vértices adyacentes de b.
+    </p>
+    <p>
+      Una definición de clase simple para un nodo de grafo podría ser esencialmente la misma que para un nodo de árbol.
+    </p>
+    <p>
+      La clase Graph se utiliza porque, a diferencia de un árbol, no se puede llegar necesariamente a todos los nodos desde un único nodo.
+    </p>
+    <p>      
+      No necesitas necesariamente ninguna clase adicional para representar un grafo. Un array (o una tabla hash) de listas (arrays, arraylists, linked lists, etc.) puede almacenar la lista de adyacencia. El grafo anterior podría representarse como:
+    </p>
+    <p>
+      Esto es un poco más compacto, pero no es tan limpio. Tendemos a utilizar clases de nodos a menos que haya una razón de peso para no hacerlo.
+    </p>
+  </article>
+  <article>
+    <p><strong>Matrices de adyacencia</strong></p>
+    <p>
+      Una matriz de adyacencia es una matriz booleana NxN (donde N es el número de nodos), donde un valor verdadero en matrix[i] [j] indica una arista del nodo i al nodo j. (También se puede utilizar una matriz entera con Os y 1 s.)
+    </p>
+    <p>
+      En un grafo no dirigido, una matriz de adyacencia será simétrica. En un grafo dirigido, no lo será (necesariamente).
+    </p>
+    <p>
+      Los mismos algoritmos de grafos que se utilizan en las listas de adyacencia (búsqueda de amplitud primero, etc.) se pueden realizar con matrices de adyacencia, pero pueden ser algo menos eficientes. En la representación de lista de adyacencia, se puede iterar fácilmente a través de los vecinos de un nodo. En la representación de la matriz de adyacencia, tendrá que recorrer todos los nodos para identificar a los vecinos de un nodo.
+    </p>
+  </article>
+  <article>
+    <h3>► Búsqueda en grafos</h3>
+    <p>
+      Las dos formas más habituales de buscar en un grafo son la búsqueda en profundidad (depth-first search) y la búsqueda en amplitud (breadth-first search).
+    </p>
+    <p>
+      En la búsqueda en profundidad (DFS), empezamos en la raíz (o en otro nodo seleccionado arbitrariamente) y exploramos cada rama por completo antes de pasar a la siguiente. Es decir, primero exploramos en profundidad (de ahí el nombre de búsqueda en profundidad) antes de explorar en profundidad.
+    </p>
+    <p>
+      En la búsqueda amplia primero (BFS), empezamos en la raíz (u otro nodo seleccionado arbitrariamente) y exploramos cada vecino antes de pasar a cualquiera de sus hijos. Es decir, vamos a lo ancho (de ahí lo de búsqueda amplia) antes de ir a lo profundo.
+    </p>
+    <p>
+      Véase la siguiente representación de un grafo y sus búsquedas en profundidad y amplitud (suponiendo que los vecinos se iteran en orden numérico).
+    </p>
+    <p>
+      La búsqueda exhaustiva y la búsqueda profunda se suelen utilizar en escenarios diferentes. A menudo se prefiere DFS si queremos visitar todos los nodos del grafo. Ambas funcionarán bien, pero la búsqueda en profundidad es un poco más sencilla.
+    </p>
+    <p>
+      Sin embargo, si queremos encontrar el camino más corto (o cualquier camino) entre dos nodos, BFS es generalmente mejor. Consideremos la representación de todas las amistades del mundo entero en un grafo e intentemos encontrar un camino de amigos entre Ash yVanessa.
+    </p>
+    <p>
+      En la búsqueda en profundidad, podríamos tomar un camino como Ash -> Brian -> Carleton -> Davis -> Eric -> Farah -> Gayle -> Harry -> Isabella -> John--> Kari... y luego encontrarnos muy lejos. Podríamos recorrer la mayor parte del mundo sin darnos cuenta de que, de hecho, Vanessa es amiga de Ash. Aún así, al final encontraremos el camino, pero puede que nos lleve mucho tiempo. Tampoco encontraremos el camino más corto.
+    </p>
+    <p>
+      En una búsqueda amplia, nos mantendríamos cerca de Ash el mayor tiempo posible. Podríamos iterar a través de muchos de los amigos de Ash, pero no iríamos a sus conexiones más distantes hasta que fuera absolutamente necesario. Si Vanessa es amiga de Ash, o amiga de un amigo, lo averiguaremos relativamente rápido.
+    </p>
+    <p>
+      Búsqueda en profundidad (DFS)
+    </p>
+    <p>
+      En DFS, visitamos un nodo a y luego iteramos a través de cada uno de los vecinos de a. Cuando visitamos un nodo b que es vecino de a, visitamos todos los vecinos de b antes de pasar a los demás vecinos de a. Es decir, a busca exhaustivamente en la rama de b antes que en cualquiera de sus otros vecinos. Es decir, a busca exhaustivamente en la rama de b antes que en cualquiera de sus otros vecinos.
+    </p>
+    <p>
+      Tenga en cuenta que el preorden y otras formas de recorrer árboles son una forma de DFS. La diferencia clave es que al implementar este algoritmo para un grafo, debemos comprobar si el nodo ha sido visitado. Si no lo hacemos, corremos el riesgo de quedar atrapados en un bucle infinito.
+    </p>
+    <p>
+      El pseudocódigo siguiente implementa DFS.
+    </p>
+    <p>
+      Búsqueda amplia (BFS)
+    </p>
+    <p>
+      BFS es un poco menos intuitiva, y muchos entrevistados tienen dificultades con la implementación a menos que ya estén familiarizados con ella. El principal escollo es la (falsa) suposición de que BFS es recursiva. No lo es. En su lugar, utiliza una cola.
+    </p>
+    <p>
+      En BFS, el nodo a visita cada uno de los vecinos de a antes de visitar cualquiera de sus vecinos. Se puede pensar en esto como la búsqueda de nivel por nivel a partir de a. Una solución iterativa que implica una cola por lo general funciona mejor.
+    </p>
+    <p>
+      Si se le pide que implemente DFS, la clave que debe recordar es el uso de la cola. El resto del algoritmo se deriva de este hecho.
+    </p>
+    <p>
+      Búsqueda bidireccional
+    </p>
+    <p>
+      La búsqueda bidireccional se utiliza para encontrar el camino más corto entre un nodo de origen y otro de destino. Funciona básicamente ejecutando dos búsquedas simultáneas, una desde cada nodo. Cuando sus búsquedas colisionan, hemos encontrado un camino.
+    </p>
+    <p>
+      Para ver por qué es más rápido, consideremos un grafo en el que cada nodo tiene como máximo k nodos adyacentes y el camino más corto del nodo s al nodo t tiene una longitud d.
+    </p>
+    <p>
+      <ul>
+        <li>
+          En una búsqueda tradicional, buscaríamos hasta k nodos en el primer "nivel" de la búsqueda. En el segundo nivel, buscaríamos hasta k nodos por cada uno de esos primeros k nodos, es decir, k2 nodos en total (hasta ahora). Haríamos esto d veces, por lo que serían 0( kd) nodos.
+        </li>
+        <li>
+          En la búsqueda bidireccional, tenemos dos búsquedas que colisionan después de aproximadamente niveles (el punto medio del camino). La búsqueda desde s visita aproximadamente kd12, al igual que la búsqueda desde t. Eso es aproximadamente 2 kdl2, o 0( kd/2), nodos en total.
+        </li>
+      </ul>
+    </p>
+    <p>
+      Puede parecer una diferencia menor, pero no lo es. Es enorme. Recuerde que (kd12)*(kd12) = kd.Th búsqueda bidireccional es en realidad más rápido por un factor de kd12.
+    </p>
+    <p>
+      Dicho de otro modo: si nuestro sistema sólo permitía la búsqueda de rutas "amigo de amigo" en la búsqueda de "amplitud primero", ahora probablemente permita la búsqueda de rutas "amigo de amigo de amigo de amigo". Las rutas pueden ser el doble de largas.
+    </p>
+    <p>
+      Lectura adicional: Ordenación Topológica (pg 632), Algoritmo de Dijkstra (pg 633), Árboles AVL (pg 637), Árboles Rojos Negros (pg 639).
+    </p>
+  </article>
+  <article>
+    <h3 class="border-y-2 border-black">Preguntas de la entrevista</h3>
+    <ul>
+      <li class="list-none">
+        <strong>4.1 Ruta entre nodos: </strong>
+        Dado un grafo dirigido, diseñar un algoritmo para averiguar si existe una ruta entre dos nodos.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #127</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 241</strong> </p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>4.2 Árbol mínimo: </strong>
+        Dada una matriz ordenada (orden creciente) con elementos enteros únicos, escriba un algoritmo para crear un árbol de búsqueda binario con altura mínima.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #79,#73,#776</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 242</strong> </p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>4.3 Lista de profundidades: </strong>
+        Dado un árbol binario, diseña un algoritmo que cree una lista enlazada de todos los nodos en cada profundidad (por ejemplo, si tienes un árbol con profundidad D, tendrás D listas enlazadas).
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #107, #123, #135</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 243</strong> </p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>4.4 Comprobar equilibrado: </strong>
+        Implementar una función para comprobar si un árbol binario está equilibrado. Para los propósitos de esta pregunta, un árbol equilibrado se define como un árbol tal que las alturas de los dos subárboles de cualquier nodo nunca difieren en más de uno.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #21, #33, #49, #705, #724</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 244</strong> </p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>4.5 Validar BST: </strong>
+        Implementar una función para comprobar si un árbol binario es un árbol de búsqueda binario.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #35, #57, #86, #113, #128</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 245</strong> </p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>4.6 Sucesor: </strong>
+        Escriba un algoritmo para encontrar el "siguiente" nodo (es decir, sucesor en orden) de un nodo dado en un árbol de búsqueda binario. Puede suponer que cada nodo tiene un enlace a su padre.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #79, #91</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 245</strong> </p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>4.7 Orden de construcción: </strong>
+        Se le da una lista de proyectos y una lista de dependencias (que es una lista de pares de proyectos, donde el segundo proyecto depende del primero). Todas las dependencias de un proyecto deben construirse antes que el proyecto. Busque un orden de compilación que permita compilar los proyectos. Si no hay un orden de compilación válido, devuelve un error.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #26, #47, #60, #85, #725, #133</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 250</strong> </p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>4.8 Primer antepasado común: </strong>
+        Diseñar un algoritmo y escribir código para encontrar el primer ancestro común de dos nodos en un árbol binario. Evita almacenar nodos adicionales en una estructura de datos. NOTA: No se trata necesariamente de un árbol de búsqueda binario.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #70, #76, #28, #36, #46, #70, #80, #96</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 257</strong> </p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>4.9 Secuencias BST: </strong>
+        Se ha creado un árbol de búsqueda binario recorriendo un array de izquierda a derecha e insertando cada elemento. Dado un árbol de búsqueda binario con elementos distintos, imprimir todas las posibles matrices que podrían haber llevado a este árbol.
+        <p>EJEMPLO</p>
+        <p>Input:</p>
+        <p><code>Output: &#123 2, 1, 3 }, &#123 2, 3, 1}</code></p>
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #39, #48, #66, #82</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 262</strong> </p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>4.10 Comprobar subárbol: </strong>
+        T1 y T2 son dos árboles binarios muy grandes, siendo Tl mucho mayor que T2. Crea un algoritmo para determinar si T2 es un subárbol de T1.
+        <p>
+          Un árbol T2 es un subárbol de Tl si existe un nodo n en Tl tal que el subárbol de n es idéntico a T2. Es decir, si se corta el árbol en el nodo n, los dos árboles serían idénticos.
+        </p>
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #4, #11, #18, #31, #37</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 265</strong> </p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>4.11 Nodo Aleatorio: </strong>
+        Estás implementando una clase de árbol binario desde cero que, además de insertar, buscar y borrar, tiene un método getRandomNode() que devuelve un nodo aleatorio del árbol. Todos los nodos deben tener la misma probabilidad de ser elegidos. Diseña e implementa un algoritmo para getRandomNode, y explica cómo implementarías el resto de métodos.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #42, #54, #62, #75, #89, #99, #112, #119</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 268</strong> </p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>4.12 Caminos con Suma: </strong>
+        Se le da un árbol binario en el que cada nodo contiene un valor entero (que puede ser positivo o negativo). Diseña un algoritmo para contar el número de caminos que suman un valor dado. No es necesario que el camino empiece o termine en la raíz o en una hoja, pero debe ir hacia abajo (viajando sólo de nodos padres a nodos hijos).
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #6, #14, #52, #68, #77, #87, #94, #103, #108, #115</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 272</strong> </p>
+        </div>
+      </li>
+    </ul>
+    <p>
+      Preguntas adicionales: Recursión (#8.10), Diseño de sistemas y escalabilidad (#9.2, #9.3), Ordenación y búsqueda (#10.10), Problemas difíciles (#17.7, #17.12, #17.13, #17.14, #17.17, #17.20, #17.22, #17.25).
+    </p>
+    <p>Los consejos empiezan en la página 653.</p>
   </article>
   <footer class="flex justify-end">
     <a class="font-khand font-bold text-3xl py-4 sm:py-8 md:py-12 sm:text-4xl md:text-5xl" href="capitulo-5">
