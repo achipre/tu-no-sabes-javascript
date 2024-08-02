@@ -95,12 +95,12 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
     </p>
   </article>
   <article>
-    <p><strong>Árbol binario frente a árbol de búsqueda binario</strong></p>
+    <p><strong>Árbol binario vs. árbol de búsqueda binario</strong></p>
     <p>
-      Un árbol de búsqueda binario es un árbol binario en el que cada nodo se ajusta a una propiedad de ordenación específica: todos los descendientes izquierdos &#60= n &#60 todos los descendientes derechos. Esto debe ser cierto para cada nodo n.
+      Un árbol de búsqueda binario es un árbol binario en el que cada nodo se ajusta a una propiedad de ordenación específica: <code>todos los descendientes izquierdos &#60= n &#60 todos los descendientes derechos</code>. Esto debe ser cierto para cada nodo n.
     </p>
-    <p>
-      La definición de un árbol de búsqueda binario puede variar ligeramente con respecto a la igualdad. En algunas definiciones, el árbol no puede tener valores duplicados. En otras, los valores duplicados estarán a la derecha o pueden estar a ambos lados. Todas son definiciones válidas, pero debes aclararlo con tu entrevistador
+    <p class="pl-4 sm:pl-6 md:pl-8 border-l-2 sm:border-l-4 md:border-l-8 border-black">
+      La definición de un árbol de búsqueda binario puede variar ligeramente con respecto a la igualdad. En algunas definiciones, el árbol no puede tener valores duplicados. En otras, los valores duplicados estarán a la derecha o pueden estar a ambos lados. Todas son definiciones válidas, pero debes aclararlo con tu entrevistador.
     </p>
     <p>
       Tenga en cuenta que esta desigualdad debe ser cierta para todos los descendientes de un nodo, no sólo para sus hijos inmediatos. El siguiente árbol de la izquierda es un árbol de búsqueda binario. El árbol de la derecha no lo es, ya que 12 está a la izquierda de 8.
@@ -161,7 +161,7 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
       Aunque muchos árboles están equilibrados, no todos lo están. Pida a su entrevistador que se lo aclare. Ten en cuenta que equilibrar un árbol no significa que los subárboles izquierdo y derecho tengan exactamente el mismo tamaño (como se ve en "árboles binarios perfectos" en el siguiente diagrama).
     </p>
     <p>
-      Una forma de verlo es que un árbol "equilibrado" significa algo más como "no terriblemente desequilibrado": "Está lo suficientemente equilibrado como para garantizar 0(log n) veces para insertar y buscar, pero no está necesariamente tan equilibrado como podría estarlo".
+      Una forma de verlo es que un árbol "equilibrado" significa algo más como "no terriblemente desequilibrado": "Está lo suficientemente equilibrado como para garantizar <code>O(log n)</code> veces para <code>insert</code> y <code>find</code>, pero no está necesariamente tan equilibrado como podría estarlo".
     </p>
     <p>
       Dos tipos comunes de árboles equilibrados son los árboles rojo-negro (pág. 639) y los árboles AVL (pág. 637). Estos se discuten con más detalle en la sección de Temas Avanzados.
@@ -172,20 +172,151 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
     <p>
       Un árbol binario completo es un árbol binario en el que cada nivel del árbol está completamente lleno, excepto quizás el último nivel. En la medida en que el último nivel está lleno, se llena de izquierda a derecha.
     </p>
+    <div class="flex justify-center gap-4">
+      <div class="flex flex-col items-center">
+        <p class="font-bold">No es un árbol binario completo.</p>
+        <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">10</div>
+        <div class="flex gap-12 h-10 -mt-1">
+          <div class="-mt-2 h-14 w-1 rotate-[50deg] bg-black"></div>
+          <div class="-mt-2 h-14 w-1 -rotate-[50deg] bg-black"></div>
+        </div>
+        <div class="-mt-2 flex gap-20">
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">5</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">20</div>
+        </div>
+        <div class="flex gap-10 -mt-4">
+          <div class="h-10 w-1 -mt-1 rotate-[50deg] bg-black"></div>
+          <div class="h-5 w-1 mt-3 -rotate-[20deg] bg-black"></div>
+          <div class="h-10 w-1 -mt-1 ml-28 -rotate-[50deg] bg-black"></div>
+        </div>
+        <div class="-mt-3 flex gap-9">
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">3</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">7</div>
+          <div class="w-12 h-12 ml-20 border-black rounded-full border-4 flex justify-center items-center">30</div>
+        </div>
+      </div>
+      <div class="flex flex-col items-center">
+        <p class="font-bold">Es un árbol binario completo.</p>
+        <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">10</div>
+        <div class="flex gap-12 h-10 -mt-1">
+          <div class="-mt-2 h-14 w-1 rotate-[50deg] bg-black"></div>
+          <div class="-mt-2 h-14 w-1 -rotate-[50deg] bg-black"></div>
+        </div>
+        <div class="-mt-2 flex gap-20">
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">5</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">20</div>
+        </div>
+        <div class="flex gap-10 -mt-4 w-full ml-24">
+          <div class="h-10 w-1 -mt-1 rotate-[50deg] bg-black"></div>
+          <div class="h-5 w-1 mt-3 -rotate-[20deg] bg-black"></div>
+          <div class="h-6 w-1 mt-2 ml-16 rotate-[50deg] bg-black"></div>
+        </div>
+        <div class="-mt-3 flex gap-9 w-full">
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">3</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">7</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">30</div>
+        </div>
+      </div>
+    </div>
   </article>
   <article>
-    <p><strong>Árboles binarios completos</strong></p>
+    <p><strong>Árboles binarios Full</strong></p>
     <p>
       Un árbol binario completo es un árbol binario en el que cada nodo tiene cero o dos hijos. Es decir, ningún nodo tiene un solo hijo.
     </p>
+    <div class="flex justify-center gap-4">
+      <div class="flex flex-col items-center">
+        <p class="font-bold">No es un árbol binario full.</p>
+        <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">10</div>
+        <div class="flex gap-12 h-10 -mt-1">
+          <div class="-mt-2 h-14 w-1 rotate-[50deg] bg-black"></div>
+          <div class="-mt-2 h-14 w-1 -rotate-[50deg] bg-black"></div>
+        </div>
+        <div class="-mt-2 flex gap-20">
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">5</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">20</div>
+        </div>
+        <div class="flex gap-8 -mt-2 w-full justify-end">
+          <div class="h-9 w-1 -mt-1 mr-12 -rotate-[40deg] bg-black"></div>
+          <div class="h-8 w-1 rotate-[40deg] bg-black"></div>
+          <div class="h-9 w-1 mr-12 -rotate-[40deg] bg-black"></div>
+        </div>
+        <div class="-mt-3 flex gap-4 w-full justify-end">
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">12</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">3</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">7</div>
+        </div>
+        <div class="flex gap-10 -mt-2 ml-[90px]">
+          <div class="h-8 w-1 rotate-45 bg-black"></div>
+          <div class="h-8 w-1 -rotate-45 bg-black"></div>
+        </div>
+        <div class="-mt-2 flex gap-4">
+          <div class="w-12 h-12 ml-[90px] border-black rounded-full border-4 flex justify-center items-center">9</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">18</div>
+        </div>
+      </div>
+      <div class="flex flex-col items-center">
+        <p class="font-bold">Es un árbol binario full.</p>
+        <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">10</div>
+        <div class="flex gap-12 h-10 -mt-1">
+          <div class="-mt-2 h-14 w-1 rotate-[50deg] bg-black"></div>
+          <div class="-mt-2 h-14 w-1 -rotate-[50deg] bg-black"></div>
+        </div>
+        <div class="-mt-2 flex gap-20">
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">5</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">20</div>
+        </div>
+        <div class="flex gap-8 -mt-2 w-full justify-end">
+          <div class="h-8 w-1 rotate-[40deg] bg-black"></div>
+          <div class="h-8 w-1 mr-8 -rotate-[40deg] bg-black"></div>
+        </div>
+        <div class="-mt-2 flex gap-4 w-full justify-end">
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">3</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center -mr-1">7</div>
+        </div>
+        <div class="flex gap-10 -mt-2 ml-16">
+          <div class="h-8 w-1 rotate-45 bg-black"></div>
+          <div class="h-8 w-1 -rotate-45 bg-black"></div>
+        </div>
+        <div class="-mt-2 flex gap-4">
+          <div class="w-12 h-12 ml-16 border-black rounded-full border-4 flex justify-center items-center">9</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">18</div>
+        </div>
+      </div>
+    </div>
   </article>
   <article>
     <p><strong>Árboles binarios perfectos</strong></p>
     <p>
       Un árbol binario perfecto es un árbol completo. Todos los nodos hoja estarán en el mismo nivel, y este nivel tiene el máximo número de nodos.
     </p>
+    <div class="flex justify-center gap-4">
+      <div class="flex flex-col items-center">
+        <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">10</div>
+        <div class="flex gap-12 h-10 -mt-1">
+          <div class="-mt-2 h-14 w-1 rotate-[50deg] bg-black"></div>
+          <div class="-mt-2 h-14 w-1 -rotate-[50deg] bg-black"></div>
+        </div>
+        <div class="-mt-2 flex gap-20">
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">5</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">20</div>
+        </div>
+        <div class="flex gap-10 -mt-4">
+          <div class="h-10 w-1 -mt-1 rotate-[50deg] bg-black"></div>
+          <div class="h-5 w-1 mt-3 mr-9 -rotate-[20deg] bg-black"></div>
+          <div class="h-5 w-1 mt-3 ml-8 rotate-[20deg] bg-black"></div>
+          <div class="h-10 w-1 -mt-1 -rotate-[50deg] bg-black"></div>
+        </div>
+        <div class="-mt-3 flex gap-9">
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">9</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">18</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">3</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">7</div>
+        </div>
+      </div>
+    </div>
     <p>
-      Tenga en cuenta que los árboles perfectos son poco frecuentes en las entrevistas y en la vida real, ya que un árbol perfecto debe tener exactamente 2k - 1 nodos (donde k es el número de niveles). En una entrevista, no suponga que un árbol binario es perfecto.
+      Tenga en cuenta que los árboles perfectos son poco frecuentes en las entrevistas y en la vida real, ya que un árbol perfecto debe tener exactamente <code>2<sup>k</sup> - 1</code> nodos (donde k es el número de niveles). En una entrevista, no suponga que un árbol binario es perfecto.
     </p>
   </article>
   <article>
@@ -199,6 +330,17 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
     <p>
       El recorrido dentro del orden significa "visitar" (a menudo, imprimir) la rama izquierda, luego el nodo actual y, por último, la rama derecha.
     </p>
+    <pre>
+      <code class="language-js">
+        void inOrderTraversal(TreeNode node) &#123
+          if (node != null) &#123
+            inOrderTraversal(node.left);
+            visit(node);
+            inOrderTraversal(node.right);
+          }
+        }
+      </code>
+    </pre>
     <p>
       Cuando se realiza en un árbol de búsqueda binario, visita los nodos en orden ascendente (de ahí el nombre "en-orden").
     </p>
@@ -208,6 +350,17 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
     <p>
       El recorrido preordenado visita el nodo actual antes que sus nodos hijos (de ahí el nombre "preordenado").
     </p>
+    <pre>
+      <code class="language-js">
+        void preOrderTraversal(TreeNode node) &#123
+          if (node != null) &#123
+            visit(node);
+            preOrderTraversal(node.left);
+            preOrderTraversal(node.right);
+          }
+        }
+      </code>
+    </pre>
     <p>
       En un recorrido preordenado, la raíz es siempre el primer nodo visitado.
     </p>
@@ -217,6 +370,17 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
     <p>
       El recorrido post-orden visita el nodo actual después de sus nodos hijos (de ahí el nombre "post-orden").
     </p>
+    <pre>
+      <code class="language-js">
+        void postOrderTraversal(TreeNode node) &#123
+          if (node != null) &#123
+            postOrderTraversal(node.left);
+            postOrderTraversal(node.right);
+            visit(node);
+          }
+        }
+      </code>
+    </pre>
     <p>
       En un recorrido post-orden, la raíz es siempre el último nodo visitado.
     </p>
@@ -229,8 +393,31 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
     <p>
       Un minicúmulo es un árbol binario completo (es decir, totalmente lleno salvo los elementos situados más a la derecha en el último nivel) en el que cada nodo es más pequeño que sus hijos. La raíz, por tanto, es el elemento mínimo del árbol.
     </p>
+    <div class="flex justify-center gap-4 my-8">
+      <div class="flex flex-col items-center">
+        <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">4</div>
+        <div class="flex gap-12 h-10 -mt-1">
+          <div class="-mt-2 h-14 w-1 rotate-[50deg] bg-black"></div>
+          <div class="-mt-2 h-14 w-1 -rotate-[50deg] bg-black"></div>
+        </div>
+        <div class="-mt-2 flex gap-16">
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">50</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">7</div>
+        </div>
+        <div class="flex gap-10 -mt-2">
+          <div class="h-8 w-1 -ml-8 rotate-[40deg] bg-black"></div>
+          <div class="h-8 w-1 -rotate-[40deg] bg-black"></div>
+          <div class="h-7 w-1  rotate-[40deg] mt-1 ml-8 bg-black"></div>
+        </div>
+        <div class="-mt-1 flex gap-4 -ml-12">
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">55</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">90</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">87</div>
+        </div>
+      </div>
+    </div>
     <p>
-      Tenemos dos operaciones clave en un minicúmulo: insertar y extraer_min.
+      Tenemos dos operaciones clave en un minicúmulo: <code>insert</code> y <code>extract_min</code>.
     </p>
     <p><em>Insertar</em>
     </p>
@@ -240,8 +427,85 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
     <p>
       A continuación, "arreglamos" el árbol intercambiando el nuevo elemento con su padre, hasta que encontremos un lugar apropiado para el elemento. Esencialmente, burbujeamos el elemento mínimo.
     </p>
+    <div class="flex justify-center gap-4 my-8">
+      <div class="flex flex-col items-center">
+        <p class="font-bold">Paso 1: Insertar 2.</p>
+
+        <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">4</div>
+        <div class="flex gap-12 h-10 -mt-1">
+          <div class="-mt-2 h-14 w-1 rotate-[50deg] bg-black"></div>
+          <div class="-mt-2 h-14 w-1 -rotate-[50deg] bg-black"></div>
+        </div>
+        <div class="-mt-2 flex gap-20">
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">50</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">7</div>
+        </div>
+        <div class="flex gap-10 -mt-4">
+          <div class="h-10 w-1 -mt-1 rotate-[50deg] bg-black"></div>
+          <div class="h-5 w-1 mt-3 mr-9 -rotate-[20deg] bg-black"></div>
+          <div class="h-5 w-1 mt-3 ml-8 rotate-[20deg] bg-black"></div>
+          <div class="h-10 w-1 -mt-1 -rotate-[50deg] bg-black"></div>
+        </div>
+        <div class="-mt-3 flex gap-9">
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">55</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">90</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">87</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center bg-slate-300">2</div>
+        </div>
+      </div>
+      <div class="flex flex-col items-center">
+        <p class="font-bold">Paso 2: Intercambiar 2 y 7.</p>
+
+        <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">4</div>
+        <div class="flex gap-12 h-10 -mt-1">
+          <div class="-mt-2 h-14 w-1 rotate-[50deg] bg-black"></div>
+          <div class="-mt-2 h-14 w-1 -rotate-[50deg] bg-black"></div>
+        </div>
+        <div class="-mt-2 flex gap-20">
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">50</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center bg-slate-300">2</div>
+        </div>
+        <div class="flex gap-10 -mt-4">
+          <div class="h-10 w-1 -mt-1 rotate-[50deg] bg-black"></div>
+          <div class="h-5 w-1 mt-3 mr-9 -rotate-[20deg] bg-black"></div>
+          <div class="h-5 w-1 mt-3 ml-8 rotate-[20deg] bg-black"></div>
+          <div class="h-10 w-1 -mt-1 -rotate-[50deg] bg-black"></div>
+        </div>
+        <div class="-mt-3 flex gap-9">
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">55</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">90</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">87</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">7</div>
+        </div>
+      </div>
+      <div class="flex flex-col items-center">
+        <p class="font-bold">Paso 3: Intercambiar 2 y 4</p>
+
+        <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center bg-slate-300">2</div>
+        <div class="flex gap-12 h-10 -mt-1">
+          <div class="-mt-2 h-14 w-1 rotate-[50deg] bg-black"></div>
+          <div class="-mt-2 h-14 w-1 -rotate-[50deg] bg-black"></div>
+        </div>
+        <div class="-mt-2 flex gap-20">
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">50</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">4</div>
+        </div>
+        <div class="flex gap-10 -mt-4">
+          <div class="h-10 w-1 -mt-1 rotate-[50deg] bg-black"></div>
+          <div class="h-5 w-1 mt-3 mr-9 -rotate-[20deg] bg-black"></div>
+          <div class="h-5 w-1 mt-3 ml-8 rotate-[20deg] bg-black"></div>
+          <div class="h-10 w-1 -mt-1 -rotate-[50deg] bg-black"></div>
+        </div>
+        <div class="-mt-3 flex gap-9">
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">55</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">90</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">87</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">7</div>
+        </div>
+      </div>
+    </div>
     <p>
-      Esto lleva un tiempo O(log n), donde n es el número de nodos del montón.
+      Esto lleva un tiempo <code>O(log n)</code>, donde n es el número de nodos del montón.
     </p>
     <p>
       <em>Extraer el elemento mínimo</em>
@@ -255,8 +519,90 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
     <p>
       ¿Lo intercambiamos con el hijo izquierdo o con el derecho? Depende de sus valores. No hay un orden inherente entre el elemento izquierdo y el derecho, pero tendrás que tomar el más pequeño para mantener el orden de miniapilación.
     </p>
+    <div class="flex justify-center gap-4 my-8">
+      <div class="flex flex-col items-center">
+        <p class="font-bold">Paso 1: Sustituir min por 80.</p>
+        <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center bg-slate-300">80</div>
+        <div class="flex gap-12 h-10 -mt-1">
+          <div class="-mt-2 h-14 w-1 rotate-[50deg] bg-black"></div>
+          <div class="-mt-2 h-14 w-1 -rotate-[50deg] bg-black"></div>
+        </div>
+        <div class="-mt-2 flex gap-16">
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">50</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">23</div>
+        </div>
+        <div class="flex gap-6 -mt-2">
+          <div class="h-8 w-1 rotate-45 bg-black"></div>
+          <div class="h-8 w-1 mr-8 -rotate-45 bg-black"></div>
+          <div class="h-8 w-1 ml-8 rotate-45 bg-black"></div>
+          <div class="h-8 w-1 -rotate-45 bg-black"></div>
+        </div>
+        <div class="-mt-2 flex gap-2">
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">88</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">90</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">32</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">74</div>
+        </div>
+        <div class="flex gap-6 -mt-2 w-full justify-start">
+          <div class="h-8 w-1 ml-8 rotate-45 bg-slate-400"></div>
+        </div>
+        <div class="-mt-2 flex gap-2 w-full justify-start">
+          <div class="w-12 h-12 border-slate-400 text-slate-400 rounded-full border-4 border-dotted flex justify-center items-center">80</div>
+        </div>
+      </div>
+      <div class="flex flex-col items-center">
+        <p class="font-bold">Paso 2: Intercambiar 23 y 80.</p>
+
+        <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">23</div>
+        <div class="flex gap-12 h-10 -mt-1">
+          <div class="-mt-2 h-14 w-1 rotate-[50deg] bg-black"></div>
+          <div class="-mt-2 h-14 w-1 -rotate-[50deg] bg-black"></div>
+        </div>
+        <div class="-mt-2 flex gap-16">
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">50</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center bg-slate-300">80</div>
+        </div>
+        <div class="flex gap-6 -mt-2">
+          <div class="h-8 w-1 rotate-45 bg-black"></div>
+          <div class="h-8 w-1 mr-8 -rotate-45 bg-black"></div>
+          <div class="h-8 w-1 ml-8 rotate-45 bg-black"></div>
+          <div class="h-8 w-1 -rotate-45 bg-black"></div>
+        </div>
+        <div class="-mt-2 flex gap-2">
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">88</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">90</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">32</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">74</div>
+        </div>
+      </div>
+      <div class="flex flex-col items-center">
+        <p class="font-bold">Paso 3: Intercambiar 32 y 80</p>
+
+        <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">23</div>
+        <div class="flex gap-12 h-10 -mt-1">
+          <div class="-mt-2 h-14 w-1 rotate-[50deg] bg-black"></div>
+          <div class="-mt-2 h-14 w-1 -rotate-[50deg] bg-black"></div>
+        </div>
+        <div class="-mt-2 flex gap-16">
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">50</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">32</div>
+        </div>
+        <div class="flex gap-6 -mt-2">
+          <div class="h-8 w-1 rotate-45 bg-black"></div>
+          <div class="h-8 w-1 mr-8 -rotate-45 bg-black"></div>
+          <div class="h-8 w-1 ml-8 rotate-45 bg-black"></div>
+          <div class="h-8 w-1 -rotate-45 bg-black"></div>
+        </div>
+        <div class="-mt-2 flex gap-2">
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">80</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">90</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center bg-slate-300">80</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">74</div>
+        </div>
+      </div>
+    </div>
     <p>
-      Este algoritmo también tardará 0(log n) veces.
+      Este algoritmo también tardará <code>O(log n)</code> veces.
     </p>
   </article>
   <article>
@@ -268,22 +614,76 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
       Un trie es una variante de un árbol n-ario en el que se almacenan caracteres en cada nodo. Cada camino del árbol puede representar una palabra.
     </p>
     <p>
-      Los nodos * (a veces llamados "nodos nulos") se utilizan a menudo para indicar palabras completas. Por ejemplo, el hecho de que haya un nodo * debajo de MUCHO indica que MUCHO es una palabra completa. La existencia de la ruta MA indica que hay palabras que empiezan por MA.
+      Los nodos * (a veces llamados "nodos nulos") se utilizan a menudo para indicar palabras completas. Por ejemplo, el hecho de que haya un nodo * debajo de <code>MANY</code> indica que <code>MANY</code> es una palabra completa. La existencia de la ruta <code>MA</code> indica que hay palabras que empiezan por <code>MA</code>.
     </p>
     <p>
-      La implementación real de estos * nodos podría ser un tipo especial de hijo (como un TerminatingTrieNode, que hereda de TrieNode). O bien, podríamos utilizar sólo una bandera booleana termina dentro del nodo "padre".
+      La implementación real de estos * nodos podría ser un tipo especial de hijo (como un <code>TerminatingTrieNode</code>, que hereda de <code>TrieNode</code>). O bien, podríamos utilizar sólo una bandera booleana termina dentro del nodo "padre".
     </p>
     <p>
-      Un nodo en un trie podría tener en cualquier lugar de 1 a ALPHABET_SIZE + 1 hijos (o, 0 a ALPHABET_SIZE si una bandera booleana se utiliza en lugar de un nodo *).
+      Un nodo en un trie podría tener en cualquier lugar de 1 a <code>ALPHABET_SIZE + 1</code> hijos (o, 0 a <code>ALPHABET_SIZE</code> si una bandera booleana se utiliza en lugar de un nodo *).
     </p>
+    <div class="flex justify-center gap-4 my-8">
+      <div class="flex flex-col items-center">
+        <p class="font-bold">Paso 1: Sustituir min por 80.</p>
+        <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center bg-amber-900"></div>
+        <div class="flex gap-6 h-10 -mt-1">
+          <div class="-mt-2 h-14 w-1 rotate-45 bg-black"></div>
+          <div class="h-9 w-1 bg-black"></div>
+          <div class="-mt-2 h-14 w-1 -rotate-45 bg-black"></div>
+        </div>
+        <div class="-mt-1 flex gap-2">
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">M</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">L</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">A</div>
+        </div>
+        <div class="flex gap-6 -mt-2">
+          <div class="h-8 w-1 rotate-45 bg-black"></div>
+          <div class="h-8 w-1 mr-8 -rotate-45 bg-black"></div>
+          <div class="h-8 w-1 mr-8 -rotate-45 bg-black"></div>
+          <div class="h-8 w-1 -rotate-45 bg-black"></div>
+        </div>
+        <div class="-mt-2 flex gap-2">
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">A</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">Y</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">I</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">*</div>
+        </div>
+        <div class="flex gap-16 -mt-1">
+          <div class="-ml-12 h-6 w-1 rotate-[24deg] bg-black"></div>
+          <div class="h-5 w-1 bg-black"></div>
+          <div class="h-6 w-1 -rotate-[24deg] bg-black"></div>
+        </div>
+        <div class="-mt-1 flex gap-9">
+          <div class="w-12 h-12 -ml-12 border-black rounded-full border-4 flex justify-center items-center">N</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">*</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">E</div>
+        </div>
+        <div class="flex gap-6 self-start -mt-1">
+          <div class="ml-6 h-6 w-1 bg-black"></div>
+          <div class="-mt-1 h-7 ml-10 rotate-[35deg] w-1 bg-black"></div>
+          <div class="h-6 ml-20 w-1 -rotate-[20deg] bg-black"></div>
+        </div>
+        <div class="-mt-1 flex gap-2">
+          <div class="w-12 h-12 -ml-10 border-black rounded-full border-4 flex justify-center items-center">Y</div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">*</div>
+          <div class="w-12 h-12 ml-20 border-black rounded-full border-4 flex justify-center items-center">*</div>
+        </div>
+        <div class="flex gap-6 -mt-1 self-start ml-6">
+          <div class="h-5 w-1 bg-black"></div>
+        </div>
+        <div class="-mt-1 flex self-start">
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">*</div>
+        </div>
+      </div>
+    </div>
     <p>
       Normalmente, un trie se utiliza para almacenar todo el idioma (inglés) para búsquedas rápidas de prefijos. Mientras que una tabla hash puede buscar rápidamente si una cadena es una palabra válida, no puede decirnos si una cadena es un prefijo de cualquier palabra válida. Un trie puede hacerlo muy rápidamente.
     </p>
-    <p>
-      ¿Con qué rapidez? Un trie puede comprobar si una cadena es un prefijo válido en tiempo 0(K), donde K es la longitud de la cadena. En realidad, es el mismo tiempo de ejecución que tarda una tabla hash. Aunque a menudo nos referimos a las búsquedas en una tabla hash como un tiempo 0(1), esto no es del todo cierto. Una tabla hash debe leer todos los caracteres de la entrada, lo que requiere un tiempo O(K) en el caso de una búsqueda de palabras.
+    <p class="pl-4 sm:pl-6 md:pl-8 border-l-2 sm:border-l-4 md:border-l-8 border-black">
+      ¿Con qué rapidez? Un trie puede comprobar si una cadena es un prefijo válido en tiempo <code>O(K)</code>, donde <code>K</code> es la longitud de la cadena. En realidad, es el mismo tiempo de ejecución que tarda una tabla hash. Aunque a menudo nos referimos a las búsquedas en una tabla hash como un tiempo <code>O(K)</code>, esto no es del todo cierto. Una tabla hash debe leer todos los caracteres de la entrada, lo que requiere un tiempo <code>O(K)</code> en el caso de una búsqueda de palabras.
     </p>
     <p>
-      Muchos problemas que implican listas de palabras válidas aprovechan un trie como optimización. En situaciones en las que buscamos repetidamente en el árbol prefijos relacionados (por ejemplo, buscando M, luego MA, luego MAN, luego MANY), podemos pasar una referencia al nodo actual del árbol. Esto nos permitirá comprobar simplemente si Y es hijo de MAN, en lugar de empezar desde la raíz cada vez.
+      Muchos problemas que implican listas de palabras válidas aprovechan un trie como optimización. En situaciones en las que buscamos repetidamente en el árbol prefijos relacionados (por ejemplo, buscando <code>M</code>, luego <code>MA</code>, luego <code>MAN</code>, luego <code>MANY</code>), podemos pasar una referencia al nodo actual del árbol. Esto nos permitirá comprobar simplemente si Y es hijo de <code>MAN</code>, en lugar de empezar desde la raíz cada vez.
     </p>
   </article>
   <article>
@@ -302,6 +702,51 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
     <p>
       Visualmente, se puede dibujar un grafo como éste:
     </p>
+    <div class="flex justify-center gap-8 my-8">
+      <div class="flex flex-col -rotate-12 items-center">
+        <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">6</div>
+        <div class="flex items-center h-10 -mt-1">
+          <div class="flex items-center rotate-[130deg]">
+            <span class="w-12 -mr-2 h-1 bg-black"></span><span>►</span>
+          </div>
+          <div class="flex items-center rotate-45">
+            <span>◀︎</span><span class="w-12 -ml-2 h-1 bg-black"></span>
+          </div>
+        </div>
+        <div class="-mt-1 flex items-center">
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">5</div>
+          <span class="w-12 h-1 bg-black -mr-2"></span><span>►</span>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">4</div>
+        </div>
+      </div>
+      <div class="flex flex-col items-center">
+        <div class="-mt-1 flex items-center">
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">0</div>
+          <span class="w-12 h-1 bg-black -mr-2"></span><span>►</span>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">1</div>
+        </div>
+        <div class="flex items-center h-14 -mt-1">
+          <div class="flex items-center -mr-2 -rotate-[135deg]">
+            <span class="w-20 -mr-2 h-1 bg-black"></span><span>►</span>
+          </div>
+          <div class="flex items-center -mr-8 -rotate-90">
+            <span>◀︎</span><span class="w-8 -ml-2 h-1 bg-black"></span>
+          </div>
+        </div>
+        <div class="-mt-1 flex items-center">
+          <div class="w-12 h-12 border-black -mt-6 rounded-full border-4 flex justify-center items-center">3</div>
+          <div class="flex flex-col rotate-12 -mt-2">
+            <div class="flex h-4 flex-nowrap items-center">
+              <span class="w-12 h-1 bg-black -mr-2"></span><span>►</span>
+            </div>
+            <div class="flex h-4 flex-nowrap items-center">
+              <span>◀︎</span><span class="w-12 h-1 bg-black -ml-2"></span>
+            </div>
+          </div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">2</div>
+        </div>
+      </div>
+    </div>
     <p>
       En términos de programación, hay dos formas habituales de representar un grafo.
     </p>
@@ -309,17 +754,40 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
   <article>
     <p><strong>Lista de adyacencia</strong></p>
     <p>
-      Es la forma más habitual de representar un grafo. Cada vértice (o nodo) almacena una lista de vértices adyacentes. En un grafo no dirigido, una arista como (a, b) se almacenaría dos veces: una en los vértices adyacentes de a y otra en los vértices adyacentes de b.
+      Es la forma más habitual de representar un grafo. Cada vértice (o nodo) almacena una lista de vértices adyacentes. En un grafo no dirigido, una arista como <code>(a, b)</code> se almacenaría dos veces: una en los vértices adyacentes de a y otra en los vértices adyacentes de b.
     </p>
     <p>
       Una definición de clase simple para un nodo de grafo podría ser esencialmente la misma que para un nodo de árbol.
     </p>
+    <pre>
+      <code class="language-js">
+        class Graph &#123
+          public Node[] nodes;
+        }
+
+        class Node &#123
+          public String name;
+          public Node[] children;
+        }
+      </code>
+    </pre>
     <p>
       La clase Graph se utiliza porque, a diferencia de un árbol, no se puede llegar necesariamente a todos los nodos desde un único nodo.
     </p>
     <p>      
       No necesitas necesariamente ninguna clase adicional para representar un grafo. Un array (o una tabla hash) de listas (arrays, arraylists, linked lists, etc.) puede almacenar la lista de adyacencia. El grafo anterior podría representarse como:
     </p>
+    <pre>
+      <code class="language-js">
+        0: 1
+        1: 2
+        2: 0, 3
+        3: 2
+        4: 6
+        5: 4
+        6: 5
+      </code>
+    </pre>
     <p>
       Esto es un poco más compacto, pero no es tan limpio. Tendemos a utilizar clases de nodos a menos que haya una razón de peso para no hacerlo.
     </p>
@@ -327,11 +795,78 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
   <article>
     <p><strong>Matrices de adyacencia</strong></p>
     <p>
-      Una matriz de adyacencia es una matriz booleana NxN (donde N es el número de nodos), donde un valor verdadero en matrix[i] [j] indica una arista del nodo i al nodo j. (También se puede utilizar una matriz entera con Os y 1 s.)
+      Una matriz de adyacencia es una matriz booleana <code>NxN</code> (donde <code>N</code> es el número de nodos), donde un valor <code>true</code> en <code>matrix[i][j]</code> indica una arista del nodo <code>i</code> al nodo <code>j</code>. (También se puede utilizar una matriz entera con <code>0s</code> y <code>1s</code>.)
     </p>
     <p>
       En un grafo no dirigido, una matriz de adyacencia será simétrica. En un grafo dirigido, no lo será (necesariamente).
     </p>
+    <div class="flex justify-center gap-24 my-8">
+      <div class="flex flex-col items-center">
+        <div class="-mt-1 flex items-center">
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">0</div>
+          <span class="w-12 h-1 bg-black -mr-2"></span><span>►</span>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">1</div>
+        </div>
+        <div class="flex items-center h-14 -mt-1">
+          <div class="flex items-center -mr-2 -rotate-[135deg]">
+            <span class="w-20 -mr-2 h-1 bg-black"></span><span>►</span>
+          </div>
+          <div class="flex items-center -mr-8 -rotate-90">
+            <span>◀︎</span><span class="w-8 -ml-2 h-1 bg-black"></span>
+          </div>
+        </div>
+        <div class="-mt-1 flex items-center">
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">3</div>
+          <div class="flex flex-col">
+            <div class="flex h-4 flex-nowrap items-center">
+              <span class="w-12 h-1 bg-black -mr-2"></span><span>►</span>
+            </div>
+          </div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">2</div>
+        </div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <td class="py-0"></td>
+            <td class="py-0">0</td>
+            <td class="py-0">1</td>
+            <td class="py-0">2</td>
+            <td class="py-0">3</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="py-0 bg-slate-300">0</td>
+            <td class="py-0">0</td>
+            <td class="py-0">1</td>
+            <td class="py-0">0</td>
+            <td class="py-0">0</td>
+          </tr>
+          <tr>
+            <td class="py-0 bg-slate-300">1</td>
+            <td class="py-0">0</td>
+            <td class="py-0">0</td>
+            <td class="py-0">1</td>
+            <td class="py-0">0</td>
+          </tr>
+          <tr>
+            <td class="py-0 bg-slate-300">2</td>
+            <td class="py-0">1</td>
+            <td class="py-0">0</td>
+            <td class="py-0">0</td>
+            <td class="py-0">0</td>
+          </tr>
+          <tr>
+            <td class="py-0 bg-slate-300">3</td>
+            <td class="py-0">0</td>
+            <td class="py-0">0</td>
+            <td class="py-0">1</td>
+            <td class="py-0">0</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <p>
       Los mismos algoritmos de grafos que se utilizan en las listas de adyacencia (búsqueda de amplitud primero, etc.) se pueden realizar con matrices de adyacencia, pero pueden ser algo menos eficientes. En la representación de lista de adyacencia, se puede iterar fácilmente a través de los vecinos de un nodo. En la representación de la matriz de adyacencia, tendrá que recorrer todos los nodos para identificar a los vecinos de un nodo.
     </p>
@@ -345,11 +880,69 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
       En la búsqueda en profundidad (DFS), empezamos en la raíz (o en otro nodo seleccionado arbitrariamente) y exploramos cada rama por completo antes de pasar a la siguiente. Es decir, primero exploramos en profundidad (de ahí el nombre de búsqueda en profundidad) antes de explorar en profundidad.
     </p>
     <p>
-      En la búsqueda amplia primero (BFS), empezamos en la raíz (u otro nodo seleccionado arbitrariamente) y exploramos cada vecino antes de pasar a cualquiera de sus hijos. Es decir, vamos a lo ancho (de ahí lo de búsqueda amplia) antes de ir a lo profundo.
+      En la búsqueda amplia primero (BFS), empezamos en la raíz (u otro nodo seleccionado arbitrariamente) y exploramos cada vecino antes de pasar a cualquiera de sus hijos. Es decir, vamos a lo ancho (de ahí lo de búsqueda <em>breadth-first</em>) antes de ir a lo profundo.
     </p>
     <p>
       Véase la siguiente representación de un grafo y sus búsquedas en profundidad y amplitud (suponiendo que los vecinos se iteran en orden numérico).
     </p>
+    <div class="flex justify-center gap-24 my-8">
+      <div class="flex flex-col items-center">
+        <p class="font-bold">Grafos</p>
+        <div class="-mt-1 flex items-center">
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">0</div>
+          <span class="w-12 h-1 bg-black -mr-2"></span><span>►</span>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">1</div>
+          <span>◀︎</span><span class="w-12 h-1 bg-black -ml-2"></span>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">2</div>
+        </div>
+        <div class="flex items-center h-14 -mt-1">
+          <div class="flex items-center -rotate-90">
+            <span>◀︎</span><span class="w-8 mr-2 -ml-2 h-1 bg-black"></span>
+          </div>
+          <div class="flex items-center -ml-5 rotate-45">
+            <span class="w-20 h-1 -mr-2 bg-black"></span><span>►</span>
+          </div>
+          <div class="flex items-center -ml-4 -rotate-90">
+            <span>◀︎</span><span class="w-8 mr-2 -ml-2 h-1 bg-black"></span>
+          </div>
+          <div class="flex items-center -ml-6 rotate-45">
+            <span class="w-20 -mr-2 h-1 bg-black"></span><span>►</span>
+          </div>
+          <div class="flex items-center -ml-2 rotate-90">
+            <span>◀︎</span><span class="w-8 -ml-2 h-1 bg-black"></span>
+          </div>
+        </div>
+        <div class="-mt-1 flex items-center">
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">5</div>
+          <div class="w-14"></div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">4</div>
+          <div class="flex flex-col">
+            <div class="flex h-4 flex-nowrap items-center">
+              <span>◀︎</span><span class="w-12 h-1 bg-black -ml-2"></span>
+            </div>
+          </div>
+          <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">3</div>
+        </div>
+      </div>
+      <div class="flex flex-col items-center">
+        <p class="font-bold">Depth-First Search</p>
+        <code>Node 0</code>
+        <code class="ml-4">Node 1</code>
+        <code class="ml-8">Node 3</code>
+        <code class="ml-12">Node 2</code>
+        <code class="ml-16">Node 4</code>
+        <code>Node 5</code>
+      </div>
+      <div class="flex flex-col items-center">
+        <p class="font-bold">Breadth-First Search</p>
+        <code>Node 0</code>
+        <code>Node 1</code>
+        <code>Node 4</code>
+        <code>Node 5</code>
+        <code>Node 3</code>
+        <code>Node 2</code>
+      </div>
+    </div>
     <p>
       La búsqueda exhaustiva y la búsqueda profunda se suelen utilizar en escenarios diferentes. A menudo se prefiere DFS si queremos visitar todos los nodos del grafo. Ambas funcionarán bien, pero la búsqueda en profundidad es un poco más sencilla.
     </p>
@@ -357,7 +950,7 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
       Sin embargo, si queremos encontrar el camino más corto (o cualquier camino) entre dos nodos, BFS es generalmente mejor. Consideremos la representación de todas las amistades del mundo entero en un grafo e intentemos encontrar un camino de amigos entre Ash yVanessa.
     </p>
     <p>
-      En la búsqueda en profundidad, podríamos tomar un camino como Ash -> Brian -> Carleton -> Davis -> Eric -> Farah -> Gayle -> Harry -> Isabella -> John--> Kari... y luego encontrarnos muy lejos. Podríamos recorrer la mayor parte del mundo sin darnos cuenta de que, de hecho, Vanessa es amiga de Ash. Aún así, al final encontraremos el camino, pero puede que nos lleve mucho tiempo. Tampoco encontraremos el camino más corto.
+      En la búsqueda en profundidad, podríamos tomar un camino como <code>Ash -> Brian -> Carleton -> Davis -> Eric -> Farah -> Gayle -> Harry -> Isabella -> John -> Kari</code>... y luego encontrarnos muy lejos. Podríamos recorrer la mayor parte del mundo sin darnos cuenta de que, de hecho, Vanessa es amiga de Ash. Aún así, al final encontraremos el camino, pero puede que nos lleve mucho tiempo. Tampoco encontraremos el camino más corto.
     </p>
     <p>
       En una búsqueda amplia, nos mantendríamos cerca de Ash el mayor tiempo posible. Podríamos iterar a través de muchos de los amigos de Ash, pero no iríamos a sus conexiones más distantes hasta que fuera absolutamente necesario. Si Vanessa es amiga de Ash, o amiga de un amigo, lo averiguaremos relativamente rápido.
@@ -374,6 +967,20 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
     <p>
       El pseudocódigo siguiente implementa DFS.
     </p>
+    <pre>
+      <code class="language-js">
+        void search(Node root) &#123
+          if (root == null) return;
+          visit(root);
+          root.visited = true;
+          for each (Node n in root.adjacent) &#123
+            if (n.visited == false) &#123
+              search(n);
+            }
+          }
+        }
+      </code>
+    </pre>
     <p>
       Búsqueda amplia (BFS)
     </p>
@@ -383,6 +990,25 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
     <p>
       En BFS, el nodo a visita cada uno de los vecinos de a antes de visitar cualquiera de sus vecinos. Se puede pensar en esto como la búsqueda de nivel por nivel a partir de a. Una solución iterativa que implica una cola por lo general funciona mejor.
     </p>
+    <pre>
+      <code class="language-js">
+        void search(Node root) &#123
+          Queue queue = new Queue();
+          root.marked = true;
+          queue.enqueue(root); // Add to the end of queue
+          while (!queue.isEmpty()) &#123
+            Node r= queue.dequeue(); // Remove from the front of the queue
+            visit(r);
+            foreach (Node n in r.adjacent) &#123
+              if (n.marked == false) &#123
+                n.marked = true;
+                queue.enqueue(n);
+              }
+            }
+          }
+        }
+      </code>
+    </pre>
     <p>
       Si se le pide que implemente DFS, la clave que debe recordar es el uso de la cola. El resto del algoritmo se deriva de este hecho.
     </p>
@@ -392,27 +1018,39 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
     <p>
       La búsqueda bidireccional se utiliza para encontrar el camino más corto entre un nodo de origen y otro de destino. Funciona básicamente ejecutando dos búsquedas simultáneas, una desde cada nodo. Cuando sus búsquedas colisionan, hemos encontrado un camino.
     </p>
+    <div class="flex justify-center gap-24 my-8">
+      <div class="flex flex-1 flex-col items-center">
+        <p class="font-bold">Breadth-First Search</p>
+        <p>Búsqueda única de s tot que colisiona después de cuatro niveles.</p>
+        <img src="/breadth-First.png" alt="imagen de breadth-First">
+      </div>
+      <div class="flex flex-1 flex-col items-center">
+        <p class="font-bold">Bidirectional Search</p>
+        <p>Dos búsquedas (una desde s y otra desdet) que chocan después de cuatro niveles en total (dos niveles cada una).</p>
+        <img src="/bidirectional.png" alt="imagen de bidirectional">
+      </div>
+    </div>
     <p>
-      Para ver por qué es más rápido, consideremos un grafo en el que cada nodo tiene como máximo k nodos adyacentes y el camino más corto del nodo s al nodo t tiene una longitud d.
+      Para ver por qué es más rápido, consideremos un grafo en el que cada nodo tiene como máximo <code>k</code> nodos adyacentes y el camino más corto del nodo <code>s</code> al nodo <code>t</code> tiene una longitud <code>d</code>.
     </p>
     <p>
       <ul>
         <li>
-          En una búsqueda tradicional, buscaríamos hasta k nodos en el primer "nivel" de la búsqueda. En el segundo nivel, buscaríamos hasta k nodos por cada uno de esos primeros k nodos, es decir, k2 nodos en total (hasta ahora). Haríamos esto d veces, por lo que serían 0( kd) nodos.
+          En una búsqueda tradicional, buscaríamos hasta <code>k</code> nodos en el primer "nivel" de la búsqueda. En el segundo nivel, buscaríamos hasta k nodos por cada uno de esos primeros <code>k</code> nodos, es decir, <code>k<sup>2</sup></code> nodos en total (hasta ahora). Haríamos esto d veces, por lo que serían <code>O(kd)</code> nodos.
         </li>
         <li>
-          En la búsqueda bidireccional, tenemos dos búsquedas que colisionan después de aproximadamente niveles (el punto medio del camino). La búsqueda desde s visita aproximadamente kd12, al igual que la búsqueda desde t. Eso es aproximadamente 2 kdl2, o 0( kd/2), nodos en total.
+          En la búsqueda bidireccional, tenemos dos búsquedas que colisionan después de aproximadamente <code><sup>d</sup>&frasl;<sub>2</sub></code> niveles (el punto medio del camino). La búsqueda desde <code>s</code> visita aproximadamente <code>k<sup>d/2</sup></code>, al igual que la búsqueda desde <code>t</code>. Eso es aproximadamente <code>2 k<sup>d/2</sup></code>, o <code>O(k<sup>d/2</sup>)</code>, nodos en total.
         </li>
       </ul>
     </p>
     <p>
-      Puede parecer una diferencia menor, pero no lo es. Es enorme. Recuerde que (kd12)*(kd12) = kd.Th búsqueda bidireccional es en realidad más rápido por un factor de kd12.
+      Puede parecer una diferencia menor, pero no lo es. Es enorme. Recuerde que <code>(k<sup>d/2</sup>)*(k<sup>d/2</sup>) = k<sup>d</sup></code>. La búsqueda bidireccional es en realidad más rápido por un factor de <code>k<sup>d/2</sup></code>.
     </p>
     <p>
       Dicho de otro modo: si nuestro sistema sólo permitía la búsqueda de rutas "amigo de amigo" en la búsqueda de "amplitud primero", ahora probablemente permita la búsqueda de rutas "amigo de amigo de amigo de amigo". Las rutas pueden ser el doble de largas.
     </p>
     <p>
-      Lectura adicional: Ordenación Topológica (pg 632), Algoritmo de Dijkstra (pg 633), Árboles AVL (pg 637), Árboles Rojos Negros (pg 639).
+      <strong>Lectura adicional:</strong> Ordenación Topológica (pg 632), Algoritmo de Dijkstra (pg 633), Árboles AVL (pg 637), Árboles Rojos Negros (pg 639).
     </p>
   </article>
   <article>
@@ -481,6 +1119,11 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
       <li class="list-none">
         <strong>4.7 Orden de construcción: </strong>
         Se le da una lista de proyectos y una lista de dependencias (que es una lista de pares de proyectos, donde el segundo proyecto depende del primero). Todas las dependencias de un proyecto deben construirse antes que el proyecto. Busque un orden de compilación que permita compilar los proyectos. Si no hay un orden de compilación válido, devuelve un error.
+        <p>EJEMPLO</p>
+        <p>Input:</p>
+        <p><code>projects: a, b, c, d, e, f</code></p>
+        <p><code>dependencies: (a, d), (f, b), (b, d), (f, a), (d, c)</code></p>
+        <p>Output: <code>f, e, a, b, d, c</code></p>
         <div class="flex justify-between items-end gap-2">
           <p><em>Pistas: #26, #47, #60, #85, #725, #133</em> 
           </p>
@@ -503,6 +1146,24 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
         Se ha creado un árbol de búsqueda binario recorriendo un array de izquierda a derecha e insertando cada elemento. Dado un árbol de búsqueda binario con elementos distintos, imprimir todas las posibles matrices que podrían haber llevado a este árbol.
         <p>EJEMPLO</p>
         <p>Input:</p>
+        <div class="flex justify-center gap-8 my-8">
+          <div class="flex flex-col items-center">
+            <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">2</div>
+            <div class="flex items-center h-10 -mt-1">
+              <div class="flex items-center rotate-[130deg]">
+                <span class="w-12 -mr-2 h-1 bg-black"></span><span>►</span>
+              </div>
+              <div class="flex items-center rotate-45">
+                <span class="w-12 -mr-2 h-1 bg-black"></span><span>►</span>
+              </div>
+            </div>
+            <div class="-mt-1 flex items-center">
+              <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">1</div>
+              <span class="w-14 -mr-2"></span>
+              <div class="w-12 h-12 border-black rounded-full border-4 flex justify-center items-center">3</div>
+            </div>
+          </div>
+        </div>
         <p><code>Output: &#123 2, 1, 3 }, &#123 2, 3, 1}</code></p>
         <div class="flex justify-between items-end gap-2">
           <p><em>Pistas: #39, #48, #66, #82</em> 
@@ -513,9 +1174,9 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
       </li>
       <li class="list-none">
         <strong>4.10 Comprobar subárbol: </strong>
-        T1 y T2 son dos árboles binarios muy grandes, siendo Tl mucho mayor que T2. Crea un algoritmo para determinar si T2 es un subárbol de T1.
+        <code>T1</code> y <code>T2</code> son dos árboles binarios muy grandes, siendo <code>T1</code> mucho mayor que <code>T2</code>. Crea un algoritmo para determinar si <code>T2</code> es un subárbol de <code>T1</code>.
         <p>
-          Un árbol T2 es un subárbol de Tl si existe un nodo n en Tl tal que el subárbol de n es idéntico a T2. Es decir, si se corta el árbol en el nodo n, los dos árboles serían idénticos.
+          Un árbol <code>T2</code> es un subárbol de <code>T1</code> si existe un nodo n en <code>T1</code> tal que el subárbol de n es idéntico a <code>T2</code>. Es decir, si se corta el árbol en el nodo n, los dos árboles serían idénticos.
         </p>
         <div class="flex justify-between items-end gap-2">
           <p><em>Pistas: #4, #11, #18, #31, #37</em> 
@@ -526,7 +1187,7 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
       </li>
       <li class="list-none">
         <strong>4.11 Nodo Aleatorio: </strong>
-        Estás implementando una clase de árbol binario desde cero que, además de insertar, buscar y borrar, tiene un método getRandomNode() que devuelve un nodo aleatorio del árbol. Todos los nodos deben tener la misma probabilidad de ser elegidos. Diseña e implementa un algoritmo para getRandomNode, y explica cómo implementarías el resto de métodos.
+        Estás implementando una clase de árbol binario desde cero que, además de <code>insert</code>, <code>find</code> y <code>delete</code>, tiene un método <code>getRandomNode()</code> que devuelve un nodo aleatorio del árbol. Todos los nodos deben tener la misma probabilidad de ser elegidos. Diseña e implementa un algoritmo para <code>getRandomNode</code>, y explica cómo implementarías el resto de métodos.
         <div class="flex justify-between items-end gap-2">
           <p><em>Pistas: #42, #54, #62, #75, #89, #99, #112, #119</em> 
           </p>
