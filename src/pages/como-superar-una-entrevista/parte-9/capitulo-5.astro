@@ -6,6 +6,543 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
   <h2>Manipulación de bits</h2>
   <article>
     <p>
+      La manipulación de bits se utiliza en una gran variedad de problemas. A veces, la pregunta pide explícitamente la manipulación de bits. Otras veces, es simplemente una técnica útil para optimizar tu código. Deberías sentirte cómodo haciendo manipulación de bits a mano, así como con código. Ten cuidado; es fácil cometer pequeños errores.
+    </p>
+  </article>
+  <article>
+    <h3>► Manipulación de bits a mano</h3>
+    <p>
+      Si estás oxidado en la manipulación de bits, intenta los siguientes ejercicios a mano. Los elementos de la tercera columna pueden resolverse manualmente o con "trucos" (descritos más adelante). Para simplificar, suponga que se trata de números de cuatro bits.
+    </p>
+    <p>
+      Si se confunde, resuélvalos como números de base 1O. A continuación, puede aplicar el mismo proceso a un número binario. Recuerde que <code>^</code> indica un <code>XOR</code>, y ~ es un <code>NOT</code> (negación).
+    </p>
+    <div class="flex justify-center my-8">
+      <table>
+        <tbody>
+          <tr class="text-center">
+            <td>
+              <code>0110 + 0010</code>
+            </td>
+            <td>
+              <code>0011 * 0101</code>
+            </td>
+            <td>
+              <code>0110 + 0110</code>
+            </td>
+          </tr>
+          <tr class="text-center">
+            <td>
+              <code>0011 + 0010</code>
+            </td>
+            <td>
+              <code>0011 * 0011</code>
+            </td>
+            <td>
+              <code>0100 * 0011</code>
+            </td>
+          </tr>
+          <tr class="text-center">
+            <td>
+              <code>0110 - 0011</code>
+            </td>
+            <td>
+              <code>1101 >> 2</code>
+            </td>
+            <td>
+              <code>1101 ^ (~1101)</code>
+            </td>
+          </tr>
+          <tr class="text-center">
+            <td>
+              <code>1000 - 0110</code>
+            </td>
+            <td>
+              <code>1101 ^ 0101</code>
+            </td>
+            <td>
+              <code>1011 & (~0 &#60&#60 2)</code>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-base">Solutions: line 1 (1000, 1111, 1100); line 2 (0101, 1001, 1100); line 3 (0011, 0011, 1111); line 4 (0010, 1000, 1000).</p>
+    <p>
+      Los trucos de la columna 3 son los siguientes
+    </p>
+    <ul>
+      <li>
+        <code>0110 + 0110</code> equivale a <code>0110 * 2</code>, lo que equivale a desplazar <code>0110</code> a la izquierda en <code>1</code>.
+      </li>
+      <li>
+        <code>0100</code> es igual a <code>4</code>, y multiplicar por <code>4</code> es simplemente desplazar a la izquierda por <code>2</code>. Así que desplazamos <code>0011</code> a la izquierda por <code>2</code> para obtener <code>1100</code>.
+      </li>
+      <li>
+        Piensa en esta operación bit a bit. Si <code>XOR</code> un bit con su propio valor negado, siempre obtendrá <code>1</code>.
+        Por lo tanto, la solución de <code>a^(~a)</code> será una secuencia de <code>1s</code>.
+      </li>
+      <li>
+        <code>~0</code> es una secuencia de <code>1s</code>, por lo que <code>~0 &#60&#60 2</code> es <code>1s</code> seguido de dos <code>0s</code>. ANDing que con otro valor borrará los dos últimos bits del valor.
+      </li>
+    </ul>
+    <p>
+      Si no has visto estos trucos inmediatamente, piénsalos lógicamente.
+    </p>
+  </article>
+  <article>
+    <h3>► Datos y trucos sobre los bits</h3>
+    <p>
+      Las siguientes expresiones son útiles en la manipulación de bits. Pero no se limite a memorizarlas; piense detenidamente por qué cada una de ellas es cierta. Utilizamos "1s" y "Os" para indicar una secuencia de 1s u Os, respectivamente.
+    </p>
+    <div class="flex justify-center gap-16">
+      <div class="flex flex-col">
+        <code>
+          x ^ 0s = x
+        </code>
+        <code>
+          x ^ 1s = ~x
+        </code>
+        <code>
+          x ^ x = 0
+        </code>
+      </div>
+      <div class="flex flex-col">
+        <code>
+          x & 0s = 0
+        </code>
+        <code>
+          x & 1s = x
+        </code>
+        <code>
+          x & x = x
+        </code>
+      </div>
+      <div class="flex flex-col">
+        <code>
+          x | 0s = x
+        </code>
+        <code>
+          x | 1s = 1s
+        </code>
+        <code>
+          x | x = x
+        </code>
+      </div>
+    </div>
+    <p>
+      Para entender estas expresiones, recuerda que estas operaciones se realizan bit a bit, y que lo que ocurre en un bit nunca afecta a los demás bits. Esto significa que si una de las afirmaciones anteriores es cierta para un solo bit, también lo es para una secuencia de bits.
+    </p>
+  </article>
+  <article>
+    <h3>► Dos complemento y números negativos</h3>
+    <p>
+      Los ordenadores suelen almacenar los números enteros en la representación del complemento a dos. Un número positivo se representa como él mismo, mientras que un número negativo se representa como el complemento a dos de su valor absoluto (con un 1 en su bit de signo para indicar que es un valor negativo). El complemento a dos de un número de <code>N</code> bits (donde N es el número de bits utilizados para el número, <em>excluyendo</em> el bit de signo) es el complemento del número con respecto a <code>2<sup>N</sup></code>.
+    </p>
+    <p>
+      Veamos el entero de <code>4</code> bits <code>-3</code> como ejemplo. Si es un número de 4 bits, tenemos un bit para el signo y tres bits para el valor. Queremos el complemento con respecto a <code>2<sup>3</sup></code>, que es <code>8</code>. El complemento de <code>3</code> (el valor absoluto de <code>-3</code>) con respecto a <code>8</code> es <code>5</code>. <code>5</code> en binario es <code>101</code>. Por lo tanto, <code>-3</code> en binario es <code>101</code>. Por lo tanto, <code>-3</code> en binario como número de <code>4</code> bits es <code>1101</code>, siendo el primer bit el bit de signo.
+    </p>
+    <p>
+      En otras palabras, la representación binaria de <code>-K</code> (<code>K</code> negativo) como número de N bits es <code>concat(1, 2<sup>N-1</sup> - K)</code>. 
+    </p>
+    <p>
+      Otra forma de ver esto es que invertimos los bits en la representación positiva y luego añadimos <code>1.3</code> es <code>011</code> en binario. Se invierten los bits para obtener <code>100</code>, se suma <code>1</code> para obtener <code>101</code> y se añade el bit de signo (<code>1</code>) para obtener <code>1101</code>.
+    </p>
+    <p>
+      En un entero de cuatro bits, el resultado sería el siguiente
+    </p>
+    <div class="flex justify-center">
+      <table class="font-poppins">
+        <thead>
+          <tr>
+            <td colspan="2">Valores Positivos</td>
+            <td colspan="2">Valores Negativos</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>7</code></td>
+            <td><code><span class="underline">0</span> 111</code></td>
+            <td><code>-1</code></td>
+            <td><code><span class="underline">1</span> 111</code></td>
+          </tr>
+          <tr>
+            <td><code>6</code></td>
+            <td><code><span class="underline">0</span> 110</code></td>
+            <td><code>-2</code></td>
+            <td><code><span class="underline">1</span> 110</code></td>
+          </tr>
+          <tr>
+            <td><code>5</code></td>
+            <td><code><span class="underline">0</span> 101</code></td>
+            <td><code>-3</code></td>
+            <td><code><span class="underline">1</span> 101</code></td>
+          </tr>
+          <tr>
+            <td><code>4</code></td>
+            <td><code><span class="underline">0</span> 100</code></td>
+            <td><code>-4</code></td>
+            <td><code><span class="underline">1</span> 100</code></td>
+          </tr>
+          <tr>
+            <td><code>3</code></td>
+            <td><code><span class="underline">0</span> 011</code></td>
+            <td><code>-5</code></td>
+            <td><code><span class="underline">1</span> 011</code></td>
+          </tr>
+          <tr>
+            <td><code>2</code></td>
+            <td><code><span class="underline">0</span> 010</code></td>
+            <td><code>-6</code></td>
+            <td><code><span class="underline">1</span> 010</code></td>
+          </tr>
+          <tr>
+            <td><code>1</code></td>
+            <td><code><span class="underline">0</span> 001</code></td>
+            <td><code>-7</code></td>
+            <td><code><span class="underline">1</span> 001</code></td>
+          </tr>
+          <tr>
+            <td><code>0</code></td>
+            <td><code><span class="underline">0</span> 000</code></td>
+            <td colspan="2"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      Observa que los valores absolutos de los enteros de la izquierda y la derecha siempre suman <code>2<sup>3</sup></code>, y que los valores binarios de los lados izquierdo y derecho son idénticos, aparte del bit de signo. ¿Por qué?
+    </p>
+  </article>
+  <article>
+    <h3>► Aaritmético vs. Desplazamiento a la derecha lógico</h3>
+    <p>
+      Hay dos tipos de operadores de desplazamiento a la derecha. El desplazamiento a la derecha aritmético esencialmente divide por dos. El desplazamiento lógico a la derecha hace lo que visualmente veríamos como un desplazamiento de bits. Esto se ve mejor en un número negativo.
+    </p>
+    <p>
+      En un desplazamiento lógico a la derecha, desplazamos los bits y ponemos un <code>0</code> en el bit más significativo. Se indica con un operador <code>>>></code>. En un número entero de <code>8-bits</code> (donde el bit de signo es el bit más significativo), esto se vería como en la imagen de abajo. El bit de signo se indica con un fondo gris.
+    </p>
+    <div class="flex justify-center my-12">
+      <table class="font-poppins">
+        <tbody>
+          <tr>
+            <td class="px-4 bg-slate-300 font-extrabold">1</td>
+            <td class="px-4 font-extrabold">0</td>
+            <td class="px-4 font-extrabold">1</td>
+            <td class="px-4 font-extrabold">1</td>
+            <td class="px-4 font-extrabold">0</td>
+            <td class="px-4 font-extrabold">1</td>
+            <td class="px-4 font-extrabold">0</td>
+            <td class="px-4 font-extrabold">1</td>
+            <td class="px-4 border-0">= -75</td>
+          </tr>
+          <tr class="relative h-10">
+            <td class="absolute left-4 flex items-center rotate-45 border-0">
+              <span class="w-8 h-1 bg-black"></span><span>►</span>
+            </td>
+            <td class="absolute left-16 flex items-center rotate-45 border-0">
+              <span class="w-8 h-1 bg-black"></span><span>►</span>
+            </td>
+            <td class="absolute left-28 flex items-center rotate-45 border-0">
+              <span class="w-8 h-1 bg-black"></span><span>►</span>
+            </td>
+            <td class="absolute left-40 flex items-center rotate-45 border-0">
+              <span class="w-8 h-1 bg-black"></span><span>►</span>
+            </td>
+            <td class="absolute left-52 flex items-center rotate-45 border-0">
+              <span class="w-8 h-1 bg-black"></span><span>►</span>
+            </td>
+            <td class="absolute right-36 flex items-center rotate-45 border-0">
+              <span class="w-8 h-1 bg-black"></span><span>►</span>
+            </td>
+            <td class="absolute right-24 flex items-center rotate-45 border-0">
+              <span class="w-8 h-1 bg-black"></span><span>►</span>
+            </td>
+            
+          </tr>
+          <tr>
+            <td class="px-4 bg-slate-300 font-extrabold">0</td>
+            <td class="px-4 font-extrabold">1</td>
+            <td class="px-4 font-extrabold">0</td>
+            <td class="px-4 font-extrabold">1</td>
+            <td class="px-4 font-extrabold">1</td>
+            <td class="px-4 font-extrabold">0</td>
+            <td class="px-4 font-extrabold">1</td>
+            <td class="px-4 font-extrabold">0</td>
+            <td class="px-4 border-0">= 90</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      En un desplazamiento aritmético a la derecha, desplazamos los valores a la derecha pero rellenamos los nuevos bits con el valor del bit de signo. Esto tiene el efecto (aproximado) de dividir por dos. Se indica mediante un operador <code>>></code>.
+    </p>
+    <div class="flex justify-center my-12">
+      <table class="font-poppins">
+        <tbody>
+          <tr>
+            <td class="px-4 bg-slate-300 font-extrabold">1</td>
+            <td class="px-4 font-extrabold">0</td>
+            <td class="px-4 font-extrabold">1</td>
+            <td class="px-4 font-extrabold">1</td>
+            <td class="px-4 font-extrabold">0</td>
+            <td class="px-4 font-extrabold">1</td>
+            <td class="px-4 font-extrabold">0</td>
+            <td class="px-4 font-extrabold">1</td>
+            <td class="px-4 border-0">= -75</td>
+          </tr>
+          <tr class="relative h-10">
+            <td class="absolute left-4 flex items-center rotate-45 border-0">
+              <span class="w-8 h-1 bg-black"></span><span>►</span>
+            </td>
+            <td class="absolute left-16 flex items-center rotate-45 border-0">
+              <span class="w-8 h-1 bg-black"></span><span>►</span>
+            </td>
+            <td class="absolute left-28 flex items-center rotate-45 border-0">
+              <span class="w-8 h-1 bg-black"></span><span>►</span>
+            </td>
+            <td class="absolute left-40 flex items-center rotate-45 border-0">
+              <span class="w-8 h-1 bg-black"></span><span>►</span>
+            </td>
+            <td class="absolute left-52 flex items-center rotate-45 border-0">
+              <span class="w-8 h-1 bg-black"></span><span>►</span>
+            </td>
+            <td class="absolute right-36 flex items-center rotate-45 border-0">
+              <span class="w-8 h-1 bg-black"></span><span>►</span>
+            </td>
+            <td class="absolute right-24 flex items-center rotate-45 border-0">
+              <span class="w-8 h-1 bg-black"></span><span>►</span>
+            </td>
+            
+          </tr>
+          <tr>
+            <td class="px-4 bg-slate-300 font-extrabold">1</td>
+            <td class="px-4 font-extrabold">1</td>
+            <td class="px-4 font-extrabold">0</td>
+            <td class="px-4 font-extrabold">1</td>
+            <td class="px-4 font-extrabold">1</td>
+            <td class="px-4 font-extrabold">0</td>
+            <td class="px-4 font-extrabold">1</td>
+            <td class="px-4 font-extrabold">0</td>
+            <td class="px-4 border-0">= -38</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      ¿Qué crees que harían estas funciones con los parámetros <code>x = -93242 y count = 40</code>?
+    </p>
+    <pre>
+      <code class="language-js">
+        int repeatedArith meticShift(int x,int count) &#123
+          for (int i = 0; i &#60 count; i++) &#123
+            x >>= 1; // Arithmetic shift by 1
+          }
+          return x;
+        }
+
+        int repeatedLogicalShift( int x,int count) &#123
+          for (int i = 0; i &#60 count; i++) &#123
+            x >>>= 1; // Logical shift by1
+          }
+          return x;
+        }
+      </code>
+    </pre>
+    <p>
+      Con el desplazamiento lógico, obtendríamos <code>0</code> porque estamos desplazando un cero al bit más significativo repetidamente.
+    </p>
+    <p>
+      Con el desplazamiento aritmético, obtendríamos <code>-1</code> porque estamos desplazando un uno al bit más significativo repetidamente. Una secuencia de todos los <code>1s</code> en un entero (con signo) representa <code>-1</code>.
+    </p>
+  </article>
+  <article>
+    <h3>► Tareas comunes con bits: Obtener y Establecer</h3>
+    <p>
+      Las siguientes operaciones son muy importantes de conocer, pero no las memorice simplemente. Memorizarlas lleva a errores de los que es imposible recuperarse. Más bien, entienda cómo implementar estos métodos, para que pueda implementar estos, y otros, problemas de bits.
+    </p>
+  </article>
+  <article>
+    <p><strong>Obtener Bit</strong></p>
+    <p>
+      Este método desplaza <code>1</code> sobre <code>i</code> bits, creando un valor que se parece a <code>00010000</code>. Al realizar un <code>AND</code> con num, borramos todos los bits que no sean el bit en el bit <code>i</code>. Finalmente, comparamos eso con <code>0</code>. Si ese nuevo valor no es cero, entonces el bit <code>i</code> debe tener un <code>1</code>. De lo contrario, biti es un <code>0</code>.
+    </p>
+    <pre>
+      <code class="language-js">
+        boolean getBit(int num, int i) &#123
+          return ((num & (1 &#60&#60 i)) != 0);
+        }
+      </code>
+    </pre>
+  </article>
+  <article>
+    <p><strong>Establecer bit</strong></p>
+    <p>
+      Set Bit desplaza 1 sobre byi bits, creando un valor como 00010000. Al realizar un OR con num, sólo cambiará el valor en el bit i cambiará. Todos los demás bits de la máscara son cero y no afectarán a num
+    </p>
+    <pre>
+      <code class="language-js">
+        int getBit(int num, int i) &#123
+          return num | (1 &#60&#60 i);
+        }
+      </code>
+    </pre>
+  </article>
+  <article>
+    <p><strong>Clear bit</strong></p>
+    <p>
+      Este método funciona casi al revés que <code>setBit</code>. Primero, creamos un número como <code>11101111</code> creando su inverso (<code>00010000</code>) y negándolo. Luego, realizamos un <code>AND</code> con num. Esto borrará el bit <code>ith</code> y dejará el resto sin cambios.
+    </p>
+    <pre>
+      <code class="language-js">
+        int clearBit(int num, int i) &#123 
+          int mask = ~(1 &#60&#60 i);
+          return num & mask;
+        }
+      </code>
+    </pre>
+    <p>
+      Para borrar todos los bits desde el más significativo hasta <code>i</code> (inclusive), creamos una máscara con un <code>1</code> en el <code>ith bit (1 &#60&#60 i)</code>. A continuación, le restamos <code>1</code>, lo que nos da una secuencia de <code>0s</code> seguida de <code>i 1s</code>. A continuación, unimos nuestro número con esta máscara para dejar sólo los últimos <code>i</code> bits.
+    </p>
+    <pre>
+      <code class="language-js">
+        int clearBitsMSBthroughI(int num, inti) &#123 
+          int mask = (1 &#60&#60 i) - 1;
+          return num & mask;
+        }
+      </code>
+    </pre>
+    <p>
+      Para borrar todos los bits de <code>i</code> a <code>0</code> (ambos inclusive), tomamos una secuencia de todos los <code>1s</code> (que es <code>-1</code>) y la desplazamos a la izquierda <code>i + 1 bits</code>. Esto nos da una secuencia de <code>1s</code> (en los bits más significativos) seguida de <code>i 0 bits</code>.
+    </p>
+    <pre>
+      <code class="language-js">
+        int clearBitsithrough0(int num, inti) &#123 
+          int mask = (-1 &#60&#60 (i + 1));
+          return num & mask;
+        }
+      </code>
+    </pre>
+  </article>
+  <article>
+    <p><strong>Actualizar bit</strong></p>
+    <p>
+      Para poner el bit <code>ith</code> a un valor <code>v</code>, primero borramos el bit en la posición <code>i</code> utilizando una máscara que se parece a <code>11101111</code>. A continuación, desplazamos el valor previsto, <code>v</code>, hacia la izquierda en <code>i</code> bits. Esto creará un número con el bit <code>i</code> igual a <code>v</code> y todos los demás bits iguales a <code>0</code>. Finalmente, <code>OR</code> estos dos números, actualizando el bit <code>ith</code> si <code>v</code> es <code>1</code> y dejándolo como <code>0</code> en caso contrario.
+    </p>
+    <pre>
+      <code class="language-js">
+        int updateBit(int num, int i, boolean bitIs1) &#123 
+          int value = bitIs1 ? 1 : 0;
+          int mask = (-1 &#60&#60 i);
+          return (num & mask) | (value &#60&#60 i);
+        }
+      </code>
+    </pre>
+  </article>
+  <article>
+    <h3 class="border-y-2 border-black">Preguntas de la entrevista</h3>
+    <ul>
+      <li class="list-none">
+        <strong>5.1 Inserción: </strong>
+        Se te dan dos números de <code>32-bits</code>, <code>N</code> y <code>M</code>, y dos posiciones de bits, <code>i</code> y <code>j</code>. Escribe un método para insertar <code>M</code> en <code>N</code> de forma que M empiece en el bit <code>j</code> y termine en el bit <code>i</code>. Puedes suponer que los bits <code>j</code> a <code>i</code> tienen espacio suficiente para que quepa todo <code>M</code>. Es decir, si <code>M = 10011</code>, puedes suponer que hay al menos 5 bits entre <code>j</code> e <code>i</code>. No tendrías, por ejemplo, <code>j = 3</code> e <code>i = 2</code>, porque M no podría caber completamente entre el bit 3 y el bit 2.
+        <p>EJEMPLO</p>
+        <p>Input: <code>N = 10000000000, M 10011, i = 2, j = 6</code></p>
+        <p>Output: <code>N = 10001001100</code></p>
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #137, #769, #215</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 276</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>5.2 Binario a cadena: </strong>
+        Dado un número real entre O y 1 (por ejemplo, 0,72) que se pasa como un double, imprime la representación binaria. Si el número no puede representarse correctamente en binario con un máximo de 32 caracteres, imprima "ERROR."
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #743,#767,#773,#269,#297</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 277</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>5.3 Voltear bit para ganar: </strong>
+        Tienes un número entero y puedes voltear exactamente un bit de un <code>0</code> a un <code>1</code>. Escribe código para encontrar la longitud de la secuencia más larga de <code>1s</code> que puedas crear.
+        <p>EJEMPLO</p>
+        <p>Input: <code>1775 (or: 11011101111)</code></p>
+        <p>Output: <code>8</code></p>
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #759, #226, #374,#352</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 278</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>5.4 Número siguiente: </strong>
+        Dado un número entero positivo, imprime el siguiente número más pequeño y el siguiente más grande que tengan el mismo número de bits <code>1</code> en su representación binaria.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #747, #7 75, #242, #372, #339, #358, #375, #390</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 280</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>5.5 Depurador: </strong>
+        Explica qué hace el siguiente código: <code>((n & (n-1)) == 0)</code>.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #757, #202, #267, #302, #346, #372, #383, #398</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 285</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>5.6 Conversión: </strong>
+        Escribe una función para determinar el número de bits que necesitarías voltear para convertir el entero A al entero B.
+        <p>EJEMPLO</p>
+        <p>Input: <code>29 (or: 11101), 15 (or: 01111)</code></p>
+        <p>Output: <code>2</code></p>
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #336, #369</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 286</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>5.7 Intercambio por pares: </strong>
+        Escribe un programa para intercambiar bits pares e impares en un número entero con el menor número de instrucciones posible (por ejemplo, el bit <code>0</code> y el bit <code>1</code> se intercambian, el bit <code>2</code> y el bit <code>3</code> se intercambian, y así sucesivamente).
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #745, #248, #328, #355</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 286</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>5.8 Ruta entre nodos: </strong>
+        Dibujar línea: Una pantalla monocroma se almacena como una única matriz de bytes, lo que permite almacenar ocho píxeles consecutivos en un byte. La pantalla tiene una anchura <code>w</code>, donde <code>w</code> es divisible por 8 (es decir, ningún byte se dividirá entre filas). La altura de la pantalla, por supuesto, puede derivarse de la longitud de la matriz y de la anchura. Implementa una función que dibuje una línea horizontal desde <code>(x1, y)</code> hasta <code>(x2, y)</code>.
+        <p>
+          La firma del método debería ser algo como:
+        </p>
+        <p>
+          <code>drawline(byte[] screen, int width, int xl, int x2, int y)</code>
+        </p>
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #366, #387, #384, #397</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 287</strong> </p>
+        </div>
+      </li>
+    </ul>
+    <p>
+      Preguntas adicionales: Matrices y cadenas (#1.1, #1.4, #1.8), Acertijos matemáticos y de lógica (#6.1O), Recursión (#8.4, #8.14), Ordenar y buscar (#10.7, #10.8), C++ (#12.10), Problemas moderados (#16.1, #16.7), Problemas difíciles (#17.1).
+    </p>
+    <p>
+      Las pistas comienzan en la página 662.
     </p>
   </article>
   <footer class="flex justify-end">

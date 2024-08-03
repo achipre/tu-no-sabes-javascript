@@ -6,6 +6,347 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
   <h2>Rompecabezas de matemáticas y lógicas</h2>
   <article>
     <p>
+      Los llamados "acertijos" (o rompecabezas) son algunas de las preguntas más debatidas, y muchas empresas tienen políticas que las prohíben. Por desgracia, incluso cuando estas preguntas están prohibidas, es posible que te hagan una. ¿Por qué? Porque nadie se pone de acuerdo en la definición de lo que es un rompecabezas.
+    </p>
+    <p>
+      La buena noticia es que si te plantean un acertijo o un rompecabezas, lo más probable es que sea razonablemente justo. Probablemente no se basará en un truco de redacción y casi siempre puede deducirse lógicamente. Muchos se basan en las matemáticas o la informática, y casi todos tienen soluciones que pueden deducirse lógicamente.
+    </p>
+    <p>
+      Repasaremos algunos enfoques comunes para abordar estas cuestiones, así como algunos de los conocimientos esenciales.
+    </p>
+  </article>
+  <article>
+    <h3>► Números primos</h3>
+    <p>
+      Como probablemente sepas, todo número entero positivo puede descomponerse en un producto de números primos. Por ejemplo:
+    </p>
+    <p>
+      Observa que muchos de estos números primos tienen exponente cero.
+    </p>
+  </article>
+  <article>
+    <p><strong>Divisibilidad</strong></p>
+    <p>
+      La ley de los números primos enunciada anteriormente significa que, para que un número x divida a un número y (escrito x\y, o mod(y, x) = 0), todos los primos de la factorización prima de x deben estar en la factorización prima de y. O, más concretamente:
+    </p>
+    <p>
+      De hecho, el máximo común divisor de x e y será:
+    </p>
+    <p>
+      El mínimo común múltiplo de x e y será:
+    </p>
+    <p>
+      Como ejercicio divertido, párate un momento a pensar qué pasaría si hicieras <code>gcd * 1cm</code>
+    </p>
+  </article>
+  <article>
+    <p><strong>Comprobación de la primalidad</strong></p>
+    <p>
+      Esta pregunta es tan común que sentimos la necesidad de cubrirla específicamente. La forma ingenua es simplemente iterar de 2 a n-1, comprobando la divisibilidad en cada iteración.
+    </p>
+    <p>
+      Una pequeña pero importante mejora es iterar sólo hasta la raíz cuadrada de n
+    </p>
+    <p>
+      La √n es suficiente porque, para cada número a que divide n uniformemente, hay un complemento b, donde a * b = n. Si a > n, entonces b &#60 /n (ya que (/n)2 =n). Por tanto, no necesitamos a para comprobar la primalidad de n, puesto que ya lo habríamos comprobado con b.
+    </p>
+    <p>
+      Por supuesto, en realidad, lo único que necesitamos es comprobar si n es divisible por un número primo. Aquí es donde entra en juego la Criba de Eratóstenes.
+    </p>
+  </article>
+  <article>
+    <p><strong>Generar una lista de números primos: La criba de Eratóstenes</strong></p>
+    <p>
+      La Criba de Eratóstenes es una forma muy eficaz de generar una lista de números primos. Funciona reconociendo que todos los números no primos son divisibles por un número primo.
+    </p>
+    <p>
+      Empezamos con una lista de todos los números hasta un valor máximo. En primer lugar, tachamos todos los números divisibles por 2. A continuación, buscamos el siguiente primo (el siguiente número no tachado) y tachamos todos los números divisibles por él. Al tachar todos los números divisibles por 2, 3, 5, 7, 11, y así sucesivamente, terminamos con una lista de números primos de 2 a max.
+    </p>
+    <p>
+      El siguiente código implementa la Criba de Eratóstenes.
+    </p>
+    <p>
+      Por supuesto, hay una serie de optimizaciones que se pueden hacer a esto. Una sencilla es utilizar sólo números impares en la matriz, lo que nos permitiría reducir el espacio utilizado a la mitad.
+    </p>
+  </article>
+  <article>
+    <h3>► Probabilidad</h3>
+    <p>
+      La probabilidad puede ser un tema complejo, pero se basa en unas pocas leyes básicas que pueden derivarse lógicamente.
+    </p>
+    <p>
+      Veamos un diagrama de Venn para visualizar dos sucesos A y B. Las áreas de los dos círculos representan su probabilidad relativa, y el área superpuesta es el suceso &#123A y B}.
+    </p>
+  </article>
+  <article>
+    <p>
+      <strong>Probabilidad de A y B</strong>
+    </p>
+    <p>
+      Imagina que lanzas un dardo a este diagrama de Venn. ¿Cuál es la probabilidad de que caiga en la intersección entre A y B? Si supieras las probabilidades de caer en A, y también supieras el porcentaje de A que también está en B (es decir, las probabilidades de estar en B dado que estuvieras en A), entonces podrías expresar la probabilidad como
+    </p>
+    <code>P(A y B) = P(B dado A) P(A)</code>
+    <p>
+      Por ejemplo, imaginemos que elegimos un número entre 1 y 10 (ambos inclusive). ¿Cuál es la probabilidad de elegir un número par y un número entre 1 y 5? La probabilidad de elegir un número entre 1 y 5 es del 50%, y la probabilidad de que un número entre 1 y 5 sea par es del 40%. Por lo tanto, las probabilidades de hacer ambas cosas son:
+    </p>
+    <code>
+      P(x es par y x &#60= 5)
+    </code>
+    <p>
+      Obsérvese que como P(A y B) = P(B dado A) P(A) = P(A dado B) P(B),se puede expresar la probabilidad de A dado B en términos de la inversa:
+    </p>
+    <p>
+      La ecuación anterior se denomina Teorema de Bayes.
+    </p>
+  </article>
+  <article>
+    <p>
+      <strong>Probabilidad de A o B</strong>
+    </p>
+    <p>
+      Ahora imagina que quieres saber cuál es la probabilidad de aterrizar en A o en B. Si conocieras las probabilidades de aterrizar en cada uno de ellos por separado y también conocieras las probabilidades de aterrizar en su intersección, podrías expresar la probabilidad como:
+    </p>
+    <p>
+      Lógicamente, esto tiene sentido. Si simplemente sumáramos sus tamaños, habríamos contado dos veces su intersección. Tenemos que restarlo. Podemos visualizarlo de nuevo mediante un diagrama de Venn:
+    </p>
+    <p>
+      Por ejemplo, imaginemos que elegimos un número entre 1 y 10 (ambos inclusive). ¿Cuál es la probabilidad de elegir un número par o un número entre 1 y 5? Tenemos un 50% de probabilidades de elegir un número par y un 50% de probabilidades de elegir un número entre 1 y 5. Las probabilidades de hacer ambas cosas son del 20%. La probabilidad de hacer ambas cosas es del 20%. Así que las probabilidades son:
+    </p>
+    <p>
+      A partir de aquí, obtener las reglas de casos especiales para sucesos independientes y para sucesos mutuamente excluyentes es fácil.
+    </p>
+  </article>
+  <article>
+    <p>
+      <strong>Independencia</strong>
+    </p>
+    <p>
+      Si A y B son independientes (es decir, un suceso no indica nada sobre el otro suceso), entoncesP(A y B) =P(A)P(B). Esta regla implica reconocer que P(B dado A) =P(B), ya queA no indica nada sobre B.
+    </p>
+  </article>
+  <article>
+    <p>
+      <strong>Exclusividad mutua</strong>
+    </p>
+    <p>
+      Si A y B son mutuamente excluyentes (es decir, si ocurre uno, entonces no puede ocurrir el otro), entoncesP(A o B) = P(A) + P(B).Esto se debe a queP(A y B) = 0,por lo que este término se elimina de la ecuación anteriorP(A o B).
+    </p>
+    <p>
+      Mucha gente, curiosamente, confunde los conceptos de independencia y exclusividad mutua. Son completamente distintos. De hecho, dos sucesos no pueden ser a la vez independientes y mutuamente excluyentes (siempre que ambos tengan probabilidades mayores que 0). ¿Por qué? Porque la exclusividad mutua significa que si ocurre uno, el otro no puede ocurrir. La independencia, en cambio, significa que el hecho de que se produzca un suceso no tiene nada que ver con el otro, por lo que, mientras dos sucesos tengan probabilidades distintas de cero, nunca serán mutuamente excluyentes e independientes.
+    </p>
+    <p>
+      Si uno o ambos sucesos tienen una probabilidad nula (es decir, es imposible), entonces los sucesos son independientes y mutuamente excluyentes. Esto es demostrable mediante una simple aplicación de las definiciones (es decir, las fórmulas) de independencia y exclusividad mutua.
+    </p>
+  </article>
+  <article>
+    <h3>► Empiece a hablar</h3>
+    <p>
+      Que no cunda el pánico cuando te planteen un rompecabezas. Al igual que ocurre con las preguntas sobre algoritmos, los entrevistadores quieren ver cómo abordas un problema; no esperan que sepas inmediatamente la respuesta. Empieza a hablar y muestra al entrevistador cómo abordas un problema.
+    </p>
+  </article>
+  <article>
+    <h3>► Desarrolle reglas y patrones</h3>
+    <p>
+      En muchos casos, le resultará útil anotar las "reglas" o patrones que descubra mientras resuelve el problema. Y sí, debería apuntarlos: le ayudarán a recordarlos mientras resuelve el problema. Vamos a demostrar este enfoque con un ejemplo.
+    </p>
+    <p>
+      Tienes dos cuerdas y cada una tarda exactamente una hora en quemarse. ¿Cómo las utilizarías para cronometrar exactamente 15 minutos? Ten en cuenta que las cuerdas tienen densidades desiguales, por lo que la mitad de la cuerda a lo largo no tarda necesariamente media hora en quemarse.
+    </p>
+    <p>
+      Consejo: Detente aquí y dedica algún tiempo a intentar resolver este problema por tu cuenta. Si no tienes más remedio, lee esta sección en busca de pistas, pero hazlo despacio. Cada párrafo te acercará un poco más a la solución.
+    </p>
+    <p>
+      A partir del enunciado del problema, sabemos inmediatamente que podemos cronometrar una hora. También podemos cronometrar dos horas encendiendo una cuerda, esperando a que se queme y encendiendo la segunda. Podemos generalizar esta regla.
+    </p>
+    <p>
+      Regla 1: Dada una cuerda que tarda x minutos en quemarse y otra que tarda y minutos, podemos cronometrar x+y minutos.
+    </p>
+    <p>
+      ¿Qué más podemos hacer con la cuerda? Probablemente podemos suponer que encender una cuerda en el centro (o en cualquier otro lugar que no sean los extremos) no nos servirá de mucho. Las llamas se expandirían en ambas direcciones y no tenemos ni idea de cuánto tardaría en arder.
+    </p>
+    <p>
+      Sin embargo, podemos encender una cuerda en ambos extremos. Las dos llamas se encontrarían al cabo de 30 minutos.
+    </p>
+    <p>
+      Regla 2: Dada una cuerda que tarda x minutos en arder, podemos cronometrar Yi minutos.
+    </p>
+    <p>
+      Ahora sabemos que podemos cronometrar 30 minutos utilizando una sola cuerda. Esto también significa que podemos eliminar 30 minutos de tiempo de combustión de la segunda cuerda, encendiendo la cuerda 1 por ambos extremos y la cuerda 2 sólo por un extremo.
+    </p>
+    <p>
+      Regla 3: Si la cuerda 1 tarda x minutos en quemarse y la cuerda 2 tarda y minutos, podemos convertir la cuerda 2 en una cuerda que tarde (y-x) minutos o (y- '.Yi) minutos.
+    </p>
+    <p>
+      Ahora, unamos todo esto. Podemos convertir la cuerda 2 en una cuerda con 30 minutos de tiempo de combustión. Si a continuación encendemos la cuerda 2 por el otro extremo (véase la regla 2), la cuerda 2 habrá terminado al cabo de 15 minutos.
+    </p>
+    <p>
+      De principio a fin, nuestro enfoque es el siguiente:
+    </p>
+    <ul>
+      <li>Enciende la cuerda 1 por ambos extremos y la cuerda 2 por un extremo.</li>
+      <li>Cuando las dos llamas de la cuerda 1 se encuentren, habrán pasado 30 minutos. A la cuerda 2 le quedan 30 minutos de tiempo de combustión.</li>
+      <li>En ese momento, enciende la cuerda 2 por el otro extremo.</li>
+      <li>En exactamente quince minutos, la cuerda 2 estará completamente quemada.</li>
+    </ul>
+    <p>
+      Observa cómo se facilita la resolución de este problema enumerando lo que has aprendido y las "reglas" que has descubierto.
+    </p>
+  </article>
+  <article>
+    <h3>► En el peor de los casos</h3>
+    <p>
+      Muchos acertijos son problemas de minimización del peor caso, planteados en términos de minimizar una acción o de hacer algo como máximo un número específico de veces. Una técnica útil es intentar "equilibrar" el peor de los casos. Es decir, si una decisión temprana resulta en una desviación del peor caso, a veces podemos cambiar la decisión para equilibrar el peor caso. Esto quedará más claro si se explica con un ejemplo.
+    </p>
+    <p>
+      La pregunta de las "nueve bolas" es un clásico de las entrevistas. Tienes nueve pelotas. Ocho tienen el mismo peso y una es más pesada. Te dan una balanza que sólo te dice si pesa más la de la izquierda o la de la derecha. Encuentra la bola pesada en sólo dos usos de la balanza.
+    </p>
+    <p>
+      Un primer enfoque consiste en dividir las bolas en grupos de cuatro, con la novena bola a un lado. La bola pesada está en el grupo más pesado. Si tienen el mismo peso, sabemos que la novena bola es la más pesada. Si se repite este método para el resto de las series, en el peor de los casos se obtendrían tres pesajes, ¡uno de más!
+    </p>
+    <p>
+      Se trata de un desequilibrio en el peor de los casos: la novena bola sólo necesita un pesaje para descubrir si es pesada, mientras que las demás necesitan tres. Si penalizamos la novena bola poniendo más bolas a un lado, podemos aligerar la carga de las demás. Este es un ejemplo de "equilibrado en el peor de los casos:'
+    </p>
+    <p>
+      Si dividimos las bolas en conjuntos de tres elementos cada uno, sabremos tras un solo pesaje qué conjunto tiene la más pesada. Incluso podemos formalizar esto en una regla: dadas N bolas, donde N es divisible por 3, un uso de la balanza nos indicará un conjunto de X bolas con la bola pesada.
+    </p>
+    <p>
+      Para el conjunto final de tres bolas, simplemente repetimos lo siguiente: ponemos una bola a un lado y pesamos dos. Elige la más pesada de las dos. O, si las bolas tienen el mismo peso, elige la tercera.
+    </p>
+  </article>
+  <article>
+    <h3>► Algoritmos de aproximación</h3>
+    <p>
+      Si estás atascado, considera la posibilidad de aplicar uno de los enfoques para resolver preguntas sobre algoritmos (a partir de la página 67). Los juegos de ingenio no suelen ser más que preguntas sobre algoritmos sin los aspectos técnicos. El Caso Base y Construye y Hazlo Tú Mismo (DIY) pueden ser especialmente útiles.
+    </p>
+    <p>
+      Lecturas adicionales: Matemáticas útiles (pág. 629). 
+    </p>
+  </article>
+  <article>
+    <h3 class="border-y-2 border-black">Preguntas de la entrevista</h3>
+    <ul>
+      <li class="list-none">
+        <strong>6.1 La píldora pesada: </strong>
+        Tienes 20 frascos de píldoras. 19 frascos tienen píldoras de 1,0 gramo, pero uno tiene píldoras de 1,1 gramo. Dada una balanza que proporciona una medida exacta, ¿cómo encontrarías el frasco pesado? Sólo puedes utilizar la báscula una vez.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #186, #252, #319, #387</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 289</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>6.2 Baloncesto: </strong>
+        Tienes una canasta de baloncesto y alguien te dice que puedes jugar a uno de estos dos juegos.
+        <p>
+          Juego 1: Tienes un tiro para encestar.
+        </p>
+        <p>
+          Juego 2: Tienes tres tiros y tienes que hacer dos de los tres tiros.
+        </p>
+        <p>
+          Si p es la probabilidad de hacer un tiro determinado, ¿para qué valores de p deberías elegir un juego u otro?
+        </p>
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #181, #239, #284, #323</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 290</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>6.3 Dominó: </strong>
+        Hay un tablero de ajedrez de 8x8 en el que se han cortado dos esquinas diagonalmente opuestas. Se le dan 31 fichas de dominó, y una sola ficha de dominó puede cubrir exactamente dos casillas. ¿Puede utilizar las 31 fichas de dominó para cubrir todo el tablero? Demuestra tu respuesta (con un ejemplo o explicando por qué es imposible).
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas:  #367, #397</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 291</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>6.4 Hormigas en un triángulo: </strong>
+        Hay tres hormigas en distintos vértices de un triángulo. ¿Cuál es la probabilidad de colisión (entre dos cualesquiera o entre todas ellas) si empiezan a caminar por los lados del triángulo? Supongamos que cada hormiga elige una dirección al azar, con la misma probabilidad de elegir cualquier dirección, y que caminan a la misma velocidad.
+        <p>
+          Del mismo modo, hallar la probabilidad de colisión con n hormigas en un polígono de n vértices.
+        </p>
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #157, #195, #296</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 291</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>6.5 Jarras de agua: </strong>
+        Tienes una jarra de cinco cuartos, otra de tres y una cantidad ilimitada de agua (pero no tienes tazas medidoras). ¿Cómo conseguirías exactamente cuatro litros de agua? Ten en cuenta que las jarras tienen forma irregular, por lo que sería imposible llenar exactamente "la mitad" de la jarra.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #149, #379, #400</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 292</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>6.6 La isla de los ojos azules: </strong>
+        Un grupo de personas viven en una isla, cuando llega un visitante con una extraña orden: todas las personas de ojos azules deben abandonar la isla lo antes posible. Habrá un vuelo de salida a las 8 de la tarde todas las noches. Cada persona puede ver el color de ojos de los demás, pero no sabe cuál es el suyo (ni nadie puede decírselo). Además, no saben cuántas personas tienen los ojos azules, aunque sí saben que al menos una los tiene. ¿Cuántos días tardarán las personas de ojos azules en marcharse?
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #278, #282, #341, #370</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 293</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>6.7 El Apocalipsis: </strong>
+        En el nuevo mundo postapocalíptico, la reina del mundo está desesperadamente preocupada por la tasa de natalidad. Por ello, decreta que todas las familias deben asegurarse de tener una niña o, de lo contrario, se enfrentan a multas masivas. Si todas las familias acatan esta política -es decir, tienen que seguir teniendo hijos hasta que tengan una niña, momento en el que dejan de hacerlo inmediatamente-, ¿cuál será la proporción de sexos de la nueva generación? (Supongamos que las probabilidades de que alguien tenga un niño o una niña en cualquier embarazo son iguales). Resuélvelo lógicamente y escribe una simulación informática.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #154, #760, #171, #788, #201</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 293</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>6.8 El problema de la caída de huevos: </strong>
+        Hay un edificio de 100 plantas. Si un huevo cae desde el piso N o superior, se romperá. Si se deja caer desde cualquier piso inferior, no se romperá. Se te dan dos huevos. Encuentra N, minimizando el número de caídas para el peor de los casos.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #756, #233, #294, #333, #357, #374, #395</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 296</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>6.9 100 taquillas: </strong>
+        En un pasillo hay 100 taquillas cerradas. Un hombre empieza abriendo las 100 taquillas. A continuación, cierra una de cada dos taquillas. A continuación, en su tercera pasada, conmuta una de cada tres taquillas (la cierra si está abierta o la abre si está cerrada). Este proceso continúa durante 100 pasadas, de modo que en cada pasada i, el hombre abre la taquilla i-ésima. Después de su paso número 100 por el pasillo, en el que sólo abre la taquilla 100, ¿cuántas taquillas están abiertas?
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #139, #172, #264, #306</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 297</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>6.10 Envenenamiento: </strong>
+        Tienes 1000 botellas de refresco, y exactamente una está envenenada. Tienes 10 tiras reactivas para detectar el veneno. Una sola gota de veneno hará que la tira de prueba dé positivo permanentemente. Puedes poner cualquier número de gotas en una tira reactiva a la vez y puedes reutilizar una tira reactiva tantas veces como quieras (siempre que los resultados sean negativos). Sin embargo, sólo se pueden hacer pruebas una vez al día y se tarda siete días en obtener un resultado. ¿Cómo descubrirías la botella envenenada en el menor número de días posible?
+        <p>
+          SEGUIMIENTO
+        </p>
+        <p>
+          Escribe código para simular tu planteamiento.
+        </p>
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #146, #163, #183, #191, #205, #221, #230, #241, #249</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 298</strong></p>
+        </div>
+      </li>
+    </ul>
+    <p>
+    </p>
+    <p>
     </p>
   </article>
   <footer class="flex justify-end">
