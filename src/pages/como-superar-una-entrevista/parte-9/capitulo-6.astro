@@ -20,6 +20,9 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
     <p>
       Como probablemente sepas, todo número entero positivo puede descomponerse en un producto de números primos. Por ejemplo:
     </p>
+    <div class="flex justify-center">
+      <code>84 = 2<sup>2</sup> * 3<sup>1</sup> * 5<sup>0</sup> * 7<sup>1</sup> * 11<sup>0</sup> * 13<sup>0</sup> * 17<sup>0</sup> * ...</code>
+    </div>
     <p>
       Observa que muchos de estos números primos tienen exponente cero.
     </p>
@@ -27,31 +30,87 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
   <article>
     <p><strong>Divisibilidad</strong></p>
     <p>
-      La ley de los números primos enunciada anteriormente significa que, para que un número x divida a un número y (escrito x\y, o mod(y, x) = 0), todos los primos de la factorización prima de x deben estar en la factorización prima de y. O, más concretamente:
+      La ley de los números primos enunciada anteriormente significa que, para que un número <code>x</code> divida a un número <code>y</code> (escrito <code>x\y</code>, o <code>mod(y, x) = 0</code>), todos los primos de la factorización prima de x deben estar en la factorización prima de y. O, más concretamente:
     </p>
+    <pre>
+      <code>
+        Lex x = 2<sup>j0</sup> * 3<sup>j1</sup> * 5<sup>j2</sup> * 7<sup>j3</sup> * 11<sup>j4</sup> * ...
+        Lex y = 2<sup>k0</sup> * 3<sup>k1</sup> * 5<sup>k2</sup> * 7<sup>k3</sup> * 11<sup>k4</sup> * ...
+      </code>
+      Si x\y, entonces para todo i, ji &#60= ki.
+    </pre>
     <p>
       De hecho, el máximo común divisor de x e y será:
     </p>
+    <pre>
+      <code>
+        gcd (x, y) = 2<sup>min(j0, k0)</sup> * 3<sup>min(j1, k1)</sup> * 5<sup>min(j2, k2)</sup> * ...
+      </code>
+    </pre>
     <p>
       El mínimo común múltiplo de x e y será:
     </p>
+    <pre>
+      <code>
+        1cm(x, y) = 2<sup>max(j0, k0)</sup> * 3<sup>max(j1, k1)</sup> * 5<sup>max(j2, k2)</sup> * ...
+      </code>
+    </pre>
     <p>
       Como ejercicio divertido, párate un momento a pensar qué pasaría si hicieras <code>gcd * 1cm</code>
     </p>
+    <pre>
+      <code>
+        gcd * 1cm = 2<sup>min(j0, k0)</sup> * 2<sup>max(j0, k0)</sup> * 3<sup>min(j1, k1)</sup> * 3<sup>max(j1, k1)</sup> * ...
+                  = 2<sup>min(j0, k0) + max(j0, k0)</sup> * 3<sup>min(j1, k1) + max(j1, k1)</sup> * ...
+                  = 2<sup>j0 + k0</sup> * 3<sup>j1 + k1</sup> * ...
+                  = 2<sup>j0</sup> * 2<sup>k0</sup> * 3<sup>j1</sup> * 3<sup>k1</sup> * ...
+                  = xy
+      </code>
+    </pre>
   </article>
   <article>
     <p><strong>Comprobación de la primalidad</strong></p>
     <p>
-      Esta pregunta es tan común que sentimos la necesidad de cubrirla específicamente. La forma ingenua es simplemente iterar de 2 a n-1, comprobando la divisibilidad en cada iteración.
+      Esta pregunta es tan común que sentimos la necesidad de cubrirla específicamente. La forma ingenua es simplemente iterar de <code>2</code> a <code>n-1</code>, comprobando la divisibilidad en cada iteración.
     </p>
+    <pre>
+      <code class="language-js">
+        boolean primeNaive(int n) &#123
+          if(n &#60 2) &#123
+            return false;
+          }
+          for (int i = 2;i &#60 n; i++) &#123
+            if (n % i == 0) &#123
+              return false;
+            }
+          }
+          return true;
+        }
+      </code>
+    </pre>
     <p>
       Una pequeña pero importante mejora es iterar sólo hasta la raíz cuadrada de n
     </p>
+    <pre>
+      <code class="language-js">
+        boolean primeSlightlyBetter(int n) &#123
+          if(n &#60 2) &#123
+            return false;
+          }
+          int sqrt = (int) Math.sqrt(n);
+          for (int i = 2;i = sqrt; i++) &#123
+            if (n % i == 0) return false;
+            }
+          }
+          return true;
+        }
+      </code>
+    </pre>
     <p>
-      La √n es suficiente porque, para cada número a que divide n uniformemente, hay un complemento b, donde a * b = n. Si a > n, entonces b &#60 /n (ya que (/n)2 =n). Por tanto, no necesitamos a para comprobar la primalidad de n, puesto que ya lo habríamos comprobado con b.
+      La √n es suficiente porque, para cada número a que divide n uniformemente, hay un complemento b, donde <code>a * b = n.Ifa > √n,</code>, entonces <code>b &#60 √n</code> (ya que <code>(√n)<sup>2</sup> = n</code> ). Por tanto, no necesitamos a para comprobar la primalidad de n, puesto que ya lo habríamos comprobado con <code>b</code>.
     </p>
     <p>
-      Por supuesto, en realidad, lo único que necesitamos es comprobar si n es divisible por un número primo. Aquí es donde entra en juego la Criba de Eratóstenes.
+      Por supuesto, en <em>realidad</em>, lo único que necesitamos es comprobar si n es divisible por un número primo. Aquí es donde entra en juego la Criba de Eratóstenes.
     </p>
   </article>
   <article>
@@ -60,11 +119,45 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
       La Criba de Eratóstenes es una forma muy eficaz de generar una lista de números primos. Funciona reconociendo que todos los números no primos son divisibles por un número primo.
     </p>
     <p>
-      Empezamos con una lista de todos los números hasta un valor máximo. En primer lugar, tachamos todos los números divisibles por 2. A continuación, buscamos el siguiente primo (el siguiente número no tachado) y tachamos todos los números divisibles por él. Al tachar todos los números divisibles por 2, 3, 5, 7, 11, y así sucesivamente, terminamos con una lista de números primos de 2 a max.
+      Empezamos con una lista de todos los números hasta un valor <code>máximo</code>. En primer lugar, tachamos todos los números divisibles por <code>2</code>. A continuación, buscamos el siguiente primo (el siguiente número no tachado) y tachamos todos los números divisibles por él. Al tachar todos los números divisibles por <code>2, 3, 5, 7, 11</code>, y así sucesivamente, terminamos con una lista de números primos de <code>2</code> a <code>max</code>.
     </p>
     <p>
       El siguiente código implementa la Criba de Eratóstenes.
     </p>
+    <pre>
+      <code class="language-js">
+        boolean[] sieveOfEratosthenes(int max) &#123
+          boolean[] flags = new boolean[max + 1];
+          int count = 0;
+
+          init(flags); // Establece todas las banderas a verdadero excepto 0 y 1 
+          int prime = 2;
+
+          while (prime &#60= Math.sqrt(max)) &#123
+            /* Tacha los múltiplos primos restantes */
+            crossOff(flags, prime);
+            /* Buscar el siguiente valor que sea verdadero */
+            prime = getNextPrime(flags, prime);
+          }
+          return flags;
+        }
+        void crossOff(boolean[] flags, int prime) &#123
+          /* Tacha los múltiplos restantes de primo. Podemos empezar con (prime*prime),
+           * porque si tenemos un k * prime, donde k &#60 prime,  este valor tendría
+           * ya ha sido tachado en una iteración anterior. */
+          for (int i= prime * prime; i &#60 flags.length; i += prime) &#123
+            flags[i] = false;
+          }
+        }
+        int getNextPrime(boolean[] flags, int prime) &#123
+          int next = prime + 1;
+          while (next &#60 flags.length && !flags[next]) &#123
+            next++;
+          }
+          return next;
+        }
+      </code>
+    </pre>
     <p>
       Por supuesto, hay una serie de optimizaciones que se pueden hacer a esto. Una sencilla es utilizar sólo números impares en la matriz, lo que nos permitiría reducir el espacio utilizado a la mitad.
     </p>
@@ -75,26 +168,48 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
       La probabilidad puede ser un tema complejo, pero se basa en unas pocas leyes básicas que pueden derivarse lógicamente.
     </p>
     <p>
-      Veamos un diagrama de Venn para visualizar dos sucesos A y B. Las áreas de los dos círculos representan su probabilidad relativa, y el área superpuesta es el suceso &#123A y B}.
+      Veamos un diagrama de Venn para visualizar dos sucesos <code>A</code> y <code>B</code>. Las áreas de los dos círculos representan su probabilidad relativa, y el área superpuesta es el suceso <code>&#123A y B}</code>.
     </p>
+    <div class="flex justify-center my-8">
+      <div class="relative w-28 h-28 rounded-full border-2 border-black">
+        <p class="absolute right-1 flex gap-2 items-center top-1/2 -translate-y-1/2 text-5xl">A <span class="text-[16px]">A∩B</span></p>
+      </div>
+      <div class="relative w-28 h-28 rounded-full -ml-10 border-2 border-black">
+        <p class="absolute right-1/2 translate-x-1/2 top-1/2 -translate-y-1/2 text-5xl">B</p>
+      </div>
+    </div>
   </article>
   <article>
     <p>
       <strong>Probabilidad de A y B</strong>
     </p>
     <p>
-      Imagina que lanzas un dardo a este diagrama de Venn. ¿Cuál es la probabilidad de que caiga en la intersección entre A y B? Si supieras las probabilidades de caer en A, y también supieras el porcentaje de A que también está en B (es decir, las probabilidades de estar en B dado que estuvieras en A), entonces podrías expresar la probabilidad como
+      Imagina que lanzas un dardo a este diagrama de Venn. ¿Cuál es la probabilidad de que caiga en la intersección entre <code>A</code> y <code>B</code>? Si supieras las probabilidades de caer en <code>A</code>, y también supieras el porcentaje de <code>A</code> que también está en <code>B</code> (es decir, las probabilidades de estar en <code>B</code> dado que estuvieras en <code>A</code>), entonces podrías expresar la probabilidad como:
     </p>
-    <code>P(A y B) = P(B dado A) P(A)</code>
+    <pre>
+      <code class="language-js">
+        P(A y B) = P(B dado A) P(A)
+      </code>
+    </pre>
     <p>
       Por ejemplo, imaginemos que elegimos un número entre 1 y 10 (ambos inclusive). ¿Cuál es la probabilidad de elegir un número par y un número entre 1 y 5? La probabilidad de elegir un número entre 1 y 5 es del 50%, y la probabilidad de que un número entre 1 y 5 sea par es del 40%. Por lo tanto, las probabilidades de hacer ambas cosas son:
     </p>
-    <code>
-      P(x es par y x &#60= 5)
-    </code>
+    <pre>
+      <code class="language-js">
+        P(x es par y x &#60= 5)
+          = P(x is even given x &#60= 5)P(x &#60= 5) 
+          = (2/5) * (1/2)
+          = 1/5
+      </code>
+    </pre>
     <p>
-      Obsérvese que como P(A y B) = P(B dado A) P(A) = P(A dado B) P(B),se puede expresar la probabilidad de A dado B en términos de la inversa:
+      Obsérvese que como <code>P(A y B) = P(B dado A) P(A) = P(A dado B) P(B)</code>,se puede expresar la probabilidad de A dado B en términos de la inversa:
     </p>
+    <pre>
+      <code class="language-js">
+        P(A given B) = P(B given A) P(A) / P(B)
+      </code>
+    </pre>
     <p>
       La ecuación anterior se denomina Teorema de Bayes.
     </p>
@@ -106,12 +221,33 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
     <p>
       Ahora imagina que quieres saber cuál es la probabilidad de aterrizar en A o en B. Si conocieras las probabilidades de aterrizar en cada uno de ellos por separado y también conocieras las probabilidades de aterrizar en su intersección, podrías expresar la probabilidad como:
     </p>
+    <pre>
+      <code class="language-js">
+        P(A or B) = P(A)+P(B) - P(A and B)
+      </code>
+    </pre>
     <p>
       Lógicamente, esto tiene sentido. Si simplemente sumáramos sus tamaños, habríamos contado dos veces su intersección. Tenemos que restarlo. Podemos visualizarlo de nuevo mediante un diagrama de Venn:
     </p>
+    <div class="flex justify-center my-8">
+      <div class="relative w-28 h-28 rounded-full border-2 border-black">
+        <p class="absolute right-1 flex gap-2 items-center top-1/2 -translate-y-1/2 text-5xl">A <span class="text-[16px]">A∩B</span></p>
+      </div>
+      <div class="relative w-28 h-28 rounded-full -ml-10 border-2 border-black">
+        <p class="absolute right-1/2 translate-x-1/2 top-1/2 -translate-y-1/2 text-5xl">B</p>
+      </div>
+    </div>
     <p>
       Por ejemplo, imaginemos que elegimos un número entre 1 y 10 (ambos inclusive). ¿Cuál es la probabilidad de elegir un número par o un número entre 1 y 5? Tenemos un 50% de probabilidades de elegir un número par y un 50% de probabilidades de elegir un número entre 1 y 5. Las probabilidades de hacer ambas cosas son del 20%. La probabilidad de hacer ambas cosas es del 20%. Así que las probabilidades son:
     </p>
+    <pre>
+      <code>
+        P(x is even or x &#60=5)
+          = P(x is even)+ P(x &#60= 5) - P(x is even and x &#60= 5)
+          = <sup>1</sup>/<sub>2</sub> + <sup>1</sup>/<sub>2</sub> - <sup>1</sup>/<sub>5</sub>
+          = <sup>4</sup>/<sub>5</sub>
+      </code>
+    </pre>
     <p>
       A partir de aquí, obtener las reglas de casos especiales para sucesos independientes y para sucesos mutuamente excluyentes es fácil.
     </p>
@@ -121,7 +257,7 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
       <strong>Independencia</strong>
     </p>
     <p>
-      Si A y B son independientes (es decir, un suceso no indica nada sobre el otro suceso), entoncesP(A y B) =P(A)P(B). Esta regla implica reconocer que P(B dado A) =P(B), ya queA no indica nada sobre B.
+      Si <code>A</code> y <code>B</code> son independientes (es decir, un suceso no indica nada sobre el otro suceso), entonces <code>P(A y B) = P(A) P(B)</code>. Esta regla implica reconocer que <code>P(B dado A) = P(B)</code>, ya que <code>A</code> no indica nada sobre <code>B</code>.
     </p>
   </article>
   <article>
@@ -129,7 +265,7 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
       <strong>Exclusividad mutua</strong>
     </p>
     <p>
-      Si A y B son mutuamente excluyentes (es decir, si ocurre uno, entonces no puede ocurrir el otro), entoncesP(A o B) = P(A) + P(B).Esto se debe a queP(A y B) = 0,por lo que este término se elimina de la ecuación anteriorP(A o B).
+      Si <code>A</code> y <code>B</code> son mutuamente excluyentes (es decir, si ocurre uno, entonces no puede ocurrir el otro), entonces <code>P(A or B) = P(A) + P(B)</code>.Esto se debe a que <code>P(A and B) = 0</code>,por lo que este término se elimina de la ecuación anterior <code>P(A or B)</code>.
     </p>
     <p>
       Mucha gente, curiosamente, confunde los conceptos de independencia y exclusividad mutua. Son completamente distintos. De hecho, dos sucesos no pueden ser a la vez independientes y mutuamente excluyentes (siempre que ambos tengan probabilidades mayores que 0). ¿Por qué? Porque la exclusividad mutua significa que si ocurre uno, el otro no puede ocurrir. La independencia, en cambio, significa que el hecho de que se produzca un suceso no tiene nada que ver con el otro, por lo que, mientras dos sucesos tengan probabilidades distintas de cero, nunca serán mutuamente excluyentes e independientes.
@@ -152,14 +288,16 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
     <p>
       Tienes dos cuerdas y cada una tarda exactamente una hora en quemarse. ¿Cómo las utilizarías para cronometrar exactamente 15 minutos? Ten en cuenta que las cuerdas tienen densidades desiguales, por lo que la mitad de la cuerda a lo largo no tarda necesariamente media hora en quemarse.
     </p>
-    <p>
-      Consejo: Detente aquí y dedica algún tiempo a intentar resolver este problema por tu cuenta. Si no tienes más remedio, lee esta sección en busca de pistas, pero hazlo despacio. Cada párrafo te acercará un poco más a la solución.
+    <p class="pl-4 sm:pl-6 md:pl-8 border-l-2 sm:border-l-4 md:border-l-8 border-black">
+      <em>
+        Consejo: Detente aquí y dedica algún tiempo a intentar resolver este problema por tu cuenta. Si no tienes más remedio, lee esta sección en busca de pistas, pero hazlo despacio. Cada párrafo te acercará un poco más a la solución.
+      </em>
     </p>
     <p>
       A partir del enunciado del problema, sabemos inmediatamente que podemos cronometrar una hora. También podemos cronometrar dos horas encendiendo una cuerda, esperando a que se queme y encendiendo la segunda. Podemos generalizar esta regla.
     </p>
-    <p>
-      Regla 1: Dada una cuerda que tarda x minutos en quemarse y otra que tarda y minutos, podemos cronometrar x+y minutos.
+    <p><em>Regla 1: </em>
+      Dada una cuerda que tarda <code>x</code> minutos en quemarse <code>y</code> otra que tarda y minutos, podemos cronometrar <code>x+y</code> minutos.
     </p>
     <p>
       ¿Qué más podemos hacer con la cuerda? Probablemente podemos suponer que encender una cuerda en el centro (o en cualquier otro lugar que no sean los extremos) no nos servirá de mucho. Las llamas se expandirían en ambas direcciones y no tenemos ni idea de cuánto tardaría en arder.
@@ -168,13 +306,14 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
       Sin embargo, podemos encender una cuerda en ambos extremos. Las dos llamas se encontrarían al cabo de 30 minutos.
     </p>
     <p>
-      Regla 2: Dada una cuerda que tarda x minutos en arder, podemos cronometrar Yi minutos.
+      <em>Regla 2: </em>
+      Dada una cuerda que tarda <code>x</code> minutos en arder, podemos cronometrar <code><sup>x</sup>/<sub>2</sub></code> minutos.
     </p>
     <p>
       Ahora sabemos que podemos cronometrar 30 minutos utilizando una sola cuerda. Esto también significa que podemos eliminar 30 minutos de tiempo de combustión de la segunda cuerda, encendiendo la cuerda 1 por ambos extremos y la cuerda 2 sólo por un extremo.
     </p>
-    <p>
-      Regla 3: Si la cuerda 1 tarda x minutos en quemarse y la cuerda 2 tarda y minutos, podemos convertir la cuerda 2 en una cuerda que tarde (y-x) minutos o (y- '.Yi) minutos.
+    <p><em>Regla 3: </em>
+      Si la cuerda 1 tarda x minutos en quemarse y la cuerda 2 tarda y minutos, podemos convertir la cuerda 2 en una cuerda que tarde <code>(y-x)</code> minutos o <code>(y - <sup>x</sup>/<sub>2</sub>)</code> minutos.
     </p>
     <p>
       Ahora, unamos todo esto. Podemos convertir la cuerda 2 en una cuerda con 30 minutos de tiempo de combustión. Si a continuación encendemos la cuerda 2 por el otro extremo (véase la regla 2), la cuerda 2 habrá terminado al cabo de 15 minutos.
@@ -182,12 +321,12 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
     <p>
       De principio a fin, nuestro enfoque es el siguiente:
     </p>
-    <ul>
+    <ol>
       <li>Enciende la cuerda 1 por ambos extremos y la cuerda 2 por un extremo.</li>
       <li>Cuando las dos llamas de la cuerda 1 se encuentren, habrán pasado 30 minutos. A la cuerda 2 le quedan 30 minutos de tiempo de combustión.</li>
       <li>En ese momento, enciende la cuerda 2 por el otro extremo.</li>
       <li>En exactamente quince minutos, la cuerda 2 estará completamente quemada.</li>
-    </ul>
+    </ol>
     <p>
       Observa cómo se facilita la resolución de este problema enumerando lo que has aprendido y las "reglas" que has descubierto.
     </p>
@@ -207,7 +346,7 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
       Se trata de un desequilibrio en el peor de los casos: la novena bola sólo necesita un pesaje para descubrir si es pesada, mientras que las demás necesitan tres. Si penalizamos la novena bola poniendo más bolas a un lado, podemos aligerar la carga de las demás. Este es un ejemplo de "equilibrado en el peor de los casos:'
     </p>
     <p>
-      Si dividimos las bolas en conjuntos de tres elementos cada uno, sabremos tras un solo pesaje qué conjunto tiene la más pesada. Incluso podemos formalizar esto en una regla: dadas N bolas, donde N es divisible por 3, un uso de la balanza nos indicará un conjunto de X bolas con la bola pesada.
+      Si dividimos las bolas en conjuntos de tres elementos cada uno, sabremos tras un solo pesaje qué conjunto tiene la más pesada. Incluso podemos formalizar esto en una regla: dadas N bolas, donde N es divisible por 3, un uso de la balanza nos indicará un conjunto de <code><sup>x</sup>/<sub>3</sub></code> bolas con la bola pesada.
     </p>
     <p>
       Para el conjunto final de tres bolas, simplemente repetimos lo siguiente: ponemos una bola a un lado y pesamos dos. Elige la más pesada de las dos. O, si las bolas tienen el mismo peso, elige la tercera.
@@ -219,7 +358,8 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
       Si estás atascado, considera la posibilidad de aplicar uno de los enfoques para resolver preguntas sobre algoritmos (a partir de la página 67). Los juegos de ingenio no suelen ser más que preguntas sobre algoritmos sin los aspectos técnicos. El Caso Base y Construye y Hazlo Tú Mismo (DIY) pueden ser especialmente útiles.
     </p>
     <p>
-      Lecturas adicionales: Matemáticas útiles (pág. 629). 
+      <strong>Lecturas adicionales: </strong>
+      Matemáticas útiles (pág. 629). 
     </p>
   </article>
   <article>
@@ -345,8 +485,10 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
       </li>
     </ul>
     <p>
+      Problemas adicionales: Problemas moderados (#16.5), Problemas difíciles (#17.19)
     </p>
     <p>
+      Las pistas comienzan en la página 662.
     </p>
   </article>
   <footer class="flex justify-end">
