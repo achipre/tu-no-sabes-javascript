@@ -6,195 +6,216 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
   <h2>Diseño orientado a objetos</h2>
   <article>
     <p>
+      Las preguntas de diseño orientado a objetos requieren que el candidato esboce las clases y métodos para implementar problemas técnicos u objetos de la vida real. Estos problemas proporcionan, o al menos se cree que proporcionan, al entrevistador una idea de su estilo de codificación.
     </p>
     <p>
-    </p>
-  </article>
-  <article>
-    <h3>► </h3>
-    <p>
+      En estas preguntas no se trata tanto de regurgitar patrones de diseño como de demostrar que sabe cómo crear código orientado a objetos elegante y fácil de mantener. Un mal rendimiento en este tipo de preguntas puede hacer saltar las alarmas.
     </p>
   </article>
   <article>
-    <p><strong></strong></p>
+    <h3>► Cómo abordarlo</h3>
     <p>
-    </p>
-    <p>
-    </p>
-    <p>
-    </p>
-    <p>
+      Independientemente de si el objeto es un elemento físico o una tarea técnica, las preguntas de diseño orientado a objetos pueden abordarse de manera similar. El siguiente enfoque funcionará bien para muchos problemas.
     </p>
   </article>
   <article>
-    <p><strong></strong></p>
+    <p><strong>Paso 1: Manejar la ambigüedad</strong></p>
     <p>
+      Las preguntas de diseño orientado a objetos (OOD) suelen ser intencionadamente imprecisas para comprobar si va a hacer suposiciones o si va a hacer preguntas aclaratorias. Después de todo, un desarrollador que simplemente codifica algo sin entender lo que se espera que cree malgasta el tiempo y el dinero de la empresa, y puede crear problemas mucho más graves.
+    </p>
+    <p>
+      Cuando se le plantea una pregunta de diseño orientado a objetos, debe preguntar quién lo va a utilizar y cómo lo va a utilizar. Dependiendo de la pregunta, puede que incluso quiera repasar las "seis W": quién, qué, dónde, cuándo, cómo, por qué.
+    </p>
+    <p>
+      Por ejemplo, supongamos que le piden que describa el diseño orientado a objetos de una cafetera. Parece sencillo, ¿verdad? Pues no.
+    </p>
+    <p>
+      Su cafetera puede ser una máquina industrial diseñada para ser utilizada en un enorme restaurante que atiende a cientos de clientes por hora y prepara diez tipos diferentes de café. O puede ser una máquina muy sencilla, diseñada para que la utilicen personas mayores para tomar un simple café solo. Estos casos de uso influirán significativamente en su diseño.
     </p>
   </article>
   <article>
-    <p><strong></strong></p>
+    <p><strong>Paso 2: Definir los objetos principales</strong></p>
     <p>
+      Ahora que ya sabemos qué vamos a diseñar, debemos plantearnos cuáles son los "objetos centrales" de un sistema. Por ejemplo, supongamos que se nos pide que hagamos el diseño orientado a objetos para un restaurante. Nuestros objetos centrales podrían ser cosas como Mesa, Invitado, Fiesta, Pedido, Comida, Empleado, Servidor y Anfitrión.
+    </p>
+  </article>
+  <article>
+    <p><strong>Paso 3: Analizar las relaciones</strong></p>
+    <p>
+      Una vez decididos más o menos nuestros objetos centrales, ahora queremos analizar las relaciones entre los objetos. ¿Qué objetos son miembros de qué otros objetos? ¿Hay objetos que heredan de otros? ¿Las relaciones son de muchos a muchos o de uno a muchos?
     </p>
     <p>
+      Por ejemplo, en la pregunta del restaurante, podemos llegar al siguiente diseño:
     </p>
     <ul>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
+      <li>Fiesta debe tener un array de Invitados.</li>
+      <li>Servidor y Anfitrión heredan de Empleado.</li>
+      <li>Cada Mesa tiene un Grupo, pero cada Grupo puede tener varias Mesas. </li>
+      <li>Hay un Anfitrión para el Restaurante.</li>
     </ul>
     <p>
+      Tenga mucho cuidado con esto, a menudo puede hacer suposiciones incorrectas. Por ejemplo, una única mesa puede tener varias partes (como es habitual en las "mesas comunales" de moda en algunos restaurantes). Debería hablar con su entrevistador sobre la generalidad de su diseño.
     </p>
   </article>
   <article>
-    <p><strong></strong></p>
+    <p><strong>Paso 4: Investigar acciones</strong></p>
     <p>
+      Llegados a este punto, debería tener el esquema básico de su diseño orientado a objetos. Lo que queda es considerar las acciones clave que realizarán los objetos y cómo se relacionan entre sí. Es posible que haya olvidado algunos objetos y tenga que actualizar su diseño.
     </p>
     <p>
-    </p>
-  </article>
-  <article>
-    <h3></h3>
-    <p>
-    </p>
-    <p>
-    </p>
-    <p>
+      Por ejemplo, un grupo entra en el restaurante y un cliente solicita una mesa al anfitrión. El anfitrión busca la reserva y, si existe, asigna una mesa al grupo. En caso contrario, se añade al final de la lista. Cuando un cliente se marcha, la mesa se libera y se asigna a un nuevo cliente de la lista.
     </p>
   </article>
   <article>
-    <p><strong></strong></p>
+    <h3>Patrones de diseño</h3>
     <p>
+      Debido a que los entrevistadores están tratando de probar sus capacidades y no sus conocimientos, los patrones de diseño son en su mayoría más allá del alcance de una entrevista. Sin embargo, los patrones de diseño Singleton y Factory Method son ampliamente utilizados en las entrevistas, por lo que los cubriremos aquí.
     </p>
     <p>
+      Existen muchos más patrones de diseño de los que este libro podría tratar. Una gran manera de mejorar tus habilidades en ingeniería de software es coger un libro que se centre en esta área específicamente.
+    </p>
+    <p>
+      Ten cuidado de no caer en la trampa de tratar constantemente de encontrar el patrón de diseño "correcto" para un problema en particular. Debes crear el diseño que funcione para ese problema. En algunos casos puede ser un patrón establecido, pero en muchos otros casos no lo es.
     </p>
   </article>
   <article>
-    <p><strong></strong></p>
+    <p><strong>Clase Singleton</strong></p>
     <p>
+      El patrón Singleton garantiza que una clase sólo tiene una instancia y asegura el acceso a la instancia a través de la aplicación. Puede ser útil en casos en los que se tiene un objeto "global" con exactamente una instancia. Por ejemplo, podemos querer implementar Restaurante de tal manera que tenga exactamente una instancia de Restaurante.
+    </p>
+    <p>
+      Hay que tener en cuenta que a mucha gente no le gusta el patrón de diseño Singleton, incluso lo llaman un "anti-patrón": Una de las razones es que puede interferir con las pruebas unitarias.
+    </p>
+  </article>
+  <article>
+    <p><strong>Método Factory</strong></p>
+    <p>
+      El método Factory ofrece una interfaz para crear una instancia de una clase, con sus subclases decidiendo qué clase instanciar. Podrías querer implementar esto con la clase creadora siendo abstracta y no proporcionando una implementación para el método Factory. O puedes hacer que la clase creadora sea una clase concreta que proporcione una implementación para el método Factory. En este caso, el método Factory tomaría un parámetro que representaría la clase a instanciar.
     </p>
   </article>
   <article>
     <h3 class="border-y-2 border-black">Preguntas de la entrevista</h3>
     <ul>
       <li class="list-none">
-        <strong>7.1 La píldora pesada: </strong>
-        Tienes 20 frascos de píldoras. 19 frascos tienen píldoras de 1,0 gramo, pero uno tiene píldoras de 1,1 gramo. Dada una balanza que proporciona una medida exacta, ¿cómo encontrarías el frasco pesado? Sólo puedes utilizar la báscula una vez.
+        <strong>7.1 Baraja de cartas: </strong>
+        Diseña las estructuras de datos para una baraja de cartas genérica. Explica cómo subclasificarías las estructuras de datos para implementar el blackjack.
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas: #186, #252, #319, #387</em> 
+          <p><em>Pistas: #753, #275</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 289</strong></p>
+          <p><strong>pg 305</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>7.2 La píldora pesada: </strong>
-        Tienes 20 frascos de píldoras. 19 frascos tienen píldoras de 1,0 gramo, pero uno tiene píldoras de 1,1 gramo. Dada una balanza que proporciona una medida exacta, ¿cómo encontrarías el frasco pesado? Sólo puedes utilizar la báscula una vez.
+        <strong>7.2 Centro de llamadas: </strong>
+        Imagine que tiene un centro de llamadas con tres niveles de empleados: encuestado, gestor y director. Una llamada telefónica entrante debe asignarse primero a un respondedor que esté libre. Si el encuestado no puede atender la llamada, debe derivarla a un gestor. Si el gestor no está libre o no puede atenderla, entonces la llamada debe escalarse a un director. Diseña las clases y estructuras de datos para este problema. Implemente un método dispatchCall() que asigne una llamada al primer empleado disponible.
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas: #186, #252, #319, #387</em> 
+          <p><em>Pistas: #363</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 289</strong></p>
+          <p><strong>pg 307</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>7.3 La píldora pesada: </strong>
-        Tienes 20 frascos de píldoras. 19 frascos tienen píldoras de 1,0 gramo, pero uno tiene píldoras de 1,1 gramo. Dada una balanza que proporciona una medida exacta, ¿cómo encontrarías el frasco pesado? Sólo puedes utilizar la báscula una vez.
+        <strong>7.3 Jukebox: </strong>
+        Diseñe una gramola musical utilizando principios orientados a objetos.
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas: #186, #252, #319, #387</em> 
+          <p><em>Pistas: #198</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 289</strong></p>
+          <p><strong>pg 310</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>7.4 La píldora pesada: </strong>
-        Tienes 20 frascos de píldoras. 19 frascos tienen píldoras de 1,0 gramo, pero uno tiene píldoras de 1,1 gramo. Dada una balanza que proporciona una medida exacta, ¿cómo encontrarías el frasco pesado? Sólo puedes utilizar la báscula una vez.
+        <strong>7.4 Aparcamiento: </strong>
+        Diseñe un aparcamiento utilizando principios orientados a objetos.
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas: #186, #252, #319, #387</em> 
+          <p><em>Pistas: #258</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 289</strong></p>
+          <p><strong>pg 312</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>7.5 La píldora pesada: </strong>
-        Tienes 20 frascos de píldoras. 19 frascos tienen píldoras de 1,0 gramo, pero uno tiene píldoras de 1,1 gramo. Dada una balanza que proporciona una medida exacta, ¿cómo encontrarías el frasco pesado? Sólo puedes utilizar la báscula una vez.
+        <strong>7.5 Lector de libros en línea: </strong>
+        Diseñar las estructuras de datos para un sistema de lectura de libros en línea.
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas: #186, #252, #319, #387</em> 
+          <p><em>Pistas: #344</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 289</strong></p>
+          <p><strong>pg 318</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>7.6 La píldora pesada: </strong>
-        Tienes 20 frascos de píldoras. 19 frascos tienen píldoras de 1,0 gramo, pero uno tiene píldoras de 1,1 gramo. Dada una balanza que proporciona una medida exacta, ¿cómo encontrarías el frasco pesado? Sólo puedes utilizar la báscula una vez.
+        <strong>7.6 Rompecabezas: </strong>
+        Implementa un puzzle NxN. Diseña las estructuras de datos y explica un algoritmo para resolver el puzzle. Puedes suponer que tienes un método fitsWith que, cuando se le pasan dos aristas de puzzle, devuelve true si las dos aristas pertenecen juntas.
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas: #186, #252, #319, #387</em> 
+          <p><em>Pistas: # 192, #238, #283</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 289</strong></p>
+          <p><strong>pg 318</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>7.7 La píldora pesada: </strong>
-        Tienes 20 frascos de píldoras. 19 frascos tienen píldoras de 1,0 gramo, pero uno tiene píldoras de 1,1 gramo. Dada una balanza que proporciona una medida exacta, ¿cómo encontrarías el frasco pesado? Sólo puedes utilizar la báscula una vez.
+        <strong>7.7 Servidor de chat: </strong>
+        Explique cómo diseñaría un servidor de chat. En particular, proporciona detalles sobre los distintos componentes, clases y métodos del backend. ¿Cuáles serían los problemas más difíciles de resolver?
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas: #186, #252, #319, #387</em> 
+          <p><em>Pistas: #213, #245, #271</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 289</strong></p>
+          <p><strong>pg 326</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>7.8 La píldora pesada: </strong>
-        Tienes 20 frascos de píldoras. 19 frascos tienen píldoras de 1,0 gramo, pero uno tiene píldoras de 1,1 gramo. Dada una balanza que proporciona una medida exacta, ¿cómo encontrarías el frasco pesado? Sólo puedes utilizar la báscula una vez.
+        <strong>7.8 Otelo: </strong>
+        Otelo se juega de la siguiente manera: Cada pieza de Otelo es blanca por un lado y negra por el otro. Cuando una pieza está rodeada por sus oponentes tanto por el lado izquierdo como por el derecho, o tanto por arriba como por abajo, se dice que ha sido capturada y su color cambia. En tu turno, debes capturar al menos una pieza de tu oponente. El juego termina cuando cualquiera de los dos usuarios no tiene más movimientos válidos. La victoria se asigna a la persona con más piezas. Implementa el diseño orientado a objetos para Otelo.
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas: #186, #252, #319, #387</em> 
+          <p><em>Pistas: #179, #228</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 289</strong></p>
+          <p><strong>pg 326</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>7.9 La píldora pesada: </strong>
-        Tienes 20 frascos de píldoras. 19 frascos tienen píldoras de 1,0 gramo, pero uno tiene píldoras de 1,1 gramo. Dada una balanza que proporciona una medida exacta, ¿cómo encontrarías el frasco pesado? Sólo puedes utilizar la báscula una vez.
+        <strong>7.9 Matriz Circular: </strong>
+        Implementa una clase CircularArray que soporte una estructura de datos tipo array que pueda ser rotada eficientemente. Si es posible, la clase debe utilizar un tipo genérico (también llamado plantilla), y debe soportar la iteración a través del estándar para (Obj o : circularArray)notación.
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas: #186, #252, #319, #387</em> 
+          <p><em>Pistas: #389</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 289</strong></p>
+          <p><strong>pg 329</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>7.10 La píldora pesada: </strong>
-        Tienes 20 frascos de píldoras. 19 frascos tienen píldoras de 1,0 gramo, pero uno tiene píldoras de 1,1 gramo. Dada una balanza que proporciona una medida exacta, ¿cómo encontrarías el frasco pesado? Sólo puedes utilizar la báscula una vez.
+        <strong>7.10 Buscaminas: </strong>
+        Diseña e implementa un juego Buscaminas basado en texto. El Buscaminas es el clásico juego de ordenador para un jugador en el que una cuadrícula NxN tiene minas B (o bombas) escondidas por toda la cuadrícula. Las casillas restantes están en blanco o tienen un número detrás. Los números reflejan el número de bombas en las ocho casillas circundantes. El usuario descubre una casilla. Si es una bomba, el jugador pierde. Si es un número, el número queda al descubierto. Si es una casilla en blanco, ésta y todas las casillas en blanco adyacentes (hasta las casillas numéricas circundantes incluidas) quedan al descubierto. El jugador gana cuando se descubren todas las casillas que no son bombas. El jugador también puede marcar ciertos lugares como bombas potenciales. Esto no afecta al juego, salvo para evitar que el usuario haga clic accidentalmente en una casilla que se cree que contiene una bomba. (Consejo para el lector: si no está familiarizado con este juego, juegue primero unas cuantas rondas en línea).
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas: #186, #252, #319, #387</em> 
+          <p><em>Pistas: #351, #361, #377, #386, #399</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 289</strong></p>
+          <p><strong>pg 332</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>7.11 La píldora pesada: </strong>
-        Tienes 20 frascos de píldoras. 19 frascos tienen píldoras de 1,0 gramo, pero uno tiene píldoras de 1,1 gramo. Dada una balanza que proporciona una medida exacta, ¿cómo encontrarías el frasco pesado? Sólo puedes utilizar la báscula una vez.
+        <strong>7.11 Sistema de archivos: </strong>
+        Explique las estructuras de datos y los algoritmos que utilizaría para diseñar un sistema de archivos en memoria. Si es posible, ilustre con un ejemplo en código.
+
+        
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas: #186, #252, #319, #387</em> 
+          <p><em>Pistas: #141, #216</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 289</strong></p>
+          <p><strong>pg 337</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>7.12 La píldora pesada: </strong>
-        Tienes 20 frascos de píldoras. 19 frascos tienen píldoras de 1,0 gramo, pero uno tiene píldoras de 1,1 gramo. Dada una balanza que proporciona una medida exacta, ¿cómo encontrarías el frasco pesado? Sólo puedes utilizar la báscula una vez.
+        <strong>7.12 Tabla hash: </strong>
+        Diseñe e implemente una tabla hash que utilice el encadenamiento (listas enlazadas) para gestionar las colisiones.
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas: #186, #252, #319, #387</em> 
+          <p><em>Pistas: #287, #307</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 289</strong></p>
+          <p><strong>pg 239</strong></p>
         </div>
       </li>
     </ul>
