@@ -24,7 +24,7 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
       Las preguntas de diseño orientado a objetos (OOD) suelen ser intencionadamente imprecisas para comprobar si va a hacer suposiciones o si va a hacer preguntas aclaratorias. Después de todo, un desarrollador que simplemente codifica algo sin entender lo que se espera que cree malgasta el tiempo y el dinero de la empresa, y puede crear problemas mucho más graves.
     </p>
     <p>
-      Cuando se le plantea una pregunta de diseño orientado a objetos, debe preguntar quién lo va a utilizar y cómo lo va a utilizar. Dependiendo de la pregunta, puede que incluso quiera repasar las "seis W": quién, qué, dónde, cuándo, cómo, por qué.
+      Cuando se le plantea una pregunta de diseño orientado a objetos, debe preguntar <em>quién</em> lo va a utilizar y cómo lo va a utilizar. Dependiendo de la pregunta, puede que incluso quiera repasar las "seis W": quién, qué, dónde, cuándo, cómo, por qué.
     </p>
     <p>
       Por ejemplo, supongamos que le piden que describa el diseño orientado a objetos de una cafetera. Parece sencillo, ¿verdad? Pues no.
@@ -36,7 +36,7 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
   <article>
     <p><strong>Paso 2: Definir los objetos principales</strong></p>
     <p>
-      Ahora que ya sabemos qué vamos a diseñar, debemos plantearnos cuáles son los "objetos centrales" de un sistema. Por ejemplo, supongamos que se nos pide que hagamos el diseño orientado a objetos para un restaurante. Nuestros objetos centrales podrían ser cosas como Mesa, Invitado, Fiesta, Pedido, Comida, Empleado, Servidor y Anfitrión.
+      Ahora que ya sabemos qué vamos a diseñar, debemos plantearnos cuáles son los "objetos centrales" de un sistema. Por ejemplo, supongamos que se nos pide que hagamos el diseño orientado a objetos para un restaurante. Nuestros objetos centrales podrían ser cosas como <code>Table</code>, <code>Guest</code>, <code>Party</code>, <code>Order</code>, <code>Meal</code>, <code>Employee</code>, <code>Server</code> y <code>Host</code>
     </p>
   </article>
   <article>
@@ -48,13 +48,13 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
       Por ejemplo, en la pregunta del restaurante, podemos llegar al siguiente diseño:
     </p>
     <ul>
-      <li>Fiesta debe tener un array de Invitados.</li>
-      <li>Servidor y Anfitrión heredan de Empleado.</li>
-      <li>Cada Mesa tiene un Grupo, pero cada Grupo puede tener varias Mesas. </li>
-      <li>Hay un Anfitrión para el Restaurante.</li>
+      <li><code>Party</code> debe tener un array de <code>Guests</code>.</li>
+      <li><code>Server</code> y <code>Host</code> heredan de <code>Employee</code>.</li>
+      <li>Cada <code>Table</code> tiene un <code>Party</code>, pero cada <code>Party</code> puede tener varias <code>Tables</code>. </li>
+      <li>Hay un <code>Host</code> para el <code>Restaurant</code>.</li>
     </ul>
     <p>
-      Tenga mucho cuidado con esto, a menudo puede hacer suposiciones incorrectas. Por ejemplo, una única mesa puede tener varias partes (como es habitual en las "mesas comunales" de moda en algunos restaurantes). Debería hablar con su entrevistador sobre la generalidad de su diseño.
+      Tenga mucho cuidado con esto, a menudo puede hacer suposiciones incorrectas. Por ejemplo, una única <code>Table</code> puede tener varias <code>Parties</code> (como es habitual en las "mesas comunales" de moda en algunos restaurantes). Debería hablar con su entrevistador sobre la generalidad de su diseño.
     </p>
   </article>
   <article>
@@ -63,7 +63,7 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
       Llegados a este punto, debería tener el esquema básico de su diseño orientado a objetos. Lo que queda es considerar las acciones clave que realizarán los objetos y cómo se relacionan entre sí. Es posible que haya olvidado algunos objetos y tenga que actualizar su diseño.
     </p>
     <p>
-      Por ejemplo, un grupo entra en el restaurante y un cliente solicita una mesa al anfitrión. El anfitrión busca la reserva y, si existe, asigna una mesa al grupo. En caso contrario, se añade al final de la lista. Cuando un cliente se marcha, la mesa se libera y se asigna a un nuevo cliente de la lista.
+      Por ejemplo, una <code>Party</code> entra en el <code>Restaurant</code> y un <code>Guest</code> solicita una <code>Table</code> al <code>Host</code>. El <code>Host</code> busca la <code>Reservation</code> y, si existe, asigna una <code>Table</code> al <code>Party</code>. En caso contrario, se añade al final de la lista. Cuando un <code>Party</code> se marcha, la <code>Table</code> se libera y se asigna a un nuevo <code>Party</code> de la lista.
     </p>
   </article>
   <article>
@@ -81,8 +81,22 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
   <article>
     <p><strong>Clase Singleton</strong></p>
     <p>
-      El patrón Singleton garantiza que una clase sólo tiene una instancia y asegura el acceso a la instancia a través de la aplicación. Puede ser útil en casos en los que se tiene un objeto "global" con exactamente una instancia. Por ejemplo, podemos querer implementar Restaurante de tal manera que tenga exactamente una instancia de Restaurante.
+      El patrón Singleton garantiza que una clase sólo tiene una instancia y asegura el acceso a la instancia a través de la aplicación. Puede ser útil en casos en los que se tiene un objeto "global" con exactamente una instancia. Por ejemplo, podemos querer implementar Restaurante de tal manera que tenga exactamente una instancia de <code>Restaurant</code>.
     </p>
+    <pre>
+      <code class="language-js">
+        public class Restaurant &#123
+          private static Restaurant _instance = null;
+          protected Restaurant()  &#123 ... }
+          public static Restaurant getlnstance()  &#123
+            if (_instance == null)  &#123
+              _instance = new Restaurant();
+            }
+            return _instance;
+          }
+        }
+      </code>
+    </pre>
     <p>
       Hay que tener en cuenta que a mucha gente no le gusta el patrón de diseño Singleton, incluso lo llaman un "anti-patrón": Una de las razones es que puede interferir con las pruebas unitarias.
     </p>
@@ -92,6 +106,20 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
     <p>
       El método Factory ofrece una interfaz para crear una instancia de una clase, con sus subclases decidiendo qué clase instanciar. Podrías querer implementar esto con la clase creadora siendo abstracta y no proporcionando una implementación para el método Factory. O puedes hacer que la clase creadora sea una clase concreta que proporcione una implementación para el método Factory. En este caso, el método Factory tomaría un parámetro que representaría la clase a instanciar.
     </p>
+    <pre>
+      <code class="language-js">
+        public class CardGame &#123
+          public static CardGame createCardGame(GameType type) &#123
+            if (type == GameType.Poker) &#123
+              return new PokerGame();
+            } else if (type == GameType.BlackJack) &#123 
+              return new BlackJackGame();
+            }
+            return null;
+          }
+        }
+      </code>
+    </pre>
   </article>
   <article>
     <h3 class="border-y-2 border-black">Preguntas de la entrevista</h3>
@@ -100,7 +128,7 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
         <strong>7.1 Baraja de cartas: </strong>
         Diseña las estructuras de datos para una baraja de cartas genérica. Explica cómo subclasificarías las estructuras de datos para implementar el blackjack.
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas: #753, #275</em> 
+          <p><em>Pistas: #153, #275</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
           <p><strong>pg 305</strong></p>
@@ -108,7 +136,7 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
       </li>
       <li class="list-none">
         <strong>7.2 Centro de llamadas: </strong>
-        Imagine que tiene un centro de llamadas con tres niveles de empleados: encuestado, gestor y director. Una llamada telefónica entrante debe asignarse primero a un respondedor que esté libre. Si el encuestado no puede atender la llamada, debe derivarla a un gestor. Si el gestor no está libre o no puede atenderla, entonces la llamada debe escalarse a un director. Diseña las clases y estructuras de datos para este problema. Implemente un método dispatchCall() que asigne una llamada al primer empleado disponible.
+        Imagine que tiene un centro de llamadas con tres niveles de empleados: encuestado, gestor y director. Una llamada telefónica entrante debe asignarse primero a un respondedor que esté libre. Si el encuestado no puede atender la llamada, debe derivarla a un gestor. Si el gestor no está libre o no puede atenderla, entonces la llamada debe escalarse a un director. Diseña las clases y estructuras de datos para este problema. Implemente un método <code>dispatchCall()</code> que asigne una llamada al primer empleado disponible.
         <div class="flex justify-between items-end gap-2">
           <p><em>Pistas: #363</em> 
           </p>
@@ -148,7 +176,7 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
       </li>
       <li class="list-none">
         <strong>7.6 Rompecabezas: </strong>
-        Implementa un puzzle NxN. Diseña las estructuras de datos y explica un algoritmo para resolver el puzzle. Puedes suponer que tienes un método fitsWith que, cuando se le pasan dos aristas de puzzle, devuelve true si las dos aristas pertenecen juntas.
+        Implementa un puzzle <code>NxN</code>. Diseña las estructuras de datos y explica un algoritmo para resolver el puzzle. Puedes suponer que tienes un método <code>fitsWith</code> que, cuando se le pasan dos aristas de puzzle, devuelve true si las dos aristas pertenecen juntas.
         <div class="flex justify-between items-end gap-2">
           <p><em>Pistas: # 192, #238, #283</em> 
           </p>
@@ -178,7 +206,7 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
       </li>
       <li class="list-none">
         <strong>7.9 Matriz Circular: </strong>
-        Implementa una clase CircularArray que soporte una estructura de datos tipo array que pueda ser rotada eficientemente. Si es posible, la clase debe utilizar un tipo genérico (también llamado plantilla), y debe soportar la iteración a través del estándar para (Obj o : circularArray)notación.
+        Implementa una clase <code>CircularArray</code> que soporte una estructura de datos tipo array que pueda ser rotada eficientemente. Si es posible, la clase debe utilizar un tipo genérico (también llamado plantilla), y debe soportar la iteración a través del estándar para <code>(Obj o : circularArray)</code>notación.
         <div class="flex justify-between items-end gap-2">
           <p><em>Pistas: #389</em> 
           </p>
@@ -189,6 +217,276 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
       <li class="list-none">
         <strong>7.10 Buscaminas: </strong>
         Diseña e implementa un juego Buscaminas basado en texto. El Buscaminas es el clásico juego de ordenador para un jugador en el que una cuadrícula NxN tiene minas B (o bombas) escondidas por toda la cuadrícula. Las casillas restantes están en blanco o tienen un número detrás. Los números reflejan el número de bombas en las ocho casillas circundantes. El usuario descubre una casilla. Si es una bomba, el jugador pierde. Si es un número, el número queda al descubierto. Si es una casilla en blanco, ésta y todas las casillas en blanco adyacentes (hasta las casillas numéricas circundantes incluidas) quedan al descubierto. El jugador gana cuando se descubren todas las casillas que no son bombas. El jugador también puede marcar ciertos lugares como bombas potenciales. Esto no afecta al juego, salvo para evitar que el usuario haga clic accidentalmente en una casilla que se cree que contiene una bomba. (Consejo para el lector: si no está familiarizado con este juego, juegue primero unas cuantas rondas en línea).
+        <div class="flex justify-center flex-col">
+          <div class="flex justify-center border-b-2 border-black">
+            <div class="w-1/2 flex justify-center p-8 flex-col border-r-2 border-black">
+              <p class="text-center">Este es un tablero completamente expuesto con 3 bombas. No se muestra al usuario.</p>
+              <div class="flex justify-center">
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">1</span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">1</span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">1</span>
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2"></span>
+              </div>
+              <div class="flex justify-center">
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">1</span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">*</span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">1</span>
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2"></span>
+              </div>
+              <div class="flex justify-center">
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">2</span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">2</span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">2</span>
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2"></span>
+              </div>
+              <div class="flex justify-center">
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">1</span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">*</span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">1</span>
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2"></span>
+              </div>
+              <div class="flex justify-center">
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">1</span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">1</span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">1</span>
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2"></span>
+              </div>
+              <div class="flex justify-center">
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">1</span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">1</span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">1</span>
+                <span class="w-10 h-10 border-black border-2"></span>
+              </div>
+              <div class="flex justify-center">
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">1</span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">*</span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">1</span>
+                <span class="w-10 h-10 border-black border-2"></span>
+              </div>
+            </div>
+            <div class="w-1/2 flex justify-center p-8 flex-col">
+              <p class="text-center">El jugador ve inicialmente un tablero sin nada expuesto.</p>
+              <div class="flex justify-center">
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+              </div>
+              <div class="flex justify-center">
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+              </div>
+              <div class="flex justify-center">
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+              </div>
+              <div class="flex justify-center">
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+              </div>
+              <div class="flex justify-center">
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+              </div>
+              <div class="flex justify-center">
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+              </div>
+              <div class="flex justify-center">
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+              </div>
+            </div>
+          </div>
+          <div class="flex justify-center">
+            <div class="w-1/2 flex justify-center p-8 flex-col border-r-2 border-black">
+              <p class="text-center">Al hacer clic en la celda (fila = 1, columna = O) se expondrá lo siguiente:</p>
+              <div class="flex justify-center">
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold"></span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">1</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+              </div>
+              <div class="flex justify-center">
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold"></span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">1</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+              </div>
+              <div class="flex justify-center">
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold"></span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">2</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+              </div>
+              <div class="flex justify-center">
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold"></span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">1</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+              </div>
+              <div class="flex justify-center">
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold"></span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">1</span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">1</span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">1</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+              </div>
+              <div class="flex justify-center">
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold"></span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold"></span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold"></span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">1</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+              </div>
+              <div class="flex justify-center">
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold"></span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold"></span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold"></span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">1</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+              </div>
+            </div>
+            <div  class="w-1/2 flex justify-center flex-col">
+              <p class="text-center">El usuario gana cuando todo lo que no sean bombas haya sido expuesto.</p>
+              <div class="flex justify-center">
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">1</span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">1</span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">1</span>
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2"></span>
+              </div>
+              <div class="flex justify-center">
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">1</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">1</span>
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2"></span>
+              </div>
+              <div class="flex justify-center">
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">2</span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">2</span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">2</span>
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2"></span>
+              </div>
+              <div class="flex justify-center">
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">1</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">1</span>
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2"></span>
+              </div>
+              <div class="flex justify-center">
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">1</span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">1</span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">1</span>
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2"></span>
+              </div>
+              <div class="flex justify-center">
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">1</span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">1</span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">1</span>
+                <span class="w-10 h-10 border-black border-2"></span>
+              </div>
+              <div class="flex justify-center">
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2"></span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">1</span>
+                <span class="w-10 h-10 border-black border-2 bg-slate-300 flex justify-center items-center font-bold">?</span>
+                <span class="w-10 h-10 border-black border-2 flex justify-center items-center font-bold">1</span>
+                <span class="w-10 h-10 border-black border-2"></span>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="flex justify-between items-end gap-2">
           <p><em>Pistas: #351, #361, #377, #386, #399</em> 
           </p>
