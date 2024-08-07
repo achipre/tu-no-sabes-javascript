@@ -6,6 +6,545 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
   <h2>Recursión y Programación Dinámica</h2>
   <article>
     <p>
+      Aunque existe un gran número de problemas recursivos, muchos siguen patrones similares. Un buen indicio de que un problema es recursivo es que se puede construir a partir de subproblemas.
+    </p>
+    <p>
+      Cuando escuche un problema que comience con los siguientes enunciados, a menudo (aunque no siempre) es un buen candidato para la recursividad: "Diseña un algoritmo para calcular el nth...", "Escribe código para enumerar los n primeros...", "Implementa un método para calcular todos...", y así sucesivamente.
+    </p>
+    <p class="pl-4 sm:pl-6 md:pl-8 border-l-2 sm:border-l-4 md:border-l-8 border-black">
+      Consejo: En mi experiencia como tutor de candidatos, la gente suele tener un 50% de acierto en su instinto de "esto parece un problema recursivo". Usa ese instinto, ya que ese 50% es valioso. Pero no tengas miedo de ver el problema de otra manera, incluso si inicialmente pensaste que parecía recursivo. También hay un 50% de posibilidades de que te hayas equivocado.
+    </p>
+    <p>
+      ¡La práctica hace al maestro! Cuantos más problemas hagas, más fácil te resultará reconocer los problemas recursivos.
+    </p>
+  </article>
+  <article>
+    <h3>► Cómo abordarlos</h3>
+    <p>
+      Las soluciones recursivas, por definición, se construyen a partir de soluciones a subproblemas. Muchas veces, esto significará simplemente calcular <code>f(n)</code> añadiendo algo, quitando algo, o cambiando de otro modo la solución para <code>f(n-1)</code>. En otros casos, puede resolver el problema para la primera mitad del conjunto de datos, luego para la segunda mitad y, a continuación, fusionar esos resultados.
+    </p>
+    <p>
+      Hay muchas formas de dividir un problema en subproblemas. Tres de los enfoques más comunes para desarrollar un algoritmo son ascendente, descendente y mitad y mitad.
+    </p>
+  </article>
+  <article>
+    <p><strong>Enfoque ascendente</strong></p>
+    <p>
+      El enfoque ascendente suele ser el más intuitivo. Empezamos por saber cómo resolver el problema para un caso sencillo, como una lista con un solo elemento. A continuación, averiguamos cómo resolver el problema para dos elementos, luego para tres elementos, y así sucesivamente. La clave es pensar en cómo <em>construir</em> la solución para un caso a partir del caso anterior (o de varios casos anteriores).
+    </p>
+  </article>
+  <article>
+    <p><strong>Enfoque descendente</strong></p>
+    <p>
+      El enfoque descendente puede ser más complejo, ya que es menos concreto. Pero, a veces, es la mejor manera de plantearse el problema.
+    </p>
+    <p>
+      En estos problemas, pensamos en cómo podemos dividir el problema del caso <code>N</code> en subproblemas. 
+    </p>
+    <p>
+      Hay que tener cuidado con el solapamiento entre los casos.
+    </p>
+  </article>
+  <article>
+    <p><strong>Enfoque mitad y mitad</strong></p>
+    <p>
+      Además de los enfoques descendente y ascendente, a menudo es eficaz dividir el conjunto de datos por la mitad.
+    </p>
+    <p>
+      Por ejemplo, la búsqueda binaria funciona con un enfoque "mitad y mitad". Cuando buscamos un elemento en una matriz ordenada, primero averiguamos qué mitad de la matriz contiene el valor. A continuación, recurrimos y lo buscamos en esa mitad.
+    </p>
+    <p>
+      La ordenación combinada también es un método "mitad y mitad". Ordenamos cada mitad de la matriz y luego unimos las mitades ordenadas.
+    </p>
+  </article>
+  <article>
+    <h3>► Soluciones recursivas vs. soluciones iterativas</h3>
+    <p>
+      Los algoritmos recursivos pueden ser muy ineficientes en términos de espacio. Cada llamada recursiva añade una nueva capa a la pila, lo que significa que si tu algoritmo recursa hasta una profundidad de n, utiliza al menos <code>O(n)</code> de memoria.
+    </p>
+    <p>
+      Por esta razón, a menudo es mejor implementar un algoritmo recursivo de forma iterativa. <code>Todos</code> los algoritmos recursivos pueden implementarse iterativamente, aunque a veces el código para hacerlo es mucho más complejo. Antes de sumergirte en código recursivo, pregúntate lo difícil que sería implementarlo iterativamente, y discute las ventajas y desventajas con tu entrevistador.
+    </p>
+  </article>
+  <article>
+    <h3>► Programación dinámica y memoización</h3>
+    <p>
+      Aunque la gente le da mucha importancia al miedo que dan los problemas de programación dinámica, en realidad no hay por qué tenerles miedo. De hecho, una vez que se les coge el truco, pueden ser problemas muy fáciles.
+    </p>
+    <p>
+      La programación dinámica consiste en tomar un algoritmo recursivo y encontrar los subproblemas que se solapan (es decir, las llamadas repetidas). A continuación, se almacenan en caché los resultados para futuras llamadas recursivas.
+    </p>
+    <p>
+      Alternativamente, puedes estudiar el patrón de las llamadas recursivas e implementar algo iterativo. Se sigue "almacenando en caché" el trabajo anterior.
+    </p>
+    <p class="pl-4 sm:pl-6 md:pl-8 border-l-2 sm:border-l-4 md:border-l-8 border-black">
+      Nota terminológica: Algunas personas llaman "memoización" a la programación dinámica descendente y sólo utilizan "programación dinámica" para referirse al trabajo ascendente. Aquí no hacemos tal distinción. Llamamos a ambas cosas programación dinámica.
+    </p>
+    <p>
+      Uno de los ejemplos más sencillos de programación dinámica es calcular el enésimo número de Fibonacci. Una buena manera de abordar un problema de este tipo suele ser implementarlo como una solución recursiva normal y, a continuación, añadir la parte de almacenamiento en caché.
+    </p>
+  </article>
+  <article>
+    <p><strong>Números Fibonacci</strong></p>
+    <p>
+      Veamos cómo calcular el enésimo número de Fibonacci.
+    </p>
+    <p><em>Recursivo</em>
+    </p>
+    <p>
+      Empezaremos con una implementación recursiva. Parece sencillo, ¿verdad?
+    </p>
+    <pre>
+      <code class="language-js">
+        int fibonacci(int i) &#123
+          if (i == 0) return 0;
+          if (i == 1) return 1;
+          return fibonacci(i - 1) + fibonacci(i - 2);
+        }
+      </code>
+    </pre>
+    <p>
+      ¿Cuál es el tiempo de ejecución de esta función? Piensa un segundo antes de responder.
+    </p>
+    <p>
+      Si has dicho <code>O(n)</code> u <code>O(n<sup>2</sup>)</code> (como hace mucha gente), piénsalo otra vez. Estudia la ruta que sigue el código. Dibujar las rutas del código como un árbol (es decir, el árbol de recursión) es útil en este y muchos problemas recursivos.
+    </p>
+    <div class="flex flex-col text-lg justify-center items-center gap-y-2 my-8">
+      <div><code>f(5)</code></div>
+      <div class="flex gap-4"><div class="w-20 -rotate-12 border-b-2 border-black"></div><div class="w-20 rotate-12 border-b-2 border-black"></div></div>
+      
+      <div class="flex flex-row gap-40"><code>f(4)</code><code>f(3)</code></div>
+      <div class="flex gap-32">
+        <div class="flex gap-8">
+          <div class="w-8 -rotate-45 border-b-2 border-black"></div><div class="w-8 rotate-45 border-b-2 border-black"></div>
+        </div>
+        <div class="flex gap-8">
+          <div class="w-8 -rotate-45 border-b-2 border-black"></div><div class="w-8 rotate-45 border-b-2 border-black"></div>
+        </div>
+      </div>
+      
+      <div class="flex flex-row gap-20">
+        <div class="flex gap-10">
+          <code>f(3)</code><code>f(2)</code>
+        </div>
+        <div class="flex gap-12">
+          <code>f(2)</code><code>f(1)</code>
+        </div>
+      </div>
+      <div class="flex gap-10">
+        <div class="flex gap-4">
+          <div class="w-8 -rotate-45 border-b-2 border-black"></div><div class="w-8 rotate-45 border-b-2 border-black"></div><div class="w-8 -rotate-45 border-b-2 border-black"></div><div class="w-8 rotate-45 border-b-2 border-black"></div>
+        </div>
+        <div class="flex gap-4 mr-24">
+          <div class="w-8 -rotate-45 border-b-2 border-black"></div><div class="w-8 rotate-45 border-b-2 border-black"></div>
+        </div>
+      </div>
+      
+      <div class="mr-24 flex gap-2"><code>f(2)</code><code>f(1)</code><code>f(1)</code><code>f(0)</code><code>f(1)</code><code>f(1)</code></div>
+      <div class="flex gap-4 mr-96"><div class="w-8 -rotate-45 border-b-2 border-black"></div><div class="w-8 rotate-45 border-b-2 border-black"></div></div>
+
+      <div class="flex flex-row gap-4 mr-96"><code>f(4)</code><code>f(3)</code></div>
+    </div>
+
+
+    <p>
+      Observa que las hojas del árbol son todas <code>fib(1)</code> y <code>fib(0)</code>. Son los casos base.
+    </p>
+    <p>
+      El número total de nodos en el árbol representará el tiempo de ejecución, ya que cada llamada sólo hace <code>0(1)</code> trabajo fuera de sus llamadas recursivas. Por lo tanto, el número de llamadas es el tiempo de ejecución.
+    </p>
+    <p class="pl-4 sm:pl-6 md:pl-8 border-l-2 sm:border-l-4 md:border-l-8 border-black">
+      Consejo: Recuerda esto para futuros problemas. Dibujar las llamadas recursivas como un árbol es una buena manera de averiguar el tiempo de ejecución de un algoritmo recursivo.
+    </p>
+    <p>
+      ¿Cuántos nodos hay en el árbol? Hasta llegar a los casos base (hojas), cada nodo tiene dos hijos. Cada nodo se ramifica dos veces.
+    </p>
+    <p>
+      El nodo raíz tiene dos hijos. Cada uno de esos hijos tiene dos hijos (por tanto, cuatro hijos en total en el nivel "nietos"). Cada uno de esos nietos tiene dos hijos, y así sucesivamente. Si hacemos esto n veces, tendremos aproximadamente <code>O(2<sup>n</sup>)</code> nodos. Esto nos da un tiempo de ejecución de aproximadamente <code>O(2<sup>n</sup>)</code>.
+    </p>
+    <p class="pl-4 sm:pl-6 md:pl-8 border-l-2 sm:border-l-4 md:border-l-8 border-black">
+      En realidad, es ligeramente mejor que <code>O(2<sup>n</sup>)</code>. Si observas el subárbol, te darás cuenta de que (excluyendo los nodos hoja y los inmediatamente superiores) el subárbol derecho de cualquier nodo es siempre más pequeño que el subárbol izquierdo. Si tuvieran el mismo tamaño, tendríamos un tiempo de ejecución de <code>O(2<sup>n</sup>)</code>. Pero como los subárboles derecho e izquierdo no tienen el mismo tamaño, el tiempo de ejecución real se aproxima más a <code>O(1.6<sup>n</sup>)</code>. Decir <code>O(2<sup>n</sup>)</code> sigue siendo técnicamente correcto, ya que describe un límite superior en el tiempo de ejecución (ver "Big 0, Big Theta, y Big Omega" en la página 39). En cualquier caso, seguimos teniendo un tiempo de ejecución exponencial.
+    </p>
+    <p>
+      De hecho, si implementáramos esto en un ordenador, veríamos que el número de segundos aumenta exponencialmente.
+    </p>
+    <div class="flex flex-col items-center my-12">
+      <div class="relative w-72">
+        <div class="flex items-center gap-2"><p>80</p> <span class="w-72 h-[1px] bg-slate-400"></span></div>
+        <div class="flex items-center gap-2"><p>60</p> <span class="w-72 h-[1px] bg-slate-400"></span></div>
+        <div class="flex items-center gap-2"><p>40</p> <span class="w-72 h-[1px] bg-slate-400"></span></div>
+        <div class="flex items-center gap-2"><p>20</p> <span class="w-72 h-[1px] bg-slate-400"></span></div>
+        <div class="flex items-center justify-end gap-2"><p class="w-6 text-end">0</p> <span class="w-72 h-[1px] bg-slate-400"></span></div>
+  
+        <div class="absolute flex flex-col-reverse left-9 top-5 gap-2 items-center"><span class="w-[1px] h-48 bg-slate-400"></span></div>
+        <div class="absolute left-20 bottom-2 flex gap-10">
+          <p class="w-[1px] h-4 bg-slate-400"></p>
+          <p class="w-[1px] h-4 bg-slate-400"></p>
+          <p class="w-[1px] h-4 bg-slate-400"></p>
+          <p class="w-[1px] h-4 bg-slate-400"></p>
+          <p class="w-[1px] h-4 bg-slate-400"></p>
+          <p class="w-[1px] h-4 bg-slate-400"></p>
+        </div>
+        <div class="absolute top-0 right-0 w-64 h-[200px] rounded-br-[24%_90%] border-b-2 border-r-2 border-black"></div>
+        <div class="absolute left-8 flex gap-8">
+          <p>0</p>
+          <p>10</p>
+          <p>20</p>
+          <p>30</p>
+          <p>40</p>
+        </div>
+      </div>
+      <p class="font-bold mt-8">Segundos para generar la enésima Fibonacci</p>
+    </div>
+    <p>
+      Deberíamos buscar una manera de optimizar esto.
+    </p>
+    <p>
+      <em>
+        Programación dinámica descendente (o Memoización)
+      </em>
+    </p>
+    <p>
+      Estudia el árbol de recursión. ¿Dónde ves nodos idénticos?
+    </p>
+    <p>
+      Hay muchos nodos idénticos. Por ejemplo, <code>fib(3)</code> aparece dos veces y <code>fib(2)</code> aparece tres veces. ¿Por qué debemos volver a calcularlos desde cero cada vez?
+    </p>
+    <p>
+      De hecho, cuando llamamos a <code>fib(n)</code>, no deberíamos tener que hacer mucho más que <code>O(n)</code> llamadas, ya que sólo hay <code>O(n)</code> valores posibles que podemos lanzar a <code>fib</code>. Cada vez que calculemos <code>fib(i)</code>, deberíamos simplemente almacenar en caché este resultado y utilizarlo más tarde.
+    </p>
+    <p>
+      Esto es exactamente la memoización.
+    </p>
+    <p>
+      Con una pequeña modificación, podemos ajustar esta función para que se ejecute en tiempo <code>0(n)</code>. Simplemente almacenamos en caché los resultados de <code>fibonacci(i)</code> entre llamadas.
+    </p>
+    <pre>
+      <code class="language-js">
+        int fibonacci(int n) &#123
+          return fibonacci(n, new int[n + 1]);
+        }
+        int fibonacci(int i, int[] memo) &#123
+          if (i == 0 || i == 1) return i;
+
+          if (memo[i] == 0) &#123
+            memo[i] = fibonacci(i - 1, memo) + fibonacci(i - 2, memo);
+          }
+          return memo[i];
+        }
+      </code>
+    </pre>
+    <p>
+      Mientras que la primera función recursiva puede tardar más de un minuto en generar el número 50 de Fibonacci en un ordenador típico, el método de programación dinámica puede generar el número 10000 de Fibonacci en sólo fracciones de milisegundo. (Por supuesto, con este código exacto, el int se habría desbordado muy pronto).
+    </p>
+    <p>
+      Ahora, si dibujamos el árbol de recursión, se parece a esto (los recuadros negros representan las llamadas en caché que volvieron inmediatamente):
+    </p>
+    <div class="flex justify-center my-8 text-lg">
+      <div class="flex justify-center flex-col">
+        <code class="text-center">f(5)</code>
+        <div class="flex gap-4 mt-6 ml-4">
+          <div class="w-28 h-[2px] bg-slate-700 -rotate-[25deg]"></div>
+          <div class="w-28 h-[2px] bg-slate-700 rotate-[25deg]"></div>
+        </div>
+        <div class="flex gap-48 mt-6">
+          <code class="text-center">f(4)</code>
+          <code class="text-center border-2 px-2 border-slate-600">f(3)</code>
+        </div>
+        <div class="flex gap-4 mt-2 -ml-12">
+          <div class="w-16 h-[2px] bg-slate-700 -rotate-[25deg]"></div>
+          <div class="w-16 h-[2px] bg-slate-700 rotate-[25deg]"></div>
+        </div>
+        <div class="flex gap-24 mt-4 -ml-14">
+          <code class="text-center">f(3)</code>
+          <code class="text-center border-2 px-2 border-slate-600">f(2)</code>
+        </div>
+        <div class="flex gap-4 mt-2 -ml-24">
+          <div class="w-12 h-[2px] bg-slate-700 -rotate-[35deg]"></div>
+          <div class="w-12 h-[2px] bg-slate-700 rotate-[35deg]"></div>
+        </div>
+        <div class="flex gap-16 mt-4 -ml-28">
+          <code class="text-center">f(2)</code>
+          <code class="text-center">f(1)</code>
+        </div>
+        <div class="flex mt-2 -ml-36">
+          <div class="w-12 h-[2px] bg-slate-700 -rotate-[35deg]"></div>
+          <div class="w-12 h-[2px] bg-slate-700 rotate-[35deg]"></div>
+        </div>
+        <div class="flex gap-8 mt-4 -ml-40">
+          <code class="text-center">f(1)</code>
+          <code class="text-center">f(0)</code>
+        </div>
+      </div>
+    </div>
+    <p>
+      ¿Cuántos nodos hay ahora en este árbol? Podemos darnos cuenta de que el árbol ahora sólo se dispara hacia abajo, a una profundidad de aproximadamente <code>n</code>. Cada nodo de esos nodos tiene otro hijo, lo que resulta en aproximadamente <code>2n</code> hijos en el árbol. Esto nos da un tiempo de ejecución de <code>O(n)</code>.
+    </p>
+    <p>
+      A menudo puede ser útil imaginar el árbol de recursión como algo parecido a esto:
+    </p>
+    <div class="flex justify-center my-8 text-lg">
+      <div class="flex justify-center flex-col">
+        <code class="text-center">f(5)</code>
+        <div class="flex justify-center gap-4 mt-2">
+          <div class="w-16 h-[2px] bg-slate-600 -rotate-[25deg]"></div>
+          <div class="w-16 h-[2px] bg-slate-600 rotate-[25deg]"></div>
+        </div>
+        <div class="flex justify-center gap-32 mt-4">
+          <code class="text-center">f(4)</code>
+          <code class="text-center border-2 px-2 border-slate-600">f(3)</code>
+        </div>
+        <div class="flex justify-center gap-20 mt-2">
+          <div class="flex gap-4">
+            <div class="w-12 h-[2px] bg-slate-600 -rotate-[25deg]"></div>
+            <div class="w-12 h-[2px] bg-slate-600 rotate-[25deg]"></div>
+          </div>
+          <div class="flex gap-4">
+            <div class="w-12 h-[2px] bg-slate-600 -rotate-[25deg]"></div>
+            <div class="w-12 h-[2px] bg-slate-600 rotate-[25deg]"></div>
+          </div>
+        </div>
+        <div class="flex gap-12 mt-2">
+          <code class="text-center border-2 px-2 border-slate-600">f(3)</code>
+          <code class="text-center">f(2)</code>
+          <code class="text-center border-2 px-2 border-slate-600">f(2)</code>
+          <code class="text-center">f(1)</code>
+        </div>
+        <div class="flex gap-4 mt-3 ml-20">
+          <div class="w-12 h-[2px] bg-slate-600 -rotate-[35deg]"></div>
+          <div class="w-12 h-[2px] bg-slate-600 rotate-[35deg]"></div>
+        </div>
+        <div class="flex gap-14 mt-4 ml-16">
+          <code class="text-center">f(1)</code>
+          <code class="text-center">f(0)</code>
+        </div>
+      </div>
+    </div>
+    <p>
+      En realidad no es así como se produce la recursión. Sin embargo, al expandir los nodos más arriba en lugar de los nodos más abajo, tienes un árbol que crece a lo ancho antes de crecer a lo profundo. (Es como hacer esto a lo ancho primero en lugar de a lo profundo primero.) A veces esto hace que sea más fácil calcular el número de nodos en el árbol. Todo lo que estás haciendo realmente es cambiar qué nodos expandes y cuáles devuelven valores en caché. Prueba esto si estás atascado en el cálculo del tiempo de ejecución de un problema de programación dinámica.
+    </p>
+    <p>
+      <em>
+        Programación dinámica ascendente
+      </em>
+    </p>
+    <p>
+      También podemos tomar este enfoque e implementarlo con programación dinámica ascendente. Piense en hacer las mismas cosas que el enfoque recursivo memoized, pero a la inversa.
+    </p>
+    <p>
+      Primero, calculamos <code>fib(1)</code> y <code>fib(0)</code>, que ya conocemos de los casos base. Luego los utilizamos para calcular <code>fib(2)</code>. A continuación, utilizamos las respuestas anteriores para calcular <code>fib(3)</code>, luego <code>fib(4)</code>, y así sucesivamente.
+    </p>
+    <pre>
+      <code class="language-js">
+        int fibonacci(int n) &#123
+          if (n == 0) return 0;
+          else if (n == 1) return 1;
+
+          int[] memo new int[n];
+          memo[0] = 0;
+          memo[1] = 1;
+          for(int i = 2; i &#60 n; i++) &#123
+            memo[i] = memo[i - 1] + memo[i - 2];
+          }
+          return memo[n - 1] + memo[n - 2];
+        }
+      </code>
+    </pre>
+    <p>
+      Si realmente piensas en cómo funciona esto, sólo usas <code>memo[i]</code> para <code>memo[i+1]</code> y <code>memo[i+2]</code>. No lo necesitas después de eso. Por lo tanto, podemos deshacernos de la tabla memo y sólo almacenar algunas variables.
+    </p>
+    <pre>
+      <code class="language-js">
+        int fibonacci(int n) &#123
+          if (n == 0) return 0;
+          int a = 0;
+          int b = 1;
+          for(int i = 2; i &#60 n; i++) &#123
+            int c = a + b;
+            a = b;
+            b = c;
+          }
+          return a + b;
+        }
+      </code>
+    </pre>
+    <p>
+      Esto es básicamente almacenar los resultados de los dos últimos valores Fibonacci en <code>a</code> y <code>b</code>. En cada iteración, calculamos el siguiente valor <code>(c = a + b)</code> y luego movemos <code>(b, c = a + b)</code> en <code>(a, b)</code>.
+    </p>
+    <p>
+      Esta explicación puede parecer exagerada para un problema tan simple, pero comprender realmente este proceso hará que los problemas más difíciles sean mucho más sencillos. Repasar los problemas de este capítulo, muchos de los cuales utilizan programación dinámica, le ayudará a consolidar su comprensión.
+    </p>
+    <p><strong>Lecturas adicionales: </strong>Prueba por Inducción (pg 631).</p>
+  </article>
+  <article>
+    <h3 class="border-y-2 border-black">Preguntas de la entrevista</h3>
+    <ul>
+      <li class="list-none">
+        <strong>8.1 Paso triple: </strong>
+        Un niño sube corriendo una escalera con <code>n</code> pasos y puede saltar 1 paso, 2 pasos o 3 pasos a la vez. Implementa un método para contar de cuántas formas posibles puede subir el niño la escalera.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas:  #152, #178, #217, #237, #262, #359</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 342</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>8.2 Robot en una cuadrícula: </strong>
+        Imagina un robot sentado en la esquina superior izquierda de una cuadrícula con r filas y c columnas. El robot sólo puede moverse en dos direcciones, hacia la derecha y hacia abajo, pero algunas celdas están "fuera de los límites", de modo que el robot no puede pisarlas. Diseña un algoritmo para encontrar un camino para el robot desde la parte superior izquierda hasta la parte inferior derecha.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #331, #360, #388</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 344</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>8.3 Índice mágico: </strong>
+        Un índice mágico en un array <code>A[0...n-1]</code> se define como un índice tal que <code>A[i] = i</code>. Dado un array ordenado de enteros distintos, escribe un método para encontrar un índice mágico, si existe, en el array <code>A</code>.
+        <p>SEGUIMIENTO</p>
+        <p>¿Qué pasa si los valores no son distintos?</p>
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #170, #204, #240, #286, #340</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 346</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>8.4 Conjunto de potencia: </strong>
+        Escribe un método para devolver todos los subconjuntos de un conjunto.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #273, #290, #338, #354, #373</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 348</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>8.5 Multiplicación Recursiva: </strong>
+        Escribe una función recursiva para multiplicar dos enteros positivos sin usar el operador <code>*</code>. Puedes usar suma, resta y desplazamiento de bits, pero debes minimizar el número de esas operaciones.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #166, #203, #227, #234, #246, #280</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 350</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>8.6 Baraja de cartas: </strong>
+        Torres de Hanoi: En el problema clásico de las Torres de Hanoi, tienes 3 torres y N discos de diferentes tamaños que pueden deslizarse sobre cualquier torre. El rompecabezas comienza con los discos ordenados en orden ascendente de tamaño de arriba a abajo (es decir, cada disco se sienta encima de uno aún más grande).Usted tiene las siguientes restricciones:
+        <p>
+          (1) Sólo se puede mover un disco a la vez.
+        </p>
+        <p>
+          (2) Un disco se desliza de la parte superior de una torre a otra torre.
+        </p>
+        <p>
+          (3) No se puede colocar un disco encima de otro más pequeño.
+        </p>
+        <p>
+          Escribe un programa para mover los discos de la primera torre a la última utilizando pilas.
+        </p>
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #144, #224, #250, #272, #318</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 353</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>8.7 Permutaciones sin Dups: </strong>
+        Escribe un método para calcular todas las permutaciones de una cadena de caracteres únicos.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #150, #185, #200, #267, #278, #309, #335, #356</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 355</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>8.8 Permutaciones con Dups: </strong>
+        Escribe un método para calcular todas las permutaciones de una cadena cuyos caracteres no sean necesariamente únicos. La lista de permutaciones no debe tener duplicados.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #161, #790, #222, #255</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 357</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>8.9 Paréntesis: </strong>
+        Implementa un algoritmo para imprimir todas las combinaciones válidas (por ejemplo, correctamente abiertas y cerradas) de n pares de paréntesis.
+        <p>EJEMPLO</p>
+        <p>Input: <code>3</code></p>
+        <p>Output: <code>((())), (()()), (())(), ()(()), ()()()</code></p>
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #138, #174, #787, #209, #243, #265, #295</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 359</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>8.10 Paint Fill: </strong>
+        Implementa la función "paint fill" que se puede ver en muchos programas de edición de imágenes. Es decir, dada una pantalla (representada por una matriz bidimensional de colores), un punto y un nuevo color, rellena el área circundante hasta que el color cambie respecto al color original.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #364, #382</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 361</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>8.11 Monedas: </strong>
+        Dado un número infinito de monedas de 25 centavos, 10 centavos, 5 centavos y 1 centavo, escribe un código para calcular el número de formas de representar n centavos.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #300, #324, #343, #380, #394</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 362</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>8.12 Ocho reinas: </strong>
+        Escribe un algoritmo para imprimir todas las formas de disponer ocho reinas en un tablero de ajedrez de 8x8 de modo que ninguna de ellas comparta la misma fila, columna o diagonal. En este caso, "diagonal" significa todas las diagonales, no sólo las dos que dividen el tablero.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #308, #350, #371</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 364</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>8.13 Pila de cajas: </strong>
+        Tienes una pila de <code>n</code> cajas, con anchuras <code>w<sub>i</sub></code>, alturas <code>h<sub>i</sub></code> y profundidades <code>d<sub>i</sub></code>. Las cajas no se pueden girar y sólo se pueden apilar unas sobre otras si cada caja de la pila es estrictamente mayor que la caja superior en anchura, altura y profundidad. Implementa un método para calcular la altura de la pila más alta posible. La altura de una pila es la suma de las alturas de cada caja.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #755, #194, #274, #260, #322, #368, #378</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 366</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>8.14 Evaluación booleana: </strong>
+        Dada una expresión booleana formada por los símbolos <code>0</code> (falso), <code>1</code> (verdadero), & (AND), | (OR), y ^ (XOR), y un valor de resultado booleano deseado result, implemente una función para contar el número de formas de poner entre paréntesis la expresión de forma que se evalúe a <code>result</code>.
+        <p>EJEMPLO</p>
+        <p><code>countEval("1^0|0|1", false) -> 2</code></p>
+        <p><code>countEval("0&0&0&1^1|0", true) -> 10</code></p>
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #748, #168, #197, #305, #327</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 368</strong></p>
+        </div>
+      </li>
+    </ul>
+    <p>
+      Preguntas adicionales: Listas enlazadas (#2.2, #2.5, #2.6), Pilas y colas (#3.3), Árboles y grafos (#4.2, #4.3, #4.4, #4.5, #4.8, #4.10, #4.11, #4.12), Enigmas matemáticos y de lógica (#6. 6), Ordenar y buscar (#10.5, #10.9, #10.10), C++ (#12.8), Problemas moderados (#16.11), Problemas difíciles (#17.4, #17.6, #17.8, #17.12, #17.13, #17.15, #17.16, #17.24, #17.25).
+    </p>
+    <p>
+      Las pistas comienzan en la página 662.
     </p>
   </article>
   <footer class="flex justify-end">
