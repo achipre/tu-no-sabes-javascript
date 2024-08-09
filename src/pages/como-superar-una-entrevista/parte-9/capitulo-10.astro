@@ -6,8 +6,306 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
   <h2>Ordenación y búsqueda</h2>
   <article>
     <p>
+      Comprender los algoritmos comunes de ordenación y búsqueda es increíblemente valioso, ya que muchos problemas de ordenación y búsqueda son retoques de los algoritmos conocidos. Por lo tanto, un buen método consiste en repasar los distintos algoritmos de ordenación y ver si alguno se aplica especialmente bien.
+    </p>
+    <p>
+      Por ejemplo, supongamos que nos plantean la siguiente pregunta: Dada una matriz muy grande de objetos Persona, ordene las personas en orden creciente de edad.
+    </p>
+    <p>
+      Aquí tenemos dos datos interesantes:
+    </p>
+    <ol>
+      <li>Se trata de un array muy grande, por lo que la eficiencia es muy importante.</li>
+      <li>Estamos ordenando por edades, por lo que sabemos que los valores están en un rango pequeño.</li>
+    </ol>
+    <p>
+      Si analizamos los distintos algoritmos de ordenación, nos daremos cuenta de que la ordenación en cubos (u ordenación radix) sería un candidato perfecto para este algoritmo. De hecho, podemos hacer los cubos pequeños (sólo 1 año cada uno) y obtener <code>0(n)</code> tiempo de ejecución.
     </p>
   </article>
+  <article>
+    <h3>► Algoritmos comunes de ordenación</h3>
+    <p>
+      Aprender (o reaprender) los algoritmos de ordenación comunes es una buena forma de aumentar el rendimiento. De los cinco algoritmos que se explican a continuación, Merge Sort, Quick Sort y Bucket Sort son los más utilizados en las entrevistas.
+    </p>
+  </article>
+  <article>
+    <p><strong>Bubble Sort | Tiempo de ejecución: </strong><code>0(n<sup>2</sup>)</code> <strong>en promedio y en el peor de los casos. Memoria:</strong> <code>0(1)</code>.</p>
+    <p>
+      En la ordenación por burbujas, empezamos al principio de la matriz e intercambiamos los dos primeros elementos si el primero es mayor que el segundo. A continuación, pasamos al siguiente par, y así sucesivamente, haciendo barridos continuos de la matriz hasta que esté ordenada. De este modo, los elementos más pequeños "burbujean" lentamente hasta el principio de la lista.
+    </p>
+  </article>
+  <article>
+    <p><strong>Selection Sort | Tiempo de ejecución: </strong></strong><code>0(n<sup>2</sup>)</code> <strong>en promedio y en el peor de los casos. Memoria: </strong><code>0(1).</code></p>
+    <p>
+      La ordenación por selección es el algoritmo del niño: simple, pero ineficiente. Encuentra el elemento más pequeño utilizando un barrido lineal y lo mueve al frente (intercambiándolo con el elemento anterior). A continuación, encuentre el segundo más pequeño y muévalo, de nuevo haciendo un barrido lineal. Continúe haciendo esto hasta que todos los elementos estén en su lugar.
+    </p>
+  </article>
+  <article>
+    <p><strong>Merge Sort | Tiempo de ejecución: </strong><code>0(n log(n))</code> <strong>en promedio y en el peor de los casos. Memoria: </strong>Depende.</p>
+    <p>
+      La ordenación por combinación divide el array por la mitad, ordena cada una de esas mitades y luego las vuelve a unir. A cada una de esas mitades se le aplica el mismo algoritmo de ordenación. Al final, sólo se fusionan dos matrices de un solo elemento. Es la parte de "fusión" la que hace todo el trabajo pesado.
+    </p>
+    <p>
+      El método de fusión funciona copiando todos los elementos del segmento de la matriz de destino en una matriz de ayuda, manteniendo un registro de donde el inicio de las mitades izquierda y derecha debe ser (helper izquierda y helperDerecha). A continuación, iteramos a través de helper, copiando el elemento más pequeño de cada mitad en la matriz. Al final, copiamos los elementos restantes en la matriz de destino.
+    </p>
+    <pre>
+      <code class="language-js">
+        void mergesort(int[] array) &#123
+          int[] helper = new int[array.length];
+          mergesort(array, helper, 0, array.length - 1);
+        }
+
+        void mergesort(int[] array, int[] helper, int low, int high) &#123
+          if (low &#60 high) &#123
+            int middle = (low + high)/ 2;
+            mergesort(array, helper, low, middle); // Sort left half 
+            mergesort(array, helper, middle+l, high); // Sort right half
+            mergesort(array, helper, low, middle, high); // Merge them
+          }
+        }
+        void merge(int[] array, int[] helper, int low, int middle, int high) &#123
+          /* Copy both halves into a helper array*/ 
+          for (int i = low; i =&#60 high; i++) &#123
+            helper[i] = array[i];
+          }
+          int helperleft = low;
+          int helperRight=middle + l;
+          int current = low;
+
+          /* Iterar a través del array helper. Compara la mitad izquierda y derecha, copiando de nuevo
+          * el elemento más pequeño de las dos mitades en la matriz original.*/
+          while (helperLeft &#60= middle && helperRight &#60=high) &#123
+            if (helper[helperleft] &#60= helper[helperRight]) &#123
+              array[current] = helper[helperleft];
+              helperleft++;
+            } else &#123 // Si el elemento derecho es menor que el elemento izquierdo
+              array[current] = helper[helperRight];
+              helperRight++;
+            }
+            current++;
+          }
+          /* Copiar el resto de la parte izquierda de la matriz en la matriz de destino */
+          int remaining = middle - helperleft;
+          for (int i= 0; i&#60= remaining; i++) &#123
+            array[current + i] = helper[helperleft + i];
+          }
+        }
+      </code>
+    </pre>
+    <p>
+      Puedes observar que sólo los elementos restantes de la mitad izquierda de la matriz helper se copian en la matriz de destino. ¿Por qué no la mitad derecha? La mitad derecha no necesita ser copiada porque ya está ahí.
+    </p>
+    <p>
+      Consideremos, por ejemplo, una matriz como [1, 4, 5 || 2, 8, 9] (el "||" indica el punto de partición). Antes de fusionar las dos mitades, tanto la matriz auxiliar como el segmento de la matriz de destino terminarán en [8, 9]. Una vez que hayamos copiado cuatro elementos (1, 4, 5 y 2) en la matriz de destino, los [8, 9] seguirán existiendo en ambas matrices. No es necesario copiarlos.
+    </p>
+    <p>
+      La complejidad espacial de la ordenación por combinación es 0(n) debido al espacio auxiliar utilizado para combinar partes de la matriz.
+    </p>
+  </article>
+  <article>
+    <p><strong>Quick Sort | Tiempo de ejecución: </strong><code>0(n log(n))</code> <strong>promedio,</strong> <code>0(n<sup>2</sup>)</code> <strong>en el peor de los casos. Memoria: </strong><code>0(log(n))</code>.</p>
+    <p>
+      En la ordenación rápida elegimos un elemento aleatorio y dividimos la matriz, de forma que todos los números que son menores que el elemento de partición se anteponen a todos los elementos que son mayores que él. La partición puede realizarse de forma eficiente mediante una serie de intercambios (véase más adelante).
+    </p>
+    <p>
+      Si particionamos repetidamente la matriz (y sus submatrices) en torno a un elemento, la matriz acabará estando ordenada. Sin embargo, como no está garantizado que el elemento particionado sea la mediana (o se acerque a la mediana), nuestra ordenación podría ser muy lenta. Esta es la razón del tiempo de ejecución de <code>0(n<sup>2</sup>)</code> en el peor de los casos.
+    </p>
+    <pre>
+      <code class="language-js">
+        void quickSort(int[] arr, int left, int right) &#123
+          int index = partition(arr, left, right);
+          if (left &#60 index - 1) &#123 // Sort left half
+            quickSort(arr, left, index - 1);
+          }
+          if (index &#60 right) &#123 // Sort right half
+            quickSort(arr, index, right);  
+          }
+        }
+        int partition(int[] arr, int left, int right) &#123
+          int pivot = arr[(left + right) I 2]; II Pick pivot point 
+            while (left &#60= right) &#123
+            // Encontrar un elemento a la izquierda que debería estar a la derecha 
+            while (arr[left] &#60 pivot) left++;
+            // Encontrar un elemento a la derecha que debería estar a la izquierda 
+            while (arr[right] > pivot) right--;
+            // Intercambiar elementos y mover índices a izquierda y derecha 
+            if (left &#60= right) &#123
+              swap(arr, left, right); // intercambia elementos
+              left++;
+              right--;
+            }
+          }
+          return left;
+        }
+      </code>
+    </pre>
+  </article>
+  <article>
+    <p><strong>Tiempo de ejecución de Radix Sort: </strong><code>0(kn) </code><strong>(véase más abajo)</strong></p>
+    <p>
+      La ordenación radix es un algoritmo de ordenación para números enteros (y algunos otros tipos de datos) que aprovecha el hecho de que los números enteros tienen un número finito de bits. En la ordenación radix, iteramos a través de cada dígito del número, agrupando los números por cada dígito. Por ejemplo, si tenemos una matriz de números enteros, podríamos ordenarlos primero por el primer dígito, de forma que los Os queden agrupados. A continuación, ordenamos cada una de estas agrupaciones por el siguiente dígito. Repetimos este proceso ordenando por cada dígito subsiguiente, hasta que finalmente toda la matriz está ordenada.
+    </p>
+    <p>
+      A diferencia de los algoritmos de ordenación por comparación, que no pueden tener un rendimiento superior a <code>0(n log(n))</code> en el caso medio, la ordenación radix tiene un tiempo de ejecución de <code>0(kn)</code>, donde n es el número de elementos y k es el número de pasadas del algoritmo de ordenación.
+    </p>
+  </article>
+  <article>
+    <p><strong>► Algoritmos de búsqueda</strong></p>
+    <p>
+      Cuando pensamos en algoritmos de búsqueda, generalmente pensamos en la búsqueda binaria. De hecho, se trata de un algoritmo para estudiar.
+    </p>
+    <p>
+      En la búsqueda binaria, buscamos un elemento <code>x</code> en una matriz ordenada comparando primero <code>x</code> con el punto medio de la matriz. Si <code>x</code> es menor que el punto medio, buscamos en la mitad izquierda de la matriz. Si <code>x</code> es mayor que el punto medio, se busca en la mitad derecha de la matriz. A continuación, repetimos este proceso, tratando las mitades izquierda y derecha como submatrices. De nuevo, comparamos <code>x</code> con el punto medio de esta submatriz y buscamos en su lado izquierdo o derecho. Repetimos este proceso hasta que encontremos <code>x</code> o la submatriz tenga tamaño 0.
+    </p>
+    <p>
+      Tenga en cuenta que aunque el concepto es bastante simple, conseguir todos los detalles es mucho más difícil de lo que podría pensar. Cuando estudies el código siguiente, presta atención a los más y a los menos.
+    </p>
+    <p>
+      Las posibles formas de buscar en una estructura de datos van más allá de la búsqueda binaria, y lo mejor es que no te limites sólo a esta opción. Podrías, por ejemplo, buscar un nodo aprovechando un árbol binario, o usando una tabla hash. Piense más allá de la búsqueda binaria.
+    </p>
+  </article>
+  <article>
+      <h3 class="border-y-2 border-black">Preguntas de la entrevista</h3>
+      <ul>
+        <li class="list-none">
+          <strong>10.1 Combinación ordenada: </strong>
+          Se te dan dos matrices ordenadas, A y B, donde A tiene un buffer suficientemente grande al final para contener B. Escribe un método para combinar B en A en orden.
+          <div class="flex justify-between items-end gap-2">
+            <p><em>Pistas: #332</em> 
+            </p>
+            <p class="border-t-2 border-black flex-1 border-dashed"></p>
+            <p><strong>pg 396</strong></p>
+          </div>
+        </li>
+        <li class="list-none">
+          <strong>10.2 Agrupar Anagramas: </strong>
+          Escribe un método para ordenar un array de cadenas de forma que todos los anagramas estén uno al lado del otro.
+          <div class="flex justify-between items-end gap-2">
+            <p><em>Pistas: #177, #182, #263, #342</em> 
+            </p>
+            <p class="border-t-2 border-black flex-1 border-dashed"></p>
+            <p><strong>pg 397</strong></p>
+          </div>
+        </li>
+        <li class="list-none">
+          <strong>10.3 Buscar en matriz girada: </strong>
+          Dada una matriz ordenada de n enteros que se ha girado un número desconocido de veces, escriba código para encontrar un elemento en la matriz. Puede suponer que la matriz estaba ordenada originalmente en orden creciente.
+          <p>EJEMPLO</p>
+          <p>Input: find 5 in &#123<code>15, 16, 19, 20, 25, 1, 3, 4, 5, 7, 10, 14</code>}</p>
+          <p>Output: 8 (the index of 5 in the array)</p>
+          <div class="flex justify-between items-end gap-2">
+            <p><em>Pistas: #298, #370</em> 
+            </p>
+            <p class="border-t-2 border-black flex-1 border-dashed"></p>
+            <p><strong>pg 398</strong></p>
+          </div>
+        </li>
+        <li class="list-none">
+          <strong>10.4 Búsqueda ordenada, sin tamaño: </strong>
+          Se le da una estructura de datos tipo array <code>Listy</code> que carece de método de tamaño. Sin embargo, tiene un método <code>elementAt(i)</code> que devuelve el elemento en el índice <code>i</code> en tiempo <code>0(1)</code>. Si i está fuera de los límites de la estructura de datos, devuelve <code>-1</code>. (Por esta razón, la estructura de datos sólo admite enteros positivos.) Dada una <code>Listy</code> que contiene enteros positivos ordenados, encuentre el índice en el que aparece un elemento <code>x</code>. Si <code>x</code> aparece varias veces, puede encontrar el índice en el que aparece. Si <code>x</code> aparece varias veces, puede devolver cualquier índice.
+          <div class="flex justify-between items-end gap-2">
+            <p><em>Pistas: #320, #337, #348</em> 
+            </p>
+            <p class="border-t-2 border-black flex-1 border-dashed"></p>
+            <p><strong>pg 400</strong></p>
+          </div>
+        </li>
+        <li class="list-none">
+          <strong>10.5 Búsqueda dispersa: </strong>
+          Dada una matriz ordenada de cadenas que está intercalada con cadenas vacías, escriba un método para encontrar la ubicación de una cadena dada.
+          <p>EJEMPLO</p>
+          <p>Input: ball, <code>&#123"at", "", "", "", "ball", "", "", "car", "", "", "dad", "", ""}</code></p>
+          <p>Output: 4</p>
+          <div class="flex justify-between items-end gap-2">
+            <p><em>Pistas: #256</em> 
+            </p>
+            <p class="border-t-2 border-black flex-1 border-dashed"></p>
+            <p><strong>pg 401</strong></p>
+          </div>
+        </li>
+        <li class="list-none">
+          <strong>10.6 Ordenar un archivo grande: </strong>
+          Imagine que tiene un archivo de 20 GB con una cadena por línea. Explique cómo ordenaría el fichero
+          <div class="flex justify-between items-end gap-2">
+            <p><em>Pistas: #207</em> 
+            </p>
+            <p class="border-t-2 border-black flex-1 border-dashed"></p>
+            <p><strong>pg 402</strong></p>
+          </div>
+        </li>
+        <li class="list-none">
+          <strong>10.7 Int. perdido: </strong>
+          Dado un fichero de entrada con cuatro mil millones de enteros no negativos, proporcione un algoritmo para generar un entero que no esté contenido en el fichero. Suponga que dispone de 1 GB de memo ry para esta tarea.
+          <p>SEGUIMIENTO</p>
+          <p>¿Y si sólo dispone de 10 MB de memoria? Suponga que todos los valores son distintos y que ahora no tenemos más de mil millones de enteros no negativos.</p>
+          <div class="flex justify-between items-end gap-2">
+            <p><em>Pistas: #235, #254, #281</em> 
+            </p>
+            <p class="border-t-2 border-black flex-1 border-dashed"></p>
+            <p><strong>pg 403</strong></p>
+          </div>
+        </li>
+        <li class="list-none">
+          <strong>10.8 Buscar duplicados: </strong>
+          Tienes una matriz con todos los números de 1 a N, donde N es como máximo 32.000. La matriz puede tener entradas duplicadas y hay que buscarlas. La matriz puede tener entradas duplicadas y usted no sabe cuál es N. Con sólo 4 kilobytes de memoria disponible, ¿cómo imprimiría todos los elementos duplicados de la matriz?
+          <div class="flex justify-between items-end gap-2">
+            <p><em>Pistas: #289, #315</em> 
+            </p>
+            <p class="border-t-2 border-black flex-1 border-dashed"></p>
+            <p><strong>pg 406</strong></p>
+          </div>
+        </li>
+        <li class="list-none">
+          <strong>10.9 Búsqueda de matrices ordenadas: </strong>
+          Dada una matriz M x N en la que cada fila y cada columna están ordenadas de forma ascendente, escribe un método para encontrar un elemento.
+          <div class="flex justify-between items-end gap-2">
+            <p><em>Pistas: #193, #211, #229, #251, #266, #279, #288, #297, #303, #317, #330</em> 
+            </p>
+            <p class="border-t-2 border-black flex-1 border-dashed"></p>
+            <p><strong>pg 407</strong></p>
+          </div>
+        </li>
+        <li class="list-none">
+          <strong>10.10 Ordenar a partir de un Flujo: </strong>
+          Imagina que estás leyendo un flujo de enteros. Periódicamente, desea poder buscar el rango de un número <code>x</code> (el número de valores menores o iguales a <code>x</code>). Implementa las estructuras de datos y los algoritmos que permitan realizar estas operaciones. Es decir, implemente el método <code>track(int x)</code>, que se llama cuando se genera cada número, y el método <code>getRankOfNumber(int x)</code>, que devuelve el número de valores menores o iguales que x (sin incluir el propio <code>x</code>).
+          <p>EJEMPLO</p>
+          <p>Stream (in order of appearance): <code>5, 1, 4, 4, 5, 9, 7, 13, 3</code></p>
+          <p><code>getRankOfNumber(1) = 0</code></p>
+          <p><code>getRankOfNumber(3) = 1</code></p>
+          <p><code>getRankOfNumber(4) = 3</code></p>
+          <div class="flex justify-between items-end gap-2">
+            <p><em>Pistas: #301, #376, #392</em> 
+            </p>
+            <p class="border-t-2 border-black flex-1 border-dashed"></p>
+            <p><strong>pg 412</strong></p>
+          </div>
+        </li>
+        
+        <li class="list-none">
+          <strong>10.11 Picos y valles: </strong>
+          En una matriz de números enteros, un "pico" es un elemento que es mayor o igual que los números enteros adyacentes y un "valle" es un elemento que es menor o igual que los números enteros adyacentes. Por ejemplo, en la matriz <code>&#123 5, 8, 6, 2, 3, 4, 6 }</code>, <code>&#123 8, 6 }</code> son picos y <code>&#123  5, 2 }</code> son valles. Dada una matriz de enteros, ordene la matriz en una secuencia alterna de picos y valles.
+          <p>EJEMPLO</p>
+          <p>
+            Input: &#123 5, 3, 1, 2, 3 }
+          </p>
+          <p>
+            Output: &#123 5, 1, 3, 2, 3 }
+          </p>
+          <div class="flex justify-between items-end gap-2">
+            <p><em>Pistas: #196, #219, #231, #253, #277, #292, #316</em> 
+            </p>
+            <p class="border-t-2 border-black flex-1 border-dashed"></p>
+            <p><strong>pg 414</strong></p>
+          </div>
+        </li>
+      </ul>
+      <p>
+        Preguntas adicionales: Matrices y cadenas (#1.2), Recursión (#8.3), Moderado (#16.1O, #16.16, #16.21, #16.24), Difícil (#17.11, #17.26).
+      </p>
+      <p>
+        Las pistas comienzan en la página 662.
+      </p>
+    </article>
   <footer class="flex justify-end">
     <a class="font-khand font-bold text-3xl py-4 sm:py-8 md:py-12 sm:text-4xl md:text-5xl" href="capitulo-11">
       <div class="transition-all text-nowrap relative ease-linear duration-500 w-28 sm:w-40 md:w-52

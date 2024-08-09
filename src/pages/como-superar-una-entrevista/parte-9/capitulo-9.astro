@@ -238,7 +238,7 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
       </li>
       <li>
         <strong>Particionamiento basado en claves (o en hash): </strong>
-        Utiliza alguna parte de los datos (por ejemplo, un ID) para particionarlos. Una forma muy sencilla de hacerlo es asignar N servidores y poner los datos en mod (clave, n). El problema es que el número de servidores es fijo. Añadir servidores adicionales significa reasignar todos los datos, una tarea muy costosa.
+        Utiliza alguna parte de los datos (por ejemplo, un ID) para particionarlos. Una forma muy sencilla de hacerlo es asignar N servidores y poner los datos en <code>mod(key, n)</code>. El problema es que el número de servidores es fijo. Añadir servidores adicionales significa reasignar todos los datos, una tarea muy costosa.
       </li>
       <li>
         <strong>Particionamiento basado en directorios: </strong>
@@ -318,7 +318,7 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
       Como su nombre indica, un programa MapReduce requiere que escribas un paso Map y un paso Reduce. Del resto se encarga el sistema.
     </p>
     <ul>
-      <li>Map toma algunos datos y emite un par &#60key, value>.</li>
+      <li>Map toma algunos datos y emite un par <code>&#60key, value></code>.</li>
       <li>Reduce toma una clave y un conjunto de valores asociados y los "reduce" de alguna manera, emitiendo una nueva clave y valor. Los resultados de esto pueden ser devueltos al programa Reduce para una mayor reducción.</li>
     </ul>
     <p>
@@ -357,11 +357,10 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
   <article>
     <h3>► Ejemplo de problema
     </h3>
-    <p>
-      Dada una lista de millones de documentos, ¿cómo encontrar todos los documentos que contienen una lista de palabras? Las palabras pueden aparecer en cualquier orden, pero deben ser palabras completas. Es decir, "libro" no coincide con "contable".
+    <p><em>Dada una lista de millones de documentos, ¿cómo encontrar todos los documentos que contienen una lista de palabras? Las palabras pueden aparecer en cualquier orden, pero deben ser palabras completas. Es decir, "libro" no coincide con "contable".</em>
     </p>
     <p>
-      Antes de empezar a resolver el problema, tenemos que saber si se trata de una operación que se realiza una sola vez, o si este procedimiento findWords se llamará repetidamente. Supongamos que vamos a llamar a findWords muchas veces para el mismo conjunto de documentos y, por lo tanto, podemos aceptar la carga del preprocesamiento.
+      Antes de empezar a resolver el problema, tenemos que saber si se trata de una operación que se realiza una sola vez, o si este procedimiento <code>findWords</code> se llamará repetidamente. Supongamos que vamos a llamar a <code>findWords</code> muchas veces para el mismo conjunto de documentos y, por lo tanto, podemos aceptar la carga del preprocesamiento.
     </p>
   </article>
   <article>
@@ -369,13 +368,19 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
       <strong>Paso 1</strong>
     </p>
     <p>
-      El primer paso es imaginar que sólo tenemos unas pocas docenas de documentos. ¿Cómo implementaríamos findWords en este caso? (Consejo: deténgase aquí e intente resolver esto usted mismo antes de seguir leyendo).
+      El primer paso es imaginar que sólo tenemos unas pocas docenas de documentos. ¿Cómo implementaríamos <code>findWords</code> en este caso? (Consejo: deténgase aquí e intente resolver esto usted mismo antes de seguir leyendo).
     </p>
+    <pre>
+      <code class="language-js">
+        "books" -> &#123doc2, doc3, doc6, doc8} 
+        "many" -> &#123docl, doc3, doc7, doc8, doc9}
+      </code>
+    </pre>
     <p>
       Una forma de hacerlo es preprocesar cada documento y crear un índice de tabla hash. Esta tabla hash asignaría desde una palabra a una lista de los documentos que contienen esa palabra.
     </p>
     <p>
-      Para buscar "muchos libros", basta con hacer una intersección entre los valores de "libros" y "muchos" y obtener como resultado {doc3, doc8}.
+      Para buscar "muchos libros", basta con hacer una intersección entre los valores de "libros" y "muchos" y obtener como resultado <code>&#123doc3, doc8}</code>.
     </p>
   </article>
   <article>
@@ -404,7 +409,7 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
       <strong>Paso 3</strong>
     </p>
     <p>
-      En el Paso 3, encontramos soluciones a cada una de estas cuestiones. Una solución es dividir las palabras alfabéticamente por palabra clave, de modo que cada máquina controle un rango de palabras (por ejemplo, desde "después" hasta "manzana").
+      En el Paso 3, encontramos soluciones a cada una de estas cuestiones. Una solución es dividir las palabras alfabéticamente por palabra clave, de modo que cada máquina controle un rango de palabras (por ejemplo, desde "<code>after</code>" hasta "<code>apple</code>").
     </p>
     <p>
       Podemos aplicar un algoritmo sencillo en el que recorremos las palabras clave por orden alfabético, almacenando tantos datos como sea posible en una máquina. Cuando esa máquina esté llena, podemos pasar a la siguiente.
@@ -413,13 +418,110 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
       La ventaja de este enfoque es que la tabla de consulta es pequeña y sencilla (ya que sólo debe especificar un rango de valores), y cada máquina puede almacenar una copia de la tabla de consulta. Sin embargo, la desventaja es que si se añaden nuevos documentos o palabras, es posible que tengamos que realizar un costoso cambio de palabras clave.
     </p>
     <p>
-      Para encontrar todos los documentos que coinciden con una lista de cadenas, primero ordenaríamos la lista y luego enviaríamos a cada máquina una petición de búsqueda de las cadenas que posee la máquina. Por ejemplo, si nuestra cadena es "after builds boat amaze banana", la máquina 1 recibiría una petición de búsqueda de &#123"after", "amaze"}.
+      Para encontrar todos los documentos que coinciden con una lista de cadenas, primero ordenaríamos la lista y luego enviaríamos a cada máquina una petición de búsqueda de las cadenas que posee la máquina. Por ejemplo, si nuestra cadena es "after builds boat amaze banana", la máquina 1 recibiría una petición de búsqueda de <code>&#123"after", "amaze"}</code>.
     </p>
     <p>
+      La máquina 1 busca los documentos que contienen "after" y "amaze" y realiza una intersección en estas listas de documentos. La máquina 3 hace lo mismo para &#123"banana", "boat", "builds"}, e interseca sus listas.
     </p>
     <p>
+      En el último paso, la máquina inicial realizaría una intersección sobre los resultados de la Máquina 1 y la Máquina 3. 
     </p>
     <p>
+      El siguiente diagrama explica este proceso.
+    </p>
+  </article>
+  <article>
+    <h3 class="border-y-2 border-black">Preguntas de la entrevista</h3>
+    <p>
+      Estas preguntas están diseñadas para reflejar una entrevista real, por lo que no siempre estarán bien definidas. Piense en las preguntas que le haría a su entrevistador y luego haga suposiciones razonables. Puede que hagas suposiciones diferentes a las nuestras y eso te lleve a un diseño muy diferente. No pasa nada.
+    </p>
+    <ul>
+      <li class="list-none">
+        <strong>9.1 Datos de stock: </strong>
+        Imagina que estás creando algún tipo de servicio al que llamarán hasta 1.000 aplicaciones cliente para obtener información sencilla sobre el precio de las acciones al final del día (apertura, cierre, máximo, mínimo). Puede suponer que ya dispone de los datos y que puede almacenarlos en el formato que desee. ¿Cómo diseñaría el servicio de cara al cliente que proporciona la información a las aplicaciones cliente? Usted es responsable del desarrollo, la puesta en marcha y la supervisión y el mantenimiento continuos del feed. Describa los diferentes métodos que ha considerado y por qué recomendaría su enfoque. Su servicio puede utilizar las tecnologías que desee y distribuir la información a las aplicaciones cliente mediante el mecanismo que elija.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #385, #396</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 372</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>9.2 Red social: </strong>
+        ¿Cómo diseñarías las estructuras de datos de una red social muy grande como Facebook o LinkedIn? Describa cómo diseñaría un algoritmo para mostrar el camino más corto entre dos personas (por ejemplo, Yo -> Bob -> Susana -> Jason -> Tu).
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #270, #285, #304, #321</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 374</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>9.3 Rastreador web: </strong>
+        Si estuvieras diseñando un rastreador web, ¿cómo evitarías entrar en bucles infinitos?
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #334, #353, #365</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 378</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>9.4 URL duplicadas: </strong>
+        Tienes 10 mil millones de URLs. ¿Cómo detecta los documentos duplicados? En este caso, "duplicado" significa que las URL son idénticas.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #326, #347</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 380</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>9.5 Caché: </strong>
+        Imagine un servidor web para un motor de búsqueda simplificado. Este sistema dispone de 100 máquinas para responder a las consultas de búsqueda, que luego pueden llamar mediante el proceso Search (string query)a otro grupo de máquinas para obtener realmente el resultado. La máquina que responde a una determinada consulta se elige al azar, por lo que no se puede garantizar que la misma máquina responda siempre a la misma petición. El método processSearch es muy caro. Diseña un mecanismo de caché para las consultas más recientes. Asegúrate de explicar cómo actualizarías la caché cuando cambien los datos.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #259, #274, #293, #311</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 381</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>9.6 Rango de ventas: </strong>
+        Una gran empresa de comercio electrónico desea listar los productos más vendidos, en general y por categoría. Por ejemplo, un producto podría ser el nº 1056 más vendido de todos, pero el nº 13 en "Equipamiento deportivo" y el nº 24 en "Seguridad". Describa cómo diseñaría este sistema.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #142, #158, #176, #189, #208, #223, #236, #244</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 385</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>9.7 Gestor financiero personal: </strong>
+        Explica cómo diseñarías un gestor financiero personal (como Mint.com). Este sistema se conectaría a tus cuentas bancarias, analizaría tus hábitos de gasto y te haría recomendaciones.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #762, #180, #199, #212, #247, #276</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 388</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>9.8 Pastebin: </strong>
+        Diseña un sistema como Pastebin, en el que un usuario puede introducir un texto y obtener una URL generada aleatoriamente para acceder a él.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #165, #184, #206, #232</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 392</strong></p>
+        </div>
+      </li>
+    </ul>
+    <p>
+      Preguntas adicionales: Diseño Orientado a Objetos (#7.7)
+    </p>
+    <p>
+      Las pistas comienzan en la página 662.
     </p>
   </article>
   <footer class="flex justify-end">
