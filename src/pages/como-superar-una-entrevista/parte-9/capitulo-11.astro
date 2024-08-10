@@ -6,7 +6,337 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
   <h2>Testing</h2>
   <article>
     <p>
+      Antes de que pases por alto este capítulo diciendo "pero yo no soy un tester", párate a pensar. El testing es una tarea importante para un ingeniero de software, y por esta razón, las preguntas sobre testing pueden surgir durante su entrevista. Por supuesto, si usted está solicitando puestos de pruebas (o Ingeniero de Software en Pruebas), entonces eso es una razón más por la que debe prestar atención.
     </p>
+    <p>
+      Los problemas de las pruebas suelen clasificarse en una de estas cuatro categorías: (1) Probar un objeto del mundo real (como un bolígrafo); (2) Probar una pieza de software; (3) Escribir código de prueba para una función; (4) Solucionar un problema existente. Trataremos cada uno de estos cuatro tipos.
+    </p>
+    <p>
+      Recuerde que los cuatro tipos requieren que usted no haga una suposición de que la entrada o el usuario va a jugar bien. Espera abusos y planifícalos.
+    </p>
+  </article>
+  <article>
+    <h3>► Qué busca el entrevistador</h3>
+    <p>
+      A primera vista, parece que las preguntas sobre pruebas se limitan a elaborar una extensa lista de casos de prueba. Y hasta cierto punto, es cierto. Tienes que elaborar una lista razonable de casos de prueba.
+    </p>
+    <p>
+      Pero además, los entrevistadores quieren comprobar lo siguiente:
+    </p>
+    <ul>
+      <li><em>Comprensión general: </em>
+        ¿Es usted una persona que entiende lo que el software es en realidad? ¿Puede priorizar correctamente los casos de prueba? Por ejemplo, supongamos que te piden que pruebes un sistema de comercio electrónico como Amazon. Está muy bien asegurarse de que las imágenes de los productos aparecen en el lugar correcto, pero es aún más importante que los pagos funcionen de forma fiable, que los productos se añadan a la cola de envío y que nunca se cobre dos veces a los clientes.
+      </li>
+      <li><em>Saber cómo encajan las piezas: </em>
+        ¿Sabe cómo funciona el software y cómo puede encajar en un ecosistema más amplio? Supongamos que te piden que pruebes las hojas de cálculo de Google. Es importante que pruebes a abrir, guardar y editar documentos. Pero Google Spreadsheets forma parte de un ecosistema más amplio. Debes probar la integración con Gmail, con plug-ins y con otros componentes.
+      </li>
+      <li><em>Organización: </em>
+        ¿Enfocas el problema de forma estructurada o te limitas a soltar cualquier cosa que se te pase por la cabeza? Algunos candidatos, cuando se les pide que planteen casos de prueba para una cámara, se limitan a decir cualquier cosa que se les pase por la cabeza. Un buen candidato dividirá las partes en categorías como Hacer fotos, Gestión de imágenes, Ajustes, etcétera. Este enfoque estructurado también te ayudará a realizar un trabajo más exhaustivo a la hora de crear los casos de prueba.
+      </li>
+      <li><em>Practicidad: </em>
+        ¿Puede crear planes de prueba razonables? Por ejemplo, si un usuario informa de que el software se bloquea al abrir una imagen concreta y usted se limita a decirle que reinstale el software, eso no suele ser muy práctico. Tus planes de pruebas tienen que ser factibles y realistas para que una empresa pueda ponerlos en práctica.
+      </li>
+    </ul>
+    <p>
+      Demostrar estos aspectos demostrará que serás un miembro valioso del equipo de pruebas.
+    </p>
+  </article>
+  <article>
+    <h3>► Probar un objeto del mundo real</h3>
+    <p>
+      Algunos candidatos se sorprenden cuando se les pregunta cómo probar un bolígrafo. Al fin y al cabo, deberían probar software, ¿no? Tal vez, pero estas preguntas del "mundo real" siguen siendo muy comunes. Veámoslo con un ejemplo.
+    </p>
+    <p>
+      Pregunta: ¿Cómo probarías un clip?
+    </p>
+  </article>
+  <article>
+    <p><strong>Paso 1: ¿Quién lo va a utilizar? ¿Y por qué?</strong>
+    </p>
+    <p>
+      Tienes que hablar con tu entrevistador sobre quién va a utilizar el producto y con qué fin. Puede que la respuesta no sea la que tú piensas. La respuesta podría ser "por los profesores, para sujetar papeles" o "por los artistas, para doblarlo en forma de animal". La respuesta a esta pregunta determinará la forma de abordar las preguntas restantes.
+    </p>
+  </article>
+  <article>
+    <p><strong>Paso 2: ¿Cuáles son los casos de uso?</strong>
+    </p>
+    <p>
+      Le resultará útil hacer una lista de los casos de uso. En este caso, el caso de uso podría ser simplemente unir papeles de forma que no resulten dañados (para el papel).
+    </p>
+    <p>
+      Para otras preguntas, puede haber varios casos de uso. Por ejemplo, puede que el producto tenga que ser capaz de enviar y recibir contenidos, o escribir y borrar, etc.
+    </p>
+  </article>
+  <article>
+    <p><strong>Step 3: What are the bounds of use?</strong>
+    </p>
+    <p>
+      The bounds of use might mean holding up to thirty sheets of paper in a single usage without permanent damage (e.g., bending), and thirty to fifty sheets with minimal permanent bending.
+    </p>
+    <p>
+      The bounds also extend to environmental factors as well. For example, should the paperclip work during very warm temperatures (90 - 110 degrees Fahrenheit)? What about extreme cold?
+    </p>
+  </article>
+  <article>
+    <p><strong>Step 4: What are the stress/ failure conditions?</strong>
+    </p>
+    <p>
+      No product is fail-proof, so analyzing failure conditions needs to be part of your testing. A good discussion to have with your interviewer is about when it's acceptable (or even necessary) for the product to fail, and what failure should mean.
+    </p>
+    <p>
+      For example, if you were testing a laundry machine, you might decide that the machine should be able to handle at least 30 shirts or pants. Loading 30 - 45 pieces of clothing may result in minor failure, such as the clothing being inadequately cleaned. At more than 45 pieces of clothing, extreme failure might be accept­ able. However, extreme failure in this case should probably mean the machine never turning on the water. It should certainly not mean a flood or a fire.
+    </p>
+  </article>
+  <article>
+    <p><strong>Paso 5: ¿Cómo realizaría las pruebas?</strong>
+    </p>
+    <p>
+      En algunos casos, también puede ser importante discutir los detalles de la realización de las pruebas. Por ejemplo, si necesita asegurarse de que una silla puede soportar un uso normal durante cinco años, probablemente no pueda colocarla en una casa y esperar cinco años. En su lugar, habría que definir qué es un uso "normal" (¿cuántas "sentadas" al año en el asiento? ¿y en el reposabrazos?). A continuación, además de realizar algunas pruebas manuales, es probable que se necesite una máquina que automatice parte del uso.
+    </p>
+  </article>
+  <article>
+    <h3>► Probar un programa informático</h3>
+    <p>
+      Probar un programa informático es muy parecido a probar un objeto del mundo real. La principal diferencia es que las pruebas de software suelen hacer más hincapié en los detalles de la realización de las pruebas.
+    </p>
+    <p>
+      Tenga en cuenta que las pruebas de software tienen dos aspectos fundamentales:
+    </p>
+    <ul>
+      <li><em>Pruebas manuales vs. pruebas automatizadas: </em>
+        En un mundo ideal, nos encantaría automatizar todo, pero eso rara vez es factible. Algunas cosas son simplemente mucho mejores con las pruebas manuales porque algunas características son demasiado cualitativas para que un ordenador las examine con eficacia (como si el contenido representa pornografía). Además, mientras que un ordenador sólo puede reconocer los problemas que se le han indicado, la observación humana puede revelar nuevos problemas que no se han examinado específicamente. Tanto los humanos como los ordenadores forman una parte esencial del proceso de pruebas.
+      </li>
+      <li><em>Pruebas de caja negra frente a pruebas de caja blanca: </em>
+        Esta distinción se refiere al grado de acceso que tenemos al software. En las pruebas de caja negra, nos dan el software tal cual y tenemos que probarlo. Con las pruebas de caja blanca, tenemos acceso programático adicional para probar funciones individuales. También podemos automatizar algunas pruebas de caja negra, aunque sin duda es mucho más difícil.
+      </li>
+    </ul>
+    <p>
+      Veamos un enfoque de principio a fin.
+    </p>
+  </article>
+  <article>
+    <p><strong>Paso 1: ¿Estamos haciendo Pruebas de Caja Negra o Pruebas de Caja Blanca?</strong></p>
+    <p>
+      Aunque esta pregunta a menudo se puede retrasar a un paso posterior, me gusta sacarla del camino desde el principio. Compruebe con su entrevistador si está haciendo pruebas de caja negra o pruebas de caja blanca, o ambas.
+    </p>
+  </article>
+  <article>
+    <p><strong>Paso 2: ¿Quién lo utilizará? ¿Y por qué?</strong></p>
+    <p>
+      Los programas informáticos suelen tener uno o varios usuarios objetivo, y las funciones se diseñan teniendo esto en cuenta. Por ejemplo, si le piden que pruebe un software de control parental en un navegador web, los usuarios a los que va dirigido son tanto los padres (que aplican el bloqueo) como los hijos (que son los destinatarios del bloqueo). También puede haber "invitados" (personas que no deberían aplicar ni recibir el bloqueo).
+    </p>
+  </article>
+  <article>
+    <p><strong>Paso 3: ¿Cuáles son los casos de uso?</strong></p>
+    <p>
+      En el escenario del bloqueo por software, los casos de uso de los padres incluyen la instalación del software, la actualización de los controles, la eliminación de los controles y, por supuesto, su propio uso personal de Internet. Para los niños, los casos de uso incluyen el acceso a contenidos legales y a contenidos "ilegales".
+    </p>
+    <p>
+      Recuerda que no te corresponde a ti decidir mágicamente los casos de uso. Es una conversación que debes mantener con tu entrevistador.
+    </p>
+  </article>
+  <article>
+    <p><strong>Paso 4: ¿Cuáles son los límites de uso?</strong></p>
+    <p>
+      Ahora que tenemos definidos los casos de uso imprecisos, tenemos que averiguar qué significan exactamente. ¿Qué significa bloquear un sitio web? ¿Debe bloquearse sólo la página "ilegal" o todo el sitio web? ¿Se supone que la aplicación "aprende" qué contenidos son malos, o se basa en una lista blanca o negra? Si se supone que aprende qué es un contenido inapropiado, ¿qué grado de falsos positivos o falsos negativos es aceptable?
+    </p>
+  </article>
+  <article>
+    <p><strong>Paso 5: ¿Cuáles son las condiciones de estrés o de fallo?</strong></p>
+    <p>
+      Cuando el software falla -lo que inevitablemente ocurrirá-, ¿qué aspecto debe tener el fallo? Evidentemente, el fallo del software no debe hacer que el ordenador se bloquee. En su lugar, es probable que el software sólo permita el acceso a un sitio bloqueado o prohíba el acceso a un sitio permitido. En este último caso, es posible que desee discutir la posibilidad de una anulación selectiva
+      con una contraseña de los padres.
+    </p>
+  </article>
+  <article>
+    <p><strong>Paso 6: ¿Cuáles son los casos de prueba? ¿Cómo realizar las pruebas?</strong></p>
+    <p>
+      Aquí es donde realmente entran en juego las distinciones entre pruebas manuales y automatizadas, y entre pruebas de caja negra y de caja blanca.
+    </p>
+    <p>
+      Los pasos 3 y 4 deberían haber definido a grandes rasgos los casos de uso. En el paso 6, los definiremos con más detalle y hablaremos de cómo realizar las pruebas. ¿Qué situaciones exactas está probando? ¿Cuáles de estos pasos pueden automatizarse? ¿Cuáles requieren intervención humana?
+    </p>
+    <p>
+      Recuerda que, aunque la automatización permite realizar pruebas muy potentes, también tiene algunos inconvenientes importantes. Por lo general, las pruebas manuales deben formar parte de los procedimientos de prueba.
+    </p>
+    <p>
+      Cuando repases esta lista, no te limites a enumerar todos los escenarios que se te ocurran. Es desorganizado y seguro que se te escapan categorías importantes. En lugar de eso, hazlo de forma estructurada. Divida las pruebas en los componentes principales y parta de ahí. No sólo obtendrás una lista más completa de casos de prueba, sino que también demostrarás que eres una persona estructurada y metódica.
+    </p>
+  </article>
+  <article>
+    <h3>► Probar una función</h3>
+    <p>
+      En muchos sentidos, probar una función es el tipo de prueba más sencillo. La conversación suele ser más breve y menos vaga, ya que las pruebas suelen limitarse a validar la entrada y la salida.
+    </p>
+    <p>
+      Sin embargo, no hay que pasar por alto el valor de una conversación con el entrevistador. Deberías discutir cualquier suposición con tu entrevistador, particularmente con respecto a cómo manejar situaciones específicas.
+    </p>
+    <p>
+      Suponga que le piden que escriba código para probar sort (int[] array), que ordena un array de enteros. Usted podría proceder de la siguiente manera.
+    </p>
+  </article>
+  <article>
+    <p><strong>Paso 1: Definir los casos de prueba</strong></p>
+    <p>
+      En general, debe pensar en los siguientes tipos de casos de prueba:
+    </p>
+    <ul>
+      <li>
+        <em>El caso normal: </em>
+        ¿Genera la salida correcta para las entradas típicas? No olvide tener en cuenta los posibles problemas. Por ejemplo, como la ordenación a menudo requiere algún tipo de partición, es razonable pensar que el algoritmo puede fallar en matrices con un número impar de elementos, ya que no se pueden particionar uniformemente. Tu caso de prueba debería incluir ambos ejemplos.
+      </li>
+      <li>
+        <em>Los extremos: </em>
+        ¿Qué pasa si pasas una matriz vacía? ¿O una matriz muy pequeña (de un elemento)? ¿Y si pasas una muy grande?
+      </li>
+      <li>
+        <em>Nulos y entradas "ilegales": </em>
+        Merece la pena pensar en cómo debe comportarse el código cuando recibe una entrada ilegal. Por ejemplo, si estás probando una función para generar el enésimo número de Fibonacci, tus casos de prueba probablemente deberían incluir la situación en la que n es negativo.
+      </li>
+      <li>
+        <em>Entradas extrañas: </em>
+        A veces surge un cuarto tipo de entrada: la entrada extraña. ¿Qué pasa cuando pasas un array ya ordenado? ¿O una matriz ordenada en orden inverso?
+      </li>
+    </ul>
+    <p>
+      Para generar estas pruebas es necesario conocer la función que se está escribiendo. Si no tienes claras las restricciones, tendrás que preguntárselo primero a tu entrevistador.
+    </p>
+  </article>
+  <article>
+    <p><strong>Paso 2: Definir el resultado esperado</strong></p>
+    <p>
+      A menudo, el resultado esperado es obvio: la salida correcta. Sin embargo, en algunos casos, puede que quieras validar aspectos adicionales. Por ejemplo, si el método sort devuelve una nueva copia ordenada del array, probablemente deberías validar que el array original no ha sido tocado.
+    </p>
+  </article>
+  <article>
+    <p><strong>Paso 3: Escribir el código de prueba</strong></p>
+    <p>
+      Una vez definidos los casos de prueba y los resultados, escribir el código para implementar los casos de prueba debería ser bastante sencillo:
+    </p>
+  </article>
+  <article>
+    <h3>► Preguntas de solución de problemas</h3>
+    <p>
+      Un último tipo de pregunta consiste en explicar cómo depurar o solucionar un problema existente. Muchos candidatos se resisten a este tipo de preguntas y dan respuestas poco realistas como "reinstale el software".
+    </p>
+    <p>
+      Veamos este problema con un ejemplo: Estás trabajando en el equipo de Google Chrome cuando recibes un informe de error: Chrome se bloquea al iniciarse. ¿Qué harías?
+    </p>
+    <p>
+      Reinstalar el navegador podría resolver el problema de este usuario, pero no ayudaría a los demás usuarios que podrían estar experimentando el mismo problema. Tu objetivo es entender qué está pasando realmente, para que los desarrolladores puedan solucionarlo.
+    </p>
+  </article>
+  <article>
+    <p><strong>Paso 1: Comprender el escenario</strong></p>
+    <p>
+      Lo primero que debe hacer es formular preguntas para comprender la situación lo mejor posible.
+    </p>
+    <ul>
+      <li>¿Desde cuándo tiene el usuario este problema?</li>
+      <li>¿De qué versión de navegador se trata? ¿Qué sistema operativo?</li>
+      <li>¿Sucede el problema de forma constante o con qué frecuencia? ¿Cuándo se produce?</li>
+      <li>¿Hay algún informe de error que se lance?</li>
+    </ul>
+  </article>
+  <article>
+    <p><strong>Paso 2: Desglose del problema</strong></p>
+    <p>
+      Ahora que conoce los detalles de la situación, debe dividir el problema en unidades que se puedan probar. En este caso, puede imaginar el flujo de la situación de la siguiente manera:
+    </p>
+    <ol>
+      <li>Vaya al menú Inicio de Windows.</li>
+      <li>Haga clic en el icono Chrome.</li>
+      <li>Se inicia el navegador.</li>
+      <li>El navegador carga la configuración.</li>
+      <li>El navegador emite una solicitud HTIP para la página de inicio.</li>
+      <li>El navegador recibe una respuesta HTIP.</li>
+      <li>El navegador analiza la página web.</li>
+      <li>El navegador muestra el contenido.</li>
+    </ol>
+    <p>
+      En algún momento de este proceso, algo falla y el navegador se bloquea. Un probador experto iteraría a través de los elementos de este escenario para diagnosticar el problema.
+    </p>
+  </article>
+  <article>
+    <p>
+      <strong>Paso 3: Crear pruebas específicas y manejables</strong>
+    </p>
+    <p>
+      Cada uno de los componentes anteriores debe tener instrucciones realistas: cosas que puede pedir al usuario que haga, o cosas que puede hacer usted mismo (como replicar los pasos en su propia máquina). En el mundo real, tratará con clientes y no puede darles instrucciones que no puedan o no quieran hacer.
+    </p>
+  </article>
+  <article>
+    <h3 class="border-y-2 border-black">Preguntas de la entrevista</h3>
+    <ul>
+      <li class="list-none">
+        <strong>11.1 Error: </strong>
+        Encuentra el error o errores en el siguiente código:
+        <pre>
+          <code class="language-js">
+            unsigned int i;
+            for (i = 100; i >= 0; --i) 
+              printf("%d\n", i);
+          </code>
+        </pre>
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #257, #299, #362</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 417</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>11.2 Fallos aleatorios: </strong>
+        Te dan el código fuente de una aplicación que se bloquea al ejecutarla. Después de ejecutarla diez veces en un depurador, descubres que nunca se bloquea en el mismo lugar. La aplicación es monohilo y sólo utiliza la librería estándar C. ¿Qué errores de programación podrían estar causando este fallo? ¿Cómo comprobarías cada uno de ellos?
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #325</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 417</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>11.3 Prueba de ajedrez: </strong>
+        Tenemos el siguiente método utilizado en una partida de ajedrez: <code>boolean canMoveTo(int x, int y)</code>. Este método forma parte de la clase <code>Piece</code> y devuelve si la pieza puede o no moverse a la posición (<code>x, y</code>). Explica cómo comprobarías este método.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #329 #401</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 418</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>11.4 Sin herramientas de prueba: </strong>
+        ¿Cómo probarías la carga de una página web sin utilizar herramientas de prueba?
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #313, #345</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 419</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>11.5 Probar un bolígrafo: </strong>
+        ¿Cómo probaría un bolígrafo?
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #140, #164, #220</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 420</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>11.6 Probar un cajero automático: </strong>
+        ¿Cómo probaría un cajero automático en un sistema bancario distribuido?
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #210, #225, #268, #349, #393</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 421</strong></p>
+        </div>
+      </li>
+    </ul>
+    <p></p>
   </article>
   <footer class="flex justify-end">
     <a class="font-khand font-bold text-3xl py-4 sm:py-8 md:py-12 sm:text-4xl md:text-5xl" href="capitulo-12">

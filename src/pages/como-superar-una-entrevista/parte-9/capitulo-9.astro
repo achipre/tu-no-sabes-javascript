@@ -418,10 +418,10 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
       La ventaja de este enfoque es que la tabla de consulta es pequeña y sencilla (ya que sólo debe especificar un rango de valores), y cada máquina puede almacenar una copia de la tabla de consulta. Sin embargo, la desventaja es que si se añaden nuevos documentos o palabras, es posible que tengamos que realizar un costoso cambio de palabras clave.
     </p>
     <p>
-      Para encontrar todos los documentos que coinciden con una lista de cadenas, primero ordenaríamos la lista y luego enviaríamos a cada máquina una petición de búsqueda de las cadenas que posee la máquina. Por ejemplo, si nuestra cadena es "after builds boat amaze banana", la máquina 1 recibiría una petición de búsqueda de <code>&#123"after", "amaze"}</code>.
+      Para encontrar todos los documentos que coinciden con una lista de cadenas, primero ordenaríamos la lista y luego enviaríamos a cada máquina una petición de búsqueda de las cadenas que posee la máquina. Por ejemplo, si nuestra cadena es "<code>after builds boat amaze banana</code>", la máquina 1 recibiría una petición de búsqueda de <code>&#123"after", "amaze"}</code>.
     </p>
     <p>
-      La máquina 1 busca los documentos que contienen "after" y "amaze" y realiza una intersección en estas listas de documentos. La máquina 3 hace lo mismo para &#123"banana", "boat", "builds"}, e interseca sus listas.
+      La máquina 1 busca los documentos que contienen "<code>after</code>" y "<code>amaze</code>" y realiza una intersección en estas listas de documentos. La máquina 3 hace lo mismo para <code>&#123"banana", "boat", "builds"}</code>, e interseca sus listas.
     </p>
     <p>
       En el último paso, la máquina inicial realizaría una intersección sobre los resultados de la Máquina 1 y la Máquina 3. 
@@ -429,6 +429,33 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
     <p>
       El siguiente diagrama explica este proceso.
     </p>
+    <div class="flex items-center flex-col gap-y-4">
+      <div class="w-[480px] border-2 text-center border-slate-700">
+        <p><code class="language-js">"after builds boat amaze banana"</code></p>
+      </div>
+      <div class="flex gap-8">
+        <p class="border-2 w-96 text-center border-slate-700"><code class="language-js">Machine 1: "after amaze"</code></p>
+        <p class="border-2 w-96 text-center border-slate-700"><code class="language-js">Machine 3: "builds boat banana"</code></p>
+      </div>
+      <div class="flex gap-8">
+        <p class="border-2 w-96 text-center flex flex-col justify-center border-slate-700">
+          <code class="language-js">"after" -> doc1, docs, doc7</code>
+          <code class="language-js">"amaze" -> doc2, docs, doc7</code>
+        </p>
+        <p class="border-2 w-96 text-center border-slate-700">
+          <code class="language-js">"builds" -> doc3, doc4, doc5</code>
+          <code class="language-js">"boat" -> doc2, doc3, doc5</code>
+          <code class="language-js">"banana" -> doc3, doc4, doc5</code>
+        </p>
+      </div>
+      <div class="flex gap-8">
+        <p class="border-2 w-96 text-center border-slate-700"><code class="language-js">Machine 1: "after amaze"</code></p>
+        <p class="border-2 w-96 text-center border-slate-700"><code class="language-js">Machine 3: "builds boat banana"</code></p>
+      </div>
+      <div class="w-[480px] border-2 text-center border-slate-700">
+        <p><code class="language-js">solution = docs</code></p>
+      </div>
+    </div>
   </article>
   <article>
     <h3 class="border-y-2 border-black">Preguntas de la entrevista</h3>
@@ -478,7 +505,7 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
       </li>
       <li class="list-none">
         <strong>9.5 Caché: </strong>
-        Imagine un servidor web para un motor de búsqueda simplificado. Este sistema dispone de 100 máquinas para responder a las consultas de búsqueda, que luego pueden llamar mediante el proceso Search (string query)a otro grupo de máquinas para obtener realmente el resultado. La máquina que responde a una determinada consulta se elige al azar, por lo que no se puede garantizar que la misma máquina responda siempre a la misma petición. El método processSearch es muy caro. Diseña un mecanismo de caché para las consultas más recientes. Asegúrate de explicar cómo actualizarías la caché cuando cambien los datos.
+        Imagine un servidor web para un motor de búsqueda simplificado. Este sistema dispone de 100 máquinas para responder a las consultas de búsqueda, que luego pueden llamar mediante el <code>processSearch(string query)</code> a otro grupo de máquinas para obtener realmente el resultado. La máquina que responde a una determinada consulta se elige al azar, por lo que no se puede garantizar que la misma máquina responda siempre a la misma petición. El método <code>processSearch</code> es muy caro. Diseña un mecanismo de caché para las consultas más recientes. Asegúrate de explicar cómo actualizarías la caché cuando cambien los datos.
         <div class="flex justify-between items-end gap-2">
           <p><em>Pistas: #259, #274, #293, #311</em> 
           </p>
