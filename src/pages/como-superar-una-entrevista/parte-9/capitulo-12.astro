@@ -6,217 +6,507 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
   <h2>C y C++</h2>
   <article>
     <p>
+      Un buen entrevistador no te pedirá que programes en un lenguaje que no conoces. Con suerte, si te piden que programes en C++, figurará en tu currículum. Si no recuerdas todas las APls, no te preocupes: a la mayoría de los entrevistadores (aunque no a todos) no les importa demasiado. No obstante, te recomendamos que estudies la sintaxis básica de C++ para que puedas abordar estas preguntas con facilidad.
     </p>
   </article>
   <article>
-    <h3>► </h3>
+    <h3>► Clases y herencia</h3>
     <p>
+      Aunque las clases de C++ tienen características similares a las de otros lenguajes, a continuación repasaremos parte de la sintaxis.
     </p>
     <p>
+      El siguiente código muestra la implementación de una clase básica con herencia.
     </p>
+    <pre>
+      <code class="language-js">
+        #include &#60iostream>
+        using namespace std;
+
+        #define NAME_SIZE 50 // Defines a macro
+
+        class Person &#123
+          int id; // all members are private by default 
+          char name[NAME_SIZE];
+        
+        public:
+          void aboutMe() &#123
+          cout &#60&#60 "I am a person.";
+          }
+        }
+
+        class Student : public Person &#123
+          public:
+            void aboutMe() &#123
+              cout &#60&#60 "I am a student.";
+          }
+        }
+
+        int main() &#123
+          Student * p = new Student();
+          p -> aboutMe(); // prints "I am a student."
+          delete p; // Importante! Asegúrese de borrar la memoria asignada.
+          return 0;
+        }
+      </code>
+    </pre>
     <p>
-    </p>
-  </article>
-  <article>
-    <h3>► </h3>
-    <p>
-    </p>
-    <p>
-    </p>
-    <p>
-    </p>
-    <p>
-    </p>
-    <p>
-    </p>
-  </article>
-  <article>
-    <h3>► </h3>
-    <p>
-    </p>
-    <p>
-    </p>
-    <p>
-    </p>
-    <p>
-    </p>
-    <p>
-    </p>
-    <p>
-    </p>
-    <p>
-    </p>
-  </article>
-  <article>
-    <h3>► </h3>
-    <p>
-    </p>
-    <p>
-    </p>
-    <p>
-    </p>
-    <p>
+      Todos los miembros de datos y métodos son privados por defecto en C++. Esto se puede modificar introduciendo la palabra clave <code>public</code>.
     </p>
   </article>
   <article>
-    <h3>► </h3>
+    <h3>► Constructores y destructores</h3>
     <p>
+      El constructor de una clase se llama automáticamente al crear un objeto. Si no se define ningún constructor, el compilador genera automáticamente uno llamado Constructor por Defecto. Alternativamente, podemos definir nuestro propio constructor.
+    </p>
+    <p>
+      Si sólo necesitas inicializar tipos primitivos, una forma sencilla de hacerlo es la siguiente:
+    </p>
+    <pre>
+      <code class="language-js">
+        Person(int a) &#123
+          id = a
+        }
+      </code>
+    </pre>
+    <p>
+      Esto funciona para tipos primitivos, pero puede que quieras hacer esto:
+    </p>
+    <pre>
+      <code class="language-js">
+        Person(int a) : id(a) &#123
+          ...
+        }
+      </code>
+    </pre>
+    <p>
+      El <code>id</code> del miembro de datos se asigna antes de que se cree el objeto real y antes de que se llame al resto del código del constructor. Este enfoque es necesario cuando los campos son constantes o tipos de clase.
+    </p>
+    <p>
+      El destructor se limpia al borrar el objeto y se llama automáticamente cuando se destruye un objeto. No puede tomar un argumento ya que no llamamos explícitamente a un destructor.
+    </p>
+    <pre>
+      <code class="language-js">
+        -Person() &#123
+          delete obj; // free any memory allocated within class
+        }
+      </code>
+    </pre>
+  </article>
+  <article>
+    <h3>► Funciones virtuales</h3>
+    <p>
+      En un ejemplo anterior, definimos p como de tipo Estudiante:
+    </p>
+    <pre>
+      <code class="language-js">
+        Student * p = new Student();
+        p -> aboutMe();
+      </code>
+    </pre>
+    <p>
+      ¿Qué pasaría si definimos p como <code>Persona*</code>?
+    </p>
+    <pre>
+      <code class="language-js">
+        Person * p = new Student();
+        p -> aboutMe();
+      </code>
+    </pre>
+    <p>
+      En este caso, se imprimiría <code>"I am a person"</code>. Esto se debe a que la función <code>aboutMe</code> se resuelve en tiempo de compilación, en un mecanismo conocido como <em>static binding</em>.
+    </p>
+    <p>
+      Si queremos asegurarnos de que se llama a la implementación de <code>aboutMe</code> de <code>Student</code>, podemos definir <code>aboutMe</code> en la clase Person para que sea <code>virtual</code>.
+    </p>
+    <pre>
+      <code class="language-js">
+        class Person #123
+          ...
+          virtual void aboutMe() &#123
+            cout &#60&#60 "I am a person.";
+          }
+        };
+
+        class Student : public Person &#123
+          public:
+            void aboutMe() &#123
+            cout &#60&#60 "I am a student.";  
+          }
+        };
+      </code>
+    </pre>
+    <p>
+      Otro uso de las funciones virtuales es cuando no podemos (o no queremos) implementar un método de la clase padre. Imaginemos, por ejemplo, que queremos que <code>Student</code> y <code>Teacher</code> hereden de <code>Person</code> para poder implementar un método común como addCourse(<code>string s</code>). Llamar a <code>addCourse</code> en <code>Person</code>, sin embargo, no tendría mucho sentido ya que la implementación depende de si el objeto es realmente un <code>Student</code> o un <code>Teacher</code>.
+    </p>
+    <p>
+      En este caso, podríamos querer que addCourse fuera una función virtual definida dentro de <code>Person</code>, dejando la implementación a la subclase.
+    </p>
+    <pre>
+      <code class="language-js">
+        class Person &#123
+          int id; // todos los miembros son privados por defecto
+          char name[NAME_SIZE];
+          public:
+          virtual void aboutMe() &#123
+            cout &#60&#60 "I am a person." &#60&#60 end1;
+          }
+          virtual bool addCourse(string s) = 0;   
+        };
+
+        class Student : public Person &#123
+          public:
+          void aboutMe() &#123
+            cout &#60&#60 "I am a student." &#60&#60 end1;
+          }
+
+          bool addCourse(string s) &#123
+            cout &#60&#60 "Added course " &#60&#60 s &#60&#60 "to student." &#60&#60 end1;
+            retorn true;
+          }
+        };
+
+        int main() &#123
+          Person * p = new Student();
+          p->aboutMe(); // prints "I am a student."
+          p->addCourse("History");
+          delete p;
+        }
+      </code>
+    </pre>
+    <p>
+      Nótese que al definir addCourse como una «función virtual pura»- Persona es ahora una clase abstracta y no podemos instanciarla.
     </p>
   </article>
   <article>
-    <h3>► </h3>
+    <h3>► Destructor virtual</h3>
     <p>
+      La función virtual introduce naturalmente el concepto de «destructor virtual». Supongamos que queremos implementar un método destructor para <code>Person</code> y <code>Student</code>. Una solución ingenua podría ser la siguiente:
+    </p>
+    <pre>
+      <code class="language-js">
+        class Person &#123
+          public:
+            ~Person() &#123
+              cout &#60&#60 "Deleting a person." &#60&#60 end1;
+          }
+        }
+
+        class Student public Person &#123
+          public:
+            ~Student() &#123
+              cout &#60&#60 "Deleting a student." &#60&#60 end1;
+          }
+        }
+
+        int main() &#123
+          Person * p new Student();
+          delete p; // prints "Deleting a person."
+        }
+      </code>
+    </pre>
+    <p>
+      Como en el ejemplo anterior, dado que p es una Persona, se llama al destructor de la clase Persona. Esto es problemático porque la memoria de Student puede no ser limpiada.
+    </p>
+    <p>
+      Para solucionarlo, simplemente definimos que el destructor de Persona sea virtual.
+    </p>
+    <pre>
+      <code class="language-js">
+        class Person &#123
+          public:
+            virtual ~Person() &#123
+              cout &#60&#60 "Deleting a person." &#60&#60 end1;
+          }
+        }
+
+        class Student public Person &#123
+          public:
+            ~Student() &#123
+              cout « "Deleting a student." &#60&#60 end1;
+          }
+        }
+
+        int main() &#123
+          Person * p new Student();
+          delete p;
+        }
+      </code>
+    </pre>
+    <p>
+      Esto producirá lo siguiente:
+      
+    </p>
+    <pre>
+      <code class="language-js">
+        Borrando un estudiante. 
+        Borrando una persona.
+      </code>
+    </pre>
+  </article>
+  <article>
+    <h3>► Valores por defecto</h3>
+    <p>
+      Las funciones pueden especificar valores por defecto, como se muestra a continuación. Tenga en cuenta que todos los parámetros por defecto deben estar en el lado derecho de la declaración de la función, ya que no habría otra manera de especificar cómo se alinean los parámetros
+    </p>
+    <pre>
+      <code class="language-js">
+        int func(int a, int b = 3) &#123
+          x = a;
+          y = b;
+          return a + b;
+        }
+
+        w = func(4);
+        z = func(4, 5);
+      </code>
+    </pre>
+  </article>
+  <article>
+    <h3>► Sobrecarga de operadores</h3>
+    <p>
+      La sobrecarga de operadores nos permite aplicar operadores como + a objetos que, de otro modo, no soportarían estas operaciones. Por ejemplo, si quisiéramos fusionar dos BookShelves en uno, podríamos sobrecargar el operador + de la siguiente manera.
+    </p>
+    <pre>
+      <code class="language-js">
+        Bookshelf BookShelf::operator+(BookShelf &other) &#123 ... }
+      </code>
+    </pre>
+  </article>
+  <article>
+    <h3>► Punteros y referencias</h3>
+    <p>
+      Un puntero contiene la dirección de una variable y puede utilizarse para realizar cualquier operación que pueda hacerse directamente sobre la variable, como acceder a ella y modificarla.
+    </p>
+    <p>
+      Dos punteros pueden ser iguales entre sí, de modo que al cambiar el valor de uno también cambia el valor del otro (ya que, de hecho, apuntan a la misma dirección).
+    </p>
+    <pre>
+      <code class="language-js">
+        int * p new int;
+        *p = 7;
+        int * q = p;
+        *p = 8;
+        cout &#60&#60 *q; // prints 8
+      </code>
+    </pre>
+    <p>
+      Tenga en cuenta que el tamaño de un puntero varía en función de la arquitectura: 32 bits en una máquina de 32 bits y 64 bits en una máquina de 64 bits. Presta atención a esta diferencia, ya que es habitual que los entrevistadores pregunten cuánto espacio ocupa exactamente una estructura de datos.
     </p>
   </article>
   <article>
-    <h3>► </h3>
+    <p><strong>Referencias</strong></p>
     <p>
+      Una referencia es otro nombre (un alias) para un objeto preexistente y no tiene memoria propia. Por ejemplo
+    </p>
+    <pre>
+      <code class="language-js">
+        int a = 5;
+        int & b = 5;
+        b = 7;
+        cout &#60&#60 *q; // prints 8
+      </code>
+    </pre>
+    <p>
+      En la línea 2 anterior, b es una referencia a a; si se modifica b también se modificará a.
     </p>
     <p>
+      No se puede crear una referencia sin especificar a qué parte de la memoria se refiere. Sin embargo, puedes crear una referencia independiente como se muestra a continuación:
     </p>
+    <pre>
+      <code class="language-js">
+        /* asigna memoria para almacenar 12 y hace b una referencia a esta
+          * piece of memory. */
+          const int & b = 12;
+      </code>
+    </pre>
     <p>
+      A diferencia de los punteros, las referencias no pueden ser nulas y no pueden reasignarse a otra parte de la memoria.
     </p>
   </article>
   <article>
-    <p><strong></strong></p>
+    <p><strong>Aritmética de punteros</strong></p>
     <p>
+      A menudo se ve a los programadores realizar sumas en un puntero, como lo que se ve a continuación:
     </p>
+    <pre>
+      <code class="language-js">
+        int * p = new int[2];
+        p[0] 0;
+        p[1] 1;
+        p++
+        cout &#60&#60 *p; // Outputs 1
+      </code>
+    </pre>
     <p>
-    </p>
-    <p>
-    </p>
-    <p>
+      Realizar p++ saltará hacia delante <code>sizeof(int)</code> bytes, de tal forma que el código producirá 1. Si p fuera de otro tipo, saltaría hacia delante tantos bytes como el tamaño de la estructura de datos.
     </p>
   </article>
   <article>
-    <p><strong></strong></p>
+    <h3>► Plantillas</h3>
     <p>
+      Las plantillas son una forma de reutilizar código para aplicar la misma clase a distintos tipos de datos. Por ejemplo, podríamos tener una estructura de datos tipo lista que quisiéramos utilizar para listas de varios tipos. El siguiente código implementa esto con la clase <code>Shiftedlist</code>.
     </p>
-    <p>
-    </p>
-  </article>
-  <article>
-    <h3>► </h3>
-    <p>
-    </p>
+    <pre>
+      <code class="language-js">
+        template &#60class T>class ShiftedList &#123
+          T* array;
+          int offset, size;
+        public:
+          Shiftedlist(int sz) : offset(0), size(sz) &#123
+            array= new T[size];
+          }
+
+          ~Shiftedlist() &#123
+            delete [] array;
+          }
+
+          void shiftBy(int n) &#123
+            offset = (offset + n) % size;
+          }
+          T getAt(int i) &#123
+            return array[convertindex(i)];
+          }
+
+          void setAt(T item, int i) &#123
+            array[convertindex(i)] = item;
+          }
+        
+        private:
+          int convertlndex(int i) &#123
+            int index = (i - offset) % size;
+            while (index &#60 0) index += size;
+            return index;
+          }
+        }
+      </code>
+    </pre>
   </article>
   <article>
     <h3 class="border-y-2 border-black">Preguntas de la entrevista</h3>
     <ul>
       <li class="list-none">
-        <strong>12.1 Fallos aleatorios: </strong>
-        Te dan el código fuente de una aplicación que se bloquea al ejecutarla. Después de ejecutarla diez veces en un depurador, descubres que nunca se bloquea 
+        <strong>12.1 Últimas K Líneas: </strong>
+        Escribe un método para imprimir las últimas K Líneas de un fichero de entrada usando C++.
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas: #325</em> 
+          <p><em>Pistas: #449, #459</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 417</strong></p>
+          <p><strong>pg 422</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>12.2 Fallos aleatorios: </strong>
-        Te dan el código fuente de una aplicación que se bloquea al ejecutarla. Después de ejecutarla diez veces en un depurador, descubres que nunca se bloquea 
+        <strong>12.2 Invertir cadena: </strong>
+        Implementar una función void reverse(char* str) en C o C++ que invierta una cadena terminada en cero.
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas: #325</em> 
+          <p><em>Pistas: #470, #452</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 417</strong></p>
+          <p><strong>pg 423</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>12.3 Fallos aleatorios: </strong>
-        Te dan el código fuente de una aplicación que se bloquea al ejecutarla. Después de ejecutarla diez veces en un depurador, descubres que nunca se bloquea 
+        <strong>12.3 Tabla Hash vs. Mapa STL: </strong>
+        Compara y contrasta una tabla hash y un mapa STL. ¿Cómo se implementa una tabla hash? Si el número de entradas es pequeño, ¿qué opciones de estructura de datos se pueden utilizar en lugar de una tabla hash?
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas: #325</em> 
+          <p><em>Pistas: #423</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 417</strong></p>
+          <p><strong>pg 423</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>12.4 Fallos aleatorios: </strong>
-        Te dan el código fuente de una aplicación que se bloquea al ejecutarla. Después de ejecutarla diez veces en un depurador, descubres que nunca se bloquea 
+        <strong>12.4 Funciones virtuales: </strong>
+        ¿Cómo funcionan las funciones virtuales en C++? 
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas: #325</em> 
+          <p><em>Pistas: #463</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 417</strong></p>
+          <p><strong>pg 424</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>12.5 Fallos aleatorios: </strong>
-        Te dan el código fuente de una aplicación que se bloquea al ejecutarla. Después de ejecutarla diez veces en un depurador, descubres que nunca se bloquea 
+        <strong>12.5 Copia superficial vs. Copia profunda: </strong>
+        ¿Cuál es la diferencia entre copia profunda y copia superficial? Explica cómo usarías cada una.
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas: #325</em> 
+          <p><em>Pistas: #445</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 417</strong></p>
+          <p><strong>pg 425</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>12.6 Fallos aleatorios: </strong>
-        Te dan el código fuente de una aplicación que se bloquea al ejecutarla. Después de ejecutarla diez veces en un depurador, descubres que nunca se bloquea 
+        <strong>12.6 Volatile: </strong>
+        ¿Cuál es el significado de la palabra clave «volatile» en C? 
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas: #325</em> 
+          <p><em>Pistas: #456</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 417</strong></p>
+          <p><strong>pg 426</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>12.7 Fallos aleatorios: </strong>
-        Te dan el código fuente de una aplicación que se bloquea al ejecutarla. Después de ejecutarla diez veces en un depurador, descubres que nunca se bloquea 
+        <strong>12.7 Clase base virtual: </strong>
+        ¿Por qué un destructor en una clase base necesita ser declarado virtual? 
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas: #325</em> 
+          <p><em>Pistas: #427, #460</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 417</strong></p>
+          <p><strong>pg 427</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>12.8 Fallos aleatorios: </strong>
-        Te dan el código fuente de una aplicación que se bloquea al ejecutarla. Después de ejecutarla diez veces en un depurador, descubres que nunca se bloquea 
+        <strong>12.8 Copiar Nodo: </strong>
+        Escribe un método que tome como parámetro un puntero a una estructura Nodo y devuelva una copia completa de la estructura de datos pasada. La estructura de datos Nodo contiene dos punteros a otros Nodos.
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas: #325</em> 
+          <p><em>Pistas: #427, #462</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 417</strong></p>
+          <p><strong>pg 427</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>12.9 Fallos aleatorios: </strong>
-        Te dan el código fuente de una aplicación que se bloquea al ejecutarla. Después de ejecutarla diez veces en un depurador, descubres que nunca se bloquea 
+        <strong>12.9 Puntero inteligente: </strong>
+        Escribe una clase de puntero inteligente. Un puntero inteligente es un tipo de datos, normalmente implementado con plantillas, que simula un puntero a la vez que proporciona recolección automática de basura. Cuenta automáticamente el número de referencias a un objeto <code>SmartPointer&#60T*></code> y libera el objeto de tipo T cuando el recuento de referencias llega a cero.
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas: #325</em> 
+          <p><em>Pistas: #402, #438, #453</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 417</strong></p>
+          <p><strong>pg 428</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>12.10 Fallos aleatorios: </strong>
-        Te dan el código fuente de una aplicación que se bloquea al ejecutarla. Después de ejecutarla diez veces en un depurador, descubres que nunca se bloquea 
+        <strong>12.10 Malloc: </strong>
+        Escribe una función alineada malloc y free que soporte la asignación de memoria de forma que la dirección de memoria devuelta sea divisible por una potencia específica de dos.
+        <p>EJEMPLO</p>
+        <p>
+          <code>align_malloc(1000, 128)</code> devolverá una dirección de memoria que es múltiplo de 128 y que apunta a una memoria de tamaño 1000 bytes.
+        </p>
+        <p>
+          <code>aligned_free()</code> liberará la memoria asignada por <code>align_malloc</code>.
+        </p>
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas: #325</em> 
+          <p><em>Pistas: #473, #432, #440</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 417</strong></p>
+          <p><strong>pg 430</strong></p>
         </div>
       </li>
       <li class="list-none">
         <strong>12.11 Fallos aleatorios: </strong>
-        Te dan el código fuente de una aplicación que se bloquea al ejecutarla. Después de ejecutarla diez veces en un depurador, descubres que nunca se bloquea 
+        2DAlloc: Escribe una función en <code>C</code> llamada <code>my2DAlloc</code> que asigne una matriz bidimensional. Minimice el número de llamadas a malloc y asegúrese de que la memoria es accesible mediante la notación <code>arr[i][j]</code>.
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas: #325</em> 
+          <p><em>Pistas: #406, #478, #426</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 417</strong></p>
+          <p><strong>pg 431</strong></p>
         </div>
       </li>
     </ul>
     <p>
+      Preguntas adicionales: Listas enlazadas (#2.6), Pruebas (#11.1), Java (#13.4), Hilos y bloqueos (#15.3). 
     </p>
     <p>
+      Los consejos comienzan en la página 676.
     </p>
   </article>
   <footer class="flex justify-end">

@@ -172,7 +172,7 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
       Sin embargo, no hay que pasar por alto el valor de una conversación con el entrevistador. Deberías discutir cualquier suposición con tu entrevistador, particularmente con respecto a cómo manejar situaciones específicas.
     </p>
     <p>
-      Suponga que le piden que escriba código para probar sort (int[] array), que ordena un array de enteros. Usted podría proceder de la siguiente manera.
+      Suponga que le piden que escriba código para probar <code>sort(int[] array)</code>, que ordena un array de enteros. Usted podría proceder de la siguiente manera.
     </p>
   </article>
   <article>
@@ -213,6 +213,17 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
     <p>
       Una vez definidos los casos de prueba y los resultados, escribir el código para implementar los casos de prueba debería ser bastante sencillo:
     </p>
+    <pre>
+      <code class="language-js">
+        void testAddThreeSorted() &#123
+          Mylist list = new Mylist();
+          list.addThreeSorted(3, 1, 2); // Adds 3 items in sorted order
+          assertEquals(list.getElement(0), 1);
+          assertEquals(list.getElement(l), 2);
+          assertEquals(list.getElement(2), 3);
+        }
+      </code>
+    </pre>
   </article>
   <article>
     <h3>► Preguntas de solución de problemas</h3>
