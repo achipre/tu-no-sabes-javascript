@@ -6,6 +6,248 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
   <h2>Java</h2>
   <article>
     <p>
+      Aunque a lo largo de este libro se encuentran preguntas relacionadas con Java, este capítulo se ocupa de las preguntas sobre el lenguaje y la sintaxis. Este tipo de preguntas son más inusuales en las grandes empresas, que creen más en la aptitud del candidato que en sus conocimientos (y que disponen de tiempo y recursos para formar a un candidato en un lenguaje concreto). Sin embargo, en otras empresas, estas molestas preguntas pueden ser bastante habituales.
+    </p>
+  </article>
+  <article>
+    <h3>► Cómo abordarlas</h3>
+    <p>
+      Como estas preguntas se centran tanto en los conocimientos, puede parecer una tontería hablar de un enfoque de estos problemas. Después de todo, ¿no se trata sólo de saber la respuesta correcta? 
+    </p>
+    <p>
+      Sí y no. Por supuesto, lo mejor que puedes hacer para dominar estas preguntas es aprender Java por dentro y por fuera. Pero, si te quedas perplejo, puedes intentar abordarlo con el siguiente enfoque:
+      
+    </p>
+    <ol>
+      <li>Crea un ejemplo del escenario y pregúntate cómo deberían desarrollarse las cosas.</li>
+      <li>Pregúntate cómo manejarían este escenario otros lenguajes.</li>
+      <li>Considera cómo diseñarías esta situación si fueras el diseñador del lenguaje. ¿Cuáles serían las implicaciones de cada elección? </li>
+    </ol>
+    <p>
+      A tu entrevistador le puede impresionar tanto o más que seas capaz de deducir la respuesta que si la supieras automáticamente. Pero no intentes ir de farol. Dile al entrevistador: «No estoy seguro de poder recordar la respuesta, pero déjame ver si puedo deducirla. Supongamos que tenemos este código...».
+    </p>
+  </article>
+  <article>
+    <h3>► Sobrecarga vs. Sobreescritura</h3>
+    <p>
+      Sobrecarga es un término utilizado para describir cuando dos métodos tienen el mismo nombre pero difieren en el tipo o número de argumentos.
+    </p>
+    <pre>
+      <code class="language-js">
+        public double computeArea(Circle c) &#123 ... }
+        public double computeArea(Square s) &#123 ... }
+      </code>
+    </pre>
+    <p>
+      La sobreescritura, sin embargo, se produce cuando un método comparte el mismo nombre y firma de función que otro método de su superclase.
+    </p>
+    <pre>
+      <code class="language-js">
+        public abstract class Shape &#123
+          public void printMe() &#123
+            System.out.println("I am a shape.");
+          }
+          public abstract double computeArea();
+        }
+
+        public class Circle extends Shape &#123
+          private double rad = 5;
+          public void printMe() &#123
+            System.out.println("I am a circle.");
+          }
+
+          public double computeArea() &#123
+            return rad * rad * 3.15;
+          }
+        }
+
+        public class Ambiguous extends Shape &#123
+          private double area = 10;
+          public double computeArea() &#123
+            return area
+          }
+        }
+
+        public class IntroductionOverriding &#123
+          public static void main(String[] args) &#123
+            Shape[] shapes = new Shape[2];
+            Circle circle = new Circle();
+            Ambiguous ambiguous = new Ambiguous();
+
+            shapes[0] = circle; 
+            shapes[1] = ambiguous;
+
+            for (Shape s : shapes) &#123
+              s.printMe();
+              System.out.println(s.computeArea());
+            }
+          }
+        }
+      </code>
+    </pre>
+    <p>
+      El código anterior imprimirá:
+    </p>
+    <pre>
+      <code class="language-js">
+        I am a circle.
+        78.75
+        I am a shape.
+        10.0
+      </code>
+    </pre>
+    <p>
+      Observe que <code>Circle</code> ha sobreescrito <code>printMe()</code>, mientras que Ambiguous ha dejado este método tal cual.
+    </p>
+  </article>
+  <article>
+    <h3>► Marco de colecciones</h3>
+    <p>
+      El marco de colección de Java es increíblemente útil, y lo verá utilizado a lo largo de este libro. Aquí están algunos de los elementos más útiles:
+    </p>
+    <p>
+      <code>ArrayList</code>: Un <code>ArrayList</code> es un array de redimensionamiento dinámico, que crece a medida que se insertan elementos.
+    </p>
+    <pre>
+      <code class="language-js">
+        ArrayList&#60String> myArr = new Arraylist&#60String>();
+        myArr. add("one");
+        myArr.add("two");
+        System.out.println(myArr.get(0)); /* prints &#60one>*/
+      </code>
+    </pre>
+    <p>
+      <code>Vector</code>: Un <code>vector</code> es muy similar a un <code>ArrayList</code> excepto que es sincronizado. Su sintaxis es casi idéntica también.
+    </p>
+    <pre>
+      <code class="language-js">
+        Vector&#60String> myVect = new Vector&#60String>();
+        myVect.add("one");
+        myVect. add("two");
+        System.out.printin(myVect.get(0));
+      </code>
+    </pre>
+    <p>
+      <code>LinkedList</code>: <code>LinkedList</code> es, por supuesto, la clase <code>LinkedList</code> incorporada en Java. Aunque rara vez aparece en una entrevista, es útil estudiarla porque demuestra parte de la sintaxis de un iterador.
+    </p>
+    <pre>
+      <code class="language-js">
+        Linkedlist&#60String> myLinkedList = new Linkedlist&#60String>();
+        mylinkedlist. add("two");
+        myLinkedList.addFirst("one");
+        Iterator&#60String> iter = mylinkedlist.iterator(); 
+        while (iter.hasNext()) &#123
+          System.out.println(iter.next());
+        }
+      </code>
+    </pre>
+    <p>
+      <code>HashMap</code>:La colección <code>HashMap</code> se utiliza mucho, tanto en las entrevistas como en el mundo real. A continuación te mostramos un fragmento de la sintaxis.
+    </p>
+    <pre>
+      <code class="language-js">
+        HashMap&#60String, String> map = new HashMap&#60String, String>();
+        map.put("one", "uno");
+        map.put("two", "dos");
+        System.out.println(map.get("one"));
+      </code>
+    </pre>
+    <p>
+      Antes de tu entrevista, asegúrate de que te sientes muy cómodo con la sintaxis anterior. La necesitarás.
+    </p>
+  </article>
+  <article>
+    <h3 class="border-y-2 border-black">Preguntas de la entrevista</h3>
+    <p>
+      Tenga en cuenta que, dado que prácticamente todas las soluciones de este libro se implementan con Java, sólo hemos seleccionado un pequeño número de preguntas para este capítulo. Además, la mayoría de estas preguntas tratan sobre las «trivialidades» de los lenguajes, ya que el resto del libro está lleno de preguntas de programación Java.
+    </p>
+    <ul>
+      <li class="list-none">
+        <strong>13.1 Constructor privado: </strong>
+        En términos de herencia, ¿cuál es el efecto de mantener un constructor privado?
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas:#404</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 433</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>13.2 Retorno desde Finally: </strong>
+        En Java, ¿se ejecuta el bloque <code>finally</code> si insertamos una sentencia <code>return</code> dentro del bloque try de un <code>try-catch-finally</code>?
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #409</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 433</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>13.3 Final, etc.: </strong>
+        ¿Cuál es la diferencia entre <code>final</code>, <code>finally</code> y <code>finalize</code>?
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #412</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 433</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>13.4 Genéricos vs. Plantillas: </strong>
+        Explique la diferencia entre plantillas en C++ y genéricos en Java.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #416, #425</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 435</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>13.5 TreeMap, HashMap, LinkedHashMap: </strong>
+        Explique las diferencias entre <code>TreeMap</code>, <code>HashMap</code> y <code>LinkedHashMap</code>. Proporcione un ejemplo de cuándo sería mejor cada uno.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #420, #424, #430, #454</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 436</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>13.6 Reflexión de objetos: </strong>
+        Explique qué es la reflexión de objetos en Java y por qué es útil.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #435</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 437</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>13.7 Expresiones Lambda: </strong>
+        Hay una clase <code>Country</code> que tiene métodos <code>getContinent()</code> y <code>getPopulation()</code>. Escribe una función <code>int getPopulation(List countries, String continent</code> ) que calcule la población total de un continente dado, dada una lista de todos los países y el nombre de un continente.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #448, #467, #464</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 438</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>13.8 Lambda Aleatorio: </strong>
+        Utilizando expresiones lambda, escribe una función <code>List getRandomSubset(List list)</code> que devuelva un subconjunto aleatorio de tamaño arbitrario. Todos los subconjuntos (incluido el conjunto vacío) deben tener la misma probabilidad de ser elegidos.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #443, #450, #457</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 439</strong></p>
+        </div>
+      </li>
+    </ul>
+    <p>
+      Preguntas adicionales: Arrays y cadenas (#1.3), Diseño orientado a objetos (#7.12), Hilos y bloqueos (#15.3) 
+    </p>
+    <p>
+      Las sugerencias comienzan en la página 676.
     </p>
   </article>
   <footer class="flex justify-end">
