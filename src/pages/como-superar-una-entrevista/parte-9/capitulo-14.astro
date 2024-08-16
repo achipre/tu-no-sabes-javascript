@@ -6,7 +6,553 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
   <h2>Base de Datos</h2>
   <article>
     <p>
+      Si profesas conocimientos sobre bases de datos, es posible que te hagan algunas preguntas al respecto. Repasaremos algunos de los conceptos clave y ofreceremos una visión general de cómo abordar estos problemas. Cuando leas estas consultas, no te sorprendas por pequeñas variaciones en la sintaxis. Hay una variedad de sabores de SQL, y puede que haya trabajado con uno ligeramente diferente. Los ejemplos de este libro se han probado con Microsoft SQL Server.
     </p>
+  </article>
+  <article>
+    <h3>► Sintaxis y variaciones de SQL</h3>
+    <p>
+      A continuación se muestran las uniones implícitas y explícitas. Estas dos sentencias son equivalentes, y es una cuestión de preferencia personal la que elija. En aras de la coherencia, nos ceñiremos a la unión explícita.
+    </p>
+    <div class="flex justify-center mt-6 font-poppins">
+      <table>
+        <thead>
+          <tr>
+            <td class="border-0">Explicit Join</td>
+            <td class="border-0">Implicit Join</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="border-0"><code>SELECT CourseName, TeacherName</code></td>
+            <td class="border-0"><code>SELECT CourseName, TeacherName</code></td>
+          </tr>
+          <tr>
+            <td class="border-0"><code>FROM Courses INNER JOIN Teachers</code></td>
+            <td class="border-0"><code>FROM Courses, Teachers</code></td>
+          </tr>
+          <tr>
+            <td class="border-0"><code>ON Courses.TeacherID = Teachers.TeacherID</code></td>
+            <td class="border-0"><code>WHERE Courses.TeacherID = Teachers.TeacherID</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </article>
+  <article>
+    <h3>► Bases de datos desnormalizadas vs. normalizadas</h3>
+    <p>
+      Las bases de datos normalizadas están diseñadas para minimizar la redundancia, mientras que las desnormalizadas están diseñadas para optimizar el tiempo de lectura.
+    </p>
+    <p>
+      En una base de datos normalizada tradicional con datos como <code>Courses</code> y <code>Teachers</code>, <code>Courses</code> puede contener una columna llamada <code>TeacherID</code>, que es una clave externa a <code>Teacher</code>. Una de las ventajas es que la información sobre el profesor (nombre, dirección, etc.) sólo se almacena una vez en la base de datos. El inconveniente es que muchas de las consultas habituales requerirán costosas uniones.
+    </p>
+    <p>
+      En cambio, podemos desnormalizar la base de datos almacenando datos redundantes. Por ejemplo, si sabemos que tendremos que repetir esta consulta a menudo, podríamos almacenar el nombre del profesor en la tabla <code>Courses</code>. La desnormalización se utiliza habitualmente para crear sistemas altamente escalables.
+    </p>
+  </article>
+  <article>
+    <h3>► Sentencias SQL</h3>
+    <p>
+      Repasemos la sintaxis básica de SQL utilizando como ejemplo la base de datos mencionada anteriormente. Esta base de datos tiene la siguiente estructura simple (* indica una clave primaria):
+    </p>
+    <pre>
+      <code>
+        Courses: CourseID*, CourseName, TeacherID 
+        Teachers: TeacherID*, TeacherName 
+        Students; StudentID*, StudentName
+        StudentCourses: CourseID*, StudentID*
+      </code>
+    </pre>
+    <p>
+      A partir de la tabla anterior, realice las siguientes consultas.
+    </p>
+  </article>
+  <article>
+    <p><strong>Consulta 1: Matriculación de alumnos</strong></p>
+    <p>
+      Implemente una consulta para obtener una lista de todos los estudiantes y en cuántos cursos está matriculado cada estudiante.
+    </p>
+    <p>
+      Al principio, podríamos intentar algo como esto:
+    </p>
+    <pre>
+      <code class="language-js">
+        /* Incorrect Code */
+        SELECTStudents.StudentName, count(*)
+        FROM Students INNER JOIN StudentCourses
+        ON Students.StudentID = StudentCourses.StudentID
+        GROUP BY Students.StudentID
+      </code>
+    </pre>
+    <p>
+      Esto tiene tres problemas:
+    </p>
+    <ol>
+      <li>Hemos excluido a los estudiantes que no están matriculados en ningún curso, ya que <code>StudentCourses</code> sólo incluye a los estudiantes matriculados. Necesitamos cambiar esto a un <code>LEFT JOIN</code>.</li>
+      <li>Incluso si lo cambiamos a una <code>LEFT JOIN</code>, la consulta sigue siendo incorrecta. Hacer <code>count(*)</code> devolvería cuántos elementos hay en un grupo dado de <code>StudentIDs</code>. Los estudiantes matriculados en cero cursos seguirían teniendo un elemento en su grupo. Tenemos que cambiar esto para contar el número de <code>CourseIDs</code> en cada grupo: <code>count(StudentCourses.CourseID)</code>.</li>
+      <li>Hemos agrupado por <code>Students.StudentID</code>, pero sigue habiendo varios <code>StudentNames</code> en cada grupo. ¿Cómo sabrá la base de datos qué <code>StudentName</code> debe devolver? Puede que todos tengan el mismo valor, pero la base de datos no lo entiende. Necesitamos aplicar una función <em>aggregate</em> a esto, como <code>first(Students.StudentName)</code>.</li>
+    </ol>
+    <p>
+      Solucionando estos problemas llegamos a esta consulta:
+    </p>
+    <pre>
+      <code class="language-js">
+        /* Solution 1: Wrap with another query */
+        SELECT StudentName, Students.StudentID, Cnt
+        FROM(
+          SELECT Students.StudentID, count(StudentCourses.CourseID) as [Cnt]
+          FROM Students LEFT JOIN StudentCourses
+          ON Students.StudentID = StudentCourses.StudentID
+          GROUP BY Students.StudentID
+        ) T INNER JOIN Students on T.studentID = Students.StudentID
+      </code>
+    </pre>
+    <p>
+      Observando este código, uno podría preguntarse por qué no seleccionamos simplemente el nombre del alumno en la línea 3 para evitar tener que envolver las líneas 3 a 6 con otra consulta. Esta solución (incorrecta) se muestra a continuación.
+    </p>
+    <pre>
+      <code class="language-js">
+        /* Incorrect Code */
+        SELECTStudentName, Students.StudentID, count(StudentCourses.CourseID) as [Cnt]
+        FROM Students LEFT JOIN StudentCourses
+        ON Students.StudentID = StudentCourses.StudentID
+        GROUP BY Students.StudentID
+      </code>
+    </pre>
+    <p>
+      La respuesta es que no podemos hacer eso, al menos no exactamente como se muestra. Sólo podemos seleccionar valores que estén en una función agregada o en la cláusula GROUP BY.
+    </p>
+    <p>
+      Alternativamente, podríamos resolver los problemas anteriores con cualquiera de las siguientes sentencias:
+    </p>
+    <pre>
+      <code class="language-js">
+        /* Solution 2: Add StudentName to GROUP BY clause. */
+        SELECT StudentName, Students.StudentID, count(StudentCourses.CourseID) as [Cnt]
+        FROM Students LEFT JOIN StudentCourses
+        ON Students.StudentID = StudentCourses.StudentID
+        GROUP BY Students.StudentID, Students.StudentName
+      </code>
+    </pre>
+    <p>
+      OR
+    </p>
+    <pre>
+      <code class="language-js">
+        /* Solution 3: Wrap with aggregate function. */
+        SELECT max(StudentName) as [StudentName], Students.StudentID, 
+          count(StudentCourses.CourseID) as [Count]
+        FROM Students LEFT JOIN StudentCourses
+        ON Students.StudentID = StudentCourses.StudentID
+        GROUP BY Students.StudentID
+      </code>
+    </pre>
+    <p>
+      <em>
+        Consulta 2: Tamaño de la clase del profesor
+      </em>
+    </p>
+    <p>
+      Implemente una consulta para obtener una lista de todos los profesores y cuántos alumnos enseña cada uno. Si un profesor enseña al mismo alumno en dos cursos, deberá contar dos veces al alumno. Ordene la lista en orden descendente según el número de alumnos a los que enseña cada profesor.
+    </p>
+    <p>
+      Podemos construir esta consulta paso a paso. Primero, obtengamos una lista de <code>TeacherIDs</code> y cuántos estudiantes están asociados con cada <code>TeacherIDs</code>. Esto es muy similar a la consulta anterior.
+    </p>
+    <pre>
+      <code class="language-js">
+        SELECT TeacherID, count(StudentCourses.CourseID) AS [Number]
+        FROM Courses INNER JOIN StudentCourses
+        ON Courses.CourseID = StudentCourses.CourseID
+        GROUP BY Courses.TeacherID
+      </code>
+    </pre>
+    <p>
+      Tenga en cuenta que este <code>INNER JOIN</code> no seleccionará profesores que no estén dando clases. Esto lo haremos en la consulta siguiente cuando la unamos con la lista de todos los profesores.
+    </p>
+    <pre>
+      <code class="language-js">
+        SELECT TeacherName, isnull(StudentSize.Number, 0)
+        FROM Teachers LEFT JOIN
+            (SELECT TeacherID, count(StudentCourses.CourseID) AS [Number]
+            FROM Courses INNER JOIN StudentCourses
+            ON Courses.CourseID = StudentCourses.CourseID
+            GROUP BY Courses.TeacherID) StudentSize
+        ON Teachers.TeacherID = StudentSize.TeacherID
+        ORDER BY StudentSize.Number DESC
+      </code>
+    </pre>
+    <p>
+      Observe cómo tratamos los valores <code>NULL</code> en la sentencia <code>SELECT</code> para convertir los valores <code>NULL</code> en ceros.
+    </p>
+  </article>
+  <article>
+    <h3>► Diseño de Bases de Datos Pequeñas</h3>
+    <p>
+      Adicionalmente, se le puede pedir que diseñe su propia base de datos. Lo guiaremos a través de un enfoque para esto. Podrá notar las similitudes entre este enfoque y el enfoque para el diseño orientado a objetos.
+    </p>
+  </article>
+  <article>
+    <p><strong>Paso 1: Manejar la ambigüedad</strong></p>
+    <p>
+      Las preguntas sobre bases de datos suelen ser ambiguas, intencionadamente o no. Antes de proceder a su diseño, debe comprender exactamente qué es lo que tiene que diseñar.
+    </p>
+    <p>
+      Imagine que le piden que diseñe un sistema para representar a una agencia de alquiler de apartamentos. Tendrá que saber si esta agencia tiene varias sedes o sólo una. También deberá discutir con su entrevistador hasta qué punto debe ser general. Por ejemplo, sería muy raro que una persona alquilara dos apartamentos en el mismo edificio. Pero, ¿significa eso que usted no debería poder encargarse de eso? Puede que sí, puede que no. Algunas situaciones muy raras pueden tratarse mejor mediante un método alternativo (como duplicar la información de contacto de la persona en la base de datos).
+    </p>
+  </article>
+  <article>
+    <p><em>Paso 2: Definir los objetos principales</em></p>
+    <p>
+      A continuación, debemos examinar los objetos centrales de nuestro sistema. Cada uno de estos objetos centrales suele traducirse en una tabla. En este caso, nuestros objetos principales podrían ser <code>Property, Building, Apartment, Tenant </code> y  <code> Manager</code>.
+    </p>
+  </article>
+  <article>
+    <p><strong>Paso 3: Analizar las relaciones</strong></p>
+    <p>
+      La descripción de los objetos principales debería darnos una idea de lo que deberían ser las tablas. ¿Cómo se relacionan estas tablas entre sí? ¿Son múltiples? ¿De uno a muchos?
+    </p>
+    <p>
+      Si <code>Buildings</code> tiene una relación de uno a muchos con <code>Apartments</code> (<code>oneBuildings</code> tiene muchos <code>Apartments</code>), podríamos representarlo de la siguiente manera:
+    </p>
+    <div class="flex justify-center gap-6 font-poppins">
+      <table>
+        <thead>
+          <tr>
+            <th colspan="2">Apartments</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>ApartmentID</td>
+            <td><code>int</code></td>
+          </tr>
+          <tr>
+            <td>ApartmentAddress</td>
+            <td><code>varchar(100)</code></td>
+          </tr>
+          <tr>
+            <td>BuildingID</td>
+            <td><code>int</code></td>
+          </tr>
+        </tbody>
+
+      </table>
+      <table>
+        <thead>
+          <tr>
+            <th colspan="2">Buildings</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>BuildingID</td>
+            <td><code>int</code></td>
+          </tr>
+          <tr>
+            <td>BuildingName</td>
+            <td><code>varchar(100)</code></td>
+          </tr>
+          <tr>
+            <td>BuildingAddress</td>
+            <td><code>varchar(500)</code></td>
+          </tr>
+        </tbody>
+
+      </table>
+    </div>
+    <p>
+      Tenga en cuenta que la tabla <code>Apartments</code> está vinculada a <code>Buildings</code> mediante la columna <code>BuildingID</code>.
+    </p>
+    <p>
+      Si queremos tener en cuenta la posibilidad de que una persona alquile más de un apartamento, es posible que queramos implementar una relación de muchos a muchos de la siguiente manera:
+    </p>
+    <div class="flex justify-center gap-6 font-poppins">
+      <table>
+        <thead>
+          <tr>
+            <th colspan="2">TenantApartment's</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>TenantID</td>
+            <td><code>int</code></td>
+          </tr>
+          <tr>
+            <td>ApartmentID</td>
+            <td><code>int</code></td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <thead>
+          <tr>
+            <th colspan="2">Apartments</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>ApartmentID</td>
+            <td><code>int</code></td>
+          </tr>
+          <tr>
+            <td>ApartmentAddress</td>
+            <td><code>varchar(500)</code></td>
+          </tr>
+          <tr>
+            <td>BuildingID</td>
+            <td><code>int</code></td>
+          </tr>
+        </tbody>
+
+      </table>
+      <table>
+        <thead>
+          <tr>
+            <th colspan="2">Tenants</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>TenantID</td>
+            <td><code>int</code></td>
+          </tr>
+          <tr>
+            <td>TenantName</td>
+            <td><code>varchar(100)</code></td>
+          </tr>
+          <tr>
+            <td>TenantAddress</td>
+            <td><code>varchar(500)</code></td>
+          </tr>
+        </tbody>
+
+      </table>
+    </div>
+    <p>
+      La tabla <code>TenantApartments</code> almacena una relación entre <code>Tenants</code> y <code>Apartments</code>.
+    </p>
+  </article>
+  <article>
+    <p><strong>Paso 4: Investigar acciones</strong></p>
+    <p>
+      Por último, completamos los detalles. Repase las acciones comunes que se llevarán a cabo y comprenda cómo almacenar y recuperar los datos relevantes. Tendremos que gestionar los términos del contrato de arrendamiento, las mudanzas, los pagos del alquiler, etc. Cada una de estas acciones requiere nuevas tablas y columnas.
+    </p>
+  </article>
+  <article>
+    <h3>► Diseño de bases de datos grandes</h3>
+    <p>
+      Cuando se diseña una base de datos grande y escalable, las uniones (necesarias en los ejemplos anteriores) suelen ser muy lentas. Por lo tanto, hay que <code>desnormalizar</code> los datos. Piense detenidamente en cómo se utilizarán los datos: probablemente necesitará duplicar los datos en varias tablas.
+    </p>
+  </article>
+  <article>
+    <h3 class="border-y-2 border-black">Preguntas de la entrevista</h3>
+    <p>
+      Las preguntas 1 a 3 se refieren al esquema de la base de datos al final del capítulo. Cada apartamento puede tener varios inquilinos, y cada inquilino puede tener varios apartamentos. Cada apartamento pertenece a un edificio y cada edificio pertenece a un complejo.
+    </p>
+    <ul>
+      <li class="list-none">
+        <strong>14.1 Apartamentos múltiples: </strong>
+        Escriba una consulta SOL para obtener una lista de los inquilinos que alquilan más de un apartamento.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas:#408</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 441</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>14.2 Solicitudes abiertas: </strong>
+        Escriba una consulta SQL para obtener una lista de todos los edificios y el número de solicitudes abiertas (Solicitudes en las que el estado es igual a 'Abierto').
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas:#411</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 442</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>14.3 Cerrar todas las solicitudes: </strong>
+        El edificio 11 está siendo renovado. Implemente una consulta para cerrar todas las solicitudes de los apartamentos de este edificio.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas:#431</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 442</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>14.4 Uniones: </strong>
+        ¿Cuáles son los diferentes tipos de uniones? Explique en qué se diferencian y por qué ciertos tipos son mejores en determinadas situaciones.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas:#451</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 442</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>14.5 Desnormalización: </strong>
+        ¿Qué es la desnormalización? Explique los pros y los contras.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #444, #455</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 443</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>14.6 Diagrama entidad-relación: </strong>
+        Dibuje un diagrama entidad-relación para una base de datos con empresas, personas y profesionales (personas que trabajan para empresas).
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #436</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 444</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>14.7 Base de datos de grado de diseño: </strong>
+        Imagina una base de datos sencilla que almacene información para las calificaciones de los estudiantes. Diseñe el aspecto que podría tener esta base de datos y proporcione una consulta SQL que devuelva una lista de los alumnos del cuadro de honor (el 10% de los mejores), ordenados por su media de notas.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #428, #442</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 445</strong></p>
+        </div>
+      </li>
+    </ul>
+    <p>
+      Preguntas adicionales: Diseño orientado a objetos (#7.7), Diseño de sistemas y escalabilidad (#9.6)
+    </p>
+    <p>
+      Las sugerencias comienzan en la página 676.
+    </p>
+    <div class="flex justify-center gap-6 font-poppins flex-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th colspan="2">Apartments</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>AptID</td>
+            <td><code>int</code></td>
+          </tr>
+          <tr>
+            <td>UnitNumber</td>
+            <td><code>varchar(10)</code></td>
+          </tr>
+          <tr>
+            <td>BuildingID</td>
+            <td><code>int</code></td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <thead>
+          <tr>
+            <th colspan="2">Buildings</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>BuildingID</td>
+            <td><code>int</code></td>
+          </tr>
+          <tr>
+            <td>ComplexID</td>
+            <td><code>int</code></td>
+          </tr>
+          <tr>
+            <td>BuildingName</td>
+            <td><code>varchar(100)</code></td>
+          </tr>
+          <tr>
+            <td>Address</td>
+            <td><code>varchar(100)</code></td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <thead>
+          <tr>
+            <th colspan="2">Requests</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>RequestID</td>
+            <td><code>int</code></td>
+          </tr>
+          <tr>
+            <td>Status</td>
+            <td><code>varchar(100)</code></td>
+          </tr>
+          <tr>
+            <td>AptID</td>
+            <td><code>int</code></td>
+          </tr>
+          <tr>
+            <td>Description</td>
+            <td><code>varchar(500)</code></td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <thead>
+          <tr>
+            <th colspan="2">Complexes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>ComplexID</td>
+            <td><code>int</code></td>
+          </tr>
+          <tr>
+            <td>ComplexName</td>
+            <td><code>varchar(100)</code></td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <thead>
+          <tr>
+            <th colspan="2">AptTenants</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>TenantID</td>
+            <td><code>int</code></td>
+          </tr>
+          <tr>
+            <td>AptID</td>
+            <td><code>int</code></td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <thead>
+          <tr>
+            <th colspan="2">Tenants</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>TenantID</td>
+            <td><code>int</code></td>
+          </tr>
+          <tr>
+            <td>TenantName</td>
+            <td><code>varchar(100)</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </article>
   <footer class="flex justify-end">
     <a class="font-khand font-bold text-3xl py-4 sm:py-8 md:py-12 sm:text-4xl md:text-5xl" href="capitulo-15">
