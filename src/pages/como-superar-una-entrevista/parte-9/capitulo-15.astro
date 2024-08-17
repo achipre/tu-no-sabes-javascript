@@ -6,7 +6,462 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
   <h2>Hilos y Bloqueos</h2>
   <article>
     <p>
+      En una entrevista de Microsoft, Google o Amazon, no es muy habitual que te pidan que implementes un algoritmo con hilos (a menos que trabajes en un equipo para el que esta habilidad sea especialmente importante). Sin embargo, es relativamente común que los entrevistadores de cualquier compañía evalúen tu comprensión general de los hilos, particularmente tu comprensión de los bloqueos.
     </p>
+    <p>
+      Este capítulo proporcionará una introducción a este tema.
+    </p>
+  </article>
+  <article>
+    <h3>
+      ► Hilos en Java
+    </h3>
+    <p>
+      Cada hilo en Java es creado y controlado por un único objeto de la clase <code>java.lang.Thread</code>. Cuando se ejecuta una aplicación independiente, se crea automáticamente un hilo de usuario para ejecutar el método <code>main()</code>. Este hilo se denomina hilo principal.
+    </p>
+    <p>
+      En Java, podemos implementar hilos de dos maneras:
+    </p>
+    <ul>
+      <li>
+        Implementando la interfaz <code>java.lang.Runnable</code>
+      </li>
+      <li>
+        Extendiendo la clase <code>java.lang.Thread</code>
+      </li>
+    </ul>
+    <p>
+      A continuación veremos ambas opciones.
+    </p>
+  </article>
+  <article>
+    <p>
+      <strong>Implementación de la interfaz Runnable</strong>
+    </p>
+    <p>
+      La interfaz <code>Runnable</code> tiene una estructura muy simple.
+    </p>
+    <pre>
+      <code class="language-js">
+        public interface Runnable &#123
+          void run();
+        }
+      </code>
+    </pre>
+    <p>
+      Para crear y utilizar un hilo con esta interfaz, hay que hacer lo siguiente:
+    </p>
+    <ol>
+      <li>
+        Crear una clase que implemente la interfaz <code>Runnable</code>. Un objeto de esta clase es un objeto <code>Runnable</code>.
+      </li>
+      <li>
+        Cree un objeto de tipo <code>Thread</code> pasando un objeto <code>Runnable</code> como argumento en el constructor de <code>Thread</code>. El objeto Thread tiene ahora un objeto <code>Runnable</code> que implementa el método <code>run()</code>.
+      </li>
+      <li>
+        El método <code>start()</code> se invoca sobre el objeto Thread creado en el paso anterior. Por ejemplo:
+      </li>
+    </ol>
+    <p>Por Ejemplo:
+    </p>
+    <pre>
+      <code class="language-js">
+        public class RunnableThreadExample implements Runnable &#123
+          public int count = 0;
+
+          public void run() &#123
+            System.out.println("RunnableThread starting.");
+            try &#123
+              while (count &#60 5) &#123
+                Thread.sleep(500);
+                count++;
+              }
+            } catch (InterruptedException exc) &#123
+              System.out.println("RunnableThread interrupted.");
+            }
+            System.out.println("RunnableThread terminating.");
+          }
+        }
+
+        public static void main(String[] args) &#123
+          RunnableThreadExample instance = new RunnableThreadExample();
+          Thread thread = new Thread(instance);
+          thread.start();
+
+          /* waits until above thread count to 5 (slowly) */
+          while (instance.count != 5) &#123
+            try &#123
+              Thread.sleep(250);
+            } catch (InterruptedException exc) &#123
+              exc.printStacktrace();
+            }
+          }
+        }
+      </code>
+    </pre>
+    <p>
+      En el código anterior, observe que todo lo que realmente necesitamos hacer es que nuestra clase implemente el método <code>run()</code> (línea 4). Otro método puede entonces pasar una instancia de la clase a <code>new Thread(obj)</code> (líneas 19 - 20) y llamar a <code>start()</code> en el hilo (línea 21).
+    </p>
+  </article>
+  <article>
+    <p>
+      <strong>Extender la clase Thread</strong>
+    </p>
+    <p>
+      Alternativamente, podemos crear un hilo extendiendo la clase <code>Thread</code>. Esto casi siempre significará que anulamos el método <code>run()</code>, y la subclase también puede llamar al constructor del hilo explícitamente en su constructor.
+    </p>
+    <p>
+      El siguiente código proporciona un ejemplo de esto.
+    </p>
+    <pre>
+      <code class="language-js">
+        public class ThreadExample extends Thread &#123
+          int count = 0;
+
+          public void run() &#123
+            System.out.println("Thread starting.");
+            try &#123
+              while (count &#60 5) &#123
+                Thread.sleep(500);
+                System.out.println("In Thread, count is " + count);
+                count++;
+              }
+            } catch (InterruptedException exc) &#123
+              System.out.println("Thread interrupted.");
+            }
+            System.out.println("Thread terminating.");
+          }
+        }
+
+        public class ExampleB &#123
+          public static void main(String args[]) &#123
+            ThreadExample instance = new ThreadExample();
+            instance.start();
+
+            while (instance.count != 5) &#123
+              try &#123
+                Thread.sleep(250);
+              } catch (InterruptedException exc) &#123
+                exc.printStackTrace();
+              }
+            }
+          }
+        }
+
+      </code>
+    </pre>
+    <p>
+      Este código es muy similar al primer enfoque. La diferencia es que como estamos extendiendo la clase <code>Thread</code>, en lugar de simplemente implementar una interfaz, podemos llamar a <code>start()</code> en la instancia de la propia clase.
+    </p>
+  </article>
+  <article>
+    <p>
+      <strong>Extender la clase Thread vs. Implementar la interfaz Runnable</strong>
+    </p>
+    <p>
+      Cuando se crean hilos, hay dos razones por las que implementar la interfaz <code>Runnable</code> puede ser preferible a extender la clase <code>Thread</code>:
+    </p>
+    <ul>
+      <li>
+        Java no admite herencia múltiple. Por lo tanto, extender la clase <code>Thread</code> significa que la subclase no puede extender ninguna otra clase. Una clase que implemente la interfaz <code>Runnable</code> podrá extender otra clase.
+      </li>
+      <li>
+        Una clase puede estar interesada sólo en ser ejecutable, y por lo tanto, heredar toda la sobrecarga de la clase Thread sería excesivo.
+      </li>
+    </ul>
+  </article>
+  <article>
+    <h3>► Sincronización y bloqueos</h3>
+    <p>
+      Los subprocesos de un mismo proceso comparten el mismo espacio de memoria, lo que es a la vez positivo y negativo. Permite a las hebras compartir datos, lo que puede ser valioso. Sin embargo, también crea la oportunidad de problemas cuando dos hilos modifican un recurso al mismo tiempo. Java proporciona sincronización para controlar el acceso a los recursos compartidos.
+    </p>
+    <p>
+      La palabra clave <code>synchronized</code> y el <code>lock</code> forman la base para implementar la ejecución sincronizada de código.
+    </p>
+  </article>
+  <article>
+    <p><strong>Métodos sincronizados</strong></p>
+    <p>
+      Lo más habitual es restringir el acceso a los recursos compartidos mediante el uso de la palabra clave <code>synchronized</code>. Puede aplicarse a métodos y bloques de código, y restringe que múltiples hilos ejecuten el código simultáneamente <em>en el mismo objeto</em>. 
+    </p>
+    <p>
+      Para aclarar este último punto, considere el siguiente código:
+    </p>
+    <pre>
+      <code class="language-js">
+        public class MyClass extends Thread &#123
+          private String name;
+          private MyObject myObj;
+
+          public MyClass(MyObject obj, String n) &#123
+            name = n;
+            myObj = obj;
+          }
+          public void run() &#123
+            myObj.foo(name);
+          }
+        }
+
+        public class MyObject &#123
+          public synchronized void foo(String name) &#123
+            try &#123
+              System.out.println("Thread " + name + ".foo(): starting");
+              Thread.sleep(3000);
+              System.out.println("Thread " + name + ".foo(): ending");
+            } catch (InterruptedException exc) &#123
+              System.out.println("Thread " + name + ": interrupted.");
+            }
+          }
+        }
+      </code>
+    </pre>
+    <p>
+      ¿Pueden dos instancias de <code>MyClase</code> llamar a <code>foo</code> al mismo tiempo? Depende. Si tienen la misma instancia de <code>MyObject</code>, entonces no. Pero si tienen referencias diferentes, la respuesta es sí.
+    </p>
+    <pre>
+      <code class="language-js">
+        /* Difference references - both threads can call MyObject.foo() */
+        MyObject objl = new MyObject();
+        MyObject obj2 = new MyObject();
+        MyClass thread! new MyClass(obj1, "1");
+        MyClass thread2 new MyClass(obj2, "2");
+        threadl.start();
+        thread2.start()
+
+        /* La misma referencia a obj. Sólo uno podrá llamar a foo, 
+        * y el otro se verá obligado a esperar. */
+        MyObject obj= new MyObject();
+        MyClass thread! new MyClass(obj, "1");
+        MyClass thread2 = new MyClass(obj, "2");
+        thread1.start()
+        thread2.start()
+      </code>
+    </pre>
+    <p>
+      Los métodos estáticos se sincronizan en el <code>class lock</code>. Los dos hilos anteriores no podrían ejecutar simultáneamente métodos estáticos sincronizados en la misma clase, incluso si uno está llamando a <code>foo</code> y el otro a <code>bar</code>.
+    </p>
+    <pre>
+      <code class="language-js">
+        public class MyClass extends Thread &#123
+          ...
+          public void run() &#123
+            if (name.equals("!")) MyObject.foo(name);
+            else if (name.equals("2")) MyObject.bar(name);
+          }
+        }
+
+        public class MyObject &#123
+          public static synchronized void foo(String name) &#123/* same as before */}
+          public static synchronized void bar(String name) &#123/* same as foo */}
+        }
+      </code>
+    </pre>
+    <p>
+      Si ejecutas este código, verás impreso lo siguiente:
+    </p>
+    <pre>
+      <code class="language-js">
+        Thread 1.foo(): starting
+        Thread 1.foo(): ending
+        Thread 2.bar(): starting
+        Thread 2.bar(): ending
+      </code>
+    </pre>
+  </article>
+  <article>
+    <p><strong>Bloques sincronizados</strong></p>
+    <p>
+      Del mismo modo, un bloque de código puede ser sincronizado. Esto funciona de forma muy similar a la sincronización de un método.
+    </p>
+    <pre>
+      <code class="language-js">
+        public class MyClass extends Thread &#123
+          ...
+          public void run() &#123
+            myObj.foo(name);
+          }
+        }
+        public class MyObject &#123
+          public void foo(String name) &#123
+            synchronized(this) &#123
+              ...
+            }
+          }
+        }
+      </code>
+    </pre>
+    <p>
+      Al igual que al sincronizar un método, sólo un hilo por instancia de <code>MyObject</code> puede ejecutar el código dentro del bloque <code>synchronized</code>. Esto significa que si el <code>thread1</code> y el <code>thread2</code> tienen la misma instancia de <code>MyObject</code>, sólo uno podrá ejecutar el bloque de código a la vez.
+    </p>
+  </article>
+  <article>
+    <p><strong>Bloqueos</strong></p>
+    <p>
+      Para un control más granular, podemos utilizar un bloqueo. Un bloqueo (o monitor) se utiliza para sincronizar el acceso a un recurso compartido asociando el recurso con el bloqueo. Un hilo accede a un recurso compartido adquiriendo primero el bloqueo asociado al recurso. En un momento dado, sólo una hebra puede mantener el bloqueo y, por tanto, sólo una hebra puede acceder al recurso compartido.
+    </p>
+    <p>
+      Un caso de uso común para los bloqueos es cuando se accede a un recurso desde múltiples lugares, pero sólo debe ser accedido por un hilo a la vez. Este caso se demuestra en el siguiente código.
+    </p>
+    <pre>
+      <code class="language-js">
+        public class LockedATM &#123
+          private Lock lock;
+          private int balance= 100;
+
+          public LockedATM() &#123
+            lock = new Reentrantlock();
+          }
+
+          public int withdraw(int value) &#123
+            lock.lock();
+            int temp = balance;
+            try &#123
+              Thread.sleep(100);
+              temp = temp - value;
+              Thread.sleep(100);
+              balance = temp;
+            } catch (InterruptedException e) &#123 } 
+            lock.unlock();
+            return temp;
+          }
+
+          public int deposit(int value) &#123 
+            lock. lock();
+            int temp = balance;
+            try &#123
+              Thread.sleep(100);
+              temp = temp+ value;
+              Thread.sleep(300);
+              balance = temp;
+            } catch (InterruptedException e) &#123 }
+            lock.unlock();
+            return temp;
+          }
+        }
+      </code>
+    </pre>
+    <p>
+      Por supuesto, hemos añadido código para ralentizar intencionadamente la ejecución de <code>withdraw</code> y <code>deposit</code>, ya que ayuda a ilustrar los problemas potenciales que pueden ocurrir. Puede que no escribas código exactamente como este, pero la situación que refleja es muy, muy real. Usar un bloqueo ayudará a proteger un recurso compartido de ser modificado de formas inesperadas.
+    </p>
+  </article>
+  <article>
+    <h3>► Bloqueos y prevención de bloqueos</h3>
+    <p>
+      Un bloqueo es una situación en la que un subproceso está esperando un bloqueo de objeto que otro subproceso tiene, y este segundo subproceso está esperando un bloqueo de objeto que el primer subproceso tiene (o una situación equivalente con varios subprocesos). Como cada hebra espera a que la otra renuncie a un bloqueo, ambas se quedan esperando para siempre. Se dice que los hilos están bloqueados.
+    </p>
+    <p>
+      Para que se produzca un bloqueo, deben cumplirse las cuatro condiciones siguientes:
+    </p>
+    <ol>
+      <li>
+        <em>Exclusión mutua: </em>
+        sólo un proceso puede acceder a un recurso en un momento dado (o, más exactamente, hay un acceso limitado a un recurso). También podría producirse un bloqueo si un recurso tiene una cantidad limitada).
+      </li>
+      <li>
+        <em>Mantener y esperar: </em>
+        los procesos que ya disponen de un recurso pueden solicitar recursos adicionales, sin renunciar a sus recursos actuales.
+      </li>
+      <li>
+        <em>Sin tanteo: </em>
+        un proceso no puede retirar por la fuerza el recurso de otro proceso.
+      </li>
+      <li>
+        <em>Espera circular: </em>
+        dos o más procesos forman una cadena circular en la que cada proceso espera en otro recurso de la cadena.
+      </li>
+    </ol>
+    <p>
+      La prevención del bloqueo implica eliminar cualquiera de las condiciones anteriores, pero es complicado porque muchas de estas condiciones son difíciles de satisfacer. Por ejemplo, eliminar el número 1 es difícil porque muchos recursos sólo pueden ser utilizados por un proceso a la vez (por ejemplo, las impresoras). La mayoría de los algoritmos de prevención de bloqueos se centran en evitar la condición #4: espera circular.
+    </p>
+  </article>
+  <article>
+    <h3 class="border-y-2 border-black">Preguntas de la entrevista</h3>
+    <ul>
+      <li class="list-none">
+        <strong>15.1 Hilo vs. Proceso: </strong>
+        ¿Cuál es la diferencia entre un hilo y un proceso?
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas:#405</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 447</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>15.2 Cambio de contexto: </strong>
+        ¿Cómo medirías el tiempo empleado en un cambio de contexto?
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #403, #407, #475, #447</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 447</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>15.3 Cena de filósofos: </strong>
+        En el famoso problema de los filósofos comensales, un grupo de filósofos están sentados alrededor de una mesa circular con un palillo entre cada uno de ellos. Un filósofo necesita los dos palillos para comer y siempre coge el de la izquierda antes que el de la derecha. Si todos los filósofos cogieran el palillo izquierdo al mismo tiempo, podría producirse un bloqueo. Utilizando hilos y bloqueos, implemente una simulación del problema de los filósofos comensales que evite los bloqueos.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #419, #437</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 449</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>15.4 Clase sin bloqueo: </strong>
+        Diseña una clase que proporcione un bloqueo sólo si no hay posibles bloqueos.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #422, #434</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 452</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>15.5 Llamada en orden: </strong>
+        Supongamos que tenemos el siguiente código:
+        <pre>
+          <code class="language-js">
+            public class Foo &#123
+              public Foo() &#123 ... }
+              public void first() &#123 ... } 
+              public void second() &#123 ... } 
+              public void third() &#123 ... }
+            }
+          </code>
+        </pre>
+        <p>
+          La misma instancia de Foo será pasada a tres hilos diferentes. <code>ThreadA</code> llamará <code>first</code>, <code>threadB</code> llamará <code>segundo</code>, y <code>threadC</code> llamará <code>third</code>. Diseña un mecanismo que asegure que el <code>first</code> es llamado antes que el <code>second</code> y que el segundo es llamado antes que el <code>third</code>.
+        </p>
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #417, #433, #446</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 456</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>15.6 Métodos sincronizados: </strong>
+        Se te da una clase con un método sincronizado A y un método normal B. Si tienes dos hilos en una instancia de un programa, ¿pueden ambos ejecutar A al mismo tiempo? ¿Pueden ejecutar A y B al mismo tiempo?
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #429</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 458</strong></p>
+        </div>
+      </li>
+      <li class="list-none">
+        <strong>15.1 FizzBuzz: </strong>
+        En el problema clásico FizzBuzz, se le pide que imprima los números de 1 a n. Sin embargo, cuando el número es divisible por 3, imprima «Fizz». Si es divisible por 5, imprime «Buzz». Si es divisible entre 3 y 5, imprime «FizzBuzz“”. En este problema, se le pide que haga esto de forma multihilo. Implementa una versión multihilo de FizzBuzz con cuatro hilos. Un subproceso comprueba la divisibilidad de 3 e imprime «Fizz“”. Otro subproceso es responsable de la divisibilidad de 5 e imprime «Buzz“”. Un tercer hilo es responsable de la divisibilidad de 3 y 5 e imprime «FizzBuzz“”. Un cuarto hilo hace los números.
+        <div class="flex justify-between items-end gap-2">
+          <p><em>Pistas: #414, #439, #447, #458</em> 
+          </p>
+          <p class="border-t-2 border-black flex-1 border-dashed"></p>
+          <p><strong>pg 458</strong></p>
+        </div>
+      </li>
+    </ul>
+    <p>Los consejos empiezan en la página 676.</p>
   </article>
   <footer class="flex justify-end">
     <a class="font-khand font-bold text-3xl py-4 sm:py-8 md:py-12 sm:text-4xl md:text-5xl" href="capitulo-16">
