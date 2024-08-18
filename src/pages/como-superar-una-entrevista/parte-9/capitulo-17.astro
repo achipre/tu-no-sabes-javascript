@@ -17,253 +17,336 @@ import Layoutcracking from "../../../layouts/Layoutcracking.astro"
         </div>
       </li>
       <li class="list-none">
-        <strong>17.2 Suma sin más: </strong>
-        Escribe una función que sume dos números. No debes usar+ ni ningún operador aritmético.
+        <strong>17.2 Barajar: </strong>
+        Escribe un método para barajar una baraja de cartas. Debe ser una barajada perfecta, es decir, cada una de las 52 permutaciones de la baraja tiene que tener la misma probabilidad. Suponga que le dan un generador de números aleatorios que es perfecto.
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas:  #467, #544, #607, #628, #642, #664, #692, #772, #724</em> 
+          <p><em>Pistas: #483, #579, #634</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 530</strong></p>
+          <p><strong>pg 531</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>17.3 Suma sin más: </strong>
-        Escribe una función que sume dos números. No debes usar+ ni ningún operador aritmético.
+        <strong>17.3 Conjunto aleatorio: </strong>
+        Escribe un método para generar aleatoriamente un conjunto de m enteros a partir de una matriz de tamaño n. Cada elemento debe tener la misma probabilidad de ser elegido.
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas:  #467, #544, #607, #628, #642, #664, #692, #772, #724</em> 
+          <p><em>Pistas: #494, #596</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 530</strong></p>
+          <p><strong>pg 532</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>17.4 Suma sin más: </strong>
-        Escribe una función que sume dos números. No debes usar+ ni ningún operador aritmético.
+        <strong>17.4 Número que falta: </strong>
+        Una matriz A contiene todos los enteros de O a n, excepto un número que falta. En este problema, no podemos acceder a un entero entero en A con una sola operación. Los elementos de A están representados en binario, y la única operación que podemos utilizar para acceder a ellos es "obtener el <code>j-th</code> bit de <code>A[i]</code>", que lleva un tiempo constante. Escribe un código para encontrar el entero que falta. ¿Puedes hacerlo en tiempo <code>O(n)</code>?
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas:  #467, #544, #607, #628, #642, #664, #692, #772, #724</em> 
+          <p><em>Pistas: #670, #659, #683</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 530</strong></p>
+          <p><strong>pg 533</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>17.5 Suma sin más: </strong>
-        Escribe una función que sume dos números. No debes usar+ ni ningún operador aritmético.
+        <strong>17.5 Letras y números: </strong>
+        Dada una matriz llena de letras y números, encuentra la submatriz más larga con igual número de letras y números.
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas:  #467, #544, #607, #628, #642, #664, #692, #772, #724</em> 
+          <p><em>Pistas: #485, #575, #679, #677, #773</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 530</strong></p>
+          <p><strong>pg 536</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>17.6 Suma sin más: </strong>
-        Escribe una función que sume dos números. No debes usar+ ni ningún operador aritmético.
+        <strong>17.6 Recuento de 2s: </strong>
+        Escribe un método para contar el número de 2s que aparecen en todos los números entre O y n (inclusive).
+        <p>EJEMPLO</p>
+        <p>Input <code>25</code></p>
+        <p>Output  9 (2, 12, 20, 21, 22, 23, 24 and 25. Note that 22 counts for two 2s.)</p>
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas:  #467, #544, #607, #628, #642, #664, #692, #772, #724</em> 
+          <p><em>Pistas: #573, #672, #641</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 530</strong></p>
+          <p><strong>pg 538</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>17.7 Suma sin más: </strong>
-        Escribe una función que sume dos números. No debes usar+ ni ningún operador aritmético.
+        <strong>17.7 Nombres de bebé: </strong>
+        Cada año, el gobierno publica una lista de los 10000 nombres de bebé más comunes y sus frecuencias (el número de bebés con ese nombre). El único problema es que algunos nombres tienen varias grafías. Por ejemplo, «John» y ''.Jon» son básicamente el mismo nombre, pero aparecen por separado en la lista. Dadas dos listas, una de nombres/frecuencia y otra de pares de nombres equivalentes, escriba un algoritmo que imprima una nueva lista con la frecuencia real de cada nombre. Tenga en cuenta que si Juan y Jon son sinónimos, y Jon y Juanito son sinónimos, entonces Juan y Juanito son sinónimos. (Es transitivo y simétrico.) En la lista final, cualquier nombre puede utilizarse como nombre «verdadero».
+        <p>EJEMPLO</p>
+        <p>Input</p>
+        <p class="ml-4">Names: John(15),Jon(12), Chris(13),Kris(4),Christopher(19)</p>
+        <p class="ml-4">Synonyms: (Jon,John),(John,Johnny),(Chris,Kris),(Chris, Christopher)</p>
+        <p>Output John(27), Kris(36)</p>
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas:  #467, #544, #607, #628, #642, #664, #692, #772, #724</em> 
+          <p><em>Pistas: #478, #493, #512, #537, #586, #605, #655, #675, #704</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 530</strong></p>
+          <p><strong>pg 541</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>17.8 Suma sin más: </strong>
-        Escribe una función que sume dos números. No debes usar+ ni ningún operador aritmético.
+        <strong>17.8 Torre de circo: </strong>
+        Un circo está diseñando un número de torre formado por personas que se colocan sobre los hombros de otras. Por razones prácticas y estéticas,cada persona debe ser a la vez más baja y más ligera que la persona que tiene debajo. Dadas las alturas y pesos de cada persona del circo,escribe un método para calcular el mayor número posible de personas en dicha torre.
+        <p>EJEMPLO</p>
+        <p>Input (ht,wt): <code>(65, 100) (70, 150) (56, 90) (75, 190) (60, 95) (68, 110)</code></p>
+        <p>Output: The longest tower is length 6 and includes from top to bottom:</p>
+        <p><code>(56, 90) (60,95) (65,100) (68,110) (70,150) (75,190)</code></p>
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas:  #467, #544, #607, #628, #642, #664, #692, #772, #724</em> 
+          <p><em>Pistas: #638, #657, #666, #682, #699</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 530</strong></p>
+          <p><strong>pg 546</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>17.9 Suma sin más: </strong>
-        Escribe una función que sume dos números. No debes usar+ ni ningún operador aritmético.
+        <strong>17.9 K-ésimo múltiplo: </strong>
+        Diseñar un algoritmo para encontrar el número kth tal que los únicos factores primos son 3, 5, y 7. Tenga en cuenta que 3, 5 y 7 no tienen que ser factores, pero no debe tener ningún otro factor primo. Por ejemplo, los primeros múltiplos serían (en orden) 1,3,5,7,9,15, 21.
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas:  #467, #544, #607, #628, #642, #664, #692, #772, #724</em> 
+          <p><em>Pistas: #488, #508, #550, #591, #622, #660, #686</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 530</strong></p>
+          <p><strong>pg 549</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>17.10 Suma sin más: </strong>
-        Escribe una función que sume dos números. No debes usar+ ni ningún operador aritmético.
+        <strong>17.10 Elemento mayoritario: </strong>
+        Un elemento mayoritario es un elemento que constituye más de la mitad de los elementos de una matriz. Dada una matriz de enteros positivos, hallar el elemento mayoritario. Si no hay elemento mayoritario, devuelve-1. Hágalo en <code>O(N)</code> de tiempo y <code>0(1)</code> de espacio.
+        <p>EJEMPLO</p>
+        <p>Input: <code>1 2 5 9 5 9 5 5 5</code></p>
+        <p>Output: <code>5</code></p>
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas:  #467, #544, #607, #628, #642, #664, #692, #772, #724</em> 
+          <p><em>Pistas: #522, #566, #604, #620, #650</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 530</strong></p>
+          <p><strong>pg 554</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>17.11 Suma sin más: </strong>
-        Escribe una función que sume dos números. No debes usar+ ni ningún operador aritmético.
+        <strong>17.11 Distancia entre palabras: </strong>
+        Usted tiene un archivo de texto grande que contiene palabras. Dadas dos palabras cualesquiera, encuentre la distancia más corta (en términos de número de palabras) entre ellas en el fichero. Si la operación se repite varias veces para el mismo fichero (pero con pares de palabras diferentes), ¿puede optimizar la solución?
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas:  #467, #544, #607, #628, #642, #664, #692, #772, #724</em> 
+          <p><em>Pistas: #486, #501, #538, #558, #633</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 530</strong></p>
+          <p><strong>pg 557</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>17.12 Suma sin más: </strong>
-        Escribe una función que sume dos números. No debes usar+ ni ningún operador aritmético.
+        <strong>17.12 BiNodo: </strong>
+        Considere una estructura de datos simple llamada BiNode, que tiene punteros a otros dos nodos.
+        <pre>
+          <code class="language-js">
+            public class BiNode &#123
+              public BiNode node1, node2;
+              public int data;
+            }
+          </code>
+        </pre>
+        <p>
+          La estructura de datos BiNode podría utilizarse para representar tanto un árbol binario (donde nodel es el nodo izquierdo y node2 es el nodo derecho) como una lista doblemente enlazada (donde nodel es el nodo anterior y node2 es el nodo siguiente). Implemente un método para convertir un árbol de búsqueda binario (implementado con BiNode) en una lista doblemente enlazada. Los valores deben mantenerse en orden y la operación debe realizarse in situ (es decir, sobre la estructura de datos original).
+        </p>
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas:  #467, #544, #607, #628, #642, #664, #692, #772, #724</em> 
+          <p><em>Pistas: #509, #608, #646, #680, #707, #719</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 530</strong></p>
+          <p><strong>pg 560</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>17.13 Suma sin más: </strong>
-        Escribe una función que sume dos números. No debes usar+ ni ningún operador aritmético.
+        <strong>17.13 Re-Space: </strong>
+        ¡Oh, no! Has eliminado accidentalmente todos los espacios, signos de puntuación y mayúsculas en un documento largo. Una frase como <code>"He reiniciado el ordenador. Todavía no arrancaba"</code> se convirtió en <code>“hereiniciadoelordenadorytodavíanoarrancaba”</code>. Ya te ocuparás de la puntuación y las mayúsculas más adelante; ahora tienes que volver a insertar los espacios. La mayoría de las palabras están en un diccionario, pero algunas no. Dado un diccionario (una lista de cadenas) y el documento (una cadena), diseña un algoritmo para desconcatenar el documento de forma que se minimice el número de caracteres no reconocidos.
+        <p>EJEMPLO</p>
+        <p>Input: <code>jesslookedjustliketimherbrother</code></p>
+        <p>Output: <code><span class="underline">jess</span> looked just like <span class="underline">tim</span> her brother</code> (7 unrecognized characters)</p>
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas:  #467, #544, #607, #628, #642, #664, #692, #772, #724</em> 
+          <p><em>Pistas: #496, #623, #656, #677, #739, #749</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 530</strong></p>
+          <p><strong>pg 563</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>17.14 Suma sin más: </strong>
-        Escribe una función que sume dos números. No debes usar+ ni ningún operador aritmético.
+        <strong>17.14 K más pequeño: </strong>
+        Diseña un algoritmo para encontrar los K números más pequeños de una matriz.
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas:  #467, #544, #607, #628, #642, #664, #692, #772, #724</em> 
+          <p><em>Pistas: #470, #530, #552, #593, #625, #647, #661, #678</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 530</strong></p>
+          <p><strong>pg 567</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>17.15 Suma sin más: </strong>
-        Escribe una función que sume dos números. No debes usar+ ni ningún operador aritmético.
+        <strong>17.15 Palabra más larga: </strong>
+        Dada una lista de palabras, escribe un programa para encontrar la palabra más larga formada por otras palabras de la lista.
+        <p>EJEMPLO</p>
+        <p>Input: <code>cat, banana, dog, nana, walk, walker, dogwalker</code></p>
+        <p>Output: <code>dogwalker</code></p>
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas:  #467, #544, #607, #628, #642, #664, #692, #772, #724</em> 
+          <p><em>Pistas: #475, #499, #543, #589</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 530</strong></p>
+          <p><strong>pg 572</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>17.16 Suma sin más: </strong>
-        Escribe una función que sume dos números. No debes usar+ ni ningún operador aritmético.
+        <strong>17.16 La masajista: </strong>
+        Una popular masajista recibe una serie de solicitudes de cita consecutivas y se debate sobre cuáles aceptar. Necesita un descanso de 15 minutos entre citas y, por lo tanto, no puede aceptar ninguna solicitud adyacente. Dada una secuencia de peticiones de cita consecutivas (todas múltiplos de 15 minutos, ninguna se solapa y ninguna se puede mover), encuentre el conjunto óptimo (mayor total de minutos reservados) que la masajista puede aceptar. Devuelve el número de minutos.
+        <p>EJEMPLO</p>
+        <p>Input: <code>&#123 30, 15, 60, 75, 45, 15, 15, 45 }</code></p>
+        <p>Output: <code>180 minutes (&#123 30, 60, 45, 45 })</code></p>
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas:  #467, #544, #607, #628, #642, #664, #692, #772, #724</em> 
+          <p><em>Pistas: #495, #504, #576, #526, #542, #554, #562, #568, #578, #587, #607</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 530</strong></p>
+          <p><strong>pg 574</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>17.17 Suma sin más: </strong>
-        Escribe una función que sume dos números. No debes usar+ ni ningún operador aritmético.
+        <strong>17.17 Búsqueda múltiple: </strong>
+        Dada una cadena banda una matriz de cadenas más pequeñas T, diseñar un método para buscar b por cada cadena pequeña en T.
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas:  #467, #544, #607, #628, #642, #664, #692, #772, #724</em> 
+          <p><em>Pistas: #480, #582, #617, #743</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 530</strong></p>
+          <p><strong>pg 578</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>17.18 Suma sin más: </strong>
-        Escribe una función que sume dos números. No debes usar+ ni ningún operador aritmético.
+        <strong>17.18 Supersecuencia más corta: </strong>
+        Se dan dos matrices, una más corta (con todos los elementos distintos) y otra más larga. Encuentra la submatriz más corta de la matriz más larga que contenga todos los elementos de la matriz más corta. Los elementos pueden aparecer en cualquier orden.
+        <p>EJEMPLO</p>
+        <p>Input: <code>&#123 1, 5, 9 } | &#123 7, 5, 9, 0, 2, 1, 3, <span class="underline">5, 7, 9, 1, 1,</span> 5, 8, 8, 9, 7 }</code></p>
+        <p>Output: <code>[7, 10]</code> (the underlined portion above)</p>
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas:  #467, #544, #607, #628, #642, #664, #692, #772, #724</em> 
+          <p><em>Pistas: #645, #652, #669, #687, #697, #725, #731, #741</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 530</strong></p>
+          <p><strong>pg 584</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>17.19 Suma sin más: </strong>
-        Escribe una función que sume dos números. No debes usar+ ni ningún operador aritmético.
+        <strong>17.19 Missing Two: </strong>
+        Se le da una matriz con todos los números de <code>1</code> a <code>N</code> que aparecen exactamente una vez, a excepción de un número que falta. ¿Cómo puedes encontrar el número que falta en <code>O(N)</code> tiempo y <code>0(1)</code> espacio? ¿Y si faltan dos números?
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas:  #467, #544, #607, #628, #642, #664, #692, #772, #724</em> 
+          <p><em>Pistas: #503, #590, #609, #626, #649, #672, #689, #696, #702, #717</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 530</strong></p>
+          <p><strong>pg 591</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>17.20 Suma sin más: </strong>
-        Escribe una función que sume dos números. No debes usar+ ni ningún operador aritmético.
+        <strong>17.20 Mediana continua: </strong>
+        Los números se generan aleatoriamente y se pasan a un método. Escribe un programa para encontrar y mantener el valor de la mediana a medida que se generan nuevos valores.
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas:  #467, #544, #607, #628, #642, #664, #692, #772, #724</em> 
+          <p><em>Pistas: #519,#546, #575,#709</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 530</strong></p>
+          <p><strong>pg 595</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>17.21 Suma sin más: </strong>
-        Escribe una función que sume dos números. No debes usar+ ni ningún operador aritmético.
+        <strong>17.21 Volumen del histograma: </strong>
+        Imagina un histograma (gráfico de barras). Diseña un algoritmo para calcular el volumen de agua que podría contener si alguien vertiera agua por la parte superior. Puedes suponer que cada barra del histograma tiene una anchura de 1.
+        <p>EXAMPLE (Black bars are the histogram. Gray is water.)</p>
+        <p>Input: <code>&#123 0, 0, 4, 0, 0, 6, 0, 0, 3, 0, 5, 0, 1, 0, 0, 0 }</code></p>
+        <div class="flex justify-center mb-14">
+          <div class="relative h-36 w-96 border-b-slate-700 border-b-2">
+            <div class="absolute left-10 bottom-0 w-24 h-[70%] bg-slate-300"></div>
+            <div class="absolute left-10 bottom-0 w-7 h-[70%] bg-slate-600"></div>
+            <div class="absolute left-28 bottom-0 w-32 h-[85%] bg-slate-300"></div>
+            <div class="absolute left-44 bottom-0 w-32 h-[20%] bg-slate-300"></div>
+            <div class="absolute left-28 bottom-0 w-7 h-full bg-slate-600"></div>
+            <div class="absolute left-[184px] bottom-0 w-7 h-[50%] bg-slate-600"></div>
+            <div class="absolute left-[232px] bottom-0 w-7 h-[85%] bg-slate-600"></div>
+            <div class="absolute left-[280px] bottom-0 w-7 h-[20%] bg-slate-600"></div>
+            <p class="absolute -bottom-12"><code>0 0 4 0 0 6 0 0 3 0 5 0 1 0 0 0</code></p>
+            <div class="w-96"></div>
+          </div>
+        </div>
+        <p>Output: 26</p>
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas:  #467, #544, #607, #628, #642, #664, #692, #772, #724</em> 
+          <p><em>Pistas: #629,#640,#657,#658,#662,#676,#693,#734,#742</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 530</strong></p>
+          <p><strong>pg 596</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>17.22 Suma sin más: </strong>
-        Escribe una función que sume dos números. No debes usar+ ni ningún operador aritmético.
+        <strong>17.22 Transformador de palabras: </strong>
+        Dadas dos palabras de igual longitud que estén en un diccionario, escribe un método para transformar una palabra en otra cambiando sólo una letra cada vez. La nueva palabra que obtengas en cada paso debe estar en el diccionario.
+        <p>EXAMPLE (Black bars are the histogram. Gray is water.)</p>
+        <p>Input: DAMP, LIKE</p>
+        <p>Output: DAMP-> LAMP-> LIMP-> LIME-> LIKE</p>
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas:  #467, #544, #607, #628, #642, #664, #692, #772, #724</em> 
+          <p><em>Pistas: #506, #535, #556, #580, #598, #618, #738</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 530</strong></p>
+          <p><strong>pg 602</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>17.23 Suma sin más: </strong>
-        Escribe una función que sume dos números. No debes usar+ ni ningún operador aritmético.
+        <strong>17.23 Máximo Cuadrado Negro: </strong>
+        Imagina que tienes una matriz cuadrada, donde cada celda (píxel) es blanca o negra Diseña un algoritmo para encontrar el máximo subcuadrado tal que los cuatro bordes estén llenos de píxeles negros.
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas:  #467, #544, #607, #628, #642, #664, #692, #772, #724</em> 
+          <p><em>Pistas: #684, #695, #705, #714, #721, #736</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 530</strong></p>
+          <p><strong>pg 608</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>17.24 Suma sin más: </strong>
-        Escribe una función que sume dos números. No debes usar+ ni ningún operador aritmético.
+        <strong>17.24 Submatriz Max: </strong>
+        Dada una matriz NxN de enteros positivos y negativos, escribe código para encontrar la submatriz con la mayor suma posible.
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas:  #467, #544, #607, #628, #642, #664, #692, #772, #724</em> 
+          <p><em>Pistas: #469, #511, #525, #539, #565, #581, #595, #615, #621</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 530</strong></p>
+          <p><strong>pg 611</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>17.25 Suma sin más: </strong>
-        Escribe una función que sume dos números. No debes usar+ ni ningún operador aritmético.
+        <strong>17.25 Rectángulo de palabras: </strong>
+        Teniendo en cuenta una lista de millones de palabras, diseñe un algoritmo para crear el rectángulo de letras más grande posible, de modo que cada fila forme una palabra (de izquierda a derecha) y cada columna forme una palabra (de arriba abajo). No es necesario que las palabras se elijan consecutivamente de la lista, pero todas las filas deben tener la misma longitud y todas las columnas la misma altura.
         <div class="flex justify-between items-end gap-2">
-          <p><em>Pistas:  #467, #544, #607, #628, #642, #664, #692, #772, #724</em> 
+          <p><em>Pistas: #477, #500, #748</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 530</strong></p>
+          <p><strong>pg 615</strong></p>
         </div>
       </li>
       <li class="list-none">
-        <strong>17.26 Suma sin más: </strong>
-        Escribe una función que sume dos números. No debes usar+ ni ningún operador aritmético.
+        <strong>17.26 Similitud dispersa: </strong>
+        La similitud de dos documentos (cada uno con palabras distintas) se define como el tamaño de la intersección dividido por el tamaño de la unión. Por ejemplo, si los documentos están formados por números enteros, la similitud de <code>&#123 1, 5, 3 }</code> y <code>&#123 1, 7, 2, 3 }</code> es <code>0,4</code>, porque la intersección tiene un tamaño de 2 y la unión tiene un tamaño de 5.
+        <p>
+          Tenemos una larga lista de documentos (con valores distintos y cada uno con un ID asociado) en la que se cree que la similitud es «dispersa:'Es decir, es muy probable que dos documentos cualesquiera seleccionados arbitrariamente tengan una similitud 0. Diseñe un algoritmo que devuelva una lista de pares de ID de documentos y la similitud asociada.
+        </p>
+        <p>
+          Imprima sólo los pares cuya similitud sea superior a 0. Los documentos vacíos no deben imprimirse. Para simplificar, puede suponer que cada documento se representa como una matriz de enteros distintos.
+        </p>
+        <p>EJEMPLO</p>
+        <p>Input:</p>
+        <pre>
+          <code class="language-js">
+            13: &#123 14, 15, 100, 9, 3 } 
+            16: &#123 32, 1, 9, 3, 5 } 
+            19: &#123 15, 29, 2, 6, 8, 7 } 
+            24: &#123 7, 10 } 
+          </code>
+        </pre>
+        <p>Output:</p>
+        <pre>
+          <code class="language-js">
+            ID1, ID2  : SIMILARITY
+            13, 19    : 0.1
+            13, 16    : 0.25
+            19, 24    : 0.14285714285714285
+          </code>
+        </pre>
         <div class="flex justify-between items-end gap-2">
           <p><em>Pistas:  #467, #544, #607, #628, #642, #664, #692, #772, #724</em> 
           </p>
           <p class="border-t-2 border-black flex-1 border-dashed"></p>
-          <p><strong>pg 530</strong></p>
+          <p><strong>pg 620</strong></p>
         </div>
       </li>
     </ul>
