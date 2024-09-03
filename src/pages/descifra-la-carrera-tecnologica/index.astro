@@ -4012,3 +4012,272 @@ Este es el primer caso interesante. Si tuviéramos la respuesta a las permutacio
 merge(c, ab) → cab, acb, abc
 
 merge(c, ba) → cba, bca, bac
+
+Podemos utilizar un algoritmo recursivo para resolver este problema. Primero, generamos todas las permutaciones de una cadena cortando el último carácter y generando todas las permutaciones de s[1 . . . n - 1]. A continuación, inserta s[n] en cada posición de la cadena permutada.
+
+Método 4: Tormenta de ideas sobre estructuras de datos
+
+Hay que admitir que el método de Tormenta de Ideas de Estructuras de Datos es un poco complicado, pero a menudo funciona. En este enfoque, simplemente recorremos una lista de estructuras de datos e intentamos aplicar cada una de ellas. Este enfoque funciona porque muchos algoritmos son bastante sencillos una vez que encontramos la estructura de datos adecuada.
+
+Un buen indicio de que puedes aplicar la tormenta de ideas de estructuras de datos es que el entrevistador no haya especificado una estructura de datos para los datos. Esto significa que probablemente tendrás que idear una estructura de datos, que podría ser la clave del problema.
+
+Ejemplo: Estás construyendo una clase con dos funciones: add-Number(n) y getMedian(). El método addNumber(n) será llamado periódicamente por alguna función externa con un valor entero. Cuando se llama a getMedian(), se necesita devolver eficientemente la mediana de todos los números anteriores. (Si usted tiene un número impar de valores, la mediana es el medio exacto de los valores ordenados. Si tienes un número par de valores, la mediana es la media entre los dos valores medios). ¿Cómo se implementan estos dos métodos?
+
+Repasemos las estructuras de datos más comunes y veamos si sería útil utilizar alguna de ellas.
+
+¿Lista enlazada? Probablemente las listas no enlazadas no suelen funcionar muy bien a la hora de acceder y ordenar números.
+
+¿Matriz? Tal vez, si mantenemos los elementos ordenados. Pero probablemente sea caro. Dejémoslo para cuando sea necesario.
+
+¿Arbol binario? Esto es posible, ya que los árboles binarios hacen bastante bien con el ordenamiento. De hecho, si el árbol de búsqueda binario está perfectamente equilibrado, la parte superior podría ser la mediana. Pero cuidado: si hay un número par de elementos, la mediana es en realidad la media de los dos elementos centrales. Los dos elementos centrales no pueden estar en la cima. Podría haber un algoritmo viable, pero volvamos a ello.
+
+¿Un montón? Un montón es realmente bueno en el ordenamiento básico y el seguimiento de máximos y mínimos. Esto es realmente interesante: si tuvieras dos montones, podrías hacer un seguimiento de la mitad mayor y la mitad menor de los elementos. La mitad mayor se guarda en un montón mínimo, de forma que el elemento más pequeño de la mitad mayor esté en la raíz. La mitad más pequeña se guarda en un montón máximo, de forma que el elemento más grande de la mitad más pequeña esté en la raíz. Ahora, con estas estructuras de datos, tienes los elementos medianos potenciales en las raíces. Si los montones ya no tienen el mismo tamaño, puedes reequilibrarlos rápidamente sacando un elemento de un montón y poniéndolo en el otro.
+
+Ten en cuenta que cuantos más problemas hagas, más desarrollado estará tu instinto sobre qué estructura de datos aplicar. Las tablas hash, los árboles, los tries y los montones son algunas de las mejores estructuras de datos para resolver problemas.
+
+Diseño orientado a objetos
+
+Las cuestiones de diseño orientado a objetos (DPO) son de dos tipos: OOD para una pieza de software y OOD para un objeto del mundo real. A pesar de la aparente gran diferencia entre estos temas, se abordan de la misma manera:
+
+¿Cuáles son tus objetivos? Imagina, por ejemplo, que te piden que diseñes las clases para una baraja de cartas genérica. ¿Qué tipo de cartas? ¿Son cartas estándar, cartas UNO o de otro tipo? ¿Cómo de genérica tiene que ser?
+
+¿Cuáles son los objetos principales? Por ejemplo, si estás haciendo el OOD para un restaurante, tus objetos principales podrían ser Restaurante, Patrón, Fiesta, Anfitrión, Servidor, Camarero, Mesa, y así sucesivamente. Cada uno de ellos se convertirá en una clase.
+
+¿Cómo se relacionan los objetos entre sí? Probablemente sólo haya un Restaurante, por lo que puede ser una clase singleton. El restaurante tiene muchos camareros, un anfitrión, muchos camareros, muchas mesas, muchas fiestas y muchos clientes. (Nota: Esto es sólo una suposición; hable con su interlocutor al respecto.) Cada Mesa tiene un Servidor y una Parte. Busque y elimine redundancias. Por ejemplo, el Restaurante puede no necesitar una lista de Clientes, ya que puede obtenerla de la lista de Partes.
+
+¿Cómo interactúan los objetos? Piense en las principales acciones que tienen lugar en el restaurante. Por ejemplo, un cliente hace una reserva con un anfitrión. El Anfitrión sienta al Cliente en una Mesa y le asigna un Servidor. Cada una de estas acciones se corresponde con uno o varios métodos. Al repasar estos métodos, es posible que descubra que ha omitido algunos objetos o que su diseño no es del todo correcto. No pasa nada, ¡ahora es un buen momento para añadirlos!
+
+¿Hay algún algoritmo complicado? En algunos casos, puede haber un algoritmo que afecte al diseño. Por ejemplo, la implementación de findNextReservation(int partySize) puede requerir algunos cambios en la forma en que se hace referencia a las reservas. Comente estos detalles con su entrevistador.
+
+Recuerde que las preguntas de diseño orientado a objetos requieren mucha comunicación con su entrevistador acerca de lo flexible que debe ser su diseño y cómo equilibrar ciertas compensaciones. No existe una respuesta «correcta» a una pregunta de diseño orientado a objetos.
+
+Preguntas sobre escalabilidad
+
+Las preguntas sobre escalabilidad pueden intimidar mucho a los candidatos, especialmente a los recién licenciados o a los que no han hecho mucho diseño de grandes sistemas. Te pueden hacer preguntas muy amplias, como diseñar Google Maps. O las preguntas pueden ser más específicas, como diseñar un rastreador web.
+
+Fundamentalmente, se trata de preguntas de resolución de problemas y pueden abordarse como tales. No son pruebas de conocimientos. Por ejemplo, Google no espera que conozcas tecnologías de Google como MapReduce y BigTable.
+
+Preparación
+
+Una de las mejores cosas que puedes hacer es leer cómo se implementaron los sistemas del mundo real. ¿Cuáles son los componentes que intervienen en el diseño? ¿Por qué tomaron los diseñadores las decisiones que tomaron? ¿Cuáles fueron las compensaciones?
+
+Estos sistemas pueden ser productos importantes (por ejemplo, Twitter, Google Maps) o componentes de productos existentes (por ejemplo, MapReduce, BigTable).
+
+Cuanto más analices cómo se diseñan otros sistemas, mejor podrás diseñar uno nuevo. De nuevo, no se trata de memorizar cómo están diseñados estos sistemas. Tienes que analizar por qué se han diseñado así.
+
+Cómo enfocarlo
+
+Una estructura general como la siguiente secuencia de cuatro pasos funciona bien:
+
+Analice el problema. No se puede construir un sistema sin saber qué debe hacer. Al tiempo que formula las preguntas necesarias, haga una lista de los algoritmos o componentes necesarios. Por ejemplo, si estás diseñando Google Maps, puede que necesites dirigir a las personas, mostrar mapas, recopilar datos de tráfico, etc.
+
+Estructura la arquitectura. Esboza cuáles son los componentes clave del problema. Por ejemplo, puede que tengas un almacén de datos, un rastreador, una pieza de front-end para obtener datos de la estructura de datos, etcétera. Este es un buen momento para levantarse y utilizar la pizarra. Hará que tu proceso de pensamiento sea claro y organizado, tanto para ti como para el entrevistador.
+
+Identifique los problemas clave. Describa cuáles son los problemas clave a los que se enfrentará el sistema. ¿Se trata de una aplicación que requiere mucha lectura o mucha escritura? ¿Qué significa eso? ¿Cuáles son los cuellos de botella o los recursos críticos? ¿Necesita distribuir su base de datos entre varias máquinas?
+
+Resuelva los problemas. Una vez identificados los problemas, es hora de resolverlos. Si no está claro de cuál debes hablar, pregúntale a tu entrevistadora qué le gustaría que hicieras.
+
+Aunque esta estructura se proporciona de forma lineal, no tienes por qué ceñirte a ella de forma absoluta. La identificación de una cuestión clave puede dar lugar a un ajuste en la arquitectura central, o puede que tengas preguntas de seguimiento para tu entrevistadora. Dé prioridad a la comunicación a lo largo de este proceso.
+
+Entrevistas sobre pruebas
+
+Los trabajos relacionados con las pruebas tienen muchos nombres y se confunden fácilmente, pero pueden agruparse en dos áreas:
+
+Garantía de calidad/ingeniero de pruebas de software/probador. En estos puestos se diseñan y ejecutan planes de pruebas. No se puede probar todo lo que hay en un programa informático; hay demasiadas configuraciones diferentes. Los probadores dan prioridad a los aspectos más importantes del software que hay que probar y luego los llevan a cabo.
+
+Ingeniero de software en pruebas/ingeniero de diseño de software en pruebas. Las personas que ocupan estos puestos son programadores -escriben código todo el día-, pero en lugar de crear funciones, escriben código de automatización. Por ejemplo, pueden probar Microsoft Word creando automáticamente un conjunto de archivos grandes y automatizando Word para que abra, procese y cierre los archivos repetidamente.
+
+No te fíes por completo de los nombres de los puestos que acabas de dar. En una empresa concreta, un ingeniero de software en pruebas puede dedicarse más a las pruebas manuales y menos a las pruebas de código automatizado.
+
+Si un trabajo específico de pruebas requiere codificación (independientemente del nombre del puesto), es posible que te hagan preguntas de codificación. Esto significa que tendrás que practicar la codificación, los algoritmos y las estructuras de datos, además de todos los problemas habituales de las pruebas. Si eres evaluador, hazte un favor y asegúrate de practicar la codificación: es una forma excelente de diferenciarte.
+
+Además, se le plantearán preguntas de comprobación de las tres categorías siguientes:
+
+¿Cómo probaría este objeto del mundo real?
+
+Explica cómo probarías este programa informático.
+
+Probar un método (posiblemente uno que acabe de escribir).
+
+En algunos casos, también se pueden plantear preguntas de prueba a los desarrolladores.
+
+Probar un objeto real
+
+¿Qué tiene que ver probar clips y bolígrafos con probar Office o Gmail? Quizás no mucho, pero tu entrevistador seguro que piensa que sí.
+
+Tu entrevistador está utilizando esta pregunta para poner a prueba tu capacidad para lidiar con la ambigüedad, para entender tu capacidad para pensar en el comportamiento esperado e inesperado y, como siempre, para poner a prueba tu capacidad para estructurar y comunicar tus pensamientos.
+
+Analicemos este enfoque de seis pasos recomendado para un problema de ejemplo: probar un bolígrafo.
+
+Haz preguntas para entender qué es el objeto. Un bolígrafo no parece tan ambiguo, pero lo es. Un bolígrafo puede ser cualquier cosa, desde una estilográfica hasta un rotulador para niños con varios colores o un bolígrafo para astronautas. Haga preguntas a su entrevistador para resolver esta ambigüedad.
+
+¿Quién lo utiliza y qué hace con él? Los niños pequeños con poca destreza dibujan con él, así que probablemente tenga que ser bonito y grueso. Probablemente dibujen sobre papel en el suelo, pero esto significa que pueden acabar dibujando un poco en el propio suelo.
+
+¿Cuáles son los usos inesperados? Comérselo: los niños se llevan cualquier cosa a la boca. Dibujar sobre otros niños o sobre las paredes (como descubrió una vez mi madre en casa de una amiga cuando interrumpió a mi hermana jugando a un divertido juego llamado «¿Puedo dibujar una línea continua que atraviese todo el piso de arriba?»). Pisotearlo. Tirarla.
+
+¿Existen otros casos de estrés? Piensa en el calor, el frío, etc. No todos ellos serán aplicables a todos los problemas.
+
+¿Puede fallar con elegancia? Lo ideal sería que nuestro bolígrafo no se rompiera nunca. Pero si lo hace, ¿podemos evitar que explote?
+
+¿Cuáles son los casos de prueba? Llegados a este punto, hemos descubierto que probablemente queramos probar al menos los siguientes elementos:
+
+Que no sea tóxico. Quizás debatamos los ingredientes con el servicio de toxicología, que podría ofrecernos pruebas más específicas si fuera necesario.
+
+Lavable. Prueba el dibujo en suelos, paredes, ropa y piel.
+
+Espesor. Probablemente querremos realizar una serie de pruebas para saber qué anchuras resultan incómodas para los niños, además de probar en vivo nuestro prototipo de rotulador.
+
+Suavidad/ligereza. El material debe ser un plástico ligero, para que no duela demasiado si te golpea.
+
+Durabilidad. El bolígrafo no debe romperse fácilmente. Debemos discutir con nuestro entrevistador cuánta presión debe soportar.
+
+Fugas. Si el bolígrafo se rompe, queremos asegurarnos de que la tinta no hace daño.
+
+Puede que te hayas dado cuenta de cómo las pruebas se integran en el diseño: es de esperar. Al fin y al cabo, los probadores tienen que analizar si el objeto se ajusta a los requisitos de diseño.
+
+Probar un programa informático
+
+Ahora que ya nos hemos quitado de encima lo que muchos consideran las preguntas más difíciles, probar una pieza de software no es terriblemente difícil. De hecho, se aborda de la misma manera que una pregunta sobre un objeto del mundo real.
+
+Ejemplo: Explique cómo probaría un cliente de correo electrónico.
+
+Haga preguntas para resolver ambigüedades. No todos los clientes de correo electrónico son iguales. ¿Es un cliente de correo electrónico corporativo? ¿Un cliente de correo electrónico personal? ¿Es un cliente de correo electrónico web o de escritorio?
+
+¿Quién es el usuario? Un usuario corporativo tendrá necesidades muy diferentes a las de un usuario personal, en términos de seguridad, almacenamiento, mantenimiento, etc.
+
+¿Qué características tiene? Algunas funciones se pueden dar por supuestas (consultar el correo electrónico, enviarlo, etc.), pero otras requieren más tiempo de conversación. ¿El correo electrónico está en un servidor? ¿Está cifrado?
+
+¿Hay usos inesperados o casos de estrés? En el caso de un cliente de correo electrónico, esto puede significar una avalancha de mensajes, archivos adjuntos enormes y cosas por el estilo.
+
+Cuando hay fallos, ¿cómo se puede fallar con elegancia? Si un archivo es demasiado grande para ser manejado por el cliente de correo electrónico, querrás asegurarte de que falla correctamente. Es decir, que el cliente rechace como mucho el archivo adjunto, pero que no se bloquee permanentemente.
+
+¿Qué puede automatizarse y qué debe probarse manualmente? Por supuesto, hay un conjunto casi interminable de cosas que se pueden probar; después de todo, las empresas tienen equipos completos para hacerlo. Lo importante es centrarse en los elementos más importantes (o más interesantes) y estudiar cómo probarlos. ¿Qué puede automatizarse y qué debe probarse manualmente?
+
+Probar un método
+
+Después de escribir el código, es posible que te pidan que lo pruebes o que simplemente generes los casos de prueba. En tus casos de prueba, recuerda tener en cuenta lo siguiente.
+
+Ejemplo: Probar un método que ordena una matriz.
+
+Haga preguntas para resolver la ambigüedad. ¿La matriz debe ordenarse de forma ascendente o descendente? ¿Cuáles son las expectativas en cuanto a tiempo, uso de memoria, etc.? ¿Qué tipo de datos debe tener la matriz?
+
+¿Qué hay que comprobar? Haz una lista de todo lo que hay que comprobar. En muchos casos, esto puede ser sólo el resultado (por ejemplo, ¿está ordenado el array?), pero en otros casos puede que quieras comprobar otros efectos secundarios (por ejemplo, uso de memoria, cambio de otros datos, etc.).
+
+Escribe los casos esperados. Este es el más fácil: uno de tus casos de prueba debería ser simplemente un array sin ordenar.
+
+Escribe los casos extremos. Comprueba si hay matrices nulas o vacías, matrices enormes, matrices ya ordenadas, etc.
+
+Preguntas y respuestas
+
+Demasiada preparación, poco tiempo
+
+Llevo unos años trabajando como programador de software en una empresa de consultoría, pero mi trabajo es aburrido y principalmente de mantenimiento de código. El poco código que escribo está en C, no hay programación orientada a objetos. No siento que esté aprendiendo mucho y, desde luego, no estoy ascendiendo.
+
+Mi sueño es trabajar para una gran empresa como Microsoft. Creo que necesitaría meses para prepararme para estas entrevistas. ¿Debería dejarlo ahora para poder centrarme en prepararme?
+
+Voy a ser sincera: no me entusiasma la idea de dejarlo para preparar las entrevistas. En primer lugar, Microsoft y empresas similares contratan a menos del 5% de los candidatos. Incluso con mucha preparación, tus posibilidades son escasas. En segundo lugar, puede que tengas que dar una explicación a los entrevistadores de por qué lo dejas, y «para prepararme para ti» no es una buena razón. En tercer lugar, el valor de una preparación intensiva y a largo plazo depende realmente de cuáles sean tus puntos débiles. Lo único que has mencionado es la falta de conocimientos sobre programación orientada a objetos, y probablemente no necesites meses para aprender eso.
+
+Yo recomendaría dejarlo sólo si las tres afirmaciones siguientes son ciertas:
+
+Sabes que puedes encontrar un trabajo igual de bueno que el actual sin necesidad de prepararte.
+
+No puedes prepararte simultáneamente con el trabajo.
+
+Te llevará mucho tiempo prepararte.
+
+Si has decidido dejarlo, te recomiendo que hagas algo un poco más tangible con tu tiempo. En lugar de centrarte únicamente en superar las entrevistas, dedica tu tiempo a crear lo que podría ser una empresa. Construye un programa informático o un sitio web y utilízalo como herramienta principal para aprender lo que necesitas saber (programación orientada a objetos, etc.).
+
+La ventaja de esto es que cuando los empresarios te pregunten qué has estado haciendo desde que lo dejaste, podrás decirles que querías intentar crear una empresa, pero que te diste cuenta de que no era para ti (descubriste que prefieres trabajar con equipos más grandes, etc.). Y tendrás algo tangible que enumerar en tu currículum que mostrará experiencia y enmascarará cualquier laguna.
+
+Conócelo todo
+
+Para preparar mi entrevista con Google, he repasado todos mis cursos anteriores de informática. He dedicado la mayor parte del tiempo a los algoritmos y, en concreto, a la programación dinámica y al equilibrio de árboles. Aún no estoy seguro de ser capaz de resolver un problema como este durante una entrevista.
+
+¿Cómo afrontan estas preguntas los candidatos con éxito?
+
+Demos un paso atrás y pongámonos en la mente de nuestros entrevistadores. Quieren saber si somos inteligentes y si sabemos programar. Tener conocimientos específicos no es importante, a menos que sean (1) necesarios para desempeñar bien el trabajo o (2) tan integrales para una formación básica en informática que probablemente los conozcas.
+
+Insertar un elemento en un árbol entra en la categoría 2. En realidad, los árboles no se utilizan tan a menudo en la industria, pero son tan fundamentales, ¿cómo no conocerlos?
+
+El equilibrado de árboles, sin embargo, no entra en esta categoría. Deberías saber que el equilibrado de árboles existe, y deberías saber básicamente cómo funciona (rotaciones cuando los lados son demasiado desiguales), pero los pequeños detalles no son tan esenciales de conocer. Sáltatelo.
+
+Las preguntas complejas de programación dinámica -las que se leen en los grandes libros de algoritmos- suelen ser demasiado complejas para una entrevista. Pueden surgir, pero no suelen ser buenas preguntas.
+
+Sin embargo, las preguntas sencillas de programación dinámica -memorización (o almacenamiento en caché de resultados entre llamadas recursivas)- pueden surgir. Vale la pena dedicar un poco de tiempo a practicar esas preguntas, pero no son tan complejas como se podría suponer.
+
+Recuerda también que el código en una entrevista es relativamente corto. Normalmente no se escriben más de 20 líneas. Entre diseñar un algoritmo, probar el código y corregir errores, no hay tiempo suficiente para escribir mucho más que eso.
+
+Así que relájate. Céntrate en prepararte para las preguntas normales, las que puedes responder en 45 minutos.
+
+Información engañosa
+
+Me entrevistaron en Microsoft y me hicieron una pregunta difícil. Empecé a pensar en una solución de fuerza bruta, y el entrevistador dijo que la fuerza bruta estaba bien. Empecé a escribir el código y, antes de terminar, el entrevistador empezó a bombardearme a preguntas. Sus preguntas me llevaron a una solución mejor. También me di cuenta más tarde de que tenía algunos fallos y otros errores en mi código, pero parecían bastante menores.
+
+Creo que me engañó al decirme que mi solución inicial de fuerza bruta estaba bien, y como resultado acabé siendo rechazado. ¿Tengo alguna posibilidad de presentar un argumento?
+
+Hay muchas cosas en juego en esta pregunta, así que voy a desglosarlas.
+
+¿Te engañó tu entrevistador al decirte que la fuerza bruta estaba bien (cuando en realidad no lo estaba)?
+Es posible que tuvieras un mal entrevistador que no te dirigió correctamente. Los malos entrevistadores existen, incluso en las mejores empresas. Sospecho que tu entrevistador probablemente buscaba saber si te darías cuenta y buscarías una solución más óptima, o si te conformarías con una solución suficientemente buena. Dependiendo de lo avanzado que estuvieras en la entrevista, el entrevistador también puede haber estado pensando: «Vale, no tenemos mucho tiempo y quiero asegurarme de que veo el código de este candidato. Déjeme animarle a que se ponga manos a la obra».
+
+¿Esto hizo que le rechazaran?
+De nuevo, es muy difícil decir que esto realmente causó el rechazo. En primer lugar, normalmente entre el 50% y el 75% de los candidatos son rechazados en cada fase, así que es casi como si tuvieras que hacer las cosas muy, muy bien para no ser rechazado. En segundo lugar, es poco probable que un solo problema sea la causa del rechazo. Como has señalado, tenías algunos fallos y otros errores. Supongo que lo que pensó tu entrevistador fue más bien «Hmm, este chico me cae bien, pero su solución no es muy buena, y tiene algunos fallos en el código y otros errores».
+
+¿Puedes argumentarlo?
+No te lo recomiendo. Digas lo que digas a tu reclutador, es casi seguro que se pondrá de parte de tu entrevistador. Lo más probable es que eches a perder tu buena reputación en la empresa, y no merece la pena.
+
+Siento que las cosas no te hayan salido bien, pero no estás solo. Las entrevistas son difíciles y, por desgracia, muy aleatorias. La mayoría de mis compañeros de Google admitieron que no creían que pasarían las entrevistas la segunda vez. Por suerte, la mayoría de las empresas lo entienden y te permiten volver a presentarte en un plazo de entre seis meses y un año.
+
+Recursos adicionales
+
+Visita www.crackingthetechcareer.com para obtener recursos adicionales y www.careercup.com para consultar miles de preguntas y respuestas sobre posibles entrevistas.
+
+13 
+Los artistas suelen tener una formación artística tradicional y a veces se les contrata directamente en institutos de arte. Los candidatos deben presentar un portafolio y se les recomienda encarecidamente que lo publiquen en su sitio web.
+
+
+Entrar en el mundo del juego
+
+Incluso entre las empresas tecnológicas, las de juegos destacan por sus entornos llenos de energía y diversión. Juegos recreativos de gran tamaño, cervezas de barril en las happy hours semanales, oficinas coloridas, salas enteras dedicadas al ping-pong... todo es típico de las empresas de juegos. En términos de cultura, han «superado» a las empresas tecnológicas. Su atractivo para los candidatos es evidente.
+
+La cultura: ¿Es todo diversión y juegos?
+
+Alessandra, de la empresa de selección de personal VonChurch, sugiere que el ambiente festivo forma parte de la naturaleza del sector: «El juego es una mezcla de creatividad y tecnología. Las empresas tecnológicas ya son entornos jóvenes y divertidos. Cuando mezclas una mano de obra muy creativa, esto es lo que obtienes».
+
+Su colega Katy Haddix está de acuerdo, pero advierte que se trata de un ambiente en el que se trabaja duro y se juega duro: «Se espera que estés a tope, trabajando de 10 a 12 horas al día, más los fines de semana cuando sea necesario».
+
+Las largas jornadas son necesarias en el mundo de los juegos casuales. Los juegos casuales pasan de la concepción al lanzamiento en apenas dos meses. Terminar un proyecto antes de la fecha límite es siempre una carrera, y en esta industria, siempre hay una fecha límite inminente. El trabajo no puede parar.
+
+Además, tu producto está en directo las 24 horas del día y puede depender de otra plataforma viva y cambiante como Facebook. Las cosas pueden romperse en cualquier momento; alguien tiene que estar pendiente.
+
+En el mundo de los juegos de consola, los ciclos de lanzamiento son más largos, lo que reduce el nivel de estrés, pero las horas pueden seguir siendo intensas. Toda la industria del videojuego es ferozmente competitiva.
+
+Es una industria para los verdaderos apasionados de los juegos. Si no estás preparado para largas jornadas de trabajo -complementadas, por supuesto, con happy hours y torneos de futbolín-, éste no es tu campo.
+
+Puestos de trabajo: ¿Qué puedes hacer?
+
+En la creación de juegos intervienen cuatro funciones principales: desarrolladores, productores, artistas y diseñadores. Un puñado de otros puestos, desde marketing hasta control de calidad (QA), ayudan en las responsabilidades de creación, lanzamiento y postproducción del juego. En esta sección veremos qué formación, aptitudes y características hay que tener para cada una de estas funciones.
+
+Ingeniería de software
+
+La contratación de ingenieros de software en las empresas de videojuegos es similar a la de otras empresas tecnológicas. «Los candidatos deben esperar que les pongan a prueba igual que en Microsoft o en cualquier otra empresa tecnológica. Somos como ellas: necesitamos gente inteligente y que sepa programar», señala Ben Ahroni, productor de PopCap.
+
+Como las empresas de videojuegos se mueven con tanta rapidez, a menudo no pueden permitirse esperar a que los candidatos se pongan al día con sus tecnologías. Un candidato que ya conozca bien el lenguaje de programación de la empresa tendrá mucho más éxito en el proceso de contratación.
+
+Audra Aulabaugh, reclutadora de Big Fish Games, añade que los universitarios interesados en los juegos se matriculan en algunos cursos relacionados: «Contratamos a gente que acaba de salir de la universidad, aunque no tenga experiencia en juegos, pero un interés y una experiencia demostrados en este campo te ayudarán a destacar».
+
+Producción
+
+Los productores desempeñan un papel muy parecido al de los jefes de producto en una empresa tecnológica. Gestionan toda la producción del juego, incluido el calendario previo al lanzamiento y el rendimiento posterior. Además, Ben Ahroni me dijo: «El productor debe ser un líder. Cuando las cosas se ponen difíciles, tienes que estar ahí para levantar la moral del equipo».
+
+BJ Bigley, de Big Kind Games, es un poco más directo. «Los productores son sociables. Tienes que ser capaz de contentar a todo el mundo a la vez que obtienes resultados. Eres el diplomático por excelencia».
+
+Saber escribir código está bien, pero no es estrictamente necesario. Lo más importante es que seas analítico y cuantitativo, y eso puede venir de cualquier parte, desde la ingeniería a la economía». Tras el lanzamiento del juego, el productor debe hacer números para saber qué funciona y qué no. ¿Cuál es la tasa de conversión de descargas? ¿Cuántos créditos compra la gente por cada aumento de nivel y cómo afecta esto a su tasa de uso durante toda la vida?
+
+Los productores suelen ser contratados en estos dos puestos:
+
+Control de calidad (QA)/pruebas. Muchos productores empiezan en el departamento de control de calidad y, en concreto, en las llamadas pruebas de humo. Estas funciones les permiten ver el ciclo de vida completo del juego, lo que se traduce muy bien en la función de producción. Los productores también pueden proceder de pruebas de automatización, o incluso del desarrollo de software básico, pero esto tiende a ser más raro por la sencilla razón de que a los programadores les gusta seguir siendo programadores.
+
+Consultores. Los antiguos consultores, sobre todo de empresas importantes como McKinsey, Bain y Boston Consulting Group (BCG), pueden ser excelentes productores. Puede que carezcan de experiencia en la industria del juego, pero han adquirido otra serie de habilidades útiles en sus trabajos anteriores. Sus trabajos desarrollaron su enfoque analítico de la resolución de problemas, al tiempo que les exigían relacionarse con personas diversas y reaccionar con rapidez ante los problemas.
+
+Si tu currículum carece de estos dos puestos pero sueñas con ser productor, no te preocupes. «Otros puestos basados en métricas y datos, como la publicidad online, también pueden encajar de forma natural», dice Alessandra de VonChurch.
