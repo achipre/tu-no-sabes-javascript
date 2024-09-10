@@ -8,8 +8,7 @@ export default {
 				bench: "BenchNine",
 				khand: ["Khand", "sans-serif"],
 				poppins: ["Poppins", "sans-serif"],
-				victor: ["Victor Mono", "monospace"],
-				
+				victor: '"Victor Mono", sans-serif',
 			},
 			screens: {
 				xs: "320px"

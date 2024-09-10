@@ -1,21 +1,17 @@
 /* PrismJS 1.29.0
 https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javascript */
-@font-face {
-  font-family: "Victor Mono";
-  src: url(VictorMono-SemiBoldOblique.woff2) format(".woff2");
-  font-display: swap;
-}
+
 pre[class*="language-"] {
-  border: 2px solid #38393b33;
-  border-radius: 1.2rem;
+  /* border: 2px solid #38393b33; */
+  /* border-radius: 1.2rem; */
   line-height: 1.6rem;
   padding-top: 1.6rem;
 }
 code[class*="language-"],
 pre[class*="language-"] {
-  background-color: #fcf8f3;
+  background-color: #fff8e8;
   color: #393646;
-  font-family: "Victor Mono", Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+  font-family: "Victor Mono", monospace;
 }
 code[class*="language-"] ::-moz-selection,
 code[class*="language-"]::-moz-selection,
