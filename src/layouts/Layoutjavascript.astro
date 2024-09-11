@@ -7,12 +7,13 @@ const { title } = Astro.props;
 		<meta charset="UTF-8" />
 		<meta name="description" content="Astro description" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="javascript/favicon.png" />
+		<link rel="icon" type="image/svg+xml" href="/public/javascript/favicon.png" />
 		<link rel="stylesheet" href="/src/layouts/prism.css">
 		<title>{title}</title>
 	</head>
 	<body class="max-w-5xl mx-auto p-2 xs:px-3 sm:px-6 sm:py-8 md:px-10 font-khand text-amber-900">
     <slot />
+		<script src="./prism.js"></script>
 	</body>
 </html>
 <style is:global>
@@ -28,27 +29,32 @@ const { title } = Astro.props;
   @layer base{
 		@font-face {
 			font-family: 'Victor Mono';
-			font-style: normal;
 			font-display: swap;
-			src: url(/font/code/VictorMono-Medium.woff2) format('woff2');
+			src: url(/font/code/VictorMono-Variable.ttf);
+		}
+		@font-face {
+			font-family: 'Victor Mono Italic';
+			font-style: italic;
+			font-display: swap;
+			src: url(/font/code/VictorMono-Variable-Italic.ttf);
 		}
     h1 {
       @apply font-bold text-3xl sm:text-4xl md:text-5xl
     }
     h2 {
-      @apply leading-6 text-amber-900 font-medium text-2xl sm:text-3xl md:text-4xl
+      @apply font-semibold leading-6 text-amber-900  text-2xl sm:text-3xl md:text-4xl
     }
 		p {
 			@apply  text-lg leading-6 sm:text-xl md:text-2xl
 		}
 		a {
-			@apply no-underline text-orange-500
+			@apply no-underline text-[#F05454]
 		}
 		section {
 			@apply flex flex-col gap-4 xs:gap-5 sm:gap-6
 		}
 		article {
-			@apply flex flex-col gap-4 xs:gap-5 sm:gap-6
+			@apply flex flex-col gap-4 xs:gap-5 sm:gap-6 border-2 border-amber-900 p-4 xs:p-5 sm:p-6 md:p-7 my-4
 		}
 		figcaption {
 			@apply italic text-center pt-1 text-sm xs:text-base sm:text-lg md:text-xl
@@ -57,7 +63,10 @@ const { title } = Astro.props;
 			@apply font-medium
 		}
 		codeinline {
-			@apply font-victor border-amber-700 border-[1px] px-1 rounded-sm bg-[#fbf8f3] text-xs xs:text-sm sm:text-base md:text-lg
+			@apply font-victor text-amber-700 px-2 rounded-sm bg-[#f6e4c5] text-xs xs:text-sm sm:text-base md:text-lg inline-block -translate-y-[2px] selection:text-[#f6e4c5] selection:bg-amber-700
+		}
+		pre {
+			@apply font-victor rounded-sm !leading-3 xs:!leading-4 sm:!leading-4 md:!leading-5 py-6 !text-xs xs:!text-sm sm:!text-base md:!text-lg
 		}
 		tecla {
 			@apply bg-white font-mono border-[1px] drop-shadow-sm shadow-[0_0_0_2px_#ffffff,0_0_0_3px_#78350f] border-amber-900 p-[2px] mx-1 text-xs xs:text-sm sm:text-base md:text-lg
@@ -81,7 +90,7 @@ const { title } = Astro.props;
 		}
 	}
 
-	.fadeInHeader {
+	.fadeIn {
 		animation: fadeIn 350ms ease-in both
 	}
 
