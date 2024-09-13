@@ -62,6 +62,12 @@ const { title } = Astro.props;
 		figcaption {
 			@apply italic text-center pt-1 text-sm xs:text-base sm:text-lg md:text-xl
 		}
+		sup {
+			@apply bg-blue-300 cursor-default p-0 px-2 rounded-full mx-1 aspect-square
+		}
+		info {
+			@apply absolute opacity-0 bg-[#f6e4c5] h-8 border-[1px] -top-8 text-nowrap px-2 rounded-full -translate-x-1/2 leading-8 shadow-lg border-amber-900
+		}
 		strong {
 			@apply font-medium
 		}
@@ -97,9 +103,18 @@ const { title } = Astro.props;
 		animation: fadeIn 350ms ease-in both
 	}
 
+	sup:hover > info {
+		animation: aparece 250ms ease-in both
+	}
+
+
 	@keyframes fadeIn {
 		from { opacity: 0; transform: translateY(-18px); }
 		to { opacity: 1; transform: translateY(0);}
+	}
+	@keyframes aparece {
+		from { display: none; opacity: 0;}
+		to { display: block; opacity: 1;}
 	}
 	
 </style>

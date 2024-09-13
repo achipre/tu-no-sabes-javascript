@@ -27,28 +27,24 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro"
     <p>JavaScript admite dos estilos de comentarios. Cualquier texto entre <codeinline>//</codeinline> y el final de una línea se trata como un comentario y JavaScript lo ignora. Cualquier texto entre los caracteres <codeinline>/*</codeinline> y <codeinline>*/</codeinline> también se trata como un comentario; estos comentarios pueden abarcar varias líneas pero no pueden anidarse. Las siguientes líneas de código son comentarios JavaScript legales:
     </p>
     <pre>
-      <code class="language-js">
-    // Este es un comentario de una sola línea.
+    <code class="language-js">// Este es un comentario de una sola línea.
     /* Esto también es un comentario */ // y aquí hay otro comentario.
     /*
       * Se trata de un comentario de varias líneas. Los caracteres * adicionales al principio de 
       * de cada línea no son una parte obligatoria de la sintaxis; ¡sólo tienen un aspecto atractivo! 
-      */</code>
-    </pre>
+      */</code></pre>
   </section>
   <section class="py-4 xs:py-5 sm:py-6">
     <h2>2.3 Literales</h2>
     <p>Un <em>literal</em> es un valor de datos que aparece directamente en un programa. Los siguientes son todos literales:</p>
     <pre>
-      <code class="language-js">
-    12                // El número doce
+    <code class="language-js">12                // El número doce
     1.2               // El número uno punto dos
     "hola mundo"      // Una cadena de texto
     'Hola'            // Otra cadena
     true              // Un valor booleano
     false             // El otro valor booleano
-    null              // Ausencia de un objeto</code>
-    </pre>
+    null              // Ausencia de un objeto</code></pre>
     <p>Encontrará información detallada sobre los literales numéricos y de cadena en el <a href="capitulo-3">Capítulo 3</a>.</p>
   </section>
   <section>
@@ -83,25 +79,19 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro"
     <h2>2.5 Unicode</h2>
     <p>Los programas JavaScript se escriben utilizando el conjunto de caracteres Unicode, por lo que puede utilizar cualquier carácter Unicode en cadenas y comentarios. Por motivos de portabilidad y facilidad de edición, es habitual utilizar sólo letras y dígitos ASCII en los identificadores. Pero esto es sólo una convención de programación, y el lenguaje permite letras, dígitos e ideogramas Unicode (pero no emojis) en los identificadores. Esto significa que los programadores pueden utilizar símbolos matemáticos y palabras de lenguas distintas del inglés como constantes y variables:</p>
     <pre class="language-js">
-      <code class="language-js">
-    const π = 3,14; 
-    const sí = true;</code>
-    </pre>
+    <code class="language-js">const π = 3,14; 
+    const sí = true;</code></pre>
   </section>
   <section class="py-4 xs:py-5 sm:py-6">
     <h3>2.5.1 Secuencias de Escape Unicode</h3>
     <p>Algunos equipos y programas informáticos no pueden mostrar, introducir o procesar correctamente el conjunto completo de caracteres Unicode. Para ayudar a los programadores y sistemas que utilizan tecnología más antigua, JavaScript define secuencias de escape que nos permiten escribir caracteres Unicode utilizando sólo caracteres ASCII. Estos escapes Unicode comienzan con los caracteres <codeinline>\u</codeinline> y van seguidos de exactamente cuatro dígitos hexadecimales (utilizando letras mayúsculas o minúsculas A-F) o de uno a seis dígitos hexadecimales encerrados entre llaves. Estos escapes Unicode pueden aparecer en literales de cadenas JavaScript, literales de expresiones regulares e identificadores (pero no en palabras clave del lenguaje). El escape Unicode para el carácter "é", por ejemplo, es <codeinline>\u00E9;</codeinline> aquí hay tres formas diferentes de escribir un nombre de variable que incluya este carácter:</p>
     <pre>
-      <code class="language-js">
-    let café = 1; // Definir una variable utilizando un carácter Unicode 
+    <code class="language-js">let café = 1; // Definir una variable utilizando un carácter Unicode 
     caf\u00e9     // => 1; acceder a la variable utilizando una secuencia de escape 
-    caf\u&lbrace;E9}     // => 1; otra forma de la misma secuencia de escape</code>
-    </pre>
+    caf\u&lbrace;E9}     // => 1; otra forma de la misma secuencia de escape</code></pre>
     <p>Las primeras versiones de JavaScript sólo admitían la secuencia de escape de cuatro dígitos. La versión con llaves se introdujo en ES6 para mejorar la compatibilidad con los puntos de código Unicode que requieren más de 16 bits, como los emoji:</p>
     <pre>
-      <code class="language-js">
-    console.log("\u&lbrace;1F600}"); // Imprime un emoji de cara sonriente</code>
-    </pre>
+    <code class="language-js">console.log("\u&lbrace;1F600}"); // Imprime un emoji de cara sonriente</code></pre>
     <p>Los escapes Unicode también pueden aparecer en comentarios, pero como los comentarios se ignoran, simplemente se tratan como caracteres ASCII en ese contexto y no se interpretan como Unicode.
     </p>
   </section>
@@ -109,12 +99,10 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro"
     <h3>2.5.2 Normalización Unicode</h3>
     <p>Si utiliza caracteres no ASCII en sus programas JavaScript, debe tener en cuenta que Unicode permite más de una forma de codificar el mismo carácter. La cadena "é", por ejemplo, puede codificarse como un único carácter Unicode <codeinline>\u00E9</codeinline> o como una "e" ASCII normal seguida del acento agudo <codeinline>\u0301</codeinline>. Estas dos codificaciones suelen tener exactamente el mismo aspecto cuando se muestran en un editor de texto, pero tienen codificaciones binarias diferentes, lo que significa que JavaScript las considera diferentes, lo que puede dar lugar a programas muy confusos:</p>
     <pre>
-      <code class="language-js">
-    const café = 1; // Esta constante se llama "caf\u&lbrace;e9}"
+    <code class="language-js">const café = 1; // Esta constante se llama "caf\u&lbrace;e9}"
     const café = 2; // Esta constante es diferente: "cafe\u&lbrace;301}" 
     café    // => 1: esta constante tiene un valor
-    café    // => 2: esta constante indistinguible tiene un valor diferente</code>
-    </pre>
+    café    // => 2: esta constante indistinguible tiene un valor diferente</code></pre>
     <p>El estándar Unicode define la codificación preferida para todos los caracteres y especifica un procedimiento de normalización para convertir el texto a una forma canónica adecuada para la comparación. JavaScript asume que el código fuente que está interpretando ya ha sido normalizado y <em>no</em> realiza ninguna normalización por sí mismo. Si planea utilizar caracteres Unicode en sus programas JavaScript, debe asegurarse de que su editor o alguna otra herramienta realice la normalización Unicode de su código fuente para evitar que termine con identificadores diferentes pero visualmente indistinguibles.
     </p>
   </section>
@@ -168,4 +156,4 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro"
     <h2>2.7 Resumen</h2>
     <p>Este capítulo ha mostrado cómo se escriben los programas JavaScript en el nivel más bajo. El siguiente capítulo nos lleva un paso más arriba e introduce los tipos y valores primitivos (números, cadenas, etc.) que sirven como unidades básicas de cálculo para los programas Java-Script.</p>
   </section>
-</Layoutj>
+</Layoutjavascript>
