@@ -331,55 +331,161 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   </section>
   <section>
     <h3>3.3.3 Trabajar con cuerdas</h3>
-    <p>Una de las funciones integradas de JavaScript es la posibilidad de concatenar cadenas. Si utiliza el operador + con números, los suma. Pero si utiliza este operador con cadenas, las une añadiendo la segunda a la primera. Por ejemplo:</p>
-    <p>Las cadenas pueden compararse con los operadores estándar de igualdad === y desigualdad !==: dos cadenas son iguales si y sólo si están formadas exactamente por la misma secuencia de valores de 16 bits. Las cadenas también pueden compararse con los operadores &minusb;, &minus;=, > y >=. La comparación de cadenas se realiza simplemente comparando los valores de 16 bits. (Para obtener información más detallada sobre la comparación y ordenación de cadenas según la configuración regional, véase §11.7.3).</p>
-    <p>Para determinar la longitud de una cadena -el número de valores de 16 bits que contiene- utilice la función propiedad de longitud de la cadena:</p>
-    <p>Además de esta propiedad de longitud, JavaScript proporciona una rica API para trabajar con cadenas:</p>
-    <p>Recuerde que las cadenas son inmutables en JavaScript. Métodos como replace() y toUpperCase() devuelven nuevas cadenas: no modifican la cadena sobre la que se invocan.</p>
-    <p>Las cadenas también pueden tratarse como matrices de sólo lectura, y puede acceder a caracteres individuales (valores de 16 bits) desde una cadena utilizando corchetes en lugar del método charAt():</p>
+    <p>Una de las funciones integradas de JavaScript es la posibilidad de <em>concatenar</em> cadenas. Si utiliza el operador <codeiinline>+</codeiinline> con números, los suma. Pero si utiliza este operador con cadenas, las une añadiendo la segunda a la primera. Por ejemplo:</p>
+    <pre>
+    <code class="language-js">let msg = "Hola, " + "mundo"; // Produce el string "Hola, mundo"
+    let greeting = "Biembenidos a mi," + " " + nombre;</code></pre>
+    <p>Las cadenas pueden compararse con los operadores estándar de igualdad <codeinline>===</codeinline> y desigualdad <codeinline>!==</codeinline>: dos cadenas son iguales si y sólo si están formadas exactamente por la misma secuencia de valores de 16 bits. Las cadenas también pueden compararse con los operadores <codeinline>&lt;</codeinline>, <codeinline>&lt;=</codeinline>, <codeinline>></codeinline> y <codeinline>>=</codeinline>. La comparación de cadenas se realiza simplemente comparando los valores de 16 bits. (Para obtener información más detallada sobre la comparación y ordenación de cadenas según la configuración regional, véase <a href="capitulo-11#7-3">§11.7.3</a>).</p>
+    <p>Para determinar la longitud de un string -el número de valores de 16 bits que contiene- utilice la propiedad <codeinline>length</codeinline> del string:</p>
+    <pre class="language-js">
+    s.length</pre>
+    <p>Además de esta propiedad <codeinline>length</codeinline>, JavaScript proporciona una rica API para trabajar con strings:</p>
+    <pre>
+    <code class="language-js">let s = "Hola, mundo"; // Comienza con algun texto.
+
+    // Obtiene la porción de un string
+    s.substring(1,4)        // => "ola": el 2do, 3er, y 4to caracter.
+    s.slice(1,4)            // => "ola": lo mismo
+    s.slice(-3)             // => "rld": los últimos 3 caracteres.
+    s.split(", ")           // => ["Hola", "mundo"]: divide en strings delimintados
+
+    // Buscando un string
+    s.indexOf("l")          // => 2: posición de la primera letra l
+    s.indexOf("l", 2)       // => 2: posición de la primera "l" en el indice 2 o después
+    s.indexOf("zz")         // => -1: no incluye la subcadena "zz"
+    s.lastIndexOf("l")      // => 10: posición de la última letra l
+    
+    // Funciones de búsqueda booleana en ES6 y posteriores
+    s.startsWith("Hola")    // => true: la cadena empieza por esto Hola
+    s.endsWith("!")         // => false: no termina en !
+    s.includes("un")        // => true: incluye el substring "un"
+    
+    // Crear versiones modificadas de un string
+    s.replace("la", "ya")  // => "Hoya, mundo"
+    s.toLowerCase()         // => "hola, mundo"
+    s.toUpperCase()         // => "HOLA, MUNDO"
+    s.normalize()           // Normalización Unicode NFC: ES6
+    s.normalize("NFD")      // Normalización NFD. Tambien "NFKC", "NFKD"
+    
+    // Inspección de caracteres individuales (16 bits) de un string
+    s.charAt(0)             // => "H": el primer caracter
+    s.charAt(s.length-1)    // => "o": el último caracter
+    s.charCodeAt(0)         // => 72: número de 16 bits en la posición especificada
+    s.codePointAt(0)        // => 72: ES6, funciona para codepoints > 16 bits
+    
+    // Funciones de relleno de cadenas en ES2017
+    "x".padStart(3)         // => " x": agrega espacios a la izquierda por una longitud de 3
+    "x".padEnd(3)           // => "x ": agrega espacios a la derecha por una longitud de 3
+    "x".padStart(3, "*")    // => "**x": agrega asteriscos a la izquierda por una longitud de 3
+    "x".padEnd(3, "-")      // => "x--": agrega dashes a la derecha por una longitud de 3
+    
+    // Funciones de recorte de espacio. trim() es ES5; las demas ES2019
+    " test ".trim()         // => "test": eliminar los espacios al principio y al final
+    " test ".trimStart()    // => "test ": eliminar los espacios a la izquierda. También trimLeft
+    " test ".trimEnd()      // => " test": eliminar los espacios a la derecha. También trimRight
+    
+    // Varios métodos de cadena
+    s.concat("!")           // => "Hola, mundo!": utiliza el operador + en su lugar
+    "&lt;>".repeat(5)          // => "&lt;>&lt;>&lt;>&lt;>&lt;>": concatenar n copias. ES6</code></pre>
+    <p>Recuerde que las cadenas son inmutables en JavaScript. Métodos como <codeinline>replace()</codeinline> y <codeinline>toUpperCase()</codeinline> devuelven nuevas cadenas: no modifican la cadena sobre la que se invocan.</p>
+    <p>Las cadenas también pueden tratarse como matrices de sólo lectura, y puede acceder a caracteres individuales (valores de 16 bits) desde una cadena utilizando corchetes en lugar del método <codeinline>charAt()</codeinline>:</p>
+    <pre>
+    <code class="language-js">let s = "hola, mundo";
+    s[0]          // => "h"
+    s[s.length-1] // => "o"</code></pre>
   </section>
   <section class="py-4 xs:py-5 sm:py-6">
     <h3>3.3.4 Literales de plantilla</h3>
     <p>En ES6 y versiones posteriores, los literales de cadena pueden delimitarse con barras invertidas:</p>
-    <p>Sin embargo, se trata de algo más que otra sintaxis de literales de cadena, ya que estos literales de plantilla pueden incluir expresiones JavaScript arbitrarias. El valor final de un literal de cadena entre comillas se calcula evaluando cualquier expresión incluida, convirtiendo los valores de esas expresiones en cadenas y combinando esas cadenas calculadas con los caracteres literales dentro de las comillas:</p>
-    <p>Todo lo que se encuentra entre $&lbrace; y } se interpreta como una expresión de JavaScript. Todo lo que queda fuera de las llaves es texto literal de cadena normal. La expresión dentro de las llaves se evalúa y luego se convierte en una cadena y se inserta en la plantilla, reemplazando el signo de dólar, las llaves y todo lo que hay entre ellos.</p>
+    <pre>
+    <code class="language-js">let s = `hola mundo`;</code></pre>
+    <p>Sin embargo, se trata de algo más que otra sintaxis de literales de cadena, ya que estos <em>template literals</em> pueden incluir expresiones JavaScript arbitrarias. El valor final de un literal de cadena entre comillas se calcula evaluando cualquier expresión incluida, convirtiendo los valores de esas expresiones en cadenas y combinando esas cadenas calculadas con los caracteres literales dentro de las comillas:</p>
+    <pre>
+    <code class="language-js">let nombre = "Alex";
+    let saludando = `Hola $&lbrace; nombre }.`; // saludando == "Hola Alex."</code></pre>
+    <p>Todo lo que se encuentra entre <codeinline>$&lbrace;</codeinline> y <codeinline>}</codeinline> se interpreta como una expresión de JavaScript. Todo lo que queda fuera de las llaves es texto literal de cadena normal. La expresión dentro de las llaves se evalúa y luego se convierte en una cadena y se inserta en la plantilla, reemplazando el signo de dólar, las llaves y todo lo que hay entre ellos.</p>
     <p>Un literal de plantilla puede incluir cualquier número de expresiones. Puede utilizar cualquiera de los caracteres de escape de las cadenas normales, y puede abarcar cualquier número de líneas, sin necesidad de escapes especiales. El siguiente literal de plantilla incluye cuatro expresiones JavaScript, una secuencia de escape Unicode y al menos cuatro nuevas líneas (los valores de expresión también pueden incluir nuevas líneas):</p>
-    <p>La barra invertida al final de la primera línea escapa de la nueva línea inicial para que la cadena resultante comience con el carácter Unicode ✘ (\u2718) en lugar de con una nueva línea.</p>
-    <p>Literales de plantilla con etiqueta</p>
+    <pre>
+    <code class="language-js">let errorMessage = `\
+    \u2718 Test failure at $&lbrace;filename}:$&lbrace;linenumber}:
+    $&lbrace;exception.message}
+    Stack trace:
+    $&lbrace;exception.stack}
+    `;</code></pre>
+    <p>La barra invertida al final de la primera línea escapa de la nueva línea inicial para que la cadena resultante comience con el carácter Unicode ✘ (<codeinline>\u2718</codeinline>) en lugar de con una nueva línea.</p>
+    <p class="title-article text-left">Literales de plantilla con etiqueta</p>
     <p>Una característica potente pero menos utilizada de los literales de plantilla es que, si el nombre de una función (o "etiqueta") aparece justo antes de la marca de apertura, el texto y los valores de las expresiones dentro del literal de plantilla se pasan a la función. El valor de este "literal de plantilla etiquetado" es el valor de retorno de la función. Esto podría utilizarse, por ejemplo, para aplicar un escape HTML o SQL a los valores antes de sustituirlos en el texto.</p>
-    <p>ES6 tiene una función de etiqueta incorporada: String.raw(). Devuelve el texto entre comillas sin procesar las barras invertidas:</p>
+    <p>ES6 tiene una función de etiqueta incorporada: <codeinline>String.raw()</codeinline>. Devuelve el texto entre comillas sin procesar las barras invertidas:</p>
+    <pre>
+    <code class="language-js">`\n`.length             // => 1: el string tiene un único carácter de nueva línea
+    String.raw`\n`.length   // => 2: una barra invertida y la letra n</code></pre>
     <p>Observe que aunque la parte de la etiqueta de un literal de plantilla etiquetado es una función, no se utilizan paréntesis en su invocación. En este caso muy específico, los caracteres de marca sustituyen a los paréntesis de apertura y cierre.</p>
-    <p>La capacidad de definir sus propias funciones de etiqueta de plantilla es una característica poderosa de Java-Script. Estas funciones no necesitan devolver cadenas, y pueden utilizarse como con- estructores, como si se definiera una nueva sintaxis literal para el lenguaje. Veremos un ejemplo en §14.5.</p>
+    <p>La capacidad de definir sus propias funciones de etiqueta de plantilla es una característica poderosa de Java-Script. Estas funciones no necesitan devolver cadenas, y pueden utilizarse como con- estructores, como si se definiera una nueva sintaxis literal para el lenguaje. Veremos un ejemplo en <a href="capitulo-14#5">§14.5</a>.</p>
   </section>
   <section>
     <h3>3.3.5 Coincidencia de patrones</h3>
-    <p>JavaScript define un tipo de datos conocido como expresión regular (o RegExp) para describir y comparar patrones en cadenas de texto. Las RegExp no son uno de los tipos de datos fundamentales de JavaScript, pero tienen una sintaxis literal como los números y las cadenas, por lo que a veces parecen fundamentales. La gramática de las expresiones regulares literales es compleja y la API que definen no es trivial. Se documentan en detalle en §11.3. Debido a que las RegExps son poderosas y comúnmente usadas para el procesamiento de texto, esta sección proporciona una breve visión general.</p>
+    <p>JavaScript define un tipo de datos conocido como <em>expresión regular</em> (o RegExp) para describir y comparar patrones en cadenas de texto. Las RegExp no son uno de los tipos de datos fundamentales de JavaScript, pero tienen una sintaxis literal como los números y las cadenas, por lo que a veces parecen fundamentales. La gramática de las expresiones regulares literales es compleja y la API que definen no es trivial. Se documentan en detalle en <a href="capitulo-11#3">§11.3</a>. Debido a que las RegExps son poderosas y comúnmente usadas para el procesamiento de texto, esta sección proporciona una breve visión general.</p>
     <p>El texto entre un par de barras constituye un literal de expresión regular. La segunda barra del par también puede ir seguida de una o varias letras, que modifican el significado del patrón. Por ejemplo:</p>
+    <pre>
+    <code class="language-js">/^HTML/;            // Coincidir las letras H T M L al principio de un string
+    /[1-9][0-9]*/;      // Coincide con un número excepto el cero, seguido de cualquier número
+    /\bjavascript\b/i;  // Coincide con "javascript" como palabra, sin distinguir mayúsculas o minúscula</code></pre>
     <p>Los objetos RegExp definen una serie de métodos útiles, y las cadenas también tienen métodos que aceptan argumentos RegExp. Por ejemplo:</p>
+    <pre>
+    <code class="language-js">let texto = "probando: 1, 2, 3"; // Texto Ejemplo
+    let pattern = /\d+/g; // Coincide con todas las instancias de unoo mas digitos
+    pattern.test(texto) // => true: existe una coincidencia
+    texto.search(pattern) // => 9: posición de la primera coincidencia
+    texto.match(pattern) // => ["1", "2", "3"]: array de todas las coincidencias
+    texto.replace(pattern, "#") // => "probando: #, #, #"
+    texto.split(/\D+/) // => ["","1","2","3"]: separando por no digitos</code></pre>
   </section>
   <section id="4" class="py-4 xs:py-5 sm:py-6">
     <h2>3.4 Valores booleanos</h2>
-    <p>Un valor booleano representa verdad o falsedad, encendido o apagado, sí o no. Sólo hay dos valores posibles de este tipo. Las palabras reservadas true y false evalúan estos dos valores.</p>
+    <p>Un valor booleano representa verdad o falsedad, encendido o apagado, sí o no. Sólo hay dos valores posibles de este tipo. Las palabras reservadas <codeinline>true</codeinline> y <codeinline>false</codeinline> evalúan estos dos valores.</p>
     <p>Los valores booleanos son generalmente el resultado de comparaciones que realizas en tus programas JavaScript. Por ejemplo:</p>
-    <p>Este código comprueba si el valor de la variable a es igual al número 4. Si lo es, el resultado de esta comparación es el valor booleano true. Si lo es, el resultado de esta comparación es el valor booleano true. Si a no es igual a 4, el resultado de la comparación es falso.</p>
-    <p>Los valores booleanos se utilizan habitualmente en las estructuras de control de JavaScript. Por ejemplo, la sentencia if/else en JavaScript realiza una acción si un valor booleano es verdadero y otra acción si el valor es falso. Normalmente se combina una comparación que crea directamente un valor booleano con una sentencia que lo utiliza. El resultado es el siguiente</p>
-    <p>Este código comprueba si a es igual a 4. En caso afirmativo, suma 1 a b; en caso contrario, suma 1 a a.</p>
-    <p>Como veremos en §3.9, cualquier valor JavaScript puede convertirse en un valor booleano. Los siguientes valores se convierten a, y por lo tanto funcionan como, false:</p>
-    <p>Todos los demás valores, incluidos todos los objetos (y matrices) se convierten y funcionan como true. false, y los seis valores que se convierten a él, se denominan a veces valores falsos, y todos los demás valores se denominan truthy. Cada vez que JavaScript espera un valor booleano, un valor falso funciona como false y un valor verdadero funciona como true.
+    <pre>
+    <code class="language-js">a === 4</code></pre>
+    <p>Este código comprueba si el valor de la variable <codeinline>a</codeinline> es igual al número <codeinline>4</codeinline>. Si lo es, el resultado de esta comparación es el valor booleano <codeinline>true</codeinline>. Si lo es, el resultado de esta comparación es el valor booleano true. Si a no es igual a <codeinline>4</codeinline>, el resultado de la comparación es <codeinline>falso</codeinline>.</p>
+    <p>Los valores booleanos se utilizan habitualmente en las estructuras de control de JavaScript. Por ejemplo, la sentencia <codeinline>if/else</codeinline> en JavaScript realiza una acción si un valor booleano es <codeinline>true</codeinline> y otra acción si el valor es <codeinline>false</codeinline>. Normalmente se combina una comparación que crea directamente un valor booleano con una sentencia que lo utiliza. El resultado es el siguiente</p>
+    <pre>
+    <code class="language-js">if (a === 4) &lbrace;
+        b = b + 1;
+    } else &lbrace;
+        a = a + 1;
+    }</code></pre>
+    <p>Este código comprueba si <codeinline>a</codeinline> es igual a <codeinline>4</codeinline>. En caso afirmativo, suma <codeinline>1</codeinline> a <codeinline>b</codeinline>; en caso contrario, suma <codeinline>1</codeinline> a <codeinline>a</codeinline>.</p>
+    <p>Como veremos en <a href="#9">§3.9</a>, cualquier valor JavaScript puede convertirse en un valor booleano. Los siguientes valores se convierten a, y por lo tanto funcionan como, <codeinline>false</codeinline>:</p>
+    <pre>
+    <code class="language-js">undefined
+    null
+    0
+    -0
+    NaN
+    "" // el string vacio</code></pre>
+    <p>Todos los demás valores, incluidos todos los objetos (y matrices) se convierten y funcionan como <codeinline>true</codeinline>. <codeinline>false</codeinline>, y los seis valores que se convierten a él, se denominan a veces valores <em>falsos</em>, y todos los demás valores se denominan <em>truthy</em>. Cada vez que JavaScript espera un valor booleano, un valor falso funciona como <codeinline>false</codeinline> y un valor verdadero funciona como <codeinline>true</codeinline>.
     </p>
-    <p>Por ejemplo, supongamos que la variable o contiene un objeto o el valor null. Puede comprobar explícitamente sio no es nulo con una sentencia if como ésta:</p>
-    <p>El operador no-igual !== compara o con null y se evalúa como verdadero o falso. Pero puede omitir la comparación y confiar en el hecho de que null es falso y los objetos son verdaderos:</p>
-    <p>En el primer caso, el cuerpo del if se ejecutará sólo si o no es null. El segundo caso es menos estricto: ejecutará el cuerpo del if sólo si o no es falso o cualquier valor falso (como null o undefined). Qué sentencia if es apropiada para su programa depende realmente de qué valores espera que se asignen a o. Si necesita distinguir entre null, 0 y "", debe utilizar una comparación explícita.</p>
-    <p>Los valores booleanos tienen un método toString() que puede utilizar para convertirlos en las cadenas "verdadero" o "falso", pero no tienen ningún otro método útil. A pesar de la trivialidad de la API, existen tres operadores booleanos importantes.</p>
-    <p>El operador && realiza la operación booleana AND. Obtiene un valor verdadero sólo si ambos operandos son verdaderos; en caso contrario, obtiene un valor falso. El operador || es la operación booleana OR: se evalúa con un valor verdadero si uno (o ambos) de sus operandos es verdadero y se evalúa con un valor falso si ambos operandos son falsos. Por último, el operador unario ! realiza la operación booleana NOT: se evalúa como verdadero si su operando es falso y como falso si su operando es verdadero. Por ejemplo:</p>
-    <p>Encontrará más información sobre estos operadores en §4.10.</p>
+    <p>Por ejemplo, supongamos que la variable <codeinline>o</codeinline> contiene un objeto o el valor <codeinline>null</codeinline>. Puede comprobar explícitamente si <codeinline>o</codeinline> no es nulo con una sentencia <codeinline>if</codeinline> como ésta:</p>
+    <pre>
+    <code class="language-js">if (o !== null) ...</code></pre>
+    <p>El operador no-igual <codeinline>!==</codeinline> compara o con <codeinline>null</codeinline> y se evalúa como <codeinline>true</codeinline> o <codeinline>false</codeinline>. Pero puede omitir la comparación y confiar en el hecho de que <codeinline>null</codeinline> es falso y los objetos son verdaderos:</p>
+    <pre>
+    <code class="language-js">if (o) ...</code></pre>
+    <p>En el primer caso, el cuerpo del <codeinline>if</codeinline> se ejecutará sólo si <codeinline>o</codeinline> no es <codeinline>null</codeinline>. El segundo caso es menos estricto: ejecutará el cuerpo del <codeinline>if</codeinline> sólo si <codeinline>o</codeinline> no es <codeinline>false</codeinline> o cualquier valor falso (como <codeinline>null</codeinline> o <codeinline>undefined</codeinline>). Qué sentencia <codeinline>if</codeinline> es apropiada para su programa depende realmente de qué valores espera que se asignen a <codeinline>o</codeinline>. Si necesita distinguir entre <codeinline>null</codeinline>, <codeinline>0</codeinline> y <codeinline>""</codeinline> , debe utilizar una comparación explícita.</p>
+    <p>Los valores booleanos tienen un método <codeinline>toString()</codeinline> que puede utilizar para convertirlos en las cadenas "verdadero" o "falso", pero no tienen ningún otro método útil. A pesar de la trivialidad de la API, existen tres operadores booleanos importantes.</p>
+    <p>El operador <codeinline>&&</codeinline> realiza la operación booleana AND. Obtiene un valor verdadero sólo si ambos operandos son verdaderos; en caso contrario, obtiene un valor falso. El operador <codeinline>||</codeinline> es la operación booleana OR: se evalúa con un valor verdadero si uno (o ambos) de sus operandos es verdadero y se evalúa con un valor falso si ambos operandos son falsos. Por último, el operador unario <codeinline>!</codeinline> realiza la operación booleana NOT: se evalúa como <codeinline>true</codeinline> si su operando es <codeinline>false</codeinline> y como falso si su operando es verdadero. Por ejemplo:</p>
+    <pre>
+    <code class="language-js">if ((x === 0 && y === 0) || !(z === 0)) &lbrace;
+        // x e y son cero o z no es cero
+    }</code></pre>
+    <p>Encontrará más información sobre estos operadores en <a href="capitulo-4#10">§4.10</a>.</p>
   </section>
   <section>
     <h2>3.5 null e undefined</h2>
-    <p>null es una palabra clave del lenguaje que se evalúa a un valor especial que se utiliza normalmente para indicar la ausencia de un valor. Al utilizar el operador typeof en null se obtiene la cadena "object", lo que indica que null puede considerarse un valor especial de objeto que indica "no object". En la práctica, sin embargo, null suele considerarse el único miembro de su propio tipo, y puede utilizarse para indicar "sin valor" tanto para números y cadenas como para objetos. La mayoría de los lenguajes de programación tienen un equivalente a null en JavaScript: es posible que lo conozca como NULL, nil o None.</p>
-    <p>JavaScript también tiene un segundo valor que indica ausencia de valor. El valor indefinido representa un tipo más profundo de ausencia. Es el valor de las variables que no se han inicializado y el valor que se obtiene al consultar el valor de una propiedad de objeto o un elemento de matriz que no existe. El valor indefinido es también el valor de retorno de las funciones que no devuelven explícitamente un valor y el valor de los parámetros de función para los que no se pasa ningún argumento. undefined es una constante global predefinida (no una palabra clave del lenguaje como null, aunque esto no es una distinción importante en la práctica) que se inicializa al valor indefinido. Si aplica el operador typeof al valor undefinido, devuelve "undefined", indicando que este valor es el único miembro de un tipo especial.</p>
-    <p>A pesar de estas diferencias, tanto null como undefined indican una ausencia de valor y a menudo pueden utilizarse indistintamente. El operador de igualdad == los considera iguales. (Utilice el operador de igualdad estricta === para distinguirlos.) Ambos son valores falsos: se comportan como false cuando se requiere un valor booleano.Ninull niundefined tienen propiedades o métodos. De hecho, utilizar . o [] para acceder a una propiedad o método de estos valores provoca un TypeError.</p>
-    <p>Considero que undefined representa una ausencia de valor a nivel de sistema, inesperada o similar a un error, y null representa una ausencia de valor a nivel de programa, normal o esperada. Evito usar null e indefinido cuando puedo, pero si necesito asignar uno de estos valores a una variable o propiedad o pasar o devolver uno de estos valores a o desde una función, normalmente uso null. Algunos programadores se esfuerzan por evitar null por completo y utilizan undefined en su lugar siempre que pueden.</p>
+    <p><codeinline>null</codeinline> es una palabra clave del lenguaje que se evalúa a un valor especial que se utiliza normalmente para indicar la ausencia de un valor. Al utilizar el operador <codeinline>typeof</codeinline> en <codeinline>null</codeinline> se obtiene la cadena "object", lo que indica que <codeinline>null</codeinline> puede considerarse un valor especial de objeto que indica "no object". En la práctica, sin embargo, <codeinline>null</codeinline> suele considerarse el único miembro de su propio tipo, y puede utilizarse para indicar "sin valor" tanto para números y cadenas como para objetos. La mayoría de los lenguajes de programación tienen un equivalente a <codeinline>null</codeinline> en JavaScript: es posible que lo conozca como <codeinline>NULL</codeinline>, <codeinline>nil</codeinline> o <codeinline>None</codeinline>.</p>
+    <p>JavaScript también tiene un segundo valor que indica ausencia de valor. El valor <codeinline>undefined</codeinline> representa un tipo más profundo de ausencia. Es el valor de las variables que no se han inicializado y el valor que se obtiene al consultar el valor de una propiedad de objeto o un elemento de matriz que no existe. El valor <codeinline>undefined</codeinline> es también el valor de retorno de las funciones que no devuelven explícitamente un valor y el valor de los parámetros de función para los que no se pasa ningún argumento. <codeinline>undefined</codeinline> es una constante global predefinida (no una palabra clave del lenguaje como <codeinline>null</codeinline>, aunque esto no es una distinción importante en la práctica) que se inicializa al valor <codeinline>undefined</codeinline>. Si aplica el operador <codeinline>typeof</codeinline> al valor <codeinline>undefined</codeinline>, devuelve "undefined", indicando que este valor es el único miembro de un tipo especial.</p>
+    <p>A pesar de estas diferencias, tanto <codeinline>null</codeinline> como undefined indican una ausencia de valor y a menudo pueden utilizarse indistintamente. El operador de igualdad <codeinline>==</codeinline> los considera iguales. (Utilice el operador de igualdad estricta <codeinline>===</codeinline> para distinguirlos.) Ambos son valores falsos: se comportan como <codeinline>false</codeinline> cuando se requiere un valor booleano. Ni <codeinline>null</codeinline> ni <codeinline>undefined</codeinline> tienen propiedades o métodos. De hecho, utilizar . o <codeinline>[]</codeinline> para acceder a una propiedad o método de estos valores provoca un TypeError.</p>
+    <p>Considero que <codeinline>undefined</codeinline> representa una ausencia de valor a nivel de sistema, inesperada o similar a un error, y <codeinline>null</codeinline> representa una ausencia de valor a nivel de programa, normal o esperada. Evito usar <codeinline>null</codeinline> e <codeinline>undefined</codeinline> cuando puedo, pero si necesito asignar uno de estos valores a una variable o propiedad o pasar o devolver uno de estos valores a o desde una función, normalmente uso <codeinline>null</codeinline>. Algunos programadores se esfuerzan por evitar <codeinline>null</codeinline> por completo y utilizan <codeinline>undefined</codeinline> en su lugar siempre que pueden.</p>
   </section>
   <section id="6" class="py-4 xs:py-5 sm:py-6">
     <h2>3.6 Symbols</h2>
