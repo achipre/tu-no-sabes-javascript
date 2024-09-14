@@ -159,53 +159,175 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Existen infinitos números reales, pero sólo un número finito de ellos (18'437 736'874 454'810 627, para ser exactos) pueden representarse exactamente con el formato de coma flotante de JavaScript. Esto significa que cuando se trabaja con números reales en JavaScript, la representación del número será a menudo una aproximación del número real.</p>
     <p>La representación en coma flotante IEEE-754 que utiliza JavaScript (y casi todos los demás lenguajes de programación modernos) es una representación binaria, que puede representar exactamente fracciones como <codeinline>1/2</codeinline>, <codeinline>1/8</codeinline> y <codeinline>1/1024</codeinline>. Por desgracia, las fracciones que utilizamos con más frecuencia (sobre todo al realizar cálculos financieros) son fracciones decimales. Por desgracia, las fracciones que utilizamos con más frecuencia (sobre todo al realizar cálculos financieros) son fracciones decimales: <codeinline>1/10</codeinline>, <codeinline>1/100</codeinline>, etc. Las representaciones binarias en coma flotante no pueden representar exactamente números tan sencillos como <codeinline>0.1</codeinline>.</p>
     <p>Los números JavaScript tienen mucha precisión y pueden aproximarse a <codeinline>0.1</codeinline> con mucha exactitud. Pero el hecho de que este número no pueda representarse exactamente puede acarrear problemas. Considere este código:</p>
-    <p>Debido al error de redondeo, la diferencia entre las aproximaciones de .3 y .2 no es exactamente la misma que la diferencia entre las aproximaciones de .2 y .1. Es importante comprender que este problema no es específico de JavaScript: afecta a cualquier lenguaje de programación que utilice números binarios en coma flotante. Además, observe que los valores <codeinline>x</codeinline> e y en el código mostrado aquí están <em>muy</em> próximos entre sí y al valor correcto. Los valores calculados son adecuados para casi cualquier propósito; el problema sólo surge cuando intentamos comparar valores para la igualdad.</p>
+    <pre>
+    <code class="language-js">let x = .3 - .2; // treinta céntimos menos 20 céntimos
+    let y = .2 - .1; // veinte céntimos menos 10 céntimos
+    x === y          // => false: los dos valores no son iguales!
+    x === .1         // => false: .3-.2 no es igual a .1
+    y === .1         // => true: .2-.1 is es igual a .1</code></pre>
+    <p>Debido al error de redondeo, la diferencia entre las aproximaciones de .3 y .2 no es exactamente la misma que la diferencia entre las aproximaciones de .2 y .1. Es importante comprender que este problema no es específico de JavaScript: afecta a cualquier lenguaje de programación que utilice números binarios en coma flotante. Además, observe que los valores <codeinline>x</codeinline> e <codeinline>y</codeinline> en el código mostrado aquí están <em>muy</em> próximos entre sí y al valor correcto. Los valores calculados son adecuados para casi cualquier propósito; el problema sólo surge cuando intentamos comparar valores para la igualdad.</p>
     <p>Si estas aproximaciones en coma flotante resultan problemáticas para sus programas, considere la posibilidad de utilizar enteros escalados. Por ejemplo, puede manipular valores monetarios como céntimos enteros en lugar de dólares fraccionarios.</p>
   </section>
   <section id="2-5" class="py-4 xs:py-5 sm:py-6">
     <h3>3.2.5 Enteros de precisión arbitraria con BigInt</h3>
     <p>Una de las características más recientes de JavaScript, definida en ES2020, es un nuevo tipo numérico conocido como BigInt. A principios de 2020, se ha implementado en Chrome, Firefox, Edge y Node, y hay una implementación en curso en Safari. Como su nombre indica, BigInt es un tipo numérico cuyos valores son números enteros. El tipo se añadió a JavaScript principalmente para permitir la representación de enteros de 64 bits, necesarios para la compatibilidad con muchos otros lenguajes de programación y API. Sin embargo, los valores BigInt pueden tener miles o incluso millones de dígitos, por si necesita trabajar con números tan grande. (Tenga en cuenta, sin embargo, que las implementaciones de BigInt no son adecuadas para la criptog- rafía porque no intentan evitar los ataques de temporización).
     </p>
-    <p>Los literales BigInt se escriben como una cadena de dígitos seguida de una letra n minúscula. Por defecto, están en base 10, pero puede utilizar los prefijos 0b, 0o y 0x para BigInts binarios, octales y hexadecimales:</p>
-    <p>Puede utilizar BigInt() como función para convertir números o cadenas normales de JavaScript en valores BigInt:
+    <p>Los literales BigInt se escriben como una cadena de dígitos seguida de una letra <codeinline>n</codeinline> minúscula. Por defecto, están en base 10, pero puede utilizar los prefijos <codeinline>0b</codeinline>, <codeinline>0b</codeinline> y <codeinline>0x</codeinline> para BigInts binarios, octales y hexadecimales:</p>
+    <pre>
+    <code class="language-js">1234n                 // Un literal BigInt no tan grande
+    0b111111n           // Un BigInt binario
+    0o7777n             // Un BigInt octal
+    0x8000000000000000n // => 2n**63n: Un entero de 64-bit</code></pre>
+    <p>Puede utilizar <codeinline>BigInt()</codeinline> como función para convertir números o cadenas normales de JavaScript en valores BigInt:
     </p>
+    <pre>
+    <code class="language-js">BigInt(Number.MAX_SAFE_INTEGER)   // => 9007199254740991n
+    let string = "1" + "0".repeat(100); // 1 seguido por 100 ceros.
+    BigInt(string)                      // => 10n**100n: one googol</code></pre>
     <p>La aritmética con valores BigInt funciona como la aritmética con números normales de JavaScript, excepto que la división elimina cualquier resto y redondea hacia abajo (hacia cero):</p>
-    <p>Aunque los operadores estándar +, -, *, /, % y ** funcionan con BigInt, es importante entender que no se pueden mezclar operandos de tipo BigInt con operandos numéricos normales. Esto puede parecer confuso al principio, pero hay una buena razón para ello. Si un tipo numérico fuera más general que el otro, sería fácil definir la aritmética sobre operandos mezclados para devolver simplemente un valor del tipo más general. Pero ninguno de los dos tipos es más general que el otro: BigInt puede representar valores extraordinariamente grandes, por lo que es más general que los números normales. Pero BigInt sólo puede representar números enteros, por lo que el tipo de número normal de JavaScript es más general. No hay forma de evitar este problema, por lo que JavaScript lo esquiva simplemente no permitiendo operandos mixtos a los operadores aritméticos.</p>
-    <p>En cambio, los operadores de comparación sí funcionan con tipos numéricos mixtos (pero véase §3.9.1 para más información sobre la diferencia entre == y ===):</p>
-    <p>Los operadores bit a bit (descritos en §4.8.3) funcionan generalmente con operandos BigInt. Sin embargo, ninguna de las funciones del objeto Math acepta operandos BigInt.</p>
+    <pre>
+    <code class="language-js">1000n + 2000n         // => 3000n
+    3000n - 2000n         // => 1000n
+    2000n * 3000n         // => 6000000n
+    3000n / 997n          // => 3n: the quotient is 3
+    3000n % 997n          // => 9n: and the remainder is 9
+    (2n ** 131071n) - 1n  // A Mersenne prime with 39457 decimal digits</code></pre>
+    <p>Aunque los operadores estándar <codeinline>+</codeinline>, <codeinline>-</codeinline>, <codeinline>*</codeinline>, <codeinline>/</codeinline>, <codeinline>%</codeinline> y <codeinline>**</codeinline> funcionan con BigInt, es importante entender que no se pueden mezclar operandos de tipo BigInt con operandos numéricos normales. Esto puede parecer confuso al principio, pero hay una buena razón para ello. Si un tipo numérico fuera más general que el otro, sería fácil definir la aritmética sobre operandos mezclados para devolver simplemente un valor del tipo más general. Pero ninguno de los dos tipos es más general que el otro: BigInt puede representar valores extraordinariamente grandes, por lo que es más general que los números normales. Pero BigInt sólo puede representar números enteros, por lo que el tipo de número normal de JavaScript es más general. No hay forma de evitar este problema, por lo que JavaScript lo esquiva simplemente no permitiendo operandos mixtos a los operadores aritméticos.</p>
+    <p>En cambio, los operadores de comparación sí funcionan con tipos numéricos mixtos (pero véase <a href="#9-1">§3.9.1</a> para más información sobre la diferencia entre <codeinline>==</codeinline> y <codeinline>===</codeinline>):</p>
+    <pre>
+    <code class="language-js">1 &lt 2n    // => true
+    2 > 1n    // => true
+    0 == 0n   // => true
+    0 === 0n  // => false: el === comprueba también la igualdad de tipos</code></pre>
+    <p>Los operadores bit a bit (descritos en <a href="capitulo-4#8-3">§4.8.3</a>) funcionan generalmente con operandos BigInt. Sin embargo, ninguna de las funciones del objeto <codeinline>Math</codeinline> acepta operandos BigInt.</p>
   </section>
   <section>
     <h3>3.2.6 Fechas y horarios</h3>
-    <p>JavaScript define una clase Date sencilla para representar y manipular los números que representan fechas y horas. Las fechas de JavaScript son objetos, pero también tienen una representación numérica como marca de tiempo que especifica el número de milisegundos transcurridos desde el 1 de enero de 1970:</p>
-    <p>La clase Date y sus métodos se tratan en detalle en §11.4. Pero volveremos a ver objetos Date en §3.9.3 cuando examinemos los detalles de las conversiones de tipo de JavaScript.
+    <p>JavaScript define una clase Date sencilla para representar y manipular los números que representan fechas y horas. Las fechas de JavaScript son objetos, pero también tienen una representación numérica como marca de <em>timestamp</em> el número de milisegundos transcurridos desde el 1 de enero de 1970:</p>
+    <pre>
+    <code class="language-js">let timestamp = Date.now();   // La hora actual como timestamp (un número).
+    let now = new Date();         // La hora actual como objeto Date.
+    let ms = now.getTime();       // Convertir timestamp en milisegundos.
+    let iso = now.toISOString();  // Convertir a un string en formato estándar.</code></pre>
+    <p>La clase Date y sus métodos se tratan en detalle en <a href="capitulo-11#4">§11.4</a>. Pero volveremos a ver objetos Date en <a href="#9-3">§3.9.3</a> cuando examinemos los detalles de las conversiones de tipo de JavaScript.
     </p>
   </section>
   <section id="3" class="py-4 xs:py-5 sm:py-6">
     <h2>3.3 Texto</h2>
-    <p>El tipo de JavaScript para representar texto es la cadena. Una cadena es una secuencia ordenada e inmutable de valores de 16 bits, cada uno de los cuales representa normalmente un carácter Unicode. La longitud de una cadena es el número de valores de 16 bits que contiene. Las cadenas de JavaScript (y sus matrices) utilizan una indexación basada en cero: el primer valor de 16 bits está en la posición 0, el segundo en la posición 1, y así sucesivamente. La cadena vacía es la cadena de longitud 0. Java Script no tiene un tipo especial que represente un único elemento de una cadena. Para representar un único valor de 16 bits, basta con utilizar una cadena de longitud 1.</p>
+    <p>El tipo de JavaScript para representar texto es la <em>string</em>. Una cadena es una secuencia ordenada e inmutable de valores de 16 bits, cada uno de los cuales representa normalmente un carácter Unicode. La <em>longitud</em> de una cadena es el número de valores de 16 bits que contiene. Las cadenas de JavaScript (y sus matrices) utilizan una indexación basada en cero: el primer valor de 16 bits está en la posición 0, el segundo en la posición 1, y así sucesivamente. El <em>string vacio</em> es la cadena de longitud 0. Java Script no tiene un tipo especial que represente un único elemento de una cadena. Para representar un único valor de 16 bits, basta con utilizar una cadena de longitud 1.</p>
     <article>
-      <p>Caracteres, puntos de código y cadenas JavaScript</p>
+      <p class="title-article">Caracteres, puntos de código y cadenas JavaScript</p>
       <p>JavaScript utiliza la codificación UTF-16 del conjunto de caracteres Unicode, y las cadenas de JavaScript son secuencias de valores de 16 bits sin signo. Los caracteres Unicode más utilizados (los del "plano multilingüe básico") tienen puntos de código que caben en 16 bits y pueden representarse mediante un elemento de una cadena. Los caracteres Unicode cuyos puntos de código no caben en 16 bits se codifican utilizando las reglas de UTF-16 como una secuencia (conocida como "par sustituto") de dos valores de 16 bits. Esto significa que una cadena JavaScript de longitud 2 (dos valores de 16 bits) podría representar un único carácter Unicode:</p>
-      <p>La mayoría de los métodos de manipulación de cadenas definidos por JavaScript operan con valores de 16 bits, no con caracteres. No tratan los pares sustitutos de forma especial, no realizan ninguna normalización de la cadena y ni siquiera garantizan que una cadena esté bien formada UTF-16.
-        36 E| CnapEítSul6o,3:sTiinpose, mvalboarersgyov,arilabslescadenas son iterables, y si utilizas el bucle for/of o el operador ... con una cadena, iterará los caracteres reales de la cadena, no los valores de 16 bits.</p>
+    <pre>
+    <code class="language-js">let euro = "€";
+    let love = "❤";
+    euro.length   // => 1: Este caracter tiene elementos de 16-bit
+    love.length   // => 2: La Codificación UTF-16 de ❤ is "\ud83d\udc99"</code></pre>
+      <p>La mayoría de los métodos de manipulación de cadenas definidos por JavaScript operan con valores de 16 bits, no con caracteres. No tratan los pares sustitutos de forma especial, no realizan ninguna normalización de la cadena y ni siquiera garantizan que una cadena esté bien formada UTF-16.</p>
+      <p>Sin embargo, en ES6, las string son <em>iterables</em> y si utiliza el bucle <codeinline>for/of</codeinline> o el operador <codeinline>...</codeinline> con una cadena, iterará los caracteres reales de la cadena, no los valores de 16 bits.</p>
     </article>
   </section>
   <section>
     <h3>3.3.1 Literales de cadena</h3>
-    <p>Para incluir una c a d e n a en un programa JavaScript, basta con encerrar los caracteres de la cadena dentro de un par coincidente de comillas simples o dobles o de puntos suspensivos (' o " o `). Las comillas dobles y los puntos suspensivos pueden incluirse en cadenas delimitadas por comillas simples, y lo mismo ocurre con las cadenas delimitadas por comillas dobles y puntos suspensivos. He aquí algunos ejemplos de literales de cadena:
-    </p>
-    <p>Las cadenas delimitadas con barras invertidas son una característica de ES6, y permiten que las expresiones de JavaScript se incrusten (o interpolen) dentro de la cadena literal. Esta sintaxis de interpolación de expresiones se trata en §3.3.4.</p>
-    <p>Las versiones originales de JavaScript requerían que los literales de cadena se escribieran en una sola línea, y es común ver código JavaScript que crea cadenas largas concatenando cadenas de una sola línea con el operador +. Sin embargo, a partir de ES5, puedes dividir una cadena literal en varias líneas terminando cada línea excepto la última con una barra invertida (\). Ni la barra invertida ni el terminador de línea que le sigue forman parte de la cadena literal. Si necesita incluir un carácter de nueva línea en un literal de cadena entre comillas simples o dobles, utilice la secuencia de caracteres \n (documentada en la siguiente sección). La sintaxis backtick de ES6 permite dividir cadenas en varias líneas y, en este caso, los terminadores de línea forman parte del literal de cadena:</p>
-    <p>Tenga en cuenta que cuando utilice comillas simples para delimitar sus cadenas, debe tener cuidado con las contracciones y posesivos ingleses, como can't y O'Reilly's. Dado que el apos- trofo es el mismo que el carácter de comilla simple, debe utilizar el carácter de barra invertida (\) para "escapar" de cualquier apóstrofo que aparezca en cadenas entre comillas simples (los escapes se explican en la siguiente sección).</p>
+    <p>Para incluir un string en un programa JavaScript, basta con encerrar los caracteres de la cadena dentro de un par coincidente de comillas simples o dobles o de puntos suspensivos (<codeinline>'</codeinline> o <codeinline>"</codeinline> o <codeinline>`</codeinline>). Las comillas dobles y los puntos suspensivos pueden incluirse en cadenas delimitadas por comillas simples, y lo mismo ocurre con las cadenas delimitadas por comillas dobles y puntos suspensivos. He aquí algunos ejemplos de literales de cadena:</p>
+    <pre>
+    <code class="language-js">"" // El string vacio: tiene cero caracteres
+    'testing'
+    "3.14"
+    'name="miformulario"'
+    "¿Te gusta la web?"
+    "τ es la relación entre la circunferencia y el radio de un círculo"
+    `"Ella dijo 'hola'", dijo.`</code></pre>
+    <p>Las cadenas delimitadas con barras invertidas son una característica de ES6, y permiten que las expresiones de JavaScript se incrusten (o interpolen) dentro de la cadena literal. Esta sintaxis de <em>interpolación</em> de expresiones se trata en <a href="#3-4">§3.3.4</a>.</p>
+    <p>Las versiones originales de JavaScript requerían que los literales de cadena se escribieran en una sola línea, y es común ver código JavaScript que crea cadenas largas concatenando cadenas de una sola línea con el operador +. Sin embargo, a partir de ES5, puedes dividir una cadena literal en varias líneas terminando cada línea excepto la última con una barra invertida (<codeinline>\</codeinline>). Ni la barra invertida ni el terminador de línea que le sigue forman parte de la cadena literal. Si necesita incluir un carácter de nueva línea en un literal de cadena entre comillas simples o dobles, utilice la secuencia de caracteres <codeinline>\n</codeinline> (documentada en la siguiente sección). La sintaxis backtick de ES6 permite dividir cadenas en varias líneas y, en este caso, los terminadores de línea forman parte del literal de cadena:</p>
+    <pre>
+    <code class="language-js">// Un string que representa 2 líneas escritas en una línea:
+    'dos\nlineas'
+    // Un string de una línea escrita en 3 líneas:
+    "una\
+    linea\
+    larga"
+    // Un string de dos líneas escrita en dos líneas:
+    `the newline character at the end of this line
+    is included literally in this string`</code></pre>
+    <p>Tenga en cuenta que cuando utilice comillas simples para delimitar sus cadenas, debe tener cuidado con las contracciones y posesivos ingleses, como <em>can't</em> y <em>O'Reilly's</em>. Dado que el apos- trofo es el mismo que el carácter de comilla simple, debe utilizar el carácter de barra invertida (<codeinline>\</codeinline>) para "escapar" de cualquier apóstrofo que aparezca en cadenas entre comillas simples (los escapes se explican en la siguiente sección).</p>
     <p>En la programación JavaScript del lado del cliente, el código JavaScript puede contener cadenas de código HTML, y el código HTML puede contener cadenas de código JavaScript. Al igual que JavaScript, HTML utiliza comillas simples o dobles para delimitar sus cadenas. Por lo tanto, al combinar Java-Script y HTML, es una buena idea utilizar un estilo de comillas para JavaScript y el otro estilo para HTML. En el siguiente ejemplo, la cadena "Gracias" aparece entre comillas simples dentro de una expresión JavaScript, que a su vez aparece entre comillas dobles dentro de un atributo HTML event-handler:</p>
+    <pre>
+    <code class="language-js">&lt;button onclick="alert('Gracias')">Cliquear Aqui&lt;/button></code></pre>
   </section>
   <section class="py-4 xs:py-5 sm:py-6">
     <h3>3.3.2 Secuencias de escape en literales de cadena</h3>
-    <p>El carácter de barra invertida (\) tiene un propósito especial en las cadenas de JavaScript. Combinado con el carácter que le sigue, representa un carácter que no es representable de otro modo dentro de la cadena. Por ejemplo, \n es una secuencia de escape que representa un carácter de nueva línea.</p>
-    <p>Otro ejemplo, mencionado anteriormente, es el escape \', que representa el carácter de comilla simple (o apóstrofo). Esta secuencia de escape es útil cuando se necesita incluir un apóstrofo en una cadena literal que está contenida entre comillas simples. Puede entender por qué se llaman secuencias de escape: la barra invertida le permite escapar de la interpretación habitual del carácter de comilla simple. En lugar de utilizarla para marcar el final de la cadena, se utiliza como apóstrofe:</p>
-    <p>La Tabla 3-1 enumera las secuencias de escape de JavaScript y los caracteres que representan. Tres secuencias de escape son genéricas y pueden utilizarse para representar cualquier carácter especificando su código de carácter Unicode como un número hexadecimal. Por ejemplo, la secuencia \xA9 representa el símbolo copyright, que tiene la codificación Unicode dada por el número hexadecimal A9. Del mismo modo, el escape \u representa un carácter Unicode arbitrario especificado por cuatro dígitos hexadecimales o de uno a cinco dígitos cuando los dígitos están encerrados entre llaves: \u03c0 representa el carácter π, por ejemplo, y \u&lbrace;1f600} representa el emoji "cara sonriente".</p>
-    <p><em>Tabla 3-1. Secuencias de escape de JavaScript</em></p>
-    <p>Si el carácter \ precede a cualquier carácter distinto de los mostrados en la Tabla 3- 1, la barra invertida simplemente se ignora (aunque futuras versiones del lenguaje pueden, por supuesto, definir nuevas secuencias de escape). Por ejemplo, \# es lo mismo que #. Por último, como se señaló anteriormente, ES5 permite una barra invertida antes de un salto de línea para romper una cadena literal a través de múltiples líneas.</p>
+    <p>El carácter de barra invertida (<codeinline>\</codeinline>) tiene un propósito especial en las cadenas de JavaScript. Combinado con el carácter que le sigue, representa un carácter que no es representable de otro modo dentro de la cadena. Por ejemplo, <codeinline>\n</codeinline> es una <em>secuencia de escape</em> que representa un carácter de nueva línea.</p>
+    <p>Otro ejemplo, mencionado anteriormente, es el escape <codeinline>\'</codeinline>, que representa el carácter de comilla simple (o apóstrofo). Esta secuencia de escape es útil cuando se necesita incluir un apóstrofo en una cadena literal que está contenida entre comillas simples. Puede entender por qué se llaman secuencias de escape: la barra invertida le permite escapar de la interpretación habitual del carácter de comilla simple. En lugar de utilizarla para marcar el final de la cadena, se utiliza como apóstrofe:</p>
+    <pre>
+    <code class="language-js">'You\'re right, it can\'t be a quote'</code></pre>
+    <p>La <a href="#tabla3-1">Tabla 3-1</a> enumera las secuencias de escape de JavaScript y los caracteres que representan. Tres secuencias de escape son genéricas y pueden utilizarse para representar cualquier carácter especificando su código de carácter Unicode como un número hexadecimal. Por ejemplo, la secuencia <codeinline>\xA9</codeinline> representa el símbolo copyright, que tiene la codificación Unicode dada por el número hexadecimal A9. Del mismo modo, el escape <codeinline>\u</codeinline> representa un carácter Unicode arbitrario especificado por cuatro dígitos hexadecimales o de uno a cinco dígitos cuando los dígitos están encerrados entre llaves: <codeinline>\u03c0</codeinline> representa el carácter π, por ejemplo, y <codeinline>\u&lbrace;1f600}</codeinline> representa el emoji "cara sonriente".</p>
+    <div id="tabla3-1" class="flex flex-col items-center">
+      <p><em>Tabla 3-1. Secuencias de escape de JavaScript</em></p>
+      <table class="text-md leading-6 sm:text-lg md:text-xl border-b-2 border-amber-900">
+        <thead class="bg-amber-900 text-[#f6e4c5]">
+          <tr>
+            <td class="w-24 text-center">Secuencia</td>
+            <td class="max-w-lg pl-4">Carácter representado</td>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td class="w-24 pl-4"><codeinline class="md:text-base bg-transparent">\0</codeinline></td>
+              <td class="max-w-lg pl-4">El carácter NUL (<codeinline class="md:text-base bg-transparent">\u0000</codeinline>)</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="w-24 pl-4"><codeinline class="md:text-base bg-transparent">\b</codeinline></td>
+              <td class="max-w-lg pl-4">Retroceso (<codeinline class="md:text-base bg-transparent">\u0008</codeinline>)</td>
+            </tr>
+            <tr>
+              <td class="w-24 pl-4"><codeinline class="md:text-base bg-transparent">\t</codeinline></td>
+              <td class="max-w-lg pl-4">Pestaña horizontal (<codeinline class="md:text-base bg-transparent">\u0009</codeinline>)</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="w-24 pl-4"><codeinline class="md:text-base bg-transparent">\n</codeinline></td>
+              <td class="max-w-lg pl-4">Nueva línea (<codeinline class="md:text-base bg-transparent">\u000A</codeinline>)</td>
+            </tr>
+            <tr>
+              <td class="w-24 pl-4"><codeinline class="md:text-base bg-transparent">\v</codeinline></td>
+              <td class="max-w-lg pl-4">Pestaña vertical (<codeinline class="md:text-base bg-transparent">\u000B</codeinline>)</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="w-24 pl-4"><codeinline class="md:text-base bg-transparent">\f</codeinline></td>
+              <td class="max-w-lg pl-4">Alimentación del formulario (<codeinline class="md:text-base bg-transparent">\u000C</codeinline>)</td>
+            </tr>
+            <tr>
+              <td class="w-24 pl-4"><codeinline class="md:text-base bg-transparent">\r</codeinline></td>
+              <td class="max-w-lg pl-4">Retorno de carro (<codeinline class="md:text-base bg-transparent">\u000D</codeinline>)</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="w-24 pl-4"><codeinline class="md:text-base bg-transparent">\"</codeinline></td>
+              <td class="max-w-lg pl-4">Comillas dobles (<codeinline class="md:text-base bg-transparent">\u0022</codeinline>)</td>
+            </tr>
+            <tr>
+              <td class="w-24 pl-4"><codeinline class="md:text-base bg-transparent">\'</codeinline></td>
+              <td class="max-w-lg pl-4">Apóstrofe o comilla simple (<codeinline class="md:text-base bg-transparent">\u0027</codeinline>)</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="w-24 pl-4"><codeinline class="md:text-base bg-transparent">\\</codeinline></td>
+              <td class="max-w-lg pl-4">Barra diagonal inversa (<codeinline class="md:text-base bg-transparent">\u005C</codeinline>)</td>
+            </tr>
+            <tr>
+              <td class="w-24 pl-4"><codeinline class="md:text-base bg-transparent pr-0">\x</codeinline><em class="text-amber-700">nn</em></td>
+              <td class="max-w-lg pl-4">El carácter Unicode especificado por los dos dígitos hexadecimales <em>nn</em></td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="w-24 pl-4"><codeinline class="md:text-base bg-transparent pr-0">\u</codeinline><em class="text-amber-700">nnnn</em></td>
+              <td class="max-w-lg pl-4">El carácter Unicode especificado por los cuatro dígitos hexadecimales <em>nnnn</em></td>
+            </tr>
+            <tr>
+              <td class="w-24 pl-4"><codeinline class="md:text-base bg-transparent pr-0">\u&lbrace;</codeinline><em class="font-khand px-0 text-amber-700">n</em><codeinline class="md:text-base bg-transparent pl-0">}</codeinline></td>
+              <td class="max-w-lg pl-4">El carácter Unicode especificado por el punto de código <em>n</em>, donde <em>n</em> es de uno a seis dígitos hexadecimales entre 0 y 10FFFF (ES6)</td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Si el carácter <codeinline>\</codeinline> precede a cualquier carácter distinto de los mostrados en la <a href="#tabla3-1">Tabla 3-1</a>, la barra invertida simplemente se ignora (aunque futuras versiones del lenguaje pueden, por supuesto, definir nuevas secuencias de escape). Por ejemplo, <codeinline>\#</codeinline> es lo mismo que <codeinline>#</codeinline>. Por último, como se señaló anteriormente, ES5 permite una barra invertida antes de un salto de línea para romper una cadena literal a través de múltiples líneas.</p>
   </section>
   <section>
     <h3>3.3.3 Trabajar con cuerdas</h3>
