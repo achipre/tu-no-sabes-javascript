@@ -264,7 +264,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>La <a href="#tabla3-1">Tabla 3-1</a> enumera las secuencias de escape de JavaScript y los caracteres que representan. Tres secuencias de escape son genéricas y pueden utilizarse para representar cualquier carácter especificando su código de carácter Unicode como un número hexadecimal. Por ejemplo, la secuencia <codeinline>\xA9</codeinline> representa el símbolo copyright, que tiene la codificación Unicode dada por el número hexadecimal A9. Del mismo modo, el escape <codeinline>\u</codeinline> representa un carácter Unicode arbitrario especificado por cuatro dígitos hexadecimales o de uno a cinco dígitos cuando los dígitos están encerrados entre llaves: <codeinline>\u03c0</codeinline> representa el carácter π, por ejemplo, y <codeinline>\u&lbrace;1f600}</codeinline> representa el emoji "cara sonriente".</p>
     <div id="tabla3-1" class="flex flex-col items-center">
       <p><em>Tabla 3-1. Secuencias de escape de JavaScript</em></p>
-      <table class="text-md leading-6 sm:text-lg md:text-xl border-b-2 border-amber-900">
+      <table>
         <thead class="bg-amber-900 text-[#f6e4c5]">
           <tr>
             <td class="w-24 text-center">Secuencia</td>
@@ -490,50 +490,241 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="6" class="py-4 xs:py-5 sm:py-6">
     <h2>3.6 Symbols</h2>
     <p>Los símbolos se introdujeron en ES6 para servir como nombres de propiedades sin cadena. Para entender Symbols, necesitas saber que el tipo fundamental Object de JavaScript es una colección desordenada de propiedades, donde cada propiedad tiene un nombre y un valor. Los nombres de las propiedades suelen ser (y hasta ES6, eran exclusivamente) cadenas. Pero en ES6 y posteriores, Symbols también puede servir para este propósito:</p>
-    <p>El tipo Symbol no tiene una sintaxis literal. Para obtener un valor Symbol, se llama a la función Symbol(). Esta función nunca devuelve el mismo valor dos veces, incluso cuando se llama con el mismo argumento. Esto significa que si llama a Symbol() para obtener un valor Symbol, puede utilizar con seguridad ese valor como nombre de propiedad para añadir una nueva propiedad a un objeto y no tiene que preocuparse de que pueda estar sobrescribiendo una propiedad existente con el mismo nombre. Del mismo modo, si utiliza nombres de propiedad simbólicos y no comparte esos símbolos, puede estar seguro de que otros módulos de código de su programa no sobrescribirán accidentalmente sus propiedades.</p>
-    <p>En la práctica, Symbols sirve como mecanismo de extensión del lenguaje. Cuando ES6 introdujo el bucle for/of (§5.4.4) y los objetos iterables (Capítulo 12), necesitó definir un método estándar que las clases pudieran implementar para hacerse iterables. Pero estandarizar cualquier nombre de cadena particular para este método iterador habría roto el código existente, así que en su lugar se utilizó un nombre simbólico. Como veremos en el Capítulo 12, Symbol.itera tor es un valor Symbol que puede usarse como nombre de método para hacer iterable un objeto.</p>
-    <p>La función Symbol() toma un argumento de cadena opcional y devuelve un valor Sym- bol único. Si proporciona un argumento de cadena, esa cadena se incluirá en la salida. del método toString() del Symbol. Tenga en cuenta, sin embargo, que llamar a Symbol() dos veces con la misma cadena produce dos valores Symbol completamente diferentes.</p>
-    <p>toString() es el único método interesante de las instancias de Symbol. Sin embargo, hay otras dos funciones relacionadas con Symbol que deberías conocer. A veces, cuando se utilizan Symbols, se desea mantenerlos privados a su propio código para tener la garantía de que sus propiedades nunca entrarán en conflicto con las propiedades utilizadas por otro código. Otras veces, sin embargo, es posible que desee definir un valor Symbol y compartirlo ampliamente con otro código. Este sería el caso, por ejemplo, si estuvieras definiendo algún tipo de extensión en la que quisieras que otro código pudiera participar, como con el mecanismo Symbol.iterator descrito anteriormente.</p>
-    <p>Para servir a este último caso de uso, JavaScript define un registro Symbol global. La función Symbol.for() toma como argumento una cadena y devuelve un valor Symbol asociado a la cadena que se le pasa. Si no hay ningún símbolo asociado a esa cadena, se crea uno nuevo y se devuelve; en caso contrario, se devuelve el símbolo ya existente. Es decir, la función Symbol.for() es completamente diferente de la función Sym bol(): Symbol() nunca devuelve el mismo valor dos veces, pero Symbol.for() siempre devuelve el mismo valor cuando se llama con la misma cadena. La cadena pasada a Symbol.for() aparece en la salida de toString() para el Symbol devuelto, y también puede recuperarse llamando a Symbol.keyFor() sobre el Symbol devuelto.</p>
+    <pre>
+    <code class="language-js">let strname = "string nombre";    // Un string para usar como nombre de propiedad
+    let symname = Symbol("propname"); // Un Symbol para usar como nombre de propiedad
+    typeof strname                    // => "string": strname es una cadena
+    typeof symname                    // => "symbol": symname es un Symbol 
+    let o = &lbrace;};                       // Un objeto
+    o[strname] = 1;                   // Definir una propiedad con nombre del string  
+    o[symname] = 2;                   // Definir una propiedad con nombre del Symbol  
+    o[strname]                        // => 1: acceder a la propiedad nombre del string 
+    o[symname]                        // => 2: acceder a la propiedad nombre del Symbol 
+    delete o[strname];                // Borrar la propiedad nombre del string</code></pre>
+    <p>El tipo Symbol no tiene una sintaxis literal. Para obtener un valor Symbol, se llama a la función <codeinline>Symbol()</codeinline>. Esta función nunca devuelve el mismo valor dos veces, incluso cuando se llama con el mismo argumento. Esto significa que si llama a <codeinline>Symbol()</codeinline> para obtener un valor Symbol, puede utilizar con seguridad ese valor como nombre de propiedad para añadir una nueva propiedad a un objeto y no tiene que preocuparse de que pueda estar sobrescribiendo una propiedad existente con el mismo nombre. Del mismo modo, si utiliza nombres de propiedad simbólicos y no comparte esos símbolos, puede estar seguro de que otros módulos de código de su programa no sobrescribirán accidentalmente sus propiedades.</p>
+    <p>En la práctica, Symbols sirve como mecanismo de extensión del lenguaje. Cuando ES6 introdujo el bucle <codeinline>for/of</codeinline> (<a href="capitulo-5#4-4">§5.4.4</a>) y los objetos iterables (<a href="capitulo-12">Capítulo 12</a>), necesitó definir un método estándar que las clases pudieran implementar para hacerse iterables. Pero estandarizar cualquier nombre de cadena particular para este método iterador habría roto el código existente, así que en su lugar se utilizó un nombre simbólico. Como veremos en el <a href="capitulo-12">Capítulo 12</a>, <codeinline>Symbol.itera</codeinline> tor es un valor Symbol que puede usarse como nombre de método para hacer iterable un objeto.</p>
+    <p>La función <codeinline>Symbol()</codeinline> toma un argumento de cadena opcional y devuelve un valor Sym- bol único. Si proporciona un argumento de cadena, esa cadena se incluirá en la salida. del método <codeinline>toString()</codeinline> del Symbol. Tenga en cuenta, sin embargo, que llamar a <codeinline>Symbol()</codeinline> dos veces con la misma cadena produce dos valores Symbol completamente diferentes.</p>
+    <pre>
+    <code class="language-js">let s = Symbol("sym_x");
+    s.toString()      // => "Symbol(sym_x)"</code></pre>
+    <p><codeinline>toString()</codeinline> es el único método interesante de las instancias de Symbol. Sin embargo, hay otras dos funciones relacionadas con Symbol que deberías conocer. A veces, cuando se utilizan Symbols, se desea mantenerlos privados a su propio código para tener la garantía de que sus propiedades nunca entrarán en conflicto con las propiedades utilizadas por otro código. Otras veces, sin embargo, es posible que desee definir un valor Symbol y compartirlo ampliamente con otro código. Este sería el caso, por ejemplo, si estuvieras definiendo algún tipo de extensión en la que quisieras que otro código pudiera participar, como con el mecanismo <codeinline>Symbol.iterator</codeinline> descrito anteriormente.</p>
+    <p>Para servir a este último caso de uso, JavaScript define un registro Symbol global. La función <codeinline>Symbol.for()</codeinline> toma como argumento una cadena y devuelve un valor Symbol asociado a la cadena que se le pasa. Si no hay ningún símbolo asociado a esa cadena, se crea uno nuevo y se devuelve; en caso contrario, se devuelve el símbolo ya existente. Es decir, la función <codeinline>Symbol.for()</codeinline> es completamente diferente de la función <codeinline>Sym bol()</codeinline>: <codeinline>Symbol()</codeinline> nunca devuelve el mismo valor dos veces, pero <codeinline>Symbol.for()</codeinline> siempre devuelve el mismo valor cuando se llama con la misma cadena. La cadena pasada a <codeinline>Symbol.for()</codeinline> aparece en la salida de <codeinline>toString()</codeinline> para el Symbol devuelto, y también puede recuperarse llamando a <codeinline>Symbol.keyFor()</codeinline> sobre el Symbol devuelto.</p>
+    <pre>
+    <code class="language-js">let s = Symbol.for("shared");
+    let t = Symbol.for("shared");
+    s === t           // => true
+    s.toString()      // => "Symbol(shared)"
+    Symbol.keyFor(t)  // => "shared"</code></pre>
   </section>
   <section id="7">
     <h2>3.7 El objeto global</h2>
-    <p>En las secciones anteriores se han explicado los tipos y valores primitivos de JavaScript. Los tipos de objeto-objetos, arrays y funciones-son tratados en capítulos propios más adelante en este libro. Pero hay un valor de objeto muy importante que debemos cubrir ahora. El objeto global es un objeto normal de JavaScript que sirve a un propósito muy importante: las propiedades de este objeto son los identificadores definidos globalmente que están disponibles para un programa Java Script. Cuando se inicia el intérprete de JavaScript (o cada vez que un navegador web carga una nueva página), crea un nuevo objeto global y le da un conjunto inicial de propiedades que definen:</p>
+    <p>En las secciones anteriores se han explicado los tipos y valores primitivos de JavaScript. Los tipos de objeto-objetos, arrays y funciones-son tratados en capítulos propios más adelante en este libro. Pero hay un valor de objeto muy importante que debemos cubrir ahora. El <em>objeto global</em> es un objeto normal de JavaScript que sirve a un propósito muy importante: las propiedades de este objeto son los identificadores definidos globalmente que están disponibles para un programa Java Script. Cuando se inicia el intérprete de JavaScript (o cada vez que un navegador web carga una nueva página), crea un nuevo objeto global y le da un conjunto inicial de propiedades que definen:</p>
     <ul>
-      <li>Constantes globales como undefined, Infinity y NaN</li>
-      <li>Funciones globales como isNaN(), parseInt() (§3.9.2), y eval() (§4.12)</li>
-      <li>Funciones constructoras como Date(), RegExp(), String(), Object() y Array() (§3.9.2)</li>
-      <li>Objetos globales como Math y JSON (§6.8)</li>
+      <li>Constantes globales como <codeinline>undefined</codeinline>, <codeinline>Infinity</codeinline> y <codeinline>NaN</codeinline></li>
+      <li>Funciones globales como <codeinline>isNaN()</codeinline>, <codeinline>parseInt()</codeinline> (<a href="#9-2">§3.9.2</a>), y <codeinline>eval()</codeinline> (<a href="capitulo-4#12">§4.12</a>)</li>
+      <li>Funciones constructoras como <codeinline>Date()</codeinline>, <codeinline>RegExp()</codeinline>, <codeinline>String()</codeinline>, <codeinline>Object()</codeinline> y <codeinline>Array()</codeinline> (<a href="#9-2">§3.9.2</a>)</li>
+      <li>Objetos globales como <codeinline>Math</codeinline> y <codeinline>JSON</codeinline> (<a href="capitulo-6#8">§6.8</a>)</li>
     </ul>
     <p>Las propiedades iniciales del objeto global no son palabras reservadas, pero merecen ser tratadas como si lo fueran. En este capítulo ya se han descrito algunas de estas propiedades globales. La mayoría de las demás se tratarán en otras partes de este libro</p>
-    <p>En Node, el objeto global tiene una propiedad llamada global cuyo valor es el propio objeto global, por lo que siempre puedes referirte al objeto global por el nombreglobal enlosprogramasNode.</p>
-    <p>En los navegadores web, el objeto Window sirve como objeto global para todo el código JavaScript contenido en la ventana del navegador que representa. Este objeto Window global tiene una propiedad window autorreferencial que puede utilizarse para referirse al objeto global. El objeto Window define las propiedades globales principales, pero también define otras propiedades globales específicas de los navegadores web y de JavaScript del lado del cliente. Los subprocesos del Web worker (§15.13) tienen un objeto global diferente al de la ventana con la que están asociados. El código en un worker puede referirse a su objeto global como self.</p>
-    <p>ES2020 define finalmente globalThis como la forma estándar de referirse al objeto global en cualquier contexto. A principios de 2020, esta característica ha sido implementada por todos los navegadores modernos y por Node.</p>
+    <p>En Node, el objeto global tiene una propiedad llamada <codeinline>global</codeinline> cuyo valor es el propio objeto global, por lo que siempre puedes referirte al objeto global por el nombre <codeinline>global</codeinline> en los programas Node.</p>
+    <p>En los navegadores web, el objeto Window sirve como objeto global para todo el código JavaScript contenido en la ventana del navegador que representa. Este objeto Window global tiene una propiedad <codeinline>window</codeinline> autorreferencial que puede utilizarse para referirse al objeto global. El objeto Window define las propiedades globales principales, pero también define otras propiedades globales específicas de los navegadores web y de JavaScript del lado del cliente. Los subprocesos del Web worker (<a href="capitulo-15#13">§15.13</a>) tienen un objeto global diferente al de la ventana con la que están asociados. El código en un worker puede referirse a su objeto global como <codeinline>self</codeinline>.</p>
+    <p>ES2020 define finalmente <codeinline>globalThis</codeinline> como la forma estándar de referirse al objeto global en cualquier contexto. A principios de 2020, esta característica ha sido implementada por todos los navegadores modernos y por Node.</p>
   </section>
   <section id="8" class="py-4 xs:py-5 sm:py-6">
     <h2>3.8 Valores primitivos inmutables y referencias a objetos mutables</h2>
-    <p>En JavaScript existe una diferencia fundamental entre los valores primitivos (indefinidos, nulos, booleanos, números y cadenas) y los objetos (incluidas las matrices y las funciones). Los valores primitivos son inmutables: no hay forma de cambiar (o "mutar") un valor primitivo. Esto es obvio en el caso de los números y los booleanos: ni siquiera tiene sentido cambiar el valor de un número. Sin embargo, no es tan obvio en el caso de las cadenas. Dado que las cadenas son como matrices de caracteres, cabría esperar poder modificar el carácter en cualquier índice especificado. De hecho, JavaScript no lo permite, y todos los métodos de cadena que parecen devolver una cadena modificada están, de hecho, devolviendo un nuevo valor de cadena. Por ejemplo:</p>
-    <p>Las primitivas también se comparan por valor: dos valores son iguales sólo si tienen el mismo valor. Esto suena circular para números, booleanos, nulos e indefinidos: no hay otra forma de compararlos. Sin embargo, no es tan obvio en el caso de las cadenas. Si se comparan dos valores de cadena distintos, JavaScript los considera iguales si, y sólo si, tienen la misma longitud y si el carácter de cada índice es el mismo.</p>
-    <p>Los objetos son diferentes de las primitivas. En primer lugar, son mutables: sus valores pueden cambiar:</p>
+    <p>En JavaScript existe una diferencia fundamental entre los valores primitivos (<codeinline>undefined</codeinline>, <codeinline>null</codeinline>, booleanos, números y cadenas) y los objetos (incluidas las matrices y las funciones). Los valores primitivos son inmutables: no hay forma de cambiar (o "mutar") un valor primitivo. Esto es obvio en el caso de los números y los booleanos: ni siquiera tiene sentido cambiar el valor de un número. Sin embargo, no es tan obvio en el caso de las cadenas. Dado que las cadenas son como matrices de caracteres, cabría esperar poder modificar el carácter en cualquier índice especificado. De hecho, JavaScript no lo permite, y todos los métodos de cadena que parecen devolver una cadena modificada están, de hecho, devolviendo un nuevo valor de cadena. Por ejemplo:</p>
+    <pre>
+    <code class="language-js">let s = "Hola";  // Comienza con algun texto en minusculas.
+    s.toUpperCase(); // Retorna "HOLA", pero no cambia el texto original.
+    s                // => "Hola"</code></pre> 
+    <p>Las primitivas también se comparan <em>por valor</em>: dos valores son iguales sólo si tienen el mismo valor. Esto suena circular para números, booleanos, <codeinline>null</codeinline> e <codeinline>undefined</codeinline>: no hay otra forma de compararlos. Sin embargo, no es tan obvio en el caso de las cadenas. Si se comparan dos valores de cadena distintos, JavaScript los considera iguales si, y sólo si, tienen la misma longitud y si el carácter de cada índice es el mismo.</p>
+    <p>Los objetos son diferentes de las primitivas. En primer lugar, son <em>mutables</em>: sus valores pueden cambiar:</p>
+    <pre>
+    <code class="language-js">let o = &lbrace; x: 1 }; // Comenzamos con un objeto
+    o.x = 2;          // Mutarlo cambiando el valor de una propiedad
+    o.y = 3;          // Mutarlo de nuevo añadiendo una nueva propiedad
+
+    let a = [1,2,3];  // Los Arrays también son mutables
+    a[0] = 0;         // Cambiar el valor de un elemento del array
+    a[3] = 4;         // Añadir un nuevo elemento al array</code></pre> 
     <p>Los objetos no se comparan por su valor: dos objetos distintos no son iguales aunque tengan las mismas propiedades y valores. Y dos matrices distintas no son iguales aunque tengan los mismos elementos en el mismo orden:</p>
-    <p>Los objetos se denominan a veces tipos de referencia para distinguirlos de los tipos primitivos de JavaScript. Utilizando esta terminología, los valores de objeto son referencias, y decimos que los objetos se comparan por referencia: dos valores de objeto son iguales si y sólo si se refieren al mismo objeto subyacente.</p>
-    <p>Como puedes ver en este código, asignar un objeto (o array) a una variable simplemente asigna la referencia: no crea una nueva copia del objeto. Si quieres hacer una nueva copia de un objeto o array, debes copiar explícitamente las propiedades del objeto o los elementos del array. Este ejemplo muestra el uso de un bucle for (§5.4.3):</p>
+    <pre>
+    <code class="language-js">let o = &lbrace;x: 1}, p = &lbrace;x: 1}; // Dos objetos con las mismas propiedades
+    o === p               // => false: son objetos distintos
+    let a = [], b = [];   // Dos array vacios y distintos
+    a === b               // => false: son arrays distintos</code></pre>
+    <p>Los objetos se denominan a veces <em>tipos de referencia</em> para distinguirlos de los tipos primitivos de JavaScript. Utilizando esta terminología, los valores de objeto son <em>referencia</em>, y decimos que los objetos se comparan <em>por referencia</em>: dos valores de objeto son iguales si y sólo si se <em>refieren</em> al mismo objeto subyacente.</p>
+    <pre>
+    <code class="language-js">let a = []; // La variable hace referencia a un array vacío.
+    let b = a;  // Ahora b hace referencia al mismo array.
+    b[0] = 1;   // Muta el array al que hace referencia a b.
+    a[0]        // => 1: el array a es el mismo que el b
+    a === b     // => true: a y b hacen referencia al mismo array.</code></pre>
+    <p>Como puedes ver en este código, asignar un objeto (o array) a una variable simplemente asigna la referencia: no crea una nueva copia del objeto. Si quieres hacer una nueva copia de un objeto o array, debes copiar explícitamente las propiedades del objeto o los elementos del array. Este ejemplo muestra el uso de un bucle <codeinline>for</codeinline> (<a href="capitulo-5#4-3">§5.4.3</a>):</p>
+    <pre>
+    <code class="language-js">let a = ["a","b","c"]; // Un array que queremos copiar
+    let b = [];            // Un array vacío
+    for(let i = 0; i &lt; a.length; i++) &lbrace; // Para cada elemento del array a
+    b[i] = a[i];           // Copiamos el elemento a[i] al elemento b[i]
+    }
+    let c = Array.from(b); // En ES6, copia un array con Array.from()</code></pre>
     <p>Del mismo modo, si queremos comparar dos objetos o matrices distintos, debemos comparar sus propiedades o elementos. Este código define una función para comparar dos matrices:</p>
+    <pre>
+    <code class="language-js">function equalArrays(a, b) &lbrace;
+        if (a === b) return true;        // Arrays identicas son iguales
+        if (a.length !== b.length) return false; // Arrays de diferentes tamaño no son iguales
+        for(let i = 0; i &lt a.length; i++) &lbrace; // Recuerde todos los elementos
+        if (a[i] !== b[i]) return false; // Si algún elemento es diferente, no son iguales
+        }
+        return true;                     // Caso contrario, son iguales
+    }</code></pre>
   </section>
   <section id="9">
     <h2>3.9 Conversiones de tipo</h2>
-    <p>JavaScript es muy flexible en cuanto a los tipos de valores que requiere. Lo hemos visto con los booleanos: cuando JavaScript espera un valor booleano, puede proporcionar un valor de cualquier tipo y JavaScript lo convertirá según sea necesario. Algunos valores (valores "verdaderos") se convierten en verdaderos y otros (valores "falsos") se convierten en falsos. Lo mismo ocurre con otros tipos: si JavaScript quiere una cadena, convertirá cualquier valor que le proporcione en una cadena. Si JavaScript quiere un número, intentará convertir el valor que le des en un número (o en NaN si no puede realizar una conversión significativa).</p>
+    <p>JavaScript es muy flexible en cuanto a los tipos de valores que requiere. Lo hemos visto con los booleanos: cuando JavaScript espera un valor booleano, puede proporcionar un valor de cualquier tipo y JavaScript lo convertirá según sea necesario. Algunos valores (valores "verdaderos") se convierten en <codeinline>true</codeinline> y otros (valores "falsos") se convierten en <codeinline>false</codeinline>. Lo mismo ocurre con otros tipos: si JavaScript quiere una cadena, convertirá cualquier valor que le proporcione en una cadena. Si JavaScript quiere un número, intentará convertir el valor que le des en un número (o en <codeinline>NaN</codeinline> si no puede realizar una conversión significativa).</p>
     <p>Algunos ejemplos:</p>
-    <p>La Tabla 3-2 resume cómo se convierten los valores de un tipo a otro en JavaScript. Las entradas en negrita de la tabla resaltan conversiones que pueden resultarle sorprendentes. Las celdas vacías indican que no es necesaria ninguna conversión y que no se realiza ninguna.</p>
-    <p><em>Tabla 3-2. Conversiones de tipos de JavaScript</em></p>
-    <p>Las conversiones de primitivo a primitivo que se muestran en la tabla son relativamente sencillas. La conversión a booleano ya se trató en §3.4. La conversión a cadenas está bien definida para todos los valores primitivos. La conversión a números es un poco más complicada. Las cadenas que pueden analizarse como números se convierten a esos números. Se permiten espacios iniciales y finales, pero cualquier carácter sin espacio inicial o final que no forme parte de un literal numérico provoca que la conversión de cadena a número produzca NaN. Algunas conversiones numéricas pueden parecer sorprendentes: verdadero se convierte en 1, y falso y la cadena vacía se convierten en 0.</p>
-    <p>La conversión de objeto a primitivo es algo más complicada, y es el tema de §3.9.3.</p>
+    <pre>
+    <code class="language-js">10 + " objects"  // => "10 objects": El número 10 se convierte en una cadena
+    "7" * "4"        // => 28: ambos strings se convierten en números
+    let n = 1 - "x"; // n == NaN; el string "x" no puede convertirse en un número
+    n + " objects"   // => "NaN objects": NaN se convierte en un string "NaN"</code></pre>
+    <p>La <a href="#tabla3-2">Tabla 3-2</a> resume cómo se convierten los valores de un tipo a otro en JavaScript. Las entradas en negrita de la tabla resaltan conversiones que pueden resultarle sorprendentes. Las celdas vacías indican que no es necesaria ninguna conversión y que no se realiza ninguna.</p>
+    <div id="tabla3-1" class="flex flex-col items-center">
+      <p><em>Tabla 3-2. Conversiones de tipos de JavaScript</em></p>
+      <table>
+        <thead class="bg-amber-900 text-[#f6e4c5]">
+          <tr>
+            <td class="max-w-sm pl-4">Valor</td>
+            <td class="max-w-xs pl-4">a String</td>
+            <td class="max-w-xs pl-4">a Number</td>
+            <td class="max-w-xs pl-4">a Boolean</td>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td class="max-w-sm pl-4"><codeinline class="md:text-base bg-transparent">undefined</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">"undefined"</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">NaN</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">false</codeinline></td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-sm pl-4"><codeinline class="md:text-base bg-transparent">null</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">"null"</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">0</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">false</codeinline></td>
+            </tr>
+            <tr>
+              <td class="max-w-sm pl-4"><codeinline class="md:text-base bg-transparent">true</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">"true"</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">1</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent"></codeinline></td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-sm pl-4"><codeinline class="md:text-base bg-transparent">false</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">"false"</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">0</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent"></codeinline></td>
+            </tr>
+            <tr>
+              <td class="max-w-sm pl-4"><codeinline class="md:text-base bg-transparent">""</codeinline>(string vacía)</td>
+              <td class="max-w-lg pl-4"></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">0</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">false</codeinline></td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-sm pl-4"><codeinline class="md:text-base bg-transparent">"1.2"</codeinline>(no vacio, numérico)</td>
+              <td class="max-w-lg pl-4"></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">1.2</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">true</codeinline></td>
+            </tr>
+            <tr>
+              <td class="max-w-sm pl-4"><codeinline class="md:text-base bg-transparent">"one"</codeinline>(no vacio, no numérico)</td>
+              <td class="max-w-lg pl-4"></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">NaN</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">true</codeinline></td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-sm pl-4"><codeinline class="md:text-base bg-transparent">0</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">"0"</codeinline></td>
+              <td class="max-w-lg pl-4"></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">false</codeinline></td>
+            </tr>
+            <tr>
+              <td class="max-w-sm pl-4"><codeinline class="md:text-base bg-transparent">-0</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">"0"</codeinline></td>
+              <td class="max-w-lg pl-4"></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">false</codeinline></td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-sm pl-4"><codeinline class="md:text-base bg-transparent">1</codeinline>(finito, distinto de 0)</td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">"1"</codeinline></td>
+              <td class="max-w-lg pl-4"></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">true</codeinline></td>
+            </tr>
+            <tr>
+              <td class="max-w-sm pl-4"><codeinline class="md:text-base bg-transparent pr-0">Infinity</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">"Infinity"</codeinline></td>
+              <td class="max-w-lg pl-4"></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">true</codeinline></td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-sm pl-4"><codeinline class="md:text-base bg-transparent pr-0">-Infinity</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">"-Infinity"</codeinline></td>
+              <td class="max-w-lg pl-4"></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">true</codeinline></td>
+            </tr>
+            <tr>
+              <td class="max-w-sm pl-4"><codeinline class="md:text-base bg-transparent pr-0">NaN</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">"NaN"</codeinline></td>
+              <td class="max-w-lg pl-4"></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">false</codeinline></td>
+            </tr>
+            <tr>
+              <td class="max-w-sm pl-4"><codeinline class="md:text-base bg-transparent pr-0">&lbrace;}</codeinline>(cualquier objeto)</td>
+              <td class="max-w-lg pl-4">ver <a href="#9-3">§3.9.3</a></td>
+              <td class="max-w-lg pl-4">ver <a href="#9-3">§3.9.3</a></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">true</codeinline></td>
+            </tr>
+            <tr>
+              <td class="max-w-sm pl-4"><codeinline class="md:text-base bg-transparent pr-0">[]</codeinline>(array vacío)</td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">""</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">0</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">true</codeinline></td>
+            </tr>
+            <tr>
+              <td class="max-w-sm pl-4"><codeinline class="md:text-base bg-transparent pr-0">[9]</codeinline>(un elemento numérico)</td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">"9"</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">9</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">true</codeinline></td>
+            </tr>
+            <tr>
+              <td class="max-w-sm pl-4"><codeinline class="md:text-base bg-transparent pr-0">['9']</codeinline>(cualquier otro array)</td>
+              <td class="max-w-lg pl-4">usa el método join()</td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">NaN</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">true</codeinline></td>
+            </tr>
+            <tr>
+              <td class="max-w-sm pl-4"><codeinline class="md:text-base bg-transparent pr-0">function()&lbrace;}</codeinline>(cualquier función)</td>
+              <td class="max-w-lg pl-4">ver <a href="#9-3">§3.9.3</a></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">NaN</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">true</codeinline></td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Las conversiones de primitivo a primitivo que se muestran en la tabla son relativamente sencillas. La conversión a booleano ya se trató en <a href="#4">§3.4</a>. La conversión a cadenas está bien definida para todos los valores primitivos. La conversión a números es un poco más complicada. Las cadenas que pueden analizarse como números se convierten a esos números. Se permiten espacios iniciales y finales, pero cualquier carácter sin espacio inicial o final que no forme parte de un literal numérico provoca que la conversión de cadena a número produzca <codeinline>NaN</codeinline>. Algunas conversiones numéricas pueden parecer sorprendentes: <codeinline>true</codeinline> se convierte en 1, y <codeinline>false</codeinline> y la cadena vacía se convierten en 0.</p>
+    <p>La conversión de objeto a primitivo es algo más complicada, y es el tema de <a href="#9-3">§3.9.3</a>.</p>
   </section>
   <section id="9-1" class="py-4 xs:py-5 sm:py-6">
     <h3>3.9.1 Conversiones e igualdad</h3>
-    <p>JavaScript tiene dos operadores que comprueban si dos valores son iguales. El "operador de igualdad estricta", ===, no considera que sus operandos sean iguales si no son del mismo tipo, y casi siempre es el operador que hay que utilizar al codificar. Pero como JavaScript es tan flexible con las conversiones de tipo, también define el operador == con una definición flexible de igualdad. Por ejemplo, todas las comparaciones siguientes son verdaderas:</p>
-    <p>§4.9.1 explica exactamente qué conversiones realiza el operador == para determinar si dos valores deben considerarse iguales.</p>
-    <p>Tenga en cuenta que la convertibilidad de un valor en otro no implica la igualdad de esos dos valores. Si se utiliza undefined donde se espera un valor booleano, por ejemplo, se convertirá a false. Pero esto no significa que undefined == false. Los operadores y sentencias de JavaScript esperan valores de varios tipos y realizan conversiones a esos tipos. La sentencia if convierte undefined en false, pero el operador == nunca intenta convertir sus operandos en booleanos.</p>
+    <p>JavaScript tiene dos operadores que comprueban si dos valores son iguales. El "operador de igualdad estricta", <codeinline>===</codeinline>, no considera que sus operandos sean iguales si no son del mismo tipo, y casi siempre es el operador que hay que utilizar al codificar. Pero como JavaScript es tan flexible con las conversiones de tipo, también define el operador <codeinline>==</codeinline> con una definición flexible de igualdad. Por ejemplo, todas las comparaciones siguientes son verdaderas:</p>
+    <pre>
+    <code class="language-js">null == undefined // => true: Estos dos valores se tratan como iguales.
+    "0" == 0          // => true: El String se convierte en un número antes de compararlos.
+    0 == false        // => true: El booleano se convierte en un número antes de compararlos.
+    "0" == false      // => true: Ambos valores se convierten en cero antes de compararlos. </code></pre>
+    <p><a href="capitulo-4#9-1">§4.9.1</a> explica exactamente qué conversiones realiza el operador <codeinline>==</codeinline> para determinar si dos valores deben considerarse iguales.</p>
+    <p>Tenga en cuenta que la convertibilidad de un valor en otro no implica la igualdad de esos dos valores. Si se utiliza <codeinline>undefined</codeinline> donde se espera un valor booleano, por ejemplo, se convertirá a <codeinline>false</codeinline>. Pero esto no significa que <codeinline>undefined == false</codeinline>. Los operadores y sentencias de JavaScript esperan valores de varios tipos y realizan conversiones a esos tipos. La sentencia <codeinline>if</codeinline> convierte <codeinline>undefined</codeinline> en <codeinline>false</codeinline>, pero el operador <codeinline>==</codeinline> nunca intenta convertir sus operandos en booleanos.</p>
   </section>
   <section>
     <h3>3.9.2 Conversiones explícitas</h3>
