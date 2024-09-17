@@ -589,7 +589,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     let n = 1 - "x"; // n == NaN; el string "x" no puede convertirse en un número
     n + " objects"   // => "NaN objects": NaN se convierte en un string "NaN"</code></pre>
     <p>La <a href="#tabla3-2">Tabla 3-2</a> resume cómo se convierten los valores de un tipo a otro en JavaScript. Las entradas en negrita de la tabla resaltan conversiones que pueden resultarle sorprendentes. Las celdas vacías indican que no es necesaria ninguna conversión y que no se realiza ninguna.</p>
-    <div id="tabla3-1" class="flex flex-col items-center">
+    <div id="tabla3-2" class="flex flex-col items-center">
       <p><em>Tabla 3-2. Conversiones de tipos de JavaScript</em></p>
       <table>
         <thead class="bg-amber-900 text-[#f6e4c5]">
@@ -679,7 +679,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
               <td class="max-w-lg pl-4"></td>
               <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">false</codeinline></td>
             </tr>
-            <tr>
+            <tr class="bg-[#f6e4c5]">
               <td class="max-w-sm pl-4"><codeinline class="md:text-base bg-transparent pr-0">&lbrace;}</codeinline>(cualquier objeto)</td>
               <td class="max-w-lg pl-4">ver <a href="#9-3">§3.9.3</a></td>
               <td class="max-w-lg pl-4">ver <a href="#9-3">§3.9.3</a></td>
@@ -691,7 +691,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
               <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">0</codeinline></td>
               <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">true</codeinline></td>
             </tr>
-            <tr>
+            <tr class="bg-[#f6e4c5]">
               <td class="max-w-sm pl-4"><codeinline class="md:text-base bg-transparent pr-0">[9]</codeinline>(un elemento numérico)</td>
               <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">"9"</codeinline></td>
               <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">9</codeinline></td>
@@ -703,7 +703,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
               <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">NaN</codeinline></td>
               <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">true</codeinline></td>
             </tr>
-            <tr>
+            <tr class="bg-[#f6e4c5]">
               <td class="max-w-sm pl-4"><codeinline class="md:text-base bg-transparent pr-0">function()&lbrace;}</codeinline>(cualquier función)</td>
               <td class="max-w-lg pl-4">ver <a href="#9-3">§3.9.3</a></td>
               <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">NaN</codeinline></td>
@@ -729,91 +729,184 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section>
     <h3>3.9.2 Conversiones explícitas</h3>
     <p>Aunque JavaScript realiza muchas conversiones de tipo de forma automática, puede que a veces necesite realizar una conversión explícita, o puede que prefiera hacer las conversiones explícitas para que su código sea más claro.</p>
-    <p>La forma más sencilla de realizar una conversión de tipo explícita es utilizar las funcionesBoolean(),Num ber() yString():</p>
-    <p>Cualquier valor distinto de null o undefined tiene un método toString(), y el resultado de este método suele ser el mismo que el devuelto por la función String().</p>
-    <p>Por otra parte, las funciones Boolean(), Number() y String() también pueden invocarse con new como constructor. Si las usas de esta manera, obtendrás un objeto "envoltorio" que se comporta igual que un valor booleano, numérico o de cadena primitivo. Estos objetos envolventes son un resto histórico de los primeros días de JavaScript, y nunca hay realmente ninguna buena razón para utilizarlos.</p>
-    <p>Ciertos operadores de JavaScript realizan conversiones de tipo implícitas y a veces se utilizan explícitamente con el propósito de convertir tipos. Si uno de los operandos del operador + es una cadena, convierte el otro en una cadena. El operador unario + convierte su operando en un número. Y el operador unario ! convierte su operando en un booleano y lo niega. Estos hechos llevan a los siguientes modismos de conversión de tipos que puedes ver en algún código:</p>
+    <p>La forma más sencilla de realizar una conversión de tipo explícita es utilizar las funciones <codeinline>Boolean()</codeinline>, <codeinline>Number()</codeinline> y <codeinline>String()</codeinline>:</p>
+    <pre>
+    <code class="language-js">Number("3") // => 3
+    String(false) // => "false": O usa false.toString()
+    Boolean([]) // => true</code></pre>
+    <p>Cualquier valor distinto de <codeinline>null</codeinline> o <codeinline>undefined</codeinline> tiene un método <codeinline>toString()</codeinline>, y el resultado de este método suele ser el mismo que el devuelto por la función <codeinline>String()</codeinline>.</p>
+    <p>Por otra parte, las funciones <codeinline>Boolean()</codeinline>, <codeinline>Number()</codeinline> y <codeinline>String()</codeinline> también pueden invocarse con <codeinline>new</codeinline> como el constructor. Si las usas de esta manera, obtendrás un objeto "envoltorio" que se comporta igual que un valor booleano, numérico o de cadena primitivo. Estos objetos envolventes son un resto histórico de los primeros días de JavaScript, y nunca hay realmente ninguna buena razón para utilizarlos.</p>
+    <p>Ciertos operadores de JavaScript realizan conversiones de tipo implícitas y a veces se utilizan explícitamente con el propósito de convertir tipos. Si uno de los operandos del operador <codeinline>+</codeinline> es una cadena, convierte el otro en una cadena. El operador unario <codeinline>+</codeinline> convierte su operando en un número. Y el operador unario <codeinline>!</codeinline> convierte su operando en un booleano y lo niega. Estos hechos llevan a los siguientes modismos de conversión de tipos que puedes ver en algún código:</p>
+    <pre>
+    <code class="language-js">x + "" // => String(x)
+    +x     // => Number(x)
+    x-0    // => Number(x)
+    !!x    // => Boolean(x): Nota doble !</code></pre>
     <p>El formateo y el análisis sintáctico de números son tareas habituales en los programas informáticos, y Java Script dispone de funciones y métodos especializados que proporcionan un control más preciso sobre las conversiones de número a cadena y de cadena a número.</p>
-    <p>El método toString() definido por la clase Number acepta un argumento opcional que especifica un radix, o base, para la conversión. Si no se especifica el argumento, la conversión se realiza en base 10. Sin embargo, también puede convertir números en otras bases (entre 2 y 36). Por ejemplo:</p>
-    <p>Al trabajar con datos financieros o científicos, es posible que desee convertir números en cadenas de manera que pueda controlar el número de decimales o el número de dígitos significativos de la salida, o que desee controlar si se utiliza la notación exponencial. La clase Number define tres métodos para este tipo de conversiones de número a cadena. toFixed() convierte un número en una cadena con un número especificado de dígitos después del punto decimal. Nunca utiliza la notación exponencial. toExponential() convierte un número en una cadena utilizando la notación exponencial, con una dígito antes del punto decimal y un número especificado de dígitos después del punto decimal (lo que significa que el número de dígitos significativos es uno mayor que el valor especificado). toPrecision() convierte un número en una cadena con el número de dígitos significativos especificado. Utiliza la notación exponencial si el número de dígitos significativos no es lo suficientemente grande como para mostrar toda la parte entera del número. Tenga en cuenta que los tres métodos redondean los dígitos finales o los rellenan con ceros, según convenga. Considere los siguientes ejemplos:</p>
-    <p>Además de los métodos de formato numérico mostrados aquí, la clase Intl.NumberFormat define un método de formato numérico más general e internacionalizado. Véase §11.7.1 para más detalles.</p>
-    <p>Si pasa una cadena de caracteres a la función de conversión Number(), ésta intentará interpretarla como un literal entero o de coma flotante. Esta función sólo funciona con enteros de base 10 y no admite caracteres finales que no formen parte del literal. Las funciones parseInt() y parseFloat() (éstas son funciones globales, no métodos de ninguna clase) son más flexibles. parseInt() analiza sólo números enteros, mientras que parseFloat() analiza tanto números enteros como de coma flotante. Si una cadena empieza por "0x" o "0X", parseInt() la interpreta como un número hexadecimal. Tanto parseInt() como parse Float() omiten los espacios en blanco iniciales, analizan tantos caracteres numéricos como pueden e ignoran todo lo que sigue. Si el primer carácter sin espacio no forma parte de un literal numérico válido, devuelven NaN:</p>
-    <p>parseInt() acepta un segundo argumento opcional que especifica el radix (base) del número que se va a analizar. Los valores legales están comprendidos entre 2 y 36. Por ejemplo:</p>
+    <p>El método <codeinline>toString()</codeinline> definido por la clase Number acepta un argumento opcional que especifica un radix, o base, para la conversión. Si no se especifica el argumento, la conversión se realiza en base 10. Sin embargo, también puede convertir números en otras bases (entre 2 y 36). Por ejemplo:</p>
+    <pre>
+    <code class="language-js">let n = 17;
+    let binary = "0b" + n.toString(2);  // binary == "0b10001"
+    let octal = "0o" + n.toString(8);   // octal == "0o21"
+    let hex = "0x" + n.toString(16);    // hex == "0x11"</code></pre>
+    <p>Al trabajar con datos financieros o científicos, es posible que desee convertir números en cadenas de manera que pueda controlar el número de decimales o el número de dígitos significativos de la salida, o que desee controlar si se utiliza la notación exponencial. La clase Number define tres métodos para este tipo de conversiones de número a cadena. <codeinline>toFixed()</codeinline> convierte un número en una cadena con un número especificado de dígitos después del punto decimal. Nunca utiliza la notación exponencial. <codeinline>toExponential()</codeinline> convierte un número en una cadena utilizando la notación exponencial, con una dígito antes del punto decimal y un número especificado de dígitos después del punto decimal (lo que significa que el número de dígitos significativos es uno mayor que el valor especificado). <codeinline>toPrecision()</codeinline> convierte un número en una cadena con el número de dígitos significativos especificado. Utiliza la notación exponencial si el número de dígitos significativos no es lo suficientemente grande como para mostrar toda la parte entera del número. Tenga en cuenta que los tres métodos redondean los dígitos finales o los rellenan con ceros, según convenga. Considere los siguientes ejemplos:</p>
+    <pre>
+    <code class="language-js">let n = 123456.789;
+    n.toFixed(0)        // => "123457"
+    n.toFixed(2)        // => "123456.79"
+    n.toFixed(5)        // => "123456.78900"
+    n.toExponential(1)  // => "1.2e+5"
+    n.toExponential(3)  // => "1.235e+5"
+    n.toPrecision(4)    // => "1.235e+5"
+    n.toPrecision(7)    // => "123456.8"
+    n.toPrecision(10)   // => "123456.7890"</code></pre>
+    <p>Además de los métodos de formato numérico mostrados aquí, la clase Intl.NumberFormat define un método de formato numérico más general e internacionalizado. Véase <a href="capitulo-11#7-1">§11.7.1</a> para más detalles.</p>
+    <p>Si pasa una cadena de caracteres a la función de conversión <codeinline>Number()</codeinline>, ésta intentará interpretarla como un literal entero o de coma flotante. Esta función sólo funciona con enteros de base 10 y no admite caracteres finales que no formen parte del literal. Las funciones <codeinline>parseInt()</codeinline> y <codeinline>parseFloat()</codeinline> (éstas son funciones globales, no métodos de ninguna clase) son más flexibles. <codeinline>parseInt()</codeinline> analiza sólo números enteros, mientras que <codeinline>parseFloat()</codeinline> analiza tanto números enteros como de coma flotante. Si una cadena empieza por "0x" o "0X", <codeinline>parseInt()</codeinline> la interpreta como un número hexadecimal. Tanto <codeinline>parseInt()</codeinline> como <codeinline>parse Float()</codeinline> omiten los espacios en blanco iniciales, analizan tantos caracteres numéricos como pueden e ignoran todo lo que sigue. Si el primer carácter sin espacio no forma parte de un literal numérico válido, devuelven <codeinline>NaN</codeinline>:</p>
+    <pre>
+    <code class="language-js">parseInt("3 blind mice")    // => 3
+    parseFloat(" 3.14 meters")  // => 3.14
+    parseInt("-12.34")          // => -12
+    parseInt("0xFF")            // => 255
+    parseInt("0xff")            // => 255
+    parseInt("-0XFF")           // => -255
+    parseFloat(".1")            // => 0.1
+    parseInt("0.1")             // => 0
+    parseInt(".1")              // => 0
+    parseFloat("$72.47")        // => NaN: los numeros no pueden empezar con "$"</code></pre>
+    <p><codeinline>parseInt()</codeinline> acepta un segundo argumento opcional que especifica el radix (base) del número que se va a analizar. Los valores legales están comprendidos entre 2 y 36. Por ejemplo:</p>
+    <pre>
+    <code class="language-js">parseInt("11", 2)   // => 3: (1*2 + 1)
+    parseInt("ff", 16)  // => 255: (15*16 + 15)
+    parseInt("zz", 36)  // => 1295: (35*36 + 35)
+    parseInt("077", 8)  // => 63: (7*8 + 7)
+    parseInt("077", 10) // => 77: (7*10 + 7)</code></pre>
   </section>
   <section class="py-4 xs:py-5 sm:py-6">
     <h3>3.9.3 Conversiones de objeto a primitivo</h3>
-    <p>Las secciones anteriores han explicado cómo se pueden convertir explícitamente valores de un tipo a otro tipo y han explicado las conversiones implícitas de JavaScript de valores de un tipo primitivo a otro tipo primitivo. Esta sección cubre las reglas que JavaScript utiliza para convertir objetos en valores primitivos. Es larga y oscura, por lo que si es la primera vez que lee este capítulo, no dude en saltar a §3.10.</p>
+    <p>Las secciones anteriores han explicado cómo se pueden convertir explícitamente valores de un tipo a otro tipo y han explicado las conversiones implícitas de JavaScript de valores de un tipo primitivo a otro tipo primitivo. Esta sección cubre las reglas que JavaScript utiliza para convertir objetos en valores primitivos. Es larga y oscura, por lo que si es la primera vez que lee este capítulo, no dude en saltar a <a href="#10">§3.10</a>.</p>
     <p>Una de las razones de la complejidad de las conversiones de objetos a primitivas de JavaScript es que algunos tipos de objetos tienen más de una representación primitiva. Los objetos de fecha, por ejemplo, pueden representarse como cadenas o como marcas de tiempo numéricas. La especificación de JavaScript define tres algoritmos fundamentales para convertir objetos en valores primitivos:</p>
     <div class="">
       <p><em>prefer-string</em></p>
-      <p>Este algoritmo devuelve un valor primitivo, prefiriendo un valor de cadena, si es posible una conversión a cadena.</p>
+      <p class="ml-2 xs:ml-3 sm:ml-4 md:ml-5">Este algoritmo devuelve un valor primitivo, prefiriendo un valor de cadena, si es posible una conversión a cadena.</p>
     </div>
     <div class="">
       <p><em>número preferente</em></p>
-      <p>Este algoritmo devuelve un valor primitivo, prefiriendo un número, si tal conver- sión es posible.</p>
+      <p class="ml-2 xs:ml-3 sm:ml-4 md:ml-5">Este algoritmo devuelve un valor primitivo, prefiriendo un número, si tal conver- sión es posible.</p>
     </div>
     <div class="">
       <p><em>sin preferencia</em></p>
-      <p>EEste algoritmo no expresa ninguna preferencia sobre qué tipo de valor primitivo se desea, y las clases pueden definir sus propias conversiones. De los tipos JavaScript incorporados, todos excepto Date implementan este algoritmo como prefer-number. La clase Date implementa este algoritmo como prefer-string.</p>
+      <p class="ml-2 xs:ml-3 sm:ml-4 md:ml-5">Este algoritmo no expresa ninguna preferencia sobre qué tipo de valor primitivo se desea, y las clases pueden definir sus propias conversiones. De los tipos JavaScript incorporados, todos excepto Date implementan este algoritmo como <em>prefer-number</em>. La clase Date implementa este algoritmo como <em>prefer-string</em>.</p>
     </div>
     <p>La implementación de estos algoritmos de conversión de objeto a primitivo se explica al final de esta sección. Antes, sin embargo, explicamos cómo se utilizan los algoritmos en JavaScript.</p>
-    <p>Conversiones de objeto a booleano</p>
-    <p>Las conversiones de objeto a booleano son triviales: todos los objetos se convierten a verdadero. Observe que esta conversión no requiere el uso de los algoritmos objeto- a-primitivo descritos, y que se aplica literalmente a todos los objetos, incluyendo matrices vacías e incluso el objeto envoltorio new Boolean(false).</p>
-    <p>Conversiones de objeto a cadena</p>
-    <p>Cuando es necesario convertir un objeto en una cadena, JavaScript lo convierte primero en una primitiva mediante el algoritmo prefer-string y, a continuación, convierte el valor de la primitiva resultante en una cadena, si es necesario, siguiendo las reglas de la Tabla 3-2.</p>
-    <p>Este tipo de conversión se produce, por ejemplo, si se pasa un objeto a una función incorporada que espera un argumento de cadena, si se llama a String() como función de conversión y cuando se interpolan objetos en literales de plantilla (§3.3.4).</p>
-    <p>Conversión de objetos en números</p>
-    <p>Cuando es necesario convertir un objeto en un número, JavaScript lo convierte primero en un valor primitivo mediante el algoritmo prefer-number y, a continuación, convierte el valor primitivo resultante en un número, si es necesario, siguiendo las reglas de la Tabla 3-2.</p>
+    <p class="title-article text-left">Conversiones de objeto a booleano</p>
+    <p>Las conversiones de objeto a booleano son triviales: todos los objetos se convierten a <codeinline>true</codeinline>. Observe que esta conversión no requiere el uso de los algoritmos objeto-a-primitivo descritos, y que se aplica literalmente a <em>todos</em> los objetos, incluyendo matrices vacías e incluso el objeto envoltorio <codeinline>new Boolean(false)</codeinline>.</p>
+    <p class="title-article text-left">Conversiones de objeto a cadena</p>
+    <p>Cuando es necesario convertir un objeto en una cadena, JavaScript lo convierte primero en una primitiva mediante el algoritmo <em>prefer-string</em> y, a continuación, convierte el valor de la primitiva resultante en una cadena, si es necesario, siguiendo las reglas de la <a href="#tabla3-2">Tabla 3-2</a>.</p>
+    <p>Este tipo de conversión se produce, por ejemplo, si se pasa un objeto a una función incorporada que espera un argumento de cadena, si se llama a <codeinline>String()</codeinline> como función de conversión y cuando se interpolan objetos en literales de plantilla (<a href="#3-4">§3.3.4</a>).</p>
+    <p class="title-article text-left">Conversión de objetos a números</p>
+    <p>Cuando es necesario convertir un objeto en un número, JavaScript lo convierte primero en un valor primitivo mediante el algoritmo <em>prefer-number</em> y, a continuación, convierte el valor primitivo resultante en un número, si es necesario, siguiendo las reglas de la <a href="#tabla3-2">Tabla 3-2</a>.</p>
     <p>Las funciones y métodos integrados de JavaScript que esperan argumentos numéricos convierten los argumentos de objetos en números de esta forma, y la mayoría (véanse las excepciones siguientes) de los operadores de JavaScript que esperan operandos numéricos convierten los objetos en números también de esta forma.</p>
-    <p>Conversiones de operadores en casos especiales</p>
-    <p>Los operadores se tratan en detalle en el Capítulo 4. Aquí explicamos los casos especiales de operadores que no utilizan las conversiones básicas de objeto a cadena y de objeto a número descritas anteriormente.</p>
-    <p>El operador + de JavaScript realiza la suma numérica y la concatenación de cadenas. Si cualquiera de sus operandos es un objeto, JavaScript los convierte en valores primitivos mediante el algoritmo de no preferencia. Una vez que tiene dos valores primitivos, comprueba sus tipos. Si alguno de los argumentos es una cadena, convierte el otro en una cadena y concatena las cadenas. En caso contrario, convierte ambos argumentos en números y los suma.</p>
-    <p>Los operadores == y != realizan pruebas de igualdad y desigualdad de una forma flexible que permite conversiones de tipo. Si un operando es un objeto y el otro es un valor primitivo, estos operadores convierten el objeto en primitivo utilizando el algoritmo de no preferencia y luego comparan los dos valores primitivos.</p>
-    <p>Por último, los operadores relacionales &minus;, &minus;=, > y >= comparan el orden de sus operandos y pueden utilizarse para comparar tanto números como cadenas. Si alguno de los operandos es un objeto, se convierte en un valor primitivo mediante el algoritmo preferir-número. Tenga en cuenta, sin embargo, que a diferencia de la conversión de objeto a número, los valores primitivos devueltos por la conversión prefer-número no se convierten en números.</p>
-    <p>Tenga en cuenta que la representación numérica de los objetos Date es significativamente comparable con &GreaterEqual; y >, pero la representación de cadena no lo es. Para los objetos Date, el algoritmo no-preference convierte a una cadena, por lo que el hecho de que JavaScript utilice el algoritmo prefer-number de estos operadores significa que podemos utilizarlos para comparar el orden de dos objetos Date.</p>
-    <p>Los métodos toString() y valueOf()</p>
-    <p>Todos los objetos heredan dos métodos de conversión que se utilizan en las versiones de objeto a primitivo, y antes de que podamos explicar los algoritmos de conversión prefer-string, prefer-number y no-preference, tenemos que explicar estos dos métodos.</p>
-    <p>El primer método es toString(), y su trabajo consiste en devolver una representación en forma de cadena del objeto. El método por defecto toString() no devuelve un valor muy interesante (aunque lo encontraremos útil en §14.4.3):</p>
-    <p>Muchas clases definen versiones más específicas del método toString(). El método toString() de la clase Array, por ejemplo, convierte cada elemento de la matriz en una cadena y une las cadenas resultantes con comas entre ellas. El método toString() de la clase Function convierte las funciones definidas por el usuario en cadenas de código fuente JavaScript. La clase Date define un método toString() que devuelve una cadena de fecha y hora legible por humanos (y por JavaScript). La clase RegExp define un método toString() que convierte los objetos RegExp en una cadena parecida a u n literal RegExp:</p>
-    <p>La otra función de conversión de objetos se llama valueOf(). El trabajo de este método está menos definido: se supone que convierte un objeto en un valor primitivo que representa el objeto, si existe tal valor primitivo. Los objetos son valores compuestos, y la mayoría de los objetos no pueden ser representados por un único valor primitivo, por lo que el método por defecto valueOf() simplemente devuelve el objeto en sí en lugar de devolver un valor primitivo. Las clases envolventes como String, Number y Boolean definen métodos valueOf() que simplemente devuelven el valor primitivo envuelto. Las matrices, funciones y expresiones regulares simplemente heredan el método por defecto. Al llamar a valueOf() para instancias de estos tipos, simplemente se devuelve el objeto en sí. La clase Date define un método valueOf() que devuelve la fecha en su representación interna: el número de milisegundos transcurridos desde el 1 de enero de 1970:</p>
-    <p>Algoritmos de conversión de objetos a primitivos</p>
-    <p>Una vez explicados los métodos toString() y valueOf(), podemos explicar aproximadamente cómo funcionan los tres algoritmos de conversión de objeto a primitiva (los detalles completos se posponen hasta §14.4.7):</p>
+    <p class="title-article text-left">Conversiones de operadores en casos especiales</p>
+    <p>Los operadores se tratan en detalle en el <a href="capitulo-4">Capítulo 4</a>. Aquí explicamos los casos especiales de operadores que no utilizan las conversiones básicas de objeto a cadena y de objeto a número descritas anteriormente.</p>
+    <p>El operador <codeinline>+</codeinline> de JavaScript realiza la suma numérica y la concatenación de cadenas. Si cualquiera de sus operandos es un objeto, JavaScript los convierte en valores primitivos mediante el algoritmo de <em>no-preferencia</em>. Una vez que tiene dos valores primitivos, comprueba sus tipos. Si alguno de los argumentos es una cadena, convierte el otro en una cadena y concatena las cadenas. En caso contrario, convierte ambos argumentos en números y los suma.</p>
+    <p>Los operadores <codeinline>==</codeinline> y <codeinline>!=</codeinline> realizan pruebas de igualdad y desigualdad de una forma flexible que permite conversiones de tipo. Si un operando es un objeto y el otro es un valor primitivo, estos operadores convierten el objeto en primitivo utilizando el algoritmo de <em>no-preferencia</em> y luego comparan los dos valores primitivos.</p>
+    <p>Por último, los operadores relacionales <codeinline>&lt;</codeinline>, <codeinline>&lt;=</codeinline>, <codeinline>></codeinline> y <codeinline>>=</codeinline> comparan el orden de sus operandos y pueden utilizarse para comparar tanto números como cadenas. Si alguno de los operandos es un objeto, se convierte en un valor primitivo mediante el algoritmo <em>prefer-number</em>. Tenga en cuenta, sin embargo, que a diferencia de la conversión de objeto a número, los valores primitivos devueltos por la conversión <em>prefer-number</em> no se convierten en números.</p>
+    <p>Tenga en cuenta que la representación numérica de los objetos Date es significativamente comparable con <codeinline>&lt;</codeinline> y <codeinline>&gt;</codeinline>, pero la representación de cadena no lo es. Para los objetos Date, el algoritmo <em>no-preference</em> convierte a una cadena, por lo que el hecho de que JavaScript utilice el algoritmo <em>prefer-number</em> de estos operadores significa que podemos utilizarlos para comparar el orden de dos objetos Date.</p>
+    <p class="title-article text-left">Los métodos toString() y valueOf()</p>
+    <p>Todos los objetos heredan dos métodos de conversión que se utilizan en las versiones de objeto a primitivo, y antes de que podamos explicar los algoritmos de conversión <em>prefer-string</em>, <em>prefer-number</em> y <em>no-preference</em>, tenemos que explicar estos dos métodos.</p>
+    <p>El primer método es <codeinline>toString()</codeinline>, y su trabajo consiste en devolver una representación en forma de cadena del objeto. El método por defecto <codeinline>toString()</codeinline> no devuelve un valor muy interesante (aunque lo encontraremos útil en <a href="capitulo-14#4-3">§14.4.3</a>):</p>
+    <pre>
+    <code class="language-js">(&lbrace;x: 1, y: 2}).toString() // => "[object Object]"</code></pre>
+    <p>Muchas clases definen versiones más específicas del método <codeinline>toString()</codeinline>. El método <codeinline>toString()</codeinline> de la clase Array, por ejemplo, convierte cada elemento de la matriz en una cadena y une las cadenas resultantes con comas entre ellas. El método <codeinline>toString()</codeinline> de la clase Function convierte las funciones definidas por el usuario en cadenas de código fuente JavaScript. La clase Date define un método <codeinline>toString()</codeinline> que devuelve una cadena de fecha y hora legible por humanos (y por JavaScript). La clase RegExp define un método <codeinline>toString()</codeinline> que convierte los objetos RegExp en una cadena parecida a u n literal RegExp:</p>
+    <pre>
+    <code class="language-js">[1,2,3].toString()                 // => "1,2,3"
+    (function(x) &lbrace; f(x); }).toString() // => "function(x) &lbrace; f(x); }"
+    /\d+/g.toString()                  // => "/\\d+/g"
+    let d = new Date(2020,0,1);
+    d.toString()                       // => "Wed Jan 01 2020 00:00:00 GMT-0800 (Pacific Standard Time)"</code></pre>
+    <p>La otra función de conversión de objetos se llama <codeinline>valueOf()</codeinline>. El trabajo de este método está menos definido: se supone que convierte un objeto en un valor primitivo que representa el objeto, si existe tal valor primitivo. Los objetos son valores compuestos, y la mayoría de los objetos no pueden ser representados por un único valor primitivo, por lo que el método por defecto <codeinline>valueOf()</codeinline> simplemente devuelve el objeto en sí en lugar de devolver un valor primitivo. Las clases envolventes como String, Number y Boolean definen métodos <codeinline>valueOf()</codeinline> que simplemente devuelven el valor primitivo envuelto. Las matrices, funciones y expresiones regulares simplemente heredan el método por defecto. Al llamar a <codeinline>valueOf()</codeinline> para instancias de estos tipos, simplemente se devuelve el objeto en sí. La clase Date define un método <codeinline>valueOf()</codeinline> que devuelve la fecha en su representación interna: el número de milisegundos transcurridos desde el 1 de enero de 1970:</p>
+    <pre>
+    <code class="language-js">let d = new Date(2010, 0, 1); // January 1, 2010, (Pacific time)
+    d.valueOf()                   // => 1262332800000</code></pre>
+    <p class="title-article text-left">Algoritmos de conversión de objetos a primitivos</p>
+    <p>Una vez explicados los métodos <codeinline>toString()</codeinline> y <codeinline>valueOf()</codeinline>, podemos explicar aproximadamente cómo funcionan los tres algoritmos de conversión de objeto a primitiva (los detalles completos se posponen hasta <a href="capitulo14#4-7">§14.4.7</a></p>
     <ul>
-      <li>El algoritmo prefer-string prueba primero el método toString(). Si el método está definido y devuelve un valor primitivo, JavaScript utiliza ese valor primitivo (¡aunque no sea una cadena!). Si toString() no existe o devuelve un objeto, JavaScript prueba con el método valueOf(). Si ese método existe y devuelve un valor primitivo, JavaScript utiliza ese valor. En caso contrario, la conversión falla con un TypeError.</li>
-      <li>El algoritmo prefer-number funciona como el algoritmo prefer-string, con la diferencia de que primero prueba con valueOf() y después con toString().</li>
-      <li>El algoritmo de no preferencia depende de la clase del objeto que se está convirtiendo. Si se trata de un objeto Date, JavaScript utiliza el algoritmo prefer- string. Para cualquier otro objeto, JavaScript utiliza el algoritmo prefer-number.</li>
+      <li class="font-normal">El algoritmo <em>prefer-string</em> prueba primero el método <codeinline>toString()</codeinline>. Si el método está definido y devuelve un valor primitivo, JavaScript utiliza ese valor primitivo (¡aunque no sea una cadena!). Si <codeinline>toString()</codeinline> no existe o devuelve un objeto, JavaScript prueba con el método <codeinline>valueOf()</codeinline>. Si ese método existe y devuelve un valor primitivo, JavaScript utiliza ese valor. En caso contrario, la conversión falla con un TypeError.</li>
+      <li class="font-normal">El algoritmo <em>prefer-number</em> funciona como el algoritmo <codeinline>prefer-string</codeinline>, con la diferencia de que primero prueba con <codeinline>valueOf()</codeinline> y después con <codeinline>toString()</codeinline>.</li>
+      <li class="font-normal">El algoritmo de <em>no-preferencia</em> depende de la clase del objeto que se está convirtiendo. Si se trata de un objeto Date, JavaScript utiliza el algoritmo <em>prefer-string</em>. Para cualquier otro objeto, JavaScript utiliza el algoritmo <em>prefer-number</em>.</li>
     </ul>
-    <p>Las reglas descritas aquí son válidas para todos los tipos JavaScript incorporados y son las reglas por defecto para cualquier clase que defina usted mismo. §14.4.7 explica cómo puede definir sus propios algoritmos de conversión de objeto a primitivo para las clases que defina.</p>
-    <p>Antes de dejar este tema, vale la pena señalar que los detalles de la con- versión de preferir números explican por qué las matrices vacías se convierten en el número 0 y las matrices de un solo elemento también pueden convertirse en números:</p>
-    <p>La conversión de objeto a número convierte primero el objeto en una primitiva mediante el algoritmo prefer-number y, a continuación, convierte el valor primitivo resultante en un número. El algoritmo prefer-number intenta primero con valueOf() y luego recurre a toString(). Pero la clase Array hereda el método por defecto valueOf(), que no devuelve un valor primitivo. Así que cuando intentamos convertir un array en un número, acabamos invocando el método toString() del array. Las matrices vacías se convierten en la cadena vacía. Y la cadena vacía se convierte en el número 0. Un array con un único elemento se convierte en la misma cadena que ese único elemento. Si un array contiene un único número, ese número se convierte en una cadena y luego de nuevo en un número.</p>
+    <p>Las reglas descritas aquí son válidas para todos los tipos JavaScript incorporados y son las reglas por defecto para cualquier clase que defina usted mismo. <a href="capitulo14#4-7">§14.4.7</a> explica cómo puede definir sus propios algoritmos de conversión de objeto a primitivo para las clases que defina.</p>
+    <p>Antes de dejar este tema, vale la pena señalar que los detalles de la con versión de <em>prefer-number</em> explican por qué las matrices vacías se convierten en el número 0 y las matrices de un solo elemento también pueden convertirse en números:</p>
+    <pre>
+    <code class="language-js">Number([])    // => 0: this is unexpected!
+    Number([99])  // => 99: really?</code></pre>
+    <p>La conversión de objeto a número convierte primero el objeto en una primitiva mediante el algoritmo <em>prefer-number</em> y, a continuación, convierte el valor primitivo resultante en un número. El algoritmo <em>prefer-number</em> intenta primero con <codeinline>valueOf()</codeinline> y luego recurre a <codeinline>toString()</codeinline>. Pero la clase Array hereda el método por defecto <codeinline>valueOf()</codeinline>, que no devuelve un valor primitivo. Así que cuando intentamos convertir un array en un número, acabamos invocando el método <codeinline>toString()</codeinline> del array. Las matrices vacías se convierten en la cadena vacía. Y la cadena vacía se convierte en el número 0. Un array con un único elemento se convierte en la misma cadena que ese único elemento. Si un array contiene un único número, ese número se convierte en una cadena y luego de nuevo en un número.</p>
   </section>
   <section id="10">
     <h2>3.10 Declaración y asignación de variables</h2>
-    <p>Una de las técnicas más fundamentales de la programación informática es el uso de nombres (o identificadores) para representar valores. Asociar un nombre a un valor nos permite referirnos a ese valor y utilizarlo en los programas que escribimos. Cuando hacemos esto, normalmente decimos que estamos asignando un valor a una variable. El término "variable" implica que se pueden asignar nuevos valores: que el valor asociado a la variable puede variar a medida que se ejecuta el programa. Si asignamos permanentemente un valor a un nombre, entonces llamamos a ese nombre una constante en lugar de una variable.
+    <p>Una de las técnicas más fundamentales de la programación informática es el uso de nombres (o <em>identificadores</em>) para representar valores. Asociar un nombre a un valor nos permite referirnos a ese valor y utilizarlo en los programas que escribimos. Cuando hacemos esto, normalmente decimos que estamos asignando un valor a una <em>variable</em>. El término "variable" implica que se pueden asignar nuevos valores: que el valor asociado a la variable puede variar a medida que se ejecuta el programa. Si asignamos permanentemente un valor a un nombre, entonces llamamos a ese nombre una <em>constante</em> en lugar de una variable.
     </p>
-    <p>Antes de poder utilizar una variable o constante en un programa JavaScript, hay que declararla. En ES6 y posteriores, esto se hace con las palabras clave let y const, que explicamos a continuación. Antes de ES6, las variables se declaraban con var, que es más idiosincrásico y se explica más adelante en esta sección.</p>
+    <p>Antes de poder utilizar una variable o constante en un programa JavaScript, hay que <em>declararla</em>. En ES6 y posteriores, esto se hace con las palabras clave <codeinline>let</codeinline> y <codeinline>const</codeinline>, que explicamos a continuación. Antes de ES6, las variables se declaraban con <codeinline>var</codeinline>, que es más idiosincrásico y se explica más adelante en esta sección.</p>
   </section>
   <section class="py-4 xs:py-5 sm:py-6">
     <h3>3.10.1 Declaraciones con let y const</h3>
-    <p>En el JavaScript moderno (ES6 y posteriores), las variables se declaran con la palabra clave let, así:</p>
+    <p>En el JavaScript moderno (ES6 y posteriores), las variables se declaran con la palabra clave <codeinline>let</codeinline>, así:</p>
+    <pre>
+    <code class="language-js">let i;
+    let suma;</code></pre>
+    </pre>
     <p>También puede declarar múltiples variables en una sola sentencia let:</p>
+    <pre>
+    <code class="language-js">let i, suma;</code></pre>
     <p>Es una buena práctica de programación asignar un valor inicial a las variables en el momento de declararlas, siempre que sea posible:</p>
-    <p>Si no se especifica un valor inicial para una variable con la sentencia let, la variable se declara, pero su valor es indefinido hasta que el código le asigne un valor.</p>
-    <p>Para declarar una constante en lugar de una variable, utilice const en lugar de let. const funciona igual que let, salvo que debe inicializar la constante al declararla:</p>
+    <pre>
+    <code class="language-js">let mensaje = "hola";
+    let i = 0, j = 0, k = 0;
+    let x = 2, y = x*x; // Los inicializadores pueden utilizar variables previamente declaradas</code></pre>
+    <p>Si no se especifica un valor inicial para una variable con la sentencia <codeinline>let</codeinline>, la variable se declara, pero su valor es <codeinline>undefined</codeinline> hasta que el código le asigne un valor.</p>
+    <p>Para declarar una constante en lugar de una variable, utilice <codeinline>const</codeinline> en lugar de <codeinline>let</codeinline>. <codeinline>const</codeinline> funciona igual que <codeinline>let</codeinline>, salvo que debe inicializar la constante al declararla:</p>
+    <pre>
+    <code class="language-js">const H0 = 74;        // Constante de Hubble (km/s/Mpc)
+    const C = 299792.458; // velocidad de la luz en el vacío (km/s)
+    const AU = 1.496E8;   // Unidad Astronomica: distancia al sol (km)</code></pre>
     <p>Como su nombre indica, no se pueden cambiar los valores de las constantes, y cualquier intento de hacerlo provoca un error de tipo TypeError.</p>
-    <p>Es una convención común (pero no universal) declarar constantes utilizando nombres con todas las letras mayúsculas como H0 o HTTP_NOT_FOUND como una forma de distinguirlas de las variables.</p>
-    <p>Cuándo utilizar const</p>
-    <p>Hay dos escuelas de pensamiento sobre el uso de la palabra clave const. Un enfoque es utilizar const sólo para valores que son fundamentalmente inmutables, como las constantes físicas mostradas, o los números de versión del programa, o las secuencias de bytes utilizadas para identificar los tipos de archivo, por ejemplo. Otro enfoque reconoce que muchas de las llamadas variables en nuestro programa en realidad nunca cambian a medida que nuestro programa se ejecuta. En este enfoque, declaramos todo con const, y luego si encontramos que realmente queremos permitir que el valor varíe, cambiamos la declaración a let. Esto puede ayudar a prevenir errores al descartar cambios accidentales a variables que no pretendíamos.</p>
-    <p>En uno de los enfoques, utilizamos const sólo para valores que no deben cambiar. En el otro, usamos const para cualquier valor que no deba cambiar. Yo prefiero el primer enfoque en mi propio código.</p>
-    <p>En el Capítulo 5, aprenderemos sobre las sentencias de bucle for, for/in y for/of en Java-Script. Cada uno de estos bucles incluye una variable de bucle a la que se asigna un nuevo valor en cada iteración del bucle. JavaScript nos permite declarar la variable de bucle como parte de la propia sintaxis del bucle, y ésta es otra forma común de usar let:</p>
-    <p>Puede parecer sorprendente, pero también puedes usar const para declarar las "variables" de bucle para los bucles for/in y for/of, siempre que el cuerpo del bucle no reasigne un nuevo valor. En este caso, la declaración const sólo está diciendo que el valor es constante para la duración de una iteración del bucle:</p>
-    <p>Ámbito variable y constante</p>
-    <p>El ámbito de una variable es la región del código fuente del programa en la que está definida. Las variables y constantes declaradas con let y const tienen ámbito de bloque. Esto significa que sólo se definen dentro del bloque de código en el que aparece la sentencia let o const. Las definiciones de clases y funciones de JavaScript son bloques, al igual que los cuerpos de las sentencias if/else, los bucles while, los bucles for, etc. En términos generales, si una variable o constante se declara dentro de un conjunto de llaves, entonces esas llaves delimitan la región de código en la que se define la variable o constante (aunque, por supuesto, no es legal hacer referencia a una variable o constante desde líneas de código que se ejecutan antes de la sentencia let o const que declara la variable). Variables y constantes declarados como parte de un bucle for, for/in, o for/of tienen como ámbito el cuerpo del bucle, aunque técnicamente aparezcan fuera de las llaves.</p>
-    <p>Cuando una declaración aparece en el nivel superior, fuera de cualquier bloque de código, decimos que es una variable o constante global y que tiene ámbito global. En Node y en los módulos JavaScript del lado del cliente (ver Capítulo 10), el ámbito de una variable global es el archivo en el que está definida. En el JavaScript tradicional del lado del cliente, sin embargo, el ámbito de una variable global es el documento HTML en el que está definida. Es decir: si un &minus;script> declara una variable o constante global, esa variable o constante se define en todos los elementos &minus;script> de ese documento (o al menos en todos los scripts que se ejecuten después de que se ejecute la sentencia let o const).</p>
-    <p>Declaraciones repetidas</p>
-    <p>Es un error sintáctico utilizar el mismo nombre con más de una declaración let o const en el mismo ámbito. Es legal (aunque es mejor evitarlo) declarar una nueva variable con el mismo nombre en un ámbito anidado:</p>
-    <p>Declaraciones y tipos</p>
+    <p>Es una convención común (pero no universal) declarar constantes utilizando nombres con todas las letras mayúsculas como <codeinline>H0</codeinline> o <codeinline>HTTP_NOT_FOUND</codeinline> como una forma de distinguirlas de las variables.</p>
+    <div class="bg-[#f6e4c5] p-2 xs:p-3 sm:p-4 md:p-5 rounded-lg flex gap-2 xs:gap-3 sm:gap-4 md:gap-5 items-center">
+      <img class="self-start" src="/public/javascript/nota_gral.png" alt="Nota de la grandesa">
+      <div class="">
+        <p class="title-article text-left">Cuándo utilizar const</p>
+        <p>Hay dos escuelas de pensamiento sobre el uso de la palabra clave <codeinline>const</codeinline>. Un enfoque es utilizar <codeinline>const</codeinline> sólo para valores que son fundamentalmente inmutables, como las constantes físicas mostradas, o los números de versión del programa, o las secuencias de bytes utilizadas para identificar los tipos de archivo, por ejemplo. Otro enfoque reconoce que muchas de las llamadas variables en nuestro programa en realidad nunca cambian a medida que nuestro programa se ejecuta. En este enfoque, declaramos todo con <codeinline>const</codeinline>, y luego si encontramos que realmente queremos permitir que el valor varíe, cambiamos la declaración a <codeinline>let</codeinline>. Esto puede ayudar a prevenir errores al descartar cambios accidentales a variables que no pretendíamos.</p>
+        <p>En uno de los enfoques, utilizamos <codeinline>const</codeinline> sólo para valores que no <em>deben</em> cambiar. En el otro, usamos <codeinline>const</codeinline> para cualquier valor que no deba cambiar. Yo prefiero el primer enfoque en mi propio código.</p>
+      </div>
+    </div>
+
+    <p>En el <a href="capitulo-5">Capítulo 5</a>, aprenderemos sobre las sentencias de bucle <codeinline>for</codeinline>, <codeinline>for/in</codeinline> y <codeinline>for/of</codeinline> en Java-Script. Cada uno de estos bucles incluye una variable de bucle a la que se asigna un nuevo valor en cada iteración del bucle. JavaScript nos permite declarar la variable de bucle como parte de la propia sintaxis del bucle, y ésta es otra forma común de usar <codeinline>let</codeinline>:</p>
+    <pre>
+    <code class="language-js">for(let i = 0, len = data.length; i &lt; len; i++) console.log(data[i]);
+    for(let datum of data) console.log(datum);
+    for(let property in object) console.log(property);</code></pre>
+    <p>Puede parecer sorprendente, pero también puedes usar <codeinline>const</codeinline> para declarar las "variables" de bucle para los bucles <codeinline>for/in</codeinline> y <codeinline>for/of</codeinline>, siempre que el cuerpo del bucle no reasigne un nuevo valor. En este caso, la declaración <codeinline>const</codeinline> sólo está diciendo que el valor es constante para la duración de una iteración del bucle:</p>
+    <pre>
+    <code class="language-js">for(const datum of data) console.log(datum);
+    for(const property in object) console.log(property);</code></pre>
+    <p class="title-article text-left">Scope de una variable y constante</p>
+    <p>El <em>scope</em> de una variable es la región del código fuente del programa en la que está definida. Las variables y constantes declaradas con let y <codeinline>const</codeinline> tienen <em>scope de bloque</em>. Esto significa que sólo se definen dentro del bloque de código en el que aparece la sentencia <codeinline>let</codeinline> o <codeinline>const</codeinline>. Las definiciones de clases y funciones de JavaScript son bloques, al igual que los cuerpos de las sentencias <codeinline>if/else</codeinline>, los bucles <codeinline>while</codeinline>, los bucles for, etc. En términos generales, si una variable o constante se declara dentro de un conjunto de llaves, entonces esas llaves delimitan la región de código en la que se define la variable o constante (aunque, por supuesto, no es legal hacer referencia a una variable o constante desde líneas de código que se ejecutan antes de la sentencia ,<codeinline>let</codeinline> o <codeinline>const</codeinline> que declara la variable). Variables y constantes declarados como parte de un bucle <codeinline>for</codeinline>, <codeinline>for/in</codeinline>, o <codeinline>for/of</codeinline> tienen como ámbito el cuerpo del bucle, aunque técnicamente aparezcan fuera de las llaves.</p>
+    <p>Cuando una declaración aparece en el nivel superior, fuera de cualquier bloque de código, decimos que es una variable o constante <em>global</em> y que tiene ámbito global. En Node y en los módulos JavaScript del lado del cliente (ver <a href="capitulo-10">Capítulo 10</a>), el ámbito de una variable global es el archivo en el que está definida. En el JavaScript tradicional del lado del cliente, sin embargo, el ámbito de una variable global es el documento HTML en el que está definida. Es decir: si un <codeinline>&lt;script></codeinline> declara una variable o constante global, esa variable o constante se define en todos los elementos <codeinline>&lt;script></codeinline> de ese documento (o al menos en todos los scripts que se ejecuten después de que se ejecute la sentencia <codeinline>let</codeinline> o <codeinline>const</codeinline>).</p>
+    <p class="title-article text-left">Declaraciones repetidas</p>
+    <p>Es un error sintáctico utilizar el mismo nombre con más de una declaración <codeinline>let</codeinline> o <codeinline>const</codeinline> en el mismo ámbito. Es legal (aunque es mejor evitarlo) declarar una nueva variable con el mismo nombre en un scope anidado:</p>
+    <pre>
+    <code class="language-js">const x = 1;      // Declara la x como una constante global
+    if (x === 1) &lbrace;
+      let x = 2;      // Dentro, la x puede referirse a un valor diferente
+      console.log(x); // Imprime 2
+    }
+    console.log(x);   // Imprime 1: ahora estamos de vuelve en el scope global
+    let x = 3;        // ERROR! en sintaxis: x ya ha sido declarada</code></pre>
+    <p class="title-article text-left">Declaraciones y tipos</p>
     <p>Si está acostumbrado a lenguajes de tipado estático como C o Java, puede pensar que el propósito principal de las declaraciones de variables es especificar el tipo de valores que pueden asignarse a una variable. Pero, como ha visto, no hay ningún tipo asociado a las declaraciones de variables de JavaScript.2 Una variable de JavaScript puede contener un valor de cualquier tipo. Por ejemplo, en JavaScript es perfectamente legal (aunque generalmente de mal estilo de programación) asignar un número a una variable y más tarde asignar una cadena a esa variable:</p>
+    <pre>
+    <code class="language-js">let i = 10;
+    i = "ten";</code></pre>
   </section>
   <section>
     <h3>3.10.2 Declaraciones de variables con var</h3>
