@@ -61,15 +61,15 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <code class="language-js">3.14
     2345.6789
     .333333333333333333
-    6.02e23 // 6.02 × 10^23
+    6.02e23       // 6.02 × 10^23
     1.4738223E-32 // 1.4738223 × 10^−32</code></pre>
     <article>
       <p class="title-article">Separadores en literales numéricos</p>
       <p>Puede utilizar guiones bajos en los literales numéricos para dividir los literales largos en trozos más fáciles de leer:</p>
     <pre>
-    <code class="language-js">let billion = 1_000_000_000; // Subguion como separador de miles.
-    let bytes = 0x89_AB_CD_EF; // Como separador de bytes.
-    let bits = 0b0001_1101_0111; // Como separador de nibble.
+    <code class="language-js">let billion = 1_000_000_000;  // Subguion como separador de miles.
+    let bytes = 0x89_AB_CD_EF;    // Como separador de bytes.
+    let bits = 0b0001_1101_0111;  // Como separador de nibble.
     let fraction = 0.123_456_789; // Funciona también en la parte fraccionaria.</code></pre>
       <p>En el momento de escribir este artículo, a principios de 2020, los guiones bajos en literales numéricos aún no están formalmente estandarizados como parte de JavaScript. Pero se encuentran en fases avanzadas del proceso de estandarización y están implementados por los principales navegadores y por Node.</p>
     </article>
@@ -149,9 +149,9 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>La función global <codeinline>isNaN()</codeinline> es similar a <codeinline>Number.isNaN()</codeinline>. Devuelve <codeinline>true</codeinline> si su argumento es <codeinline>NaN</codeinline>, o si ese argumento es un valor no numérico que no puede convertirse en un número. La función relacionada <codeinline>Number.isFinite()</codeinline> devuelve <codeinline>true</codeinline> si su argumento es un número distinto de <codeinline>NaN</codeinline>, <codeinline>Infinito</codeinline> o <codeinline>-Infinito</codeinline>. La función global <codeinline>isFinite()</codeinline> devuelve <codeinline>true</codeinline> si su argumento es,o puede convertirse en, un número finito.</p>
     <p>El valor cero negativo también es algo inusual. Se compara igual (incluso utilizando la prueba de igualdad estricta de Jav- aScript) a cero positivo, lo que significa que los dos valores son casi indistinguibles, excepto cuando se utiliza como un divisor:</p>
     <pre>
-    <code class="language-js">let zero = 0; // Cero Normal
-    let negz = -0; // Cero Negativo
-    zero === negz // => true: cero y cero negativo son iguales
+    <code class="language-js">let zero = 0;     // Cero Normal
+    let negz = -0;    // Cero Negativo
+    zero === negz     // => true: cero y cero negativo son iguales
     1/zero === 1/negz // => false: Infinity y -Infinity no son iguales</code></pre>
   </section>
   <section>
@@ -174,14 +174,14 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     </p>
     <p>Los literales BigInt se escriben como una cadena de dígitos seguida de una letra <codeinline>n</codeinline> minúscula. Por defecto, están en base 10, pero puede utilizar los prefijos <codeinline>0b</codeinline>, <codeinline>0b</codeinline> y <codeinline>0x</codeinline> para BigInts binarios, octales y hexadecimales:</p>
     <pre>
-    <code class="language-js">1234n                 // Un literal BigInt no tan grande
+    <code class="language-js">1234n               // Un literal BigInt no tan grande
     0b111111n           // Un BigInt binario
     0o7777n             // Un BigInt octal
     0x8000000000000000n // => 2n**63n: Un entero de 64-bit</code></pre>
     <p>Puede utilizar <codeinline>BigInt()</codeinline> como función para convertir números o cadenas normales de JavaScript en valores BigInt:
     </p>
     <pre>
-    <code class="language-js">BigInt(Number.MAX_SAFE_INTEGER)   // => 9007199254740991n
+    <code class="language-js">BigInt(Number.MAX_SAFE_INTEGER)     // => 9007199254740991n
     let string = "1" + "0".repeat(100); // 1 seguido por 100 ceros.
     BigInt(string)                      // => 10n**100n: one googol</code></pre>
     <p>La aritmética con valores BigInt funciona como la aritmética con números normales de JavaScript, excepto que la división elimina cualquier resto y redondea hacia abajo (hacia cero):</p>
@@ -361,7 +361,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     s.includes("un")        // => true: incluye el substring "un"
     
     // Crear versiones modificadas de un string
-    s.replace("la", "ya")  // => "Hoya, mundo"
+    s.replace("la", "ya")   // => "Hoya, mundo"
     s.toLowerCase()         // => "hola, mundo"
     s.toUpperCase()         // => "HOLA, MUNDO"
     s.normalize()           // Normalización Unicode NFC: ES6
@@ -433,12 +433,12 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Los objetos RegExp definen una serie de métodos útiles, y las cadenas también tienen métodos que aceptan argumentos RegExp. Por ejemplo:</p>
     <pre>
     <code class="language-js">let texto = "probando: 1, 2, 3"; // Texto Ejemplo
-    let pattern = /\d+/g; // Coincide con todas las instancias de unoo mas digitos
-    pattern.test(texto) // => true: existe una coincidencia
-    texto.search(pattern) // => 9: posición de la primera coincidencia
-    texto.match(pattern) // => ["1", "2", "3"]: array de todas las coincidencias
+    let pattern = /\d+/g;       // Coincide con todas las instancias de unoo mas digitos
+    pattern.test(texto)         // => true: existe una coincidencia
+    texto.search(pattern)       // => 9: posición de la primera coincidencia
+    texto.match(pattern)        // => ["1", "2", "3"]: array de todas las coincidencias
     texto.replace(pattern, "#") // => "probando: #, #, #"
-    texto.split(/\D+/) // => ["","1","2","3"]: separando por no digitos</code></pre>
+    texto.split(/\D+/)          // => ["","1","2","3"]: separando por no digitos</code></pre>
   </section>
   <section id="4" class="py-4 xs:py-5 sm:py-6">
     <h2>3.4 Valores booleanos</h2>
@@ -574,7 +574,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
         if (a === b) return true;        // Arrays identicas son iguales
         if (a.length !== b.length) return false; // Arrays de diferentes tamaño no son iguales
         for(let i = 0; i &lt a.length; i++) &lbrace; // Recuerde todos los elementos
-        if (a[i] !== b[i]) return false; // Si algún elemento es diferente, no son iguales
+          if (a[i] !== b[i]) return false; // Si algún elemento es diferente, no son iguales
         }
         return true;                     // Caso contrario, son iguales
     }</code></pre>
@@ -731,9 +731,9 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Aunque JavaScript realiza muchas conversiones de tipo de forma automática, puede que a veces necesite realizar una conversión explícita, o puede que prefiera hacer las conversiones explícitas para que su código sea más claro.</p>
     <p>La forma más sencilla de realizar una conversión de tipo explícita es utilizar las funciones <codeinline>Boolean()</codeinline>, <codeinline>Number()</codeinline> y <codeinline>String()</codeinline>:</p>
     <pre>
-    <code class="language-js">Number("3") // => 3
+    <code class="language-js">Number("3")   // => 3
     String(false) // => "false": O usa false.toString()
-    Boolean([]) // => true</code></pre>
+    Boolean([])   // => true</code></pre>
     <p>Cualquier valor distinto de <codeinline>null</codeinline> o <codeinline>undefined</codeinline> tiene un método <codeinline>toString()</codeinline>, y el resultado de este método suele ser el mismo que el devuelto por la función <codeinline>String()</codeinline>.</p>
     <p>Por otra parte, las funciones <codeinline>Boolean()</codeinline>, <codeinline>Number()</codeinline> y <codeinline>String()</codeinline> también pueden invocarse con <codeinline>new</codeinline> como el constructor. Si las usas de esta manera, obtendrás un objeto "envoltorio" que se comporta igual que un valor booleano, numérico o de cadena primitivo. Estos objetos envolventes son un resto histórico de los primeros días de JavaScript, y nunca hay realmente ninguna buena razón para utilizarlos.</p>
     <p>Ciertos operadores de JavaScript realizan conversiones de tipo implícitas y a veces se utilizan explícitamente con el propósito de convertir tipos. Si uno de los operandos del operador <codeinline>+</codeinline> es una cadena, convierte el otro en una cadena. El operador unario <codeinline>+</codeinline> convierte su operando en un número. Y el operador unario <codeinline>!</codeinline> convierte su operando en un booleano y lo niega. Estos hechos llevan a los siguientes modismos de conversión de tipos que puedes ver en algún código:</p>
@@ -829,13 +829,13 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <code class="language-js">let d = new Date(2010, 0, 1); // January 1, 2010, (Pacific time)
     d.valueOf()                   // => 1262332800000</code></pre>
     <p class="title-article text-left">Algoritmos de conversión de objetos a primitivos</p>
-    <p>Una vez explicados los métodos <codeinline>toString()</codeinline> y <codeinline>valueOf()</codeinline>, podemos explicar aproximadamente cómo funcionan los tres algoritmos de conversión de objeto a primitiva (los detalles completos se posponen hasta <a href="capitulo14#4-7">§14.4.7</a></p>
+    <p>Una vez explicados los métodos <codeinline>toString()</codeinline> y <codeinline>valueOf()</codeinline>, podemos explicar aproximadamente cómo funcionan los tres algoritmos de conversión de objeto a primitiva (los detalles completos se posponen hasta <a href="capitulo-14#4-7">§14.4.7</a></p>
     <ul>
       <li class="font-normal">El algoritmo <em>prefer-string</em> prueba primero el método <codeinline>toString()</codeinline>. Si el método está definido y devuelve un valor primitivo, JavaScript utiliza ese valor primitivo (¡aunque no sea una cadena!). Si <codeinline>toString()</codeinline> no existe o devuelve un objeto, JavaScript prueba con el método <codeinline>valueOf()</codeinline>. Si ese método existe y devuelve un valor primitivo, JavaScript utiliza ese valor. En caso contrario, la conversión falla con un TypeError.</li>
       <li class="font-normal">El algoritmo <em>prefer-number</em> funciona como el algoritmo <codeinline>prefer-string</codeinline>, con la diferencia de que primero prueba con <codeinline>valueOf()</codeinline> y después con <codeinline>toString()</codeinline>.</li>
       <li class="font-normal">El algoritmo de <em>no-preferencia</em> depende de la clase del objeto que se está convirtiendo. Si se trata de un objeto Date, JavaScript utiliza el algoritmo <em>prefer-string</em>. Para cualquier otro objeto, JavaScript utiliza el algoritmo <em>prefer-number</em>.</li>
     </ul>
-    <p>Las reglas descritas aquí son válidas para todos los tipos JavaScript incorporados y son las reglas por defecto para cualquier clase que defina usted mismo. <a href="capitulo14#4-7">§14.4.7</a> explica cómo puede definir sus propios algoritmos de conversión de objeto a primitivo para las clases que defina.</p>
+    <p>Las reglas descritas aquí son válidas para todos los tipos JavaScript incorporados y son las reglas por defecto para cualquier clase que defina usted mismo. <a href="capitulo-14#4-7">§14.4.7</a> explica cómo puede definir sus propios algoritmos de conversión de objeto a primitivo para las clases que defina.</p>
     <p>Antes de dejar este tema, vale la pena señalar que los detalles de la con versión de <em>prefer-number</em> explican por qué las matrices vacías se convierten en el número 0 y las matrices de un solo elemento también pueden convertirse en números:</p>
     <pre>
     <code class="language-js">Number([])    // => 0: this is unexpected!
@@ -871,15 +871,14 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     const AU = 1.496E8;   // Unidad Astronomica: distancia al sol (km)</code></pre>
     <p>Como su nombre indica, no se pueden cambiar los valores de las constantes, y cualquier intento de hacerlo provoca un error de tipo TypeError.</p>
     <p>Es una convención común (pero no universal) declarar constantes utilizando nombres con todas las letras mayúsculas como <codeinline>H0</codeinline> o <codeinline>HTTP_NOT_FOUND</codeinline> como una forma de distinguirlas de las variables.</p>
-    <div class="bg-[#f6e4c5] p-2 xs:p-3 sm:p-4 md:p-5 rounded-lg flex gap-2 xs:gap-3 sm:gap-4 md:gap-5 items-center">
+    <nota>
       <img class="self-start" src="/public/javascript/nota_gral.png" alt="Nota de la grandesa">
       <div class="">
         <p class="title-article text-left">Cuándo utilizar const</p>
         <p>Hay dos escuelas de pensamiento sobre el uso de la palabra clave <codeinline>const</codeinline>. Un enfoque es utilizar <codeinline>const</codeinline> sólo para valores que son fundamentalmente inmutables, como las constantes físicas mostradas, o los números de versión del programa, o las secuencias de bytes utilizadas para identificar los tipos de archivo, por ejemplo. Otro enfoque reconoce que muchas de las llamadas variables en nuestro programa en realidad nunca cambian a medida que nuestro programa se ejecuta. En este enfoque, declaramos todo con <codeinline>const</codeinline>, y luego si encontramos que realmente queremos permitir que el valor varíe, cambiamos la declaración a <codeinline>let</codeinline>. Esto puede ayudar a prevenir errores al descartar cambios accidentales a variables que no pretendíamos.</p>
         <p>En uno de los enfoques, utilizamos <codeinline>const</codeinline> sólo para valores que no <em>deben</em> cambiar. En el otro, usamos <codeinline>const</codeinline> para cualquier valor que no deba cambiar. Yo prefiero el primer enfoque en mi propio código.</p>
       </div>
-    </div>
-
+    </nota>
     <p>En el <a href="capitulo-5">Capítulo 5</a>, aprenderemos sobre las sentencias de bucle <codeinline>for</codeinline>, <codeinline>for/in</codeinline> y <codeinline>for/of</codeinline> en Java-Script. Cada uno de estos bucles incluye una variable de bucle a la que se asigna un nuevo valor en cada iteración del bucle. JavaScript nos permite declarar la variable de bucle como parte de la propia sintaxis del bucle, y ésta es otra forma común de usar <codeinline>let</codeinline>:</p>
     <pre>
     <code class="language-js">for(let i = 0, len = data.length; i &lt; len; i++) console.log(data[i]);
@@ -903,59 +902,122 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     console.log(x);   // Imprime 1: ahora estamos de vuelve en el scope global
     let x = 3;        // ERROR! en sintaxis: x ya ha sido declarada</code></pre>
     <p class="title-article text-left">Declaraciones y tipos</p>
-    <p>Si está acostumbrado a lenguajes de tipado estático como C o Java, puede pensar que el propósito principal de las declaraciones de variables es especificar el tipo de valores que pueden asignarse a una variable. Pero, como ha visto, no hay ningún tipo asociado a las declaraciones de variables de JavaScript.2 Una variable de JavaScript puede contener un valor de cualquier tipo. Por ejemplo, en JavaScript es perfectamente legal (aunque generalmente de mal estilo de programación) asignar un número a una variable y más tarde asignar una cadena a esa variable:</p>
+    <p>Si está acostumbrado a lenguajes de tipado estático como C o Java, puede pensar que el propósito principal de las declaraciones de variables es especificar el tipo de valores que pueden asignarse a una variable. Pero, como ha visto, no hay ningún tipo asociado a las declaraciones<sup><span>?</span><info>Existen extensiones de JavaScript, como TypeScript y Flow (<a href='capitulo-17#8'>§17.8</a>), que permiten especificar tipos como parte de declaraciones de variables con sintaxis como<codeinline class="md:text-base">let x: number = 0;</codeinline>.</info></sup> de variables de JavaScript. Una variable de JavaScript puede contener un valor de cualquier tipo. Por ejemplo, en JavaScript es perfectamente legal (aunque generalmente de mal estilo de programación) asignar un número a una variable y más tarde asignar una cadena a esa variable:</p>
     <pre>
     <code class="language-js">let i = 10;
     i = "ten";</code></pre>
   </section>
   <section>
     <h3>3.10.2 Declaraciones de variables con var</h3>
-    <p>En las versiones de JavaScript anteriores a ES6, la única forma de declarar una variable es con la palabra clave var, y no hay forma de declarar constantes. La sintaxis de var es igual que la sintaxis de let:</p>
-    <p>Aunque var y let tienen la misma sintaxis, existen diferencias importantes en su funcionamiento:</p>
+    <p>En las versiones de JavaScript anteriores a ES6, la única forma de declarar una variable es con la palabra clave <codeinline>var</codeinline>, y no hay forma de declarar constantes. La sintaxis de <codeinline>var</codeinline> es igual que la sintaxis de <codeinline>let</codeinline>:</p>
+    <pre>
+    <code class="language-js">var x;
+    var data = [], count = data.length;
+    for(var i = 0; i &lt; count; i++) console.log(data[i]);</code></pre>
+    <p>Aunque <codeinline>var</codeinline> y <codeinline>let</codeinline> tienen la misma sintaxis, existen diferencias importantes en su funcionamiento:</p>
     <ul>
-      <li>Las variables declaradas con var no tienen ámbito de bloque. En su lugar, tienen ámbito en el cuerpo de la función que las contiene, independientemente de la profundidad a la que estén anidadas dentro de esa función.</li>
-      <li>Si se utiliza var fuera del cuerpo de una función, se declara una variable global. Pero las variables globales declaradas con var difieren de las globales declaradas con let en un aspecto importante. Las variables globales declaradas con var se implementan como propiedades del objeto global (§3.7). El objeto global puede ser referenciado como globalThis. Así, si escribes var x = 2; fuera de una función, es como si hubieras escrito globalEsta.x = 2;. Nótese, sin embargo, que la analogía no es perfecta: las propiedades creadas con declaraciones de variables globales no pueden borrarse con el operador delete (§4.13.4). Las variables y constantes globales declaradas con let y const no son propiedades del objeto global.</li>
-      <li>A diferencia de las variables declaradas con let, es legal declarar la misma variable múltiples veces con var. Y como las variables var tienen ámbito de función en lugar de ámbito de bloque, es realmente común hacer este tipo de redeclaración. La variable i se utiliza frecuentemente para valores enteros, y especialmente como variable índice de los bucles for. En una función con múltiples bucles for, es típico que cada uno de ellos comience for(var i = 0; Dado que var no tiene alcance de estas variables para el bucle cada uno de estos bucles está (inofensivamente) redeclarando y reinicializando la misma variable.</li>
-      <li>Una de las características más inusuales de las declaraciones var se conoce como elevación. Cuando se declara una variable con var, la declaración se eleva a la parte superior de la función que la contiene. La inicialización de la variable permanece donde la escribiste, pero la definición de la variable se mueve a la parte superior de la función. Así, las variables declaradas con var pueden utilizarse, sin error, en cualquier parte de la función que las encierra. Si el código de inicialización aún no se ha ejecutado, entonces el valor de la variable puede estar indefinido, pero no obtendrá un error si utiliza la variable antes de que se inicialice. (Esto puede ser una fuente de errores y es uno de los errores importantes que let corrige: si declaras una variable con let pero intentas usarla antes de que se ejecute la sentencia let, obtendrás un error real en lugar de ver simplemente un valor indefinido).</li>
+      <li class="font-normal pl-2 xs:pl-3 sm:pl-4 md:pl-5">Las variables declaradas con <codeinline>var</codeinline> no tienen ámbito de bloque. En su lugar, tienen ámbito en el cuerpo de la función que las contiene, independientemente de la profundidad a la que estén anidadas dentro de esa función.</li>
+      <li class="font-normal pl-2 xs:pl-3 sm:pl-4 md:pl-5">Si se utiliza <codeinline>var</codeinline> fuera del cuerpo de una función, se declara una variable global. Pero las variables globales declaradas con <codeinline>var</codeinline> difieren de las globales declaradas con <codeinline>let</codeinline> en un aspecto importante. Las variables globales declaradas con <codeinline>var</codeinline> se implementan como propiedades del objeto global (<a href="#7">§3.7</a>). El objeto global puede ser referenciado como <codeinline>globalThis</codeinline>. Así, si escribes <codeinline>var x = 2;</codeinline> fuera de una función, es como si hubieras escrito <codeinline>globalThis.x = 2;</codeinline>. Nótese, sin embargo, que la analogía no es perfecta: las propiedades creadas con declaraciones de <codeinline>var</codeinline> globales no pueden borrarse con el operador <codeinline>delete</codeinline> (<a href="capitulo-4#13-4">§4.13.4</a>). Las variables y constantes globales declaradas con <codeinline>let</codeinline> y <codeinline>const</codeinline> no son propiedades del objeto global.</li>
+      <li class="font-normal pl-2 xs:pl-3 sm:pl-4 md:pl-5">A diferencia de las variables declaradas con <codeinline>let</codeinline>, es legal declarar la misma variable múltiples veces con <codeinline>var</codeinline>. Y como las variables <codeinline>var</codeinline> tienen scope de función en lugar de scope de bloque, es realmente común hacer este tipo de redeclaración. La variable <codeinline>i</codeinline> se utiliza frecuentemente para valores enteros, y especialmente como variable índice de los bucles <codeinline>for</codeinline>. En una función con múltiples bucles <codeinline>for</codeinline>, es típico que cada uno de ellos comience <codeinline>for(var i = 0; ...</codeinline>. Dado que <codeinline>var</codeinline> no tiene alcance de estas variables para el bucle cada uno de estos bucles está (inofensivamente) redeclarando y reinicializando la misma variable.</li>
+      <li class="font-normal pl-2 xs:pl-3 sm:pl-4 md:pl-5">Una de las características más inusuales de las declaraciones <codeinline>var</codeinline> se conoce como <em>hoisting</em>. Cuando se declara una variable con <codeinline>var</codeinline>, la declaración se eleva a la parte superior de la función que la contiene. La inicialización de la variable permanece donde la escribiste, pero la definición de la variable se mueve a la parte superior de la función. Así, las variables declaradas con <codeinline>var</codeinline> pueden utilizarse, sin error, en cualquier parte de la función que las encierra. Si el código de inicialización aún no se ha ejecutado, entonces el valor de la variable puede estar <codeinline>undefined</codeinline>, pero no obtendrá un error si utiliza la variable antes de que se inicialice. (Esto puede ser una fuente de errores y es uno de los errores importantes que <codeinline>let</codeinline> corrige: si declaras una variable con <codeinline>let</codeinline> pero intentas usarla antes de que se ejecute la sentencia <codeinline>let</codeinline>, obtendrás un error real en lugar de ver simplemente un valor <codeinline>undefined</codeinline>).</li>
     </ul>
-    <p>Uso de variables no declaradas</p>
-    <p>En modo estricto (§5.6.3), si intentas usar una variable no declarada, obtendrás un error de referencia cuando ejecutes tu código. Sin embargo, fuera del modo estricto, si asignas un valor a un nombre que no ha sido declarado con let, const o var, acabarás creando una nueva variable global. Será una global sin importar lo profundamente anidado que esté tu código dentro de funciones y bloques, lo que casi con toda seguridad no es lo que quieres, es propenso a errores, ¡y es una de las mejores razones para usar el modo estricto!</p>
-    <p>Las variables globales creadas de esta forma accidental son como las declaradas con var: definen propiedades del objeto global. Pero a diferencia de las propiedades definidas por declaraciones var adecuadas, estas propiedades pueden borrarse con el operador delete (§4.13.4).</p>
+    <nota>
+      <img class="self-start" src="/public/javascript/nota_gral.png" alt="Nota de la grandesa">
+      <div class="">
+        <p class="title-article text-left">Uso de variables no declaradas</p>
+        <p>En modo estricto (<a href="capitulo-5#6-3">§5.6.3</a>), si intentas usar una variable no declarada, obtendrás un error de referencia cuando ejecutes tu código. Sin embargo, fuera del modo estricto, si asignas un valor a un nombre que no ha sido declarado con <codeinline>let</codeinline>, <codeinline>const</codeinline> o <codeinline>var</codeinline>, acabarás creando una nueva variable global. Será una global sin importar lo profundamente anidado que esté tu código dentro de funciones y bloques, lo que casi con toda seguridad no es lo que quieres, es propenso a errores y es una de las mejores razones para usar el modo estricto.</p>
+        <p>Las variables globales creadas de esta forma accidental son como las declaradas con <codeinline>var</codeinline>: definen propiedades del objeto global. Pero a diferencia de las propiedades definidas por declaraciones <codeinline>var</codeinline> adecuadas, estas propiedades <em>pueden</em> borrarse con el operador <codeinline>delete</codeinline> (<a href="capitulo-4#13-4">§4.13.4</a>).</p>
+      </div>
+    </nota>
   </section>
   <section class="py-4 xs:py-5 sm:py-6">
     <h3>3.10.3 Desestructuración Asignación</h3>
-    <p>ES6 implementa un tipo de declaración compuesta y una sintaxis de asignación conocida como asignación desestructurada. En una asignación de desestructuración, el valor situado a la derecha del signo igual es una matriz o un objeto (un valor "estructurado"), y el lado izquierdo especifica uno o más nombres de variables utilizando una sintaxis que imita la sintaxis literal de matrices y objetos. Cuando se produce una asignación de desestructuración, se extraen ("desestructuran") uno o más valores del valor de la derecha y se almacenan en las variables nombradas a la izquierda. La asignación desestructurante es quizás la más utilizada para ini- tializar variables como parte de una declaración const, let o var, pero también puede hacerse en expresiones de asignación regulares (con variables que ya han sido declaradas). Y, como veremos en §8.3.5, la desestructuración también puede utilizarse al definir los parámetros de una función.</p>
+    <p>ES6 implementa un tipo de declaración compuesta y una sintaxis de asignación conocida como <em>asignación desestructurada</em>. En una asignación de desestructuración, el valor situado a la derecha del signo igual es una matriz o un objeto (un valor "estructurado"), y el lado izquierdo especifica uno o más nombres de variables utilizando una sintaxis que imita la sintaxis literal de matrices y objetos. Cuando se produce una asignación de desestructuración, se extraen ("desestructuran") uno o más valores del valor de la derecha y se almacenan en las variables nombradas a la izquierda. La asignación desestructurante es quizás la más utilizada para ini- tializar variables como parte de una declaración <codeinline>const</codeinline>, <codeinline>let</codeinline> o <codeinline>var</codeinline>, pero también puede hacerse en expresiones de asignación regulares (con variables que ya han sido declaradas). Y, como veremos en <a href="capitulo-8#3-5">§8.3.5</a>, la desestructuración también puede utilizarse al definir los parámetros de una función.</p>
     <p>A continuación se presentan asignaciones de desestructuración sencillas utilizando matrices de valores:</p>
+    <pre>
+    <code class="language-js">let [x,y] = [1,2]; // Igual que let x = 1, y = 2;
+    [x,y] = [x+1,y+1]; // Igual que x = x+1, y = y+1
+    [x,y] = [y,x];     // Intercambia los valores de x e y
+    [x,y]              // => [3,2]: los valores de x e y se han intercambiado</code></pre>
     <p>Observe cómo la asignación de desestructuración facilita el trabajo con funciones que devuelven matrices de valores:</p>
-    <p>Hemos visto que las variables y constantes pueden declararse como parte de los distintos bucles for de JavaScript. También es posible utilizar la desestructuración de variables en este contexto. He aquí un código que recorre los pares nombre/valor de todas las propiedades de un objeto y utiliza la asignación desestructurante para convertir esos pares de matrices de dos elementos en variables individuales:</p>
-    <p>El número de variables a la izquierda de una asignación de desestructuración no tiene por qué coincidir con el número de elementos del array a la derecha. Las variables extra a la izquierda se definen como indefinidas, y los valores extra a la derecha se ignoran. La lista de variables de la izquierda puede incluir comas adicionales para omitir ciertos valores de la derecha:</p>
-    <p>Si desea reunir todos los valores no utilizados o restantes en una sola variable al desestructurar una matriz, utilice tres puntos (...) antes del último nombre de variable del lado izquierdo:</p>
-    <p>Volveremos a ver tres puntos utilizados de esta forma en §8.3.2, donde se utilizan para indicar que todos los argumentos restantes de la función deben reunirse en una única matriz.</p>
-    <p>La asignación de desestructuración puede utilizarse con matrices anidadas. En este caso, el lado izquierdo de la asignación debe parecerse a un literal de matriz anidada:</p>
-    <p>Una característica importante de la desestructuración de arrays es que no requiere un array. Puede utilizar cualquier objeto iterable (Capítulo 12) en el lado derecho de la asignación; también puede desestructurarse cualquier objeto que pueda utilizarse con unbuclefor/of (§5.4.4):</p>
+    <pre>
+    <code class="language-js">// Convierte las cordenadas [x,y] a las cordenadas polares [r,theta]
+    function toPolar(x, y) &lbrace;
+      return [Math.sqrt(x*x+y*y), Math.atan2(y,x)];
+    }
+    // Convierte las cordenadas polares a las cordenadas cartesianas
+    function toCartesian(r, theta) &lbrace;
+      return [r*Math.cos(theta), r*Math.sin(theta)];
+    }
+    let [r,theta] = toPolar(1.0, 1.0);  // r == Math.sqrt(2); theta == Math.PI/4
+    let [x,y] = toCartesian(r,theta);   // [x, y] == [1.0, 1,0]</code></pre>
+    <p>Hemos visto que las variables y constantes pueden declararse como parte de los distintos bucles <codeinline>for</codeinline> de JavaScript. También es posible utilizar la desestructuración de variables en este contexto. He aquí un código que recorre los pares nombre/valor de todas las propiedades de un objeto y utiliza la asignación desestructurante para convertir esos pares de matrices de dos elementos en variables individuales:</p>
+    <pre>
+    <code class="language-js">let o = &lbrace; x: 1, y: 2 };     // El objeto sobre el que hacemos un bucle
+    for(const [name, value] of Object.entries(o)) &lbrace;
+      console.log(name, value); // Imprime "x 1" y "y 2"
+    }</code></pre>
+    <p>El número de variables a la izquierda de una asignación de desestructuración no tiene por qué coincidir con el número de elementos del array a la derecha. Las variables extra a la izquierda se definen como <codeinline>undefined</codeinline>, y los valores extra a la derecha se ignoran. La lista de variables de la izquierda puede incluir comas adicionales para omitir ciertos valores de la derecha:</p>
+    <pre>
+    <code class="language-js">let [x,y] = [1];     // x == 1; y == undefined
+    [x,y] = [1,2,3];     // x == 1; y == 2
+    [,x,,y] = [1,2,3,4]; // x == 2; y == 4</code></pre>
+    <p>Si desea reunir todos los valores no utilizados o restantes en una sola variable al desestructurar una matriz, utilice tres puntos (<codeinline>...</codeinline>) antes del último nombre de variable del lado izquierdo:</p>
+    <pre>
+    <code class="language-js">let [x, ...y] = [1,2,3,4]; // y == [2,3,4]</code></pre>
+    <p>Volveremos a ver tres puntos utilizados de esta forma en <a href="capitulo-8#3-2">§8.3.2</a>, donde se utilizan para indicar que todos los argumentos restantes de la función deben reunirse en una única matriz.</p>
+    <p>La asignación de desestructuración puede utilizarse con matrices anidadas. En este caso, el lado izquierdo de la asignación debe parecerse a un literal de array anidada:</p>
+    <pre>
+    <code class="language-js">let [a, [b, c]] = [1, [2,2.5], 3]; // a == 1; b == 2; c == 2.5</code></pre>
+    <p>Una característica importante de la desestructuración de arrays es que no requiere un array. Puede utilizar cualquier objeto <em>iterable</em> (<a href="capitulo-12">Capítulo 12</a>) en el lado derecho de la asignación; también puede desestructurarse cualquier objeto que pueda utilizarse con un bucle <codeinline>for/of</codeinline> (<a href="capitulo-5#4-4">§5.4.4</a>):</p>
+    <pre>
+    <code class="language-js">let [first, ...rest] = "Hello"; // first == "H"; rest == ["e","l","l","o"]</code></pre>
     <p>La asignación de desestructuración también puede realizarse cuando el lado derecho es un valor de objeto. En este caso, el lado izquierdo de la asignación se parece a un literal de objeto: una lista separada por comas de nombres de variables entre llaves:</p>
-    <p>El siguiente ejemplo copia funciones globales del objeto Math en variables, lo que podría simplificar el código que hace mucha trigonometría:</p>
-    <p>Observe en el código que el objeto Math tiene muchas propiedades además de las tres que están desestructuradas en variables individuales. Aquellas que no son nombradas son simplemente ignoradas. Si el lado izquierdo de esta asignación hubiera incluido una variable cuyo nombre no fuera una propiedad de Math, esa variable simplemente se asignaría como indefinida.</p>
+    <pre>
+    <code class="language-js">let transparente = &lbrace;r: 0.0, g: 0.0, b: 0.0, a: 1.0}; // Un color RGBA
+    let &lbrace;r, g, b} = transparente; // r == 0.0; g == 0.0; b == 0.0</code></pre>
+    <p>El siguiente ejemplo copia funciones globales del objeto <codeinline>Math</codeinline> en variables, lo que podría simplificar el código que hace mucha trigonometría:</p>
+    <pre>
+    <code class="language-js">// Igual que las const sin=Math.sin, cos=Math.cos, tan=Math.tan
+    const &lbrace;sin, cos, tan} = Math;</code></pre>
+    <p>Observe en el código que el objeto <codeinline>Math</codeinline> tiene muchas propiedades además de las tres que están desestructuradas en variables individuales. Aquellas que no son nombradas son simplemente ignoradas. Si el lado izquierdo de esta asignación hubiera incluido una variable cuyo nombre no fuera una propiedad de <codeinline>Math</codeinline>, esa variable simplemente se asignaría como <codeinline>undefined</codeinline>.</p>
     <p>En cada uno de estos ejemplos de desestructuración de objetos, hemos elegido nombres de variables que coinciden con los nombres de las propiedades del objeto que estamos desestructurando. Esto mantiene la sintaxis simple y fácil de entender, pero no es obligatorio. Cada uno de los identificadores de la parte izquierda de una asignación de desestructuración de objetos también puede ser un par de identificadores separados por dos puntos, donde el primero es el nombre de la propiedad cuyo valor se va a asignar y el segundo es el nombre de la variable a la que se va a asignar:</p>
+    <pre>
+    <code class="language-js">// Igual que las const cosine=Math.cos, tangent=Math.tan
+    const &lbrace; cos: cosine, tan: tangent } = Math;</code></pre>
     <p>Encuentro que la sintaxis de desestructuración de objetos se vuelve demasiado complicada para ser útil cuando los nombres de las variables y los nombres de las propiedades no son los mismos, y tiendo a evitar la mano corta en este caso. Si decide utilizarla, recuerde que los nombres de las propiedades van siempre a la izquierda de los dos puntos, tanto en los literales de objeto como a la izquierda de una asignación de desestructuración de objeto.</p>
+    <pre>
+    <code class="language-js">let points = [&lbrace;x: 1, y: 2}, &lbrace;x: 3, y: 4}];     // Un array de dos objetos
+    let [&lbrace;x: x1, y: y1}, &lbrace;x: x2, y: y2}] = points; // destructuracion en cuatro variables
+    (x1 === 1 && y1 === 2 && x2 === 3 && y2 === 4) // => true</code></pre>
     <p>La asignación desestructurada se complica aún más cuando se utiliza con objetos nes- tados, o matrices de objetos, u objetos de matrices, pero es legal:</p>
     <p>O, en lugar de desestructurar un array de objetos, podríamos desestructurar un objeto de arrays:</p>
-    <p>Una sintaxis de desestructuración compleja como ésta puede ser difícil de escribir y de leer, y puede que sea mejor escribir las asignaciones explícitamente con código tradicionalcomolet x1 = points.p1[0];.</p>
+    <pre>
+    <code class="language-js">let points = &lbrace; p1: [1,2], p2: [3,4] };         // Un objeto con dos arrays como propiedades
+    let &lbrace; p1: [x1, y1], p2: [x2, y2] } = points;   // desestructuración en cuatro variables
+    (x1 === 1 && y1 === 2 && x2 === 3 && y2 === 4) // => true</code></pre>
+    <p>Una sintaxis de desestructuración compleja como ésta puede ser difícil de escribir y de leer, y puede que sea mejor escribir las asignaciones explícitamente con código tradicional como <codeinline>let x1 = points.p1[0];</codeinline>.</p>
     <article>
-      <p>Comprender la desestructuración compleja</p>
-      <p>Si se encuentra trabajando con código que utiliza asignaciones de desestructuración complejas, existe una regularidad útil que puede ayudarle a dar sentido a los casos complejos. Piense primero en una asignación normal (de un solo valor). Una vez realizada la asignación, puede tomar el nombre de la variable del lado izquierdo de la asignación y utilizarlo como una expresión en su código, donde se evaluará al valor que le haya asignado. Lo mismo ocurre con las asignaciones desestructuradas. El lado izquierdo de una asignación de desestructuración se parece a un literal de matriz o a un literal de objeto (§6.2.1 y §6.10). Una vez realizada la asignación, la parte izquierda funcionará como un literal de array o de objeto válido en cualquier otra parte del código. Puede comprobar que ha escrito correctamente una asignación destructiva intentando usar el lado izquierdo en el lado derecho de otra expresión de asignación:</p>
+      <p class="title-article">Comprender la desestructuración compleja</p>
+      <p>Si se encuentra trabajando con código que utiliza asignaciones de desestructuración complejas, existe una regularidad útil que puede ayudarle a dar sentido a los casos complejos. Piense primero en una asignación normal (de un solo valor). Una vez realizada la asignación, puede tomar el nombre de la variable del lado izquierdo de la asignación y utilizarlo como una expresión en su código, donde se evaluará al valor que le haya asignado. Lo mismo ocurre con las asignaciones desestructuradas. El lado izquierdo de una asignación de desestructuración se parece a un literal de matriz o a un literal de objeto (<a href="capitulo-6#2-1">§6.2.1</a> y <a href="capitulo-6#10">§6.10</a>). Una vez realizada la asignación, la parte izquierda funcionará como un literal de array o de objeto válido en cualquier otra parte del código. Puede comprobar que ha escrito correctamente una asignación destructiva intentando usar el lado izquierdo en el lado derecho de otra expresión de asignación:</p>
+    <pre>
+    <code class="language-js">// Comienza con una estructura de datos y una compleja declaración
+    let points = [&lbrace;x: 1, y: 2}, &lbrace;x: 3, y: 4}];
+    let [&lbrace;x: x1, y: y1}, &lbrace;x: x2, y: y2}] = points;
+
+    // Compueba tu sintaxis de desestructuración dando la vuelta a la asignación
+    let points2 = [&lbrace;x: x1, y: y1}, &lbrace;x: x2, y: y2}]; // points2 == points</code></pre>
     </article>
   </section>
   <section id="11" class="pb-4 xs:pb-5 sm:pb-6">
     <h2>3.11 Resumen</h2>
     <p>Algunos puntos clave que conviene recordar sobre este capítulo:</p>
     <ul>
-      <li>Cómo escribir y manipular números y cadenas de texto en JavaScript.</li>
-      <li>CómotrabajarconotrostiposprimitivosdeJavaScript:booleanos,símbolos,
-        null eindefinido.</li>
-      <li>Diferencias entre tipos primitivos inmutables y tipos de referencia mutables.</li>
-      <li>Cómo JavaScript convierte valores implícitamente de un tipo a otro y cómo puede hacerlo explícitamente en sus programas.</li>
-      <li>Cómodeclarareinicializarconstantesyvariables(inclusoconasignación desestructurante) y el ámbito léxico de las variables y constantes que se declaran.</li>
+      <li class="font-normal pl-2 xs:pl-3 sm:pl-4 md:pl-5">Cómo escribir y manipular números y cadenas de texto en JavaScript.</li>
+      <li class="font-normal pl-2 xs:pl-3 sm:pl-4 md:pl-5">Cómo trabajar con otros tipos primitivos de JavaScript: booleanos, símbolos, <codeinline>null</codeinline> e <codeinline>undefined</codeinline>.</li>
+      <li class="font-normal pl-2 xs:pl-3 sm:pl-4 md:pl-5">Diferencias entre tipos primitivos inmutables y tipos de referencia mutables.</li>
+      <li class="font-normal pl-2 xs:pl-3 sm:pl-4 md:pl-5">Cómo JavaScript convierte valores implícitamente de un tipo a otro y cómo puede hacerlo explícitamente en sus programas.</li>
+      <li class="font-normal pl-2 xs:pl-3 sm:pl-4 md:pl-5">Cómo declarar e inicializar constantes y variables (incluso con asignación desestructurante) y el ámbito léxico de las variables y constantes que se declaran.</li>
     </ul>
   </section>
 </Layoutjavascript>
