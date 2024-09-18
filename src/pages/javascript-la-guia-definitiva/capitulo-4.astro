@@ -1,0 +1,93 @@
+---
+import Navegation from "../../components/Navegation.astro";
+import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
+
+---
+<Layoutjavascript title="JavaScript: La guia definitiva">
+  <Navegation capAnterior="capitulo-3" capSiguiente="capitulo-5" />
+  <section class="fadeIn">
+    <h1>Expresiones y operadores</h1>
+    <p>Este capítulo documenta las expresiones de JavaScript y los operadores con los que se construyen muchas de esas expresiones. Una <em>expresión</em> es una frase de JavaScript que puede ser <em>evaluada</em> para producir un valor. Una constante incrustada literalmente en tu programa es un tipo de expresión muy simple. Un nombre de variable es también una expresión simple que se evalúa a cualquier valor que se haya asignado a esa variable. Las expresiones complejas se construyen a partir de expresiones más simples. Una expresión de acceso a array, por ejemplo, consiste en una expresión que evalúa a un array seguida de un corchete cuadrado abierto, una expresión que evalúa a un entero y un corchete cuadrado cerrado. Esta nueva expresión, más compleja, se evalúa al valor almacenado en el índice especificado de la matriz especificada. Del mismo modo, una expresión de invocación de función consiste en una expresión que se evalúa como un objeto de función y cero o más expresiones adicionales que se utilizan como argumentos de la función.</p>
+    <p>La forma más habitual de construir una expresión compleja a partir de expresiones más sencillas es mediante un <em>operador</em>. Un operador combina los valores de sus operandos (normalmente dos) de alguna forma y los evalúa a un nuevo valor. El operador de multiplicación <codeinline>*</codeinline> es un ejemplo sencillo. La expresión <codeinline>x * y</codeinline> se evalúa como el producto de los valores de las expresiones <codeinline>x</codeinline> e <codeinline>y</codeinline>. Para simplificar, a veces decimos que un operador <em>devuelve</em> un valor en lugar de "se evalúa como" un valor.</p>
+    <p>Este capítulo documenta todos los operadores de JavaScript, y también explica expresiones (como la indexación de matrices y la invocación de funciones) que no utilizan operadores. Si ya conoces otro lenguaje de programación que utilice sintaxis de tipo C, verás que la sintaxis de la mayoría de las expresiones y operadores de JavaScript ya te resulta familiar.</p>
+  </section>
+  <section id="1" class="fadeIn py-4 xs:py-5 sm:py-6">
+    <h2>4.1 Expresiones primarias</h2>
+    <p>Las expresiones más sencillas, conocidas como <em>expresiones primarias</em>, son aquellas que son independientes, es decir, que no incluyen expresiones más sencillas. Las expresiones primarias en JavaScript son valores constantes o <em>literales</em>, ciertas palabras clave del lenguaje y referencias a variables.</p>
+    <p>Los literales son valores constantes que se incrustan directamente en el programa. Tienen el siguiente aspecto:</p>
+    <pre>
+    <code class="language-javascript">1.23      // Un literal numérico
+    "hello"   // Un literal de string
+    /pattern/ // Una expresión regular literal</code></pre>
+    <p>La sintaxis de JavaScript para los literales numéricos se trató en <a href="capitulo-3#2">§3.2</a> Los literales de string se documentaron en <a href="capitulo-3#3">§3.3</a>. La sintaxis de literal es de expresiones regulares se introdujo en <a href="capitulo-3#3-5">§3.3.5</a> y se documentará en detalle en <a href="capitulo-11#3">§11.3</a>.</p>
+    <p>Algunas de las palabras reservadas de JavaScript son expresiones primarias:</p>
+    <pre>
+    <code class="language-javascript">true  // Se evalua un valor booleano verdadero
+    false // Se evalua un valor booleano falso
+    null  // Se evalua a un valor nulo
+    this  // Se evalúa el objeto "actual"</code></pre>
+    <p>Aprendimos sobre <codeinline>true</codeinline>, <codeinline>false</codeinline> y <codeinline>null</codeinline> en <a href="capitulo-3#4">§3.4</a> y <a href="capitulo-3#5">§3.5</a>. A diferencia de las otras palabras clave, <codeinline>this</codeinline> no es una constante - se evalúa a diferentes valores en diferentes lugares del programa. La palabra clave <codeinline>this</codeinline> se utiliza en programación orientada a objetos. Dentro del cuerpo de un método, <codeinline>this</codeinline> se evalúa como el objeto sobre el que se invoca el método. Véase <a href="#5">§4.5</a>, <a href="capitulo-8">Capítulo 8</a> (especialmente <a href="capitulo-8#2-2">§8.2.2</a>) y <a href="capitulo-9">Capítulo 9</a> para más información sobre <codeinline>this</codeinline>.</p>
+    <p>Por último, el tercer tipo de expresión primaria es una referencia a una variable, constante o propiedad del objeto global:</p>
+    <pre>
+    <code class="language-javascript">i         // Evalua el valor de la variable i.
+    sum       // Evalua el valor de la variable sum.
+    undefined // El valor de la propiedad "undefined" del objeto global.</code></pre> 
+    <p>Cuando un identificador aparece solo en un programa, JavaScript asume que es una variable, constante o propiedad del objeto global y busca su valor. Si no existe ninguna variable con ese nombre, al intentar evaluar una variable inexistente se produce un error ReferenceError.</p>
+  </section>
+  <section id="2">
+    <h2>4.2 Inicializadores de objetos y arrays</h2>
+    <p>Los <em>inicializadores de objetos</em> y <em>array</em> son expresiones cuyo valor es un objeto o una matriz recién creados. Estas expresiones inicializadoras se denominan a veces <em>literales de objeto</em> y <em>literales de arrays</em>. Sin embargo, a diferencia de los literales verdaderos, no son expresiones primarias, porque incluyen un número de subexpresiones que especifican valores de propiedades y elementos. Los inicializadores de matrices tienen una sintaxis ligeramente más simple, y comenzaremos con ellos.</p>
+    <p>Un inicializador de matriz es una lista de expresiones separadas por comas y contenidas entre corchetes. El valor de un inicializador de matriz es una matriz recién creada. Los elementos de esta nueva matriz se inicializan con los valores de las expresiones separadas por comas:</p>
+    <pre>
+    <code class="language-javascript">[]        // Un array vacio: Ninguan expresion en los corchetes significa sin elementos.
+    [1+2,3+4] // Un array de dos elementos. Primer elemento es 3 y el segundo es 7</code></pre>
+    <p>Las expresiones de elemento en un inicializador de matriz pueden ser a su vez inicializadores de matriz, lo que significa que estas expresiones pueden crear matrices anidadas:</p>
+    <pre>
+    <code class="language-javascript">let matrix = [[1,2,3], [4,5,6], [7,8,9]];</code></pre>
+    <p>Las expresiones de elemento en un inicializador de matriz se evalúan cada vez que se evalúa el inicializador de matriz. Esto significa que el valor de la expresión de un inicializador de matriz puede ser diferente cada vez que se evalúa.</p>
+    <p>Los elementos no definidos pueden incluirse en un literal de matriz simplemente omitiendo un valor entre comas. Por ejemplo, el siguiente array contiene cinco elementos, entre ellos tres indefinidos:</p>
+    <pre>
+    <code class="language-javascript">let sparseArray = [1,,,,5];</code></pre>
+    <p>Se permite una sola coma después de la última expresión en un inicializador de matriz y no crea un elemento indefinido. Sin embargo, cualquier expresión de acceso al array para un índice posterior al de la última expresión se evaluará necesariamente como indefinido.</p>
+    <p>Las expresiones de inicialización de objetos son como las expresiones de inicialización de matrices, pero los corchetes se sustituyen por llaves y cada subexpresión va precedida de un nombre de propiedad y dos puntos:</p>
+    <pre>
+    <code class="language-javascript">let p = &lbrace; x: 2.3, y: -1.2 }; // Un objeto con dos propiedades
+    let q = &lbrace;};                  // Un objeto vacio sin propiedades
+    q.x = 2.3; q.y = -1.2;       // Ahora q tiene la misma propiedad que p</code></pre>
+    <p>En ES6, los literales de objeto tienen una sintaxis mucho más rica en funciones (encontrará más detalles en (<a href="capitulo-6#10"></a>). Los literales de objeto pueden anidarse. Por ejemplo:</p>
+    <pre>
+    <code class="language-javascript">let rectangle = &lbrace;
+      upperLeft: &lbrace; x: 2, y: 2 },
+      lowerRight: &lbrace; x: 4, y: 5 }
+    };</code></pre>
+    <p>Volveremos a ver inicializadores de objetos y matrices en los capítulos 6 y 7.</p>
+  </section>
+  <section id="3" class="py-4 xs:py-5 sm:py-6">
+    <h2>4.3 Definir expresiones de funciones</h2>
+    <p>Una <em>definicion de expresion de funciones</em> define una función JavaScript, y el valor dedicha expresión es la función recién definida. En cierto sentido, una expresión de definición de función es un "literal de función" del mismo modo que un inicializador de objeto es un "literal de objeto". Una expresión de definición de función suele estar formada por la palabra clave function seguida de una lista separada por comas de cero o más identificadores (los nombres de los parámetros) en formato paréntesis y un bloque de código JavaScript (el cuerpo de la función) entre llaves. Por ejemplo:</p>
+    <pre>
+    <code class="language-js">// Esta función retorna el cuadrado del valor pasado.
+    let square = function(x) &lbrace; return x * x; };</code></pre>
+    <p>Una expresión de definición de función también puede incluir un nombre para la función. Las funciones también pueden definirse utilizando una declaración de función en lugar de una expresión de función. Y en ES6 y posteriores, las expresiones de función pueden utilizar una nueva sintaxis compacta "función de flecha". Los detalles completos sobre la definición de funciones se encuentran en el <a href="capitulo-8">Capítulo 8</a>.</p>
+  </section>
+  <section id="4">
+    <h2>4.4 Expresiones de acceso a la propiedad</h2>
+    <p>Una <em>expresión de acceso a propiedades</em> evalúa el valor de una propiedad de objeto o de un elemento de matriz. JavaScript define dos sintaxis para el acceso a propiedades:</p>
+    <pre class="language-javascript">
+    expression . identifier
+    expression [ expression ]</pre>
+    <p>El primer estilo de acceso a una propiedad es una expresión seguida de un punto y un identificador. La expresión especifica el objeto, y el identificador especifica el nombre de la propiedad deseada. El segundo estilo de acceso a propiedades sigue a la primera expresión (el objeto o matriz) con otra expresión entre corchetes. Esta segunda expresión especifica el nombre de la propiedad deseada o el índice del elemento de la matriz deseado. He aquí algunos ejemplos concretos:</p>
+    <pre>
+    <code class="language-javascript">let o = &lbrace;x: 1, y: &lbrace;z: 3}}; // Un ejemplo de objeto
+    let a = [o, 4, [5, 6]];    // Un ejemplo de array que contiene el objeto o.
+    o.x       // => 1: La propiedad x de la expresión o
+    o.y.z     // => 3: La propiedad z de la expresión o.y
+    o["x"]    // => 1: La propiedad x del objeto o
+    a[1]      // => 4: El elemento en el índice 1 de la expresión a
+    a[2]["1"] // => 6: El elemento en el índice 2 de la expresión a[2]
+    a[0].x    // => 1: La propiedad x de la expresion a[0]</code></pre>
+    <p>Con cualquiera de los dos tipos de expresión de acceso a propiedades, primero se evalúa la expresión anterior a <codeinline>.</codeinline> o <codeinline>[</codeinline>. Si el valor es <codeinline>null</codeinline> o <codeinline>undefined</codeinline>, la expresión lanza un TypeError, ya que estos son los dos valores de JavaScript que no pueden tener propiedades. Si la expresión de objeto va seguida de un punto y un identificador, se busca el valor de la propiedad nombrada por ese identificador y se convierte en el valor global de la expresión. Si la expresión del objeto va seguida de otra expresión entre corchetes, esta segunda expresión se evalúa y se convierte en una cadena. El valor global de la expresión es entonces el valor de la propiedad nombrada por esa cadena. En cualquier caso, si la propiedad nombrada no existe, el valor de la expresión de acceso a la propiedad es <em>undefined</em>.</p>
+    <p>La sintaxis <em>.identifier</em> es la más sencilla de las dos opciones de acceso a propiedades, pero tenga en cuenta que sólo puede utilizarse cuando la propiedad a la que desea acceder tiene un nombre que es un identificador legal, y cuando conoce el nombre al escribir el programa. Si la propiedad incluye espacios o caracteres de puntuación, o cuando es un número (para matrices), debe utilizar la notación de corchetes. Los corchetes también se utilizan cuando el nombre de la propiedad no es estático, sino que es el resultado de un cálculo (véase un ejemplo en <a href="capitulo-6#3-1">§6.3.1</a>).</p>
+    <p>Los objetos y sus propiedades se tratan en detalle en el <a href="capitulo-6">Capitulo 6</a>, y las matrices y sus elementos en el <a href="capitulo-7">Capítulo 7</a>.</p>
+  </section>
+</Layoutjavascript>
