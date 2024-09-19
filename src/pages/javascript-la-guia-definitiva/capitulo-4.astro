@@ -90,4 +90,379 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>La sintaxis <em>.identifier</em> es la más sencilla de las dos opciones de acceso a propiedades, pero tenga en cuenta que sólo puede utilizarse cuando la propiedad a la que desea acceder tiene un nombre que es un identificador legal, y cuando conoce el nombre al escribir el programa. Si la propiedad incluye espacios o caracteres de puntuación, o cuando es un número (para matrices), debe utilizar la notación de corchetes. Los corchetes también se utilizan cuando el nombre de la propiedad no es estático, sino que es el resultado de un cálculo (véase un ejemplo en <a href="capitulo-6#3-1">§6.3.1</a>).</p>
     <p>Los objetos y sus propiedades se tratan en detalle en el <a href="capitulo-6">Capitulo 6</a>, y las matrices y sus elementos en el <a href="capitulo-7">Capítulo 7</a>.</p>
   </section>
+  <section id="4-1" class="py-4 xs:py-5 sm:py-6">
+    <h2>4.4.1 Acceso condicional a la propiedad</h2>
+    <p>ES2020 añade dos nuevos tipos de expresiones de acceso a propiedades:</p>
+    <pre class="language-js">
+    expression ?. identifier
+    expression ?.[ expression ]</pre>
+    <p>En JavaScript, los valores <codeinline>null</codeinline> e <codeinline>undefined</codeinline> son los dos únicos valores que no tienen propiedades. En una expresión regular de acceso a propiedades que utilice <codeinline>.</codeinline> o <codeinline>[]</codeinline>, se produce un error de tipo TypeError si la expresión de la izquierda se evalúa como <codeinline>null</codeinline> o <codeinline>undefined</codeinline>. Puede utilizar la sintaxis <codeinline>?.</codeinline> y <codeinline>?.[]</codeinline> para evitar errores de este tipo.</p>
+    <p>Considere la expresión <codeinline>a?.b</codeinline>. Si a es <codeinline>null</codeinline> o <codeinline>undefined</codeinline>, entonces la expresión se evalúa como <codeinline>undefined</codeinline> sin ningún intento de acceder a la propiedad <codeinline>b</codeinline>. Si <codeinline>a</codeinline> es algún otro valor, entonces <codeinline>a?.b</codeinline> se evalúa como <codeinline>a.b</codeinline> (y si <codeinline>a</codeinline> no tiene una propiedad llamada <codeinline>b</codeinline>, entonces el valor volverá a ser <codeinline>undefined</codeinline>).</p>
+    <p>Esta forma de expresión de acceso a propiedades a veces se denomina “optional chaining” porque también funciona para expresiones de acceso a propiedades “chained” más largas como ésta:</p>
+    <pre>
+    <code class="language-js">let a = &lbrace; b: null };
+    a.b?.c.d // => undefined</code></pre>
+    <p><codeinline>a</codeinline> es un objeto, por lo que <codeinline>a.b</codeinline> es una expresión de acceso a propiedades válida. Pero el valor de <codeinline>a.b</codeinline> es <codeinline>null</codeinline>, por lo que <codeinline>a.b.c</codeinline> lanzaría un TypeError. Usando <codeinline>?.</codeinline> en lugar de <codeinline>.</codeinline> evitamos el error de tipo, y <codeinline>a.b?.c</codeinline> se evalúa como <codeinline>undefined</codeinline>. Esto significa que </codeinline>(a.b?.c).d</codeinline> lanzará un TypeError, porque esa expresión intenta acceder a una propiedad del valor <codeinline>undefined</codeinline>. Pero -y esta es una parte muy importante del "encadenamiento opcional"-<codeinline>a.b?.c.d</codeinline> (sin los paréntesis) simplemente evalúa a <codeinline>undefined</codeinline> y no lanza un error. Esto se debe a que el acceso a propiedades con <codeinline>?.</codeinline> es un "cortocircuito": si la subexpresión a la izquierda de <codeinline>?.</codeinline> se evalúa como <codeinline>null</codeinline> o <codeinline>undefined</codeinline>, entonces toda la expresión se evalúa inmediatamente como <codeinline>undefined</codeinline> sin ningún otro intento de acceso a propiedades.</p>
+    <p>Por supuesto, si <codeinline>a.b</codeinline> es un objeto, y si ese objeto no tiene una propiedad llamada <codeinline>c</codeinline>, entonces <codeinline>a.b?.c.d</codeinline> lanzará de nuevo un TypeError, y querremos usar otro acceso condicional a propiedades</p>
+    <pre>
+    <code class="language-js">let a = &lbrace; b: &lbrace;} };
+    a.b?.c?.d // => undefined</code></pre>
+    <p>El acceso condicional a propiedades también es posible utilizando <codeinline>?.[]</codeinline> en lugar de <codeinline>[]</codeinline>. En la expresión <codeinline>a?.[b][c]</codeinline>, si el valor de a es <codeinline>null</codeinline> o <codeinline>undefined</codeinline>, toda la expresión se evalúa inmediatamente como <codeinline>undefined</codeinline>, y las subexpresiones <codeinline>b</codeinline> y <codeinline>c</codeinline> ni siquiera se evalúan. Si alguna de estas expresiones tiene efectos secundarios, éstos no se producirán si <codeinline>a</codeinline> no está definida:</p>
+    <pre>
+    <code class="language-js">let a;        // Uy, olvidamos inicializar esta variable
+    let index = 0;
+    try &lbrace;
+      a[index++]; // Lanza TypeError
+    } catch(e) &lbrace;
+      index       // => 1: el incremento se produce antes de que se lance el error
+    }
+    a?.[index++]  // => undefined: por que a es undefined
+    index // => 1: no se incrementa por que ?.[] corto-circuita
+    a[index++]    // !TypeError: no se puede indexar undefined.</code></pre>
+    <p>El acceso condicional a propiedades con <codeinline>?.</codeinline> y <codeinline>?.[]</codeinline> es una de las características más recientes de Java- Script. Desde principios de 2020, esta nueva sintaxis es compatible con las versiones actuales o beta de la mayoría de los principales navegadores.</p>
+  </section>
+  <section id="5">
+    <h2>4.5 Expresiones de invocación</h2>
+    <p>Una <em>expresión de invocación</em> es la sintaxis de JavaScript para llamar (o ejecutar) una función o método. Comienza con una expresión de función que identifica la función a llamar. La expresión de función va seguida de un paréntesis de apertura, una lista separada por comas de cero o más expresiones de argumento y un paréntesis de cierre. Algunos ejemplos:</p>
+    <pre>
+    <code class="language-js">f(0)             // f es la función; 0 es el argumento.
+    Math.max(x,y,z)  // Math.max es la funcion: x, y y z son los argumentos.
+    a.sort()         // a.sort es la función y no toma argumentos.</code></pre>
+    <p>Cuando se evalúa una expresión de invocación, primero se evalúa la expresión de la función y, a continuación, se evalúan las expresiones de los argumentos para obtener una lista de valores de los argumentos. Si el valor de la expresión de función no es una función, se lanza un TypeError. A continuación, los valores de los argumentos se asignan, en orden, a los nombres de los parámetros especificados al definir la función y, por último, se ejecuta el cuerpo de la función. Si la función utiliza una sentencia <codeinline>return</codeinline> para devolver un valor, entonces ese valor se convierte en el valor de la expresión de invocación. En caso contrario, el valor de la expresión de invocación es <codeinline>undefined</codeinline>. Los detalles completos sobre la invocación de funciones, incluida una explicación de lo que ocurre cuando el número de expresiones de argumento no coincide con el número de parámetros en la definición de la función, se encuentran en el <a href="capitulo-8">Capítulo 8</a>.</p>
+    <p>Cada expresión de invocación incluye un par de paréntesis y una expresión antes del paréntesis abierto. Si esa expresión es una expresión de acceso a una propiedad, entonces la invocación se conoce como <em>invocación a un método</em>. En las invocaciones a métodos, el objeto o array objeto del acceso a la propiedad se convierte en el valor de la palabra clave <codeinline>this</codeinline> mientrasque se ejecuta el cuerpo de la función. Esto permite un paradigma de programación orientada a objetos en el que las funciones (que llamamos "métodos" cuando se utilizan de esta manera) operan sobre el objeto del que forman parte. Para más detalles, véase el <a href="capitulo-9">Capítulo 9</a>.</p>
+  </section>
+  <section id="5-1" class="py-4 xs:py-5 sm:py-6">
+    <h2>4.5.1 Invocación condicional</h2>
+    <p>En ES2020, también puede invocar una función utilizando <codeinline>?.()</codeinline> en lugar de <codeinline>()</codeinline>. Normalmente, cuando se invoca una función, si la expresión a la izquierda de los paréntesis es <codeinline>null</codeinline> o no <codeinline>undefined</codeinline> o cualquier otra no-función, se lanza un TypeError. Con la nueva sintaxis de invocación <codeinline>?.()</codeinline>, si la expresión a la izquierda del <codeinline>?.</codeinline> se evalúa como <codeinline>null</codeinline> o <codeinline>undefined</codeinline>, toda la expresión de invocación se evalúa como <codeinline>undefined</codeinline> y no se lanza ninguna excepción.</p>
+    <p>Los objetos array tienen un método <codeinline>sort()</codeinline> al que opcionalmente se le puede pasar un argumento de función que defina el orden de clasificación deseado para los elementos del array. Antes de ES2020, si querías escribir un método como <codeinline>sort()</codeinline> que toma un argumento de función opcional, normalmente usabas una sentencia <codeinline>if</codeinline> para comprobar que el argumento de función estaba definido antes de invocarlo en el cuerpo del <codeinline>if</codeinline>:</p>
+    <pre>
+    <code class="language-js">function square(x, log) &lbrace; // El segundo argumento es opcional
+      if (log) &lbrace;              // Si pasa la función opcional
+        log(x);               // Invoca la función
+      }
+      return x * x;           // Devuelve el cuadrado del argumento
+    }</code></pre>
+    <p>Con esta sintaxis de invocación condicional de ES2020, sin embargo, puedes simplemente escribir la invocación de la función usando <codeinline>?.()</codeinline>, sabiendo que la invocación sólo ocurrirá si realmente hay un valor que invocar:</p>
+    <pre>
+    <code class="language-js">function square(x, log) &lbrace; // El segundo argumento es opcional
+      log?.(x);               // Llama a la función si log es definido
+      return x * x;           // Retorna el cuadrado del argumento
+    }</code></pre>
+    <p>Tenga en cuenta, sin embargo, que <codeinline>?.()</codeinline> sólo comprueba si el lado izquierdo es <codeinline>null</codeinline> o <codeinline>undefined</codeinline>. No comprueba que el valor sea realmente una función. Por tanto, la función <codeinline>square()</codeinline> de este ejemplo lanzaría una excepción si se le pasaran dos números, por ejemplo.</p>
+    <p>Al igual que las expresiones de acceso condicional a propiedades (<a href="#4-1">§4.4.1</a>) la invocación de funciones con <codeinline>?.()</codeinline> es un cortocircuito: si el valor a la izquierda de <codeinline>?.</codeinline> es <codeinline>null</codeinline> o <codeinline>undefined</codeinline>, no se evalúa ninguna de las expresiones de argumento dentro de los paréntesis:</p>
+    <pre>
+    <code class="language-js">let f = null, x = 0;
+    try &lbrace;
+    f(x++);       // Lanza TypeError porque f es null
+    } catch(e) &lbrace;
+    x             // => 0: el incremento se produce antes de que se lance el error
+    }
+    f?.(x++)      // => undefined: f es null, pero no se lanza ninguna excepción
+    x             // => 1: se salta el incremento porque corto-circuita</code></pre>
+    <p>Las expresiones de invocación condicional con <codeinline>?.()</codeinline> funcionan tanto para métodos como para funciones. Pero como la invocación de métodos también implica el acceso a propiedades, merece la pena dedicar un momento a entender las diferencias entre las siguientes expresiones:</p>
+    <pre>
+    <code class="language-js">o.m()   // Acceso regular a la propiedad, invocación regular
+    o?.m()  // Acceso condicional a la propiedad, invocación regular
+    o.m?.() // Acceso regular a la propiedad, invocación condicional</code></pre>
+    <p>En la primera expresión, o debe ser un objeto con una propiedad <codeinline>m</codeinline> y el valor de esa propiedad debe ser una función. En la segunda expresión, si <codeinline>o</codeinline> es <codeinline>null</codeinline> o <codeinline>undefined</codeinline>, entonces la expresión se evalúa como <codeinline>undefined</codeinline>. Pero si <codeinline>o</codeinline> tiene cualquier otro valor, entonces debe tener una propiedad <codeinline>m</codeinline> cuyo valor sea una función. Y en la tercera expresión, <codeinline>o</codeinline> no debe ser <codeinline>null</codeinline> ni <codeinline>undefined</codeinline>. Si no tiene una propiedad <codeinline>m</codeinline>, o si el valor de esa propiedad es <codeinline>null</codeinline>, entonces toda la expresión se evalúa como <codeinline>undefined</codeinline>.</p>
+    <p>La invocación condicional con <codeinline>?.()</codeinline> es una de las características más recientes de JavaScript. Desde los primeros meses de 2020, esta nueva sintaxis es compatible con las versiones actuales o beta de la mayoría de los principales navegadores.</p>
+  </section>
+  <section id="6">
+    <h2>4.6 Expresiones de creación de objetos</h2>
+    <p>Una <em>expresión de creación de objeto</em> crea un nuevo objeto e invoca una función (denominada constructor) para inicializar las propiedades de dicho objeto. Las expresiones de creación de objetos son como las expresiones de invocación, salvo que van precedidas de la palabra clave <codeinline>new</codeinline>:</p>
+    <pre>
+    <code class="language-js">new Object()
+    new Point(2,3)</code></pre>
+    <p>Si no se pasan argumentos a la función constructora en una expresión de creación de objeto, se puede omitir el par de paréntesis vacío:</p>
+    <pre>
+    <code class="language-js">new Object
+    new Date</code></pre>
+    <p>El valor de una expresión de creación de objeto es el objeto recién creado. Los constructores se explican con más detalle en el <a href="capitulo-9">Capítulo 9</a>.</p>
+  </section>
+  <section id="7" class="py-4 xs:py-5 sm:py-6">
+    <h2>4.7 Visión general del operador</h2>
+    <p>Los operadores se utilizan para las expresiones aritméticas, las expresiones de comparación, las expresiones lógicas y las expresiones de asignación de JavaScript, entre otras. La <a href="#tabla4-1">Tabla 4-1</a> resume los operadores y sirve como referencia práctica.</p>
+    <p>Tenga en cuenta que la mayoría de los operadores se representan mediante caracteres de puntuación, como <codeinline>+</codeinline> y <codeinline>=</codeinline>. Algunos, sin embargo, se representan mediante palabras clave, como <codeinline>delete</codeinline> e <codeinline>instanceof</codeinline>. Los operadores de palabras clave son operadores regulares, al igual que los expresados con signos de puntuación; simplemente tienen una sintaxis menos sucinta.</p>
+    <p>La <a href="#tabla4-1">Tabla 4-1</a> está organizada por precedencia de operadores. Los operadores listados en primer lugar tienen mayor precedencia que los listados en último lugar. Los operadores separados por una línea horizontal tienen niveles de precedencia diferentes. La columna A indica la asociatividad del operador, que puede ser L (de izquierda a derecha) o R (de derecha a izquierda), y la columna N especifica el número de operandos. La columna Tipos indica los tipos esperados de los operandos y (después del símbolo →) el tipo de resultado del operador. Las subsecciones que siguen a la tabla explican los conceptos de precedencia, asociatividad y tipo de operando. Los propios operandos se documentan individualmente a continuación.</p>
+    <div id="tabla4-1" class="flex flex-col items-center">
+      <p><em>Tabla 4-1. Operadores de JavaScript</em></p>
+      <table>
+        <thead class="bg-amber-900 text-[#f6e4c5]">
+          <tr>
+            <td class="max-w-lg text-center">Operador</td>
+            <td class="max-w-72 pl-4">Operanción</td>
+            <td class="max-w-lg pl-4">A</td>
+            <td class="max-w-lg pl-4">N</td>
+            <td class="max-w-lg px-4">Tipos</td>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">++</codeinline></td>
+              <td class="max-w-72 pl-4">Aumento previo o posterior</td>
+              <td class="max-w-lg pl-4">R</td>
+              <td class="max-w-lg pl-4">1</td>
+              <td class="max-w-lg px-4">lval → num</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">--</codeinline></td>
+              <td class="max-w-72 pl-4">Decrecimiento previo o posterior</td>
+              <td class="max-w-lg pl-4">R</td>
+              <td class="max-w-lg pl-4">1</td>
+              <td class="max-w-lg px-4">lval → num</td>
+            </tr>
+            <tr>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">-</codeinline></td>
+              <td class="max-w-72 pl-4">Negar número</td>
+              <td class="max-w-lg pl-4">R</td>
+              <td class="max-w-lg pl-4">1</td>
+              <td class="max-w-lg px-4">num → num</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">+</codeinline></td>
+              <td class="max-w-72 pl-4">Convertir a número</td>
+              <td class="max-w-lg pl-4">R</td>
+              <td class="max-w-lg pl-4">1</td>
+              <td class="max-w-lg px-4">any → num</td>
+            </tr>
+            <tr>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">~</codeinline></td>
+              <td class="max-w-72 pl-4">Invertir bits</td>
+              <td class="max-w-lg pl-4">R</td>
+              <td class="max-w-lg pl-4">1</td>
+              <td class="max-w-lg px-4">int → int</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">!</codeinline></td>
+              <td class="max-w-72 pl-4">Invertir valores booleanos</td>
+              <td class="max-w-lg pl-4">R</td>
+              <td class="max-w-lg pl-4">1</td>
+              <td class="max-w-lg px-4">bool → bool</td>
+            </tr>
+            <tr>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">delete</codeinline></td>
+              <td class="max-w-72 pl-4">Eliminar una propiedad</td>
+              <td class="max-w-lg pl-4">R</td>
+              <td class="max-w-lg pl-4">1</td>
+              <td class="max-w-lg px-4">lval → bool</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">typeof</codeinline></td>
+              <td class="max-w-72 pl-4">Determinar el tipo de un valor</td>
+              <td class="max-w-lg pl-4">R</td>
+              <td class="max-w-lg pl-4">1</td>
+              <td class="max-w-lg px-4">any → str</td>
+            </tr>
+            <tr class="border-b-2 border-amber-900">
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">void</codeinline></td>
+              <td class="max-w-72 pl-4">Devolver una valor indefinido</td>
+              <td class="max-w-lg pl-4">R</td>
+              <td class="max-w-lg pl-4">1</td>
+              <td class="max-w-lg px-4">any → undef</td>
+            </tr>
+            <tr class="bg-[#f6e4c5] border-b-2 border-amber-900">
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">**</codeinline></td>
+              <td class="max-w-72 pl-4">Potencia</td>
+              <td class="max-w-lg pl-4">R</td>
+              <td class="max-w-lg pl-4">2</td>
+              <td class="max-w-lg px-4">num, num → num</td>
+            </tr>
+            <tr class="border-b-2 border-amber-900">
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">*</codeinline>, <codeinline class="md:text-base bg-transparent">/</codeinline>, <codeinline class="md:text-base bg-transparent">%</codeinline></td>
+              <td class="max-w-72 pl-4">Multiplicaión, división y resto</td>
+              <td class="max-w-lg pl-4">L</td>
+              <td class="max-w-lg pl-4">2</td>
+              <td class="max-w-lg px-4">num, num → num</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">**</codeinline>, <codeinline class="md:text-base bg-transparent">**</codeinline></td>
+              <td class="max-w-72 pl-4">Suma, resta</td>
+              <td class="max-w-lg pl-4">L</td>
+              <td class="max-w-lg pl-4">2</td>
+              <td class="max-w-lg px-4">num, num → num</td>
+            </tr>
+            <tr class="border-b-2 border-amber-900">
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">+</codeinline></td>
+              <td class="max-w-72 pl-4">Concatenar strings</td>
+              <td class="max-w-lg pl-4">L</td>
+              <td class="max-w-lg pl-4">2</td>
+              <td class="max-w-lg px-4">str, str → str</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">&lt;&lt;</codeinline></td>
+              <td class="max-w-72 pl-4">Desplazamiento a la izquierda</td>
+              <td class="max-w-lg pl-4">L</td>
+              <td class="max-w-lg pl-4">2</td>
+              <td class="max-w-lg px-4">int, int → int</td>
+            </tr>
+            <tr>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">>></codeinline></td>
+              <td class="max-w-72 pl-4">Desplazamiento a la derecha con signo extendido</td>
+              <td class="max-w-lg pl-4">L</td>
+              <td class="max-w-lg pl-4">2</td>
+              <td class="max-w-lg px-4">int, int → int</td>
+            </tr>
+            <tr class="bg-[#f6e4c5] border-b-2 border-amber-900">
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">>>></codeinline></td>
+              <td class="max-w-72 pl-4">Desplazamiento a la derecha con extensión cero</td>
+              <td class="max-w-lg pl-4">L</td>
+              <td class="max-w-lg pl-4">2</td>
+              <td class="max-w-lg px-4">int, int → int</td>
+            </tr>
+            <tr>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">&lt;</codeinline>, <codeinline class="md:text-base bg-transparent">&lt;=</codeinline>, <codeinline class="md:text-base bg-transparent">&gt;</codeinline>, <codeinline class="md:text-base bg-transparent">&gt;=</codeinline></td>
+              <td class="max-w-72 pl-4">Comparar por orden numérico</td>
+              <td class="max-w-lg pl-4">L</td>
+              <td class="max-w-lg pl-4">2</td>
+              <td class="max-w-lg px-4">num, num → bool</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">&lt;</codeinline>, <codeinline class="md:text-base bg-transparent">&lt;=</codeinline>, <codeinline class="md:text-base bg-transparent">&gt;</codeinline>, <codeinline class="md:text-base bg-transparent">&gt;=</codeinline></td>
+              <td class="max-w-72 pl-4">Comparar por orden alfabético</td>
+              <td class="max-w-lg pl-4">L</td>
+              <td class="max-w-lg pl-4">2</td>
+              <td class="max-w-lg px-4">str, str → bool</td>
+            </tr>
+            <tr>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">instanceof</codeinline></td>
+              <td class="max-w-72 pl-4">Clase de objeto de prueba</td>
+              <td class="max-w-lg pl-4">L</td>
+              <td class="max-w-lg pl-4">2</td>
+              <td class="max-w-lg px-4">obj, func → bool</td>
+            </tr>
+            <tr class="bg-[#f6e4c5] border-b-2 border-amber-900">
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">in</codeinline></td>
+              <td class="max-w-72 pl-4">Comprobar si la propiedad existe</td>
+              <td class="max-w-lg pl-4">L</td>
+              <td class="max-w-lg pl-4">2</td>
+              <td class="max-w-lg px-4">any, obj → bool</td>
+            </tr>
+            <tr>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">==</codeinline></td>
+              <td class="max-w-72 pl-4">Prueba de igualdad no estricta</td>
+              <td class="max-w-lg pl-4">L</td>
+              <td class="max-w-lg pl-4">2</td>
+              <td class="max-w-lg px-4">any, any → bool</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">!=</codeinline></td>
+              <td class="max-w-72 pl-4">Prueba de desigualdad no estricta</td>
+              <td class="max-w-lg pl-4">L</td>
+              <td class="max-w-lg pl-4">2</td>
+              <td class="max-w-lg px-4">any, any → bool</td>
+            </tr>
+            <tr>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">===</codeinline></td>
+              <td class="max-w-72 pl-4">Prueba de igualdad estricta</td>
+              <td class="max-w-lg pl-4">L</td>
+              <td class="max-w-lg pl-4">2</td>
+              <td class="max-w-lg px-4">any, any → bool</td>
+            </tr>
+            <tr class="bg-[#f6e4c5] border-b-2 border-amber-900">
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">!==</codeinline></td>
+              <td class="max-w-72 pl-4">Prueba de desigualdad estricta</td>
+              <td class="max-w-lg pl-4">L</td>
+              <td class="max-w-lg pl-4">2</td>
+              <td class="max-w-lg px-4">any, any → bool</td>
+            </tr>
+            <tr class="border-b-2 border-amber-900">
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">&</codeinline></td>
+              <td class="max-w-72 pl-4">Computa a nivel de bits &</td>
+              <td class="max-w-lg pl-4">L</td>
+              <td class="max-w-lg pl-4">2</td>
+              <td class="max-w-lg px-4">any, any → bool</td>
+            </tr>
+            <tr class="bg-[#f6e4c5] border-b-2 border-amber-900">
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">^</codeinline></td>
+              <td class="max-w-72 pl-4">Computa a nivel de bits XOR</td>
+              <td class="max-w-lg pl-4">L</td>
+              <td class="max-w-lg pl-4">2</td>
+              <td class="max-w-lg px-4">any, any → bool</td>
+            </tr>
+            <tr class="border-b-2 border-amber-900">
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">|</codeinline></td>
+              <td class="max-w-72 pl-4">Computa a nivel de bits OR</td>
+              <td class="max-w-lg pl-4">L</td>
+              <td class="max-w-lg pl-4">2</td>
+              <td class="max-w-lg px-4">any, any → bool</td>
+            </tr>
+            <tr class="bg-[#f6e4c5] border-b-2 border-amber-900">
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">&&</codeinline></td>
+              <td class="max-w-72 pl-4">Computa valores logicos AND</td>
+              <td class="max-w-lg pl-4">L</td>
+              <td class="max-w-lg pl-4">2</td>
+              <td class="max-w-lg px-4">any, any → bool</td>
+            </tr>
+            <tr class="border-b-2 border-amber-900">
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">||</codeinline></td>
+              <td class="max-w-72 pl-4">Computa valores logicos OR</td>
+              <td class="max-w-lg pl-4">L</td>
+              <td class="max-w-lg pl-4">2</td>
+              <td class="max-w-lg px-4">any, any → bool</td>
+            </tr>
+            <tr class="bg-[#f6e4c5] border-b-2 border-amber-900">
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">??</codeinline></td>
+              <td class="max-w-72 pl-4">Escoge el primer operando definido</td>
+              <td class="max-w-lg pl-4">L</td>
+              <td class="max-w-lg pl-4">2</td>
+              <td class="max-w-lg px-4">any, any → bool</td>
+            </tr>
+            <tr class="border-b-2 border-amber-900">
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">?:</codeinline></td>
+              <td class="max-w-72 pl-4">Escoge el segundo o el tercero operando</td>
+              <td class="max-w-lg pl-4">R</td>
+              <td class="max-w-lg pl-4">3</td>
+              <td class="max-w-lg px-4">any, any → bool</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">=</codeinline></td>
+              <td class="max-w-72 pl-4">Asigna el valor a una variable o propiedad</td>
+              <td class="max-w-lg pl-4">R</td>
+              <td class="max-w-lg pl-4">2</td>
+              <td class="max-w-lg px-4">any, any → bool</td>
+            </tr>
+            <tr class="border-b-2 border-amber-900">
+              <td class="max-w-40 pl-4">
+                <codeinline class="md:text-base bg-transparent">**=</codeinline>, 
+                <codeinline class="md:text-base bg-transparent">*=</codeinline>, 
+                <codeinline class="md:text-base bg-transparent">/=</codeinline>, 
+                <codeinline class="md:text-base bg-transparent">%=</codeinline>, 
+                <codeinline class="md:text-base bg-transparent">-=</codeinline>, 
+                <codeinline class="md:text-base bg-transparent">&=</codeinline>, 
+                <codeinline class="md:text-base bg-transparent">^=</codeinline>, 
+                <codeinline class="md:text-base bg-transparent">|=</codeinline>, 
+                <codeinline class="md:text-base bg-transparent">&lt;&lt;=</codeinline>, 
+                <codeinline class="md:text-base bg-transparent">>>=</codeinline>, 
+                <codeinline class="md:text-base bg-transparent">>>>=</codeinline>, 
+              </td>
+              <td class="max-w-72 pl-4">Operar y asignar</td>
+              <td class="max-w-lg pl-4">R</td>
+              <td class="max-w-lg pl-4">2</td>
+              <td class="max-w-lg px-4">any, any → bool</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-lg pl-4">
+                <codeinline class="md:text-base bg-transparent">,</codeinline>
+              </td>
+              <td class="max-w-72 pl-4">Descarta el primer operando, devuelve el segundo</td>
+              <td class="max-w-lg pl-4">L</td>
+              <td class="max-w-lg pl-4">2</td>
+              <td class="max-w-lg px-4">any, any → bool</td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <section id="7-1">
+    <h2>4.7.1 Número de operandos</h2>
+    <p>Los operadores pueden clasificarse en función del número de operandos que esperan (su <em>aridad</em>). La mayoría de los operadores de JavaScript, como el operador de multiplicación <codeinline>*</codeinline>, son <em>operadores binarios</em> que combinan dos expresiones en una única expresión más compleja. Es decir, esperan dos operandos. JavaScript también admite una serie de <em>operadores unarios</em>, que convierten una expresión simple en una única expresión más compleja. El operador <codeinline>-</codeinline> en la expresión <codeinline>-x</codeinline> es un operador unario que realiza la operación de negación en el operando <codeinline>x</codeinline>. Por último, JavaScript admite un <em>operador ternario</em>, el operador condicional <codeinline>?:</codeinline>, que combina tres expresiones en una sola.</p>
+  </section>
+  <section id="7-2">
+    <h2>4.7.2 Tipo de operando y resultado</h2>
+    <p>Algunos operadores funcionan con valores de cualquier tipo, pero la mayoría esperan que sus operandos sean de un tipo específico, y la mayoría de los operadores devuelven (o evalúan a) un valor de un tipo específico. La columna Tipos de la <a href="#tabla4-1">Tabla 4-1</a> especifica los tipos de operando (antes de la flecha) y el tipo de resultado (después de la flecha) para los operadores.</p>
+    <p>Los operadores de JavaScript suelen convertir el tipo (véase <a href="capitulo-3#9">§3.9</a>) de sus operandos según sea necesario. El operador de multiplicación <codeinline>*</codeinline> espera operandos numéricos, pero la expresión <codeinline>"3" * "5"</codeinline> es legal porque JavaScript puede convertir los operandos a números. El valor de esta expresión es el número 15, no la cadena "15", por supuesto. Recuerde también que todos los valores de JavaScript son "verdaderos" o "falsos", por lo que los operadores que esperan operandos booleanos funcionarán con un operando de cualquier tipo.</p>
+    <p>Algunos operadores se comportan de forma diferente en función del tipo de los operandos utilizados con ellos. En particular, el operador <codeinline>+</codeinline> suma operandos numéricos pero concatena operandos de cadena. Del mismo modo, los operadores de comparación como <codeinline>&lt;</codeinline> realizan la comparación en orden numérico o alfabético en función del tipo de los operandos. Las descripciones de los operadores individuales explican sus dependencias de tipo y especifican qué conversiones de tipo realizan.
+    </p>
+    <p>Observa que los operadores de asignación y algunos de los otros operadores listados en la <a href="#tabla4-1">Tabla 4-1</a> esperan un operando de tipo <codeinline>lvalue</codeinline>. <em>lvalue</em> es un término histórico que significa "una expresión que puede aparecer legalmente en el lado izquierdo de una expresión de asignación". En JavaScript, las variables, las propiedades de los objetos y los elementos de las matrices son lvalues.</p>
+  </section>
 </Layoutjavascript>
