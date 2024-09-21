@@ -457,12 +457,104 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>4.7.1 Número de operandos</h2>
     <p>Los operadores pueden clasificarse en función del número de operandos que esperan (su <em>aridad</em>). La mayoría de los operadores de JavaScript, como el operador de multiplicación <codeinline>*</codeinline>, son <em>operadores binarios</em> que combinan dos expresiones en una única expresión más compleja. Es decir, esperan dos operandos. JavaScript también admite una serie de <em>operadores unarios</em>, que convierten una expresión simple en una única expresión más compleja. El operador <codeinline>-</codeinline> en la expresión <codeinline>-x</codeinline> es un operador unario que realiza la operación de negación en el operando <codeinline>x</codeinline>. Por último, JavaScript admite un <em>operador ternario</em>, el operador condicional <codeinline>?:</codeinline>, que combina tres expresiones en una sola.</p>
   </section>
-  <section id="7-2">
+  <section id="7-2" class="py-4 xs:py-5 sm:py-6">
     <h2>4.7.2 Tipo de operando y resultado</h2>
     <p>Algunos operadores funcionan con valores de cualquier tipo, pero la mayoría esperan que sus operandos sean de un tipo específico, y la mayoría de los operadores devuelven (o evalúan a) un valor de un tipo específico. La columna Tipos de la <a href="#tabla4-1">Tabla 4-1</a> especifica los tipos de operando (antes de la flecha) y el tipo de resultado (después de la flecha) para los operadores.</p>
     <p>Los operadores de JavaScript suelen convertir el tipo (véase <a href="capitulo-3#9">§3.9</a>) de sus operandos según sea necesario. El operador de multiplicación <codeinline>*</codeinline> espera operandos numéricos, pero la expresión <codeinline>"3" * "5"</codeinline> es legal porque JavaScript puede convertir los operandos a números. El valor de esta expresión es el número 15, no la cadena "15", por supuesto. Recuerde también que todos los valores de JavaScript son "verdaderos" o "falsos", por lo que los operadores que esperan operandos booleanos funcionarán con un operando de cualquier tipo.</p>
     <p>Algunos operadores se comportan de forma diferente en función del tipo de los operandos utilizados con ellos. En particular, el operador <codeinline>+</codeinline> suma operandos numéricos pero concatena operandos de cadena. Del mismo modo, los operadores de comparación como <codeinline>&lt;</codeinline> realizan la comparación en orden numérico o alfabético en función del tipo de los operandos. Las descripciones de los operadores individuales explican sus dependencias de tipo y especifican qué conversiones de tipo realizan.
     </p>
     <p>Observa que los operadores de asignación y algunos de los otros operadores listados en la <a href="#tabla4-1">Tabla 4-1</a> esperan un operando de tipo <codeinline>lvalue</codeinline>. <em>lvalue</em> es un término histórico que significa "una expresión que puede aparecer legalmente en el lado izquierdo de una expresión de asignación". En JavaScript, las variables, las propiedades de los objetos y los elementos de las matrices son lvalues.</p>
+  </section>
+  <section id="7-3">
+    <h2>4.7.3 Efectos secundarios del operador</h2>
+    <p>Evaluar una expresión simple como <codeinline>2 * 3</codeinline> nunca afecta al estado de tu programa, y cualquier cálculo futuro que realice tu programa no se verá afectado por esa evaluación. Sin embargo, algunas expresiones tienen <em>efectos secundarios</em> y su evaluación puede afectar al resultado de futuras evaluaciones. Los operadores de asignación son el ejemplo más obvio: si asigna un valor a una variable o propiedad, cambia el valor de cualquier expresión que utilice esa variable o propiedad. Los operadores de incremento y decremento <codeinline>++</codeinline> y <codeinline>--</codeinline> son similares, ya que realizan una asignación implícita. El operador <codeinline>delete</codeinline> también tiene efectos secundarios: borrar una propiedad es como (pero no lo mismo que) asignar <codeinline>undefined</codeinline> a la propiedad.</p>
+    <p>Ningún otro operador de JavaScript tiene efectos secundarios, pero las expresiones de invocación de funciones y creación de objetos tendrán efectos secundarios si alguno de los operadores utilizados en el cuerpo de la función o del constructor tiene efectos secundarios.</p>
+  </section>
+  <section id="7-4" class="py-4 xs:py-5 sm:py-6">
+    <h2>4.7.4  Precedencia del operador</h2>
+    <p>Los operadores listados en la <a href="#tabla4-1">Tabla 4-1</a> están ordenados de mayor a menor precedencia, con líneas horizontales separando grupos de operadores en el mismo nivel de precedencia. La precedencia de los operadores controla el orden en que se realizan las operaciones. Los operadores con mayor precedencia (más cerca de la parte superior de la tabla) se ejecutan antes que los de menor precedencia (más cerca de la parte inferior).</p>
+    <p>Considera la siguiente expresión:</p>
+    <pre>
+    <code class="language-js">w = x + y*z;</code></pre>
+    <p>El operador de multiplicación <codeinline>*</codeinline> tiene mayor precedencia que el operador de suma <codeinline>+</codeinline>, por lo que la multiplicación se realiza antes que la suma. Por otra parte, el operador de asignación <codeinline>=</codeinline> tiene la precedencia más baja, por lo que la asignación se realiza una vez completadas todas las operaciones del lado derecho.</p>
+    <p>La precedencia de los operadores puede anularse mediante el uso explícito de paréntesis. Para forzar que la suma del ejemplo anterior se realice primero, escriba:</p>
+    <pre>
+    <code class="language-js">w = (x + y)*z;</code></pre>
+    <p>Tenga en cuenta que las expresiones de acceso e invocación de propiedades tienen mayor precedencia que cualquiera de los operadores listados en la <a href="#tabla4-1">Tabla 4-1</a>. Considere esta expresión:</p>
+    <pre>
+    <code class="language-js">// my es un objeto con una propiedad llamada funciones cuyo valor es 
+    // una matriz de funciones. Invocamos la función número x, le pasamos el argumento y 
+    // y luego pedimos el tipo del valor devuelto.
+    typeof my.functions[x](y)</code></pre>
+    <p>Aunque <codeinline>typeof</codeinline> es uno de los operadores de mayor prioridad, la operación <codeinline>typeof</codeinline> se forma sobre el resultado del acceso a la propiedad, el índice del array y la invocación a la función, todos los cuales tienen mayor prioridad que los operadores.</p>
+    <p>En la práctica, si no está seguro de la precedencia de los operadores, lo más sencillo es utilizar paréntesis para explicitar el orden de evaluación. Las reglas que es importante conocer son las siguientes: la multiplicación y la división se realizan antes que la suma y la resta, y la asignación tiene una precedencia muy baja y casi siempre se realiza en último lugar.</p>
+    <p>Cuando se añaden nuevos operadores a JavaScript, no siempre encajan de forma natural en este esquema de precedencia. El operador <codeinline>??</codeinline> ( <a href="#13-2">§4.13.2</a>) se muestra en la tabla como de menor precedencia que <codeinline>||</codeinline> y <codeinline>&&</codeinline>, pero, de hecho, su precedencia relativa a esos operadores no está definida, y ES2020 requiere que use explícitamente paréntesis si mezcla <codeinline>&&</codeinline> con <codeinline>||</codeinline> o <codeinline>&&</codeinline>. De manera similar, el nuevo operador de exponenciación <codeinline>**</codeinline> no tiene una precedencia bien definida con respecto al operador de negación unario, y debe usar paréntesis cuando combine negación con exponenciación.</p>
+  </section>
+  <section id="7-5">
+    <h2>4.7.5 Asociatividad de operadores</h2>
+    <p>En la <a href="tabla4-1">Tabla 4-1</a> la columna A especifica la <em>asociatividad</em> del operador. Un valor de L especifica la asociatividad de izquierda a derecha, y un valor de R especifica la asociatividad de derecha a izquierda. La asociatividad de un operador especifica el orden en que se realizan las operaciones de la misma precedencia. La asociatividad de izquierda a derecha significa que las operaciones se realizan de izquierda a derecha. Por ejemplo, el operador de resta tiene asociatividad de izquierda a derecha, así:</p>
+    <pre>
+    <code class="language-js">w = x - y - z;</code></pre>
+    <p>es lo mismo que:</p>
+    <pre>
+    <code class="language-js">w = ((x - y) - z);</code></pre>
+    <p>Por otra parte, las siguientes expresiones:</p>
+    <pre>
+    <code class="language-js">y = a ** b ** c;
+    x = ~-y;
+    w = x = y = z;
+    q = a?b:c?d:e?f:g;</code></pre>
+    <p>son equivalentes:</p>
+    <pre>
+    <code class="language-js">y = (a ** (b ** c));
+    x = ~(-y);
+    w = (x = (y = z));
+    q = a?b:(c?d:(e?f:g));</code></pre>
+    <p>porque los operadores de exponenciación, unario, asignación y condicional ternario tienen asociatividad de derecha a izquierda.</p>
+  </section>
+  <section id="7-6" class="py-4 xs:py-5 sm:py-6">
+    <h2>4.7.6 Orden de evaluación</h2>
+    <p>La precedencia de operadores y la asociatividad especifican el orden en que se realizan las operaciones en una expresión compleja, pero no especifican el orden en que se evalúan las subexpresiones. JavaScript siempre evalúa las expresiones en un orden estrictamente de izquierda a derecha. En la expresión <codeinline>w = x + y * z</codeinline>, por ejemplo, la subexpresión <codeinline>w</codeinline> se evalúa en primer lugar, seguida de <codeinline>x</codeinline>, <codeinline>y</codeinline> y <codeinline>z</codeinline>. A continuación, los valores de <codeinline>y</codeinline> y <codeinline>z</codeinline> se multiplican, se suman al valor de <codeinline>x</codeinline> y se asignan a la variable o propiedad especificada por la expresión <codeinline>w</codeinline>. La adición de paréntesis a las expresiones puede cambiar el orden relativo de la multiplicación, la suma y la asignación, pero no el orden de evaluación de izquierda a derecha.</p>
+    <p>El orden de evaluación sólo tiene importancia si alguna de las expresiones evaluadas tiene efectos secundarios que afectan al valor de otra expresión. Si la expresión <codeinline>x</codeinline> incrementa una variable que es utilizada por la expresión <codeinline>z</codeinline>, entonces el hecho de que <codeinline>x</codeinline> se evalúe antes que <codeinline>z</codeinline> es importante.</p>
+  </section>
+  <section id="8">
+    <h2>4.8 Expresiones aritméticas</h2>
+    <p>Esta sección trata de los operadores que realizan operaciones aritméticas u otras manipulaciones numéricas en sus operandos. Los operadores de exponenciación, multiplicación, división y sustracción son sencillos y se tratan en primer lugar. El operador de suma recibe una subsección propia porque también puede realizar la concatenación de cadenas y tiene algunas reglas de conversión de tipos inusuales. Los operadores unarios y los operadores bit a bit también se tratan en subsecciones propias.</p>
+    <p>La mayoría de estos operadores aritméticos (excepto los que se indican a continuación) pueden utilizarse con operandos BigInt (véase <a href="capitulo-3#2-5">§3.2.5</a> ) o con números normales, siempre que no se mezclen los dos tipos.</p>
+    <p>Los operadores aritméticos básicos son <codeinline>**</codeinline> (exponenciación), <codeinline>*</codeinline> (multiplicación), <codeinline>/</codeinline> (división), <codeinline>%</codeinline> (módulo: resto después de la división), <codeinline>+</codeinline> (suma) y <codeinline>-</codeinline> (resta). Como se ha indicado, hablaremos del operador <codeinline>+</codeinline> en una sección aparte. Los otros cinco operadores básicos simplemente evalúan sus operandos, convierten los valores en números si es necesario y, a continuación, calculan la potencia, el producto, el cociente, el resto o la diferencia. No numérico los operandos que no pueden convertirse en números se convierten en el valor <codeinline>NaN</codeinline>. Si cualquiera de los operandos es (o se convierte en) <codeinline>NaN</codeinline>, el resultado de la operación es (casi siempre) <codeinline>NaN</codeinline>.</p>
+    <p>El operador <codeinline>**</codeinline> tiene mayor precedencia que <codeinline>*</codeinline>, <codeinline>/</codeinline> y <codeinline>%</codeinline> (que a su vez tienen mayor precedencia que <codeinline>+</codeinline> y <codeinline>-</codeinline>). A diferencia de los otros operadores, <codeinline>**</codeinline> funciona de derecha a izquierda, por lo que <codeinline>2**2**3</codeinline> es lo mismo que <codeinline>2**8</codeinline>, no que <codeinline>4**3</codeinline>. Existe una ambigüedad natural en expresiones como <codeinline>-3**2</codeinline>. Dependiendo de la precedencia relativa del signo menos unario y de la exponenciación, esa expresión podría significar <codeinline>(-3)**2</codeinline> o <codeinline>--(3**2)</codeinline>. Los distintos lenguajes manejan esto de forma diferente, y en lugar de tomar partido, JavaScript simplemente convierte en un error sintáctico omitir los paréntesis en este caso, obligándole a escribir una expresión inequívoca. <codeinline>**</codeinline> es el operador aritmético más reciente de JavaScript: se añadió al lenguaje con ES2016. Sin embargo, la función <codeinline>Math.pow()</codeinline> ha estado disponible desde las primeras versiones de JavaScript y realiza exactamente la misma operación que el operador <codeinline>**</codeinline>.</p>
+    <p>El operador <codeinline>/</codeinline> divide el primer operando por el segundo. Si está acostumbrado a lenguajes de programación que distinguen entre números enteros y de coma flotante, es posible que espere obtener un resultado entero al dividir un número entero por otro. En JavaScript, sin embargo, todos los números son de coma flotante, por lo que todas las operaciones de división tienen resultados de coma flotante: <codeinline>5/2</codeinline> equivale a <codeinline>2.5</codeinline>, no a <codeinline>2</codeinline>. La división por cero produce infinitos positivos o negativos, mientras que <codeinline>0/0</codeinline> se evalúacomo <codeinline>NaN</codeinline>: en ninguno de estos casos se produce un error.</p>
+    <p>El operador <codeinline>%</codeinline> calcula el primer operando módulo el segundo operando. En otras palabras, devuelve el resto de la división entera del primer operando por el segundo operando. El signo del resultado es el mismo que el del primer operando. Por ejemplo, <codeinline>5 % 2</codeinline> se evalúacomo <codeinline>1</codeinline>, y <codeinline>-5 % 2</codeinline> se evalúa como <codeinline>-1</codeinline>.</p>
+    <p>Aunque el operador módulo se utiliza normalmente con operandos enteros, también funciona con valores de coma flotante. Por ejemplo, <codeinline>6.5 % 2.1</codeinline> equivale a <codeinline>0.2</codeinline>.</p>
+  </section>
+  <section id="8-1" class="py-4 xs:py-5 sm:py-6">
+    <h2>4.8.1 Operador de +</h2>
+    <p>El operador binario <codeinline>+</codeinline> suma operandos numéricos o concatena operandos de cadena:</p>
+    <pre>
+    <code class="language-js">1 + 2                   // => 3
+    "hello" + " " + "there" // => "hello there"
+    "1" + "2"               // => "12"</code></pre>
+    <p>Cuando los valores de ambos operandos son números, o ambos son cadenas, entonces es obvio lo que hace el operador <codeinline>+</codeinline>. En cualquier otro caso, sin embargo, es necesaria la conversión de tipos, y la operación a realizar depende de la conversión efectuada. Las reglas de conversión de <codeinline>+</codeinline> dan prioridad a la concatenación de cadenas: si uno de los operandos es una cadena o un objeto que se convierte en cadena, el otro operando se convierte en cadena y se realiza la concatenación. La suma sólo se realiza si ninguno de los dos operandos es una cadena.</p>
+    <p>Técnicamente, el operador <codeinline>+</codeinline> se comporta así:</p>
+    <ul>
+      <li class="font-normal">Si alguno de los valores de su operando es un objeto, lo convierte en una primitiva mediante el algoritmo de conversión de objetos a primitivas descrito en <a href="capitulo-3#9-3">§3.9.3</a> Los objetos Date se convierten mediante su método <codeinline>toString()</codeinline>, y todos los demás objetos se convierten mediante <codeinline>valueOf()</codeinline>, si dicho método devuelve un valor primitivo. Sin embargo, la mayoría de los objetos no tienen un método <codeinline>valueOf()</codeinline> utilizable, por lo que también se convierten mediante <codeinline>toString()</codeinline>.</li>
+      <li class="font-normal">Tras la conversión de objeto a primitivo, si alguno de los operandos es una cadena, el otro se convierte en cadena y se realiza la concatenación.</li>
+      <li class="font-normal">En caso contrario, ambos operandos se convierten en números (o en <codeinline>NaN</codeinline> y se realiza la suma.</li>
+    </ul>
+    <p>He aquí algunos ejemplos:</p>
+    <pre>
+    <code class="language-js">1 + 2         // => 3: suma
+    "1" + "2"     // => "12": concatenación
+    "1" + 2       // => "12": concatenación después numérico-a-string
+    1 + &lbrace;} // => "1[object Object]": concatenación después objeto-a-string
+    true + true   // => 2: suma después booleano-a-numérico
+    2 + null      // => 2: suma después null a cero
+    2 + undefined // => NaN: suma despues undefined se convierte a NaN</code></pre>
+    <p>Por último, es importante tener en cuenta que cuando el operador <codeinline>+</codeinline> se utiliza con cadenas y números, puede no ser asociativo. Es decir, el resultado puede depender del orden en que se realicen las operaciones.</p>
+    <p>Por ejemplo:</p>
+    <pre>
+    <code class="language-js">1 + 2 + " blind mice"   // => "3 blind mice"
+    1 + (2 + " blind mice") // => "12 blind mice"</code></pre>
+    <p>La primera línea no tiene paréntesis, y el operador <codeinline>+</codeinline> tiene asociatividad de izquierda a derecha, por lo que los dos números se suman primero, y su suma se concatena con la cadena. En la segunda línea, los paréntesis alteran este orden de operaciones: el número 2 se concatena con la cadena para producir una nueva cadena. A continuación, el número 1 se concatena con la nueva cadena para obtener el resultado final.</p>
   </section>
 </Layoutjavascript>
