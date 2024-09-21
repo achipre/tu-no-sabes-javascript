@@ -101,12 +101,12 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Esta forma de expresión de acceso a propiedades a veces se denomina “optional chaining” porque también funciona para expresiones de acceso a propiedades “chained” más largas como ésta:</p>
     <pre>
     <code class="language-js">let a = &lbrace; b: null };
-    a.b?.c.d // => undefined</code></pre>
+    a.b?.c.d      // => undefined</code></pre>
     <p><codeinline>a</codeinline> es un objeto, por lo que <codeinline>a.b</codeinline> es una expresión de acceso a propiedades válida. Pero el valor de <codeinline>a.b</codeinline> es <codeinline>null</codeinline>, por lo que <codeinline>a.b.c</codeinline> lanzaría un TypeError. Usando <codeinline>?.</codeinline> en lugar de <codeinline>.</codeinline> evitamos el error de tipo, y <codeinline>a.b?.c</codeinline> se evalúa como <codeinline>undefined</codeinline>. Esto significa que </codeinline>(a.b?.c).d</codeinline> lanzará un TypeError, porque esa expresión intenta acceder a una propiedad del valor <codeinline>undefined</codeinline>. Pero -y esta es una parte muy importante del "encadenamiento opcional"-<codeinline>a.b?.c.d</codeinline> (sin los paréntesis) simplemente evalúa a <codeinline>undefined</codeinline> y no lanza un error. Esto se debe a que el acceso a propiedades con <codeinline>?.</codeinline> es un "cortocircuito": si la subexpresión a la izquierda de <codeinline>?.</codeinline> se evalúa como <codeinline>null</codeinline> o <codeinline>undefined</codeinline>, entonces toda la expresión se evalúa inmediatamente como <codeinline>undefined</codeinline> sin ningún otro intento de acceso a propiedades.</p>
     <p>Por supuesto, si <codeinline>a.b</codeinline> es un objeto, y si ese objeto no tiene una propiedad llamada <codeinline>c</codeinline>, entonces <codeinline>a.b?.c.d</codeinline> lanzará de nuevo un TypeError, y querremos usar otro acceso condicional a propiedades</p>
     <pre>
     <code class="language-js">let a = &lbrace; b: &lbrace;} };
-    a.b?.c?.d // => undefined</code></pre>
+    a.b?.c?.d     // => undefined</code></pre>
     <p>El acceso condicional a propiedades también es posible utilizando <codeinline>?.[]</codeinline> en lugar de <codeinline>[]</codeinline>. En la expresión <codeinline>a?.[b][c]</codeinline>, si el valor de a es <codeinline>null</codeinline> o <codeinline>undefined</codeinline>, toda la expresión se evalúa inmediatamente como <codeinline>undefined</codeinline>, y las subexpresiones <codeinline>b</codeinline> y <codeinline>c</codeinline> ni siquiera se evalúan. Si alguna de estas expresiones tiene efectos secundarios, éstos no se producirán si <codeinline>a</codeinline> no está definida:</p>
     <pre>
     <code class="language-js">let a;        // Uy, olvidamos inicializar esta variable
@@ -117,7 +117,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       index       // => 1: el incremento se produce antes de que se lance el error
     }
     a?.[index++]  // => undefined: por que a es undefined
-    index // => 1: no se incrementa por que ?.[] corto-circuita
+    index         // => 1: no se incrementa por que ?.[] corto-circuita
     a[index++]    // !TypeError: no se puede indexar undefined.</code></pre>
     <p>El acceso condicional a propiedades con <codeinline>?.</codeinline> y <codeinline>?.[]</codeinline> es una de las características más recientes de Java- Script. Desde principios de 2020, esta nueva sintaxis es compatible con las versiones actuales o beta de la mayoría de los principales navegadores.</p>
   </section>
@@ -370,56 +370,56 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
               <td class="max-w-72 pl-4">Computa a nivel de bits &</td>
               <td class="max-w-lg pl-4">L</td>
               <td class="max-w-lg pl-4">2</td>
-              <td class="max-w-lg px-4">any, any → bool</td>
+              <td class="max-w-lg px-4">int, int → int</td>
             </tr>
             <tr class="bg-[#f6e4c5] border-b-2 border-amber-900">
               <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">^</codeinline></td>
               <td class="max-w-72 pl-4">Computa a nivel de bits XOR</td>
               <td class="max-w-lg pl-4">L</td>
               <td class="max-w-lg pl-4">2</td>
-              <td class="max-w-lg px-4">any, any → bool</td>
+              <td class="max-w-lg px-4">int, int → int</td>
             </tr>
             <tr class="border-b-2 border-amber-900">
               <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">|</codeinline></td>
               <td class="max-w-72 pl-4">Computa a nivel de bits OR</td>
               <td class="max-w-lg pl-4">L</td>
               <td class="max-w-lg pl-4">2</td>
-              <td class="max-w-lg px-4">any, any → bool</td>
+              <td class="max-w-lg px-4">int, int → int</td>
             </tr>
             <tr class="bg-[#f6e4c5] border-b-2 border-amber-900">
               <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">&&</codeinline></td>
               <td class="max-w-72 pl-4">Computa valores logicos AND</td>
               <td class="max-w-lg pl-4">L</td>
               <td class="max-w-lg pl-4">2</td>
-              <td class="max-w-lg px-4">any, any → bool</td>
+              <td class="max-w-lg px-4">any, any → any</td>
             </tr>
             <tr class="border-b-2 border-amber-900">
               <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">||</codeinline></td>
               <td class="max-w-72 pl-4">Computa valores logicos OR</td>
               <td class="max-w-lg pl-4">L</td>
               <td class="max-w-lg pl-4">2</td>
-              <td class="max-w-lg px-4">any, any → bool</td>
+              <td class="max-w-lg px-4">any, any → any</td>
             </tr>
             <tr class="bg-[#f6e4c5] border-b-2 border-amber-900">
               <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">??</codeinline></td>
               <td class="max-w-72 pl-4">Escoge el primer operando definido</td>
               <td class="max-w-lg pl-4">L</td>
               <td class="max-w-lg pl-4">2</td>
-              <td class="max-w-lg px-4">any, any → bool</td>
+              <td class="max-w-lg px-4">any, any → any</td>
             </tr>
             <tr class="border-b-2 border-amber-900">
               <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">?:</codeinline></td>
               <td class="max-w-72 pl-4">Escoge el segundo o el tercero operando</td>
               <td class="max-w-lg pl-4">R</td>
               <td class="max-w-lg pl-4">3</td>
-              <td class="max-w-lg px-4">any, any → bool</td>
+              <td class="max-w-lg px-4">bool, any, any → any</td>
             </tr>
             <tr class="bg-[#f6e4c5]">
               <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">=</codeinline></td>
               <td class="max-w-72 pl-4">Asigna el valor a una variable o propiedad</td>
               <td class="max-w-lg pl-4">R</td>
               <td class="max-w-lg pl-4">2</td>
-              <td class="max-w-lg px-4">any, any → bool</td>
+              <td class="max-w-lg px-4">lval, any → any</td>
             </tr>
             <tr class="border-b-2 border-amber-900">
               <td class="max-w-40 pl-4">
@@ -438,7 +438,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
               <td class="max-w-72 pl-4">Operar y asignar</td>
               <td class="max-w-lg pl-4">R</td>
               <td class="max-w-lg pl-4">2</td>
-              <td class="max-w-lg px-4">any, any → bool</td>
+              <td class="max-w-lg px-4">lval, any → any</td>
             </tr>
             <tr class="bg-[#f6e4c5]">
               <td class="max-w-lg pl-4">
@@ -447,7 +447,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
               <td class="max-w-72 pl-4">Descarta el primer operando, devuelve el segundo</td>
               <td class="max-w-lg pl-4">L</td>
               <td class="max-w-lg pl-4">2</td>
-              <td class="max-w-lg px-4">any, any → bool</td>
+              <td class="max-w-lg px-4">any, any → any</td>
             </tr>
         </tbody>
       </table>
@@ -488,7 +488,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     typeof my.functions[x](y)</code></pre>
     <p>Aunque <codeinline>typeof</codeinline> es uno de los operadores de mayor prioridad, la operación <codeinline>typeof</codeinline> se forma sobre el resultado del acceso a la propiedad, el índice del array y la invocación a la función, todos los cuales tienen mayor prioridad que los operadores.</p>
     <p>En la práctica, si no está seguro de la precedencia de los operadores, lo más sencillo es utilizar paréntesis para explicitar el orden de evaluación. Las reglas que es importante conocer son las siguientes: la multiplicación y la división se realizan antes que la suma y la resta, y la asignación tiene una precedencia muy baja y casi siempre se realiza en último lugar.</p>
-    <p>Cuando se añaden nuevos operadores a JavaScript, no siempre encajan de forma natural en este esquema de precedencia. El operador <codeinline>??</codeinline> ( <a href="#13-2">§4.13.2</a>) se muestra en la tabla como de menor precedencia que <codeinline>||</codeinline> y <codeinline>&&</codeinline>, pero, de hecho, su precedencia relativa a esos operadores no está definida, y ES2020 requiere que use explícitamente paréntesis si mezcla <codeinline>&&</codeinline> con <codeinline>||</codeinline> o <codeinline>&&</codeinline>. De manera similar, el nuevo operador de exponenciación <codeinline>**</codeinline> no tiene una precedencia bien definida con respecto al operador de negación unario, y debe usar paréntesis cuando combine negación con exponenciación.</p>
+    <p>Cuando se añaden nuevos operadores a JavaScript, no siempre encajan de forma natural en este esquema de precedencia. El operador <codeinline>??</codeinline> ( <a href="#13-2">§4.13.2</a>) se muestra en la tabla como de menor precedencia que <codeinline>||</codeinline> y <codeinline>&&</codeinline>, pero, de hecho, su precedencia relativa a esos operadores no está definida, y ES2020 requiere que use explícitamente paréntesis si mezcla <codeinline>??</codeinline> con <codeinline>||</codeinline> o <codeinline>&&</codeinline>. De manera similar, el nuevo operador de exponenciación <codeinline>**</codeinline> no tiene una precedencia bien definida con respecto al operador de negación unario, y debe usar paréntesis cuando combine negación con exponenciación.</p>
   </section>
   <section id="7-5">
     <h2>4.7.5 Asociatividad de operadores</h2>
@@ -524,7 +524,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Los operadores aritméticos básicos son <codeinline>**</codeinline> (exponenciación), <codeinline>*</codeinline> (multiplicación), <codeinline>/</codeinline> (división), <codeinline>%</codeinline> (módulo: resto después de la división), <codeinline>+</codeinline> (suma) y <codeinline>-</codeinline> (resta). Como se ha indicado, hablaremos del operador <codeinline>+</codeinline> en una sección aparte. Los otros cinco operadores básicos simplemente evalúan sus operandos, convierten los valores en números si es necesario y, a continuación, calculan la potencia, el producto, el cociente, el resto o la diferencia. No numérico los operandos que no pueden convertirse en números se convierten en el valor <codeinline>NaN</codeinline>. Si cualquiera de los operandos es (o se convierte en) <codeinline>NaN</codeinline>, el resultado de la operación es (casi siempre) <codeinline>NaN</codeinline>.</p>
     <p>El operador <codeinline>**</codeinline> tiene mayor precedencia que <codeinline>*</codeinline>, <codeinline>/</codeinline> y <codeinline>%</codeinline> (que a su vez tienen mayor precedencia que <codeinline>+</codeinline> y <codeinline>-</codeinline>). A diferencia de los otros operadores, <codeinline>**</codeinline> funciona de derecha a izquierda, por lo que <codeinline>2**2**3</codeinline> es lo mismo que <codeinline>2**8</codeinline>, no que <codeinline>4**3</codeinline>. Existe una ambigüedad natural en expresiones como <codeinline>-3**2</codeinline>. Dependiendo de la precedencia relativa del signo menos unario y de la exponenciación, esa expresión podría significar <codeinline>(-3)**2</codeinline> o <codeinline>--(3**2)</codeinline>. Los distintos lenguajes manejan esto de forma diferente, y en lugar de tomar partido, JavaScript simplemente convierte en un error sintáctico omitir los paréntesis en este caso, obligándole a escribir una expresión inequívoca. <codeinline>**</codeinline> es el operador aritmético más reciente de JavaScript: se añadió al lenguaje con ES2016. Sin embargo, la función <codeinline>Math.pow()</codeinline> ha estado disponible desde las primeras versiones de JavaScript y realiza exactamente la misma operación que el operador <codeinline>**</codeinline>.</p>
     <p>El operador <codeinline>/</codeinline> divide el primer operando por el segundo. Si está acostumbrado a lenguajes de programación que distinguen entre números enteros y de coma flotante, es posible que espere obtener un resultado entero al dividir un número entero por otro. En JavaScript, sin embargo, todos los números son de coma flotante, por lo que todas las operaciones de división tienen resultados de coma flotante: <codeinline>5/2</codeinline> equivale a <codeinline>2.5</codeinline>, no a <codeinline>2</codeinline>. La división por cero produce infinitos positivos o negativos, mientras que <codeinline>0/0</codeinline> se evalúacomo <codeinline>NaN</codeinline>: en ninguno de estos casos se produce un error.</p>
-    <p>El operador <codeinline>%</codeinline> calcula el primer operando módulo el segundo operando. En otras palabras, devuelve el resto de la división entera del primer operando por el segundo operando. El signo del resultado es el mismo que el del primer operando. Por ejemplo, <codeinline>5 % 2</codeinline> se evalúacomo <codeinline>1</codeinline>, y <codeinline>-5 % 2</codeinline> se evalúa como <codeinline>-1</codeinline>.</p>
+    <p>El operador <codeinline>%</codeinline> calcula el primer operando módulo el segundo operando. En otras palabras, devuelve el resto de la división entera del primer operando por el segundo operando. El signo del resultado es el mismo que el del primer operando. Por ejnpmemplo, <codeinline>5 % 2</codeinline> se evalúacomo <codeinline>1</codeinline>, y <codeinline>-5 % 2</codeinline> se evalúa como <codeinline>-1</codeinline>.</p>
     <p>Aunque el operador módulo se utiliza normalmente con operandos enteros, también funciona con valores de coma flotante. Por ejemplo, <codeinline>6.5 % 2.1</codeinline> equivale a <codeinline>0.2</codeinline>.</p>
   </section>
   <section id="8-1" class="py-4 xs:py-5 sm:py-6">
@@ -546,7 +546,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <code class="language-js">1 + 2         // => 3: suma
     "1" + "2"     // => "12": concatenación
     "1" + 2       // => "12": concatenación después numérico-a-string
-    1 + &lbrace;} // => "1[object Object]": concatenación después objeto-a-string
+    1 + &lbrace;}        // => "1[object Object]": concatenación después objeto-a-string
     true + true   // => 2: suma después booleano-a-numérico
     2 + null      // => 2: suma después null a cero
     2 + undefined // => NaN: suma despues undefined se convierte a NaN</code></pre>
@@ -556,5 +556,184 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <code class="language-js">1 + 2 + " blind mice"   // => "3 blind mice"
     1 + (2 + " blind mice") // => "12 blind mice"</code></pre>
     <p>La primera línea no tiene paréntesis, y el operador <codeinline>+</codeinline> tiene asociatividad de izquierda a derecha, por lo que los dos números se suman primero, y su suma se concatena con la cadena. En la segunda línea, los paréntesis alteran este orden de operaciones: el número 2 se concatena con la cadena para producir una nueva cadena. A continuación, el número 1 se concatena con la nueva cadena para obtener el resultado final.</p>
+  </section>
+  <section id="8-2">
+    <h2>4.8.2 Operadores aritméticos unarios</h2>
+    <p>Los operadores unarios modifican el valor de un único operando para producir un nuevo valor. En JavaScript, todos los operadores unarios tienen precedencia alta y son asociativos a la derecha. Los operadores aritméticos unarios descritos en esta sección (<codeinline>+</codeinline>, <codeinline>-</codeinline>, <codeinline>++</codeinline> y <codeinline>--</codeinline>) convierten su único operando en un número, si es necesario. Tenga en cuenta que los caracteres de puntuación <codeinline>+</codeinline> y <codeinline>-</codeinline> se utilizan como operadores unarios y binarios.</p>
+    <p>Los operadores aritméticos unarios son los siguientes:</p>
+    <div>
+      <p><em>Más unario (<codeinline>+</codeinline>)</em></p>
+      <p class="ml-5 xs:ml-6 sm:ml-7 md:ml-8">El operador unario más convierte su operando en un número (o en <codeinline>NaN</codeinline>) y devuelve el valor convertido. Cuando se utiliza con un operando que ya es un número, no hace nada. Este operador no puede utilizarse con valores BigInt, ya que no pueden convertirse en números normales.</p>
+    </div>
+    <div>
+      <p><em>Menos unario (<codeinline>-</codeinline>)</em></p>
+      <p class="ml-5 xs:ml-6 sm:ml-7 md:ml-8">Cuando <codeinline>-</codeinline> se utiliza como operador unario, convierte su operando en un número, si es necesario, y luego cambia el signo del resultado.</p>
+    </div>
+    <div>
+      <p><em>Incremento (<codeinline>++</codeinline>)</em></p>
+      <div class="flex flex-col gap-4 xs:gap-5 sm:gap-6">
+        <p class="ml-5 xs:ml-6 sm:ml-7 md:ml-8">El operador <codeinline>++</codeinline> incrementa (es decir, suma 1) su único operando, que debe ser un lvalue (una variable, un elemento de una matriz o una propiedad de un objeto). El operador convierte su operando en un número, suma 1 a ese número y asigna el valor incrementado de nuevo a la variable, elemento o propiedad.</p>
+        <p class="ml-5 xs:ml-6 sm:ml-7 md:ml-8">El valor de retorno del operador <codeinline>++</codeinline> depende de su posición respecto al operando. Cuando se utiliza antes del operando, se conoce como operador de preincremento, incrementa el operando y se evalúa al valor incrementado de ese operando. Cuando se utiliza después del operando, donde se conoce como operador de post-incremento, incrementa su operando pero se evalúa al valor <em>no incrementado</em> de ese operando. Considere la diferencia entre estas dos líneas de código:</p>
+        <pre>
+        <code class="language-js">let i = 1, j = ++i;   // i and j are both 2
+        let n = 1, m = n++;   // n is 2, m is 1</code></pre>
+        <p class="ml-5 xs:ml-6 sm:ml-7 md:ml-8">Tenga en cuenta que la expresión <codeinline>x++</codeinline> no siempre es lo mismo que <codeinline>x=x+1</codeinline>. El operador <codeinline>++</codeinline> nunca realiza una concatenación de cadenas: siempre convierte su operando en un número y lo incrementa. Si <codeinline>x</codeinline> es la cadena "1", <codeinline>++x</codeinline> es el número 2, pero <codeinline>x+1</codeinline> es la cadena "11".</p>
+        <p class="ml-5 xs:ml-6 sm:ml-7 md:ml-8">Tenga en cuenta también que, debido a la inserción automática de punto y coma de JavaScript, no puede insertar un salto de línea entre el operador de postincremento y el operando que lo precede. Si lo hace, JavaScript tratará el operando como una sentencia completa por sí misma e insertará un punto y coma antes.</p>
+        <p class="ml-5 xs:ml-6 sm:ml-7 md:ml-8">Este operador, tanto en su forma de preincremento como de postincremento, se utiliza normalmente para incrementar un contador que controla un bucle for (<a href="capitulo-5#4-3">§5.4.3</a>).</p>
+      </div>
+    </div>
+    <div>
+      <p><em>Disminución (<codeinline>--</codeinline>)</em></p>
+      <p class="ml-5 xs:ml-6 sm:ml-7 md:ml-8">El operador <codeinline>--</codeinline> espera un operando lvalue. Convierte el valor del operando en un número, resta 1 y asigna el valor decrementado de nuevo al operando. Al igual que el operador <codeinline>++</codeinline>, el valor de retorno de <codeinline>--</codeinline> depende de su posición con respecto al operando. Cuando se utiliza antes del operando, decrementa y devuelve el valor <em>decrementado</em>. Cuando se utiliza después del operando, decrementa el operando pero devuelve el valor sin decuentar. Cuando se utiliza después de su operando, no se permite ningún salto de línea entre el operando y el operador.</p>
+    </div>
+  </section>
+  <section id="8-3" class="py-4 xs:py-5 sm:py-6">
+    <h2>4.8.3 Operadores bit a bit</h2>
+    <p>Los operadores bit a bit (bitwise) realizan una manipulación de bajo nivel de los bits en la representación binaria de los números. Aunque no realizan operaciones aritméticas tradicionales, aquí se clasifican como operadores aritméticos porque operan con operandos numéricos y devuelven un valor numérico. Cuatro de estos operadores realizan álgebra booleana en los bits individuales de los operandos, comportándose como si cada bit de cada operando fuera un valor booleano (1=verdadero, 0=falso). Los otros tres operadores bit a bit se utilizan para desplazar bits a izquierda y derecha. Estos operadores no son de uso común en la programación de JavaScript, y si usted no está familiarizado con la representación binaria de los enteros, incluyendo la representación del complemento a dos de los enteros negativos, probablemente puede saltarse esta sección.</p>
+    <p>Los operadores bit a bit esperan operandos enteros y se comportan como si esos valores se representaran como enteros de 32 bits en lugar de valores de coma flotante de 64 bits. Estos operadores convierten sus operandos en números, si es necesario, y luego coaccionan los valores numéricos a enteros de 32 bits eliminando cualquier parte fraccionaria y cualquier bit más allá del 32. Los operadores de desplazamiento requieren un operando a la derecha entre 0 y 31. Después de convertir este operando en un entero de 32 bits sin signo, eliminan cualquier bit más allá del 5o, lo que produce un número en el rango apropiado. Sorprendentemente, <codeinline>NaN</codeinline>, <codeinline>Infinity</codeinline> y <codeinline>-Infinity</codeinline> se convierten en 0 cuando se utilizan como operandos de estos operadores bit a bit.</p>
+    <p>Todos estos operadores bit a bit, excepto <codeinline>>>></codeinline>, pueden utilizarse con operandos numéricos normales o con operandos BigInt (véase <a href="capitulo-3#2-5">§3.2.5</a>).</p>
+    <div>
+      <p><em>Bitwise AND (<codeinline>&</codeinline>)</em></p>
+      <p class="ml-5 xs:ml-6 sm:ml-7 md:ml-8">El operador <codeinline>&</codeinline> realiza una operación booleana AND en cada bit de sus argumentos enteros. Un bit se activa en el resultado sólo si el bit correspondiente está activado en ambos operandos. Por ejemplo, <codeinline>0x1234 & 0x00FF</codeinline> equivale a <codeinline>0x0034</codeinline>.</p>
+    </div>
+    <div>
+      <p><em>Bitwise OR (<codeinline>|</codeinline>)</em></p>
+      <p class="ml-5 xs:ml-6 sm:ml-7 md:ml-8">El operador <codeinline>|</codeinline> realiza una operación booleana OR en cada bit de sus argumentos enteros. Un bit se activa en el resultado si el bit correspondiente está activado en uno o ambos operandos. Por ejemplo, <codeinline>0x1234 | 0x00FF</codeinline> equivale a <codeinline>0x12FF</codeinline>.</p>
+    </div>
+    <div>
+      <p><em>Bitwise XOR (<codeinline>^</codeinline>)</em></p>
+      <p class="ml-5 xs:ml-6 sm:ml-7 md:ml-8">El operador <codeinline>^</codeinline> realiza una operación booleana OR exclusiva en cada bit de sus argumentos enteros. OR exclusivo significa que o bien el operando uno es <codeinline>true</codeinline> o bien el operando dos es <codeinline>true</codeinline>, pero no ambos. Se activa un bit en el resultado de esta operación si se activa el bit correspondiente en uno (pero no en ambos) de los dos operandos. Por ejemplo, <codeinline>0xFF00 ^ 0xF0F0</codeinline> equivale a <codeinline>0x0F0F</codeinline>.</p>
+    </div>
+    <div>
+      <p><em>Bitwise NOT (<codeinline>~</codeinline>)</em></p>
+      <p class="ml-5 xs:ml-6 sm:ml-7 md:ml-8">El operador <codeinline>~</codeinline> es un operador unario que aparece antes de su único operando entero. Funciona invirtiendo todos los bits del operando. Debido a la forma en que se representan los enteros con signo en JavaScript, aplicar el operador <codeinline>~</codeinline> a un valor equivale a cambiar su signo y restar 1. Por ejemplo, <codeinline>~0x0F</codeinline> equivale a <codeinline>0xFFFFFFF0</codeinline>, es decir, -16.</p>
+    </div>
+    <div>
+      <p><em>Desplazamiento a la izquierda (<codeinline>&lt;&lt;</codeinline>)</em></p>
+      <p class="ml-5 xs:ml-6 sm:ml-7 md:ml-8">El operador <codeinline>&lt;&lt;</codeinline> desplaza todos los bits de su primer operando hacia la izquierda el número de posiciones especificado en el segundo operando, que debe ser un número entero comprendido entre 0 y 31. Por ejemplo, en la operación a <codeinline>&lt;&lt; 1</codeinline>, el primer bit (el bit de unos) de <codeinline>a</codeinline> se convierte en el segundo bit (el bit de dos), el segundo bit de <codeinline>a</codeinline> se convierte en el tercero, etc. Se utiliza un cero para el nuevo primer bit, y se pierde el valor del bit 32. Desplazar un valor una posición a la izquierda equivale a multiplicar por 2, desplazar dos posiciones equivale a multiplicar por 4, y así sucesivamente. Por ejemplo, <codeinline>7 &lt;&lt; 2</codeinline> equivale a 28.</p>
+    </div>
+    <div>
+      <p><em>Desplazamiento a la derecha con signo (<codeinline>&gt;&gt;</codeinline>)</em></p>
+      <p class="ml-5 xs:ml-6 sm:ml-7 md:ml-8">El operador <codeinline>&gt;&gt;</codeinline> desplaza todos los bits de su primer operando hacia la derecha el número de posiciones especificado en el segundo operando (un entero entre 0 y 31).Losbitsdesplazados a la derecha sepierden.Losbitsrellenados a la izquierda dependen del bit de signo del operando original, para preservar el signo del resultado. Si el primer operando es positivo, el resultado tiene ceros en los bits altos; si el primer operando es negativo, el resultado tiene unos en los bits altos. Desplazar un valor positivo un lugar a la derecha equivale a dividir por 2 (descartando el resto), desplazar dos lugares a la derecha equivale a una división entera por 4, y así sucesivamente. Por ejemplo, <codeinline>7 &gt;&gt; 1</codeinline> equivale a 3, pero tenga en cuenta que <codeinline>-7 &gt;&gt; 1</codeinline> equivale a -4.</p>
+    </div>
+    <div>
+      <p><em>Desplazamiento a la derecha con relleno cero (<codeinline>&gt;&gt;&gt;</codeinline>)</em></p>
+      <p class="ml-5 xs:ml-6 sm:ml-7 md:ml-8">El operador <codeinline>&gt;&gt;&gt;</codeinline> es igual que el operador <codeinline>&gt;&gt;</codeinline>, excepto en que los bits desplazados a la izquierda son siempre cero, independientemente del signo del primer operando. Esto resulta útil cuando se desea tratar valores de 32 bits con signo como si fueran enteros sin signo. <codeinline>-1 &gt;&gt; 4</codeinline> equivale a -1, pero <codeinline>-1 &gt;&gt;&gt; 4</codeinline> equivale a <codeinline>0x0FFFFFFF</codeinline>, por ejemplo. Este es el único de los operadores bitwise de JavaScript que no se puede utilizar con valores BigInt. BigInt no representa números negativos poniendo el bit alto como lo hacen los enteros de 32 bits, y este operador sólo tiene sentido para esa representación particular de complemento a dos.</p>
+    </div>
+  </section>
+  <section id="9">
+    <h2>4.9 Expresiones relacionales</h2>
+    <p>Esta sección describe los operadores relacionales de JavaScript. Estos operadores comprueban si existe una relación (como "igual a", "menor que" o "propiedad de") entre dos valores y devuelven <codeinline>true</codeinline> o <codeinline>false</codeinline> en función de si existe dicha relación. Las expresiones relacionales siempre se evalúan con un valor booleano, y ese valor se utiliza a menudo para controlar el flujo de ejecución del programa en las sentencias <codeinline>if</codeinline>, <codeinline>while</codeinline> y <codeinline>for</codeinline> (véase el <a href="capitulo-5">Capítulo 5</a> Las subsecciones siguientes documentan los operadores de igualdad y desigualdad, los operadores de comparación y los otros dos operadores relacionales de JavaScript, <codeinline>in</codeinline> e <codeinline>instanceof</codeinline>.</p>
+  </section>
+  <section id="9-1" class="py-4 xs:py-5 sm:py-6">
+    <h2>4.9.1 Operadores de igualdad y desigualdad</h2>
+    <p>Los operadores <codeinline>==</codeinline> y <codeinline>===</codeinline> comprueban si dos valores son iguales, utilizando dos definiciones diferentes de igualdad. Ambos operadores aceptan operandos de cualquier tipo, y ambos devuelven <codeinline>true</codeinline> si sus operandos son iguales y <codeinline>false</codeinline> si son diferentes. El operador <codeinline>===</codeinline> se conoce como operador de igualdad estricta (o a veces operador de identidad) y comprueba si sus dos operandos son "idénticos" utilizando una definición estricta de igualdad. El operador <codeinline>==</codeinline> se conoce como operador de igualdad; comprueba si sus dos operandos son "iguales" utilizando una definición más relajada de igualdad que permite conversiones de tipo.</p>
+    <p>Los operadores <codeinline>!=</codeinline> y <codeinline>!==</codeinline> comprueban exactamente lo contrario que los operadores <codeinline>==</codeinline> y <codeinline>===</codeinline>. El operador de desigualdad <codeinline>!=</codeinline> devuelve <codeinline>false</codeinline> si dos valores son iguales según <codeinline>==</codeinline> y <codeinline>true</codeinline> en caso contrario. El operador <codeinline>!==</codeinline> devuelve <codeinline>false</codeinline> si dos valores son estrictamente iguales y <codeinline>true</codeinline> en caso contrario. Como se verá en <a href="#10">§4.10</a>, el operador <codeinline>!</codeinline> calcula la operación booleana NOT. Esto facilita recordar que <codeinline>!=</codeinline> y <codeinline>!==</codeinline> significan"no igual a" y "no estrictamente igual a".</p>
+    <article>
+      <p class="title-article">Los operadores =, == y ===</p>
+      <p>JavaScript admite los operadores <codeinline>=</codeinline>, <codeinline>==</codeinline> y <codeinline>===</codeinline>. Asegúrese de comprender las diferencias entre estos operadores de asignación, igualdad e igualdad estricta, y tenga cuidado de utilizar el correcto al codificar. Aunque es tentador leer los tres operadores como "iguales", puede ayudar a reducir la confusión si lees "obtiene" o "se asigna" para <codeinline>=</codeinline>, "es igual a" para <codeinline>==</codeinline>, y "es estrictamente igual a" para <codeinline>===</codeinline>.</p>
+      <p>El operador <codeinline>==</codeinline> es una característica heredada de JavaScript y se considera una fuente de errores. Casi siempre se debe utilizar <codeinline>===</codeinline> en lugar de <codeinline>==</codeinline>, y <codeinline>!==</codeinline> en lugar de <codeinline>!=</codeinline>.</p>
+    </article>
+    <p>Como se menciona en <a href="capitulo-3#8">§3.8</a>, los objetos JavaScript se comparan por referencia, no por valor. Un objeto es igual a sí mismo, pero no a cualquier otro objeto. Si dos objetos distintos tienen el mismo número de propiedades, con los mismos nombres y valores, siguen sin ser iguales. Del mismo modo, dos matrices que tienen los mismos elementos en el mismo orden no son iguales entre sí.</p>
+    <p class="title-article text-left">Igualdad estricta</p>
+    <p>El operador de igualdad estricta <codeinline>===</codeinline> evalúa sus operandos y luego compara los dos valores de la siguiente manera, sin realizar ninguna conversión de tipo:</p>
+    <ul class="flex flex-col gap-4 xs:gap-5 sm:gap-6">
+      <li class="font-normal">Si los dos valores tienen tipos diferentes, no son iguales.</li>
+      <li class="font-normal">Si ambos valores son <codeinline>null</codeinline> o ambos valores son <codeinline>undefined</codeinline>, son iguales.</li>
+      <li class="font-normal">Si ambos valores son el valor booleano <codeinline>true</codeinline> o ambos son el valor booleano <codeinline>false</codeinline>, son iguales.</li>
+      <li class="font-normal">Si uno o ambos valores son <codeinline>NAN</codeinline>, no son iguales. (Esto es sorprendente, pero el valor <codeinline>NaN</codeinline> nunca es igual a ningún otro valor, ¡incluido él mismo! Para comprobar si un valor <codeinline>x</codeinline> es <codeinline>NaN</codeinline>, utilice <codeinline>x !== x</codeinline>, o la función global <codeinline>isNaN()</codeinline>).</li>
+      <li class="font-normal">Si ambos valores son números y tienen el mismo valor, son iguales. Si un valor es <codeinline>0</codeinline> y el otro es <codeinline>-0</codeinline>, también son iguales.</li>
+      <li class="font-normal">Si ambos valores son cadenas y contienen exactamente los mismos valores de 16 bits (véase la barra lateral en <a href="capitulo-3#3-3">§3.3</a>) en las mismas posiciones, son iguales. Si las cadenas difieren en longitud o contenido, no son iguales. Dos cadenas pueden tener el mismo significado y la misma apariencia visual, pero aún así estar codificadas utilizando diferentes secuencias de valores de 16 bits. JavaScript no realiza ninguna normalización Unicode, y un par de cadenas como éstas no se considera igual con los operadores <codeinline>===</codeinline> o <codeinline>==</codeinline>.</li>
+      <li class="font-normal">Si ambos valores se refieren al mismo objeto, matriz o función, son iguales. Si se refieren a objetos diferentes, no son iguales, aunque ambos objetos tengan propiedades idénticas.</li>
+    </ul>
+    <p class="title-article text-left">Igualdad con conversión de tipos</p>
+    <p>El operador de igualdad <codeinline>==</codeinline> es como el operador de igualdad estricta, pero menos estricto. Si los valores de los dos operandos no son del mismo tipo, intenta algunas conversiones de tipo y vuelve a intentar la comparación:</p>
+    <ul class="flex flex-col gap-4 xs:gap-5 sm:gap-6">
+      <li class="font-normal">Si los dos valores tienen el mismo tipo, compruebe si son estrictamente iguales como se ha descrito anteriormente. Si son estrictamente iguales, son iguales. Si no son estrictamente iguales, no son iguales.</li>
+      <li class="font-normal">Si los dos valores no tienen el mismo tipo, el operador <codeinline>==</codeinline> puede considerarlos iguales. Utiliza las siguientes reglas y conversiones de tipo para comprobar la igualdad:
+        <li class="font-normal">Si un valor es <codeinline>null</codeinline> y el otro <codeinline>undefined</codeinline>, son iguales.</li>
+        <li class="font-normal">Si un valor es un número y el otro es una cadena, convierta la cadena en un
+          número e intente de nuevo la comparación utilizando el valor convertido.</li>
+        <li class="font-normal">Si alguno de los valores es <codeinline>true</codeinline>, conviértalo en 1 y vuelva a realizar la comparación. Si alguno de los valores es <codeinline>false</codeinline>, conviértalo en 0 y vuelva a intentar la comparación.</li>
+        <li class="font-normal">Si un valor es un objeto y el otro es un número o una cadena, convierta el objeto en una primitiva utilizando el algoritmo descrito en <a href="capitulo-3#9-3">§3.9.3</a> y vuelva a intentar la comparación. Un objeto se convierte en un valor primitivo mediantesufunción <codeinline>toString()</codeinline> o su método <codeinline>valueOf()</codeinline>. Las clases incorporadas del núcleo de JavaScript intentan la conversión <codeinline>valueOf()</codeinline> antes que la conversión <codeinline>toString()</codeinline>, excepto la clase <codeinline>Date</codeinline>, que realiza la conversión <codeinline>toString()</codeinline>.</li>
+        <li class="font-normal">Cualquier otra combinación de valores no es igual.</li>
+      </li>
+    </ul>
+    <p>Como ejemplo de comprobación de la igualdad, considere la comparación:</p>
+    <pre>
+    <code class="language-js">"1" == true // => true</code></pre>
+    <p>Esta expresión se evalúa como <codeinline>true</codeinline>, lo que indica que estos valores de aspecto tan diferente son iguales. El valor booleano <codeinline>true</codeinline> se convierte primero en el número 1, y la comparación se realiza de nuevo. A continuación, la cadena <codeinline>"1"</codeinline> se convierte en el número 1. Como ahora ambos valores son iguales, la comparación devuelve verdadero.</p>
+  </section>
+  <section id="9-2">
+    <h2>9.2 Operadores de comparación</h2>
+    <p>Los operadores de comparación comprueban el orden relativo (numérico o alfabético) de sus dos operandos:</p>
+    <div>
+      <p><em>Menor que (<codeinline>&lt;</codeinline>)</em></p>
+      <p class="ml-5 xs:ml-6 sm:ml-7 md:ml-8">El operador <codeinline>&lt;</codeinline> se evalúa como <codeinline>true</codeinline> si su primer operando es menor que su segundo operando; en caso contrario, se evalúa como <codeinline>false</codeinline>.</p>
+    </div>
+    <div>
+      <p><em>Mayor que (<codeinline>&gt;</codeinline>)</em></p>
+      <p class="ml-5 xs:ml-6 sm:ml-7 md:ml-8">El operador <codeinline>&gt;</codeinline> se evalúa como <codeinline>true</codeinline> si su primer operando es mayor que su segundo operando; en caso contrario, se evalúa como <codeinline>false</codeinline>.</p>
+    </div>
+    <div>
+      <p><em>Menor o igual que (<codeinline>&lt;=</codeinline>)</em></p>
+      <p class="ml-5 xs:ml-6 sm:ml-7 md:ml-8">El operador <codeinline>&lt;=</codeinline> se evalúa como <codeinline>true</codeinline> si su primer operando es menor o igual que su segundo operando; en caso contrario, se evalúa como <codeinline>false</codeinline>.</p>
+    </div>
+    <div>
+      <p><em>Mayor o igual (<codeinline>&gt;=</codeinline>)</em></p>
+      <p class="ml-5 xs:ml-6 sm:ml-7 md:ml-8">El operador <codeinline>&gt;=</codeinline> se evalúa como <codeinline>true</codeinline> si su primer operando es mayor o igual que su segundo operando; en caso contrario, se evalúa como <codeinline>false</codeinline>.</p>
+    </div>
+    <p>Los operandos de estos operadores de comparación pueden ser de cualquier tipo. Sin embargo, la comparación sólo puede realizarse con números y cadenas, por lo que los operandos que no son números o cadenas se convierten.</p>
+    <p>La comparación y la conversión se producen del siguiente modo:</p>
+    <ul class="flex flex-col gap-4 xs:gap-5 sm:gap-6">
+      <li class="font-normal">Si cualquiera de los operandos se evalúa como un objeto, dicho objeto se convierte en un valor primitivo, tal y como se describe al final de <a href="capitulo-3#9-3">§3.9.3</a>; si su método <codeinline>valueOf()</codeinline> devuelve un valor primitivo, se utiliza dicho valor. En caso contrario, se utiliza el valor devuelto por su método <codeinline>toString()</codeinline>.</li>
+      <li class="font-normal">Si, tras cualquier conversión objeto-primitivo necesaria, ambos operandos son cadenas, las dos cadenas se comparan, utilizando el orden alfabético, donde "orden alfabético" se define por el orden numérico de los valores Unicode de 16 bits que componen las cadenas.</li>
+      <li class="font-normal">Si, tras la conversión de objeto a primitivo, al menos un operando no es una cadena, ambos operandos se convierten en números y se comparan numéricamente. <codeinline>0</codeinline> y <codeinline>-0</codeinline> se consideran iguales. <codeinline>Infinity</codeinline> es mayor que cualquier número que no sea él mismo, y <codeinline>-Infinity</codeinline> es menor que cualquier número que no sea él mismo. Si cualquiera de los operandos es (o se convierte en) <codeinline>NaN</codeinline>, el operador de comparación siempre devuelve <codeinline>false</codeinline>. Aunque los operadores aritméticos no permiten mezclar valores BigInt con números normales, los operadores de comparación sí permiten realizar comparaciones entre números y BigInts.</li>
+    </ul>
+    <p>Recuerde que las cadenas JavaScript son secuencias de valores enteros de 16 bits, y que la comparación de cadenas es sólo una comparación numérica de los valores de las dos cadenas. El orden de codificación numérica definido por Unicode puede no coincidir con el orden de colla- ción tradicional utilizado en un idioma o configuración regional concretos. Tenga en cuenta, en particular, que la comparación de cadenas distingue entre mayúsculas y minúsculas, y que todas las letras ASCII mayúsculas son "menos que" todas las letras ASCII minúsculas. Esta regla puede dar lugar a resultados confusos si no se tiene en cuenta. Por ejemplo, según el operador <codeinline>&lt;</codeinline>, la cadena "Zoo" está antes que la cadena "aardvark".</p>
+    <p>Para un algoritmo de comparación de cadenas más robusto, pruebe el método <codeinline>String.localeCompare()</codeinline>, que también tiene en c u e n t a las definiciones de orden alfabético específicas de cada localización. Para realizar comparaciones sin distinguir mayúsculas de minúsculas, puede convertir las cadenas a minúsculas o mayúsculas utilizando <codeinline>String.toLowerCase()</codeinline> o <codeinline>String.toUpperCase()</codeinline>. Y, para una herramienta de comparación de cadenas más general y mejor localizada, utilice la clase <codeinline>Intl.Collator</codeinline> descrita en <a href="capitulo-11#7-3">§11.7.3</a>.</p>
+    <p>Tanto el operador <codeinline>+</codeinline> como los operadores de comparación se comportan de forma diferente para los operandos numéricos y los de cadena. <codeinline>+</codeinline> favorece a las cadenas: realiza la concatenación si cualquiera de los operandos es una cadena. Los operadores de comparación favorecen a los números y sólo comparan cadenas si ambos operandos son cadenas:</p>
+    <pre>
+    <code class="language-javascript">1 + 2      // => 3: suma.
+    "1" + "2"  // => "12": concatenación.
+    "1" + 2    // => "12": 2 se convierte en "2".
+    11 &lt; 3     // => false: comparación numérica.
+    "11" &lt; "3" // => true: comparación de string.
+    "11" &lt; 3   // => false: comparación numérica, "11" se convierte en 11.
+    "uno" &lt; 3  // => false: comparación numérica, "uno" se convierte en NaN.</code></pre>
+    <p>Por último, tenga en cuenta que los operadores <codeinline>&lt;=</codeinline> (menor que o igual) y <codeinline>&gt;=</codeinline> (mayor que o igual) no se basan en los operadores de igualdad o igualdad estricta para determinar si dos valores son "iguales". En su lugar, el operador menor que o igual se define simplemente como "no mayor que", y el operador mayor que o igual se define como "no menor que". La dirección se produce una excepción cuando cualquiera de los operandos es (o se convierte en) <codeinline>NaN</codeinline>, en cuyo caso, los cuatro operadores de comparación devuelven <codeinline>false</codeinline>.</p>
+  </section>
+  <section id="9-3" class="py-4 xs:py-5 sm:py-6">
+    <h2>4.9.3 El operador in</h2>
+    <p>El operador <codeinline>in</codeinline> espera un operando izquierdo que sea una cadena, un símbolo o un valor que pueda convertirse en cadena. Espera un operando del lado derecho que es un objeto. Se evalúa como <codeinline>true</codeinline> si el valor del lado izquierdo es el nombre de una propiedad del objeto del lado derecho. Por ejemplo:</p>
+    <pre>
+    <code class="language-js">let point = &lbrace;x: 1, y: 1}; // Definir un objeto
+    "x" in point              // => true: el objecto tiene una propiedad llamada "x"
+    "z" in point              // => false: el objeto no tiene una propiedad llamada "z".
+    "toString" in point       // => true: el objeto hereda el método toString
+
+    let data = [7,8,9];       // Un array con elementos (indices) 0, 1, y 2
+    "0" in data               // => true: array tiene un elemento "0"
+    1 in data                 // => true: los numeros se convierten en cadenas
+    3 in data                 // => false: no hay elemento 3</code></pre>
+  </section>
+  <section id="9-4">
+    <h2>4.9.4 El operador instanceof</h2>
+    <p>El operador <codeinline>instanceof</codeinline> espera un operando del lado izquierdo que es un objeto y un operando del lado derecho que identifica una clase de objetos. El operador evalúa a <codeinline>true</codeinline> si el objeto del lado izquierdo es una instancia de la clase del lado derecho y evalúa a <codeinline>false</codeinline> en caso contrario. En el <a href="capitulo-9">capítulo 9</a> se explica que, en JavaScript, las clases de objetos se definen mediante la función constructora que los inicializa. Por lo tanto, el operando derecho de <codeinline>instanceof</codeinline> debe ser una función. He aquí algunos ejemplos:</p>
+    <pre>
+    <code class="language-js">let d = new Date(); // Crea un nuevo objeto con el constructor Date()
+    d instanceof Date   // => true: d fue creado con Date()
+    d instanceof Object // => true: todos los objetos son instancias de Object
+    d instanceof Number // => false: d no es un objeto Number
+    let a = [1, 2, 3];  // Creaun array con la sintaxis literal de array
+    a instanceof Array  // => true: a es un array
+    a instanceof Object // => true: todos los arrays son objectos
+    a instanceof RegExp // => false: los arrays no son expresiones regulares</code></pre>
+    <p>Tenga en cuenta que todos los objetos son <codeinline>Object.instanceof</codeinline>. instanceof considera las "superclases" cuando decide si un objeto es una instancia de una clase. Si el operando del lado izquierdo de <codeinline>instanceof</codeinline> no es un objeto, <codeinline>instanceof</codeinline> devuelve <codeinline>false</codeinline>. Si el operando del lado derecho no es una clase de objetos, lanza un <codeinline>TypeError</codeinline>.</p>
+    <p>Para entender cómo funciona el operador <codeinline>instanceof</codeinline>, debes entender la "cadena de prototipos". Éste es el mecanismo de herencia de JavaScript, y se describe en <a href="capitulo-6#3-2">§6.3.2</a>. Para evaluar la expresión <codeinline>o instanceof f</codeinline>, JavaScript evalúa <codeinline>f.prototype</codeinline>, y luego busca ese valor en la cadena de prototipos de <codeinline>o</codeinline>. Si lo encuentra, entonces <codeinline>o</codeinline> es una instancia de <codeinline>f</codeinline> (o de una subclase de <codeinline>f</codeinline>) y el operador devuelve verdadero. Si <codeinline>f.prototype</codeinline> no es uno de los valores de la cadena prototipo de <codeinline>o</codeinline>, entonces <codeinline>o</codeinline> no es una instancia de <codeinline>f</codeinline> y <codeinline>instanceof</codeinline> devuelve <codeinline>false</codeinline>.</p>
+  </section>
+  <section id="10"class="py-4 xs:py-5 sm:py-6">
+    <h2>4.10 Expresiones lógicas</h2>
+    <p>Los operadores lógicos <codeinline>&&</codeinline>, <codeinline>||</codeinline> y <codeinline>!</codeinline> realizan álgebra booleana y se utilizan a menudo junto con los operadores relacionales para combinar dos expresiones relacionales en una expresión más compleja. Estos operadores se describen en las subsecciones siguientes. Para comprenderlos en su totalidad, puede que desee repasar el concepto de valores verdaderos (“truthy”) y falsos (“falsy”) introducido en <a href="capitulo-3#4">§3.4</a>.</p>
   </section>
 </Layoutjavascript>
