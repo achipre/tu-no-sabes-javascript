@@ -736,4 +736,168 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>4.10 Expresiones lógicas</h2>
     <p>Los operadores lógicos <codeinline>&&</codeinline>, <codeinline>||</codeinline> y <codeinline>!</codeinline> realizan álgebra booleana y se utilizan a menudo junto con los operadores relacionales para combinar dos expresiones relacionales en una expresión más compleja. Estos operadores se describen en las subsecciones siguientes. Para comprenderlos en su totalidad, puede que desee repasar el concepto de valores verdaderos (“truthy”) y falsos (“falsy”) introducido en <a href="capitulo-3#4">§3.4</a>.</p>
   </section>
+  <section id="10-1">
+    <h2>4.10.1 Expresión lógica AND (&&)</h2>
+    <p>El operador <codeinline>&&</codeinline> puede entenderse en tres niveles diferentes. En el nivel más simple, cuando se utiliza con operandos booleanos, <codeinline>&&</codeinline> realiza la operación booleana AND sobre los dos valores: devuelve <codeinline>true</codeinline> si y sólo si tanto su primer operando como su segundo operando son <codeinline>true</codeinline>. Si uno o ambos operandos son <codeinline>false</codeinline>, devuelve <codeinline>false</codeinline>.</p>
+    </p>
+    <p><codeinline>&&</codeinline> se utiliza a menudo como conjunción para unir dos expresiones relacionales:</p>
+    <pre>
+    <code class="language-js">x === 0 && y === 0 // true si solo si x y y son iguales a 0</code></pre>
+    <p>Las expresiones relacionales siempre se evalúan como <codeinline>true</codeinline> o <codeinline>false</codeinline>, por lo que cuando se utilizan de este modo, el propio operador <codeinline>&&</codeinline> devuelve verdadero o falso. Los operadores relacionales tienen mayor precedencia que <codeinline>&&</codeinline> (y <codeinline>||</codeinline>), por lo que este tipo de expresiones pueden escribirse sin paréntesis.</p>
+    <p>Pero <codeinline>&&</codeinline> no requiere que sus operandos sean valores booleanos. Recuerde que todos los valores de JavaScript son "verdaderos" o "falsos". (Véase <a href="capitulo-3#4">§3.4</a> para más detalles. Los valores falsos son <codeinline>false</codeinline>, <codeinline>null</codeinline>, <codeinline>undefined</codeinline>, <codeinline>0</codeinline>, <codeinline>-0</codeinline>, <codeinline>NaN</codeinline> y <codeinline>""</codeinline>. Todos los demás valores, incluidos todos los objetos, son verdaderos). El segundo nivel en el que <codeinline>&&</codeinline> puede entenderse es como un operador booleano AND para valores verdaderos y falsos. Si ambos operandos son verdaderos, el operador devuelve un valor verdadero. En caso contrario, uno o ambos operandos deben ser falsos, y el operador devuelve un valor falso. En JavaScript, cualquier expresión o sentencia que espere un valor booleano funcionará con un valor verdadero o falso, por lo que el hecho de que <codeinline>&&</codeinline> no siempre devuelva <codeinline>true</codeinline> o <codeinline>false</codeinline> no causa problemas prácticos.</p>
+    <p>Observe que esta descripción dice que el operador devuelve "un valor verdadero" o "un valor falso", pero no especifica cuál es ese valor. Para ello, necesitamos describir <codeinline>&&</codeinline> en el tercer y último nivel. Este operador comienza evaluando su primer operando, la expresión de la izquierda. Si el valor de la izquierda es falso, el valor de toda la expresión también debe ser falso, por lo que <codeinline>&&</codeinline> simplemente devuelve el valor de la izquierda y ni siquiera evalúa la expresión de la derecha.</p>
+    <p>En cambio, si el valor de la izquierda es verdadero, el valor total de la expresión depende del valor de la derecha. Si el valor de la derecha es es verdadero, entonces el valor total debe ser verdadero, y si el valor de la derecha es falso, entonces el valor total debe ser falso. Por lo tanto, cuando el valor de la izquierda es verdadero, el operador <codeinline>&&</codeinline> evalúa y devuelve el valor de la derecha:</p>
+    <pre>
+    <code class="language-js">let o = &lbrace; x: 1 };
+    let p = null;
+    o && o.x // => 1: o is truthy, a si que devuelve el valor de o.x
+    p && p.x // => null: p is falsy, así que devuelve null y no evalúa p.x</code></pre>
+    <p>Es importante entender que <codeinline>&&</codeinline> puede o no evaluar su operando derecho. En este ejemplo de código, la variable <codeinline>p</codeinline> se establece en <codeinline>null</codeinline>, y la expresión <codeinline>p.x</codeinline>, si se evaluara, causaría un <codeinline>TypeError</codeinline>. Pero el código usa <codeinline>&&</codeinline> de forma idiomática para que <codeinline>p.x</codeinline> se evalúe sólo si <codeinline>p</codeinline> es verdadera- no <codeinline>nul</codeinline> o <codeinline>undefined</codeinline>.</p>
+    <p>El comportamiento de <codeinline>&&</codeinline> se denomina a veces cortocircuito, y a veces se puede ver código que explota a propósito este comportamiento para ejecutar código condicionalmente. Por ejemplo, las siguientes dos líneas de código JavaScript tienen efectos equivalentes:</p>
+    <pre>
+    <code class="language-js">if (a === b) stop(); // Invoca stop() solo si a === b
+    (a === b) && stop(); // Esto hace lo mismo</code></pre>
+    <p>En general, debe tener cuidado siempre que escriba una expresión con efectos secundarios (asignaciones, incrementos, decrementos o invocaciones de funciones) en el lado derecho de <codeinline>&&</codeinline>. Que se produzcan esos efectos secundarios depende del valor del lado izquierdo.</p>
+    <p>A pesar de la complejidad de su funcionamiento, este operador se utiliza habitualmente como un simple operador de álgebra booleana que trabaja con valores verdaderos y falsos.</p>
+  </section>
+  <section id="10-2" class="py-4 xs:py-5 sm:py-6">
+    <h2>4.10.2 Expresión lógica OR (||)</h2>
+    <p>El operador <codeinline>||</codeinline> realiza la operación booleana OR sobre sus dos operandos. Si uno o ambos operandos son verdaderos, devuelve un valor verdadero. Si ambos operandos son falsos, devuelve un valor falso.</p>
+    <p>Aunque el operador <codeinline>||</codeinline> se utiliza más a menudo simplemente como operador booleano OR, al igual que el operador <codeinline>&&</codeinline>, tiene un comportamiento más complejo. Comienza evaluando su primer operando, la expresión de su izquierda. Si el valor de este primer operando es verdadero, se cortocircuita y devuelve ese valor verdadero sin evaluar nunca la expresión de la derecha. Si, por el contrario, el valor del primer operando es falso, entonces <codeinline>||</codeinline> evalúa su segundo operando y devuelve el valor de esa expresión.</p>
+    <p>Al igual que con el operador <codeinline>&&</codeinline>, debe evitar los operandos del lado derecho que incluyan efectos secundarios, a menos que desee utilizar a propósito el hecho de que la expresión del lado derecho no pueda evaluarse.</p>
+    <p>Un uso idiomático de este operador es seleccionar el primer valor verdadero de un conjunto de alternativas:</p>
+    <pre>
+    <code class="language-js">// Si maxWidth es verdadero, use ese valor. Si no busca en
+    // el objeto de preferencias. Si no es verdadero, use la constante codificada.
+    let max = maxWidth || preferences.maxWidth || 500;</code></pre>
+    <p>Tenga en cuenta que si 0 es un valor legal para <codeinline>maxWidth</codeinline>, este código no funcionará correctamente, ya que 0 es un valor falso. Véase el operador <codeinline>??</codeinline> (<a href="#13-2">§4.13.2</a>) como alternativa.</p>
+    <p>Antes de ES6, este modismo se utilizaba a menudo en las funciones para proporcionar valores por defecto a los parámetros:</p>
+    <pre>
+    <code class="language-js">// La propiedades de copia: o hasta p, retorna p 
+    function copia(o, p) &lbrace;
+    p = p || &lbrace;}; // Si no se pasa p, utiliza un objeto vacío
+    // el cuerpo de la función va aquí
+    }</code></pre>
+    <p>En ES6 y posteriores, sin embargo, este truco ya no es necesario porque el valor de parámetro por defecto puede ser simplemente escrito en la propia definición de la función: <codeinline>function copia(o, p = &lbrace;}) { }</codeinline>.</p>
+  </section>
+  <section id="10-3">
+    <h2>4.10.3 Expresión lógica NOT (!)</h2>
+    <p>El operador ! es un operador unario; se coloca delante de un único operando. Su propósito es invertir el valor booleano de su operando. Por ejemplo, si x es verdadero, !x se evalúa como falso. Si x es falso, !x es verdadero.</p>
+    <p>A diferencia de los operadores && y ||, el operador ! convierte su operando en un valor booleano (utilizando las reglas descritas en el Capítulo 3) antes de invertir el valor convertido. Esto significa que ! siempre devuelve verdadero o falso y que puede convertir cualquier valor x a su valor booleano equivalente aplicando este operador dos veces: !!x (véase §3.9.2).</p>
+    <p>Como operador unario, ! tiene alta precedencia y se vincula estrechamente. Si desea invertir el valor de una expresión como p && q, debe utilizar paréntesis: !(p && q). Vale la pena observar dos leyes del álgebra booleana que podemos expresar utilizando la sintaxis de JavaScript:</p>
+    <pre>
+    <code class="language-js">// Leyes de DeMorgan's
+    !(p && q) === (!p || !q) // => true: para todos los valores de p y q
+    !(p || q) === (!p && !q) // => true: para todos los valores de p y q</code></pre>
+  </section>
+  <section id="11" class="py-4 xs:py-5 sm:py-6">
+    <h2>4.11 Expresiones de asignación</h2>
+    <p>JavaScript utiliza el operador <codeinline>=</codeinline> para asignar un valor a una variable o propiedad. Por ejemplo:</p>
+    <pre>
+    <code class="language-js">i = 0; // Establece la variable i igual a 0
+    o.x = 1; // Establece la propiedad x del objeto o igual a 1.</code></pre>
+    <p>El operador <codeinline>=</codeinline> espera que su operando izquierdo sea un lvalue: una variable o propiedad de objeto (o elemento de matriz). Espera que su operando derecho sea un valor arbitrario de cualquier tipo. El valor de una expresión de asignación es el valor del operando de la derecha. Como efecto secundario, el operador <codeinline>=</codeinline> asigna el valor de la derecha a la variable o propiedad de la izquierda, de modo que las futuras referencias a la variable o propiedad se evalúen al valor.</p>
+    <p>Aunque las expresiones de asignación suelen ser bastante simples, a veces puede ver que el valor de una expresión de asignación se utiliza como parte de una expresión mayor. Por ejemplo, puede asignar y probar un valor en la misma expresión con código como éste:</p>
+    <pre>
+    <code class="language-js">(a = b) === 0</code></pre>
+    <p>Si lo hace, asegúrese de tener clara la diferencia entre los operadores <codeinline>=</codeinline> y <codeinline>===</codeinline>. Tenga en cuenta que <codeinline>=</codeinline> tiene una precedencia muy baja, y que los paréntesis suelen ser necesarios cuando el valor de una asignación se va a utilizar en una expresión mayor.</p>
+    <p>El operador de asignación tiene asociatividad de derecha a izquierda, lo que significa que cuando aparecen varios operadores de asignación en una expresión, se evalúan de derecha a izquierda. Por lo tanto, puedes escribir código como éste para asignar un único valor a múltiples variables:</p>
+    <pre>
+    <code class="language-js">i = j = k = 0; // Inicializa 3 variables a 0</code></pre>
+  </section>
+  <section id="11-1">
+    <h2>4.11.1 Asignación con operación</h2>
+    <p>Además del operador de asignación normal <codeinline>=</codeinline>, JavaScript admite otros operadores de asignación que proporcionan atajos combinando la asignación con alguna otra operación. Por ejemplo, el operador <codeinline>+=</codeinline> realiza una suma y una asignación. La expresión siguiente:</p>
+    <pre>
+    <code class="language-js">total += ventasImpuestos;</code></pre>
+    <p>es equivalente a ésta:</p>
+    <pre>
+    <code class="language-js">total = total + ventasImpuestos;</code></pre>
+    <p>Como era de esperar, el operador <codeinline>+=</codeinline> funciona con números o cadenas. Para los operandos numéricos, realiza la suma y la asignación; para los operandos de cadena, realiza la con- catenación y la asignación.</p>
+    <p>Otros operadores similares son <codeinline>-=</codeinline>, <codeinline>*=</codeinline>, <codeinline>&=</codeinline>, etc. En la <a href="#tabla4-2">Tabla 4-2</a> se enumeran todos ellos.</p>
+    <div id="tabla4-2" class="flex flex-col items-center">
+      <p><em>Tabla 4-2. Operadores de asignación</em></p>
+      <table>
+        <thead class="bg-amber-900 text-[#f6e4c5]">
+          <tr>
+            <td class="max-w-lg text-center pl-4">Operador</td>
+            <td class="max-w-lg text-center">Ejemplo</td>
+            <td class="max-w-lg text-center">Equivalente</td>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">+=</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">a += b</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">a = a + b</codeinline></td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">-=</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">a -= b</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">a = a - b</codeinline></td>
+            </tr>
+            <tr>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">*=</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">a *= b</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">a = a * b</codeinline></td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">/=</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">a /= b</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">a = a / b</codeinline></td>
+            </tr>
+            <tr>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">%=</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">a %= b</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">a = a % b</codeinline></td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">**=</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">a **= b</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">a = a ** b</codeinline></td>
+            </tr>
+            <tr>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">&lt;&lt;=</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">a &lt;&lt;= b</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">a = a &lt;&lt; b</codeinline></td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">&gt;&gt;=</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">a &gt;&gt;= b</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">a = a &gt;&gt; b</codeinline></td>
+            </tr>
+            <tr>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">&gt;&gt;&gt;=</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">a &gt;&gt;&gt;= b</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">a = a &gt;&gt;&gt; b</codeinline></td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">&=</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">a &= b</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">a = a &amp; b</codeinline></td>
+            </tr>
+            <tr>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">|=</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">a |= b</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">a = a | b</codeinline></td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">^=</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">a ^= b</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">a = a ^ b</codeinline></td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>En la mayoría de los casos, la expresión:</p>
+    <pre class="language-js">
+    a op= b</pre>
+    <p>donde <codeinline>op</codeinline> es un operador, es equivalente a la expresión:</p>
+    <pre class="language-js">
+    a = a op b</pre>
+    <p>En la primera línea, la expresión <codeinline>a</codeinline> se evalúa una vez. En la segunda, se evalúa dos veces. Los dos casos diferirán sólo si <codeinline>a</codeinline> incluye efectos secundarios como una llamada a función o un operador de incremento. Las dos asignaciones siguientes, por ejemplo, no son iguales:</p>
+    <pre>
+    <code class="language-js">data[i++] *= 2;
+    data[i++] = data[i++] * 2;</code></pre>
+  </section>
 </Layoutjavascript>
