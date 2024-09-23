@@ -900,4 +900,242 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <code class="language-js">data[i++] *= 2;
     data[i++] = data[i++] * 2;</code></pre>
   </section>
-</Layoutjavascript>
+  <section id="12" class="py-4 xs:py-5 sm:py-6">
+    <h2>4.12 Expresiones de evaluación</h2>
+    <p>Como muchos lenguajes interpretados, JavaScript tiene la capacidad de interpretar cadenas de código fuente Java-Script, evaluándolas para producir un valor. JavaScript hace esto con la función global <codeinline><codeinline>eval()</codeinline></codeinline>:</p>
+    <pre>
+    <code class="language-js">eval("3+2") // => 5</code></pre>
+    <p>La evaluación dinámica de cadenas de código fuente es una potente característica del lenguaje que casi nunca es necesaria en la práctica. Si se encuentra utilizando <codeinline>eval()</codeinline>, debería pensar detenidamente si realmente necesita utilizarla. En particular, <codeinline>eval()</codeinline> puede ser un agujero de seguridad, y nunca debe pasar ninguna cadena derivada de la entrada del usuario a <codeinline>eval()</codeinline>. Con un lenguaje tan complicado como JavaScript, no hay forma de desinfectar la entrada del usuario para que sea seguro utilizarla con <codeinline>eval()</codeinline>. Debido a estos problemas de seguridad, algunos servidores web utilizan la cabecera HTTP "Content-Security-Policy" para desactivar <codeinline>eval()</codeinline> en todo el sitio web.</p>
+    <p>Las subsecciones siguientes explican el uso básico de <codeinline>eval()</codeinline> y explican dos versiones restringidas del mismo que tienen menos impacto en el optimizador.</p>
+    <article>
+      <p class="title-article">¿Es eval() una función o un operador?</p>
+      <p><codeinline>eval()</codeinline> es una función, pero se incluye en este capítulo sobre expresiones porque en realidad debería haber sido un operador. Las primeras versiones del lenguaje definían una función <codeinline>eval()</codeinline>, y desde entonces, los diseñadores del lenguaje y los escritores de intérpretes han ido imponiéndole restricciones que la hacen cada vez más parecida a un operador. Los intérpretes modernos de Java Script realizan una gran cantidad de análisis y optimización del código. En general, si una función llama a <codeinline>eval()</codeinline>, el intérprete no puede optimizar esa función. El problema de definir <codeinline>eval()</codeinline> como una función es que se le pueden dar otros nombres:</p>
+    <pre>
+    <code class="language-js">let f = eval;
+    let g = f;</code></pre>
+      <p>Si esto se permite, entonces el intérprete no puede saber con seguridad qué funciones llaman a <codeinline>eval()</codeinline>, por lo que no puede optimizar agresivamente. Este problema podría haberse evitado si <codeinline>eval()</codeinline> fuera un operador (y una palabra reservada). Aprenderemos (en <a href="#12-2">§4.12.2</a> y <a href="#12-3">§4.12.3</a>) sobre las restricciones impuestas a <codeinline>eval()</codeinline> para hacerla más similar a un operador.</p>
+    </article>
+  </section>
+  <section id="12-1">
+    <h2>4.12.1 eval()</h2>
+    <p><codeinline>eval()</codeinline> espera un argumento. Si se le pasa cualquier valor que no sea una cadena, simplemente devuelve ese valor. Si pasa una cadena, intenta analizarla como código JavaScript, lanzando un SyntaxError si falla. Si analiza correctamente la cadena, evalúa el código y devuelve el valor de la última expresión o sentencia de la cadena o <codeinline>undefined</codeinline> si la última expresión o sentencia no tenía valor. Si la cadena evaluada lanza una excepción, esa excepción se propaga desde la llamada a <codeinline>eval()</codeinline>.</p>
+    <p>La clave de <codeinline>eval()</codeinline> (cuando se invoca así) es que utiliza el entorno de variables del código que la invoca. Es decir, busca los valores de las variables y define nuevas variables y funciones de la misma forma que lo hace el código local. Si una función define una variable local <codeinline>x</codeinline> y luego llama a <codeinline>eval("x")</codeinline>, obtendrá el valor de la variable local. Si llama a <codeinline>eval("x=1")</codeinline>, cambiará el valor de la variable local. Y si la función llama a <codeinline>eval("var y = 3;")</codeinline>, declara una nueva variable local y. Por otro lado, si la cadena evaluada utiliza <codeinline>let</codeinline> o <codeinline>const</codeinline>, la variable o constante declarada será local a la evaluación y no estará definida en el entorno de llamada.</p>
+    <p>Del mismo modo, una función puede declarar una función local con código como este:</p>
+    <pre>
+    <code class="language-js">eval("function f() &lbrace; return x+1; }");</code></pre>
+    <p>Si llama a <codeinline>eval()</codeinline> desde código de nivel superior, opera sobre variables globales y funciones globales, por supuesto.</p>
+    <p>Tenga en cuenta que la cadena de código que pase a <codeinline>eval()</codeinline> debe tener sentido sintáctico por sí misma: no puede utilizarla para pegar fragmentos de código en una función. No tiene sentido escribir <codeinline>eval("return;")</codeinline>, por ejemplo, porque <codeinline>return</codeinline> sólo es legal dentro de funciones, y el hecho de que la cadena evaluada utilice el mismo entorno de variables que la función que la llama no la convierte en parte de esa función. Si su cadena tiene sentido como un script independiente (incluso uno muy corto como <codeinline>x=0</codeinline>), es legal pasarlo a <codeinline>eval()</codeinline>. De lo contrario, <codeinline>eval()</codeinline> lanzará un SyntaxError.</p>
+  </section>
+  <section id="12-2" class="py-4 xs:py-5 sm:py-6">
+    <h2>4.12.2 Global eval()</h2>
+    <p>Es la capacidad de <codeinline>eval()</codeinline> para cambiar variables locales lo que resulta tan problemático para los optimizadores de JavaScript. Como solución, sin embargo, los intérpretes simplemente hacen menos optimización en cualquier función que llame a <codeinline>eval()</codeinline>. Pero, ¿qué debe hacer un intérprete de JavaScript si un script define un alias para <codeinline>eval()</codeinline> y luego llama a esa función con otro nombre? La especificación de JavaScript declara que cuando <codeinline>eval()</codeinline> se invoca con un nombre distinto de "eval", debe evaluar la cadena como si fuera código global de nivel superior. El código evaluado puede definir nuevas variables globales o funciones globales, y puede establecer variables globales, pero no utilizará ni modificará ninguna variable local a la función de llamada, y por lo tanto, no interferirá con las optimizaciones locales.</p>
+    <p>Una "evaluación directa" es una llamada a la función <codeinline>eval()</codeinline> con una expresión que utiliza el nombre exacto y no cualificado "eval" (que empieza a parecer una palabra reservada). Las llamadas directas a <codeinline>eval()</codeinline> utilizan el entorno de variables del contexto de llamada. Cualquier otra llamada-una llamada indirecta-utiliza el objeto global como su entorno de variables y no puede leer, escribir o definir variables o funciones locales. (Tanto las llamadas directas como las indirectas pueden definir nuevas variables sólo con <codeinline>var</codeinline>. Los usos de <codeinline>let</codeinline> y <codeinline>const</codeinline> dentro de una cadena evaluada crean variables y constantes que son locales a la evaluación y no alteran el entorno de llamada o global).</p>
+    <p>El siguiente código lo demuestra:</p>
+    <pre>
+    <code class="language-js">const geval = eval;             // Usando otro nombre hace que la eval sea global
+    let x = "global", y = "global"; // Dos variables globales
+    function f() &lbrace;              // Esta función hace eval local
+      let x = "local";          // Define una variable local
+      eval("x += 'changed';");  // La evaluación directa establece la variable local
+      return x;                 // Devuelve la variable local modificada
+    }
+    function g() &lbrace;              // Esta función hace eval global
+      let y = "local";          // Una variable local
+      geval("y += 'changed';"); // La indirecta eval establece la variable global
+      return y;                 // Devuelve la variable global sin modificarla
+    }
+    console.log(f(), x); // Variable local cambiada: imprime "localchanged global":
+    console.log(g(), y); // Variable global cambiada: imprime "local changedglobal":</code></pre>
+    <p>Tenga en cuenta que la capacidad de hacer una evaluación global no es sólo una adaptación a las necesidades del optimizador; en realidad es una característica tremendamente útil que le permite ejecutar cadenas de código como si fueran scripts independientes de nivel superior. Como se indica en la sección principio de esta sección, es raro que realmente necesites evaluar una cadena de código. Pero si lo encuentras necesario, es más probable que quieras hacer una eval global que una eval local.</p>
+  </section>
+  <section id="12-3">
+    <h2>4.12.3 eval() estricto</h2>
+    <p>El modo estricto (véase <a href="capitulo-5#6-3">§5.6.3</a>) impone más restricciones al comportamiento de la función <codeinline>eval()</codeinline> e incluso al uso del identificador "eval". Cuando <codeinline>eval()</codeinline> es llamada desde código en modo estricto, o cuando la propia cadena de código a evaluar comienza con una directiva "use strict", entonces <codeinline>eval()</codeinline> realiza una evaluación local con un entorno de variable privada. Esto significa que en modo estricto, el código evaluado puede consultar y establecer variables locales, pero no puede definir nuevas variables o funciones en el ámbito local.</p>
+    <p>Además, el modo estricto hace que <codeinline>eval()</codeinline> se parezca aún más a un operador al convertir "eval" en una palabra reservada. No está permitido sobrescribir la función <codeinline>eval()</codeinline> con un nuevo valor. Y no se permite declarar una variable, función, parámetro de función o parámetro de bloque catch con el nombre "eval".</p>
+  </section>
+  <section id="13" class="py-4 xs:py-5 sm:py-6">
+    <h2>4.13 Operadores varios</h2>
+    <p>JavaScript admite otros operadores diversos, que se describen en las secciones siguientes.</p>
+  </section>
+  <section id="13-1">
+    <h2>4.13.1 El operador condicional (?:)</h2>
+    <p>El operador condicional es el único operador ternario (tres operandos) en JavaScript y a veces se denomina <em>operador ternario</em>. Este operador a veces se escribe <codeinline>?:</codeinline>, aunque no aparece de esa manera en el código. Como este operador tiene tres operandos, el primero va antes de <codeinline>?:</codeinline>, el segundo va entre <codeinline>?</codeinline> y <codeinline>:</codeinline>, y el tercero va después de <codeinline>:</codeinline>. Se utiliza así:</p>
+    <pre>
+    <code class="language-js">x > 0 ? x : -x // El valor absoluto de x</code></pre>
+    <p>Los operandos del operador condicional pueden ser de cualquier tipo. El primer operando se evalúa y se interpreta como un booleano. Si el valor del primer operando es verdadero, entonces se evalúa el segundo operando y se devuelve su valor. En caso contrario, si el primer operando es falso, entonces se evalúa el tercer operando y se devuelve su valor. Sólo se evalúa uno de los dos operandos, nunca ambos.</p>
+    <p>Aunque puede obtener resultados similares con la sentencia <codeinline>if</codeinline> (<a href="capitulo-5#3-1">§5.3.1</a>), el operador <codeinline>?:</codeinline> suele ser un atajo muy útil. Este es un uso típico, que comprueba que una variable está definida (y tiene un valor significativo y verdadero) y la utiliza si es así o proporciona un valor por defecto si no:</p>
+    <pre>
+    <code class="language-js">greeting = "hello " + (username ? username : "there");</code></pre>
+    <p>Esto es equivalente, pero más compacto, que la siguiente sentencia <codeinline>if</codeinline>:</p>
+    <pre>
+    <code class="language-js">greeting = "hola ";
+    if (username) &lbrace;
+      greeting += username;
+    } else &lbrace;
+      greeting += "there";
+    }</code></pre>
+  </section>
+  <section id="13-2" class="py-4 xs:py-5 sm:py-6">
+    <h2>4.13.2 El primero definido (??)</h2>
+    <p>El operador definido en primer lugar <codeinline>??</codeinline> evalúa a su primer operando definido: si su operando izquierdo no es <codeinline>null</codeinline> ni <codeinline>undefined</codeinline>, devuelve ese valor. En caso contrario, devuelve el valor del operando derecho. Al igual que los operadores <codeinline>&&</codeinline> y <codeinline>||</codeinline>, el operador <codeinline>??</codeinline> es de cortocircuito: sólo evalúa su segundo operando si el primero es <codeinline>null</codeinline> o <codeinline>undefined</codeinline>. Si la expresión a no tiene efectos secundarios, la expresión <codeinline>a ?? b</codeinline> esequivalentea:</p>
+    <pre>
+    <code class="language-js">(a !== null && a !== undefined) ? a : b</code></pre>
+    <p><codeinline>??</codeinline> es una alternativa útil a <codeinline>||</codeinline> (<a href="#10-2">§4.10.2</a>) cuando se desea seleccionar el primer operando <em>definido</em> en lugar del primer operando verdadero. Aunque <codeinline>||</codeinline> es nominalmente un operador lógico OR, también se usa idiomáticamente para seleccionar el primer operando no verdadero con código como este:</p>
+    <pre>
+    <code class="language-js">// Si maxWidth es verdadero, use ese valor. Si no busca en
+    // el objeto de preferencias. Si no es verdadero, use la constante codificada.
+    let max = maxWidth || preferences.maxWidth || 500;</code></pre>
+    <p>El problema con este uso idiomático es que cero, la cadena vacía y <codeinline>false</codeinline> son valores falsos que pueden ser perfectamente válidos en algunas circunstancias. En este ejemplo de código, si <codeinline>maxWidth</codeinline> es cero, ese valor será ignorado. Pero si cambiamos el operador <codeinline>||</codeinline> por <codeinline>??</codeinline>, terminamos con una expresión donde cero es un valor válido:</p>
+    <pre>
+    <code class="language-js">// Si maxWidth esta definido, use ese valor. Si no busca en
+    // el objeto de preferencias. Si no esta definido, use la constante codificada.
+    let max = maxWidth ?? preferences.maxWidth ?? 500;</code></pre>
+    <p>Aquí hay más ejemplos que muestran cómo funciona <codeinline>??</codeinline> cuando el primer operando es falso. Si ese operando es falso pero está definido, entonces <codeinline>??</codeinline> lo devuelve. Sólo cuando el primer operando es "nulo" (es decir, <codeinline>null</codeinline> o <codeinline>undefined</codeinline>) este operador evalúa y devuelve el segundo operando:</p>
+    <pre>
+    <code class="language-js">let options = &lbrace; timeout: 0, title: "", verbose: false, n: null };
+    options.timeout ?? 1000     // => 0: esta definida en el objeto
+    options.title ?? "Untitled" // => "": esta definida en el objeto
+    options.verbose ?? true     // => false: esta definida en el objeto
+    options.quiet ?? false      // => false: la propiedad no esta definida
+    options.n ?? 10             // => 10: la propiedad es nula</code></pre>
+    <p>Tenga en cuenta que las expresiones <codeinline>timeout</codeinline>, <codeinline>title</codeinline> y <codeinline>verbose</codeinline> tendrían valores diferentes si utilizáramos <codeinline>||</codeinline> en lugar de <codeinline>??</codeinline>.</p>
+    <p>El operador <codeinline>??</codeinline> es similar a los operadores <codeinline>&&</codeinline> y <codeinline>||</codeinline>, pero no tiene mayor o menor precedencia que éstos. Si lo utiliza en una expresión con cualquiera de esos operadores, debe utilizar paréntesis explícitos para especificar qué operación desea realizar en primer lugar:</p>
+    <pre>
+    <code class="language-js">(a ?? b) || c // ?? primero, luego ||
+    a ?? (b || c) // || primero, luego ??
+    a ?? b || c // SyntaxError: los paréntesis son necesarios</code></pre>
+    <p>El operador <codeinline>??</codeinline> está definido por ES2020, y desde principios de 2020, es soportado por las versiones actuales o beta de los principales navegadores. Este operador se llama formalmente el operador "nullish coalescing", pero evito ese término porque este operador selecciona uno de sus operandos pero no los "coalesce" de ninguna manera que yo pueda ver.</p>
+  </section>
+  <section id="13-3">
+    <h2>4.13.3 El operador typeof</h2>
+    <p><codeinline>typeof</codeinline> es un operador unario que se coloca delante de su único operando, que puede ser de cualquier tipo. Su valor es una cadena que especifica el tipo del operando. La <a href="tabla4-3">Tabla 4-3</a> especifica el valor del operador <codeinline>typeof</codeinline> para cualquier valor de JavaScript.</p>
+    <div id="tabla4-3" class="flex flex-col items-center">
+      <p><em>Tabla 4-3. Secuencias de escape de JavaScript</em></p>
+      <table>
+        <thead class="bg-amber-900 text-[#f6e4c5]">
+          <tr>
+            <td class="max-w-lg pl-4">x</td>
+            <td class="max-w-lg pl-4">typeof x</td>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">undefined</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">"undefined"</codeinline></td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">null</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">"object"</codeinline></td>
+            </tr>
+            <tr>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">true</codeinline> o <codeinline class="md:text-base bg-transparent">false</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">"boolean"</codeinline></td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-lg pl-4">Cualquier número o<codeinline class="md:text-base bg-transparent">NaN</codeinline></td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">"number"</codeinline></td>
+            </tr>
+            <tr>
+              <td class="max-w-lg pl-4">Cualquier BigInt</td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">"bigint"</codeinline></td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-lg pl-4">Cualquier string</td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">"string"</codeinline></td>
+            </tr>
+            <tr>
+              <td class="max-w-lg pl-4">Cualquier Simbolo</td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">"symbol"</codeinline></td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-lg pl-4">Cualquier Función</td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">"function"</codeinline></td>
+            </tr>
+            <tr>
+              <td class="max-w-lg pl-4">Cualquier Objeto no funcional</td>
+              <td class="max-w-lg pl-4"><codeinline class="md:text-base bg-transparent">"object"</codeinline></td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Puede utilizar el operador <codeinline>typeof</codeinline> en una expresión como ésta:</p>
+    <pre>
+    <code class="language-js">// Si el value es un string, envolver entre comillas, si no convertirlo
+    (typeof value === "string") ? "'" + value + "'" : value.toString()</code></pre>
+    <p>Tenga en cuenta que <codeinline>typeof</codeinline> devuelve "object" si el valor del operando es <codeinline>null</codeinline>. Si desea distinguir <codeinline>null</codeinline> de objetos, tendrá que comprobar explícitamente este valor de caso especial.</p>
+    <p>Aunque las funciones de JavaScript son un tipo de objeto, el operador <codeinline>typeof</codeinline> considera que las funciones son lo suficientemente diferentes como para tener su propio valor de retorno.</p>
+    <p>Dado que <codeinline>typeof</codeinline> evalúa a "object" para todos los valores de objetos y matrices que no sean funciones, sólo es útil para distinguir objetos de otros tipos primitivos. Para distinguir una clase de objeto de otra, debe utilizar otras técnicas, como el operador <codeinline>instanceof</codeinline> (véase <a href="#9-4">§4.9.4</a>), el atributo class (véase <a href="capitulo-14#4-3">§14.4.3</a>) o la propiedad <codeinline>constructor</codeinline> (véase <a href="capitulo-9#9-2">§9.2.2</a> y <a href="capitulo-14#3">§14.3</a>).</p>
+  </section>
+  <section id="13-4" class="py-4 xs:py-5 sm:py-6">
+    <h2>4.13.4 El operador delete</h2>
+    <p><codeinline>delete</codeinline> es un operador unario que intenta borrar la propiedad del objeto o el elemento de matriz especificado como operando. Al igual que los operadores de asignación, incremento y decremento, <codeinline>delete</codeinline> se utiliza normalmente por el efecto secundario de borrado de la propiedad y no por el valor que devuelve. Algunos ejemplos:</p>
+    <pre>
+    <code class="language-js">let o = &lbrace; x: 1, y: 2}; // Comienza con un objeto
+    delete o.x;            // Borra una de las propiedades del objeto
+    "x" in o               // => false: la propiedad "x" no existe
+
+    let a = [1,2,3];  // Comienza con un array
+    delete a[2];      // Borra el ultimo elemento del array
+    2 in a            // => false: el elemento 2 ya no existe
+    a.length          // => 3: aunque la longitud no cambia</code></pre>
+    <p>Tenga en cuenta que una propiedad o elemento de matriz eliminado no se establece simplemente al valor <codeinline>undefined</codeinline>. Cuando se borra una propiedad, ésta deja de existir. Intentar leer una propiedad inexistente devuelve <codeinline>undefined</codeinline>, pero puede comprobar la existencia real de una propiedad con el operador <codeinline>in</codeinline> (<a href="#9-3">§4.9.3</a>). Borrar un elemento de una matriz deja un "hueco" en la matriz y no cambia su longitud. La matriz resultante es <em>dispersa</em> (<a href="capitulo-7#3">§7.3</a>).</p>
+    <p><codeinline>delete</codeinline> espera que su operando sea un lvalue. Si no es un lvalue, el operador no realiza ninguna acción y devuelve <codeinline>true</codeinline>. En caso contrario, <codeinline>delete</codeinline> intenta borrar el lvalue especificado. <codeinline>delete</codeinline> devuelve <codeinline>true</codeinline> si consigue borrar el lvalue especificado. Sin embargo, no todas las propiedades pueden borrarse: las propiedades no configurables (<a href="capitulo-14#1">§14.1</a>) son inmunes al borrado.</p>
+    <p>En modo estricto, <codeinline>delete</codeinline> produce un SyntaxError si su operando es un identificador no cualificado como una variable, función o parámetro de función: sólo funciona cuando el operando es una expresión de acceso a una propiedad (<a href="#4">§4.4</a>). El modo estricto también especifica que <codeinline>delete</codeinline> genera un TypeError si se le pide que borre cualquier propiedad no configurable (es decir, no borrable). Fuera del modo estricto, no se produce ninguna excepción en estos casos, y <codeinline>delete</codeinline> simplemente devuelve <codeinline>false</codeinline> para indicar que el operando no ha podido ser borrado.</p>
+    <p>He aquí algunos ejemplos de uso del operador <codeinline>delete</codeinline>:</p>
+    <pre>
+    <code class="language-js">let o = &lbrace;x: 1, y: 2};
+    delete o.x; // Borra la propiedad "x" del objeto: devuelve true.
+    typeof o.x; // La propiedad "x" no existe: devuelve "undefined".
+    delete o.x; // Borrar una propiedad inexistente: devuelve true.
+    delete 1;   // Esto no tiene sentido: pero devuelve true.
+    // No puede borrar una variable; devuelve false o SyntaxError en modo estricto.
+    delete o;
+    // Propiedad indeleble: devuelve false o TypeError en modo estricto.
+    delete Object.prototype;</code></pre>
+    <p>Volveremos a ver el operador <codeinline>delete</codeinline> en <a href="capitulo-6#4">§6.4</a>.</p>
+  </section>
+  <section id="13-5">
+    <h2>4.13.5 El operador await</h2>
+    <p><codeinline>await</codeinline> se introdujo en ES2017 como una forma de hacer más natural la programación asíncrona en JavaScript. Tendrás que leer el <a href="capitulo-13">Capítulo 13</a> para entender este operador. En resumen, <codeinline>await</codeinline> espera un objeto Promise (que representa una computación asíncrona) como único operando, y hace que tu programa se comporte como si estuviera esperando a que se complete la computación asíncrona (pero lo hace sin bloquear, y no impide que otras operaciones asíncronas se realicen al mismo tiempo). El valor del operador <codeinline>await</codeinline> es el valor de cumplimiento del objeto Promise. Es importante destacar que <codeinline>await</codeinline> sólo es legal dentro de funciones que han sido declaradas asíncronas con la palabra clave <codeinline>async</codeinline>. De nuevo, consulta el <a href="capitulo-13">Capítulo 13</a> para más detalles.</p>
+  </section>
+  <section id="13-6" class="py-4 xs:py-5 sm:py-6">
+    <h2>4.13.6 El operador void</h2>
+    <p><codeinline>void</codeinline> es un operador unario que aparece antes de su único operando, que puede ser de cualquier tipo. Este operador es inusual y se utiliza con poca frecuencia; evalúa su operando, luego descarta el valor y devuelve <codeinline>undefined</codeinline>. Dado que el valor del operando se descarta, el uso del operador <codeinline>void</codeinline> sólo tiene sentido si el operando tiene efectos secundarios.</p>
+    <p>El operador <codeinline>void</codeinline> es tan oscuro que resulta difícil encontrar un ejemplo práctico de su uso. Un caso sería cuando se quiere definir una función que no devuelve nada pero que también utiliza la sintaxis abreviada de la función flecha (véase <a href="capitulo-8#1-3">§8.1.3</a>), en la que el cuerpo de la función es una única expresión que se evalúa y devuelve. Si evalúa la expresión únicamente por sus efectos secundarios y no desea devolver su valor, lo más sencillo es utilizar llaves alrededor del cuerpo de la función. Pero, como alternativa, también podría utilizar el operador void en este caso:</p>
+    <pre>
+    <code class="language-js">let counter = 0;
+    const increment = () => void counter++;
+    increment() // => undefined
+    counter // => 1</code></pre>
+  </section>
+  <section id="13-7">
+    <h2>4.13.7 El operador coma (,)</h2>
+    <p>El operador <codeinline>coma</codeinline> es un operador binario cuyos operandos pueden ser de cualquier tipo. Evalúa su operando izquierdo, evalúa su operando derecho y devuelve el valor del operando derecho. Así, la línea siguiente:</p>
+    <pre>
+    <code class="language-js">i=0, j=1, k=2;</code></pre>
+    <p>evalúa a 2 y es básicamente equivalente a:</p>
+    <pre>
+    <code class="language-js">i = 0; j = 1; k = 2;</code></pre>
+    <p>La expresión de la izquierda siempre se evalúa, pero su valor se descarta, lo que significa que sólo tiene sentido utilizar el operador coma cuando la expresión de la izquierda tiene efectos secundarios. La única situación en la que se suele utilizar el operador coma es con un bucle <codeinline>for</codeinline> ( <a href="capitulo-5#4-3">§5.4.3</a> ) que tiene múltiples variables de bucle:</p>
+    <pre>
+    <code class="language-js">// La primera coma es parte de la sintaxis de la declaración let
+    // La segunda coma es el operador coma: nos permite comprimir 2
+    // las expresiones (i++ y j--) en el bucle for espera 1 
+    for(let i=0,j=10; i &lt; j; i++,j--) &lbrace;
+    console.log(i+j);
+    }</code></pre>
+  </section>
+  <section id="14" class="py-4 xs:py-5 sm:py-6">
+    <h2>4.14 Resumen</h2>
+    <p>Este capítulo cubre una amplia variedad de temas, y hay mucho material de referencia aquí que puede que quieras releer en el futuro a medida que continúes aprendiendo JavaScript. Algunos puntos clave a recordar, sin embargo, son los siguientes:</p>
+    <ul>
+      <li class="font-normal">Las expresiones son las frases de un programa JavaScript.</li>
+      <li class="font-normal">Cualquier expresión puede ser <em>evaluada</em> a un valor JavaScript.</li>
+      <li class="font-normal">Las expresiones también pueden tener efectos secundarios (como la asignación de variables) además de producir un valor.</li>
+      <li class="font-normal">Las expresiones sencillas, como los literales, las referencias a variables y los accesos a propiedades, pueden combinarse con operadores para producir expresiones más amplias.</li>
+      <li class="font-normal">JavaScript define operadores para aritmética, comparaciones, lógica booleana, asignación y manipulación de bits, junto con algunos operadores varios, incluido el operador condicional ternario.</li>
+      <li class="font-normal">El operador <codeinline>+</codeinline> de JavaScript se utiliza tanto para sumar números como para concatenar cadenas.</li>
+      <li class="font-normal">Los operadores lógicos <codeinline>&&</codeinline> y <codeinline>||</codeinline> tienen un comportamiento especial de "cortocircuito" y a veces sólo evalúan uno de sus argumentos. Los modismos comunes de JavaScript requieren que comprenda el comportamiento especial de estos operadores.</li>
+    </ul>
+  </section>
+</Layoutjavascript></section>
