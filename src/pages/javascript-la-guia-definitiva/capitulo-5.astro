@@ -1,0 +1,261 @@
+---
+import Navegation from "../../components/Navegation.astro";
+import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
+---
+<Layoutjavascript title="JavaScript: La guia definitiva">
+  <Navegation capAnterior="capitulo-4" capSiguiente="capitulo-6" />
+  <section class="fadeIn">
+    <h1>Declaraciones</h1>
+    <p>El <a href="capitulo-4">capítulo 4</a> describía las expresiones como frases de JavaScript. Por esa analogía, las <em>expresiones</em> son frases o comandos de JavaScript. Del mismo modo que las frases en inglés se terminan y separan entre sí con puntos, las sentencias en JavaScript se terminan con puntos y coma (<a href="capitulo-2#6">§2.6</a>). Las expresiones se <em>evalúan</em> para producir un valor, pero las sentencias se <em>ejecutan</em> para que ocurra algo.</p>
+    <p>Una forma de "hacer que ocurra algo" es evaluar una expresión que tenga efectos secundarios. Las expresiones con efectos secundarios, como las asignaciones y las invocaciones de funciones, pueden funcionar por sí solas como sentencias y, cuando se utilizan de este modo, se conocen como <em>sentencias de expresión</em>. Una categoría similar de sentencias son las <em>sentencias de declaración</em> que declaran nuevas variables y definen nuevas funciones.</p>
+    <p>Los programas JavaScript no son más que una secuencia de sentencias a ejecutar. Por defecto, el intérprete de JavaScript ejecuta estas sentencias una tras otra en el orden en que están escritas. Otra forma de "hacer que algo suceda" es alterar este orden de ejecución predeterminado, y JavaScript tiene una serie de sentencias o <em>estructuras de control</em> que hacen precisamente esto:
+    </p>
+    <div class="">
+      <p><em>Condicionales</em></p>
+      <p class="pl-2 xs:pl-3 sm:pl-4 md:pl-5 lg:pl-6">Sentencias como <codeinline>if</codeinline> y <codeinline>switch</codeinline> que hacen que el intérprete de JavaScript ejecute u omita otras sentencias en función del valor de una expresión.</p>
+    </div>
+    <div class="">
+      <p><em>Bucles</em></p>
+      <p class="pl-2 xs:pl-3 sm:pl-4 md:pl-5 lg:pl-6">Sentencias como <codeinline>while</codeinline> y <codeinline>for</codeinline> que ejecutan otras sentencias de forma repetitiva</p>
+    </div>
+    <div class="">
+      <p><em>Saltos</em></p>
+      <p class="pl-2 xs:pl-3 sm:pl-4 md:pl-5 lg:pl-6">Sentencias como <codeinline>break</codeinline>, <codeinline>return</codeinline> y <codeinline>throw</codeinline> que hacen que el intérprete salte a otra parte del programa.</p>
+    </div>
+    <p>Las secciones siguientes describen las distintas sentencias de JavaScript y explican su sintaxis. La <a href="tabla5-1">Tabla 5-1</a> al final del capítulo, resume la sintaxis. Un programa JavaScript es simplemente una secuencia de sentencias, separadas entre sí por punto y coma, por lo que una vez que se familiarice con las sentencias de JavaScript, podrá empezar a escribir programas JavaScript.</p>
+  </section>
+  <section id="1" class="py-4 xs:py-5 sm:py-6">
+    <h2>5.1 Sentencias de expresión</h2>
+    <p>Los tipos más simples de sentencias en JavaScript son las expresiones que tienen efectos secundarios. Este tipo de sentencia se mostró en el <a href="capitulo-4">capítulo 4</a>. Las sentencias de asignación son una de las principales categorías de sentencias de expresión. Por ejemplo:</p>
+    <pre>
+    <code class="language-js">greeting = "Hello " + name;
+    i *= 3;</code></pre>
+    <p>Los operadores de incremento y decremento, <codeinline>++</codeinline> y <codeinline>--</codeinline>, están relacionados con los estados de asignación. Tienen el efecto secundario de cambiar el valor de una variable, como si se hubiera realizado una asignación:</p>
+    <pre>
+    <code class="language-js">counter++;</code></pre>
+    <p>El operador <codeinline>delete</codeinline> tiene el importante efecto secundario de borrar la propiedad de un objeto. Por lo tanto, casi siempre se utiliza como una sentencia, en lugar de como parte de una expresión más amplia:</p>
+    <pre>
+    <code class="language-js">delete o.x;</code></pre>
+    <p>Las llamadas a funciones son otra categoría importante de expresiones. Por ejemplo:</p>
+    <pre>
+    <code class="language-js">console.log(debugMessage);
+    displaySpinner(); // Una hipotetica función que muestra un spinne en la aplicación web</code></pre>
+    <p>Estas llamadas a funciones son expresiones, pero tienen efectos secundarios que afectan al entorno anfitrión o al estado del programa, y se utilizan aquí como sentencias. Si una función no tiene efectos secundarios, no tiene sentido llamarla, a menos que forme parte de una expresión mayor o de una sentencia de asignación. Por ejemplo, no calcularías un coseno y descartarías el resultado:</p>
+    <pre>
+    <code class="language-js">Math.cos(x);</code></pre>
+    <p>Pero bien podría calcular el valor y asignarlo a una variable para su uso futuro:</p>
+    <pre>
+    <code class="language-js">cx = Math.cos(x);</code></pre>
+    <p>Observe que cada línea de código de estos ejemplos termina con un punto y com</p>
+  </section>
+  <section id="2">
+    <h2>5.2 Enunciados compuestos y vacíos</h2>
+    <p>Al igual que el operador coma (<a href="#13-7">§4.13.7</a>) combina varias expresiones en una sola, un <em>bloque de sentencias</em> combina varias sentencias en una sola <em>sentencia compuesta</em>. Un bloque de sentencias es simplemente una secuencia de sentencias encerradas entre llaves. Así, las siguientes líneas actúan como una única sentencia y pueden utilizarse en cualquier lugar en el que JavaScript espere una única sentencia:</p>
+    <pre>
+    <code class="language-js">&lbrace;
+      x = Math.PI;
+      cx = Math.cos(x);
+      console.log("cos(π) = " + cx);
+    }</code></pre>
+    <p>Hay que tener en cuenta algunas cosas sobre este bloque de sentencia. En primer lugar, <em>no</em> termina con punto y coma. Las sentencias primitivas dentro del bloque terminan en punto y coma, pero el bloque en sí no. En segundo lugar, las líneas dentro del bloque están sangradas con respecto a las llaves que las encierran. Esto es opcional, pero facilita la lectura y comprensión del código.</p>
+    <p>Del mismo modo que las expresiones suelen contener subexpresiones, muchas sentencias de JavaScript contienen sustantivos. Formalmente, la sintaxis de JavaScript suele permitir una única sentencia. Por ejemplo, la sintaxis del bucle <codeinline>while</codeinline> incluye una única sentencia que sirve como cuerpo del bucle. Utilizando un bloque de sentencias, puede colocar cualquier número de sentencias dentro de esta única sustanciación permitida.</p>
+    <p>Una sentencia compuesta le permite utilizar varias sentencias donde la sintaxis de JavaScript espera una única sentencia. La <em>sentencia empty</em> es lo contrario: permite no incluir ninguna sentencia donde se espera una. La sentencia empty tiene el siguiente aspecto:</p>
+    <pre class="language-js">
+    ;</pre>
+    <p>El intérprete de JavaScript no realiza ninguna acción cuando ejecuta una sentencia vacía. La sentencia empty es útil ocasionalmente cuando se desea crear un bucle con un cuerpo vacío. Considere el siguiente bucle <codeinline>for</codeinline> (los bucles <codeinline>for</codeinline> se tratarán en <a href="#4.3">§5.4.3</a>):</p>
+    <pre>
+    <code class="language-js">// Inializa un array a
+      for(let i = 0; i &lt; a.length; a[i++] = 0) ;</code></pre>
+    <p>En este bucle, todo el trabajo lo realiza la expresión <codeinline>a[i++] = 0</codeinline>, y no es necesario ningún cuerpo de bucle. Sin embargo, la sintaxis de JavaScript requiere una expresión como cuerpo del bucle, por lo que se utiliza una expresión vacía, sólo un punto y coma.</p>
+    <p>Tenga en cuenta que la inclusión accidental de un punto y coma después del paréntesis derecho de un bucle <codeinline>for</codeinline>, un bucle <codeinline>while</codeinline> o una sentencia <codeinline>if</codeinline> puede provocar errores frustrantes difíciles de detectar. Por ejemplo, el siguiente código probablemente no hace lo que el autor pretendía:</p>
+    <pre>
+    <code class="language-js">if ((a === 0) || (b === 0)); // Ups..! Esta linea no hace nada
+      o = null;                  // y esta linea siempre se ejecuta</code></pre>
+    <p>Cuando utilice intencionadamente la sentencia empty, es una buena idea comentar su código de forma que quede claro que lo hace a propósito. Por ejemplo:</p>
+    <pre>
+    <code class="language-js">for(let i = 0; i &lt; a.length; a[i++] = 0) /* vacio */ ;</code></pre>
+  </section>
+  <section id="3" class="py-4 xs:py-5 sm:py-6">
+    <h2>5.3 Condicionales</h2>
+    <p>Las sentencias condicionales ejecutan u omiten otras sentencias en función del valor de una expresión especificada. Estas sentencias son los puntos de decisión de su código, y también se conocen a veces como "ramas". Si imagina un intérprete de JavaScript siguiendo un camino a través de su código, las sentencias condicionales son los lugares donde el código se bifurca en dos o más caminos y el intérprete debe elegir qué camino seguir.</p>
+    <p>Las siguientes subsecciones explican la condicional básica de JavaScript, el estado <codeinline>if/else</codeinline>, y también cubren <codeinline>switch</codeinline>, una sentencia de bifurcación multidireccional más complicada.</p>
+  </section>
+  <section id="3-1">
+    <h2>5.3.1 If</h2>
+    <p>La sentencia <codeinline>if</codeinline> es la sentencia de control fundamental que permite a JavaScript tomar decisiones o, más exactamente, ejecutar sentencias condicionalmente. Esta sentencia tiene dos formas. La primera es:</p>
+    <pre class="language-js">
+    if (expression)
+      statement</pre>
+    <p>En este formulario, se evalúa la expresión. Si el valor resultante es verdadero, se ejecuta la <em>sentencia</em>. Si la <em>expresión</em> es falsa, la <em>sentencia</em> no se ejecuta. (Véase <a href="capitulo-3#4">§3.4</a> para una definición de los valores verdadero y falso): Por ejemplo:</p>
+    <pre>
+    <code class="language-js">if (usuario == null)    // Si el usuario es null o undefined
+      usuario = "John Doe"; // definelo</code></pre>
+    <p>O algo parecido:</p>
+    <pre>
+    <code class="language-js">// Si usuario es null, undefined, false, 0, "" o NaN dale un nuevo valor
+    if (!usuario) usuario = "John Doe";</code></pre>
+    <p>Tenga en cuenta que los paréntesis alrededor de la <em>expresión</em> son una parte obligatoria de la sintaxis de la sentencia <codeinline>if</codeinline>.</p>
+    <p>La sintaxis de JavaScript requiere una única sentencia después de la palabra clave <codeinline>if</codeinline> y la expresión entre paréntesis, pero puede utilizar un bloque de sentencias para combinar varias sentencias en una sola. Así que la sentencia <codeinline>if</codeinline> también podría tener este aspecto:</p>
+    <pre>
+    <code class="language-js">if (!address) &lbrace;
+      address = "";
+      message = "Por favor ingrese su dirección de correo.";
+    }</code></pre>
+    <p>La segunda forma de la sentencia <codeinline>if</codeinline> introduce una cláusula <codeinline>else</codeinline> que se ejecuta cuando es la <em>expresión</em> es <codeinline>false</codeinline>. Su sintaxis es:</p>
+    <pre class="language-js">
+      if (expression)
+      statement1
+      else
+      statement2</pre>
+    <p>Esta forma de la sentencia ejecuta la <codeinline>sentencia1</codeinline> si la <em>expresión</em> es verdadera y ejecuta <codeinline>statement2</codeinline> si la <em>expresión</em> es falsa. Por ejemplo:</p>
+    <pre>
+    <code class="language-js">if (n === 1)
+      console.log("Tines un mensaje nuevo.");
+    else
+      console.log(`Tienes $&lbrace;n} mensajes nuevos.`);</code></pre>
+    <p>Cuando se han anidado sentencias <codeinline>if</codeinline> con cláusulas <codeinline>else</codeinline>, se requiere cierta precaución para asegurar que la cláusula <codeinline>else</codeinline> va con la sentencia <codeinline>if</codeinline> apropiada. Considere las siguientes líneas:</p>
+    <pre>
+    <code class="language-js">i = j = 1;
+    k = 2;
+    if (i === j)
+      if (j === k)
+        console.log("i es igual a k");
+    else
+      console.log("i no es igual a  j"); // MAL!!</code></pre>
+    <p>En este ejemplo, la sentencia <codeinline>if</codeinline> interna forma la única sentencia permitida por la sintaxis de la sentencia <codeinline>if</codeinline> externa. Desafortunadamente, no está claro (excepto por la pista dada por la sangría) con qué <codeinline>if</codeinline> va el <codeinline>else</codeinline>. Y en este ejemplo, la sangría es incorrecta, porque un intérprete de JavaScript interpreta el ejemplo anterior como:</p>
+    <pre>
+    <code class="language-js">if (i === j) &lbrace;
+      if (j === k)
+        console.log("i es igual k");
+      else
+        console.log("i no es igual j"); // UPS!
+    }</code></pre>
+    <p>La regla en JavaScript (como en la mayoría de los lenguajes de programación) es que, por defecto, una cláusula <codeinline>else</codeinline> forma parte de la sentencia <codeinline>if</codeinline> más próxima. Para que este ejemplo sea menos ambiguo y más fácil de leer, entender, mantener y depurar, debe utilizar llaves:</p>
+    <pre>
+    <code class="language-js">if (i === j) &lbrace;
+      if (j === k) &lbrace;
+        console.log("i es igual k");
+      }
+    } else &lbrace; // Que diferencia hace la ubicación de las llaves!
+      console.log("i no es igual a j");
+    }</code></pre>
+    <p>Muchos programadores acostumbran a encerrar los cuerpos de las sentencias <codeinline>if</codeinline> y <codeinline>else</codeinline> (así como otras sentencias compuestas, como los bucles <codeinline>while</codeinline>) entre llaves, incluso cuando el cuerpo consta de una sola sentencia. Si lo hace de forma sistemática, puede evitar el tipo de problema que se acaba de mostrar, por lo que le aconsejo que adopte esta práctica. En este libro impreso, hago hincapié en mantener el código de ejemplo verticalmente compacto, y no siempre sigo mis propios consejos al respecto.</p>
+  </section>
+  <section id="3-2" class="py-4 xs:py-5 sm:py-6">
+    <h2>5.3.2 else if</h2>
+    <p>La sentencia <codeinline>if/else</codeinline> evalúa una expresión y ejecuta uno o dos fragmentos de código, en función del resultado. Pero, ¿qué ocurre cuando es necesario ejecutar uno de varios fragmentos de código? Una forma de hacerlo es con una sentencia <codeinline>else if</codeinline>. <codeinline>else if</codeinline> no es realmente una sentencia JavaScript, sino simplemente un lenguaje de programación de uso frecuente que resulta cuando se utilizan sentencias <codeinline>if/else</codeinline> repetidas:</p>
+    <pre>
+    <code class="language-js">if (n === 1) &lbrace;
+      // Ejecuta el código del bloque #1
+    } else if (n === 2) &lbrace;
+      // Ejecuta el código del bloque #2
+    } else if (n === 3) &lbrace;
+      // Ejecuta el código del bloque #3
+    } else &lbrace;
+      // Si todo falla, ejecuta el código del bloque #4
+    }</code></pre>
+    <p>Este código no tiene nada de especial. Es simplemente una serie de sentencias <codeinline>if</codeinline>, donde cada <codeinline>if</codeinline> siguiente es parte de la cláusula <codeinline>else</codeinline> de la sentencia anterior. Usar el lenguaje <codeinline>else if</codeinline> es preferible y más legible que escribir estas sentencias en su forma sintácticamente equivalente, completamente anidada:</p>
+    <pre>
+    <code class="language-js">if (n === 1) &lbrace;
+      // Ejecuta el código del bloque #1
+    }
+    else &lbrace;
+      if (n === 2) &lbrace;
+        // Execute code block #2
+      }
+      else &lbrace;
+        if (n === 3) &lbrace;
+          // Ejecuta el código del bloque #3
+        }
+        else &lbrace;
+          // Si todo falla, ejecuta el código del bloque #4
+        }
+      }
+    }</code></pre>
+  </section>
+  <section id="3-3">
+    <h2>5.3.3 switch</h2>
+    <p>Una sentencia <codeinline>if</codeinline> provoca una bifurcación en el flujo de ejecución de un programa, y puede utilizar la expresión <codeinline>else if</codeinline> para realizar una bifurcación multidireccional. Sin embargo, esta no es la mejor solución cuando todas las ramas dependen del valor de la misma expresión. En este caso, es un desperdicio evaluar repetidamente esa expresión en múltiples sentencias <codeinline>if</codeinline>.</p>
+    <p>La sentencia <codeinline>switch</codeinline> trata exactamente esta situación. La palabra clave <codeinline>switch</codeinline> va seguida de una expresión entre paréntesis y un bloque de código entre llaves:</p>
+    <pre class="language-js">
+    switch(expression) &lbrace;
+      statements
+    }</pre>
+    <p>Sin embargo, la sintaxis completa de una sentencia <codeinline>switch</codeinline> es más compleja que esto. Varias ubicaciones en el bloque de código se etiquetan con la palabra clave <codeinline>clase</codeinline> seguida de una expresión y dos puntos. Cuando se ejecuta un <codeinline>switch</codeinline>, calcula el valor de la <em>expresión</em> y busca una etiqueta <codeinline>case</codeinline> cuya expresión se evalúe con el mismo valor (donde la igualdad viene determinada por el operador <codeinline>===</codeinline>). Si encuentra uno, comienza a ejecutar el bloque de código en la sentencia etiquetada por <codeinline>case</codeinline>. Si no encuentra un <codeinline>case</codeinline> con un valor coincidente, busca una sentencia etiquetada como <codeinline>defalut:</codeinline>. Si no hay ninguna etiqueta <codeinline>default:</codeinline>, la sentencia <codeinline>switch</codeinline> se salta el bloque de código.</p>
+    <p><codeinline>switch</codeinline> es una sentencia confusa de explicar; su funcionamiento queda mucho más claro con un ejemplo. La siguiente sentencia <codeinline>switch</codeinline> es equivalente a las sentencias <codeinline>if/else</codeinline> repetidas mostradas en la sección anterior:</p>
+    <pre>
+    <code class="language-js">switch(n) &lbrace;
+    case 1: // Empieza aquí si n === 1
+      // Execute code block #1.
+      break; // Se detiene aquí
+    case 2: // Empieza aquí si n === 2
+      // Execute code block #2.
+      break; // Se detiene aquí
+    case 3: // Empieza aquí si n === 3
+      // Execute code block #3.
+      break; // Se detiene aquí
+    default: // Si todo falla,
+      // Ejecuta el código del bloque #4
+      break; // Se detiene aquí
+    }</code></pre>
+    <p>Observe la palabra clave <codeinline>break</codeinline> utilizada al final de cada caso en este código. El estado <codeinline>break</codeinline>, descrito más adelante en este capítulo, hace que el intérprete salte al final (o "salga") de la sentencia <codeinline>switch</codeinline> y continúe con la sentencia que le sigue. Las cláusulas <codeinline>case</codeinline> en una sentencia <codeinline>switch</codeinline> especifican sólo el <em>punto de inicio</em> del código deseado; no especifican ningún punto final. En ausencia de sentencias <codeinline>break</codeinline>, una sentencia <codeinline>switch</codeinline> comienza a ejecutar su bloque de código en la etiqueta <codeinline>case</codeinline> que coincide con la sentencia de su <em>expresión</em> y continúa ejecutando sentencias hasta que llega al final del bloque. En raras ocasiones, es útil escribir código como este que "pasa" de una etiqueta <codeinline>case</codeinline> a la siguiente, pero el 99% de las veces debe tener cuidado de terminar cada <codeinline>case</codeinline> con una sentencia <codeinline>break</codeinline>. (Sin embargo, cuando use <codeinline>switch</codeinline> dentro de una función, puede usar una sentencia <codeinline>return</codeinline> en lugar de una sentencia <codeinline>break</codeinline>. Ambas sirven para terminar la sentencia <codeinline>switch</codeinline> y evitar que la ejecución pase al siguiente <codeinline>case</codeinline>).</p>
+    <p>He aquí un ejemplo más realista de la sentencia <codeinline>switch</codeinline>; convierte un valor en una cadena de una forma que depende del tipo del valor:</p>
+    <pre>
+    <code class="language-js">function convert(x) &lbrace;
+      switch(typeof x) &lbrace;
+      case "number": // Convierte el número en hexadecimal
+        return x.toString(16);
+      case "string": // Devuelve la cadena entre comillas
+        return '"' + x + '"';
+      default: // Convierte cualquier otro tipo en una cadena
+        return String(x);
+      }
+    }</code></pre>
+    <p>Observe que en los dos ejemplos anteriores, las palabras clave <codeinline>case</codeinline> van seguidas de literales numéricos y de cadena, respectivamente. Así es como la sentencia <codeinline>switch</codeinline> se utiliza más a menudo en la práctica, pero tenga en cuenta que el estándar ECMAScript permite que cada <codeinline>case</codeinline> vaya seguido de una expresión arbitraria.</p>
+    <p>La sentencia <codeinline>switch</codeinline> evalúa primero la expresión que sigue a la palabra clave <codeinline>switch</codeinline> y luego evalúa las expresiones <codeinline>case</codeinline>, en el orden en que aparecen, hasta encontrar un valor que coincida.<sup>1</sup> El caso coincidente se determina utilizando el operador de identidad <codeinline>===</codeinline>, no el operador de igualdad <codeinline>==</codeinline>, por lo que las expresiones deben coincidir sin ninguna conversión de tipo.</p>
+    <p>Dado que no todas las expresiones <codeinline>case</codeinline> se evalúan cada vez que se ejecuta la sentencia <codeinline>switch</codeinline>, debe evitar el uso de expresiones <codeinline>case</codeinline> que contengan efectos secundarios como llamadas a funciones o asignaciones. Lo más seguro es limitar las expresiones <codeinline>case</codeinline> a expresiones constantes.</p>
+    <p>Como se explicó anteriormente, si ninguna de las expresiones <codeinline>case</codeinline> coincide con la expresión <codeinline>switch</codeinline>, la sentencia <codeinline>switch</codeinline> comienza a ejecutar su cuerpo en la sentencia etiquetada <codeinline>defalut:</codeinline>. Si no hay ninguna etiqueta <codeinline>default:</codeinline>, la sentencia <codeinline>switch</codeinline> se salta todo su cuerpo. Observe que en los ejemplos mostrados, la etiqueta <codeinline>default:</codeinline> aparece al final del cuerpo de la sentencia <codeinline>switch</codeinline>, después de todas las etiquetas <codeinline>case</codeinline>. Este es un lugar lógico y común para ella, pero en realidad puede aparecer en cualquier lugar dentro del cuerpo de la declaración.</p>
+  </section>
+  <section id="4" class="py-4 xs:py-5 sm:py-6">
+    <h2>5.4 Bucles (loops)</h2>
+    <p>Para entender las sentencias condicionales, imaginemos que el intérprete de JavaScript sigue un camino ramificado a través del código fuente. Las <em>sentencias de bucle</em> son las que doblan ese camino sobre sí mismo para repetir partes del código. JavaScript tiene cinco sentencias de bucle: <codeinline>while</codeinline>, <codeinline>do/while</codeinline>, <codeinline>for</codeinline>, <codeinline>for/of</codeinline> (y su variante <codeinline>for/await</codeinline>), y <codeinline>for/in</codeinline>. Las siguientes subsecciones explican cada una de ellas. Un uso común de los bucles es iterar sobre los elementos de un array. <a href="capitulo-7#6">§7.6</a> discute este tipo de bucle en detalle y cubre los métodos especiales de bucle definidos por la clase Array.
+    </p>
+  </section>
+  <section id="4-1">
+    <h2>5.4.1 While</h2>
+    <p>Al igual que la sentencia <codeinline>if</codeinline> es el condicional básico de JavaScript, la sentencia <codeinline>while</codeinline> es el bucle básico de JavaS cript. Su sintaxis es la siguiente:</p>
+    <pre class="language-js">
+    while (expression)
+      statement</pre>
+    <p>Para ejecutar una sentencia <codeinline>while</codeinline>, el intérprete evalúa primero la <em>expresión</em>. Si el valor de la expresión es falso, el intérprete se salta la <em>sentencia</em> que sirve de cuerpo del bucle y pasa a la siguiente sentencia del programa. Si, por el contrario, la <em>expresión</em> es verdadera, el intérprete ejecuta la <em>sentencia</em> y repite, saltando de nuevo al principio del bucle y evaluando de nuevo la <em>expresión</em>. Otra forma de decir esto es que el intérprete ejecuta la <em>sentencia</em> repetidamente <em>mientras</em> la <em>expresión</em> es verdadera. Tenga en cuenta que puede crear un bucle infinito con la sintaxis <codeinline>while(true)</codeinline>.</p>
+    <p>Normalmente, no se desea que JavaScript realice exactamente la misma operación una y otra vez. En casi todos los bucles, una o más variables cambian con cada <em>iteración</em> del bucle. Dado que las variables cambian, las acciones realizadas al ejecutar la <em>sentencia</em> pueden diferir cada vez que se repite el bucle. Además, si la variable o variables que cambian están involucradas en una <em>expresión</em>, el valor de la expresión puede ser diferente cada vez que se repite el bucle. Esto es importante; de lo contrario, una expresión que comienza siendo verdadera nunca cambiaría, ¡y el bucle nunca terminaría! He aquí un ejemplo de un bucle <codeinline>while</codeinline> que imprime los números del 0 al 9:</p>
+    <pre>
+    <code class="language-js">let count = 0;
+    while(count &lt; 10) &lbrace;
+      console.log(count);
+      count++;
+    }</code></pre>
+    <p>Como puedes ver, la variable <codeinline>count</codeinline> empieza en 0 y se incrementa cada vez que se ejecuta el cuerpo del bucle. Una vez que el bucle se ha ejecutado 10 veces, la expresión se convierte en <codeinline>false</codeinline> (es decir, la variable <codeinline>count</codeinline> ya no es inferior a 10), la sentencia <codeinline>while</codeinline> finaliza y el intérprete puede pasar a la siguiente sentencia del programa. Muchos bucles tienen una variable contador como <codeinline>count</codeinline>. Los nombres de variables <codeinline>i</codeinline>, <codeinline>j</codeinline>, y <codeinline>k</codeinline> se usan comúnmente como contadores de bucle, aunque debería usar nombres más descriptivossihacequesucódigo sea másfácildeentender.</p>
+  </section>
+  <section id="4-2" class="py-4 xs:py-5 sm:py-6">
+    <h2>5.4.2 Do/While</h2>
+    <p>El bucle <codeinline>do/while</codeinline> es como un bucle <codeinline>while</codeinline>, salvo que la expresión del bucle se comprueba al final del bucle en lugar de al principio. Esto significa que el cuerpo del bucle siempre se ejecuta al menos una vez. La sintaxis es:</p>
+    <pre class="language-js">
+    do
+      statement
+    while (expression);</pre>
+    <p>El bucle <codeinline>do/while</codeinline> es menos comúnmente usado que su primo <codeinline>while</codeinline> en la práctica, es algo poco común estar seguro de que quieres que un bucle se ejecute al menos una vez. Aquí hay un ejemplo de un bucle <codeinline>do/while</codeinline>:</p>
+    <pre>
+    <code class="language-js">function printArray(a) &lbrace;
+      let len = a.length, i = 0;
+      if (len === 0) &lbrace;
+        console.log("Empty Array");
+      } else &lbrace;
+        do &lbrace;
+          console.log(a[i]);
+        } while(++i &lt; len);
+      }
+    }</code></pre>
+    <p>Hay un par de diferencias sintácticas entre el bucle <codeinline>do/while</codeinline> y el bucle <codeinline>while</codeinline> ordinario. En primer lugar, el bucle <codeinline>do</codeinline> requiere tanto la palabra clave <codeinline>do</codeinline> (para marcar el inicio del bucle) como la palabra clave <codeinline>while</codeinline> (para marcar el final e introducir la condición del bucle). Además, el bucle <codeinline>do</codeinline> debe terminar siempre con punto y coma. El bucle <codeinline>while</codeinline> no necesita punto y coma si el cuerpo del bucle está encerrado entre llaves.</p>
+  </section>
+</Layoutjavascript>
