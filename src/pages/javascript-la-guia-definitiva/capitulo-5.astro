@@ -258,4 +258,266 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     }</code></pre>
     <p>Hay un par de diferencias sintácticas entre el bucle <codeinline>do/while</codeinline> y el bucle <codeinline>while</codeinline> ordinario. En primer lugar, el bucle <codeinline>do</codeinline> requiere tanto la palabra clave <codeinline>do</codeinline> (para marcar el inicio del bucle) como la palabra clave <codeinline>while</codeinline> (para marcar el final e introducir la condición del bucle). Además, el bucle <codeinline>do</codeinline> debe terminar siempre con punto y coma. El bucle <codeinline>while</codeinline> no necesita punto y coma si el cuerpo del bucle está encerrado entre llaves.</p>
   </section>
+  <section id="4-3">
+    <h2>5.4.3 for</h2>
+    <p>La sentencia <codeinline>for</codeinline> proporciona una construcción de bucle que a menudo es más conveniente que la sentencia <codeinline>while</codeinline>. La sentencia <codeinline>for</codeinline> simplifica los bucles que siguen un patrón común. La mayoría de los bucles tienen una variable contadora de algún tipo. Esta variable se inicializa antes de que comience el bucle y se comprueba antes de cada iteración del bucle. Finalmente, la variable contador se incrementa o se actualiza al final del bucle, justo antes de que la variable se compruebe de nuevo. En este tipo de bucle, la inicialización, la prueba y la actualización son las tres manipulaciones cruciales de una variable de bucle. La sentencia <codeinline>for</codeinline> codifica cada una de estas tres manipulaciones como una expresión y las convierte en parte explícita de la sintaxis del bucle:r</p>
+    <pre class="language-js">
+    for(initialize ; test ; increment)
+      statement</pre>
+    <p><em>inicializar</em>, <em>probar</em> e <em>incrementar</em> son tres expresiones (separadas por punto y coma) que son responsables de inicializar, probar e incrementar la variable del bucle. Ponerlas todas en la primera línea del bucle facilita la comprensión de lo que está haciendo un bucle <codeinline>for</codeinline> y evita errores como olvidar inicializar o incrementar la variable del bucle.</p>
+    <p>La forma más sencilla de explicar cómo funciona un bucle <codeinline>for</codeinline> es mostrar el <codeinline>while</codeinline> equivalente bucle:<sup>2</sup></p>
+    <pre class="language-js">
+    initialize;
+    while(test) &lbrace;
+      statement
+      increment;
+    }</pre>
+    <p>En otras palabras, la expresión <em>inicializar</em> se evalúa una vez, antes de que comience el bucle. Para ser útil, esta expresión debe tener efectos secundarios (normalmente una asignación). JavaScript también permite que <em>initialize</em> sea una sentencia de declaración de variable, de modo que se puede declarar e inicializar un contador de bucle al mismo tiempo. La expresión <em>test</em> se evalúa antes de cada iteración y controla si se ejecuta el cuerpo del bucle. Si el valor de <em>test</em> es verdadero, se ejecuta la <em>sentencia</em> que constituye el cuerpo del bucle. Por último, se evalúa la em de <em>incremento</em>. De nuevo, debe ser una expresión con efectos secundarios para ser útil. Generalmente, es una expresión de asignación, o utiliza los operadores <codeinline>++</codeinline> o <codeinline>--</codeinline>.</p>
+    <p>Podemos imprimir los números del 0 al 9 con un bucle <codeinline>for</codeinline> como el siguiente. Contrástalo con el bucle <codeinline>while</codeinline> equivalente mostrado en la sección anterior:</p>
+    <pre>
+    <code class="language-js">for(let count = 0; count &lt; 10; count++) &lbrace;
+      console.log(count);
+    }</code></pre>
+    <p>Los bucles pueden llegar a ser mucho más complejos que este sencillo ejemplo, por supuesto, y a veces múltiples variables cambian con cada iteración del bucle. Esta situación es el único lugar donde el operador coma se utiliza comúnmente en JavaScript; proporciona una manera de combinar múltiples expresiones de inicialización e incremento en una sola expresión adecuada para su uso en un bucle <codeinline>for</codeinline>:</p>
+    <pre>
+    <code class="language-js">let i, j, sum = 0;
+      for(i = 0, j = 10 ; i &lt; 10 ; i++, j--) &lbrace;
+      sum += i * j;
+    }</code></pre>
+    <p>En todos nuestros ejemplos de bucles hasta ahora, la variable del bucle ha sido numérica. Esto es bastante común, pero no es necesario. El siguiente código utiliza un bucle <codeinline>for</codeinline> para recorrer una estructura de datos de lista enlazada y devolver el último objeto de la lista (es decir, el primer objeto que no tiene una propiedad <codeinline>next</codeinline>):</p>
+    <pre>
+    <code class="language-js">function tail(o) &lbrace; // Devuelve la ultima de la lista enlazada
+      for(; o.next; o = o.next) /* empty */ ; // Recorre mientras o.next sea verdadero
+      return o;
+    }</code></pre>
+    <p>Observe que este código no tiene ninguna expresión de <em>inicialización</em>. Cualquiera de las tres expresiones puede omitirse en un bucle <codeinline>for</codeinline>, pero los dos puntos y coma son obligatorios. Si omite la expresión de <em>prueba</em>, el bucle se repite para siempre, y <codeinline>for(;;)</codeinline> es otra forma de escribir un bucle infinito, como <codeinline>while(true)</codeinline>.</p>
+  </section>
+  <section id="4-4" class="py-4 xs:py-5 sm:py-6">
+    <h2>5.4.4 for/of</h2>
+    <p>ES6 define una nueva sentencia de bucle: <codeinline>for/of</codeinline>. Este nuevo tipo de bucle utiliza la palabra clave <codeinline>for</codeinline>, pero es un tipo de bucle completamente diferente del bucle <codeinline>for</codeinline> normal. (También es completamente diferente del antiguo bucle <codeinline>for/in</codeinline> que describiremos en <a href="capitulo-5#4-5">§5.4.5</a>.)</p>
+    <p>El bucle <codeinline>for/of</codeinline> funciona con objetos <em>iterables</em>. Explicaremos exactamente qué significa que un objeto sea iterable en el <a href="capitulo-12">Capítulo 12</a>, pero para este capítulo, es suficiente saber que los arrays, cadenas, conjuntos y mapas son iterables: representan una secuencia o conjunto de elementos que puedes recorrer usando un bucle <codeinline>for/of</codeinline>.</p>
+    <p>Aquí, por ejemplo, podemos utilizar <codeinline>for/of</codeinline> para recorrer los elementos de una matriz de números y calcular su suma:</p>
+    <pre>
+    <code class="language-js">let data = [1, 2, 3, 4, 5, 6, 7, 8, 9], sum = 0;
+    for(let element of data) &lbrace;
+      sum += element;
+    }
+    sum // => 45</code></pre>
+    <p>Superficialmente, la sintaxis se parece a la de un bucle <codeinline>for</codeinline> normal: la palabra clave <codeinline>for</codeinline> va seguida de paréntesis que contienen detalles sobre lo que debe hacer el bucle. En este caso, los paréntesis contienen una declaración de variable (o, para variables que ya han sido declaradas, simplemente el nombre de la variable) seguida por la palabra clave <codeinline>of</codeinline> y una expresión que evalúa a un objeto iterable, como el array de <codeinline>date</codeinline> en este caso. Como con todos los bucles, el cuerpo de un bucle <codeinline>for/of</codeinline> sigue a los paréntesis, normalmente entre llaves.</p>
+    <p>En el código que se acaba de mostrar, el cuerpo del bucle se ejecuta una vez por cada elemento de la matriz de <codeinline>data</codeinline>. Antes de cada ejecución del cuerpo del bucle, el siguiente elemento de la matriz se asigna a la variable element. Los elementos del array se iteran en orden del primero al último.</p>
+    <p>Los arrays se iteran "en vivo"-los cambios realizados durante la iteración pueden afectar al resultado de la misma. Si modificamos el código anterior añadiendo la línea <codeinline>data.push(sum);</codeinline> dentro del cuerpo del bucle, entonces creamos un bucle infinito porque la iteración nunca puede alcanzar el último elemento del array.</p>
+    <p class="title-article text-left">for/of con objectos</p>
+    <p>Los objetos no son iterables (por defecto). El intento de utilizar <codeinline>for/of</codeinline> en un objeto normal produce un TypeError en tiempo de ejecución:</p>
+    <pre>
+    <code class="language-js">let o = &lbrace; x: 1, y: 2, z: 3 };
+    for(let element of o) &lbrace; // Throws TypeError porque o no es iterable
+      console.log(element);
+    }</code></pre>
+    <p>Si quieres iterar a través de las propiedades de un objeto, puedes utilizar el bucle <codeinline>for/in</codeinline> (introducido en <a href="capitulo-5#4-5">§5.4.5</a>), o utilizar <codeinline>for/of</codeinline> con el método <codeinline>Object.keys()</codeinline>:</p>
+    <pre>
+    <code class="language-js">let o = &lbrace; x: 1, y: 2, z: 3 };
+    let keys = "";
+    for(let k of Object.keys(o)) &lbrace;
+      keys += k;
+    }
+    keys // => "xyz"</code></pre>
+    <p>Esto funciona porque <codeinline>Object.keys()</codeinline> devuelve un array de nombres de propiedades de un objeto, y los arrays son iterables con <codeinline>for/of</codeinline>. Tenga en cuenta también que esta iteración de las claves de un objeto no es en vivo como en el ejemplo de la matriz anterior - los cambios en el objeto o realizados en el cuerpo del bucle no tendrán ningún efecto sobre la iteración. Si no te importan las claves de un objeto, también puedes iterar a través de sus valores correspondientes así:</p>
+    <pre>
+    <code class="language-js">let sum = 0;
+    for(let v of Object.values(o)) &lbrace;
+      sum += v;
+    }
+    sum // => 6</code></pre>
+    <p>Y si está interesado tanto en las claves como en los valores de las propiedades de un objeto, puede utilizar <codeinline>for/of</codeinline> con <codeinline>Object.entries()</codeinline> y la asignación de desestructuración:</p>
+    <pre>
+    <code class="language-js">let pairs = "";
+    for(let [k, v] of Object.entries(o)) &lbrace;
+      pairs += k + v;
+    }
+    pairs // => "x1y2z3"</code></pre>
+    <p><codeinline>Object.entries()</codeinline> devuelve una matriz de matrices, donde cada matriz interna representa un par clave/valor para una propiedad del objeto. En este ejemplo de código utilizamos la asignación de desestructuración para descomponer esas matrices internas en dos variables individuales.</p>
+    <p class="title-article text-left">for/of con strings</p>
+    <p>Las cadenas son iterables carácter a carácter en ES6:</p>
+    <pre>
+    <code class="language-js">let frequency = &lbrace;};
+    for(let letter of "mississippi") &lbrace;
+      if (frequency[letter]) &lbrace;
+        frequency[letter]++;
+      } else &lbrace;
+        frequency[letter] = 1;
+      }
+    }
+    frequency // => &lbrace;m: 1, i: 4, s: 4, p: 2}</code></pre>
+    <p>Tenga en cuenta que las cadenas se iteran por punto de código Unicode, no por carácter UTF-16. La cadena "I ❤ 🐶" tiene una <codeinline>.length</codeinline> de 5 (porque cada uno de los dos caracteres emoji requiere dos caracteres UTF-16 para representarse). Pero si iteras esa cadena con <codeinline>for/of</codeinline>, el cuerpo del bucle se ejecutará tres veces, una por cada uno de los tres puntos de código "I", "❤" y "🐶."</p>
+    <p class="title-article text-left">for/of con Set y Map</p>
+    <p>Las clases incorporadas Set y Map de ES6 son iterables. Cuando iteras un Set con <codeinline>for/of</codeinline>, el cuerpo del bucle se ejecuta una vez por cada elemento del set. Puede utilizar código como éste para imprimir las palabras únicas en una cadena de texto:</p>
+    <pre>
+    <code class="language-js">let text = "Na na na na na na na na Batman!";
+    let wordSet = new Set(text.split(" "));
+    let unique = [];
+    for(let word of wordSet) &lbrace;
+      unique.push(word);
+    }
+    unique // => ["Na", "na", "Batman!"]</code></pre>
+    <p>Los Mapas son un caso interesante porque el iterador de un objeto Mapa no itera las claves del Mapa, ni los valores del Mapa, sino pares clave/valor. En cada iteración, el iterador devuelve un array cuyo primer elemento es una clave y cuyo segundo elemento es el valor correspondiente. Dado un Map <codeinline>m</codeinline>, podrías iterar y desestructurar sus pares clave/valor así:</p>
+    <pre>
+    <code class="language-js">let m = new Map([[1, "one"]]);
+    for(let [key, value] of m) &lbrace;
+      key // => 1
+      value // => "one"
+    }</code></pre>
+    <p class="title-article text-left">Iteración asíncrona con for/await</p>
+    <p>ES2018 introduce un nuevo tipo de iterador, conocido como <em>iterador asíncrono</em>, y una variante del bucle <codeinline>for/of</codeinline>, conocida como bucle <codeinline>for/await</codeinline>, que funciona con iteradores asíncronos.</p>
+    <p>Tendrás que leer los Capítulos <a href="capitulo-12">12</a> y <a href="capitulo-13">13</a> para entender el bucle <codeinline>for/await</codeinline>, pero aquí tienes cómo se ve en código:</p>
+    <pre>
+    <code class="language-js">// Leer trozos de un flujo iterable asincrono e imprimirlos
+    async function printStream(stream) &lbrace;
+      for await (let chunk of stream) &lbrace;
+        console.log(chunk);
+      }
+    }</code></pre>
+  </section>
+  <section id="4-5">
+    <h2>5.4.5 for/in</h2>
+    <p>Un bucle <codeinline>for/in</codeinline> se parece mucho a un bucle <codeinline>for/of</codeinline>, con la palabra clave <codeinline>of</codeinline> cambiada por <codeinline>in</codeinline>. Mientras que un bucle <codeinline>for/of</codeinline> requiere un objeto iterable después de <codeinline>of</codeinline>, un bucle <codeinline>for/in</codeinline> funciona con cualquier objeto después de <codeinline>in</codeinline>. El bucle <codeinline>for/of</codeinline> es nuevo en ES6, pero <codeinline>for/in</codeinline> ha formado parte de JavaScript desde el principio (por eso tiene una sintaxis más natural).</p>
+    <p>La sentencia <codeinline>for/in</codeinline> recorre en bucle los nombres de las propiedades de un objeto especificado. La sintaxis es la siguiente:</p>
+    <pre class="language-js">
+    for (variable in object)
+      statement</pre>
+    <p><em>variable</em> normalmente nombra una variable, pero puede ser una declaración de variable o cualquier cosa adecuada como el lado izquierdo de una expresión de asignación. <em>object</em> es una expresión que se evalúa a un objeto. Como de costumbre, <em>statement</em> es la sentencia o bloque de sentencias que sirve como cuerpo del bucle.</p>
+    <p>Y podrías usar un bucle <codeinline>for/in</codeinline> como este:</p>
+    <pre>
+    <code class="language-js">for(let p in o) &lbrace; // Asigna los nombres de las propiedades de o a la variable p
+      console.log(o[p]); // Imprime el valor de cada propiedad
+    }</code></pre>
+    <p>Para ejecutar una sentencia <codeinline>for/in</codeinline>, el intérprete de JavaScript evalúa primero la expresión del <em>objeto</em>. Si es <codeinline>null</codeinline> o <codeinline>undefined</codeinline>, el intérprete omite el bucle y pasa a la siguiente sentencia. El intérprete ejecuta ahora el cuerpo del bucle una vez por cada propiedad enumerable del objeto. Antes de cada iteración, sin embargo, el intérprete evalúa la expresión de la <em>variable</em> y le asigna el nombre de la propiedad (un valor de cadena).</p>
+    <p>Tenga en cuenta que la <em>variable</em> en el bucle <codeinline>for/in</codeinline> puede ser una expresión arbitraria, siempre y cuando se evalúe a algo adecuado para el lado izquierdo de una asignación. Esta expresión es se evalúa cada vez que se pasa por el bucle, lo que significa que puede evaluarse de forma diferente cada vez. Por ejemplo, puede utilizar código como el siguiente para copiar los nombres de todas las propiedades del objeto en un array:</p>
+    <pre>
+    <code class="language-js">let o = &lbrace; x: 1, y: 2, z: 3 };
+    let a = [], i = 0;
+    for(a[i++] in o) /* empty */;</code></pre>
+    <p>Las matrices de JavaScript son simplemente un tipo especializado de objeto, y los índices de las matrices son propiedades de los objetos que pueden enumerarse con un bucle <codeinline>for/in</codeinline>. Por ejemplo, siguiendo el código anterior con esta línea se enumeran los índices 0, 1 y 2 del array:</p>
+    <pre>
+    <code class="language-js">for(let i in a) console.log(i);</code></pre>
+    <p>Encuentro que una fuente común de errores en mi propio código es el uso accidental de <codeinline>for/in</codeinline> con arrays cuando quería usar <codeinline>for/of</codeinline>. Cuando se trabaja con matrices, casi siempre es mejor usar <codeinline>for/of</codeinline> en lugar de <codeinline>for/in</codeinline>.</p>
+    <p>El bucle <codeinline>for/in</codeinline> no enumera todas las propiedades de un objeto. No enumera las propiedades cuyos nombres son símbolos. Y de las propiedades cuyos nombres son cadenas, sólo hace un bucle sobre las propiedades <em>enumerables</em> (véase <a href="capitulo-6#14-1">§14.1</a>). Los diversos métodos incorporados definidos por el núcleo de JavaScript no son enumerables. Todos los objetos tienen un método <codeinline>toString()</codeinline>, por ejemplo, pero el bucle <codeinline>for/in</codeinline> no enumera esta propiedad <codeinline>toString()</codeinline>. Además de los métodos incorporados, muchas otras propiedades de los objetos incorporados no son enumerables. Todas las propiedades y métodos definidos por su código son enumerables, por defecto. (Puede hacerlos no enumerables utilizando técnicas explicadas en <a href="capitulo-6#14-1">§14.1</a>.)</p>
+    <p>Las propiedades heredadas enumerables (véase <a href="capitulo-6#3-2">§6.3.2</a>) también son enumeradas por el bucle <codeinline>for/in</codeinline>. Esto significa que si utilizas bucles <codeinline>for/in</codeinline> y también utilizas código que define propiedades que son heredadas por todos los objetos, entonces tu bucle puede no comportarse de la manera que esperas. Por esta razón, muchos programadores prefieren utilizar un bucle <codeinline>for/of</codeinline> con <codeinline>Object.keys()</codeinline> en lugar de un bucle <codeinline>for/in</codeinline>.</p>
+    <p>Si el cuerpo de un bucle <codeinline>for/in</codeinline> borra una propiedad que aún no ha sido enumerada, esa propiedad no será enumerada. Si el cuerpo del bucle define nuevas propiedades en el objeto, esas propiedades pueden o no ser enumeradas. Véase <a href="capitulo-6#6-1">§6.6.1</a> para más información sobre el orden en que <codeinline>for/in</codeinline> enumera las propiedades de un objeto.</p>
+  </section>
+  <section id="5" class="py-4 xs:py-5 sm:py-6">
+    <h2>5.5 Jumps</h2>
+    <p>Otra categoría de sentencias JavaScript son las <em>sentencias jump</em>. Como su nombre indica, hacen que el intérprete de JavaScript salte a una nueva ubicación en el código fuente. La sentencia <codeinline>break</codeinline> hace que el intérprete salte al final de un bucle u otro estado. <codeinline>continue</codeinline> hace que el intérprete se salte el resto del cuerpo de un bucle y vuelva al principio de un bucle para comenzar una nueva iteración. JavaScript permite que las sentencias con nombre o <em>etiqueta</em>, y <codeinline>break</codeinline> y <codeinline>continue</codeinline> pueden identificar el bucle de destino u otra etiqueta de estado.</p>
+    <p>La sentencia <codeinline>return</codeinline> hace que el intérprete salte desde la invocación de una función de vuelta al código que la invocó y también proporciona el valor de la invocación. La sentencia <codeinline>throw</codeinline> es una especie de retorno provisional de una función generadora. La sentencia <codeinline>throw</codeinline> levanta, o <em>lanza</em>, una excepción y está diseñada para trabajar con la sentencia <codeinline>try/catch/finally</codeinline>, que establece un bloque de código de gestión de excepciones. Se trata de un tipo de sentencia de salto: cuando se lanza una excepción, el intérprete salta al manejador de excepciones más cercano, que puede estar en la misma función o más arriba en la pila de llamadas de una función invocadora.</p>
+    <p>Los detalles sobre cada una de estas declaraciones de salto se encuentran en las secciones siguientes.</p>
+  </section>
+  <section id="5-1">
+    <h2>5.5.1 Declaraciones etiquetadas</h2>
+    <p>Cualquier declaración puede <em>etiquetarse</em> precediéndola de un identificador y dos puntos:</p>
+    <pre class="language-js">
+    identificador: declaración</pre>
+    <p>Al etiquetar una sentencia, le da un nombre que puede utilizar para referirse a ella en cualquier parte de su programa. Puede etiquetar cualquier sentencia, aunque sólo es útil para etiquetar sentencias que tienen cuerpo, como bucles y condicionales. Al dar un nombre a un bucle, puede utilizar las sentencias <codeinline>break</codeinline> y <codeinline>continue</codeinline> dentro del cuerpo del bucle para salir del bucle o para saltar directamente a la parte superior del bucle para comenzar la siguiente iteración. <codeinline>break</codeinline> y <codeinline>continue</codeinline> son las únicas sentencias de JavaScript que utilizan etiquetas de sentencia; se tratan en las siguientes subsecciones. A continuación se muestra un ejemplo de un bucle <codeinline>while</codeinline> etiquetado y una sentencia <codeinline>continue</codeinline> que utiliza la etiqueta.</p>
+    <pre>
+    <code class="language-js">mainloop: while(token !== null) &lbrace;
+      // Codigo omitido...
+      continue mainloop; // Salta a la siguiente iteración del bucle
+      // Mas codigo omitido...
+    }</code></pre>
+    <p>El <em>identificador</em> que se utiliza para etiquetar una sentencia puede ser cualquier identificador legal de JavaScript que no sea una palabra reservada. El espacio de nombres para etiquetas es diferente del espacio de nombres para variables y funciones, por lo que puede utilizar el mismo identificador como etiqueta de sentencia y como nombre de variable o función. Las etiquetas de sentencia sólo se definen dentro de la sentencia a la que se aplican (y dentro de sus sustituciones, por supuesto). Una sentencia no puede tener la misma etiqueta que la sentencia que la contiene, pero dos sentencias pueden tener la misma etiqueta siempre que ninguna esté anidada dentro de la otra. Las sentencias etiquetadas pueden ser a su vez etiquetadas. Esto significa que cualquier sentencia puede tener varias etiquetas.</p>
+  </section>
+  <section id="5-2" class="py-4 xs:py-5 sm:py-6">
+    <h2>5.5.2 break</h2>
+    <p>La sentencia <codeinline>break</codeinline>, utilizada por sí sola, hace que el bucle o <codeinline>switch</codeinline> que la encierra en su interior
+      para salir inmediatamente. Su sintaxis es sencilla:</p>
+    <pre class="language-js">
+    break;</pre>
+    <p>Dado que provoca la salida de un bucle o <codeinline>switch</codeinline>, esta forma de la sentencia <codeinline>break</codeinline> sólo es legal si aparece dentro de una de estas sentencias.</p>
+    <p>Ya ha visto ejemplos de la sentencia <codeinline>break</codeinline> dentro de una sentencia <codeinline>switch</codeinline>. En los bucles, se utiliza normalmente para salir prematuramente cuando, por cualquier razón, ya no hay necesidad de completar el bucle. Cuando un bucle tiene condiciones de terminación complejas, a menudo es más fácil implementar algunas de estas condiciones con sentencias <codeinline>break</codeinline> en lugar de intentar expresarlas todas en una única expresión de bucle. El siguiente código busca un valor determinado en los elementos de una matriz. El bucle termina de forma normal cuando alcanza el final del array; termina con una sentencia <codeinline>break</codeinline> si encuentra lo que está buscando en el array:</p>
+    <pre>
+    <code class="language-js">for(let i = 0; i &lt; a.length; i++) &lbrace;
+      if (a[i] === target) break;
+    }</code></pre>
+    <p>JavaScript también permite que la palabra clave <codeinline>break</codeinline> vaya seguida de una etiqueta de sentencia (sólo el identificador, sin dos puntos):</p>
+    <pre class="language-js">
+    break labelname;</pre>
+    <p>Cuando se utiliza <codeinline>break</codeinline> con una etiqueta, salta al final o termina la sentencia adjunta que tiene la etiqueta especificada. Es un error de sintaxis utilizar <codeinline>break</codeinline> de esta forma si no hay una sentencia anexa con la etiqueta especificada. Con esta forma de la sentencia <codeinline>break</codeinline>, no es necesario que la sentencia nombrada sea un bucle o un <codeinline>switch:break</codeinline> puede "salir" de cualquier sentencia adjunta. Esta sentencia puede ser incluso un bloque de sentencias agrupado entre llaves con el único propósito de nombrar el bloque con una etiqueta.</p>
+    <p>No se permite una nueva línea entre la palabra clave <codeinline>break</codeinline> y el nombre de la <em>etiqueta</em>. Esto se debe a que JavaScript inserta automáticamente el punto y coma omitido: si se coloca un punto y coma entre la palabra clave <codeinline>break</codeinline> y la etiqueta que le sigue, JavaScript asume que se pretende utilizar la forma simple y sin etiqueta de la sentencia y trata el punto y coma como un punto y coma. (Véase <a href="capitulo-2#6">§2.6</a>.)</p>
+    <p>Necesitará la forma etiquetada de la sentencia <codeinline>break</codeinline> cuando desee salir de una sentencia que no sea el bucle o <codeinline>switch</codeinline> más cercano. El siguiente código lo demuestra:</p>
+    <pre>
+    <code class="language-js">let matrix = getData(); // Obtiene una matriz 2D de números de alguna manera
+      // Ahora suma todos los números en la matriz.
+      let sum = 0, success = false;
+      // Empieza con una sentencia etiquetada que podemos salir de si ocurre un error
+      computeSum: if (matrix) &lbrace;
+        for(let x = 0; x &lt; matrix.length; x++) &lbrace;
+          let row = matrix[x];
+          if (!row) break computeSum;
+          for(let y = 0; y &lt; row.length; y++) &lbrace;
+            let cell = row[y];
+            if (isNaN(cell)) break computeSum;
+            sum += cell;
+          }
+        }
+        success = true;
+      }
+      // La sentencia break salta aquí. Si llegamos aquí con success == false
+      // entonces hubo algo malo con la matriz que nos dieron.
+      // Caso contrario sum contiene la suma de todas las celdas de la matriz</code></pre>
+    <p>Por último, tenga en cuenta que una sentencia <codeinline>break</codeinline>, con o sin etiqueta, no puede transferir el control a través de los límites de la función. No puede etiquetar una sentencia de definición de función, por ejemplo, y luego utilizar esa etiqueta dentro de la función.</p>
+  </section>
+  <section id="5-3">
+    <h2>5.5.3 continue</h2>
+    <p>La sentencia <codeinline>continue</codeinline> es similar a la sentencia <codeinline>break</codeinline>. Sin embargo, en lugar de salir de un bucle, <codeinline>continue</codeinline> lo reinicia en la siguiente iteración. La sintaxis de la sentencia <codeinline>continue</codeinline> es tan sencilla como la de la sentencia <codeinline>break</codeinline>:</p>
+    <pre class="language-js">
+    continue;</pre>
+    <p>La sentencia <codeinline>continue</codeinline> también puede utilizarse con una etiqueta:</p>
+    <pre class="language-js">
+    continue labelname;</pre>
+    <p>La sentencia <codeinline>continue</codeinline>, tanto en su forma etiquetada como sin etiquetar, sólo puede utilizarse dentro del cuerpo de un bucle. Su uso en cualquier otro lugar provoca un error de sintaxis.</p>
+    <p>Cuando se ejecuta la sentencia <codeinline>continue</codeinline>, finaliza la iteración actual del bucle que lo encierra y comienza la siguiente iteración. Esto significa cosas diferentes para los distintos tipos de bucles:</p>
+    <ul>
+      <li class="font-normal">En un bucle <codeinline>while</codeinline>, la <em>expresión</em> especificada al principio del bucle se comprueba de nuevo y, si es <codeinline>true</codeinline>, el cuerpo del bucle se ejecuta empezando por arriba.</li>
+      <li class="font-normal">En un bucle <codeinline>do/while</codeinline>, la ejecución salta a la parte inferior del bucle, donde la condición del bucle se comprueba de nuevo antes de reiniciar el bucle en la parte superior.</li>
+      <li class="font-normal">En un bucle <codeinline>for</codeinline>, se evalúa la expresión de <em>incremento</em> y se vuelve a comprobar la expresión de <em>prueba</em> para determinar si debe realizarse otra iteración.</li>
+      <li class="font-normal">En un bucle <codeinline>for/of</codeinline> o <codeinline>for/in</codeinline>, el bucle comienza de nuevo con el siguiente valor iterado o el siguiente nombre de propiedad que se asigna a la variable especificada.</li>
+    </ul>
+    <p>Observe la diferencia en el comportamiento de la sentencia <codeinline>continue</codeinline> en los bucles <codeinline>while</codeinline> y <codeinline>for</codeinline>: un bucle <codeinline>while</codeinline> vuelve directamente a su condición, pero un bucle <codeinline>for</codeinline> evalúa primero su expresión de <em>incremento</em> y luego vuelve a su condición. Anteriormente, consideramos el comportamiento del bucle <codeinline>for</codeinline> en términos de un bucle <codeinline>while</codeinline> "equivalente". Sin embargo, debido a que el estado <codeinline>continue</codeinline> se comporta de forma diferente para estos dos bucles, en realidad no es posible simular perfectamente un bucle <codeinline>for</codeinline> sólo con un bucle <codeinline>while</codeinline>.</p>
+    <p>El siguiente ejemplo muestra una sentencia <codeinline>continue</codeinline> sin etiquetar que se utiliza para saltarse el resto de la iteración actual de un bucle cuando se produce un error:</p>
+    <pre>
+    <code class="language-js">for(let i = 0; i &lt; data.length; i++) &lbrace;
+      if (!data[i]) continue; // No puedo proceder son datos indefinidos
+      total += data[i];
+    }</code></pre>
+    <p>Al igual que la sentencia <codeinline>break</codeinline>, la sentencia <codeinline>continue</codeinline> puede utilizarse en su forma etiquetada dentro de bucles anidados cuando el bucle a reiniciar no es el bucle inmediatamente adyacente. Además, al igual que con la sentencia <codeinline>break</codeinline>, no se permiten saltos de línea entre la sentencia <codeinline>continue</codeinline> y su <em>labelname</em>.</p>
+  </section>
+  <section id="5-4" class="py-4 xs:py-5 sm:py-6">
+    <h2>5.5.4 return</h2>
+    <p>Recordemos que las invocaciones a funciones son expresiones y que todas las expresiones tienen valores. Una sentencia <codeinline>return</codeinline> dentro de una función especifica el valor de las invocaciones de esa función. Esta es la sintaxis de la sentencia <codeinline>return</codeinline>:</p>
+    <pre class="language-js">
+    return expression;</pre>
+    <p>Una sentencia <codeinline>return</codeinline> sólo puede aparecer dentro del cuerpo de una función. Es un error sintáctico que aparezca en cualquier otro lugar. Cuando se ejecuta la sentencia <codeinline>return</codeinline>, la función que la contiene devuelve el valor de la <em>expresión</em> a su invocador. Por ejemplo:</p>
+    <pre>
+    <code class="language-js">function square(x) &lbrace; return x*x; } // Una función que devuelve el cuadrado de su argumento
+    square(2) // => 4</code></pre>
+    <p>Sin sentencia <codeinline>return</codeinline>, una invocación de función simplemente ejecuta cada uno de los estados del cuerpo de la función por turnos hasta que llega al final de la función y entonces devuelve a su invocador. En este caso, la expresión de invocación se evalúa como <codeinline>undefined</codeinline>. La sentencia <codeinline>return</codeinline> aparece a menudo como la última sentencia de una función, pero no tiene por qué ser la última: una función vuelve a su invocador cuando se ejecuta una sentencia <codeinline>return</codeinline>, aunque queden otras sentencias en el cuerpo de la función.</p>
+    <p>La sentencia <codeinline>return</codeinline> también puede utilizarse sin una <em>expresión</em> para hacer que la función devuelva <codeinline>undefined</codeinline> asuinvocador. Por ejemplo:</p>
+    <pre>
+    <code class="language-js">function displayObject(o) &lbrace;
+      // Regresa inmediatamente si el argumento es null o undefined
+      if (!o) return;
+      // El resto de la función va aquí
+    }</code></pre>
+    <p>Debido a la inserción automática de punto y coma de JavaScript (<a href="capitulo-2#6">§2.6</a>) no puede incluir un salto de línea entre la palabra clave <codeinline>return</codeinline> y la expresión que le sigue.</p>
+  </section>
+  <section id="5-5">
+    <h2>5.5.5 yield</h2>
+    <p>La sentencia <codeinline>yield</codeinline> es muy parecida a la sentencia <codeinline>return</codeinline>, pero sólo se utiliza en funciones generadoras ES6 (véase <a href="capitulo-12#3">§12.3</a>) para producir el siguiente valor en la secuencia generada de valores sin devolverlo:</p>
+    <pre>
+    <code class="language-js">// Una función generadora que produce un rango de números
+    function* range(from, to) &lbrace;
+      for(let i = from; i &lt;= to; i++) &lbrace;
+      yield i;
+      }
+    }</code></pre>
+    <p>Para entender <codeinline>yield</codeinline>, debe entender los iteradores y generadores, que no se tratarán hasta el <a href="capitulo-12">capítulo 12</a>. Sin embargo, <codeinline>yield</codeinline> se incluye aquí para completar el tema. (Técnicamente, sin embargo, <codeinline>yield</codeinline> es un operador más que una sentencia, como se explica en <a href="capitulo-12#4-2">§12.4.2</a>.)</p>
+  </section>
 </Layoutjavascript>
