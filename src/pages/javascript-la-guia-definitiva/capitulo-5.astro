@@ -520,4 +520,200 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     }</code></pre>
     <p>Para entender <codeinline>yield</codeinline>, debe entender los iteradores y generadores, que no se tratarán hasta el <a href="capitulo-12">capítulo 12</a>. Sin embargo, <codeinline>yield</codeinline> se incluye aquí para completar el tema. (Técnicamente, sin embargo, <codeinline>yield</codeinline> es un operador más que una sentencia, como se explica en <a href="capitulo-12#4-2">§12.4.2</a>.)</p>
   </section>
+  <section id="5-6" class="py-4 xs:py-5 sm:py-6">
+    <h2>5.5.6 throw</h2>
+    <p>Una <em>excepción</em> es una señal que indica que se ha producido algún tipo de condición excepcional o error. <em>Lanzar</em> una excepción es señalar un error o una condición excepcional. <em>Atrapar</em> una excepción es manejarla, es decir, tomar las medidas necesarias o apropiadas para recuperarse de la excepción. En JavaScript, las excepciones se lanzan siempre que se produce un error en tiempo de ejecución y siempre que el programa las lanza explícitamente utilizando la sentencia <codeinline>throw</codeinline>. Las excepciones se capturan con el estado <codeinline>try/catch/finally</codeinline>, que se describe en la siguiente sección.</p>
+    <p>La sentencia <codeinline>throw</codeinline> tiene la siguiente sintaxis:</p>
+    <pre class="language-js">
+    throw expression;</pre>
+    <p><em>expression</em> puede evaluarse a un valor de cualquier tipo. Puede lanzar un número que represente un código de error o una cadena que contenga un mensaje de error legible por humanos. La clase Error y sus subclases se utilizan cuando el propio intérprete de JavaScript lanza un error, y usted también puede utilizarlas. Un objeto Error tiene una propiedad <codeinline>name</codeinline> que especifica el tipo de error y una propiedad <codeinline>message</codeinline> que contiene la cadena pasada a la función constructora. A continuación se muestra una función de ejemplo que lanza un objeto Error cuando se invoca con un argumento no válido:</p>
+    <pre>
+    <code class="language-js">function factorial(x) &lbrace;
+      // Si el argumento de entrada e invalido, lanza una excepción!.
+      if (x &lt; 0) throw new Error("x no debe ser negativo");
+      // Caso contrario, calcula el valor y lo devuelve.
+      let f;
+      for(f = 1; x > 1; f *= x, x--) /* empty */ ;
+      return f;
+    }
+    factorial(4) // => 24</code></pre>
+    <p>Cuando se lanza una excepción, el intérprete de JavaScript detiene inmediatamente la ejecución normal del programa y salta al manejador de excepciones más cercano. Los manejadores de excepciones se escriben utilizando la cláusula <codeinline>catch</codeinline> de la sentencia <codeinline>try/catch/finally</codeinline>, que se describe en la siguiente sección. Si el bloque de código en el que se lanzó la excepción no tiene una cláusula <codeinline>catch</codeinline> asociada, el intérprete comprueba el siguiente bloque de código más alto para ver si tiene un manejador de excepciones asociado. Esto continúa hasta que se encuentra un manejador. Si se lanza una excepción en una función que no contiene una sentencia <codeinline>try/catch/finally</codeinline> para manejarla, la excepción se propaga hasta el código que invocó la función. De este modo, las excepciones se propagan por la estructura léxica de los métodos de JavaScript y por la pila de llamadas. Si no se encuentra ningún manejador de excepciones, la excepción se trata como un error y se notifica al usuario.</p>
+  </section>
+  <section id="5-7">
+    <h2>5.5.7 try/catch/nally</h2>
+    <p>La sentencia <codeinline>try/catch/finally</codeinline> es el mecanismo de gestión de excepciones de JavaScript. La cláusula <codeinline>try</codeinline> de esta sentencia simplemente define el bloque de código cuyas excepciones deben tratarse. El bloque <codeinline>try</codeinline> va seguido de una cláusula <codeinline>catch</codeinline>, que es un bloque de sentencias que se invocan cuando se produce una excepción en cualquier parte del bloque <codeinline>try</codeinline>. La cláusula <codeinline>catch</codeinline> va seguida de un bloque <codeinline>finally</codeinline> que contiene código de limpieza que está garantizado que se ejecute, independientemente de lo que ocurra en el bloque <codeinline>try</codeinline>. Los bloques <codeinline>catch</codeinline> y <codeinline>finally</codeinline> son opcionales, pero un bloque <codeinline>try</codeinline> debe ir acompañado de al menos uno de estos bloques. Los bloques <codeinline>try</codeinline>, <codeinline>catch</codeinline> y <codeinline>finally</codeinline> comienzan y terminan con llaves. Estas llaves son una parte obligatoria de la sintaxis y no pueden omitirse, incluso si una cláusula contiene una única sentencia.</p>
+
+
+    <p>El siguiente código ilustra la sintaxis y el propósito de <codeinline>try/catch/finally</codeinline> declaración:</p>
+    <pre>
+    <code class="language-js">try &lbrace;
+      // Normalmente, este codigo se ejecuta desde la parte superior hasta la 
+      // parte inferior sin problemas. Pero a veces, puede producirse una 
+      // excepción ya sea directamente, con una sentencia throw, o indirectamente 
+      // llamando a un metodo que lanza una excepción.
+    }
+    catch(e) &lbrace;
+      // La sentencia de este bloque se ejecuta si, y solo si el bloque try
+      // lanza una excepción. Esta sentencia puede utilizar la variable local
+      // e para referirse para el objeto Error o cualquier otro valor lanzado.
+      // Este bloque puede manejar la excepción alguna manera, puede ignorar
+      // la excepción haciendo nada, o puede lanzar otra excepción con throw.
+    }
+    finally &lbrace;
+      // Este bloque contiene sentencias que siempre se ejecutan, independientemente
+      // que ocurra en el bloque try. Estas sentencias se ejecutan siempre que el
+      // bloque terminal:
+      // 1) normalmente, después de llegar al final del bloque
+      // 2) debido a una sentencia break, continue o return
+      // 3) con una excepción que se gestiona por una cláusula catch anterior
+      // 4) con una excepción no capturada que se esta propagando
+    }
+    </code></pre>
+    <p>Tenga en cuenta que la palabra clave <codeinline>catch</codeinline> suele ir seguida de un identificador entre paréntesis. Este identificador es como un parámetro de función. Cuando se captura una excepción, el valor asociado con la excepción (un objeto Error, por ejemplo) se asigna a este parámetro. El identificador asociado a una cláusula <codeinline>catch</codeinline> tiene alcance de bloque: sólo se define dentro del bloque <codeinline>catch</codeinline>.</p>
+    <p>He aquí un ejemplo realista de la sentencia <codeinline>try/catch</codeinline>. Utiliza el método <codeinline>factorial()</codeinline> definido en la sección anterior y los métodos JavaScript del lado del cliente <codeinline>prompt()</codeinline> y <codeinline>alert()</codeinline> para la entrada y la salida:</p>
+    <pre>
+    <code class="language-js">try &lbrace;
+      // Pedir al usuario que introduzca un número
+      let n = Number(prompt("Por favor ingrese un número entero", ""));
+      // Calcula el factorial del número, asuimiendo que sea válido
+      let f = factorial(n);
+      // Mostrar el resultado
+      alert(n + "! = " + f);
+    }
+    catch(ex) &lbrace;   // Si la entrada del usuario no es valida, termina aquí
+      alert(ex);  // Indica al usuario cual es el error
+    }</code></pre>
+    <p>Este ejemplo es una sentencia <codeinline>try/catch</codeinline> sin cláusula <codeinline>finally</codeinline>. Aunque <codeinline>finally</codeinline> no se utiliza tan a menudo como <codeinline>catch</codeinline>, puede ser útil. Sin embargo, su comportamiento requiere una explicación adicional. Se garantiza la ejecución de la cláusula <codeinline>finally</codeinline> si se ejecuta cualquier parte del bloque <codeinline>try</codeinline>, independientemente de cómo finalice el código del bloque <codeinline>try</codeinline>. Generalmente se utiliza para limpiar después del código en la cláusula <codeinline>try</codeinline>.</p>
+    <p>En el caso normal, el intérprete de JavaScript llega al final del bloque <codeinline>try</codeinline> y pasa al bloque <codeinline>finally</codeinline>, que realiza cualquier limpieza necesaria. Si el intérprete abandonó el bloque <codeinline>try</codeinline> debido a una sentencia <codeinline>return</codeinline>, <codeinline>continue</codeinline> o <codeinline>break</codeinline>, el bloque <codeinline>finally</codeinline> se ejecuta antes de que el intérprete salte a su nuevo destino.</p>
+    <p>Si se produce una excepción en el bloque <codeinline>try</codeinline> y hay un bloque <codeinline>catch</codeinline> asociado para manejar la excepción, el intérprete ejecuta primero el bloque <codeinline>catch</codeinline> y luego el bloque <codeinline>finally</codeinline>. Si no hay un bloque <codeinline>catch</codeinline> local para manejar la excepción, el intérprete ejecuta primero el bloque <codeinline>finally</codeinline> y luego salta a la cláusula <codeinline>catch</codeinline> más cercana.</p>
+    <p>Si el propio bloque <codeinline>finally</codeinline> provoca un salto con una sentencia <codeinline>return</codeinline>, <codeinline>continue</codeinline>, <codeinline>break</codeinline> o <codeinline>throw</codeinline>, o llamando a un método que lanza una excepción, el intérprete abandona cualquier salto que estuviera pendiente y realiza el nuevo salto. Por ejemplo, si una cláusula <codeinline>finally</codeinline> lanza una excepción, esa excepción sustituye a cualquier excepción que estuviera en proceso de ser lanzada. Si una cláusula <codeinline>finally</codeinline> emite una sentencia <codeinline>return</codeinline>, el método retorna normalmente, incluso si se ha lanzado una excepción y aún no ha sido manejada.</p>
+    <p><codeinline>try</codeinline> y <codeinline>finally</codeinline> pueden usarse juntos sin una cláusula <codeinline>catch</codeinline>. En este caso, el bloque <codeinline>finally</codeinline> es simplemente código de limpieza cuya ejecución está garantizada, independientemente de lo que ocurra en el bloque <codeinline>try</codeinline>. Recordemos que no podemos simular completamente un bucle <codeinline>for</codeinline> con un bucle <codeinline>while</codeinline> porque la sentencia <codeinline>continue</codeinline> se comporta de forma diferente en los dos bucles. Si añadimos una sentencia <codeinline>try/finally</codeinline>, podemos escribir un bucle <codeinline>while</codeinline> que funcione como un bucle <codeinline>for</codeinline> y que maneje correctamente las sentencias <codeinline>continue</codeinline>:</p>
+    <pre class="language-js">
+    // Simula for(initialize ; test ;increment ) body;
+    initialize ;
+    while( test ) &lbrace;
+      try &lbrace; body ; }
+      finally &lbrace; increment ; }
+    }</pre>
+    <p>Tenga en cuenta, sin embargo, que un <em>cuerpo</em> que contiene una sentencia <codeinline>break</codeinline> se comporta de forma ligeramente diferente (provocando un incremento extra antes de salir) en el bucle <codeinline>while</codeinline> que en el bucle <codeinline>for</codeinline>, por lo que incluso con la cláusula <codeinline>finally</codeinline>, no es posible simular completamente el bucle <codeinline>for</codeinline> con <codeinline>while</codeinline>.</p>
+    <article>
+      <p class="title-article">Cláusulas de salvaguardia</p>
+      <p>Ocasionalmente puedes encontrarte utilizando una cláusula <codeinline>catch</codeinline> únicamente para detectar y detener la propagación de una excepción, aunque no te importe el tipo o el valor de la excepción. En ES2019 y posteriores, puedes omitir los paréntesis y el identificador y utilizar la palabra clave <codeinline>catch</codeinline> desnuda en este caso. He aquí un ejemplo:</p>
+    <pre>
+    <code class="language-js">// Como JSON.parse(), pero devuelve undefined en lugar de lanzar un error
+    function parseJSON(s) &lbrace;
+      try &lbrace;
+        return JSON.parse(s);
+      } catch &lbrace;
+      // Algo salio mal pero no nos importa, devolvemos undefined
+        return undefined;
+      }
+    }</code></pre>
+    </article>
+  </section>
+  <section id="6" class="py-4 xs:py-5 sm:py-6">
+    <h2>5.6 Declaraciones varias</h2>
+    <p>Esta sección describe las tres sentencias JavaScript restantes: <codeinline>with</codeinline>, <codeinline>debugger</codeinline> y <codeinline>"use strict"</codeinline>.</p>
+  </section>
+  <section id="6-1">
+    <h2>5.6.1 with</h2>
+    <p>La sentencia <codeinline>with</codeinline> ejecuta un bloque de código como si las propiedades de un objeto especificado fueran variables en el ámbito de ese código. Su sintaxis es la siguiente:</p>
+    <pre class="language-js">
+    with (object)
+      statements
+    }</pre>
+    <p>Esta sentencia crea un ámbito temporal con las propiedades del <em>object</em> como variables y luego ejecuta la <em>sentencia</em> dentro de ese ámbito.</p>
+    <p>La sentencia <codeinline>with</codeinline> está prohibida en modo estricto (véase <a href="#6-3">§5.6.3</a>) y debe considerarse obsoleta en modo no estricto: evite su uso siempre que sea posible. El código JavaScript que utiliza <codeinline>with</codeinline> es difícil de optimizar y es probable que se ejecute significativamente más despacio que el código equivalente escrito sin la sentencia <codeinline>with</codeinline>.</p>
+    <p>El uso habitual de la sentencia <codeinline>with</codeinline> es facilitar el trabajo con jerarquías de objetos muy definidas. En JavaScript del lado del cliente, por ejemplo, es posible que tenga que escribir expresiones como ésta para acceder a los elementos de un formulario HTML:</p>
+    <pre>
+    <code class="language-js">document.forms[0].address.value</code></pre>
+    <p>Si necesita escribir expresiones como ésta varias veces, puede utilizar la función <codeinline>with</codeinline> con para tratar las propiedades del objeto formulario como variables:</p>
+    <pre>
+    <code class="language-js">with(document.forms[0]) &lbrace;
+      // Acceso 
+      name.value = "";
+      address.value = "";
+      email.value = "";
+    }</code></pre>
+    <p>Esto reduce la cantidad de escritura que tiene que hacer: ya no necesita anteponer a cada nombre de propiedad de formulario <codeinline>document.forms[0]</codeinline>. Es igual de sencillo, por supuesto, evitar la sentencia <codeinline>with</codeinline> y escribir el código anterior así:</p>
+    <pre>
+    <code class="language-js">let f = document.forms[0];
+    f.name.value = "";
+    f.address.value = "";
+    f.email.value = "";
+    </code></pre>
+    <p>Tenga en cuenta que si utiliza <codeinline>const</codeinline> o <codeinline>let</codeinline> o <codeinline>var</codeinline> para declarar una variable o constante dentro del cuerpo de una sentencia <codeinline>with</codeinline>, se crea una variable ordinaria y no se define una nueva propiedad dentro del objeto especificado.</p>
+  </section>
+  <section id="6-2" class="py-4 xs:py-5 sm:py-6">
+    <h2>5.6.2 debugger</h2>
+    <p>La sentencia <codeinline>debugger</codeinline> normalmente no hace nada. Sin embargo, si se dispone de un programa de depuración y se está ejecutando, entonces una implementación puede (aunque no está obligada a) realizar algún tipo de acción de depuración. En la práctica, esta sentencia actúa como un punto de interrupción: la ejecución del código JavaScript se detiene, y puede utilizar el depurador para imprimir los valores de las variables, examinar la pila de llamadas, etc. Supongamos, por ejemplo, que estás recibiendo una excepción en tu función <codeinline>f()</codeinline> porque está siendo llamada con un argumento indefinido, y no puedes averiguar de dónde viene esta llamada. Para ayudarte en la depuración de este problema, podrías alterar <codeinline>f()</codeinline> para que comience así:</p>
+    <pre>
+    <code class="language-js">function f(o) &lbrace;
+      if (o === undefined) debugger; // Linea temporal para proposito de depuración
+      ...                            // El resto de la función va aquí
+      }</code></pre>
+    <p>Ahora, cuando <codeinline>f()</codeinline> es llamada sin argumento, la ejecución se detendrá, y puedes usar el depurador para inspeccionar la pila de llamadas y averiguar de dónde viene esta llamada incorrecta.</p>
+    <p>Ten en cuenta que no basta con tener un depurador disponible: la sentencia <codeinline>debugger</codeinline> no iniciará el depurador por ti. Sin embargo, si estás utilizando un navegador web y tienes abierta la consola de herramientas de desarrollador, esta sentencia provocará un punto de interrupción.</p>
+  </section>
+  <section id="6-3">
+    <h2>5.6.3 "use strict"</h2>
+    <p><codeinline>"use strict"</codeinline> es una <em>directiva</em> introducida en ES5. Las directivas no son sentencias (pero se parecen lo suficiente como para que <codeinline>"use strict"</codeinline> se documente aquí). Hay dos diferencias importantes entre la directiva <codeinline>"use strict"</codeinline> y las sentencias normales:</p>
+    <ul>
+      <li class="font-normal">No incluye ninguna palabra clave del lenguaje: la directiva es sólo una declaración de expresión que consiste en un literal de cadena especial (entre comillas simples o dobles).</li>
+      <li class="font-normal">Sólo puede aparecer al principio de una secuencia de comandos o al principio del cuerpo de una función, antes de que aparezca ninguna sentencia real.</li>
+    </ul>
+    <p>El propósito de una directiva <codeinline>"use strict"</codeinline> es indicar que el código que sigue (en el script o función) es <em>código estricto</em>. El código de nivel superior (no función) de un script es código estricto si el script tiene una directiva <codeinline>"use strict"</codeinline>. El cuerpo de una función es código estricto si está definido dentro de código estricto o si tiene una directiva <codeinline>"use strict"</codeinline>. El código pasado al método <codeinline>eval()</codeinline> es código estricto si <codeinline>eval()</codeinline> se llama desde código estricto o si la cadena de código incluye una directiva <codeinline>"use strict"</codeinline>. Además del código declarado explícitamente como estricto, cualquier código en el cuerpo de una <codeinline>class</codeinline> (<a href="capitulo-9">Capítulo 9</a>) o en un módulo ES6 (<a href="capitulo-10#3">§10.3</a>) es automáticamente código estricto. Esto significa que si todo tu código JavaScript está escrito como módulos, entonces es automáticamente estricto, y nunca necesitarás usar una directiva <codeinline>"use strict"</codeinline> explícita.</p>
+    <p>El código estricto se ejecuta en <em>modo estricto</em>. El modo estricto es un subconjunto restringido del lenguaje que corrige importantes deficiencias del lenguaje y proporciona una comprobación de errores más sólida y una mayor seguridad. Dado que el modo estricto no es el predeterminado, el código JavaScript antiguo que aún utiliza las características heredadas deficientes del lenguaje seguirá ejecutándose correctamente. Las diferencias entre el modo estricto y el modo no estricto son las siguientes (las tres primeras son especialmente importantes):</p>
+    <ul>
+      <li class="font-normal">La sentencia <codeinline>with</codeinline> no está permitida en modo estricto.</li>
+      <li class="font-normal">En modo estricto, todas las variables deben ser declaradas: se lanza un ReferenceError si asignas un valor a un identificador que no es una variable declarada, función, parámetro de función, parámetro de cláusula <codeinline>catch</codeinline>, o propiedad del objeto global. (En modo no estricto, esto declara implícitamente una variable global añadiendo una nueva propiedad al objeto global).</li>
+      <li class="font-normal">En modo estricto, las funciones invocadas como funciones (en lugar de como métodos) tienen un valor <codeinline>this</codeinline> de <codeinline>undefined</codeinline>. (En modo no estricto, a las funciones invocadas como funciones siempre se les pasa el objeto global como su valor <codeinline>this</codeinline>). Además, en modo estricto, cuando una función se invoca con <codeinline>call()</codeinline> o <codeinline>apply()</codeinline> (<a href="capitulo-8#7-4">§8.7.4</a>) el valor <codeinline>this</codeinline> es exactamente el valor pasado como primer argumento a <codeinline>call()</codeinline> o <codeinline>apply()</codeinline>. (En modo no estricto, los valores <codeinline>null</codeinline> e <codeinline>undefined</codeinline> se sustituyen por el objeto global y los valores que no son objetos se convierten en objetos).</li>
+      <li class="font-normal">En modo estricto, las asignaciones a propiedades no escribibles y los intentos de crear nuevas propiedades en objetos no extensibles lanzan un TypeError. (En modo no estricto, estos intentos fallan silenciosamente).</li>
+      <li class="font-normal">En modo estricto, el código pasado a <codeinline>eval()</codeinline> no puede declarar variables o definir funciones en el ámbito del invocador, como puede hacerlo en modo no estricto. En su lugar, las definiciones de variables y funciones viven en un nuevo ámbito creado para <codeinline>eval()</codeinline>. Este ámbito se descarta cuando vuelve <codeinline>eval()</codeinline>.</li>
+      <li class="font-normal">En modo estricto, el objeto Arguments (<a href="capitulo-8#8-3-3">§8.3.3</a>) de una función contiene una copia estática de los valores pasados a la función. En modo no estricto, el objeto Arguments tiene un comportamiento <codeinline>"mágico"</codeinline> en el que los elementos de la matriz y los parámetros con nombre de la función se refieren al mismo valor.</li>
+      <li class="font-normal">En modo estricto, se lanza un SyntaxError si el operador <codeinline>delete</codeinline> va seguido de un identificador no cualificado como una variable, función o parámetro de función. (En modo no estricto, una expresión <codeinline>delete</codeinline> de este tipo no hace nada y se evalúa como <codeinline>false</codeinline>).</li>
+      <li class="font-normal">En modo estricto, un intento de borrar una propiedad no configurable lanza un TypeError. (En modo no estricto, el intento falla y la expresión de <codeinline>delete</codeinline> se evalúa como <codeinline>false</codeinline>).</li>
+      <li class="font-normal">En modo estricto, es un error sintáctico que un literal de objeto defina dos o más propiedades con el mismo nombre. (En modo no estricto, no se produce ningún error).</li>
+      <li class="font-normal">En modo estricto, es un error sintáctico que una declaración de función tenga dos o más parámetros con el mismo nombre. (En modo no estricto, no se produce ningún error).</li>
+      <li class="font-normal">En modo estricto, no se permiten los literales enteros octales (que empiezan por 0 y no van seguidos de una x). (En modo no estricto, algunas implementaciones permiten literales octales).</li>
+      <li class="font-normal">En modo estricto, los identificadores <codeinline>eval</codeinline> y <codeinline>arguments</codeinline> se tratan como palabras clave, y no se permite cambiar su valor. No puedes asignar un valor a estos identificadores, declararlos como variables, usarlos como nombres de función, usarlos como nombres de parámetros de función o usarlos como identificador de un bloque <codeinline>catch</codeinline>.</li>
+      <li class="font-normal">En modo estricto, la capacidad de examinar la pila de llamadas está restringida. <codeinline>arguments.caller</codeinline> y <codeinline>arguments.callee</codeinline> lanzan un TypeError dentro de una función en modo estricto o . Las funciones en modo estricto también tienen propiedades <codeinline>caller</codeinline> y <codeinline>arguments</codeinline> que lanzan un TypeError cuando se leen. (Algunas implementaciones definen estas propiedades no estándar en funciones no estrictas).</li>
+    </ul>
+  </section>
+  <section id="7" class="py-4 xs:py-5 sm:py-6">
+    <h2>5.7 Declaraciones</h2>
+    <p>Las palabras clave <codeinline>const</codeinline>, <codeinline>let</codeinline>, <codeinline>var</codeinline>, <codeinline>function</codeinline>, <codeinline>class</codeinline>, <codeinline>import</codeinline> y <codeinline>export</codeinline> no son técnicamente sentencias, pero se parecen mucho a las sentencias, y este libro se refiere informalmente a ellas como sentencias, por lo que merecen una mención en este capítulo.</p>
+    <p>Estas palabras clave se describen mejor como <em>declaraciones</em> que como sentencias. Dijimos al principio de este capítulo que las declaraciones "hacen que algo suceda". Las declaraciones sirven para definir nuevos valores y darles nombres que podemos usar para referirnos a esos valores. No hacen mucho por sí mismas, pero al proporcionar nombres para los valores, en un sentido importante, definen el significado de las otras declaraciones en su programa.</p>
+    <p>Cuando un programa se ejecuta, son las expresiones del programa las que se evalúan y las declaraciones del programa las que se ejecutan. Las declaraciones de un programa no se "ejecutan" de la misma manera: en su lugar, definen la estructura del propio programa. En términos generales, se puede pensar en las declaraciones como las partes del programa que se procesan antes de que el código comience a ejecutarse.</p>
+    <p>Las declaraciones de JavaScript se utilizan para definir constantes, variables, funciones y clases, así como para importar y exportar valores entre módulos. Las siguientes subsecciones dan ejemplos de todas estas declaraciones. Todas ellas se tratan con mucho más detalle en otras partes de este libro.</p>
+  </section>
+  <section id="7-1">
+    <h2>5.7.1 const, let, y var</h2>
+    <p>Las declaraciones <codeinline>const</codeinline>, <codeinline>let</codeinline> y <codeinline>var</codeinline> se tratan en <a href="capitulo-3#10">§3.10</a>. En ES6 y posteriores, <codeinline>const</codeinline> declara constantes, y <codeinline>let</codeinline> declara variables. Antes de ES6, la palabra clave <codeinline>var</codeinline> era la única forma de declarar variables y no había forma de declarar constantes. Las variables declaradas con <codeinline>var</codeinline> se asignan a la función que las contiene en lugar de al bloque que las contiene. Esto puede ser una fuente de errores, y en el JavaScript moderno no hay realmente ninguna razón para usar <codeinline>var</codeinline> en lugar de <codeinline>let</codeinline>.</p>
+    <pre>
+    <code class="language-js">const TAU = 2*Math.PI;
+    let radius = 3;
+    var circumference = TAU * radius;</code></pre>
+  </section>
+  <section id="7-2" class="py-4 xs:py-5 sm:py-6">
+    <h2>5.7.2 function</h2>
+    <p>La declaración de <codeinline>function</codeinline> se utiliza para definir funciones, que se tratan en detalle en el <a href="capitulo-8">Capítulo 8</a>. (También vimos la <codeinline>function</codeinline> en <a href="capitulo-4#3">§4.3</a>, donde se utilizó como parte de una expresión de función en lugar de una declaración de función). Una declaración de función tiene este aspecto:</p>
+    <pre>
+    <code class="language-js">function area(radius) &lbrace;
+      return Math.PI * radius * radius;
+    }</code></pre>
+    <p>Una declaración de función crea un objeto de función y lo asigna al nombre especificado -<codeinline>area</codeinline> en este ejemplo. En cualquier parte de nuestro programa, podemos referirnos a la función- y ejecutar el código que contiene- utilizando este nombre. Las declaraciones de función de cualquier bloque de código JavaScript se procesan antes de que se ejecute el código, y los nombres de función se vinculan a los objetos de función de todo el bloque. Decimos que las declaraciones de función se "elevan" porque es como si todas se hubieran movido a la parte superior del ámbito en el que se definen. El resultado es que el código que invoca una función puede existir en el programa antes que el código que declara la función.</p>
+    <p><a href="capitulo-12#3">§12.3</a> describe un tipo especial de función conocida como <em>generador</em>. Las declaraciones de generador utilizan la palabra clave <codeinline>function</codeinline> pero van seguidas de un asterisco. En <a href="capitulo-13#3">§13.3</a> se describen las funciones asíncronas, que también se declaran con la palabra clave <codeinline>function</codeinline> pero van precedidas de la palabra clave <codeinline>async</codeinline>.</p>
+  </section>
+  <section>
+    <h2>5.7.3 class</h2>
+    <p>En ES6 y posteriores, la declaración de <codeinline>class</codeinline> crea una nueva clase y le da un nombre que podemos utilizar para referirnos a ella. Las clases se describen en detalle en el <a href="capitulo-9">Capítulo 9</a> Una declaración de clase simple puede tener este aspecto:</p>
+    <pre>
+    <code class="language-js">class Circle &lbrace;
+      constructor(radius) &lbrace; this.r = radius; }
+      area() &lbrace; return Math.PI * this.r * this.r; }
+      circumference() &lbrace; return 2 * Math.PI * this.r; }
+    }</code></pre>
+    <p>A diferencia de las funciones, las declaraciones de clase no son hoisted, y no se puede utilizar una clase declarada de esta manera en el código que aparece antes de la declaración.</p>
+  </section>
 </Layoutjavascript>
