@@ -705,7 +705,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Una declaración de función crea un objeto de función y lo asigna al nombre especificado -<codeinline>area</codeinline> en este ejemplo. En cualquier parte de nuestro programa, podemos referirnos a la función- y ejecutar el código que contiene- utilizando este nombre. Las declaraciones de función de cualquier bloque de código JavaScript se procesan antes de que se ejecute el código, y los nombres de función se vinculan a los objetos de función de todo el bloque. Decimos que las declaraciones de función se "elevan" porque es como si todas se hubieran movido a la parte superior del ámbito en el que se definen. El resultado es que el código que invoca una función puede existir en el programa antes que el código que declara la función.</p>
     <p><a href="capitulo-12#3">§12.3</a> describe un tipo especial de función conocida como <em>generador</em>. Las declaraciones de generador utilizan la palabra clave <codeinline>function</codeinline> pero van seguidas de un asterisco. En <a href="capitulo-13#3">§13.3</a> se describen las funciones asíncronas, que también se declaran con la palabra clave <codeinline>function</codeinline> pero van precedidas de la palabra clave <codeinline>async</codeinline>.</p>
   </section>
-  <section>
+  <section id="7-3">
     <h2>5.7.3 class</h2>
     <p>En ES6 y posteriores, la declaración de <codeinline>class</codeinline> crea una nueva clase y le da un nombre que podemos utilizar para referirnos a ella. Las clases se describen en detalle en el <a href="capitulo-9">Capítulo 9</a> Una declaración de clase simple puede tener este aspecto:</p>
     <pre>
@@ -715,5 +715,150 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       circumference() &lbrace; return 2 * Math.PI * this.r; }
     }</code></pre>
     <p>A diferencia de las funciones, las declaraciones de clase no son hoisted, y no se puede utilizar una clase declarada de esta manera en el código que aparece antes de la declaración.</p>
+  </section>
+  <section id="7-4" class="py-4 xs:py-5 sm:py-6">
+    <h2>5.7.4 import y export</h2>
+    <p>Las declaraciones <codeinline>import</codeinline> y <codeinline>export</codeinline> se utilizan conjuntamente para que los valores definidos en un módulo de código JavaScript estén disponibles en otro módulo. Un módulo es un archivo de código JavaScript con su propio espacio de nombres global, completamente independiente de todos los demás módulos. La única manera de que un valor (como una función o una clase) definido en un módulo pueda utilizarse en otro módulo es que el módulo que lo define lo exporte con <codeinline>export</codeinline> y el módulo que lo utiliza lo importe con <codeinline>import</codeinline>. Los módulos son el tema del <a href="capitulo-10">Capítulo 10</a> y la <codeinline>import</codeinline> y la <codeinline>export</codeinline> se tratan en detalle en <a href="capitulo-10#3">§10.3</a>.</p>
+    <p>Las directivas <codeinline>import</codeinline> se utilizan para importar uno o más valores de otro archivo de código Java-Script y asignarles nombres dentro del módulo actual. La directiva <codeinline>import</codeinline> viene de diferente forma. He aquí algunos ejemplos:</p>
+    <pre>
+    <code class="language-js">import Circle from './geometry/circle.js';
+    import &lbrace; PI, TAU } from './geometry/constants.js';
+    import &lbrace; magnitude as hypotenuse } from './vectors/utils.js';</code></pre>
+    <p>Los valores de un módulo JavaScript son privados y no pueden importarse a otros módulos a menos que se hayan exportado explícitamente. La directiva <codeinline>export</codeinline> hace esto: declara que uno o más valores definidos en el módulo actual son exportados y por lo tanto disponibles para ser importados por otros módulos. La directiva <codeinline>export</codeinline> tiene más variables que la directiva <codeinline>import</codeinline>. He aquí una de ellas:</p>
+    <pre>
+    <code class="language-js">// geometry/constants.js
+    const PI = Math.PI;
+    const TAU = 2 * PI;
+    export &lbrace; PI, TAU };</code></pre>
+    <p>La palabra clave <codeinline>export</codeinline> se utiliza a veces como modificador de otras declaraciones, dando lugar a una especie de declaración compuesta que define una constante, variable, función o clase y la exporta al mismo tiempo. Y cuando un módulo exporta un único valor, suele hacerse con la forma especial <codeinline>export default</codeinline>:</p>
+    <pre>
+    <code class="language-js">export const TAU = 2 * Math.PI;
+    export function magnitude(x,y) &lbrace; return Math.sqrt(x*x + y*y); }
+    export default class Circle &lbrace; /* class definition omitted here */ }</code></pre>
+  </section>
+  <section id="8" class="pb-4 xs:pb-5 sm:pb-6">
+    <h2>5.8 Resumen de las declaraciones de JavaScript</h2>
+    <p>En este capítulo se ha presentado cada una de las sentencias del lenguaje JavaScript, que se resumen en la <a href="tabla5-1">Tabla 5-1</a>.</p>
+    <div id="tabla5-1" class="flex flex-col items-center">
+      <p><em>Tabla 5-1. Sintaxis de sentencias de JavaScript</em></p>
+      <table>
+        <thead class="bg-amber-900 text-[#f6e4c5]">
+          <tr>
+            <td class="w-24 text-center">Declaración</td>
+            <td class="max-w-lg pl-4">Proposito</td>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td class="w-24 pl-4">break</td>
+              <td class="max-w-lg pl-4">Salir de bucle o<codeinline class="md:text-base bg-transparent">switch</codeinline>interno o de una declaración envolvente nombrada</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="w-24 pl-4">case</td>
+              <td class="max-w-lg pl-4">Etiqueta una sentencia dentro de un<codeinline class="md:text-base bg-transparent">switch</codeinline></td>
+            </tr>
+            <tr>
+              <td class="w-24 pl-4">class</td>
+              <td class="max-w-lg pl-4">Declara una clase</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="w-24 pl-4">const</td>
+              <td class="max-w-lg pl-4">Declara una o mas constantes</td>
+            </tr>
+            <tr>
+              <td class="w-24 pl-4">continue</td>
+              <td class="max-w-lg pl-4">Empieza la siguiente iteración de un bucle interno o del bucle con nombre</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="w-24 pl-4">debugger</td>
+              <td class="max-w-lg pl-4">Punto de interrupción del depurador</td>
+            </tr>
+            <tr>
+              <td class="w-24 pl-4">default</td>
+              <td class="max-w-lg pl-4">Etiqueta la sentencia por defecto dentro de un<codeinline class="md:text-base bg-transparent">switch</codeinline></td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="w-24 pl-4">do/while</td>
+              <td class="max-w-lg pl-4">Una alternativa al bucle<codeinline class="md:text-base bg-transparent">while</codeinline></td>
+            </tr>
+            <tr>
+              <td class="w-24 pl-4">export</td>
+              <td class="max-w-lg pl-4">Declara valores que se pueden importar en otros módulos</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="w-24 pl-4">for</td>
+              <td class="max-w-lg pl-4">Un bucle facil de usar</td>
+            </tr>
+            <tr>
+              <td class="w-24 pl-4">for/await</td>
+              <td class="max-w-lg pl-4">Itera de forma asincrónica los valores de un iterador.</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="w-24 pl-4">for/in</td>
+              <td class="max-w-lg pl-4">Enumara los nombres de las propiedades de un objeto.</td>
+            </tr>
+            <tr>
+              <td class="w-24 pl-4">for/of</td>
+              <td class="max-w-lg pl-4">Enumera los valores de un objeto iterable como un array</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="w-24 pl-4">function</td>
+              <td class="max-w-lg pl-4">Declara una función</td>
+            </tr>
+            <tr>
+              <td class="w-24 pl-4">if/else</td>
+              <td class="max-w-lg pl-4">Ejecuta una sentencia u otra función de una condición</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="w-24 pl-4">import</td>
+              <td class="max-w-lg pl-4">Declara nombres para valores definidos en otros módulos</td>
+            </tr>
+            <tr>
+              <td class="w-24 pl-4">label</td>
+              <td class="max-w-lg pl-4">Dar un nombre a una sentencia para usar con<codeinline class="md:text-base bg-transparent">break</codeinline>o<codeinline class="md:text-base bg-transparent">continue</codeinline></td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="w-24 pl-4">let</td>
+              <td class="max-w-lg pl-4">Declara e inicializa una o mas variables (nueva sintaxis).</td>
+            </tr>
+            <tr>
+              <td class="w-24 pl-4">return</td>
+              <td class="max-w-lg pl-4">Devuelve un valor de una función</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="w-24 pl-4">switch</td>
+              <td class="max-w-lg pl-4">Bifurcación multidireccional <codeinline class="md:text-base bg-transparent">case</codeinline>o<codeinline class="md:text-base bg-transparent">default:</codeinline>etiqueta</td>
+            </tr>
+            <tr>
+              <td class="w-24 pl-4">throw</td>
+              <td class="max-w-lg pl-4">Lanza una excepción</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="w-24 pl-4">try/catch/nally</td>
+              <td class="max-w-lg pl-4">Gestión de excepciones y limpieza de código</td>
+            </tr>
+            <tr>
+              <td class="w-24 pl-4">“use strict”</td>
+              <td class="max-w-lg pl-4">Aplicar restricciones de modo estricto a script o funciones</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="w-24 pl-4">var</td>
+              <td class="max-w-lg pl-4">Declara e inicializa una o mas variables (antigua sintaxis).</td>
+            </tr>
+            <tr>
+              <td class="w-24 pl-4">while</td>
+              <td class="max-w-lg pl-4">Una construcción de bucle básica</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="w-24 pl-4">with</td>
+              <td class="max-w-lg pl-4">Extender la cadena de alcance (obsoleto y prohibido en modo estricto)</td>
+            </tr>
+            <tr>
+              <td class="w-24 pl-4">yield</td>
+              <td class="max-w-lg pl-4">Proporciona un valor para ser iterado; solo se utiliza en funciones generadoras</td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
   </section>
 </Layoutjavascript>

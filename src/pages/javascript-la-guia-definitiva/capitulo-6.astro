@@ -1,0 +1,152 @@
+---
+import Navegation from "../../components/Navegation.astro";
+import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
+---
+<Layoutjavascript title="JavaScript: La guia definitiva">
+  <Navegation capAnterior="capitulo-5" capSiguiente="capitulo-7" />
+  <section class="fadeIn">
+    <h1>Objetos</h1>
+    <p>Los objetos son el tipo de datos más fundamental de JavaScript, y ya los has visto
+      muchas veces en los capítulos que preceden a éste. Debido a que los objetos son tan
+      importantes para el lenguaje JavaScript, es importante que entiendas cómo funcionan
+      en detalle, y este capítulo proporciona ese detalle. Comienza con una descripción
+      formal de los objetos, y luego se sumerge en secciones prácticas sobre la creación de
+      objetos y la consulta, configuración, eliminación, comprobación y enumeración de
+      las propiedades de los objetos. Estas secciones centradas en las propiedades van
+      seguidas de otras que explican cómo extender, serializar y definir métodos
+      importantes en los objetos. Finalmente, el capítulo concluye con una larga sección
+      sobre la nueva sintaxis literal de objetos en ES6 y versiones más recientes del lenguaje.</p>
+  </section>
+  <section id="1" class="fadeIn py-4 xs:py-5 sm:py-6">
+    <h2>6.1 Introducción a los objetos</h2>
+    <p>Un objeto es un valor compuesto: agrega múltiples valores (valores primitivos u otros
+      objetos) y permite almacenar y recuperar esos valores por su nombre. Un objeto es
+      una colección desordenada de <em>propiedades</em>, cada una de las cuales tiene un nombre y
+      un valor. Los nombres de las propiedades suelen ser cadenas (aunque, como veremos
+      en <a href="#6-10-3">§6.10.3</a>, los nombres de las propiedades también pueden ser símbolos), por lo que
+      podemos decir que los objetos convierten cadenas en valores. Este mapeo de cadena a
+      valor recibe varios nombres, probablemente ya estés familiarizado con la estructura
+      de datos fundamental bajo el nombre de "hash", "hashtable", "diccionario" o "array
+      asociativo". Sin embargo, un objeto es más que un simple mapa cadena-valor.
+      Además de mantener su propio conjunto de propiedades, un objeto JavaScript
+      también hereda las propiedades de otro objeto, conocido como su "prototipo". Los
+      métodos de un objeto suelen ser propiedades heredadas, y esta "herencia prototípica"
+      es una característica clave de JavaScript.</p>
+    <p>Los objetos JavaScript son dinámicos (normalmente se pueden añadir y eliminar
+      propiedades), pero se pueden utilizar para simular los objetos estáticos y los "structs" de los lenguajes tipados estáticamente. También pueden utilizarse (ignorando la parte
+      de valor del mapeo cadena-valor) para representar conjuntos de cadenas.</p>
+    <p>Cualquier valor en JavaScript que no sea una cadena, un número, un Símbolo, o
+      <codeinline>true</codeinline>, <codeinline>false</codeinline>, <codeinline>null</codeinline> o <codeinline>undefined</codeinline> es un objeto. Y aunque las cadenas, los
+      números y los booleanos no son objetos, pueden comportarse como objetos
+      inmutables.</p>
+    <p>Recordemos de <a href="capitulo-3#8">§3.8</a> que los objetos son <em>mutables</em> y se manipulan por referencia en
+      lugar de por valor. Si la variable <codeinline>x</codeinline> se refiere a un objeto y se ejecuta el código <codeinline>let y = x;</codeinline> la variable <codeinline>y</codeinline> contiene una referencia al mismo objeto, no una copia de ese objeto. Cualquier modificación hecha al objeto a través de la variable <codeinline>y</codeinline> es también visible a través de la variable <codeinline>x</codeinline>.</p>
+    <p>Lo más habitual con los objetos es crearlos y establecer, consultar, borrar, comprobar
+      y enumerar sus propiedades. Estas operaciones fundamentales se describen en las
+      primeras secciones de este capítulo. Las secciones siguientes tratan temas más
+      avanzados.</p>
+    <p>Una <em>propiedad</em> tiene un nombre y un valor. El nombre de una propiedad puede ser
+      cualquier cadena, incluida la cadena vacía (o cualquier Símbolo), pero ningún objeto
+      puede tener dos propiedades con el mismo nombre. El valor puede ser cualquier
+      valor JavaScript, o puede ser una función getter o setter (o ambas). Aprenderemos
+      sobre las funciones getter y setter en <a href="#6-10-6">§6.10.6</a>.</p>
+    <p>A veces es importante saber distinguir entre las propiedades definidas directamente
+      en un objeto y las que se heredan de un objeto prototipo. JavaScript utiliza el término
+      <em>propiedad propia</em> para referirse a las propiedades no heredadas.</p>
+    <p>Además de su nombre y valor, cada propiedad tiene tres <em>atributos</em>:</p>
+    <ul>
+      <li class="font-normal">El atributo <em>writable</em> especifica si se puede establecer el valor de la propiedad.</li>
+      <li class="font-normal">El atributo <em>enumerable</em> especifica si el nombre de la propiedad es devuelto por un bucle <codeinline>for/in</codeinline>.</li>
+      <li class="font-normal">El atributo <em>configurable</em> especifica si la propiedad se puede eliminar y si se
+        pueden modificar sus atributos.</li>
+    </ul>
+    <p>Muchos de los objetos incorporados de JavaScript tienen propiedades que son de sólo
+      lectura, no enumerables o no configurables. Por defecto, sin embargo, todas las
+      propiedades de los objetos que creas son escribibles, enumerables y configurables. En
+      <a href="capitulo-14#1">§14.1</a> se explican técnicas para especificar valores de atributos de propiedades no
+      predeterminados para los objetos.</p>
+  </section>
+  <section id="6-2">
+    <h3>6.2 Creación de objetos</h3>
+    <p>Los objetos pueden crearse con literales de objeto, con la palabra clave new y con la función <codeinline>Object.create()</codeinline>. Las subsecciones siguientes describen cada técnica.</p>
+  </section>
+  <section id="6-2-1" class="py-4 xs:py-5 sm:py-6">
+    <h3>6.2.1 Literales de objeto</h3>
+    <p>La forma más sencilla de crear un objeto es incluir un literal de objeto en el código
+      JavaScript. En su forma más simple, un <em>literal de objeto</em> es una lista separada por
+      comas de pares nombre:valor separados por dos puntos, encerrados entre llaves. Un
+      nombre de propiedad es un identificador de Java Script o un literal de cadena (se
+      permite la cadena vacía). Un valor de propiedad es cualquier expresión de JavaScript;
+      el valor de la expresión (puede ser un valor primitivo o un valor de objeto) se
+      convierte en el valor de la propiedad. He aquí algunos ejemplos:</p>
+    <pre>
+    <code class="language-js">let empty = &lbrace;}; // Un objeto sin propiedades
+    let point = &lbrace; x: 0, y: 0 }; // Dos propiedades numéricas
+    let p2 = &lbrace; x: point.x, y: point.y+1 }; // Valores mas complejos
+    let book = &lbrace;
+      "main title": "JavaScript", // Estas propiedades incluyen espacios
+      "sub-title": "The Definitive Guide", // y guiones, asi que utilice literales de cadena.
+      for: "all audiences", // para esta reservado, pero sin comillas
+      author: &lbrace; // El valor de esta propiedad es
+        firstname: "David", // un objeto por si mismo.
+        surname: "Flanagan"
+      }
+    };</code></pre>
+    <p>Una coma al final de la última propiedad en un objeto literal es legal, y algunos estilos
+        de programación fomentan el uso de estas comas al final para que sea menos
+        probable que se produzca un error de sintaxis si se añade una nueva propiedad al
+        final del objeto literal en algún momento posterior.</p>
+    <p>Un literal de objeto es una expresión que crea e inicializa un objeto nuevo y distinto
+      cada vez que se evalúa. El valor de cada propiedad se evalúa cada vez que se evalúa el
+      literal. Esto significa que un único literal de objeto puede crear muchos objetos
+      nuevos si aparece dentro del cuerpo de un bucle o en una función que se llama
+      repetidamente, y que los valores de las propiedades de estos objetos pueden diferir
+      entre sí.</p>
+    <p>Los literales de objeto mostrados aquí utilizan una sintaxis simple que ha sido legal
+      desde las primeras versiones de JavaScript. Las versiones recientes del lenguaje han
+      introducido una serie de nuevas características de literales de objeto, que se tratan en
+      <a href="#6-10">§6.10</a>.</p>
+  </section>
+  <section id="6-2-2">
+    <h2>6.2.2 Creación de objetos con new</h2>
+    <p>El operador <codeinline>new</codeinline> crea e inicializa un nuevo objeto. La palabra clave <codeinline>new</codeinline> debe ir
+      seguida de una invocación a una función. Una función utilizada de este modo se
+      denomina <em>constructor</em> y sirve para inicializar un objeto recién creado. JavaScript
+      incluye constructores para sus tipos incorporados. Por ejemplo:</p>
+    <pre>
+    <code class="language-js">let o = new Object(); // Crea un objeto vacio: igual a &lbrace;}.
+    let a = new Array(); // Crea un array vacío: igual a [].
+    let d = new Date(); // Crea un objeto Date representando la fecha actual.
+    let r = new Map(); // Crea un objeto Map para mapeos clave-valor.</code></pre>
+    <p>Además de estos constructores incorporados, es común definir sus propias funciones
+      constructoras para inicializar los objetos recién creados. Esto se explica en el <a href="capitulo-9">Capítulo 9</a>.</p>
+  </section>
+  <section id="6-2-3" class="py-4 xs:py-5 sm:py-6">
+    <h2>6.2.3 Prototipos</h2>
+    <p>Antes de que podamos cubrir la tercera técnica de creación de objetos, debemos
+      detenernos un momento para explicar los <em>prototipos</em>. Casi todos los objetos
+      JavaScript tienen un segundo objeto JavaScript asociado. Este segundo objeto se
+      conoce como prototipo, y el primer objeto hereda propiedades del prototipo.</p>
+    <p>Todos los objetos creados por literales de objeto tienen el mismo objeto prototipo, y
+      podemos referirnos a este objeto prototipo en código JavaScript como
+      <codeinline>Object.prototype</codeinline>. Los objetos creados mediante la palabra clave <codeinline>new</codeinline> y la
+      invocación de un constructor utilizan como prototipo el valor de la propiedad
+      <codeinline>prototype</codeinline> de la función constructora. Así, el objeto creado por <codeinline>new Object()</codeinline>
+      hereda de <codeinline>Object.prototype</codeinline>, al igual que el objeto creado por <codeinline>&lbrace;}</codeinline>. Del mismo modo,
+      el objeto creado por <codeinline>new Array()</codeinline> utiliza <codeinline>Array.prototype</codeinline> como su prototipo, y el
+      objeto creado por <codeinline>new Date()</codeinline> utiliza <codeinline>Date.prototype</codeinline> como su prototipo. Esto
+      puede resultar confuso cuando se aprende JavaScript por primera vez. Recuerda: casi
+      todos los objetos tienen un <em>prototipo</em>, pero sólo un número relativamente pequeño de
+      objetos tienen una propiedad <codeline>prototype</codeline>. Son estos objetos con propiedades <codeinline>prototype</codeinline> los
+      que definen los <em>prototipos</em> para todos los demás objetos.</p>
+    <p><codeinline>Object.prototype</codeinline> es uno de los raros objetos que no tiene prototipo: no hereda
+      ninguna propiedad. Otros objetos prototipo son objetos normales que sí tienen un
+      prototipo. La mayoría de los constructores incorporados (y la mayoría de los
+      constructores definidos por el usuario) tienen un prototipo que hereda de
+      <codeinline>Object.prototype</codeinline>. Por ejemplo, <codeinline>Date.prototype</codeinline> hereda las propiedades de
+      <codeinline>Object.prototype</codeinline>, por lo que un objeto Date creado por <codeinline>new Date()</codeinline> hereda las
+      propiedades tanto de <codeinline>Date.prototype</codeinline> como de <codeinline>Object.prototype</codeinline>. Esta serie
+      enlazada de objetos prototipo se conoce como <em>cadena prototipo</em>.</p>
+    <p>En <a href="#6-3">§6.3.2</a> se explica cómo funciona la herencia de propiedades. El <a href="capitulo-9">capítulo 9</a> explica con más detalle la conexión entre prototipos y constructores: muestra cómo definirnuevas "clases" de objetos escribiendo una función constructora y estableciendo su propiedad proto type en el objeto prototipo que utilizarán las "instancias" creadas con ese constructor. Y aprenderemos cómo consultar (e incluso cambiar) el prototipo de un objeto en <a href="#14-3">§14.3</a>.</p>
+  </section>
+</Layoutjavascript>
