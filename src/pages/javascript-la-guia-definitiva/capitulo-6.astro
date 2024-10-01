@@ -567,4 +567,198 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     let o = &lbrace; x, y };
     o.x + o.y // => 3</code></pre>
   </section>
+  <section id="10-2">
+    <h2>6.10.2 Nombres de propiedades computados</h2>
+    <p>A veces necesitas crear un objeto con una propiedad específica, pero el nombre de esa propiedad no es una constante en tiempo de compilación que puedas escribir literalmente en tu código fuente. En su lugar, el nombre de la propiedad que necesitas se almacena en una variable o es el valor de retorno de una función que invocas. No se puede utilizar un literal de objeto básico para este tipo de propiedad. En su lugar, tienes que crear un objeto y luego añadir las propiedades deseadas como un paso adicional:</p>
+    <pre>
+    <code class="language-js">const PROPERTY_NAME = "p1";
+    function computePropertyName() &lbrace; return "p" + 2; }
+
+    let o = &lbrace;};
+    o[PROPERTY_NAME] = 1;
+    o[computePropertyName()] = 2;</code></pre>
+    <p>Es mucho más sencillo configurar un objeto como este con una característica de ES6 conocida como <em>propiedades computadas</em> que te permite tomar los corchetes del código anterior y moverlos directamente al literal del objeto:</p>
+    <pre>
+    <code class="language-js">const PROPERTY_NAME = "p1";
+    function computePropertyName() &lbrace; return "p" + 2; }
+
+    let p = &lbrace;
+      [PROPERTY_NAME]: 1,
+      [computePropertyName()]: 2
+    };
+    
+    p.p1 + p.p2 // => 3</code></pre>
+    <p>Con esta nueva sintaxis, los corchetes delimitan una expresión JavaScript arbitraria. Esa expresión se evalúa y el valor resultante (convertido a cadena, si es necesario) se utiliza como nombre de la propiedad.</p>
+    <p>Una situación en la que podrías querer usar propiedades computadas es cuando tienes una librería de código JavaScript que espera que se le pasen objetos con un conjunto particular de propiedades, y los nombres de esas propiedades están definidos como constantes en esa librería. Si estás escribiendo código para crear los objetos que se pasarán a esa biblioteca, podrías codificar los nombres de las propiedades, pero te arriesgarías a errores si escribes mal el nombre de la propiedad en cualquier parte, y te arriesgarías a problemas de desajuste de versiones si una nueva versión de la biblioteca cambia los nombres de las propiedades requeridas. En lugar de eso, puede que encuentres que hace que tu código sea más robusto usar la sintaxis de propiedad computada con los con- stantes de nombre de propiedad definidos por la librería.</p>
+  </section>
+  <section id="10-3" class="py-4 xs:py-5 sm:py-6">
+    <h2>6.10.3 Símbolos como nombres de propiedades</h2>
+    <p>La sintaxis de propiedad computada permite otra característica literal de objeto muy importante. En ES6 y posteriores, los nombres de propiedad pueden ser cadenas o símbolos. Si asignas un símbolo a una variable o constante, puedes usar ese símbolo como nombre de propiedad usando la sintaxis de propiedad calculada:</p>
+    <pre>
+    <code class="language-js">const extension = Symbol("my extension symbol");
+    let o = &lbrace;
+      [extension]: &lbrace; /* datos de extensión almacenados en este objeto */ }
+    };
+    o[extension].x = 0; // Esto no entrará en conflicto con otras propiedades de o</code></pre>
+    <p>Como se explica en <a href="capitulo-3#6">§3.6</a>, los Símbolos son valores opacos. No se puede hacer nada con ellos salvo utilizarlos como nombres de propiedades. Sin embargo, cada Symbol es diferente de cualquier otro Symbol, lo que significa que los Symbols son buenos para crear nombres de propiedades únicos. Crea un nuevo Symbol llamando a la función de fábrica <codeinline>Symbol()</codeinline>. (Los Symbols son valores primitivos, no objetos, por lo que <codeinline>Symbol()</codeinline> no es una función constructora que se invoque con <codeinline>new</codeinline>). El valor devuelto por <codeinline>Symbol()</codeinline> no es igual a ningún otro Symbol u otro valor. Puede pasar una cadena a <codeinline>Symbol()</codeinline>, y esta cadena se utiliza cuando su Symbol se convierte en una cadena. Pero esto es sólo una ayuda para la depuración: dos Symbols creados con el mismo argumento de cadena siguen siendo diferentes entre sí.</p>
+    <p>El objetivo de Symbols no es la seguridad, sino definir un mecanismo de extensión seguro para objetos JavaScript. Si obtienes un objeto de código de terceros que no controlas y necesitas añadir algunas de tus propias propiedades a ese objeto pero quieres estar seguro de que tus propiedades no entrarán en conflicto con ninguna propiedad que pueda existir ya en el objeto, puedes usar Symbols de forma segura como nombres de propiedades. Si hace esto, también puede estar seguro de que el código de terceros no alterará accidentalmente sus propiedades nombradas simbólicamente. (Ese código de terceros podría, por supuesto, utilizar <codeinline>Object.getOwnPropertySymbols()</codeinline> para descubrir los Symbols que está utilizando y podría entonces alterar o borrar sus propiedades. Esta es la razón por la que los Symbols no son un mecanismo de seguridad).</p>
+  </section>
+  <section id="10-4">
+    <h2>6.10.4 Operador Spread</h2>
+    <p>En ES2018 y versiones posteriores, puede copiar las propiedades de un objeto existente en un objeto nuevo utilizando el "operador de propagación" <codeinline>...</codeinline> dentro de un literal de objeto:</p>
+    <pre>
+    <code class="language-js">let position = &lbrace; x: 0, y: 0 };
+    let dimensions = &lbrace; width: 100, height: 75 };
+    let rect = &lbrace; ...position, ...dimensions };
+    rect.x + rect.y + rect.width + rect.height // => 175</code> </pre>
+    <p>En este código, las <codeinline>propiedades</codeinline> de los objetos posición y <codeinline>dimensiones</codeinline> se "extienden" en el literal del objeto <codeinline>rect</codeinline> como si se hubieran escrito literalmente dentro de esas llaves. Tenga en cuenta que esta sintaxis <codeinline>...</codeinline> a menudo se denomina operador de extensión, pero no es un verdadero operador de JavaScript en ningún sentido. En su lugar, es una sintaxis de caso especial disponible sólo para dentro de literales de objeto. (Los tres puntos se utilizan con otros fines en otros contextos de JavaScript, pero los literales de objeto son el único contexto en el que los tres puntos provocan este tipo de interpolación de un objeto en otro).</p>
+    <p>Si el objeto que se propaga y el objeto en el que se propaga tienen una propiedad con el mismo nombre, el valor de esa propiedad será el último:</p>
+    <pre>
+    <code class="language-js">let o = &lbrace; x: 1 };
+    let p = &lbrace; x: 0, ...o };
+    p.x // => 1: el valor viene del objeto o sobreescribiendo el valor inicial
+    let q = &lbrace; ...o, x: 2 };
+    q.x // => 2: el valor 2 sobreescribe el valor inicial de o</code> </pre>
+    <p>Tenga en cuenta también que el operador de propagación sólo propaga las propiedades propias de un objeto, no las heredadas:</p>
+    <pre>
+    <code class="language-js">let o = Object.create(&lbrace;x: 1}); // o hereda la propiedad x
+    let p = &lbrace; ...o };
+    p.x // => undefined</code> </pre>
+    <p>Por último, cabe señalar que, aunque el operador de propagación no es más que tres puntitos en tu código, puede representar una cantidad sustancial de trabajo para el intérprete de JavaScript. Si un objeto tiene <em>n</em> propiedades, es probable que el proceso de propagación de esas propiedades en otro objeto sea una operación O(<em>n</em>). Esto significa que si te encuentras usando <codeinline>...</codeinline> dentro de un bucle o función recursiva como una forma de acumular datos en un objeto grande, puedes estar escribiendo un algoritmo O(<em>n<sup class="bg-transparent mx-0 px-1">2</sup></em>) ineficiente que no escalará bien a medida que <em>n</em> se haga más grande.</p>
+  </section>
+  <section id="10-5" class="py-4 xs:py-5 sm:py-6">
+    <h2>6.10.5 Métodos abreviados</h2>
+    <p>Cuando una función se define como una propiedad de un objeto, llamamos a esa función un <em>método</em> (tendremos mucho más que decir sobre los métodos en los Capítulos <a href="capitulo-8">8</a> y <a href="capitulo-9">9</a>). Antes de ES6, se definía un método en un literal de objeto usando una expresión de definición de función igual que se definía cualquier otra propiedad de un objeto:</p>
+    <pre>
+    <code class="language-js">let square = &lbrace;
+      area: function() &lbrace; return this.side * this.side; },
+      side: 10
+    };
+    square.area() // => 100</code></pre>
+    <p>En ES6, sin embargo, la sintaxis literal de objeto (y también la sintaxis de definición de clase que veremos en el <a href="capitulo-9">Capítulo 9</a>) se ha ampliado para permitir un atajo en el que la palabra clave <codeinline>function</codeinline> y los dos puntos se omiten, dando como resultado un código como este:</p>
+    <pre>
+    <code class="language-js">let square = &lbrace;
+    area() &lbrace; return this.side * this.side; },
+    side: 10
+    };
+    square.area() // => 100</code></pre>
+    <p>Ambas formas del código son equivalentes: ambas añaden una propiedad llamada <codeinline>area</codeinline> al objeto literal, y ambas establecen el valor de esa propiedad en la función especificada. La sintaxis corta deja más claro que <codeinline>area()</codeinline> es un método y no una propiedad de datos como <codeinline>side</codeinline>.</p>
+    <p>Cuando se escribe un método utilizando esta sintaxis abreviada, el nombre de la propiedad puede adoptar cualquiera de las formas que son legales en un literal de objeto: además de un identificador JavaScript normal como el <codeinline>area</codeinline> de nombre anterior, también se pueden utilizar literales de cadena y nombres de propiedad computados, que pueden incluir nombres de propiedad Symbol:</p>
+    <pre>
+    <code class="language-js">const METHOD_NAME = "m";
+    const symbol = Symbol();
+    let weirdMethods = &lbrace;
+      "method With Spaces"(x) &lbrace; return x + 1; },
+      [METHOD_NAME](x) &lbrace; return x + 2; },
+      [symbol](x) &lbrace; return x + 3; }
+    };
+    weirdMethods["method With Spaces"](1) // => 2
+    weirdMethods[METHOD_NAME](1) // => 3
+    weirdMethods[symbol](1) // => 4</code></pre>
+    <p>Utilizar un Símbolo como nombre de método no es tan extraño como parece. Para hacer que un objeto sea iterable (de modo que pueda usarse con un bucle <codeinline>for/of</codeinline>), debe definir un método con el nombre simbólico <codeinline>Symbol.iterator</codeinline>, y hay ejemplos de cómo hacerlo exactamente en el <a href="capitulo-12">Capítulo 12</a>.</p>
+  </section>
+  <section id="10-6">
+    <h2>6.10.6 Propiedades Getters y Setters</h2>
+    <p>Todas las propiedades de objeto que hemos tratado hasta ahora en este capítulo han
+      sido <em>propiedades de datos</em> con un nombre y un valor ordinario. JavaScript también
+      admite <em>propiedades accesorias</em>, que no tienen un único valor sino uno o dos métodos
+      de acceso: un <em>getter</em> y/o un <em>setter</em>.</p>
+    <p>Cuando un programa consulta el valor de una propiedad accessor, JavaScript invoca el
+      método get- ter (sin pasar argumentos). El valor de retorno de este método se
+      convierte en el valor de la expresión de acceso a la propiedad. Cuando un programa
+      establece el valor de una propiedad accesoria, JavaScript invoca el método setter,
+      pasando el valor del lado derecho de la asignación. Este método es responsable de
+      "establecer", en cierto sentido, el valor de la propiedad. El valor de retorno del método
+      setter se ignora.</p>
+    <p>Si una propiedad tiene un método getter y un método setter, es una propiedad de lectura/escritura. Si sólo tiene un método getter, es una propiedad de sólo lectura. Y si sólo tiene un método setter, es una propiedad de sólo escritura (algo que no es posible con las propiedades de datos), y los intentos de leerla siempre se evalúan como <codeinline>undefined</codeinline>.</p>
+    <p>Las propiedades accesorias pueden definirse con una extensión de la sintaxis literal
+      del objeto (a diferencia de las otras extensiones de ES6 que hemos visto aquí, los
+      getters y setters se introdujeron en ES5):</p>
+    <pre>
+    <code class="language-js">let o = &lbrace;
+    // Una propiedad de datos normal.
+    dataProp: value,
+    // Una propiedad accesoria con un getter y un setter.
+    get accessorProp() &lbrace; return this.dataProp; },
+    set accessorProp(value) &lbrace; this.dataProp = value; }
+    };</code></pre>
+    <p>Las propiedades accesorias se definen como uno o dos métodos cuyo nombre es el mismo que el de la propiedad. Se parecen a los métodos ordinarios definidos con la abreviatura ES6, salvo que las definiciones getter y setter llevan el prefijo <codeinline>get</codeinline> o <codeinline>set</codeinline>. (En ES6, también puede utilizar nombres de propiedad computados al definir getters y setters. Basta con sustituir el nombre de la propiedad después de <codeinline>get</codeinline> o <codeinline>set</codeinline> por una expresión entre corchetes).</p>
+    <p>Los métodos de acceso definidos anteriormente simplemente obtienen y establecen el
+      valor de una propiedad de datos, y no hay ninguna razón para preferir la propiedad
+      de acceso a la propiedad de datos. Pero como ejemplo más interesante, consideremos
+      el siguiente objeto que representa un punto Carte- siano 2D. Tiene propiedades de
+      datos ordinarias para representar las coordenadas <em>x</em> e <em>y</em> del punto, y tiene propiedades
+      accesorias que dan las coordenadas polares equivalentes del punto:</p>
+    <pre>
+    <code class="language-js">let p = &lbrace;
+      // x e y son propiedades de datos normales de lectura/escritura.
+      x: 1.0,
+      y: 1.0,
+
+      // r es una propiedad de acceso con getter y setter.
+      // No olvides poner una coma despues del metodo de acceso.
+      get r() &lbrace; return Math.hypot(this.x, this.y); },
+      set r(newvalue) &lbrace;
+        let oldvalue = Math.hypot(this.x, this.y);
+        let ratio = newvalue/oldvalue;
+        this.x *= ratio;
+        this.y *= ratio;
+      },
+
+      // theta es una propiedad de acceso de solo lectura con solo un getter.
+      get theta() &lbrace; return Math.atan2(this.y, this.x); }
+    };
+    p.r // => Math.SQRT2
+    p.theta // => Math.PI / 4</code></pre>
+    
+    <p>Observe el uso de la palabra clave <codeinline>this</codeinline> en los getters y setters de este ejemplo. JavaScript invoca estas funciones como métodos del objeto sobre el que están definidas, lo que significa que dentro del cuerpo de la función, <codeinline>this</codeinline> se refiere al objeto punto <codeinline>p</codeinline>. Así, la función para la propiedad <codeinline>r</codeinline> puede referirse a las propiedades <codeinline>x</codeinline> e <codeinline>y</codeinline> como <codeinline>this.x</codeinline> y <codeinline>this.y</codeinline>. Los métodos y la palabra clave <codeinline>this</codeinline> se tratan con más detalle en <a href="capitulo-8#2-2">§8.2.2</a>.</p>
+    <p>Las propiedades accesorias se heredan, al igual que las propiedades de datos, por lo que puedes utilizar el objeto <codeinline>p</codeinline> definido anteriormente como prototipo para otros puntos. Puedes dar a los nuevos objetos sus propias propiedades <codeinline>x</codeinline> e <codeinline>y</codeinline>, y heredarán las propiedades <codeinline>r</codeinline> y <codeinline>theta</codeinline>:</p>
+    <pre>
+    <code class="language-js">let q = Object.create(p); // Un nuevo objeto que hereda getters y setters
+    q.x = 3; q.y = 4;         // Crear propiedades de datos propias de q
+    q.r                       // => 5: las propiedades accesorias heredadas funcionan
+    q.theta                   // => Math.atan2(4, 3)</code></pre>
+    <p>El código anterior utiliza propiedades accesorias para definir una API que proporciona dos representaciones (coordenadas cartesianas y coordenadas polares) de un único conjunto de datos. Otras razones para utilizar propiedades accesorias incluyen la comprobación de la sanidad de las propiedades escritas y la devolución de valores diferentes en cada propiedad leída:</p>
+    <pre>
+    <code class="language-js">// Este objeto genera números de serie estrictamente crecientes
+    const serialnum = &lbrace;
+      // Esta propiedad de datos contiene el siguiente número de serie
+      // El _ en el nombre de la propiedad indica que es solo para el uso interno.
+      _n: 0,
+
+      // Devuelve el valor actual y lo incrementa
+      get next() &lbrace; return this._n++; },
+
+      // Establece un nuevo valor de n, pero solo si es mayor que el actual
+      set next(n) &lbrace;
+        if (n > this._n) this._n = n;
+        else throw new Error("el numero de series no solo puede establecerse en un valor mayor");
+      }
+    };
+    serialnum.next = 10; // Establecer el numero de serie inicial
+    serialnum.next // => 10
+    serialnum.next // => 11: valor diferente cada vez que obtenemos next</code></pre>
+    <p>Por último, he aquí otro ejemplo que utiliza un método getter para implementar una propiedad con comportamiento "mágico":</p>
+    <pre>
+    <code class="language-js">// Este objeto tiene una propiedad que devuelve un numeros aleatorios.
+    // La expresión "random.octet" por ejemplo, produce un numero aleatorio
+    // entre 0 y 255 cada vez que se evalúa.
+    const random = &lbrace;
+      get octet() &lbrace; return Math.floor(Math.random()*256); },
+      get uint16() &lbrace; return Math.floor(Math.random()*65536); },
+    get int16() &lbrace; return Math.floor(Math.random()*65536)-32768; }
+    };</code></pre>
+  </section>
+  <section id="11" class="py-4 xs:py-5 sm:py-6">
+    <h2>6.11 Resumen</h2>
+    <p>En este capítulo se han documentado los objetos de JavaScript con gran detalle, cubriendo temas que incluyen:</p>
+    <ul>
+      <li class="font-normal">Terminología básica de objetos, incluido el significado de términos como <em>enumerable</em> y <em>propiedad</em>.</li>
+      <li class="font-normal">Sintaxis literal de objetos, incluidas las numerosas novedades de ES6 y versiones posteriores.</li>
+      <li class="font-normal">Cómo leer, escribir, borrar, enumerar y comprobar la presencia de las propiedades de un objeto.</li>
+      <li class="font-normal">Cómo funciona la herencia basada en prototipos en JavaScript y cómo crear un objeto que hereda de otro objeto con <codeinline>Object.create()</codeinline>.</li>
+      <li class="font-normal">Cómo copiar propiedades de un objeto a otro con <codeinline>Object.assign()</codeinline>.</li>
+    </ul>
+    <p>Todos los valores de JavaScript que no son valores primitivos son objetos. Esto incluye tanto las matrices como las funciones, que son los temas de los dos capítulos siguientes.</p>
+  </section>
 </Layoutjavascript>
