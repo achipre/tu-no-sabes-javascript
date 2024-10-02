@@ -40,7 +40,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       Ofrecen un alto rendimiento y acceso a nivel de byte a los datos binarios y se tratan
       en <a href="capitulo-11#2">§11.2</a>.</p>
   </section>
-  <section class="py-4 xs:py-5 sm:py-6">
+  <section id="1" class="py-4 xs:py-5 sm:py-6">
     <h2>7.1 Creación de Arrays</h2>
     <p>Existen varias formas de crear matrices. Las subsecciones siguientes explican cómo crear matrices con:</p>
     <ul>
@@ -50,12 +50,12 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       <li class="font-normal">Los métodos de fábrica <codeinline>Array.of()</codeinline> y <codeinline>Array.from()</codeinline></li>
     </ul>
   </section>
-  <section>
+  <section id="1-1">
     <h2>7.1.1 Arrays literales</h2>
     <p>La forma más sencilla de crear una matriz es con un literal de matriz, que no es más que una lista separada por comas de elementos de matriz entre corchetes. Por ejemplo:</p>
     <pre>
-    <code class="language-js">let empty = []; // Un array sin elementos
-    let primes = [2, 3, 5, 7, 11]; // Un array con cinco elementos numéricos
+    <code class="language-js">let empty = [];                 // Un array sin elementos
+    let primes = [2, 3, 5, 7, 11];  // Un array con cinco elementos numéricos
     let misc = [ 1.1, true, "a", ]; // 3 elementos de varios tipos + coma al final</code></pre>
     <p>Los valores de un literal de matriz no tienen por qué ser constantes; pueden ser expresiones arbitrarias:</p>
     <pre>
@@ -67,7 +67,364 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Si un literal de matriz contiene varias comas seguidas sin ningún valor entre ellas, la matriz es dispersa (véase <a href="capitulo-7#3">§7.3</a>). Los elementos de la matriz para los que se omiten valores no existen, pero aparecen como <codeinline>undefined</codeinline> si se consultan:</p>
     <pre>
     <code class="language-js">let count = [1,,3]; // Elementos con indice 0 y 2. Ningun elemento en el índice 1.
-    let undefs = [,,]; // Un array sin elementos pero con longitud 2.</code></pre>
+    let undefs = [,,];  // Un array sin elementos pero con longitud 2.</code></pre>
     <p>La sintaxis literal de matriz permite una coma final opcional, por lo que <codeinline>[,,]</codeinline> tiene una longitud de 2, no de 3.</p>
+  </section>
+  <section id="1-2" class="py-4 xs:py-5 sm:py-6">
+    <h2>7.1.2 El operador Spread </h2>
+    <p>En ES6 y posteriores, puedes utilizar el “spread operator,” <codeinline>...</codeinline>, para incluir los elementos de una matriz dentro de un literal de matriz:</p>
+    <pre>
+    <code class="language-js">let a = [1, 2, 3];
+    let b = [0, ...a, 4]; // b == [0, 1, 2, 3, 4]</code></pre>
+    <p>Los tres puntos "extienden" la matriz a para que sus elementos se conviertan en elementos dentro de la matriz literal que se está creando. Es como si <codeinline>...a</codeinline> se sustituyera por los elementos de la matriz a, enumerados literalmente como parte de la matriz literal que la encierra. (Ten en cuenta que, aunque llamemos a estos tres puntos operador de extensión, no se trata de un verdadero operador porque sólo puede utilizarse en literales de array y, como veremos más adelante en el libro, en invocaciones de funciones).</p>
+    <p>El operador de dispersión es una forma práctica de crear una copia (superficial) de un array:</p>
+    <pre>
+    <code class="language-js">let original = [1,2,3];
+    let copy = [...original];
+    copy[0] = 0; // Modifica la copy, no cambia la original
+    original[0]  // => 1</code></pre>
+    <p>El operador spread funciona sobre cualquier objeto iterable. (Los objetos <em>iterables</em> son sobre los que itera el bucle <codeinline>for/of</codeinline>; los vimos por primera vez en <a href="capitulo-5#4-4">§5.4.4</a>, y veremos mucho más sobre ellos en el <a href="capitulo-12">Capítulo 12</a>.) Las cadenas son iterables, así que puedes usar un operador spread para convertir cualquier cadena en un array de cadenas de un solo carácter:</p>
+    <pre>
+    <code class="language-js">let digits = [..."0123456789ABCDEF"];
+    digits // => ["0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F"]</code></pre>
+    <p>Los objetos set (<a href="capitulo-11#1-1">§11.1.1</a>) son iterables, por lo que una forma sencilla de eliminar elementos duplicados de un array es convertir el array en un set e inmediatamente después volver a convertir el set en un array utilizando el operador spread:</p>
+    <pre>
+    <code class="language-js">let letters = [..."hello world"];
+    [...new Set(letters)] // => ["h","e","l","o"," ","w","r","d"]</code></pre>
+  </section>
+  <section id="1-3">
+    <h2>7.1.3 El constructor Array()</h2>
+    <p>Otra forma de crear un array es con el constructor <codeinline>Array()</codeinline>. Puedes invocar este constructor de tres formas distintas:</p>
+    <ul class="flex flex-col gap-4 xs:gap-5 sm:gap-6">
+      <li class="font-normal">Llámalo sin argumentos:
+      </li>
+    <pre>
+    <code class="language-js">let a = new Array();</code></pre>
+      <li class="font-normal list-none pl-5 xs:pl-6 sm:pl-7 md:pl-8">Este método crea una matriz vacía sin elementos y es equivalente a la matriz literal <codeinline>[]</codeinline>.</li>
+      <li class="font-normal">Llámelo con un único argumento numérico, que especifica una longitud:</li>
+    <pre>
+    <code class="language-js">let a = new Array(10);</code></pre>
+      <li class="font-normal list-none pl-5 xs:pl-6 sm:pl-7 md:pl-8">Esta técnica crea un array con la longitud especificada. Esta forma del constructor <codeinline>Array()</codeinline> puede utilizarse para preasignar una matriz cuando se sabe de antemano cuántos elementos se necesitarán. Tenga en cuenta que no se almacenan valores en la matriz, y las propiedades de índice de matriz "0", "1", etc. ni siquiera están definidas para la matriz.</li>
+      <li class="font-normal">Especifique explícitamente dos o más elementos de matriz o un único elemento no numérico para la array:</li>
+    <pre>
+    <code class="language-js">let a = new Array(5, 4, 3, 2, 1, "testing, testing");</code></pre>
+      <li class="font-normal list-none pl-5 xs:pl-6 sm:pl-7 md:pl-8">De esta forma, los argumentos del constructor se convierten en los elementos del nuevo array. Utilizar un literal de array es casi siempre más sencillo que este uso del constructor <codeinline>Array()</codeinline>.</li>
+    </ul>
+  </section>
+  <section id="1-4" class="py-4 xs:py-5 sm:py-6"> 
+    <h2>7.1.4 Array.of()</h2>
+    <p>Cuando la función constructora <codeinline>Array()</codeinline> se invoca con un argumento numérico, utiliza ese argumento como longitud de la matriz. Pero cuando se invoca con más de un argumento numérico , trata esos argumentos como elementos de la array que se va a crear. Esto significa que el constructor <codeinline>Array()</codeinline> no puede utilizarse para crear una matriz con un único elemento numérico.</p>
+    <p>En ES6, la función <codeinline>Array.of()</codeinline> aborda este problema: es un método de fábrica que crea y devuelve una nueva array, utilizando los valores de sus argumentos (independientemente de cuántos sean) como elementos de la array:</p>
+    <pre>
+    <code class="language-js">Array.of()      // => []; regresa un array vacío sin argumentos
+    Array.of(10)    // => [10]; puede crear un array con un solo argumento numérico
+    Array.of(1,2,3) // => [1, 2, 3]</code>
+    </pre>
+  </section>
+  <section id="1-5">
+    <h2>7.1.5 Array.from()</h2>
+    <p><codeinline>Array.from</codeinline> es otro método de fábrica de arrays introducido en ES6. Espera un objeto iterable o tipo array como primer argumento y devuelve un nuevo array que contiene los elementos de ese objeto. Con un argumento iterable, <codeinline>Array.from(iterable)</codeinline> funciona como el operador de propagación <codeinline>[...iterable]</codeinline>. También es una forma sencilla de hacer una copia de un array:</p>
+    <pre>
+    <code class="language-js">let copy = Array.from(original);</code></pre>
+    <p><codeinline>Array.from()</codeinline> también es importante porque define una forma de hacer una copia real de un objeto tipo array. Los objetos tipo array son objetos no array que tienen una propiedad de longitud numérica y tienen valores almacenados con propiedades cuyos nombres resultan ser enteros. Cuando se trabaja con JavaScript del lado del cliente, los valores de retorno de algunos métodos del navegador web son tipo array, y puede ser más fácil trabajar con ellos si primero los conviertes en verdaderos arrays:</p>
+    <pre>
+    <code class="language-js">let truearray = Array.from(arraylike);</code></pre>
+    <p><codeinline>Array.from()</codeinline> también acepta un segundo argumento opcional. Si pasas una función como segundo argumento, mientras se construye el nuevo array, cada elemento del objeto fuente se pasará a la función que especifiques, y el valor de retorno de la función se almacenará en el array en lugar del valor original. (Esto es muy parecido al método array <codeinline>map()</codeinline> que se introducirá más adelante en el capítulo, pero es más eficiente realizar el mapeo mientras se construye el array que construir el array y luego mapearlo a otro nuevo array).</p>
+  </section>
+  <section id="2" class="py-4 xs:py-5 sm:py-6">
+    <h2>7.2 Lectura y escritura de los elementos en el Array</h2>
+    <p>Para acceder a un elemento de una matriz se utiliza el operador <codeinline>[]</codeinline>. A la izquierda de los corchetes debe aparecer una referencia a la matriz. Dentro de los corchetes debe aparecer una expresión arbitraria que tenga un valor entero no negativo. Puede utilizar esta sintaxis tanto para leer como para escribir el valor de un elemento de una matriz. Por lo tanto, las siguientes son sentencias JavaScript legales</p>
+    <pre>
+    <code class="language-js">let a = ["world"];  // Comienza con un array de un elemento
+    let value = a[0];   // Lee el elemento 0
+    a[1] = 3.14;        // Escribe el elemento 1
+    let i = 2;
+    a[i] = 3;           // Escribe el elemento 2
+    a[i + 1] = "hello"; // Escribe el elemento 3
+    a[a[i]] = a[0];     // Lee elementos 0 y 2, excribe el elemento 2</code></pre>
+    <p>Lo que tienen de especial los arrays es que cuando utilizas nombres de propiedades que son enteros no negativos menores que 2<sup class="bg-transparent mx-0 px-1">32</sup>-1, el array mantiene automáticamente el valor de la propiedad <codeinline>length</codeinline> por ti. En el ejemplo anterior, por ejemplo, hemos creado una array <codeinline>a</codeinline> con un único elemento. A continuación, asignamos valores a los índices 1, 2 y 3. La propiedad de <codeinline>length</codeinline> del array cambiaba a medida que lo hacíamos, así:</p>
+    <pre>
+    <code class="language-js">a.length // => 4</code></pre>
+    <p>Recuerde que las matrices son un tipo especializado de objeto. Los corchetes utilizados para acceder a los elementos de las matrices funcionan igual que los corchetes utilizados para acceder a las propiedades de los objetos. JavaScript convierte el índice numérico de la matriz especificado en una cadena (el índice <codeinline>1</codeinline> se convierte en la cadena <codeinline>"1"</codeinline>) y, a continuación, utiliza esa cadena como nombre de la propiedad. La conversión del índice de un número a una cadena no tiene nada de especial: también se puede hacer con objetos normales:</p>
+    <pre>
+    <code class="language-js">let o = &lbrace;};    // Crea un objeto plano
+    o[1] = "one";  // Indicalo con un entero
+    o["1"]         // => "one"; los nombre de las propiedades numericas y de cadena son iguales</code></pre>
+    <p>Es útil distinguir claramente un <codeinline>índice de array</codeinline> de un <codeinline>nombre de propiedad de objeto</codeinline>. Todos los índices son nombres de propiedades, pero sólo los nombres de propiedades que son enteros entre 0 y 2<sup class="bg-transparent mx-0 px-1">32</sup>-2 son índices. Todas las matrices son objetos, y se pueden crear propiedades de cualquier nombre en ellos. Sin embargo, si utiliza propiedades que son índices de matrices, las matrices tienen el comportamiento especial de actualizar su propiedad de <codeinline>length</codeinline> según sea necesario.</p>
+    <p>Tenga en cuenta que puede indexar una matriz utilizando números negativos o que no sean enteros. Cuando se hace esto, el número se convierte en una cadena, y esa cadena se utiliza como nombre de la propiedad. Como el nombre no es un entero no negativo, se trata como una propiedad de objeto regular, no como un índice de matriz. Además, si indexa una matriz con una cadena que resulta ser un entero no negativo, se comporta como un índice de matriz, no como una propiedad de objeto. Lo mismo ocurre si se utiliza un número de coma flotante que es igual que un entero:</p>
+    <pre>
+    <code class="language-js">a[-1.23] = true;  // esto crea una propiedad llamada -1.23
+    a["1000"] = 0;    // Este es el elemnto milesimo del array.
+    a[1.000] = 1;     // Array en el indice 1. Igual que a[1] = 1;</code></pre>
+    <p>El hecho de que los índices de las matrices sean simplemente un tipo especial de
+      nombre de propiedad de objeto significa que las matrices de JavaScript no tienen
+      noción de error "fuera de límites". Cuando intentas consultar una propiedad
+      inexistente de cualquier objeto, no obtienes un error; simplemente obtienes
+      undefined. Esto es tan cierto para las matrices como para los objetos:</p>
+    <pre>
+    <code class="language-js">let a = [true, false];  // Este array tiene 2 elementos en el indice 0 y 1.
+    a[2]                    // => undefined; no hay elemento con este indice.
+    a[-1]                   // => undefined; no hay propiedad con este nombre</code></pre>
+  </section>
+  <section id="3">
+    <h2>7.3 Matrices dispersas</h2>
+    <p>Una matriz <em>dispersa</em> es aquella en la que los elementos no tienen índices contiguos que comiencen en 0. Normalmente, la propiedad <codeinline>length</codeinline> de una matriz especifica el número de elementos de la matriz. Si la matriz es dispersa, el valor de la propiedad <codeinline>length</codeinline> es mayor que el número de elementos. Las matrices dispersas pueden crearse con el constructor <codeinline>Array()</codeinline> o simplemente asignando a una matriz un índice mayor que la <codeinline>length</codeinline> actual de la matriz.</p>
+    <pre>
+    <code class="language-js">let a = new Array(5); // Sin elementos, pero a.length es 5.
+    a = [];               // Crea un array sin elementos y longitud 0.
+    a[1000] = 0;          // La asignación añade un elemento pero establece la longitud a 1001.</code></pre>
+    <p>Más adelante veremos que también se puede hacer un array disperso con el operador <codeinline>delete</codeinline>.</p>
+    <p>Las matrices suficientemente dispersas se implementan normalmente de una forma más lenta y eficiente en memoria que las matrices densas, y la búsqueda de elementos en una matriz de este tipo llevará aproximadamente el mismo tiempo que la búsqueda de propiedades de un objeto normal.</p>
+    <p>Tenga en cuenta que cuando omite un valor en un literal de matriz (utilizando comas repetidas como en <codeinline>[1,,3]</codeinline>), la matriz resultante es dispersa y los elementos omitidos simplemente no existen:</p>
+    <pre>
+    <code class="language-js">let a1 = [,];         // Este array no tiene elementos y su longitud es 1
+    let a2 = [undefined]; // Este array tiene un elemento undefined.
+    0 in a1               // => false: a1 no tiene elementos con indice 0.
+    0 in a2               // => true: a2 tiene el valor undefined en el indice 0.</code></pre>
+    <p>Comprender los arrays dispersos es importante para entender la verdadera naturaleza de los arrays de JavaScript. En la práctica, sin embargo, la mayoría de las matrices JavaScript con las que trabajará no serán dispersas. Y, si tiene que trabajar con una matriz dispersa, su código probablemente la tratará igual que trataría una matriz no dispersa con elementos <codeinline>undefined</codeinline>.</p>
+  </section>
+  <section id="4" class="py-4 xs:py-5 sm:py-6">
+    <h2>7.4 Longitud de arrays</h2>
+    <p>Todas las matrices tienen una propiedad de <codeinline>length</codeinline>, que las diferencia de los objetos normales de JavaScript. Para las matrices densas (es decir, no dispersas), la propiedad <codeinline>length</codeinline> especifica el número de elementos de la matriz. Su valor es uno más que el índice más alto de la matriz:</p>
+    <pre>
+    <code class="language-js">[].length            // => 0: el array no tiene elementos.
+    ["a","b","c"].length // => 3: el indice mas alto es 2. La longitud es 3</code></pre>
+    <p>Cuando una matriz es dispersa, la propiedad de <codeinline>length</codeinline> es mayor que el número de elementos, y todo lo que podemos decir al respecto es que se garantiza que la <codeinline>length</codeinline> sea mayor que el índice de cada elemento de la matriz. O, dicho de otro modo, una matriz (dispersa o no) nunca tendrá un elemento cuyo índice sea mayor o igual que su <codeinline>length</codeinline>. Para mantener esta invariante, las matrices tienen dos comportamientos especiales. El primero lo hemos descrito antes: si asignas un valor a un elemento de la matriz cuyo índice <codeinline>i</codeinline> es mayor o igual que la <codeinline>length</codeinline> actual de la matriz, el valor de la propiedad <codeinline>length</codeinline> se establece en <codeinline>i+1</codeinline>.</p>
+    <p>El segundo comportamiento especial que implementan las matrices para mantener la invariante de <codeinline>length</codeinline> es que, si se establece la propiedad de longitud en un entero no negativo <codeinline>n</codeinline> menor que su valor actual, cualquier elemento de la matriz cuyo índice sea mayor o igual que <codeinline>n</codeinline> se elimina de la matriz:</p>
+    <pre>
+    <code class="language-js">a = [1,2,3,4,5]; // Comienza un array con 5 elementos.
+    a.length = 3;    // a ahora es [1,2,3].
+    a.length = 0;    // Borra todos los elementos. a es []
+    a.length = 5;    // La longitud es 5. pero sin elementos, como new Array(5)</code></pre>
+    <p>También puede establecer la propiedad <codeinline>length</codeinline> de un array a un valor mayor que su valor actual. Al hacer esto no se añade ningún elemento nuevo a la matriz; simplemente se crea un área dispersa al final de la matriz.</p>
+  </section>
+  <section id="5">
+    <h2>7.5 Agrega y elimina elementos de un array</h2>
+    <p>Ya hemos visto la forma más sencilla de añadir elementos a un array: basta con asignar valores a nuevos índices:</p>
+    <pre>
+    <code class="language-js">let a = [];     // Comienza con un array vacío.
+    a[0] = "zero";  // Agrega un elemento al array.
+    a[1] = "one";</code></pre>
+    <p>También puedes utilizar el método <codeinline>push()</codeinline> para añadir uno o más valores al final de un array:</p>
+    <pre>
+    <code class="language-js">let a = [];           // Comineza con un array vacío.
+    a.push("zero");       // Agrega un valor al final. a = ["zero"]
+    a.push("one", "two"); // Agrega dos valores mas. a = ["zero", "one", "two"]</code></pre>
+    <p>Introducir un valor en una matriz <codeinline>a</codeinline> es lo mismo que asignar el valor <codeinline>a[a.length]</codeinline>. Puede utilizar el método <codeinline>unshift()</codeinline> (descrito en <a href="#8">§7.8</a>) para insertar un valor al principio de una matriz, desplazando los elementos existentes de la matriz a índices superiores. El método <codeinline>pop()</codeinline> es lo contrario de <codeinline>push()</codeinline>: elimina el último elemento de la matriz y lo devuelve, reduciendo la longitud de una matriz en 1. Del mismo modo, el método <codeinline>shift()</codeinline> elimina y devuelve el primer elemento de la matriz, reduciendo la longitud en 1 y desplazando todos los elementos a un índice inferior al índice actual. Para más información sobre estos métodos, véase <a href="#8">§7.8</a>.</p>
+    <p>Puedes borrar elementos de un array con el operador <codeinline>delete</codeinline>, igual que puedes borrar propiedades de un objeto:</p>
+    <pre>
+    <code class="language-js">let a = [1,2,3];
+    delete a[2]; // a ahora no tiene el elementos en el indice 2
+    2 in a // => false: no esta definido el indice 2 en el array.
+    a.length // => 3: el delete no afecta la longitud del array.</code></pre>
+    <p>Borrar un elemento de un array es similar (pero sutilmente diferente) a asignar <codeinline>undefined</codeinline> a ese elemento. Tenga en cuenta que el uso de <codeinline>delete</codeinline> en un elemento de array no altera la propiedad de <codeinline>length</codeinline> y no desplaza los elementos con índices más altos hacia abajo para llenar el vacío que deja la propiedad eliminada. Si borras un elemento de un array, el array se vuelve disperso.</p>
+    <p>Como vimos anteriormente, también puedes eliminar elementos del final de un array simplemente estableciendo la propiedad <codeinline>length</codeinline> a la nueva longitud deseada.</p>
+    <p>Por último, <codeinline>splice()</codeinline> es el método de propósito general para insertar, borrar oreemplazar elementos de una matriz. Altera la propiedad <odeinline>length</odeinline> y desplaza los elementos de la matriz a índices superiores o inferiores según sea necesario. Para más detalles, véase <a href="#8">§7.8</a>.</p>
+  </section>
+  <section id="6" class="py-4 xs:py-5 sm:py-6">
+    <h2>7.6 Iteración en arrays</h2>
+    <p>A partir de ES6, la forma más sencilla de recorrer cada uno de los elementos de un array (o cualquier objeto iterable) es con el bucle <codeinline>for/of</codeinline>, que se trató en detalle en <a href="capitulo-5#4-4">§5.4.4</a>:</p>
+    <pre>
+    <code class="language-js">let letters = [..."Hola mundo"]; // Un array de letras.
+    let string = "";
+    for(let letter of letters) &lbrace;
+      string += letter;
+    }
+    string // => "Hola mundo"; rensamblamos el texto original</code></pre>
+    <p>El iterador de matrices incorporado que utiliza el bucle <codeinline>for/of</codeinline> devuelve los elementos de una matriz en orden ascendente. No tiene un comportamiento especial para matrices dispersas y simplemente devuelve <codeinline>undefined</codeinline> para cualquier elemento de la matriz que no exista.</p>
+    <p>Si desea utilizar un bucle <codeinline>for/of</codeinline> para un array y necesita conocer el índice de cada elemento del array, utilice el método <codeinline>entries()</codeinline> del array, junto con la asignación de desestructuración, de la siguiente manera:</p>
+    <pre>
+    <code class="language-js">let everyother = "";
+    for(let [index, letter] of letters.entries()) &lbrace;
+      if (index % 2 === 0) everyother += letter; // letras en indices pares
+    }
+    everyother // => "Hl ud"</code></pre>
+    <p>Otra buena forma de iterar matrices es con <codeinline>forEach()</codeinline>. No se trata de una nueva forma del bucle <codeinline>for</codeinline>, sino de un método de matrices que ofrece un enfoque funcional de la iteración de matrices. Pasas una función al método <codeinline>forEach()</codeinline> de un array, y <codeinline>forEach()</codeinline> invoca tu función una vez en cada elemento del array:</p>
+    <pre>
+    <code class="language-js">let uppercase = "";
+    letters.forEach(letter => &lbrace; // Observe aqui la sintaxis de funcione flecha.
+      uppercase += letter.toUpperCase();
+    });
+    uppercase // => "HELLO WORLD"</code></pre>
+    <p>Como era de esperar, <codeinline>forEach()</codeinline> itera la matriz en orden, y en realidad pasa el índice de la matriz a su función como un segundo argumento, que es ocasionalmente útil. A diferencia del bucle <codeinline>for/of</codeinline>, <codeinline>forEach()</codeinline> es consciente de las matrices dispersas y no invoca su función para los elementos que no están allí.</p>
+    <p><a href="#8-1">§7.8.1</a> documenta el método <codeinline>forEach()</codeinline> con más detalle. Esa sección también cubre métodos relacionados como <codeinline>map()</codeinline> y <codeinline>filter()</codeinline> que realizan tipos especializados de iteración de matrices.</p>
+    <p>También puedes recorrer los elementos de una matriz con un simple <codeinline>for</codeinline> (<a href="capitulo-5#4-3">§5.4.3</a>):</p>
+    <pre>
+    <code class="language-js">let vowels = "";
+    for(let i = 0; i &lt; letters.length; i++) &lbrace; // Para cada indice en el array
+      let letter = letters[i];                // Obtener el elemento de ese indice
+      if (/[aeiou]/.test(letter)) &lbrace;           // Utiliza una prueba de expresión regular
+        vowels += letter;                     // Si es una vocal, guardarla
+      }
+    }
+    vowels // => "eoo"</code></pre>
+    <p>En bucles anidados, u otros contextos donde el rendimiento es crítico, a veces puede ver este bucle básico de iteración de array escrito de forma que la longitud del array sólo se busque una vez en lugar de en cada iteración. Ambas formas de bucle <codeinline>for</codeinline> son idiomáticas, aunque no son especialmente comunes, y con los intérpretes modernos de JavaScript no está nada claro que tengan ningún impacto en el rendimiento:</p>
+    <pre>
+    <code class="language-js">// Guarda la longitud del array en una variable local
+    for(let i = 0, len = letters.length; i &lt; len; i++) &lbrace;
+      // el cuerpo del bucle sigue siendo el mismo. 
+    }
+    // Itera hacia atras desde el final del array hasta el principio
+    for(let i = letters.length-1; i >= 0; i--) &lbrace;
+      // el cuerpo del bucle sigue siendo el mismo.
+    }</code></pre>
+    <p>Estos ejemplos suponen que la matriz es densa y que todos los elementos contienen datos válidos. Si este no es el caso, deberías probar los elementos del array antes de usarlos. Si quieres omitir elementos no definidos o inexistentes, puedes escribir:</p>
+    <pre>
+    <code class="language-js">for(let i = 0; i &lbrace; a.length; i++) &lbrace;
+      if (a[i] === undefined) continue; // Salta elementos indefinidos + inexistentes
+      // cuerpo del bucle aqui
+    }</code></pre>
+  </section>
+  <section id="7">
+    <h2>7.7 Arrays multifuncional</h2>
+    <p>JavaScript no admite verdaderas matrices multidimensionales, pero puede aproximarse a ellas con matrices de matrices. Para acceder a un valor de una matriz de matrices, basta con utilizar dos veces el operador []. Por ejemplo, supongamos que la variable matriz es una matriz de matrices de números. Cada elemento de matrix[x] es una matriz de números. Para acceder a un número concreto dentro de esta matriz, se escribiría matrix[x][y]. He aquí un ejemplo concreto que utiliza una matriz bidimensional como tabla de multiplicar:</p>
+    <pre>
+    <code class="language-js">// Crea un array multidimensional
+    let table = new Array(10); // 10 filas en el array
+    for(let i = 0; i &lt; table.length; i++) &lbrace;
+      table[i] = new Array(10); // Cada fila tiene 10 columnas
+    }
+
+    // Inicializa el array multidimensional
+    for(let row = 0; row &lt; table.length; row++) &lbrace;
+      for(let col = 0; col &lt; table[row].length; col++) &lbrace;
+        table[row][col] = row*col;
+      }
+    }
+
+    // Usa el array multidimensional para calcular 5*7
+    table[5][7] // => 35</code></pre>
+  </section>
+  <section id="8" class="py-4 xs:py-5 sm:py-6">
+    <h2>7.8 Metodos del Array</h2>
+    <p>Las secciones anteriores se han centrado en la sintaxis básica de JavaScript para
+      trabajar con matrices. Sin embargo, en general, los métodos definidos por la clase
+      Array son los más potentes. Las siguientes secciones documentan estos métodos.
+      Mientras lees sobre estos métodos, ten en cuenta que algunos de ellos modifican el
+      array sobre el que son invocados y otros dejan el array sin cambios. Algunos métodos
+      devuelven una matriz: a veces, se trata de una nueva matriz, y la original no se
+      modifica. Otras veces, un método modificará la matriz en su lugar y también
+      devolverá una referencia a la matriz modificada.</p>
+    <p>Cada una de las subsecciones siguientes cubre un grupo de métodos de array relacionados:</p>
+    <ul>
+      <li class="font-normal">Los métodos de iteración recorren los elementos de una matriz, normalmente
+        invocando una función especificada en cada uno de esos elementos.</li>
+      <li class="font-normal">Los métodos de pila y cola añaden y eliminan elementos de una matriz al
+        principio y al final de la misma.</li>
+      <li class="font-normal">Los métodos de submatrices sirven para extraer, borrar, insertar, rellenar y copiar
+        regiones con- tiguas de una matriz mayor.</li>
+      <li class="font-normal">Los métodos de búsqueda y ordenación sirven para localizar elementos dentro de
+        una matriz y para ordenar los elementos de una matriz.</li>
+    </ul>
+    <p>Las siguientes subsecciones también cubren los métodos estáticos de la clase Array y
+      algunos métodos misceláneos para concatenar arrays y convertir arrays en cadenas.</p>
+  </section>
+  <section id="8-1">
+    <h2>7.8.1 Metodos iterador de arrays</h2>
+    <p>Los métodos descritos en esta sección iteran sobre matrices pasando los elementos de
+    la matriz, en orden, a una función que usted suministra, y proporcionan formas
+    convenientes de iterar, mapear, filtrar, probar y reducir matrices.</p>
+    <p>Sin embargo, antes de explicar los métodos en detalle, vale la pena hacer algunas
+    generali- zaciones sobre ellos. En primer lugar, todos estos métodos aceptan una
+    función como primer argumento e invocan esa función una vez por cada elemento (o
+    algunos elementos) de la matriz. Si la matriz es dispersa, la función que se pasa no se
+    invoca para elementos inexistentes. En la mayoría de los casos, la función se invoca
+    con tres argumentos: el valor del elemento de la matriz, el índice del elemento de la
+    matriz y la propia matriz. A menudo, sólo se necesita el primero de estos argumentos
+    y se pueden ignorar el segundo y el tercero.</p>
+    <p>La mayoría de los métodos de iteración descritos en las siguientes subsecciones
+    aceptan un segundo argumento opcional. Si se especifica, la función se invoca como
+    si fuera un método de este segundo argumento. Es decir, el segundo argumento que
+    se pasa se convierte en el valor de la palabra clave <codeinline>this</codeinline> dentro de la función que se
+    pasa como primer argumento. El valor de retorno de la función que se pasa suele ser importante, pero distintos métodos manejan el de diferentes maneras. Ninguno de los métodos descritos aquí modifica el array sobre
+    el que se invocan (aunque la función que se pasa puede modificar el array, por
+    supuesto). </p>
+    <p>Cada una de estas funciones se invoca con una función como primer argumento, y es
+    muy común definir esa función en línea como parte de la expresión de invocación del
+    método en lugar de utilizar una función existente definida en otro lugar. La sintaxis
+    de la función flecha (véase <a href="capitulo-8#1-3">§8.1.3</a>) funciona especialmente bien con estos métodos, y
+    la utilizaremos en los ejemplos que siguen.</p>
+    <p class="title-article text-left">forEach()</p>
+    <p>El método <codeinline>forEach()</codeinline> recorre una matriz, invocando una función especificada para cada elemento. Como hemos descrito, se pasa la función como primer argumento a <codeinline>forEach()</codeinline>. <codeinline>forEach()</codeinline> invoca entonces la función con tres argumentos: el valor del elemento de la matriz, el índice del elemento de la matriz y la propia matriz. Si sólo le interesa el valor del elemento de la matriz, puede escribir una función con un solo parámetro; los argumentos adicionales se ignorarán:</p>
+    <pre>
+    <code class="language-js">let data = [1,2,3,4,5], sum = 0;
+    // Calcula la suma de los elementos del array
+    data.forEach(value => &lbrace; sum += value; }); // sum == 15
+    // Ahora incrementa cada elemento del array
+    data.forEach(function(v, i, a) &lbrace; a[i] = v + 1; }); // data == [2,3,4,5,6]</code></pre>
+    <p>Tenga en cuenta que <codeinline>forEach()</codeinline> no proporciona una forma de terminar la iteración
+    antes de que todos los elementos hayan sido pasados a la función. Es decir, no existe
+    un equivalente del estado <codeinline>break</codeinline> que se puede utilizar con un bucle for normal.</p>
+    <p class="title-article text-left">map()</p>
+    <p>El método <codeinline>map()</codeinline> pasa cada elemento del array sobre el que se invoca a la función que
+    especifiques y devuelve un array que contiene los valores devueltos por tu función.
+    Por ejemplo:</p>
+    <pre>
+    <code class="language-js">let a = [1, 2, 3];
+    a.map(x => x*x) // => [1, 4, 9]: la funcion toma x y devuelve x*x</code></pre>
+    <p>La función que se pasa a <codeinline>map()</codeinline> se invoca del mismo modo que una función pasada a
+      <codeinline>forEach()</codeinline>. Sin embargo, para el método <codeinline>map()</codeinline>, la función pasada debe devolver un
+    valor. Tenga en cuenta que <codeinline>map()</codeinline> devuelve una nueva matriz: no modifica la matriz
+    sobre la que se invoca. Si esa matriz es dispersa, no se llamará a su función para los
+    elementos que falten, pero la matriz devuelta será dispersa del mismo modo que la
+    matriz original: tendrá la misma longitud y los mismos elementos que falten.</p>
+    <p class="title-article text-left">filter()</p>
+    <p>El método <codeinline>filter()</codeinline> devuelve una matriz que contiene un subconjunto de los
+    elementos de la matriz sobre la que se invoca. La función que se le pasa debe ser
+    predicado: una función que devuelve <codeinline>true</codeinline> o <codeinline>false</codeinline>. El predicado se invoca del
+    mismo modo que <codeinline>forEach()</codeinline> y <codeinline>map()</codeinline>. Si el valor de retorno es <codeinline>true</codeinline>, o un valor
+    que se convierte en <codeinline>true</codeinline>, entonces el elemento pasado al predicado es un
+    miembro del subconjunto y se añade a la matriz que se convertirá en el valor de
+    retorno. Ejemplos:</p>
+    <pre>
+    <code class="language-js">let a = [5, 4, 3, 2, 1];
+    a.filter(x => x &lt; 3) // => [2, 1]; valores menores que 3
+    a.filter((x,i) => i%2 === 0) // => [5, 3, 1]; cualquier otro valor</code></pre>
+    <p>Observe que <codeinline>filter()</codeinline> omite los elementos que faltan en las matrices dispersas y que su valor de retorno es siempre denso. Para cerrar los huecos de una matriz dispersa, puede hacer lo siguiente:</p>
+    <pre>
+    <code class="language-js">let dense = sparse.filter(() => true);</code></pre>
+    <p>Y para cerrar huecos y eliminar elementos indefinidos y nulos, puedes usar <codeinline>filter</codeinline>, así:</p>
+    <pre>
+    <code class="language-js">a = a.filter(x => x !== undefined && x !== null);</code></pre>
+    <p class="title-article text-left">find() y findIndex()</p>
+    <p>Los métodos <codeinline>find()</codeinline> y <codeinline>findIndex()</codeinline> son como <codeinline>filter()</codeinline> en el sentido de que recorrenla matriz en busca de elementos para los que la función de predicado devuelva un valor verdadero. Sin embargo, a diferencia de <codeinline>filter()</codeinline>, estos dos métodos dejan de iterar la primera vez que el predicado encuentra un elemento. Cuando esto ocurre, <codeinline>find()</codeinline> devuelve el elemento coincidente y <codeinline>findIndex()</codeinline> devuelve el índice del elemento coincidente. Si no se encuentra ningún elemento coincidente, <codeinline>find()</codeinline> devuelve <codeinline>undefined</codeinline> y <codeinline>findIndex()</codeinline> devuelve <codeinline>-1</codeinline>:</p>
+    <pre>
+    <code class="language-js">let a = [1,2,3,4,5];
+    a.findIndex(x => x === 3) // => 2; el valor 3 está en el índice 2
+    a.findIndex(x => x &lt; 0)   // => -1; no hay numeros negativos en el array
+    a.find(x => x % 5 === 0)  // => 5: este es un múltiplo de 5
+    a.find(x => x % 7 === 0)  // => undefined: no hay múltiplos de 7 en el array</code></pre>
+    <p class="title-article text-left">every() and some()</p>
+    <p>Los métodos <codeinline>every()</codeinline> y <codeinline>some()</codeinline> son predicados de matriz: aplican una función de predicado especificada a los elementos de la matriz y devuelven <codeinline>true</codeinline> o <codeinline>false</codeinline>.</p>
+    <p>El método <codeinline>every()</codeinline> es como el cuantificador matemático "para todos" ∀: devuelve <codeinline>true</codeinline> si y sólo si su función de predicado devuelve <codeinline>true</codeinline> para todos los elementos de la matriz:</p>
+    <pre>
+    <code class="language-js">let a = [1,2,3,4,5];
+    a.every(x => x &lt; 10)       // => true: todos los valores son menores que 10
+    a.every(x => x % 2 === 0)  // => false: no todos los valores son pares.</code></pre>
+    <p>El método <codeinline>some()</codeinline> es como el cuantificador matemático "existe" ∃: devuelve <codeinline>true</codeinline> si existe al menos un elemento en la matriz para el que el predicado devuelve <codeinline>true</codeinline> y devuelve <codeinline>false</codeinline> si y sólo si el predicado devuelve <codeinline>false</codeinline> para todos los elementos del array:</p>
+    <pre>
+    <code class="language-js">let a = [1,2,3,4,5];
+    a.some(x => x%2===0) // => true; a tiene algunos elementos pares
+    a.some(isNaN) // => false; a no tiene numeros NaN.</code>
+    </pre>
+    <p>Tenga en cuenta que tanto <codeinline>every()</codeinline> como <codeinline>some()</codeinline> dejan de iterar los elementos de la matriz en cuanto saben qué valor devolver. <codeinline>some()</codeinline> devuelve <codeinline>true</codeinline> la primera vez que su predicado devuelve <codeinline>&lt;code>true&lt;/code></codeinline> y sólo itera por toda la matriz si su predicado siempre devuelve <codeinline>false</codeinline>. <codeinline>every()</codeinline> es lo contrario: devuelve <codeinline>false</codeinline> la primera vez que su predicado devuelve <codeinline>false</codeinline> y sólo itera por todos los elementos si su predicado siempre devuelve <codeinline>true</codeinline>. Observe también que, por convención matemática, <codeinline>every()</codeinline> devuelve <codeinline>true</codeinline> y <codeinline>some()</codeinline> devuelve <codeinline>false</codeinline> cuando se invoca sobre una matriz vacía.</p>
+    <p class="title-article text-left">reduce() and reduceRight()</p>
+    <p>Los métodos <codeinline>reduce()</codeinline> y <codeinline>reduceRight()</codeinline> combinan los elementos de un array, utilizando la función que especifiques, para producir un único valor. Esta es una operación común en la programación funcional y también recibe los nombres de "inyectar" y "plegar". Los ejemplos ayudan a ilustrar cómo funciona:</p>
+    <pre>
+    <code class="language-js">let a = [1,2,3,4,5];
+    a.reduce((x,y) => x+y, 0)          // => 15; la suma de los valores
+    a.reduce((x,y) => x*y, 1)          // => 120; el producto de los valores
+    a.reduce((x,y) => (x > y) ? x : y) // => 5; el valor mas grande</code></pre>
+    <p><codeinline>reduce()</codeinline> recibe dos argumentos. El primero es la función que realiza la operación de reducción. La tarea de esta función de reducción es combinar o reducir de algún modo dos valores en un único valor y devolver ese valor reducido. En los ejemplos que hemos mostrado aquí, las funciones combinan dos valores sumándolos, multiplicándolos y eligiendo el mayor. El segundo argumento (opcional) es un valor inicial que se pasa a la función.</p>
+    <p>Las funciones utilizadas con <codeinline>reduce()</codeinline> son diferentes de las funciones utilizadas con <codeinline>forEach()</codeinline> y <codeinline>map()</codeinline>. El valor familiar, el índice y los valores del array se pasan como segundo, tercer y cuarto argumento. El primer argumento es el resultado acumulado de la reducción hasta el momento. En la primera llamada a la función, este primer argumento es el valor inicial pasado como segundo argumento a <codeinline>reduce()</codeinline>. En llamadas posteriores, es el valor devuelto por la invocación anterior de la función. En el primer ejemplo, la función de reducción se llama primero con los argumentos 0 y 1. Los suma y devuelve 1. A continuación, se llama de nuevo con los argumentos 1 y 2. A continuación, se invoca de nuevo con los argumentos 1 y 2 y devuelve 3. A continuación, calcula 3+3=6, luego 6+4=10 y, por último, 10+5=15. Este valor final, 15, se convierte en el resultado de la reducción. Este valor final, 15, se convierte en el valor de retorno de <codeinline>reduce()</codeinline>.</p>
+    <p>Puede que haya notado que la tercera llamada a <codeinline>reduce()</codeinline> en este ejemplo sólo tiene un argumento: no se especifica ningún valor inicial. Cuando se invoca a <codeinline>reduce()</codeinline> sin un valor inicial, utiliza el primer elemento de la matriz como valor inicial. Esto significa que la primera llamada a la función de reducción tendrá el primer y el segundo elemento de la matriz como primer y segundo argumento. En los ejemplos de suma y producto, podríamos haber omitido el argumento del valor inicial.</p>
+    <p>Llamar a <codeinline>reduce()</codeinline> en una matriz vacía sin argumento de valor inicial causa un TypeError. Si la llama con un solo valor -una matriz con un elemento y sin valor inicial o una matriz vacía y un valor inicial- simplemente devuelve ese valor sin llamar nunca a la función de reducción.</p>
+    <p><codeinline>reduceRight()</codeinline> funciona igual que <codeinline>reduce()</codeinline>, salvo que procesa la matriz desde el índice más alto al más bajo (de derecha a izquierda), en lugar de hacerlo de menor a mayor. Es posible que desee hacer esto si la operación de reducción tiene asociatividad de derecha a izquierda, por ejemplo:</p>
+    <pre>
+    <code class="language-js">// Calcula 2^(3^4). La exponenciación tiene procedencia de derecha a izquierda.
+    let a = [2, 3, 4];
+    a.reduceRight((acc,val) => Math.pow(val,acc)) // => 2.4178516392292583e+24</code></pre>
+    <p>Observe que ni <codeinline>reduce()</codeinline> ni <codeinline>reduceRight()</codeinline> aceptan un argumento opcional que especifique el valor <codeinline>this</codeinline> sobre el que se invocará la función de reducción. El argumento opcional valor inicial ocupa su lugar. Consulte el método <codeinline>Function.bind()</codeinline> (<a href="capitulo-8#7-5">§8.7.5</a>) si necesita que su función de reducción se invoque como método de un objeto concreto.</p>
+    <p>Los ejemplos mostrados hasta ahora han sido numéricos para simplificar, pero <codeinline>reduce()</codeinline> y <codeinline>reduceRight()</codeinline> no están pensadas únicamente para cálculosmatemáticos. Cualquier función que pueda combinar dos valores (como dos objetos)en un valor del mismo tipo puede utilizarse como función de reducción. Por otraparte, los algoritmos expresados utilizando reducciones de matrices pueden volverserápidamente complejos y difíciles de entender, y puede que descubra que es más fácil leer, escribir y razonar sobre su código si utiliza construcciones de bucle regulares para procesar sus matrices.</p>
   </section>
 </Layoutjavascript>
