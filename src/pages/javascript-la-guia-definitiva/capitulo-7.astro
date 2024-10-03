@@ -427,4 +427,287 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Observe que ni <codeinline>reduce()</codeinline> ni <codeinline>reduceRight()</codeinline> aceptan un argumento opcional que especifique el valor <codeinline>this</codeinline> sobre el que se invocará la función de reducción. El argumento opcional valor inicial ocupa su lugar. Consulte el método <codeinline>Function.bind()</codeinline> (<a href="capitulo-8#7-5">§8.7.5</a>) si necesita que su función de reducción se invoque como método de un objeto concreto.</p>
     <p>Los ejemplos mostrados hasta ahora han sido numéricos para simplificar, pero <codeinline>reduce()</codeinline> y <codeinline>reduceRight()</codeinline> no están pensadas únicamente para cálculosmatemáticos. Cualquier función que pueda combinar dos valores (como dos objetos)en un valor del mismo tipo puede utilizarse como función de reducción. Por otraparte, los algoritmos expresados utilizando reducciones de matrices pueden volverserápidamente complejos y difíciles de entender, y puede que descubra que es más fácil leer, escribir y razonar sobre su código si utiliza construcciones de bucle regulares para procesar sus matrices.</p>
   </section>
+  <section id="8-2" class="py-4 xs:py-5 sm:py-6">
+    <h2>7.8.2 Aplanamiento de matrices con flat() y flatMap()</h2>
+    <p>En ES2019, el método <codeinline>flat()</codeinline> crea y devuelve una nueva matriz que contiene los mismos elementos que la matriz a la que se llama, excepto que los elementos que son a su vez matrices se "aplanan" en la matriz devuelta. Por ejemplo:</p>
+    <pre>
+    <code class="language-js">[1, [2, 3]].flat() // => [1, 2, 3]
+    [1, [2, [3]]].flat() // => [1, 2, [3]]</code></pre>
+    <p>Cuando se invoca sin argumentos, <codeinline>flat()</codeinline> aplana un nivel de anidamiento. Los elementos de la matriz original que son a su vez matrices se aplanan, pero los elementos de matriz de <em>esas</em> matrices no se aplanan. Si desea aplanar más niveles, pase un número a <codeinline>flat()</codeinline>:</p>
+    <pre>
+    <code class="language-js">let a = [1, [2, [3, [4]]]];
+    a.flat(1) // => [1, 2, [3, [4]]]
+    a.flat(2) // => [1, 2, 3, [4]]
+    a.flat(3) // => [1, 2, 3, 4]
+    a.flat(4) // => [1, 2, 3, 4]</code></pre>
+    <p>El método <codeinline>flatMap()</codeinline> funciona igual que el método <codeinline>map()</codeinline> (véase "<a href="map">map()</a>"), salvo que la matriz devuelta se aplana automáticamente como si se pasara a <codeinline>flat()</codeinline>. Es decir, llamar a <codeinline>a.flatMap(f)</codeinline> es lo mismo que (pero más eficiente que) <codeinline>a.map(f).flat()</codeinline>:</p>
+    <pre>
+    <code class="language-js">let phrases = ["hola mundo", "la guia definitiva"];
+    let words = phrases.flatMap(phrase => phrase.split(" "));
+    words // => ["hola", "mundo", "la", "guia", "definitiva"];</code></pre>
+    <p>Se puede pensar en <codeinline>flatMap()</codeinline> como una generalización de <codeinline>map()</codeinline> que permite asignar cada elemento de la matriz de entrada a cualquier número de elementos de la matriz de salida. En particular, <codeinline>flatMap()</codeinline> permite asignar elementos de entrada a una matriz vacía, que se aplana a nada en la matriz de salida:</p>
+    <pre>
+    <code class="language-js">// Convertir numeros no negativos en sus raíces cuadradas
+    [-2, -1, 1, 2].flatMap(x => x &lt; 0 ? [] : Math.sqrt(x)) // => [1, 2**0.5]</code></pre>
+  </section>
+  <section id="8-3">
+    <h2>7.8.3 Añadir matrices con concat()</h2>
+    <p>El método <codeinline>concat()</codeinline> crea y devuelve una nueva matriz que contiene los elementos de la matriz original sobre la que se invocó <codeinline>concat()</codeinline>, seguidos de cada uno de los argumentos de <codeinline>concat()</codeinline>. Si alguno de estos argumentos es a su vez una matriz, entonces son los elementos de la matriz los que se concatenan, no la propia matriz. Tenga en cuenta, sin embargo, que <codeinline>concat()</codeinline> no aplana recursivamente matrices de matrices. <codeinline>concat()</codeinline> no modifica la matriz sobre la que se invoca:</p>
+    <pre>
+    <code class="language-js">let a = [1,2,3];
+    a.concat(4, 5)          // => [1,2,3,4,5]
+    a.concat([4,5],[6,7])   // => [1,2,3,4,5,6,7]; el array se aplana
+    a.concat(4, [5,[6,7]])  // => [1,2,3,4,5,[6,7]]; pero no arrays anidados
+    a                       // => [1,2,3]; el array original no se modifica</code></pre>
+    <p>Tenga en cuenta que <codeinline>concat()</codeinline> hace una nueva copia de la matriz a la que se llama. En muchos casos, esto es lo correcto, pero es una operación cara. Si se encuentra escribiendo código como <codeinline>a = a.concat(x)</codeinline>, entonces debería pensar en modificar su matriz en su lugar con <codeinline>push()</codeinline> o <codeinline>splice()</codeinline> en lugar de crear una nueva.</p>
+  </section>
+  <section id="8-4" class="py-4 xs:py-5 sm:py-6">
+    <h2>7.8.4 Pilas y colas con push(), pop(), shift() y unshift()</h2>
+    <p>Los métodos <codeinline>push()</codeinline> y <codeinline>pop()</codeinline> permiten trabajar con matrices como si fueran pilas. El método <codeinline>push()</codeinline> añade uno o más elementos nuevos al final de una matriz y devuelve la nueva longitud de la matriz. A diferencia de <codeinline>concat()</codeinline>, <codeinline>push()</codeinline> no aplana los argumentos de la matriz. El método <codeinline>pop()</codeinline> hace lo contrario: borra el último elemento de una matriz, disminuye la longitud de la matriz y devuelve el valor que ha eliminado. Tenga en cuenta que ambos métodos modifican la matriz en su lugar. La combinación de <codeinline>push()</codeinline> y <codeinline>pop()</codeinline> permite utilizar una matriz JavaScript para implementar una pila de primeras entradas y últimas salidas. Por ejemplo:</p>
+    <pre>
+    <code class="language-js">let stack = [];     // stack == []
+    stack.push(1,2);    // stack == [1,2];
+    stack.pop();        // stack == [1]; retorna 2
+    stack.push(3);      // stack == [1,3]
+    stack.pop();        // stack == [1]; retorna 3
+    stack.push([4,5]);  // stack == [1,[4,5]]
+    stack.pop()         // stack == [1]; retorna [4,5]
+    stack.pop();        // stack == []; retorna 1</code></pre>
+    <p>El método <codeinline>push()</codeinline> no aplana un array que le pases, pero si quieres empujar todos los elementos de un array a otro array, puedes usar la operación spread (<a href="capitulo-8#3-4">§8.3.4</a>) para aplanarlo explícitamente:</p>
+    <pre>
+    <code class="language-js">a.push(...values);</code></pre>
+    <p>Los métodos <codeinline>unshift()</codeinline> y <codeinline>shift()</codeinline> se comportan de forma muy parecida a <codeinline>push()</codeinline> y <codeinline>pop()</codeinline>, excepto en que insertan y eliminan elementos desde el principio de una matriz en lugar de desde el final. <codeinline>unshift()</codeinline> añade uno o varios elementos al principio de la matriz, desplaza los elementos existentes de la matriz a índices superiores para hacer espacio y devuelve la nueva longitud de la matriz. <codeinline>shift()</codeinline> elimina y devuelve el primer elemento de la matriz, desplazando todos los elementos posteriores un lugar hacia abajo para ocupar el nuevo espacio vacante al principio de la matriz. Podrías usar <codeinline>unshift()</codeinline> y <codeinline>shift()</codeinline> para implementar una pila, pero sería menos eficiente que usar <codeinline>push()</codeinline> y <codeinline>pop()</codeinline> porque los elementos del array necesitan ser desplazados hacia arriba o hacia abajo cada vez que un elemento es añadido o eliminado al principio del array. En su lugar, puedes implementar una estructura de datos de cola utilizando <codeinline>push()</codeinline> para añadir elementos al final de una matriz y <codeinline>shift()</codeinline> para eliminarlos desde el principio de la matriz:</p>
+    <pre>
+    <code class="language-js">let q = [];   // q == []
+    q.push(1,2);  // q == [1,2]
+    q.shift();    // q == [2]; retorna 1
+    q.push(3)     // q == [2, 3]
+    q.shift()     // q == [3]; retorna 2
+    q.shift()     // q == []; retorna 3</code></pre>
+    <p>Hay una característica de <codeinline>unshift()</codeinline> que merece la pena destacar porque puede resultarle sorprendente. Cuando se pasan varios argumentos a <codeinline>unshift()</codeinline>, se insertan todos a la vez, lo que significa que terminan en la matriz en un orden diferente al que tendrían si se insertaran de uno en uno:</p>
+    <pre>
+    <code class="language-js">let a = [];     // a == []
+    a.unshift(1)    // a == [1]
+    a.unshift(2)    // a == [2, 1]
+    a = [];         // a == []
+    a.unshift(1,2)  // a == [1, 2]</code></pre>
+  </section>
+  <section id="8.5">
+    <h2>7.8.5 Submatrices con slice(), splice(), fill() y copyWithin()</h2>
+    <p>Las matrices definen una serie de métodos que funcionan en regiones contiguas, o submatrices o "rebanadas" de una matriz. Las siguientes secciones describen métodos para extraer, reemplazar, rellenar y copiar rebanadas.</p>
+    <p class="title-article text-left">slice()</p>
+    <p>El método <codeinline>slice()</codeinline> devuelve una <em>porción</em>, o submatriz, de la matriz especificada. Sus dos argumentos especifican el inicio y el final de la porción a devolver. La matriz devuelta contiene el elemento especificado por el primer argumento y todos los elementos subsiguientes hasta, pero sin incluir, el elemento especificado por el segundo argumento. Si sólo se especifica un argumento, la matriz devuelta contiene todos los elementos desde la posición inicial hasta el final de la matriz. Si uno de los argumentos es negativo, especifica un elemento de la matriz relativo a la longitud de la matriz. Un argumento -1, por ejemplo, especifica el último elemento de la matriz, y un argumento -2 especifica el elemento anterior. Tenga en cuenta que <codeinline>slice()</codeinline> no modifica la matriz sobre la que se invoca. He aquí algunos ejemplos:</p>
+    <pre>
+    <code class="language-js">let a = [1,2,3,4,5];
+    a.slice(0,3);   // Retorna [1,2,3]
+    a.slice(3);     // Retorna [4,5]
+    a.slice(1,-1);  // Retorna [2,3,4]
+    a.slice(-3,-2); // Retorna [3]</code></pre>
+    <p class="title-article text-left">splice()</p>
+    <p><codeinline>splice()</codeinline> es un método de propósito general para insertar o eliminar elementos de una matriz. A diferencia de <codeinline>slice()</codeinline> y <codeinline>concat()</codeinline>, <codeinline>splice()</codeinline> modifica la matriz sobre la que se invoca. Tenga en cuenta que <codeinline>splice()</codeinline> y <codeinline>slice()</codeinline> tienen nombres muy similares pero realizan operaciones sustancialmente diferentes.</p>
+    <p><codeinline>splice()</codeinline> puede borrar elementos de una matriz, insertar nuevos elementos en una matriz o realizar ambas operaciones al mismo tiempo. Los elementos de la matriz que vienen después del punto de inserción o borrado tienen sus índices aumentados o disminuidos según sea necesario para que permanezcan contiguos con el resto de la matriz. El primer argumento de <codeinline>splice()</codeinline> especifica la posición de la matriz en la que debe comenzar la inserción y/o borrado. El segundo argumento especifica el número de elementos que deben ser eliminados (empalmados) de la matriz. (Observe que ésta es otra diferencia entre estos dos métodos. El segundo argumento de <codeinline>splice()</codeinline> es una posición final. El segundo argumento de <codeinline>splice()</codeinline> es una longitud). Si se omite este segundo argumento, se eliminan todos los elementos de la matriz desde el elemento inicial hasta el final de la matriz. <codeinline>splice()</codeinline> devuelve una matriz con los elementos eliminados, o una matriz vacía si no se ha eliminado ningún elemento. Por ejemplo:</p>
+    <pre>
+    <code class="language-js">let a = [1,2,3,4,5,6,7,8];
+    a.splice(4)   // => [5,6,7,8]; a ahora es [1,2,3,4]
+    a.splice(1,2) // => [2,3]; a ahora es [1,4]
+    a.splice(1,1) // => [4]; a ahora es [1]</code></pre>
+    <p>Los dos primeros argumentos de <codeinline>splice()</codeinline> especifican qué elementos de la matriz deben eliminarse. Estos argumentos pueden ir seguidos de cualquier número de argumentos adicionales que especifiquen los elementos que se van a insertar en la matriz, comenzando en la posición especificada por el primer argumento. Por ejemplo:</p>
+    <pre>
+    <code class="language-js">let a = [1,2,3,4,5];
+    a.splice(2,0,"a","b") // => []; a ahora es [1,2,"a","b",3,4,5]
+    a.splice(2,2,[1,2],3) // => ["a","b"]; a ahora es [1,2,[1,2],3,3,4,5]</code></pre>
+    <p>Tenga en cuenta que, a diferencia de <codeinline>concat()</codeinline>, <codeinline>splice()</codeinline> inserta las propias matrices, no los elementos de esas matrices.</p>
+    <p class="title-article text-left">fill()</p>
+    <p>El método <codeinline>fill()</codeinline> establece los elementos de una matriz, o un segmento de una matriz, a un valor especificado. Modifica la matriz a la que se llama y también devuelve la matriz modificada:</p>
+    <pre>
+    <code class="language-js">let a = new Array(5); // Comienza sin elementos y con longitud 5
+    a.fill(0)             // => [0,0,0,0,0]; rellenar el array con ceros
+    a.fill(9, 1)          // => [0,9,9,9,9]; rellena con 9 empezando en el indice 1
+    a.fill(8, 2, -1)      // => [0,9,8,8,9]; rellena con 8 en los indices 2, 3</code></pre>
+    <p>El primer argumento de <codeinline>fill()</codeinline> es el valor que se asigna a los elementos de la matriz. El segundo argumento opcional especifica el índice inicial. Si se omite, el llenado comienza en el índice 0. El tercer argumento opcional especifica el índice final: se rellenarán los elementos de la matriz hasta este índice, pero sin incluirlo. Si se omite este argumento, la matriz se rellena desde el índice inicial hasta el final. Puede especificar índices relativos al final del array pasando números negativos, igual que con <codeinline>slice()</codeinline>.</p>
+    <p class="title-article text-left">copyWithin()</p>
+    <p><codeinline>copyWithin()</codeinline> copia una porción de una matriz a una nueva posición dentro de la matriz. Modifica la matriz en su lugar y devuelve la matriz modificada, pero no cambiará la longitud de la matriz. El primer argumento especifica el índice de destino al que se copiará el primer elemento. El segundo argumento especifica el índice del primer elemento a copiar. Si se omite este segundo argumento, se utiliza 0. El tercer argumento especifica el final de la porción de elementos a copiar. Si se omite, se utiliza la longitud de la matriz. Se copiarán los elementos desde el índice inicial hasta el índice final, pero sin incluirlos. Puede especificar índices relativos al final de la matriz pasando números negativos, igual que para <codeinline>slice()</codeinline>:</p>
+    <pre>
+    <code class="language-js">let a = [1,2,3,4,5];
+    a.copyWithin(1)       // => [1,1,2,3,4]: copia los elementos del array 
+    a.copyWithin(2, 3, 5) // => [1,1,3,4,4]: copia los últimos 2 elementos a index 2
+    a.copyWithin(0, -2)   // => [4,4,3,4,4]: los desplazamientos negativos también funcionan</code></pre>
+    <p><codeinline>copyWithin()</codeinline> es un método de alto rendimiento especialmente útil con matrices tipadas (véase <a href="capitulo-11#2">§11.2</a>) Se basa en la función <codeinline>memmove()</codeinline> de la biblioteca estándar de C. Tenga en cuenta que la copia funcionará correctamente incluso si hay solapamiento entre las regiones de origen y destino.</p>
+  </section>
+  <section id="8-6" class="py-4 xs:py-5 sm:py-6">
+    <h2>7.8.6 Métodos de búsqueda y ordenación de matrices</h2>
+    <p>Las matrices implementan los métodos <codeinline>indexOf()</codeinline>, <codeinline>lastIndexOf()</codeinline> e <codeinline>includes()</codeinline> que son similares a los métodos del mismo nombre de las cadenas. También existen los métodos <codeinline>sort()</codeinline> e <codeinline>reverse()</codeinline> para reordenar los elementos de una matriz. Estos métodos se describen en las subsecciones siguientes.</p>
+    <p class="title-article text-left">indexOf() y lastIndexOf()</p>
+    <p><codeinline>indexOf()</codeinline> y <codeinline>lastIndexOf()</codeinline> buscan en una matriz un elemento con un valor especificado y devuelven el índice del primer elemento encontrado, o <codeinline>-1</codeinline> si no se encuentra ninguno. <codeinline>indexOf()</codeinline> busca en la matriz desde el principio hasta el final, y <codeinline>lastIndexOf()</codeinline> busca desde el final hasta el principio:</p>
+    <pre>
+    <code class="language-js">let a = [0,1,2,1,0];
+    a.indexOf(1)      // => 1: a[1] is 1
+    a.lastIndexOf(1)  // => 3: a[3] is 1
+    a.indexOf(3)      // => -1: no hay elemento con el valor de 3</code></pre>
+    <p><codeinline>indexOf()</codeinline> y <codeinline>lastIndexOf()</codeinline> comparan su argumento con los elementos de la matriz utilizando el equivalente del operador <codeinline>===</codeinline>. Si la matriz contiene objetos en lugar de valores primitivos, estos métodos comprueban si dos referencias se refieren exactamente al mismo objeto. Si realmente quieres ver el contenido de un objeto, prueba a utilizar el método <codeinline>find()</codeinline> con tu propia función predicada personalizada.</p>
+    <p><codeinline>indexOf()</codeinline> y <codeinline>lastIndexOf()</codeinline> toman un segundo argumento opcional que especifica el índice de la matriz en el que comenzar la búsqueda. Si se omite este argumento, <codeinline>indexOf()</codeinline> empieza por el principio y <codeinline>lastIndexOf()</codeinline> empieza por el final. Se permiten valores negativos para el segundo argumento y se tratan como un desplazamiento desde el final de la matriz, al igual que para el método <codeinline>slice()</codeinline>: un valor de <codeinline>-1</codeinline>, por ejemplo, especifica el último elemento de la matriz.</p>
+    <p>La siguiente función busca un valor especificado en una matriz y devuelve una matriz con <em>todos</em> los índices coincidentes. Esto demuestra cómo se puede utilizar el segundo argumento de <codeinline>indexOf()</codeinline> para encontrar coincidencias más allá del primero.</p>
+    <pre>
+    <code class="language-js">// Encuentra todas las ocurrencias de un valor x en un array a y devuelve un array
+    // de indices de coincidencia
+    function findall(a, x) &lbrace;
+      let results = [],           // Los arrays de indices que devolveremos
+        len = a.length,           // La longitud del array a ser buscado
+        pos = 0;                  // La posición desde la que buscar
+      while(pos &lt; len) &lbrace;          // Mientras que haya elementos para buscar...
+        pos = a.indexOf(x, pos);  // Buscar
+        if (pos === -1) break;    // Si no encuentras nada, salir
+        results.push(pos);        // De lo contrario, guardar el índice encontrado
+        pos = pos + 1;            // Y comienza la búsqueda del siguiente elemento
+      }
+      return results;             // Devuelve el array de indices
+    }</code></pre>
+    <p>Tenga en cuenta que las cadenas tienen métodos <codeinline>indexOf()</codeinline> y <codeinline>lastIndexOf()</codeinline> que funcionan como estos métodos de matriz, excepto que un segundo argumento negativo se trata como cero.</p>
+    <p class="title-article text-left">includes()</p>
+    <p>El método <codeinline>includes()</codeinline> de ES2016 toma un único argumento y devuelve <codeinline>true</codeinline> si la matriz contiene ese valor o <codeinline>false</codeinline> en caso contrario. No indica el índice del valor, sólo si existe. El método <codeinline>includes()</codeinline> es efectivamente una prueba de pertenencia a un conjunto para los arrays. Tenga en cuenta, sin embargo, que las matrices no son una representación eficiente de los conjuntos, y si está trabajando con más de unos pocos elementos, debe utilizar un objeto Set real (<a href="capitulo-11#1-1">§11.1.1</a>).</p>
+    <p>El método <codeinline>includes()</codeinline> es ligeramente diferente del método <codeinline>indexOf()</codeinline> en un aspecto importante. <codeinline>indexOf()</codeinline> comprueba la igualdad utilizando el mismo algoritmo que el operador <codeinline>===</codeinline>, y ese algoritmo de igualdad considera que el valor no numérico es diferente de cualquier otro valor, incluido él mismo. <codeinline>includes()</codeinline> utiliza una versión ligeramente diferente de la igualdad que considera que <codeinline>NaN</codeinline> es igual a sí mismo. Esto significa que <codeinline>indexOf()</codeinline> no detectará el valor <codeinline>NaN</codeinline> en una matriz, pero <codeinline>includes()</codeinline> sí lo hará:</p>
+    <pre>
+    <code class="language-js">let a = [1,true,3,NaN];
+    a.includes(true)  // => true
+    a.includes(2)     // => false
+    a.includes(NaN)   // => true
+    a.indexOf(NaN)    // => -1; indexOf no puede encontrar NaN</code></pre>
+    <p class="title-article text-left">sort()</p>
+    <p><codeinline>sort()</codeinline> ordena los elementos de una matriz en su lugar y devuelve la matriz ordenada. Cuando se llama a <codeinline>sort()</codeinline> sin argumentos, ordena los elementos de la matriz por orden alfabético (convirtiéndolos temporalmente en cadenas para realizar la comparación, si es necesario):</p>
+    <pre>
+    <code class="language-js">let a = ["banana", "cherry", "apple"];
+    a.sort(); // a == ["apple", "banana", "cherry"]</code></pre>
+    <p>Si una matriz contiene elementos indefinidos, se ordenan al final de la matriz. Para ordenar una matriz en un orden distinto del alfabético, debe pasar una función de comparación como argumento a <codeinline>sort()</codeinline>. Esta función decide cuál de sus dos argumentos debe aparecer primero en la matriz ordenada. Si el primer argumento debe aparecer antes que el segundo, la función de comparación debe devolver un número menor que cero. Si el primer argumento debe aparecer después del segundo en la matriz ordenada, la función debe devolver un número mayor que cero. Y si los dos valores son equivalentes (es decir, si su orden es irrelevante), la función de comparación debe devolver 0. Así, por ejemplo, para ordenar los elementos de una matriz en orden numérico en lugar de alfabético, puede hacer lo siguiente:</p>
+    <pre>
+    <code class="language-js">let a = [33, 4, 1111, 222];
+    a.sort();               // a == [1111, 222, 33, 4]; orden alfabético
+    a.sort(function(a,b) &lbrace;  // Pasa una función de comparación
+    return a-b;             // Returns &lt; 0, 0, or > 0, dependiendo del orden
+    });                     // a == [4, 33, 222, 1111]; orden numerico
+    a.sort((a,b) => b-a);   // a == [1111, 222, 33, 4]; invertir el orden numérico</code></pre>
+    <p>Como otro ejemplo de ordenación de elementos de matrices, puede realizar una ordenación alfabética sin distinguir mayúsculas de minúsculas en una matriz de cadenas pasando una función de comparación que convierte ambos argumentos a minúsculas (con el método <codeinline>toLowerCase()</codeinline>) antes de compararlos:</p>
+    <pre>
+    <code class="language-js">let a = ["ant", "Bug", "cat", "Dog"];
+    a.sort(); // a == ["Bug","Dog","ant","cat"]; orden sensible a mayúsculas y minúsculas
+    a.sort(function(s,t) &lbrace;
+      let a = s.toLowerCase();
+      let b = t.toLowerCase();
+      if (a &lt; b) return -1;
+      if (a > b) return 1;
+      return 0;
+    }); // a == ["ant","Bug","cat","Dog"]; orden sensible a mayúsculas y minúsculas</code></pre>
+    <p class="title-article text-left">reverse()</p>
+    <p>El método <codeinline>reverse()</codeinline> invierte el orden de los elementos de una matriz y devuelve la matriz invertida. Lo hace en su lugar; en otras palabras, no crea una nueva matriz con los elementos reordenados, sino que los reordena en la matriz ya existente:</p>
+    <pre>
+    <code class="language-js">let a = [1,2,3];
+    a.reverse(); // a == [3,2,1]</code></pre>
+  </section>
+  <section id="8-7">
+    <h2>7.8.7 Conversión de arrays a cadenas</h2>
+    <p>La clase Array define tres métodos que pueden convertir arrays en cadenas, que es algo que generalmente se hace al crear mensajes de registro y de error. (Si desea guardar el contenido de un array en forma textual para su posterior reutilización, serialice el array con <codeinline>JSON.stringify()</codeinline> [<a href="capitulo-6#8">§6.8</a>] en lugar de utilizar los métodos descritos aquí).</p>
+    <p>El método join() convierte todos los elementos de una matriz en cadenas y las concatena, devolviendo la cadena resultante. Puede especificar una cadena opcional que separe los elementos en la cadena resultante. Si no se especifica ninguna cadena separadora, se utiliza una coma:</p>
+    <pre>
+    <code class="language-js">let a = [1,2,3];
+    a.reverse();            // a == [3,2,1]
+    a.join(" ")             // => "1 2 3"
+    a.join("")              // => "123"
+    let b = new Array(10);  // Un array de 10 elementos vacíos
+    b.join("-")             // => "---------": un string de 9 guiones</code></pre>
+    <p>El método <codeinline>join()</codeinline> es el inverso del método <codeinline>String.split()</codeinline>, que crea una matriz dividiendo una cadena en trozos.</p>
+    <p>Las matrices, como todos los objetos de JavaScript, tienen un método <codeinline>toString()</codeinline>. Para un array, este método funciona igual que el método <codeinline>join()</codeinline> sin argumentos:</p>
+    <pre>
+    <code class="language-js">[1,2,3].toString()          // => "1,2,3"
+    ["a", "b", "c"].toString()  // => "a,b,c"
+    [1, [2,"c"]].toString()     // => "1,2,c"</code></pre>
+    <p>Tenga en cuenta que la salida no incluye corchetes ni ningún otro tipo de delimitador alrededor del valor de la matriz.</p>
+    <p><codeinline>toLocaleString()</codeinline> es la versión localizada de <codeinline>toString()</codeinline>. Convierte cada elemento de la matriz en una cadena llamando al método <codeinline>toLocaleString()</codeinline> del elemento y, a continuación, concatena las cadenas resultantes utilizando una cadena separadora específica de la localización (y definida por la implementación).</p>
+  </section>
+  <section id="8-8" class="py-4 xs:py-5 sm:py-6">
+    <h2>7.8.8 Funciones estáticas de matrices</h2>
+    <p>Además de los métodos de array que ya hemos documentado, la clase Array también define tres funciones estáticas que puedes invocar a través del constructor Array en lugar de sobre los arrays. <codeinline>Array.of()</codeinline> y <codeinline>Array.from()</codeinline> son métodos de fábrica para crear nuevas matrices. Se documentaron en <a href="#1-4">§7.1.4</a> y <a href="#1-5">§7.1.5</a>.</p>
+    <p>La otra función estática de array es <codeinline>Array.isArray()</codeinline>, que es útil para determinar si un valor desconocido es un array o no:</p>
+    <pre>
+    <code class="language-js">Array.isArray([]) // => true
+    Array.isArray(&lbrace;}) // => false</code></pre>
+  </section>
+  <section id="9">
+    <h2>7.9 Objetos similares a matrices</h2>
+    <p>Como hemos visto, las matrices de JavaScript tienen algunas características especiales que otros objetos no tienen:</p>
+    <ul>
+      <li class="font-normal">La propiedad de <codeinline>length</codeinline> se actualiza automáticamente a medida que se añaden nuevos elementos a la lista.</li>
+      <li class="font-normal">Si se ajusta la <codeinline>length</codeinline> a un valor menor, se trunca la matriz.</li>
+      <li class="font-normal">Las matrices heredan métodos útiles de <codeinline>Array.prototype</codeinline>.</li>
+      <li class="font-normal"><codeinline>Array.isArray()</codeinline> devuelve verdadero para las matrices.</li>
+    </ul>
+    <p>Estas son las características que distinguen a los arrays de JavaScript de los objetos normales. Pero no son las características esenciales que definen un array. A menudo es perfectamente razonable tratar cualquier objeto con una propiedad de <codeinline>length</codeinline> numérica y sus correspondientes propiedades de enteros no negativos como un tipo de array.</p>
+    <p>Estos objetos "tipo array" aparecen ocasionalmente en la práctica, y aunque no puedes invocar directamente métodos de array sobre ellos o esperar un comportamiento especial de la propiedad <codeinline>length</codeinline>, puedes iterar a través de ellos con el mismo código que usarías para un array real. Resulta que muchos algoritmos de matrices funcionan igual de bien con objetos similares a matrices que con matrices reales. Esto es especialmente cierto si tus algoritmos tratan el array como de sólo lectura o si al menos dejan la longitud del array sin cambios.</p>
+    <p>El siguiente código toma un objeto normal, le añade propiedades para convertirlo en un objeto similar a un array y, a continuación, itera a través de los "elementos" del pseudoarray resultante:</p>
+    <pre>
+    <code class="language-js">let a = &lbrace;}; // Comienza con un objeto vacio normal
+
+    // Agrega propiedades para convertirlo en un array
+    let i = 0;
+    while(i &lt; 10) &lbrace;
+      a[i] = i * i;
+      i++;
+    }
+    a.length = i;
+
+    // Ahora itera como si fuera un array real
+    let total = 0;
+    for(let j = 0; j &lt; a.length; j++) &lbrace;
+      total += a[j];
+    }</code></pre>
+    <p>En JavaScript del lado del cliente, varios métodos para trabajar con documentos HTML (como <codeinline>document.querySelectorAll()</codeinline>, por ejemplo) devuelven objetos similares a matrices. Aquí tienes una función que puedes utilizar para buscar objetos que funcionen como arrays:</p>
+    <pre>
+    <code class="language-js">// Determina si o es un objeto tipo array.
+    // Strings y funciones tienen propiedades de longitud numéricas y
+    // excluido por la prueba typeof. En JavaScript del lado del cliente, los
+    // nodos de texto en el DOM tiene una propiedad de longitud numérica y
+    // puede ser necesario excluirlo con una prueba adicional.
+    function isArrayLike(o) &lbrace;
+      if (o &&                        // o no es null, undefined, etc.
+        typeof o === "object" &&      // o es un objeto
+        Number.isFinite(o.length) &&  // o.length es un número finito
+        o.length >= 0 &&              // o.length no es negativo
+        Number.isInteger(o.length) && // o.length es un entero
+        o.length &lt; 4294967295) &lbrace;      // o.length &lt; 2^32 - 1
+        return true;                  // Entonces o es tipo array.
+      } else &lbrace;
+        return false;                 // Caso contrario, no lo es.
+      }
+    }</code></pre>
+    <p>En una sección posterior veremos que las cadenas se comportan como matrices. No obstante, las pruebas como ésta para objetos tipo array suelen devolver <codeinline>false</codeinline> para las cadenas: normalmente es mejor tratarlas como cadenas, no como arrays.</p>
+    <p>La mayoría de los métodos de array de JavaScript se definen a propósito para que sean genéricos y funcionen correctamente cuando se aplican a objetos tipo array además de a arrays reales. Dado que los objetos tipo array no heredan de <codeinline>Array.prototype</codeinline>, no es posible invocar métodos de array directamente sobre ellos. Sin embargo, puedes invocarlos indirectamente utilizando el método <codeinline>Function.call</codeinline> (véase <a href="capitulo-8#7-4">§8.7.4</a> para más detalles):</p>
+    <pre>
+    <code class="language-js">let a = &lbrace;"0": "a", "1": "b", "2": "c", length: 3}; // An array-like object
+    Array.prototype.join.call(a, "+")                  // => "a+b+c"
+    Array.prototype.map.call(a, x => x.toUpperCase())  // => ["A","B","C"]
+    Array.prototype.slice.call(a, 0)                   // => ["a","b","c"]: true array copy
+    Array.from(a)                                      // => ["a","b","c"]: easier array copy</code></pre>
+    <p>La penúltima línea de este código invoca el método Array <codeinline>slice()</codeinline> en un objeto tipo array para copiar los elementos de ese objeto en un verdadero objeto array. Este es un truco idiomático que existe en mucho código heredado, pero ahora es mucho más fácil de hacer con <codeinline>Array.from()</codeinline>.</p>
+  </section>
+  <section id="10" class="py-4 xs:py-5 sm:py-6">
+    <h2>7.10 Cadenas como matrices</h2>
+    <p>Las cadenas JavaScript se comportan como matrices de sólo lectura de caracteres Unicode UTF-16. En lugar de acceder a caracteres individuales con el método <codeinline>charAt()</codeinline>, puede utilizar corchetes:</p>
+    <pre>
+    <code class="language-js">let s = "test";
+    s.charAt(0) // => "t"
+    s[1]        // => "e"</code></pre>
+    <p>El operador <codeinline>typeof</codeinline> sigue devolviendo "cadena" para las cadenas, por supuesto, y el método <codeinline>Array.isArray()</codeinline> devuelve <codeinline>false</codeinline> si se le pasa una cadena.</p>
+    <p>La principal ventaja de las cadenas indexables es simplemente que podemos sustituir las llamadas a <codeinline>charAt()</codeinline> por corchetes, que son más concisos y legibles, y potencialmente más eficientes. Sin embargo, el hecho de que las cadenas se comporten como matrices también significa que podemos aplicarles métodos genéricos de matrices. Por ejemplo:</p>
+    <pre>
+    <code class="language-js">Array.prototype.join.call("JavaScript", " ") // => "J a v a S c r i p t"</code></pre>
+    <p>Tenga en cuenta que las cadenas son valores inmutables, por lo que cuando se tratan como matrices, son matrices de sólo lectura. Los métodos de matrices como <codeinline>push()</codeinline>, <codeinline>sort()</codeinline>, <codeinline>reverse()</codeinline> y <codeinline>splice()</codeinline> modifican una matriz en su lugar y no funcionan con cadenas. Sin embargo, intentar modificar una cadena utilizando un método de matriz no provoca un error: simplemente falla en silencio.</p>
+  </section>
+  <section id="11" class="pb-4 xs:pb-5 sm:pb-6">
+    <h2>7.11 Resumen</h2>
+    <p>Este capítulo ha cubierto en profundidad los arrays de JavaScript, incluyendo detalles esotéricos sobre arrays dispersos y objetos tipo array. Los puntos principales de este capítulo son:</p>
+    <ul>
+      <li class="font-normal">Los literales de matriz se escriben como listas de valores separados por comas entre corchetes.</li>
+      <li class="font-normal">Para acceder a cada elemento de la matriz, especifique el índice deseado entre corchetes.</li>
+      <li class="font-normal">El bucle <codeinline>for/of</codeinline> y el operador <codeinline>...</codeinline> spread introducidos en ES6 son formas especialmente útiles de iterar matrices.</li>
+      <li class="font-normal">La clase Array define un rico conjunto de métodos para manipular arrays, y deberías asegurarte de familiarizarte con la API Array.</li>
+    </ul>
+  </section>
 </Layoutjavascript>
