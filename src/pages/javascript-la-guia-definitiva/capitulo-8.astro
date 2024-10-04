@@ -53,4 +53,180 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>La función <codeinline>printprops()</codeinline> es diferente: su trabajo es mostrar los nombres y valores de las propiedades de un objeto. No es necesario un valor de retorno, y la función no incluye una sentencia return. El valor de una invocación de la función <codeinline>printprops()</codeinline> es siempre <codeinline>undefined</codeinline>. Si una función no contiene una sentencia <codeinline>return</codeinline>, simplemente ejecuta cada sentencia en el cuerpo de la función hasta que llega al final, y devuelve el valor <codeinline>undefined</codeinline> a la persona que la invoca.</p>
     <p>Antes de ES6, las declaraciones de funciones sólo se permitían en el nivel superior dentro de un archivo Java-Script o dentro de otra función. Aunque algunas implementaciones se saltaban la norma, técnicamente no era legal definir funciones dentro del cuerpo de bucles, condicionales u otros bloques. Sin embargo, en el modo estricto de ES6, las declaraciones de funciones están permitidas dentro de los bloques. Una función definida dentro de un bloque sólo existe dentro de ese bloque, sin embargo, y no es visible fuera del bloque.</p>
   </section>
+  <section id="1-2" class="py-4 xs:py-5 sm:py-6">
+    <h2>8.1.2 Expresiones de función</h2>
+    <p>Las expresiones de función se parecen mucho a las declaraciones de función, pero aparecen en el contexto de una expresión o sentencia más amplia, y el nombre es opcional. He aquí algunos ejemplos de expresiones de función:</p>
+    <pre>
+    <code class="language-js">// Esta función eleva al cuadrado su argumento.
+    // Ten en cuenta que lo asignamos a una variable.
+    const cuadrado = function(x) &lbrace; return x*x; };
+
+    // La expresión de función pueden incluir nombres lo cual es útil para la recursividad.
+    const f = function fact(x) &lbrace; if (x &lt;= 1) return 1; else return x*fact(x-1); };
+    
+    // La expresión de función también puede ser utilizada como argumento a otras funciones:
+    [3,2,1].sort(function(a,b) &lbrace; return a-b; });
+    
+    // La expresión de función a veces se definen e invocan inmediatamente:
+    let diezalcuadrado = (function(x) &lbrace;return x*x;}(10));</code></pre>
+    <p>Tenga en cuenta que el nombre de la función es opcional para las funciones definidas como expresiones, y la mayoría de las expresiones de función anteriores que hemos mostrado lo omiten. En realidad, una declaración de función <em>declara</em> una variable y le asigna un objeto de función. Una expresión de función, por otro lado, no declara una variable: depende de usted asignar el objeto de función recién definido a una constante o variable si va a necesitar referirse a él varias veces. Es una buena práctica utilizar <codeinline>const</codeinline> con expresiones de función para no sobrescribir accidentalmente las funciones asignando nuevos valores.</p>
+    <p>Se permite un nombre para funciones, como la función factorial, que necesitan referirse a sí mismas. Si una expresión de función incluye un nombre, el ámbito local de la función para esa función incluirá un enlace de ese nombre al objeto de función. En efecto, el nombre de la función se convierte en una variable local dentro de la función. La mayoría de las funciones definidas como expresiones no necesitan nombres, lo que hace que su definición sea más compacta (aunque no tanto como las funciones de flecha, que se describen más adelante).</p>
+    <p>Hay una diferencia importante entre definir una función <codeinline>f()</codeinline> con una declaración de función y asignar una función a la variable <codeinline>f</codeinline> después de crearla como una expresión. Cuando se utiliza la forma de declaración, los objetos de función se crean antes de que el código que los contiene comience a ejecutarse, y las definiciones se elevan para que pueda llamar a estas funciones desde el código que aparece sobre la sentencia de definición. Sin embargo, esto no es cierto para las funciones definidas como expresiones: estas funciones no existen hasta que la expresión que las define se evalúa realmente. Además, para invocar una función, hay que poder referirse a ella, y no se puede referir a una función definida como expresión hasta que se asigna a una variable, por lo que las funciones definidas con expresiones no pueden invocarse antes de ser definidas.</p>
+  </section>
+  <section id="1-3">
+    <h2>8.1.3 Funciones flecha</h2>
+    <p>En ES6, puede definir funciones utilizando una sintaxis particularmente compacta conocida como "funciones de flecha". Esta sintaxis recuerda a la notación matemática y utiliza una "flecha" <codeinline>=></codeinline> para separar los parámetros de la función del cuerpo de la misma. No se utiliza la palabra clave <codeinline>function</codeinline> y, dado que las funciones en flecha son expresiones en lugar de sentencias, tampoco es necesario un nombre de función. La forma general de una función de flecha es una lista de parámetros separados por comas entre paréntesis, seguida de la flecha <codeinline>=></codeinline> y el cuerpo de la función entre llaves:</p>
+    <pre>
+    <code class="language-js">const sum = (x, y) => &lbrace; return x + y; };</code></pre>
+    <p>Pero las funciones de flecha admiten una sintaxis aún más compacta. Si el cuerpo de la función es una única sentencia <codeinline>return</codeinline>, puede omitir la palabra clave <codeinline>return</codeinline>, el punto y coma que la acompaña y las llaves, y escribir el cuerpo de la función como la expresión cuyo valor se va a devolver:</p>
+    <pre>
+    <code class="language-js">const sum = (x, y) => x + y;</code></pre>
+    <p>Además, si una función de flecha tiene exactamente un parámetro, puede omitir los paréntesis alrededor de la lista de parámetros:</p>
+    <pre>
+    <code class="language-js">const polynomial = x => x*x + 2*x + 3;</code></pre>
+    <p>Tenga en cuenta, sin embargo, que una función de flecha sin argumentos debe escribirse con un par de paréntesis vacíos:</p>
+    <pre>
+    <code class="language-js">const constantFunc = () => 42;</code></pre>
+    <p>Tenga en cuenta que, al escribir una función de flecha, no debe poner una nueva línea entre los parámetros de la función y la flecha <codeinline>=></codeinline>. De lo contrario, podría terminar con una línea como <codeinline>const polinomio = x</codeinline>, que es una sentencia de asignación sintácticamente válida por sí misma.</p>
+    <p>Además, si el cuerpo de la función de flecha es una única sentencia <codeinline>return</codeinline>, pero la expresión que se devuelve es un literal de objeto, hay que poner el literal de objeto entre paréntesis para evitar la ambigüedad sintáctica entre las llaves de un cuerpo de función y las llaves de un literal de objeto:</p>
+    <pre>
+    <code class="language-js">const f = x => &lbrace; return &lbrace; value: x }; }; // Good: f() retorna un objeto
+    const g = x => (&lbrace; value: x });           // Good: g() retorna un objeto
+    const h = x => &lbrace; value: x };             // Bad: h() no retorna nada
+    const i = x => &lbrace; v: x, w: x };           // Bad: Syntax Error</code></pre>
+    <p>En la tercera línea de este código, la función <codeinline>h()</codeinline> es realmente ambigua: el código que pretendía ser un literal de objeto puede ser interpretado como una sentencia etiquetada, por lo que se crea una función que devuelve indefinido. En la cuarta línea, sin embargo, el literal de objeto más complicado no es una sentencia válida, y este código ilegal causa un error de sintaxis.</p>
+    <p>La sintaxis concisa de las funciones de flecha las hace ideales cuando se necesita pasar una función a otra función, que es algo común de hacer con métodos de array como <codeinline>map()</codeinline>, <codeinline>filter()</codeinline>, y <codeinline>reduce()</codeinline> (ver <a href="capitulo-7#8-1">§7.8.1</a>), por ejemplo:</p>
+    <pre>
+    <code class="language-js">// Hacer una copia de un array con elementos nulos eliminados.
+    let filtered = [1,null,2,3].filter(x => x !== null); // filtered == [1,2,3]
+    // Elevar al cuadrado algunos números:
+    let squares = [1,2,3,4].map(x => x*x); // squares == [1,4,9,16]</code></pre>
+    <p>Las funciones flecha difieren de las funciones definidas de otras formas en un aspecto crítico: heredan el valor de la palabra clave <codeinline>this</codeinline> del entorno en el que se definen en lugar de definir su propio contexto de invocación como hacen las funciones definidas de otras formas. Esta es una característica importante y muy útil de las funciones flecha, y volveremos a ella más adelante en este capítulo. Las funciones flecha también se diferencian de otras funciones en que no tienen una propiedad <codeinline>prototype</codeinline>, lo que significa que no pueden utilizarse como funciones constructoras de nuevas clases (véase <a href="capitulo-9#2">§9.2</a>).</p>
+  </section>
+  <section id="1-4" class="py-4 xs:py-5 sm:py-6">
+    <h2>8.1.4 Funciones anidadas</h2>
+    <p>En JavaScript, las funciones pueden estar anidadas dentro de otras funciones. Por ejemplo:</p>
+    <pre>
+    <code class="language-js">function hypotenuse(a, b) &lbrace;
+      function square(x) &lbrace; return x*x; }
+      return Math.sqrt(square(a) + square(b));
+    }</code></pre>
+    <p>Lo interesante de las funciones anidadas son sus reglas de alcance de variables: pueden acceder a los parámetros y variables de la función (o funciones) en la que están anidadas. En el código que se muestra aquí, por ejemplo, la función interna <codeinline>square()</codeinline> puede leer y escribir los parámetros <codeinline>a</codeinline> y <codeinline>b</codeinline> definidos por la función externa <codeinline>hypotenuse()</codeinline>. Estas reglas de ámbito para las funciones anidadas son muy importantes, y las volveremos a considerar en <a href="#6">§8.6</a>.</p>
+  </section>
+  <section id="2">
+    <h2>8.2 Invocación de funciones</h2>
+    <p>El código JavaScript que compone el cuerpo de una función no se ejecuta cuando se
+      define la función, sino cuando se invoca. Las funciones JavaScript pueden invocarse
+      de cinco maneras:</p>
+    <ul>
+      <li class="font-normal">Como funciones</li>
+      <li class="font-normal">Como métodos</li>
+      <li class="font-normal">Como constructores</li>
+      <li class="font-normal">Indirectamente a través de sus métodos <codeinline>call()</codeinline> y <codeinline>apply()</codeinline></li>
+      <li class="font-normal">Implícitamente, mediante funciones de</li>
+    </ul>
+  </section>
+  <section id="2-1" class="py-4 xs:py-5 sm:py-6">
+    <h2>8.2 Invocación de funciones</h2>
+    <p>Las funciones se invocan como funciones o como métodos con una expresión deinvocación (<a href="capitulo-4#5">§4.5</a>). Una expresión de invocación consiste en una expresión de funciónque se evalúa a un objeto de función seguida de un paréntesis abierto, una listaseparada por comas de cero o más expresiones de argumento y un paréntesis cerrado.Si la expresión de función es una expresión de acceso a una propiedad (si la funciónes la propiedad de un objeto o un elemento de una matriz), se trata de una expresiónde invocación a un método. Ese caso se explicará en el siguiente ejemplo. El siguientecódigo incluye una serie de expresiones regulares de invocación de funciones:</p>
+    <pre>
+    <code class="language-js">printprops(&lbrace;x: 1});
+    let total = distance(0,0,2,1) + distance(2,1,3,5);
+    let probability = factorial(5)/factorial(13);</code></pre>
+    <p>En una invocación, se evalúa cada expresión del argumento (las que están entreparéntesis) y los valores resultantes se convierten en los argumentos de la función.Estos valores se asignan a los parámetros nombrados en la definición de la función.En el cuerpo de la función, una referencia a un parámetro se evalúa al valor delargumento correspondiente.</p>
+    <p>Para la invocación regular de funciones, el valor de retorno de la función se convierteen el valor de la expresión de invocación. Si la función retorna porque el intérpretellega al final, el valor de retorno es <codeinline>undefined</codeinline>. Si la función retorna porque elintérprete ejecuta una sentencia <codeinline>return</codeinline>, entonces el valor de retorno es elvalor de la expresión que sigue al <codeinline>return</codeinline> o es <codeinline>undefined</codeinline> si la sentencia <codeinline>return</codeinline> no tiene valor.</p>
+    <article>
+      <p class="title-article">Invocación condicional</p>
+      <p>En ES2020 puede insertar <codeinline>?.</codeinline> después de la expresión de la función y antes de laparéntesis abierta en una invocación de función para invocar la función sólo si no es <codeinline>null</codeinline> o <codeinline>undefined</codeinline>. Es decir, la expresión <codeinline>f?.(x)</codeinline> es equivalente (suponiendo que nohaya efectos secundarios) a:</p>
+    <pre>
+    <code class="language-js">(f !== null && f !== undefined) ? f(x) : undefined</code></pre>
+      <p>Encontrará más detalles sobre esta sintaxis de invocación condicional en <a href="capitulo-4#5-1">§4.5.1</a>.</p>
+    </article>
+    <p>Para la invocación de funciones en modo no estricto, el contexto de invocación (elvalor <codeinline>this</codeinline>) es el objeto global. En modo estricto, sin embargo, el contexto deinvocación es <codeinline>undefined</codeinline>. Tenga en cuenta que las funciones definidas utilizando lasintaxis de flecha se comportan de manera diferente: siempre heredan el valor <codeinline>this</codeinline> que está en vigor donde se definen.</p>
+    <p>Las funciones escritas para ser invocadas como funciones (y no como métodos) nosuelen utilizar la palabra clave <codeinline>this</codeinline>. Sin embargo, esta palabra clave puede utilizarse para determinar si el modo estricto está activado:</p>
+    <pre>
+    <code class="language-js">// Define e invoca una función para determinar si el modo estricto está activado
+    const strict = (function() &lbrace; return !this; }());</code></pre>
+    <article>
+      <p class="title-article">Funciones recursivas y pila</p>
+      <p>Una función <em>recursiva</em> es aquella, como la función <codeinline>factorial()</codeinline> del principio de estecapítulo, que se llama a sí misma. Algunos algoritmos, como los que implicanestructuras de datos basadas en árboles, pueden implementarse de formaparticularmente elegante con funciones recursivas. Al escribir una función recursiva,sin embargo, es importante pensar en las restricciones de memoria. Cuando unafunción A llama a la función B y, a continuación, la función B llama a la función C, elintérprete de Java Script debe realizar un seguimiento de los contextos de ejecuciónde las tres funciones. Cuando la función C finaliza, el intérprete necesita saber dóndereanudar la ejecución de la función B, y cuando la función B finaliza, necesita saberdónde reanudar la ejecución de la función A. Puede imaginar estos contextos deejecución como una pila. Cuando una función llama a otra función, un nuevocontexto de ejecución es introducido en la pila. Cuando esa función retorna, sucontexto de ejecución es retirado de la pila. Si una función se llama a sí mismarecursivamente 100 veces, la pila tendrá 100 objetos introducidos en ella, y luego esos100 objetos serán retirados. Esta pila de llamadas ocupa memoria. En el hardwaremoderno, normalmente está bien escribir funciones recursivas que se llamen a símismas cientos de veces. Pero si una función se llama a sí misma diez mil veces, esprobable que falle con un error como "Maximum call-stack size exceeded".</p>
+    </article>
+  </section>
+  <section id="2-2">
+    <h2>8.2.2 Invocación de métodos</h2>
+    <p>Un <em>método</em> no es más que una función JavaScript que se almacena en una propiedad de un objeto. Si tienes una función <codeinline>f</codeinline> y un objeto <codeinline>o</codeinline>, puedes definir un método llamado <codeinline>m</codeinline> de <codeinline>o</codeinline> con la siguiente línea:</p>
+    <pre>
+    <code class="language-js">o.m = f;</code></pre>
+    <p>Una vez definido el método <codeinline>m()</codeinline> del objeto <codeinline>o</codeinline>, invócalo así:</p>
+    <pre>
+    <code class="language-js">o.m();</code></pre>
+    <p>O, si <codeinline>m()</codeinline> espera dos argumentos, podrías invocarla así:</p>
+    <pre>
+    <code class="language-js">o.m(x, y);</code></pre>
+    <p>El código de este ejemplo es una expresión de invocación: incluye una expresión de función <codeinline>o.m</codeinline> y dos expresiones de argumento, <codeinline>x</codeinline> e <codeinline>y</codeinline>. La expresión de función es en sí misma una expresión de acceso a propiedades, lo que significa que la función se invoca como un método y no como una función normal.</p>
+    <p>Los argumentos y el valor de retorno de una invocación de método se tratan exactamente igual que en el caso de una invocación de función normal. Sin embargo, las invocaciones a métodos difieren de las invocaciones a funciones en un aspecto importante: el contexto de invocación. Las expresiones de acceso a propiedades constan de dos partes: un objeto (en este caso <codeinline>o</codeinline>) y un nombre de propiedad (<codeinline>m</codeinline>). En una expresión de invocación de método como ésta, el objeto <codeinline>o</codeinline> se convierte en el contexto de invocación, y el cuerpo de la función puede referirse a ese objeto utilizando la palabra clave <codeinline>this</codeinline>. He aquí un ejemplo concreto:</p>
+    <pre>
+    <code class="language-js">let calculator = &lbrace; // Un objeto literal
+      operand1: 1,
+      operand2: 1,
+      add() &lbrace; // Estamos usando la sintaxis abreviada de métodos para esta función.
+        // Notese el uso de la palabra clave this para referirse al objeto contenedor.
+        this.result = this.operand1 + this.operand2;
+      }
+    };
+    calculator.add(); // Una invocación al método para calcular 1+1.
+    calculator.result // => 2</code></pre>
+    <p>La mayoría de las invocaciones de métodos utilizan la notación de punto para el acceso a propiedades, pero las expresiones de acceso a propiedades que utilizan corchetes también provocan la invocación de métodos. Por ejemplo, las siguientes son invocaciones de métodos:</p>
+    <pre>
+    <code class="language-js">o["m"](x,y); // Otra forma de escribir a m[o](x,y).
+    a[0](z)      // Tambien una invocación a un método (suponiendo que a[0] es una función).</code></pre>
+    <p>Las invocaciones de métodos también pueden implicar expresiones de acceso a propiedades más complejas:</p>
+    <pre>
+    <code class="language-js">customer.surname.toUpperCase(); // Invoca el método en customer.surname
+    f().m(); // Invoca el método m() en el retorno de f().</code></pre>
+    <p>Los métodos y la palabra clave <codeinline>this</codeinline> son fundamentales en el paradigma de la programación orientada a objetos. A cualquier función que se utilice como método se le pasa un argumento implícito: el objeto a través del cual se invoca. Típicamente, un método realiza algún tipo de operación sobre ese objeto, y la sintaxis de invocación de método es una forma elegante de expresar el hecho de que una función está operando sobre un objeto. Compare las dos líneas siguientes:</p>
+    <pre>
+    <code class="language-js">rect.setSize(width, height);
+    setRectSize(rect, width, height);</code></pre>
+    <p>Las hipotéticas funciones invocadas en estas dos líneas de código pueden realizar exactamente la misma operación sobre el (hipotético) objeto <codeinline>rect</codeinline>, pero la sintaxis método-invocación de la primera línea indica más claramente la idea de que es el objeto <codeinline>rect</codeinline> el foco principal de la operación.</p>
+    <article>
+      <p class="title-article">Encadenamiento de métodos</p>
+      <p>Cuando los métodos devuelven objetos, puede utilizar el valor de retorno de una invocación de método como parte de una invocación posterior. Esto da como resultado una serie (o "cadena") de invocaciones a métodos como una única expresión. Cuando se trabaja con operaciones asíncronas basadas en promesas (véase el <a href="capitulo-13">Capítulo 13</a>), por ejemplo, es habitual escribir código estructurado de este modo:</p>
+    <pre>
+    <code class="language-js">// Corre tres operaciones asíncronas. Maneja errores.
+    doStepOne().then(doStepTwo).then(doStepThree).catch(handleErrors);</code></pre>
+      <p>Cuando escriba un método que no tenga un valor de retorno propio, considere la posibilidad de que el método devuelva <codeinline>this</codeinline>. Si hace esto de forma consistente en toda su API, habilitará un estilo de programación conocido como <em>encadenamiento de métodos</em><sup>1</sup> en el que un objeto puede nombrarse una vez y luego pueden invocarse múltiples métodos sobre él:</p>
+    <pre>
+    <code class="language-js">new Square().x(100).y(100).size(50).outline("red").fill("blue").draw();</code></pre>
+    </article>
+    <p>Tenga en cuenta que <codeinline>this</codeinline> se trata de una palabra clave, no de un nombre de variable o propiedad. La sintaxis de JavaScript no permite asignarle un valor <codeinline>this</codeinline>.</p>
+    <p>La palabra clave <codeinline>this</codeinline> no tiene el mismo ámbito que las variables y, excepto en el caso de las funciones flecha, las funciones anidadas no heredan el valor <codeinline>this</codeinline> de la función que las contiene. Si una función anidada es invocada como un método, su valor <codeinline>this</codeinline> es el objeto sobre el que fue invocada. Si una función anidada (que no es una función de flecha) se invoca como una función, su valor <codeinline>this</codeinline> será el objeto global (modo no estricto) o <codeinline>undefined</codeinline> (modo estricto). Es un error común asumir que una función anidada definida dentro de un método e invocada como función puede utilizar <codeinline>this</codeinline> para obtener el contexto de invocación del método. El siguiente código demuestra el problema:</p>
+    <pre>
+    <code class="language-js">let o = &lbrace;            // Un objeto o.
+      m: function() &lbrace;    // El método m del objeto.
+        let self = this; // Guarda el valor "this" en una variable.
+        this === o       // => true: "this" es un objeto o.
+        f();             // Ahora llama a la función auxiliar f().
+
+        function f() &lbrace;   // Una función anidada f
+          this === o     // => false: "this" es global o undefined
+          self === o     // => true: self es el valor "this" exterior.
+        }
+      }
+    };
+    o.m();               // Invoca el método m en el objeto o.</code></pre>
+    <p>Dentro de la función anidada <codeinline>f()</codeinline>, la palabra clave <codeinline>this</codeinline> no es igual al objeto <codeinline>o</codeinline>. Esto es ampliamente considerado como un fallo en el lenguaje JavaScript, y es importante ser consciente de ello. El código anterior muestra una solución común. Dentro del método <codeinline>m</codeinline>, asignamos el valor <codeinline>this</codeinline> a una variable <codeinline>self</codeinline>, y dentro de la función anidada <codeinline>f</codeinline>, podemos usar <codeinline>self</codeinline> en lugar de <codeinline>this</codeinline> para referirnos al objeto contenedor.</p>
+    <p>En ES6 y posteriores, otra solución a este problema es convertir la función anidada <codeinline>f</codeinline> en una función de flecha, que heredará correctamente este valor:</p>
+    <pre>
+    <code class="language-js">const f = () => &lbrace;
+      this === o // true, ya que las funciones flechas heredan this.
+    };</code></pre>
+    <p>Las funciones definidas como expresiones en lugar de sentencias no son hoisted, por lo que para que este código funcione, la definición de función para <codeinline>f</codeinline> tendrá que ser movida dentro del método <codeinline>m</codeinline> para que aparezca antes de ser invocado.</p>
+    <p>Otra solución consiste en invocar el método <codeinline>bind()</codeinline> de la función anidada para definir una nueva función que se invoque implícitamente sobre un objeto especificado:</p>
+    <pre>
+    <code class="language-js">const f = (function() &lbrace;
+      this === o // true, ya que vinculamos esta función a la externa this.
+    }).bind(this);</code></pre>
+    <p>Hablaremos más sobre <codeinline>bind()</codeinline> en <a href="capitulo-8#7-5">§8.7.5</a>.</p>
+  </section>
 </Layoutjavascript>
