@@ -229,4 +229,242 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     }).bind(this);</code></pre>
     <p>Hablaremos más sobre <codeinline>bind()</codeinline> en <a href="capitulo-8#7-5">§8.7.5</a>.</p>
   </section>
+  <section id="2-3" class="py-4 xs:py-5 sm:py-6">
+    <h2>8.2.3 Invocación de constructores</h2>
+    <p>Si una invocación a una función o método va precedida de la palabra clave <codeinline>new</codeinline>, se trata de una invocación a un constructor. (Las invocaciones a constructores se introdujeron en <a href="capitulo-4#6">§4.6</a> y <a href="capitulo-6#2-2">§6.2.2</a>, y los constructores se tratarán con más detalle en el <a href="capitulo-9">Capítulo 9</a>.) Las invocaciones a constructores difieren de las invocaciones a funciones y métodos en su manejo de argumentos, contexto de invocación y valor de retorno.</p>
+    <p>Si una invocación a un constructor incluye una lista de argumentos entre paréntesis, esas expresiones de argumentos son evaluadas y pasadas a la función de la misma forma que lo serían para las invocaciones a funciones y métodos. No es una práctica común, pero puede omitir un par de paréntesis vacíos en una invocación a un constructor. Las dos líneas siguientes, por ejemplo, son equivalentes:</p>
+    <pre>
+    <code class="language-js">o = new Object();
+    o = new Object;</code></pre>
+    <p>Una invocación a un constructor crea un nuevo objeto vacío que hereda del objeto especificado por la propiedad <codeinline>prototype</codeinline> del constructor. Las funciones constructoras están pensadas para inicializar objetos, y este objeto recién creado se utiliza como contexto de invocación, por lo que la función constructora puede referirse a él con la palabra clave <codeinline>this</codeinline>. Tenga en cuenta que el nuevo objeto se utiliza como contexto de invocación incluso si la invocación del constructor parece una invocación a un método. Es decir, en la expresión <codeinline>new o.m()</codeinline>, o no se utiliza como contexto de invocación.</p>
+    <p>Las funciones constructoras no suelen utilizar la palabra clave <codeinline>return</codeinline>. Normalmente inician el nuevo objeto y luego retornan implícitamente cuando llegan al final de su cuerpo. En este caso, el nuevo objeto es el valor de la expresión de invocación del constructor. Sin embargo, si un constructor utiliza explícitamente la sentencia <codeinline>return</codeinline> para devolver un objeto, entonces ese objeto se convierte en el valor de la expresión de invocación. Si el constructor utiliza <codeinline>return</codeinline> sin ningún valor, o si devuelve un valor primitivo, ese valor de retorno se ignora y el nuevo objeto se utiliza como valor de la invocación.</p>
+  </section>
+  <section id="2-4">
+    <h2>8.2.4 Invocación indirecta</h2>
+    <p>Las funciones JavaScript son objetos y, como todos los objetos JavaScript, tienen métodos. Dos de estos métodos, <codeinline>call()</codeinline> y <codeinline>apply()</codeinline>, invocan a la función indirectamente. Ambos métodos permiten especificar explícitamente el valor <codeinline>this</codeinline> para la invocación, lo que significa que se puede invocar cualquier función como método de cualquier objeto, aunque no sea realmente un método de ese objeto. Ambos métodos también permiten especificar los argumentos de la invocación. El método <codeinline>call()</codeinline> utiliza su propia lista de argumentos como argumentos de la función, y el método <codeinline>apply()</codeinline> espera que se utilice una matriz de valores como argumentos. Los métodos <codeinline>call()</codeinline> y <codeinline>apply()</codeinline> se describen en detalle en <a href="capitulo-8#7-4">§8.7.4</a>.</p>
+  </section>
+  <section id="2-5" class="py-4 xs:py-5 sm:py-6">
+    <h2>8.2.5 Invocación implícita de funciones</h2>
+    <p>Hay varias características del lenguaje JavaScript que no parecen invocaciones de funciones pero que hacen que se invoquen funciones. Tenga mucho cuidado al escribir funciones que puedan ser invocadas implícitamente, ya que los errores, efectos secundarios y problemas de rendimiento en estas funciones son más difíciles de diagnosticar y solucionar que en las funciones normales por la sencilla razón de que puede que no sea obvio a partir de una simple inspección de su código cuándo están siendo invocadas.</p>
+    <p>Las características del lenguaje que pueden causar la invocación implícita de funciones incluyen:</p>
+    <ul>
+      <li class="font-normal">Si un objeto tiene definidos getters o setters, entonces la consulta o el establecimiento del valor de sus propiedades puede invocar esos métodos. Para más información, véase <a href="capitulo-6#10-6">§6.10.6</a>.</li>
+      <li class="font-normal">Cuando un objeto se utiliza en un contexto de cadena (como cuando se concatena con una cadena), se llama a su método <codeinline>toString()</codeinline>. Del mismo modo, cuando un objeto se utiliza en un contexto numérico, se invoca a su método <codeinline>valueOf()</codeinline>. Para más detalles, véase <a href="capitulo-3#3-9">§3.9.3</a>.</li>
+      <li class="font-normal">Cuando se realiza un bucle sobre los elementos de un objeto iterable, se producen una serie de llamadas a métodos. El <a href="capitulo-12">Capítulo 12</a> explica cómo funcionan los iteradores a nivel de llamada a funciones y demuestra cómo escribir estos métodos para que puedas definir tus propios tipos de iterables.</li>
+      <li class="font-normal">Un literal de plantilla etiquetado es una invocación a una función disfrazada. <a href="capitulo-14#5">§14.5</a> muestra cómo escribir funciones que pueden usarse junto con cadenas de literales de plantilla.</li>
+      <li class="font-normal">Los objetos proxy (descritos en <a href="capitulo-14#7">§14.7</a>) tienen su comportamiento completamente controlado por funciones. Casi cualquier operación sobre uno de estos objetos hará que se invoque una función.</li>
+    </ul>
+  </section >
+  <section id="3">
+    <h2>8.3 Argumentos y parámetros de las funciones</h2>
+    <p>Las definiciones de funciones de JavaScript no especifican un tipo esperado para los parámetros de la función, y las invocaciones de funciones no realizan ninguna comprobación de tipo en los valores de los argumentos que se pasan. De hecho, las invocaciones de funciones JavaScript ni siquiera comprueban el número de argumentos que se pasan. Las subsecciones siguientes describen lo que ocurre cuando se invoca una función con menos argumentos que los parámetros declarados o con más argumentos que los parámetros declarados. También demuestran cómo puede comprobar explícitamente el tipo de argumentos de la función si necesita asegurarse de que una función no se invoca con argumentos inadecuados.</p>
+  </section>
+  <section id="3-1" class="py-4 xs:py-5 sm:py-6">
+    <h2>8.3.1 Parámetros opcionales y valores por defecto</h2>
+    <p>Cuando se invoca una función con menos argumentos que parámetros declarados, los parámetros adicionales se fijan a su valor por defecto, que normalmente es <codeinline>undefined</codeinline>. A menudo resulta útil escribir funciones de modo que algunos argumentos sean opcionales. A continuación se ofrece un ejemplo:</p>
+    <pre>
+    <code class="language-js">// Añade los nombres de las enumaerable propiedades de un objeto o de
+    // un array, y retorna a. Si se omite, crea y devuelve un nuevo array.
+    function getPropertyNames(o, a) &lbrace;
+      if (a === undefined) a = []; // Si es undefined, usa un nuevo array
+      for(let property in o) a.push(property);
+      return a;
+    }
+
+    // getPropertyNames() puede ser invocada con una o dos argumentos:
+    let o = &lbrace;x: 1}, p = &lbrace;y: 2, z: 3}; // Dos objetos para testear
+    let a = getPropertyNames(o); // a == ["x"]; Obteniendo las propiedades de o en un nuevo array
+    getPropertyNames(p, a); // a == ["x","y","z"]; agrega las propiedades de p</code></pre>
+    <p>En lugar de utilizar una sentencia <codeinline>if</codeinline> en la primera línea de esta función, puede utilizar el operador <codeinline>||</codeinline>. de esta forma idiomática:</p>
+    <pre>
+    <code class="language-js">a = a || [];</code></pre>
+    <p>Recuerde de <a href="capatulo-4#10-2">§4.10.2</a> que el operador <codeinline>||</codeinline> devuelve su primer argumento si es verdadero y, en caso contrario, devuelve su segundo argumento. En este caso, si se pasa cualquier objeto como segundo argumento, la función utilizará ese objeto. Pero si el segundo argumento (o se pasa <codeinline>null</codeinline> u otro valor falso), se utilizará en su lugar una matriz vacía recién creada.</p>
+    <p>Tenga en cuenta que cuando diseñe funciones con argumentos opcionales, debe asegurarse de poner los opcionales al final de la lista de argumentos para que puedan ser omitidos. El programador que llame a tu función no puede omitir el primer argumento y pasar el segundo: tendría que pasar explícitamente <codeinline>undefined</codeinline> como primer argumento.</p>
+    <p>En ES6 y posteriores, puede definir un valor predeterminado para cada uno de los parámetros de la función directamente en la lista de parámetros de la función. Sólo tiene que seguir el nombre del parámetro con un signo igual y el valor por defecto a utilizar cuando no se proporciona ningún argumento para ese parámetro:</p>
+    <pre>
+    <code class="language-js">// Añade los nombres de las propiedades enumerables del objeto o al
+    // array a, y retorna a. Si a es omitido, crea y devuelve un nuevo array.
+    function getPropertyNames(o, a = []) &lbrace;
+      for(let property in o) a.push(property);
+      return a;
+    }</code></pre>
+    <p>Las expresiones de parámetros por defecto se evalúan cuando se llama a la función, no cuando se define, por lo que cada vez que se invoca a esta función <codeinline>getPropertyNames()</codeinline> con un argumento, se crea y se pasa una nueva matriz vacía.<sup>2</sup> Probablemente sea más fácil razonar sobre las funciones si los parámetros por defecto son constantes (o expresiones literales como <codeinline>[]</codeinline> y <codeinline>&lbrace;}</codeinline>). Pero esto no es necesario: puede utilizar variables, o invocaciones de funciones, por ejemplo, para calcular el valor por defecto de un parámetro. Un caso interesante es que, para funciones con múltiples parámetros, puede utilizar el valor de un parámetro anterior para definir el valor por defecto de los parámetros que le siguen:</p>
+    <pre>
+    <code class="language-js">// Esta funcion retorna un objeto que resenta las dimensiones de un rectangulo.
+    // Si solo se proporciona un ancho, hazlo el doble de alto que de ancho.
+    const rectangle = (width, height=width*2) => (&lbrace;width, height});
+    rectangle(1) // => &lbrace; width: 1, height: 2 }</code></pre>
+    <p>Este código demuestra que los parámetros por defecto funcionan con las funciones de flecha. Lo mismo ocurre con las funciones de método abreviado y todas las demás formas de definición de funciones.</p>
+  </section>
+  <section id="3-2">
+    <h2>8.3.2 Parámetros restantes y listas de argumentos de longitud variable</h2>
+    <p>Los parámetros por defecto nos permiten escribir funciones que pueden invocarse con menos argumentos que parámetros. Los <em>parámetros Rest</em> permiten el caso contrario: nos permiten escribir funciones que pueden invocarse con un número arbitrario de argumentos superior al de parámetros. He aquí un ejemplo de función que espera uno o más argumentos numéricos y devuelve el mayor de ellos:</p>
+    <pre>
+    <code class="language-js">function max(first=-Infinity, ...rest) &lbrace;
+      let maxValue = first; // Empieza asumuendo que el primer argumento es el mayor
+      // A continuación, realice un bucle con el resto de los argumentos, buscando los mas grandes.
+      for(let n of rest) &lbrace;
+        if (n > maxValue) &lbrace;
+          maxValue = n;
+        }
+      }
+      // Return the biggest
+      return maxValue;
+    }
+
+    max(1, 10, 100, 2, 3, 1000, 4, 5, 6) // => 1000</code></pre>
+    <p>Un parámetro restante va precedido de tres puntos y debe ser el último parámetro de una declaración de función. Cuando se invoca una función con un parámetro restante, los argumentos que se pasan se asignan primero a los parámetros no restantes y, a continuación, los argumentos restantes (es decir, el "resto" de los argumentos) se almacenan en una matriz que se convierte en el valor del parámetro restante. Este último punto es importante: dentro del cuerpo de una función, el valor de un parámetro rest siempre será una matriz. La matriz puede estar vacía, pero un parámetro rest nunca estará <codeinline>undefined</codeinline>. (De esto se deduce que nunca es útil -y no legal- definir un parámetro por defecto para un parámetro rest).</p>
+    <p>Las funciones como la del ejemplo anterior que pueden aceptar cualquier número de argumentos se denominan <em>funciones variádicas</em>, <em>funciones de aridad variable</em> o <em>funciones vararg</em>. En este libro se utiliza el término más coloquial, <em>varargs</em>, que data de los primeros días del lenguaje de programación C.</p>
+    <p>No confunda el operador <codeinline>...</codeinline> que define un parámetro de reposo en una definición de función con el operador de propagación <codeinline>...</codeinline>, descrito en <a href="#3-4">§8.3.4</a>, que puede utilizarse en invocaciones de funciones.</p>
+  </section>
+  <section id="3-3" class="py-4 xs:py-5 sm:py-6">
+    <h2>8.3.3 El objeto Arguments</h2>
+    <p>Los parámetros Rest se introdujeron en JavaScript en ES6. Antes de esa versión del lenguaje, las funciones varargs se escribían utilizando el objeto Arguments: dentro del cuerpo de cualquier función, el identificador <codeinline>arguments</codeinline> hace referencia al objeto Arguments para esa invocación. El objeto Arguments es un objeto tipo array (véase <a href="capitulo-7#9">§7.9</a>) que permite recuperar los valores de los argumentos pasados a la función por número, en lugar de por nombre. Aquí está la función <codeinline>max()</codeinline> de antes, reescrita para utilizar el objeto Arguments en lugar de un parámetro rest:</p>
+    <pre>
+    <code class="language-js">function max(x) &lbrace;
+      let maxValue = -Infinity;
+      // Recorre los argumentos, buscando y recuperando el mayor.
+      for(let i = 0; i &lt; arguments.length; i++) &lbrace;
+        if (arguments[i] > maxValue) maxValue = arguments[i];
+      }
+      // Devuelve el mayor
+      return maxValue;
+    }
+
+    max(1, 10, 100, 2, 3, 1000, 4, 5, 6) // => 1000</code></pre>
+    <p>El objeto Arguments se remonta a los primeros días de JavaScript y conlleva un extraño bagaje histórico que lo hace ineficiente y difícil de optimizar, especialmente fuera del modo estricto. Es posible que aún encuentres código que utilice el objeto Arguments, pero deberías evitar utilizarlo en cualquier código nuevo que escribas. Al refactorizar código antiguo, si encuentra una función que utiliza <codeinline>arguments</codeinline>, a menudo puede sustituirla por un parámetro de reposo <codeinline>...args</codeinline>. Parte del desafortunado legado del objeto Arguments es que, en modo estricto, <codeinline>arguments</codeinline> se trata como una palabra reservada, y no puedes declarar un parámetro de función o una variable local con ese nombre.</p>
+  </section>
+  <section id="3-4">
+    <h2>8.3.4 El operador Spread para llamadas a funciones</h2>
+    <p>El operador de distribución <codeinline>...</codeinline> se utiliza para descomprimir, o "distribuir", los elementos de una matriz (o cualquier otro objeto iterable, como las cadenas) en un contexto en el que se esperan valores individuales. En <a href="capitulo-7#1-2">§7.1.2</a> hemos visto cómo se utiliza el operador de distribución con los literales de matrices. El operador puede utilizarse, del mismo modo, en invocaciones a funciones:</p>
+    <pre>
+    <code class="language-js">let numbers = [5, 2, 10, -1, 9, 100, 1];
+    Math.min(...numbers) // => -1</code></pre>
+    <p>Tenga en cuenta que <codeinline>...</codeinline> no es un operador verdadero en el sentido de que no puede evaluarse para producir un valor. Se trata de una sintaxis especial de JavaScript que puede utilizarse en literales de matrices e invocaciones de funciones.</p>
+    <p>Cuando utilizamos la misma sintaxis <codeinline>...</codeinline> en una definición de función en lugar de una invocación de función, tiene el efecto contrario al operador spread. Como vimos en <a href="#3-2">§8.3.2</a>, el uso de <codeinline>...</codeinline> en una definición de función reúne varios argumentos de función en una matriz. Los parámetros Rest y el operador spread son a menudo útiles juntos, como en la siguiente función, que toma un argumento de función y devuelve una versión instrumentada de la función para su comprobación:</p>
+    <pre>
+    <code class="language-js">// Esta función toma una función y devuelve una versión envuelta
+    function timed(f) &lbrace;
+      return function(...args) &lbrace; // Recoge los argumentos en un array de parametros restantes
+        console.log(`Introducción función $&lbrace;f.name}`);
+        let startTime = Date.now();
+        try &lbrace;
+          // Pasar todos nuestros argumentos a la función envuelta
+          return f(...args); // Vuelve a distribuir los argumentos
+        }
+        finally &lbrace;
+          // Antes de devolver el valor, imprime el tiempo de ejecución
+          console.log(`Exiting $&lbrace;f.name} after $&lbrace;Date.now()-startTime}ms`);
+        }
+      };
+    }
+
+    // Calcula la suma de los números entre 1 y n por fuerza bruta
+    function benchmark(n) &lbrace;
+    let sum = 0;
+    for(let i = 1; i &lt;= n; i++) sum += i;
+    return sum;
+    }
+
+    // Ahora invoca la version temporizada de esa funcion de prueba
+    timed(benchmark)(1000000) // => 500000500000; esta es la suma de los números.</code></pre>
+  </section>
+  <section id="3-5" class="py-4 xs:py-5 sm:py-6">
+    <h2>8.3.5 Desestructuración de argumentos de función en parámetros</h2>
+    <p>Cuando se invoca una función con una lista de valores de argumentos, esos valores acaban asignándose a los parámetros declarados en la definición de la función. Esta fase inicial de la invocación de funciones se parece mucho a la asignación de variables. Por tanto, no debe sorprendernos que podamos utilizar las técnicas de asignación desestructurante (véase <a href="capitulo-3#3-10">§3.10.3</a>) con las funciones.</p>
+    <p>Si defines una función que tiene nombres de parámetros entre corchetes, le estás diciendo a la función que espere que se pase un valor de matriz por cada par de corchetes. Como parte del proceso de invocación, los argumentos de la matriz se descompondrán en los parámetros nombrados individualmente. Como ejemplo, supongamos que estamos representando vectores 2D como matrices de dos números, donde el primer elemento es la coordenada X y el segundo elemento es la coordenada Y. Con esta simple estructura de datos, podríamos decir a la función que espere un valor de matriz para cada par de corchetes. Con esta simple estructura de datos, podríamos escribir la siguiente función para sumar dos vectores:</p>
+    <pre>
+    <code class="language-js">function vectorAdd(v1, v2) &lbrace;
+    return [v1[0] + v2[0], v1[1] + v2[1]];
+    }
+    vectorAdd([1,2], [3,4]) // => [4,6]</code></pre>
+    <p>El código sería más fácil de entender si desestructuráramos los dos argumentos vectoriales en parámetros con nombres más claros:</p>
+    <pre>
+    <code class="language-js">function vectorAdd([x1,y1], [x2,y2]) &lbrace; // Descomprimir 2 argumentos en 4 parametros.
+      return [x1 + x2, y1 + y2];
+    }
+    vectorAdd([1,2], [3,4]) // => [4,6]</code></pre>
+    <p>Del mismo modo, si está definiendo una función que espera un argumento objeto, puede desestructurar los parámetros de ese objeto. Volvamos a utilizar un ejemplo vectorial, sólo que esta vez supongamos que representamos los vectores como objetos con parámetros <codeinline>x</codeinline> e <codeinline>y</codeinline>:</p>
+    <pre>
+    <code class="language-js">// Multiplica el vector &lbrace;x,y} por el valor scalar
+    function vectorMultiply(&lbrace;x, y}, scalar) &lbrace;
+      return &lbrace; x: x*scalar, y: y*scalar };
+    }
+    vectorMultiply(&lbrace;x: 1, y: 2}, 2) // => &lbrace;x: 2, y: 4 }</code></pre>
+    <p>Este ejemplo de desestructuración de un único argumento de objeto en dos parámetros es bastante claro porque los nombres de los parámetros que utilizamos coinciden con los nombres de las propiedades del objeto entrante. La sintaxis es más verbosa y confusa cuando se necesita desestructurar propiedades con un nombre en parámetros con nombres diferentes. Aquí está el ejemplo de suma de vectores, implementado para vectores basados en objetos:</p>
+    <pre>
+    <code class="language-js">function vectorAdd(
+      &lbrace;x: x1, y: y1}, // Desempaqueta el primer objeto en los parametros x1 y y1
+      &lbrace;x: x2, y: y2} // Desempaqueta el segundo objeto en los parametros x2 y y2
+    )
+    &lbrace;
+    return &lbrace; x: x1 + x2, y: y1 + y2 };
+    }
+    vectorAdd(&lbrace;x: 1, y: 2}, &lbrace;x: 3, y: 4}) // => &lbrace;x: 4, y: 6}</code></pre>
+    <p>Lo complicado de la sintaxis de desestructuración como <codeinline>&lbrace;x:x1, y:y1}</codeinline> es recordar cuáles son los nombres de las propiedades y cuáles los de los parámetros. La regla a tener en cuenta para desestructurar asignaciones y desestructurar llamadas a funciones es que las variables o parámetros que se declaran van en los lugares donde se esperaría que fueran los valores en un literal de objeto. Así que los nombres de las propiedades siempre van a la izquierda de los dos puntos, y los nombres de los parámetros (o variables) a la derecha.</p>
+    <p>Puede definir parámetros por defecto con parámetros desestructurados. He aquí una multiplicación vectorial que funciona con vectores 2D o 3D:</p>
+    <pre>
+    <code class="language-js">// Multiplica el vector &lbrace;x,y} o &lbrace;x,y,z} por el valor scalar
+    function vectorMultiply(&lbrace;x, y, z=0}, scalar) &lbrace;
+      return &lbrace; x: x*scalar, y: y*scalar, z: z*scalar };
+    }
+    vectorMultiply(&lbrace;x: 1, y: 2}, 2) // => &lbrace;x: 2, y: 4, z: 0}</code></pre>
+    <p>Algunos lenguajes (como Python) permiten a quien llama a una función invocarla con argumentos especificados en forma <codeinline>name=value</codeinline>, lo que resulta conveniente cuando hay muchos argumentos opcionales o cuando la lista de parámetros es lo suficientemente larga como para que resulte difícil recordar el orden correcto. JavaScript no permite esto directamente, pero se puede aproximar desestructurando un argumento objeto en los parámetros de la función. Consideremos una función que copia un número especificado de elementos de una matriz en otra matriz con desplazamientos iniciales especificados opcionalmente para cada matriz. Puesto que hay cinco parámetros posibles, algunos de los cuales tienen valores por defecto, y sería difícil para un llamador recordar en qué orden pasar los argumentos, podemos definir e invocar la función <codeinline>arraycopy()</codeinline> así:</p>
+    <pre>
+    <code class="language-js">function arraycopy(&lbrace;from, to=from, n=from.length, fromIndex=0, toIndex=0}) &lbrace;
+      let valuesToCopy = from.slice(fromIndex, fromIndex + n);
+      to.splice(toIndex, 0, ...valuesToCopy);
+      return to;
+    }
+    let a = [1,2,3,4,5], b = [9,8,7,6,5];
+    arraycopy(&lbrace;from: a, n: 3, to: b, toIndex: 4}) // => [9,8,7,6,1,2,3,5]</code></pre>
+    <p>Al desestructurar una matriz, puede definir un parámetro de reposo para los valores adicionales dentro de la matriz que se está descomprimiendo. Ese parámetro restante entre corchetes es completamente diferente del verdadero parámetro restante de la función:</p>
+    <pre>
+    <code class="language-js">// Esta función espera un argumento de array. Los dos primeros elementos
+    // de ese array se descomprimen en los parámetros x e y. Los elementos
+    // restantes se almacenan en el array de coordenadas. Y los argumentos
+    // posteriores al primer array se empaquetan en el array restante.
+    function f([x, y, ...coords], ...rest) &lbrace;
+    return [x+y, ...rest, ...coords]; // Note: operador de propagación aqui
+    }
+    f([1, 2, 3, 4], 5, 6) // => [3, 5, 6, 3, 4]</code></pre>
+    <p>En ES2018, también se puede utilizar un parámetro rest cuando se desestructura un objeto. El valor de ese parámetro rest será un objeto que tenga las propiedades que no se hayan desestructurado. Los parámetros de reposo de objetos suelen ser útiles con el operador de dispersión de objetos, que también es una nueva función de ES2018:</p>
+    <pre>
+    <code class="language-js">// Multiplica el vector &lbrace;x,y} o &lbrace;x,y,z} por un valor scalar, conserva otras props
+    function vectorMultiply(&lbrace;x, y, z=0, ...props}, scalar) &lbrace;
+    return &lbrace; x: x*scalar, y: y*scalar, z: z*scalar, ...props };
+    }
+    vectorMultiply(&lbrace;x: 1, y: 2, w: -1}, 2) // => &lbrace;x: 2, y: 4, z: 0, w: -1}</code></pre>
+    <p>Por último, tenga en cuenta que, además de desestructurar objetos argumento y matrices, también puede desestructurar matrices de objetos, objetos que tienen propiedades de matriz y objetos que tienen propiedades de objeto, básicamente a cualquier profundidad. Consideremos un código gráfico que representa círculos como objetos con propiedades <codeinline>x</codeinline>, <codeinline>y</codeinline>, <codeinline>radius</codeinline> y <codeinline>color</codeinline>, donde la propiedad <codeinline>color</codeinline> es una matriz de componentes de color rojo, verde y azul. Podría definir una función que espera que se le pase un único objeto círculo, pero que desestructura ese objeto círculo en seis parámetros separados:</p>
+    <pre>
+    <code class="language-js">function drawCircle(&lbrace;x, y, radius, color: [r, g, b]}) &lbrace;
+      // Aun no implementado
+    }</code></pre>
+    <p>Si la desestructuración de los argumentos de la función es más complicada que esto, encuentro que el código se vuelve más difícil de leer, en lugar de más simple. A veces, es más claro ser explícito sobre el acceso a las propiedades de los objetos y la indexación de los arrays.</p>
+  </section>
+  <section id="3-6">
+    <h2>8.3.6 Tipos de argumentos</h2>
+    <p>Los parámetros de los métodos JavaScript no tienen tipos declarados, y no se realiza ninguna comprobación de tipos en los valores que se pasan a una función. Puede ayudar a que su código sea autodocumentado eligiendo nombres descriptivos para los argumentos de las funciones y documentándolos cuidadosamente en los comentarios de cada función. (Como alternativa, consulte <a href="capitulo-17#8">§17.8</a> para una extensión del lenguaje que permite superponer la comprobación de tipos al JavaScript normal).</p>
+    <p>Como se describe en <a href="capitulo-3#9">§3.9</a>, JavaScript realiza conversiones de tipo liberales según sea necesario. Por lo tanto, si escribes una función que espera un argumento de cadena y luego llamas a esa función con un valor de otro tipo, el valor que pasaste simplemente se convertirá en una cadena cuando la función intente usarlo como una cadena. Todos los tipos primitivos pueden convertirse en cadenas, y todos los objetos tienen métodos <codeinline>toString()</codeinline> (aunque no necesariamente útiles), por lo que nunca se produce un error en este caso.</p>
+    <p>Sin embargo, esto no siempre es cierto. Consideremos de nuevo el método <codeinline>arraycopy()</codeinline> mostrado anteriormente. Espera uno o dos argumentos de array y fallará si estos argumentos son del tipo incorrecto. A menos que esté escribiendo una función privada que sólo será llamada desde partes cercanas de su código, puede valer la pena añadir código para comprobar los tipos de argumentos como éste. Es mejor que una función falle inmediatamente y de forma predecible cuando se le pasan valores erróneos que empezar a ejecutarse y fallar más tarde con un mensaje de error que probablemente no sea claro. He aquí una función de ejemplo que realiza la comprobación de tipos:</p>
+    <pre>
+    <code class="language-js">// Devuelve la suma de los elementos del objeto iterable a.
+    // El elemento de a deben ser todos números.
+    function sum(a) &lbrace;
+      let total = 0;
+      for(let element of a) &lbrace; // Lanza TypeError si no es iterable
+        if (typeof element !== "number") &lbrace;
+        throw new TypeError("sum(): los elementos deben ser números");
+        }
+        total += element;
+      }
+      return total;
+    }
+    sum([1,2,3]) // => 6
+    sum(1, 2, 3); // !TypeError: 1 no es iterable
+    sum([1,2,"3"]); // !TypeError: el elemento 2 no es un número</code></pre>
+  </section>
+  <section id="4" class="py-4 xs:py-5 sm:py-6">
+    <h2>8.4 Funciones como valores</h2>
+  </section>
 </Layoutjavascript>
