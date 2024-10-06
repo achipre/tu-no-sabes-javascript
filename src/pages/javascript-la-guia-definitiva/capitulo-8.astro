@@ -460,11 +460,314 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       }
       return total;
     }
-    sum([1,2,3]) // => 6
-    sum(1, 2, 3); // !TypeError: 1 no es iterable
+    sum([1,2,3])    // => 6
+    sum(1, 2, 3);   // !TypeError: 1 no es iterable
     sum([1,2,"3"]); // !TypeError: el elemento 2 no es un número</code></pre>
   </section>
   <section id="4" class="py-4 xs:py-5 sm:py-6">
     <h2>8.4 Funciones como valores</h2>
+    <p>Las características más importantes de las funciones son que pueden definirse e invocarse. La definición y la invocación de funciones son características sintácticas de JavaScript y de la mayoría de los demás lenguajes de programación. En JavaScript, sin embargo, las funciones no son sólo sintaxis, sino también valores, lo que significa que pueden asignarse a variables, almacenarse en los propios objetos o en los elementos de matrices, pasarse como argumentos a funciones, etc.<sup>3</sup></p>
+    <p>Para entender cómo las funciones pueden ser datos de JavaScript así como sintaxis de JavaScript, considere esta definición de función:</p>
+    <pre>
+    <code class="language-js">function square(x) &lbrace; return x*x; }</code></pre>
+    <p>Esta definición crea un nuevo objeto función y lo asigna a la variable <codeinline>square</codeinline>. El nombre de una función es realmente irrelevante; es simplemente el nombre de una variable que hace referencia al objeto función. La función puede asignarse a otra variable y seguir funcionando de la misma manera:</p>
+    <pre>
+    <code class="language-js">let s = square; // Ahora s se refiere a la misma función que el cuadrado.
+    square(4)       // => 16
+    s(4)            // => 16</code></pre>
+    <p>Las funciones también pueden asignarse a propiedades del objeto en lugar de a variables. Como ya hemos comentado, llamamos a las funciones "métodos" cuando hacemos esto:</p>
+    <pre>
+    <code class="language-js">let o = &lbrace;square: function(x) &lbrace; return x*x; }}; // Un objeto literal
+    let y = o.square(16); // y == 256</code></pre>
+    <p>Las funciones ni siquiera requieren nombres, como cuando se asignan a elementos de un array:</p>
+    <pre>
+    <code class="language-js">let a = [x => x*x, 20]; // Un array literal
+    a[0](a[1])              // => 400</code></pre>
+    <p>La sintaxis de este último ejemplo parece extraña, pero sigue siendo una expresión de invocación de función legal.</p>
+    <p>Como ejemplo de lo útil que es tratar las funciones como valores, considere el método <codeinline>Array.sort()</codeinline>. Este método ordena los elementos de un array. Debido a que hay muchos posibles órdenes para ordenar (orden numérico, orden alfabético, orden de fecha, ascendente, descendente, etc.), el método <codeinline>sort()</codeinline> opcionalmente toma una función como argumento para decirle cómo realizar la ordenación. Esta función tiene una tarea sencilla: para dos valores cualesquiera que se le pasen, devuelve un valor que especifica qué elemento iría primero en una matriz ordenada. Este argumento de función hace que <codeinline>Array.sort()</codeinline> sea perfectamente general e infinitamente flexible; puede ordenar cualquier tipo de datos en cualquier orden concebible. En <a href="capitulo-7#8-6">§7.8.6</a> se muestran ejemplos.</p>
+    <p>El <a href="#ejemplo-8-1">Ejemplo 8-1</a> demuestra el tipo de cosas que se pueden hacer cuando se utilizan funciones como valores. Este ejemplo puede ser un poco complicado, pero los comentarios explican lo que está pasando.</p>
+    <p id="ejemplo-8-1"><em>Ejemplo 8-1. Uso de funciones como datos</em></p>
+    <pre>
+    <code class="language-js">// Definimos algunas funciones aqui
+    function add(x,y) &lbrace; return x + y; }
+    function subtract(x,y) &lbrace; return x - y; }
+    function multiply(x,y) &lbrace; return x * y; }
+    function divide(x,y) &lbrace; return x / y; }
+
+    // Aquí hay una función que toma una de las funciones anteriores 
+    // como argumento y la invoca en dos operandos.
+    function operate(operator, operand1, operand2) &lbrace;
+      return operator(operand1, operand2);
+    }
+
+    // Podríamos invocar esta función de la siguiente manera para calcular el valor (2+3) + (4*5):
+    let i = operate(add, operate(add, 2, 3), operate(multiply, 4, 5));
+    
+    // Para el bien del ejemplo, implementamos nuevamente las 
+    // funciones simples, esta vez dentro de un objeto literal;
+    const operators = &lbrace;
+      add: (x,y) => x+y,
+      subtract: (x,y) => x-y,
+      multiply: (x,y) => x*y,
+      divide: (x,y) => x/y,
+      pow: Math.pow // Esto tambien funciona para funciones predefinidas
+    };
+    
+    // Esta función toma el nombre de un operador, busca dicho operador 
+    // en el objeto y luego lo invoca en los operandos suministrados. 
+    // Observe la sintaxis utilizada para invocar la función del operador.
+    function operate2(operation, operand1, operand2) &lbrace;
+      if (typeof operators[operation] === "function") &lbrace;
+        return operators[operation](operand1, operand2);
+      }
+      else throw "unknown operator";
+    }
+
+    operate2("add", "hola", operate2("add", " ", "mundo")) // => "hola mundo"
+    operate2("pow", 10, 2) // => 100</code></pre>
+  </section>
+  <section id="4-1">
+    <h2>8.4.1 Definición de propiedades de función propias</h2>
+    <p>Las funciones no son valores primitivos en JavaScript, sino un tipo especializado de objeto, lo que significa que las funciones pueden tener propiedades. Cuando una función necesita una variable "estática" cuyo valor persiste a través de las invocaciones, a menudo es conveniente utilizar una propiedad de la propia función. Por ejemplo, suponga que desea escribir una función que devuelva un único número entero cada vez que se invoque. La función nunca debe devolver el mismo valor dos veces. Para conseguirlo, la función necesita llevar un registro de los valores que ya ha devuelto, y esta información debe persistir a través de las invocaciones de la función. Podrías almacenar esta información en una variable global, pero es innecesario, porque la información sólo es utilizada por la propia función. Es mejor almacenar la información en una propiedad del objeto Función. A continuación se muestra un ejemplo que devuelve un número entero único cada vez que se llama:</p>
+    <pre>
+    <code class="language-js">// Inicialice la propiedad del contador del objeto de función. 
+    // Las declaraciones de funciones se elevan, por lo que realmente 
+    // podemos realizar esta asignación antes de la declaración de la función.
+    uniqueInteger.counter = 0;
+
+    // Esta función devuelve un entero diferente cada vez que se la llama. 
+    // Utiliza una propiedad propia para recordar el siguiente valor que se devolverá.
+    function uniqueInteger() &lbrace;
+      return uniqueInteger.counter++; // Propiedad de contador de retorno e incremento
+    }
+    uniqueInteger()                   // => 0
+    uniqueInteger()                   // => 1</code></pre>  
+    <p>Como otro ejemplo, considere la siguiente función <codeinline>factorial()</codeinline> que utiliza los valores propios de sí misma (tratándose a sí misma como una matriz) para almacenar en caché los resultados calculados previamente:</p>
+    <pre>
+    <code class="language-js">// Calcular factoriales y almacenar en caché los resultados como propiedades de la función misma.
+    function factorial(n) &lbrace;
+      if (Number.isInteger(n) && n > 0) &lbrace;    // Sólo números enteros positivos
+        if (!(n in factorial)) &lbrace;             // Si no hay ningún resultado almacenado en caché
+          factorial[n] = n * factorial(n-1); // Calcularlo y almacenarlo en caché
+        }
+        return factorial[n]; // Devuelve el resultado almacenado en caché
+      } else &lbrace;
+        return NaN;          // Si la entrada fue incorrecta
+      }
+    }
+    factorial[1] = 1; // Inicialice la caché para almacenar este caso base.
+    factorial(6)      // => 720
+    factorial[5]      // => 120; La llamada anterior almacena en caché este valor</code></pre>
+  </section>
+  <section id="5" class="py-4 xs:py-5 sm:py-6">
+    <h2>8.5 Funciones como espacios de nombres</h2>
+    <p>Las variables declaradas dentro de una función no son visibles fuera de ella. Por esta razón, a veces es útil definir una función simplemente para que actúe como un espacio de nombres temporal en el que se pueden definir variables sin saturar el espacio de nombres global.</p>
+    <p>Supongamos, por ejemplo, que tiene un fragmento de código JavaScript que desea utilizar en varios programas JavaScript diferentes (o, en el caso de JavaScript del lado del cliente, en varias páginas web diferentes). Supongamos que este código, como la mayoría, define variables para almacenar los resultados intermedios de sus cálculos. El problema es que como este trozo de código se utilizará en muchos programas diferentes, no sabes si las variables que crea entrarán en conflicto con las variables creadas por los programas que lo utilizan. La solución es poner el trozo de código en una función y luego invocar la función. De esta forma, las variables que habrían sido globales pasan a ser locales a la función:</p>
+    <pre>
+    <code class="language-js">function chunkNamespace() &lbrace;
+      // El fragmento de código va aquí
+      // Todas las variables definidas en el fragmento son locales 
+      // para esta función en lugar de saturar.
+      // El espacio de nombres global.
+    }
+    chunkNamespace(); // ¡Pero no olvides invocar la función!</code></pre>
+    <p>Este código define una única variable global: el nombre de la función chunkNamespace. Si definir incluso una sola propiedad es demasiado, puedes definir e invocar una función anónima en una sola expresión:</p>
+    <pre>
+    <code class="language-js">(function() &lbrace; // chunkNamespace() función reescrita como una expresión sin nombre.
+      // Un fragmento de código va aquí
+    }()); // Finalice la función literal e invóquela ahora.</code></pre>
+    <p>Esta técnica de definir e invocar una función en una única expresión se utiliza con tanta frecuencia que se ha convertido en una expresión idiomática y se le ha dado el nombre de "expresión de función invocada inmediatamente". Observe el uso de paréntesis en el ejemplo de código anterior. El paréntesis abierto antes de la <codeinline>function</codeinline> es necesario porque, sin él, el intérprete de JavaScript intenta interpretar la palabra clave <codeinline>function</codeinline> como una declaración de función. Con el paréntesis, el intérprete reconoce correctamente que se trata de una expresión de definición de función. El paréntesis inicial también ayuda a los lectores humanos a reconocer cuándo se está definiendo una función para invocarla inmediatamente en lugar de definirla para su uso posterior.</p>
+    <p>Este uso de funciones como espacios de nombres se vuelve realmente útil cuando definimos una o más funciones dentro de la función del espacio de nombres usando variables dentro de ese espacio de nombres, pero luego las pasamos de vuelta como el valor de retorno de la función del espacio de nombres. Las funciones de este tipo se conocen como <em>closures</em>, y son el tema de la siguiente sección.</p>
+  </section>
+  <section id="6">
+    <h2>8.6 Closures</h2>
+    <p>Como la mayoría de los lenguajes de programación modernos, JavaScript utiliza el <em>ámbito léxico</em>. Esto significa que las funciones se ejecutan utilizando el ámbito de la variable que estaba en vigor cuando se definieron, no el ámbito de la variable que está en vigor cuando se invocan. Para implementar el ámbito léxico, el estado interno de un objeto de función JavaScript debe incluir no sólo el código de la función, sino también una referencia al ámbito en el que aparece la definición de la función. Esta combinación de un objeto de función y un ámbito (un conjunto de enlaces de variables) en el que se resuelven las variables de la función se denomina <em>closure</em> en la literatura informática.</p>
+    <p>Técnicamente, todas las funciones de JavaScript son cierres, pero como la mayoría de las funciones se invocan desde el mismo ámbito en el que se definieron, normalmente no importa que haya un cierre implicado. Los cierres se vuelven interesantes cuando son invocados desde un ámbito diferente al que fueron definidos. Esto sucede más comúnmente cuando un objeto de función anidada es devuelto desde la función dentro de la cual fue definido. Existen varias técnicas de programación potentes que implican este tipo de cierres de funciones anidadas, y su uso se ha vuelto relativamente común en la programación JavaScript. Los cierres pueden parecer confusos la primera vez que te topas con ellos, pero es importante que los entiendas lo suficientemente bien como para utilizarlos cómodamente.</p>
+    <p>El primer paso para entender los cierres es revisar las reglas de alcance léxico de las funciones nes- tadas. Consideremos el siguiente código:</p>
+    <pre>
+    <code class="language-js">let scope = "global scope";       // Una variable global
+    function checkscope() &lbrace;
+      let scope = "local scope";      // Una variable local
+      function f() &lbrace; return scope; }  // Retorna el valor in scope aquí
+      return f();
+    }
+    checkscope() // => "local scope"</code></pre>
+    <p>La función <codeinline>checkscope()</codeinline> declara una variable local y luego define e invoca una función que devuelve el valor de esa variable. Debería quedarte claro por qué la llamada a <codeinline>checkscope()</codeinline> devuelve "ámbito local". Ahora, cambiemos ligeramente el código. ¿Puedes decir qué devolverá este código?</p>
+    <pre>
+    <code class="language-js">let scope = "global scope";      // Una variable global
+    function checkscope() &lbrace;
+      let scope = "local scope";     // Una variable local
+      function f() &lbrace; return scope; } // Retorna el valor in scope aquí
+      return f;
+    }
+    let s = checkscope()(); // ¿Qué devuelve esto?</code></pre>
+    <p>En este código, un par de paréntesis se ha movido de dentro de <codeinline>checkscope()</codeinline> a fuera de él. En lugar de invocar la función anidada y devolver su resultado, <codeinline>checkscope()</codeinline> ahora sólo devuelve el propio objeto de la función anidada. ¿Qué sucede cuando invocamos esa función anidada (con el segundo par de paréntesis en la última línea de código) fuera d e la función en la que fue definida?</p>
+    <p>Recuerda la regla fundamental del ámbito léxico: Las funciones JavaScript se ejecutan utilizando el ámbito en el que fueron definidas. La función anidada <codeinline>f()</codeinline> se definió en un ámbito en el que la variable <codeinline>scope</codeinline> estaba vinculada al valor "ámbito local". Esa vinculación sigue vigente cuando se ejecuta <codeinline>f</codeinline>, independientemente del lugar desde el que se ejecute. Así que la última línea del ejemplo de código anterior devuelve "ámbito local", no "ámbito global". Esto, en pocas palabras, es la sorprendente y poderosa naturaleza de los cierres: capturan las variables locales (y parámetros) de la función externa dentro de la cual están definidos.</p>
+    <p>En <a href="#4-1">§8.4.1</a>, definimos una función <codeinline>uniqueInteger()</codeinline> que utilizaba una propiedad de la propia función para realizar un seguimiento del siguiente valor a devolver. Una desventaja de este enfoque es que un código malicioso podría reiniciar el contador o ponerlo en un valor que no sea entero, haciendo que la función <codeinline>uniqueInteger()</codeinline> viole la parte "unique" o "integer" de su contrato. Los cierres capturan las variables locales de una única invocación a una función y pueden utilizar esas variables como estado privado. He aquí cómo podríamos reescribir la función <codeinline>uniqueInteger()</codeinline> utilizando una expresión de función de invocación inmediata para definir un espacio de nombres y un cierre que utilice ese espacio de nombres para mantener su estado privado:</p>
+    <pre>
+    <code class="language-js">let uniqueInteger = (function() &lbrace; // Lo definimos y lo invocamos
+      let counter = 0;                // Estado privado de la función a continuación
+      return function() &lbrace; return counter++; };
+    }());
+    uniqueInteger()    // => 0
+    uniqueInteger()    // => 1</code></pre>
+    <p>Para entender este código, tienes que leerlo detenidamente. A primera vista, la primera línea de código parece que está asignando una función a la variable <codeinline>uniqueInteger</codeinline>. De hecho, el código está definiendo e invocando (como sugiere el paréntesis abierto en la primera línea) una función, por lo que es el valor de retorno de la función el que se asigna a <codeinline>uniqueInteger</codeinline>. Ahora, si estudiamos el cuerpo de la función, vemos que su valor de retorno es otra función. Es este objeto de función anidada el que se asigna a <codeinline>uniqueInteger</codeinline>. La función anidada tiene acceso a las variables de su ámbito y puede utilizar la variable <codeinline>counter</codeinline> definida en la función externa. Una vez que la función externa retorna, ningún otro código puede ver la variable <codeinline>counter</codeinline>: la función interna tiene acceso exclusivo a ella.</p>
+    <p>Las variables privadas como <codeinline>counter</codeinline> no tienen por qué ser exclusivas de un único cierre: es perfectamente posible que dos o más funciones anidadas se definan dentro de la misma función externa y compartan el mismo ámbito. Considere el siguiente código:</p>
+    <pre>
+    <code class="language-js">function counter() &lbrace;
+      let n = 0;
+      return &lbrace;
+        count: function() &lbrace; return n++; },
+        reset: function() &lbrace; n = 0; }
+      };
+    }
+
+    let c = counter(), d = counter(); // Crea dos contadores
+    c.count()            // => 0
+    d.count()            // => 0: cuentan independientemente
+    c.reset();           // los metodos reset() y count() comparten el estado.
+    c.count()            // => 0: porque reseteamos c
+    d.count()            // => 1: d no se ha reseteado</code></pre>
+    <p>La función <codeinline>counter()</codeinline> devuelve un objeto "counter". Este objeto tiene dos métodos: <codeinline>count()</codeinline> devuelve el siguiente entero, y <codeinline>reset()</codeinline> reinicia el estado interno. Lo primero que hay que entender es que los dos métodos comparten el acceso a la variable privada <codeinline>n</codeinline>. Lo segundo que hay que entender es que cada invocación de <codeinline>counter()</codeinline> crea un nuevo ámbito -independientemente de los ámbitos utilizados por las invocaciones anteriores- y una nueva variable privada dentro de ese ámbito. Así que si llamas a <codeinline>counter()</codeinline> dos veces, obtendrás dos objetos contador con diferentes variables privadas. Llamar a <codeinline>count()</codeinline> o <codeinline>reset()</codeinline> en un objeto contador no tiene efecto en el otro.</p>
+    <p>Vale la pena señalar aquí que se puede combinar esta técnica de cierre con getters y setters de propiedades. La siguiente versión de la función <codeinline>counter()</codeinline> es una variación del código que apareció en <a href="capitulo-6#10-6">§6.10.6</a>, pero utiliza cierres para el estado privado en lugar de confiar en una propiedad de objeto normal:</p>
+    <pre>
+    <code class="language-js">function counter(n) &lbrace; // El argumento de función n es la variable privada
+      return &lbrace;
+        // El método getter de propiedad retorna e incrementa la variable del contador privado.
+        get count() &lbrace; return n++; },
+        // El establecedor de propiedades no permite que el valor de n disminuya
+        set count(m) &lbrace;
+          if (m > n) n = m;
+          else throw Error("El recuento solo se puede establecer en un valor mayor");
+        }
+      };
+    }
+    let c = counter(1000);
+    c.count         // => 1000
+    c.count         // => 1001
+    c.count = 2000;
+    c.count         // => 2000
+    c.count = 2000; // !Error: el recuento solo se puede establecer en un valor mayor</code></pre>
+    <p>Observe que esta versión de la función <codeinlien>counter()</codeinlien> no declara una variable local, sino que sólo utiliza su parámetro n para mantener el estado privado compartido por los métodos de acceso a propiedades. Esto permite a quien llama a <codeinline>counter()</codeinline> especificar el valor inicial de la variable privada.</p>
+    <p>El <a href="ejemplo-8-2">Ejemplo 8-2</a> es una generalización del estado privado compartido a través de la técnica de cierres que hemos estado demostrando aquí. Este ejemplo define una función <codeinline>addPrivateProp()</codeinline> que define una variable privada y dos funciones anidadas para obtener y establecer el valor de esa variable. Añade estas funciones anidadas como métodos del objeto que especifiques.</p>
+    <p id="ejemplo-8-2"><em>Ejemplo 8-2. Métodos de acceso a propiedades privadas utilizando cierres</em></p>
+    <pre>
+    <code class="language-js">// Esta función agrega métodos de acceso a propiedades para una propiedad con
+    // el nombre especificado al objeto o. Los métodos se denominan get&lt;name>
+    // y set&lt;name>. Si se proporciona una función de predicado, el método de
+    // establecimiento la utiliza para probar la validez de su argumento antes de almacenarlo.
+    // Si el predicado devuelve falso, el método de establecimiento genera una excepción.
+
+    // Lo inusual de esta función es que el valor de la propiedad que se 
+    // manipula mediante los métodos getter y setter no se almacena en el 
+    // objeto o. En cambio, el valor se almacena solo en una variable local 
+    // en esta función. Los métodos getter y setter también se definen localmente 
+    // en esta función y, por lo tanto, tienen acceso a esta variable local.
+    // Esto significa que el valor es privado para los dos métodos de acceso y no 
+    // se puede establecer ni modificar excepto a través del método setter.
+
+    function addPrivateProperty(o, name, predicate) &lbrace;
+      let value; // Este es el valor de la propiedad
+      // El método getter simplemente devuelve el valor.
+      o[`get$&lbrace;name}`] = function() &lbrace; return value; };
+      // El método setter almacena el valor o lanza una excepción si el 
+      // predicado rechaza el valor.
+      o[`set$&lbrace;name}`] = function(v) &lbrace;
+        if (predicate && !predicate(v)) &lbrace;
+          throw new TypeError(`set$&lbrace;name}: invalid value $&lbrace;v}`);
+        } else &lbrace;
+          value = v;
+        }
+      };
+    }
+    // El siguiente código demuestra el método addPrivateProperty().
+    let o = &lbrace;}; // Aquí hay un objeto vacío.
+    // Agregar los métodos de acceso a propiedades getName y setName()
+    // Asegúrese de que solo se permitan valores de cadena
+    addPrivateProperty(o, "Name", x => typeof x === "string");
+    o.setName("Frank"); // Establecer el valor de la propiedad
+    o.getName()   // => "Frank"
+    o.setName(0); // !TypeError: Intente establecer un valor del tipo incorrecto</code></pre>
+    <p>Ya hemos visto varios ejemplos en los que dos cierres se definen en el mismo ámbito y comparten el acceso a la misma variable o variables privadas. Esta es una técnica importante, pero es igualmente importante reconocer cuando los cierres comparten inadvertidamente el acceso a una variable que no deberían compartir. Considere el siguiente código:</p>
+    <pre>
+    <code class="language-js">// Esta función devuelve una función que siempre devuelve v
+    function constfunc(v) &lbrace; return () => v; }
+
+    // Crea una matriz de funciones constantes:
+    let funcs = [];
+    for(var i = 0; i &lt; 10; i++) funcs[i] = constfunc(i);
+
+    // La función en el elemento 5 de la matriz devuelve el valor 5.
+    funcs[5]() // => 5</code></pre>
+    <p>Cuando se trabaja con código como éste que crea múltiples cierres utilizando un bucle, es un error común intentar mover el bucle dentro de la función que define los cierres. Piense en el siguiente código, por ejemplo:</p>
+    <pre>
+    <code class="language-js">// Devuelve un array de funciones que devuelven los valores 0-9
+    function constfuncs() &lbrace;
+      let funcs = [];
+      for(var i = 0; i &lt; 10; i++) &lbrace;
+        funcs[i] = () => i;
+      }
+      return funcs;
+    }
+    let funcs = constfuncs();
+    funcs[5]() // => 10; ¿Por qué esto no devuelve 5?</code></pre>
+    <p>Este código crea 10 cierres y los almacena en un array. Todos los cierres se definen dentro de la misma invocación de la función, por lo que comparten el acceso a la variable <codeinline>i</codeinline>. Cuando <codeinline>constfuncs()</codeinline> devuelve, el valor de la variable <codeinline>i</codeinline> es 10, y los 10 cierres comparten este valor. Por lo tanto, todas las funciones de la matriz de funciones devuelven el mismo valor, que no es lo que queríamos en absoluto. Es importante recordar que el ámbito asociado a un cierre es "vivo". Las funciones anidadas no hacen copias privadas del ámbito ni instantáneas estáticas de los enlaces de las variables. Fundamentalmente, el problema aquí es que las variables declaradas con <codeinline>var</codeinline> se definen a lo largo de la función. Nuestro bucle <codeinline>for</codeinline> declara la variable del bucle con <codeinline>var i</codeinline>, por lo que la variable <codeinline>i</codeinline> está definida en toda la función en lugar de tener un ámbito más limitado al cuerpo del bucle. El código muestra una categoría común de errores en ES5 y anteriores, pero la introducción de variables de ámbito de bloque en ES6 resuelve el problema. Si sustituimos <codeinline>var</codeinline> por <codeinline>let</codeinline> o <codeinline>const</codeinline>, el problema desaparece. Debido a que <codeinline>let</codeinline> y <codeinline>const</codeinline> tienen ámbito de bloque, cada iteración del bucle define un ámbito que es independiente de los ámbitos de todas las demás iteraciones, y cada uno de estos ámbitos tiene su propio ámbito independiente de <codeinline>i</codeinline>.</p>
+    <p>Otra cosa que hay que recordar al escribir cierres es que <codeinline>this</codeinline> es una palabra clave de JavaScript, no una variable. Como se ha comentado antes, las funciones de flecha heredan el valor <codeinline>this</codeinline> de la función que las contiene, pero las funciones definidas con la palabra clave <codeinline>function</codeinline> no lo hacen. Así que si estás escribiendo un cierre que necesita usar el valor <codeinline>this</codeinline> de su función contenedora, deberías usar una función de flecha, o llamar a <codeinline>bind()</codeinline>, en el cierre antes de devolverlo, o asignar el valor <codeinline>this</codeinline> externo a una variable que tu cierre heredará:</p>
+    <pre>
+    <code class="language-js">const self = this; // Hacer que este valor esté disponible para funciones anidadas</code></pre>
+  </section>
+  <section id="7" class="py-4 xs:py-5 sm:py-6">
+    <h2>8.7 Propiedades, métodos y constructores de funciones</h2>
+    <p>Hemos visto que las funciones son valores en los programas JavaScript. El operador <codeinline>typeof</codeinline> devuelve la cadena "function" cuando se aplica a una función, pero las funciones son en realidad un tipo especializado de objeto JavaScript. Dado que las funciones son objetos, pueden tener propiedades y métodos, como cualquier otro objeto. Existe incluso un constructor <codeinline>Function()</codeinline> para crear nuevos objetos función. Las subsecciones siguientes documentan las propiedades <codeinline>length</codeinline>, <codeinline>name</codeinline> y <codeinline>prototype</codeinline>; los métodos <codeinline>call()</codeinline>, <codeinline>apply()</codeinline>, <codeinline>bind()</codeinline> y <codeinline>toString()</codeinline>; y el constructor <codeinline>Function()</codeinline>.</p>
+  </section>
+  <section id="7-1">
+    <h2>8.7.1 La longitud Propiedad</h2>
+    <p>La propiedad de <codeinline>length</codeinline> de sólo lectura de una función especifica la <em>aridad</em> de la función: el número de parámetros que declara en su lista de parámetros, que suele ser el número de argumentos que espera la función. Si una función tiene un parámetro restante, ese parámetro no se cuenta a efectos de esta propiedad de <codeinline>length</codeinline>.</p>
+  </section>
+  <section id="7-2" class="py-4 xs:py-5 sm:py-6">
+    <h2>8.7.2 El nombre Propiedad</h2>
+    <p>La propiedad <codeinline>name</codeinline> de sólo lectura de una función especifica el nombre que se utilizó cuando se definió la función, si se definió con un nombre, o el nombre de la variable o propiedad a la que se asignó una expresión de función sin nombre cuando se creó por primera vez. Esta propiedad es útil sobre todo cuando se escriben mensajes de depuración o de error.</p>
+  </section>
+  <section id="7-3">
+    <h2>8.7.3 El prototipo Propiedad</h2>
+    <p>Todas las funciones, excepto las funciones flecha, tienen una propiedad <codeinline>prototype</codeinline> que hace referencia a un objeto conocido como <em>objeto prototipo</em>. Cada función tiene un objeto prototipo diferente. Cuando una función se utiliza como constructor, el objeto recién creado hereda propiedades del objeto prototipo. Los prototipos y la propiedad <codeinline>prototype</codeinline> se trataron en <a href="capitulo-6#2-3">§6.2.3</a> y se tratará de nuevo en el <a href="capitulo-9">Capítulo 9</a>.</p>
+  </section>
+  <section id="7-4" class="py-4 xs:py-5 sm:py-6">
+    <h2>8.7.4 Los métodos call() y apply()</h2>
+    <p><codeinline>call()</codeinline> y <codeinline>apply()</codeinline> permiten invocar indirectamente ( <a href="#2-4">§8.2.4</a> ) una función como si fuera un método de otro objeto. El primer argumento de <codeinline>call()</codeinline> y <codeinline>apply()</codeinline> es el objeto sobre el que se va a invocar la función; este argumento es el contexto de invocación y se convierte en el valor de la palabra clave <codeinline>this</codeinline> dentro del cuerpo de la función. Para invocar la función <codeinline>f()</codeinline> como un método del objeto <codeinline>o</codeinline> (sin pasar argumentos), puede utilizar <codeinline>call()</codeinline> o <codeinline>apply()</codeinline>:</p>
+    <pre>
+    <code class="language-js">f.call(o);
+    f.apply(o);</code></pre>
+    <p>Cualquiera de estas líneas de código son similares a las siguientes (que suponen que <codeinline>o</codeinline> no tiene ya una propiedad llamada <codeinline>m</codeinline>):</p>
+    <pre>
+    <code class="language-js">o.m = f;    // Haga de f un método temporal de o.
+    o.m();      // Invocarlo sin pasar ningún argumento.
+    delete o.m; // Eliminar el método temporal.</code></pre>
+    <p>Recuerde que las funciones de flecha heredan el valor <codeinline>this</codeinline> del contexto donde se definen. Esto no puede anularse con los métodos <codeinline>call()</codeinline> y <codeinline>apply()</codeinline>. Si llama a cualquiera de esos métodos en una función de flecha, el primer argumento es efectivamente ignorado.</p>
+    <p>Cualquier argumento a <codeinline>call()</codeinline> después del primer argumento del contexto de invocación son los valores que se pasan a la función que se invoca (y estos argumentos no se ignoran para las funciones de flecha). Por ejemplo, para pasar dos números a la función <codeinline>f()</codeinline> e invocarla como si fuera un método del objeto <codeinline>o</codeinline>, se podría utilizar código como este:</p>
+    <pre>
+    <code class="language-js">f.call(o, 1, 2);</code></pre>
+    <p>El método <codeinline>apply()</codeinline> es como el método <codeinline>call()</codeinline>, salvo que los argumentos que se pasan a la función se especifican como una matriz:</p>
+    <pre>
+    <code class="language-js">f.apply(o, [1,2]);</code></pre>
+    <p>Si una función está definida para aceptar un número arbitrario de argumentos, el método <codeinline>apply()</codeinline> permite invocar esa función sobre el contenido de un array de longitud arbitraria. En ES6 y posteriores, podemos utilizar simplemente el operador spread, pero es posible que veas código ES5 que utiliza <codeinline>apply()</codeinline> en su lugar. Por ejemplo, para encontrar el mayor número en un array de números sin usar el operador spread, podrías usar el mé todo <codeinline>apply()</codeinline> para pasar los elementos del array a la función <codeinline>Math.max()</codeinline>:</p>
+    <pre>
+    <code class="language-js">let biggest = Math.max.apply(Math, arrayOfNumbers);</code></pre>
+    <p>La función <codeinline>trace()</codeinline> definida a continuación es similar a la función <codeinline>timed()</codeinline> definida en <a href="#3-4">§8.3.4</a>, pero funciona para métodos en lugar de funciones. Utiliza el método <codeinline>apply()</codeinline> en lugar de un operador spread, y al hacerlo, es capaz de invocar al método envuelto con los mismos argumentos y el mismo valor <codeinline>this</codeinline> que el método envuelto:</p>
+    <pre>
+    <code class="language-js">// Reemplace el método llamado m del objeto o con una versión 
+    // que registre mensajes antes y después de invocar el método original.
+    function trace(o, m) &lbrace;
+      let original = o[m];        // Recuerde el método original en el cierre.
+      o[m] = function(...args) &lbrace;  // Ahora defina el nuevo método.
+        console.log(new Date(), "Entering:", m);  // Mensaje de registro.
+        let result = original.apply(this, args);  // Invocar original.
+        console.log(new Date(), "Exiting:", m);   // Mensaje de registro.
+        return result;                            // Return result.
+      };
+    }</code></pre>
+  </section>
+  <section id="7-5">
+    <h2>8.7.5 El método bind()</h2>
   </section>
 </Layoutjavascript>
