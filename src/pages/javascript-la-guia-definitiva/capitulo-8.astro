@@ -769,5 +769,279 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   </section>
   <section id="7-5">
     <h2>8.7.5 El método bind()</h2>
+    <p>El propósito principal de <codeinline>bind()</codeinline> es <em>vincular</em> una función a un objeto. Cuando se invoca el método <codeinline>bind()</codeinline> sobre una función <codeinline>f</codeinline> y se le pasa un objeto <codeinline>o</codeinline>, el método devuelve una nueva función. Al invocar la nueva función (como una función) se invoca la función original <codeinline>f</codeinline> como un método de <codeinline>o</codeinline>. Cualquier argumento que se pase a la nueva función se pasa a la función original. Por ejemplo:</p>
+    <pre>
+    <code class="language-js">function f(y) &lbrace; return this.x + y; } // Esta función necesita estar vinculada
+    let o = &lbrace; x: 1 };      // Un objeto que enlazaremos
+    let g = f.bind(o);     // Al llamar a g(x) se invoca a f() en o
+    g(2)                   // => 3
+    let p = &lbrace; x: 10, g };  // Invocar g() como un método de este objeto
+    p.g(2)                 // => 3: g sigue logando a o no a p.</code></pre>
+    <p>Las funciones de flecha heredan su valor <codeinline>this</codeinline> del entorno en el que están definidas, y ese valor no se puede sobrescribir con <codeinline>bind()</codeinline>, por lo que si la función <codeinline>f()</codeinline> en el código anterior se definiera como una función de flecha, la vinculación no funcionaría. Sin embargo, el caso de uso más común para llamar a <codeinline>bind()</codeinline> es hacer que las funciones que no son de flecha se comporten como funciones de flecha, por lo que esta limitación en la vinculación de funciones de flecha no es un problema en la práctica.</p>
+    <p>Sin embargo, el método <codeinline>bind()</codeinline> no sólo vincula una función a un objeto. También puede realizar una aplicación parcial: cualquier argumento que pase a <codeinline>bind()</codeinline> después del primero se vincula junto con el valor <codeinline>this</codeinline>. Esta característica de aplicación parcial de <codeinline>bind()</codeinline> funciona con funciones de flecha. La aplicación parcial es una técnica común en la programación funcional y a veces se denomina <em>currying</em>. Aquí hay algunos ejemplos del método <codeinline>bind()</codeinline> utilizado para la aplicación parcial:</p>
+    <pre>
+    <code class="language-js">let sum = (x,y) => x + y;     // Retorna la suma de 2 argumentos
+    let succ = sum.bind(null, 1); // Vincula el primer argumentos a 1
+    succ(2)             // => 3: x esta ligado a 1, y pasamos 2 para el argumento y
+
+    function f(y,z) &lbrace; return this.x + y + z; }
+    let g = f.bind(&lbrace;x: 1}, 2);   // Enlaza this e y
+    g(3)               // => 6: this.x esta ligado a 1, y esta ligando a 2 y z es 3</code></pre>
+    <p>La propiedad <codeinline>name</codeinline> de la función devuelta por <codeinline>bind()</codeinline> es la propiedad name de la función sobre la que se llamó a <codeinline>bind()</codeinline>, prefijada con la palabra "bound".</p>
+  </section>
+  <section id="7-6" class="py-4 xs:py-5 sm:py-6">
+    <h2>8.7.6 El método toString()</h2>
+    <p>Como todos los objetos JavaScript, las funciones tienen un método <codeinline>toString()</codeinline>. La especificación ECMAScript requiere que este método devuelva una cadena que siga la sintaxis de la declaración de la función. En la práctica, la mayoría (pero no todas) de las implementaciones de este método <codeinline>toString()</codeinline> devuelven el código fuente completo de la función. Las funciones incorporadas suelen devolver una cadena que incluye algo como "[código nativo]" como cuerpo de la función</p>
+  </section>
+  <section id="7-7">
+    <h2>8.7.7 El constructor Function()</h2>
+    <p>Dado que las funciones son objetos, existe un constructor <codeinline>Function()</codeinline> que puede utilizarse para crear nuevas funciones:</p>
+    <pre>
+    <code class="language-js">const f = new Function("x", "y", "return x*y;");</code></pre>
+    <p>Esta línea de código crea una nueva función que es más o menos equivalente a una función definida con la sintaxis familiar:</p>
+    <pre>
+    <code class="language-js">const f = function(x, y) &lbrace; return x*y; };</code></pre>
+    <p>El constructor <codeinline>Function()</codeinline> espera cualquier número de argumentos de cadena. El último argumento es el texto del cuerpo de la función; puede contener sentencias JavaScript arbitrarias, separadas entre sí por punto y coma. Todos los demás argumentos del constructor son cadenas que especifican los nombres de los parámetros de la función. Si está definiendo una función que no recibe argumentos, simplemente pasaría una única cadena -el cuerpo de la función- al constructor.</p>
+    <p>Observe que al constructor <codeinline>Function()</codeinline> no se le pasa ningún argumento que especifique un nombre para la función que crea. Al igual que los literales de función, el constructor <codeinline>Function()</codeinline> crea funciones anónimas.</p>
+    <p>Hay algunos puntos que es importante comprender sobre la función <codeinline>Function()</codeinline> constructor:</p>
+    <ul class="flex flex-col gap-4 xs:gap-5 sm:gap-6">
+      <li class="font-normal">El constructor <codeinline>Function()</codeinline> permite crear y compilar dinámicamente funciones JavaScript en tiempo de ejecución.</li>
+      <li class="font-normal">El constructor <codeinline>Function()</codeinline> analiza el cuerpo de la función y crea un nuevo objeto función cada vez que es llamado. Si la llamada al constructor aparece dentro de un bucle o dentro de una función llamada con frecuencia, este proceso puede resultar ineficiente. Por el contrario, las funciones anidadas y las expresiones de función que aparecen dentro de bucles no se recompilan cada vez que se encuentran.</li>
+      <li class="font-normal">Un último punto muy importante sobre el constructor <codeinline>Function()</codeinline> es que las funciones que crea no utilizan ámbito léxico; en su lugar, siempre se compilan como si fueran funciones de nivel superior, como demuestra el siguiente código:
+      </li>
+    <pre>
+    <code class="language-js">let scope = "global";
+    function constructFunction() &lbrace;
+    let scope = "local";
+    return new Function("return scope"); // Doesn't capture local scope!
+    }
+    // This line returns "global" because the function returned by the
+    // Function() constructor does not use the local scope.
+    constructFunction()() // => "global"</code></pre>
+    </ul>
+    <p>El constructor <codeinline>Function()</codeinline> es una versión global de <codeinline>eval()</codeinline> (véase <a href="capitulo-4#12-2">§4.12.2</a>) que define nuevas variables y funciones en su propio ámbito privado. Probablemente nunca necesite utilizar este constructor en su código.</p>
+  </section>
+  <section id="8" class="py-4 xs:py-5 sm:py-6">
+    <h2>8.8 Programación funcional</h2>
+    <p>JavaScript no es un lenguaje de programación funcional como Lisp o Haskell, pero el hecho de que JavaScript pueda manipular funciones como objetos significa que podemos utilizar técnicas de programación funcional en JavaScript. Los métodos de array como <codeinline>map()</codeinline> y <codeinline>reduce()</codeinline> se prestan particularmente bien a un estilo de programación funcional. Las secciones siguientes muestran técnicas de programación funcional en JavaScript. Pretenden ser una exploración enriquecedora de la potencia de las funciones de JavaScript, no una prescripción para un buen estilo de programación.</p>
+  </section>
+  <section id="8-1">
+    <h2>8.8.1 Procesamiento de matrices con funciones</h2>
+    <p>Supongamos que tenemos una matriz de números y queremos calcular la media y la desviación estándar de esos valores. Podríamos hacerlo en un estilo no funcional como este:</p>
+    <pre>
+    <code class="language-js">let data = [1,1,3,5,5]; // Esto es un array de números
+
+    // La media es la suma de los elementos dividida por el número de elementos.
+    let total = 0;
+    for(let i = 0; i &lt; data.length; i++) total += data[i];
+    let mean = total/data.length; // mean == 3; La media de nuestros datos es 3
+
+    // Para calcular la desviación estándar, primero sumamos los 
+    // cuadrados de la desviación de cada elemento con respecto a la media.
+    total = 0;
+    for(let i = 0; i &lt; data.length; i++) &lbrace;
+    let deviation = data[i] - mean;
+    total += deviation * deviation;
+    }
+    let stddev = Math.sqrt(total/(data.length-1)); // stddev == 2</code></pre>
+    <p>Podemos realizar estos mismos cálculos en un estilo funcional conciso utilizando los métodos de array <codeinline>map()</codeinline> y <codeinline>reduce()</codeinline> de esta manera (véase <a href="capitulo-7#8-1">§7.8.1</a> para revisar estos métodos):</p>
+    <pre>
+    <code class="language-js">// Primero, defina dos funciones simples
+    const sum = (x,y) => x+y;
+    const square = x => x*x;
+
+    // Luego use esas funciones con métodos de array para calcular la mean y stddev.
+    let data = [1,1,3,5,5];
+    let mean = data.reduce(sum)/data.length; // mean == 3
+    let deviations = data.map(x => x-mean);
+    let stddev = Math.sqrt(deviations.map(square).reduce(sum)/(data.length-1));
+    stddev // => 2</code></pre>
+    <p>Esta nueva versión del código parece bastante diferente de la primera, pero sigue invocando métodos sobre objetos, por lo que conserva algunas convenciones orientadas a objetos. Escribamos versiones funcionales de los métodos <codeinline>map()</codeinline> y <codeinline>reduce()</codeinline>:</p>
+    <pre>
+    <code class="language-js">const map = function(a, ...args) &lbrace; return a.map(...args); };
+    const reduce = function(a, ...args) &lbrace; return a.reduce(...args); };</code></pre>
+    <p>Con estas funciones <codeinline>map()</codeinline> y <codeinline>reduce()</codeinline> definidas, nuestro código para calcular la media y la desviación típica tiene ahora este aspecto:</p>
+    <pre>
+    <code class="language-js">const sum = (x,y) => x+y;
+    const square = x => x*x;
+
+    let data = [1,1,3,5,5];
+    let mean = reduce(data, sum)/data.length;
+    let deviations = map(data, x => x-mean);
+    let stddev = Math.sqrt(reduce(map(deviations, square), sum)/(data.length-1));
+    stddev // => 2</code></pre>
+  </section>
+  <section id="8-2" class="py-4 xs:py-5 sm:py-6">
+    <h2>8.8.2 Funciones de orden superior</h2>
+    <p>Una <em>función de orden superior</em> es una función que opera sobre funciones, tomando una o más funciones como argumentos y devolviendo una nueva función. He aquí un ejemplo:</p>
+    <pre>
+    <code class="language-js">// Esta función de orden superior devuelve una nueva función que pasa sus 
+    // argumentos a f y devuelve la negación lógica del valor de retorno de f;
+    function not(f) &lbrace;
+      return function(...args) &lbrace;          // Devolver una nueva función
+        let result = f.apply(this, args); // Eso llama f
+        return !result;                   // y niega su resultado.
+      };
+    }
+
+    const even = x => x % 2 === 0; // Una función para determinar si un número es par
+    const odd = not(even);         // Una nueva función que hace lo contrario
+    [1,1,3,5,5].every(odd)         // => true: Cada elemento de la matriz es impar</code></pre>
+    <p>Esta función <codeinline>not()</codeinline> es una función de orden superior porque toma un argumento de función y devuelve una nueva función. Como otro ejemplo, considere la función <codeinline>mapper()</codeinline> que sigue. Toma un argumento de función y devuelve una nueva función que mapea una matriz a otra utilizando esa función. Esta función utiliza la función <codeinline>map()</codeinline> definida anteriormente, y es importante que entiendas en qué se diferencian ambas funciones:</p>
+    <pre>
+    <code class="language-js">// Devuelve una función que espera un argumento de matriz y aplica f 
+    // a cada elemento, devolviendo la matriz de valores de retorno. 
+    // Compárese con la función map() de antes.
+    function mapper(f) &lbrace;
+      return a => map(a, f);
+    }
+
+    const increment = x => x+1;
+    const incrementAll = mapper(increment);
+    incrementAll([1,2,3]) // => [2,3,4]</code></pre>
+    <p>He aquí otro ejemplo más general que toma dos funciones, <codeinline>f</codeinline> y <codeinline>g</codeinline>, y devuelve una nueva función que calcula <codeinline>f(g())</codeinline>:</p>
+    <pre>
+    <code class="language-js">// Devuelve una nueva función que calcula f(g(...)).
+    // La ​​función devuelta h pasa todos sus argumentos a g, luego pasa 
+    // el valor de retorno de g a f y luego devuelve el valor de retorno de f.
+    // Tanto f como g se invocan con el mismo valor this con el que se invocó h.
+    function compose(f, g) &lbrace;
+      return function(...args) &lbrace;
+      // Usamos call para f porque estamos pasando un solo valor y 
+      // apply para g porque estamos pasando una matriz de valores.
+        return f.call(this, g.apply(this, args));
+      };
+    }
+    const sum = (x,y) => x+y;
+    const square = x => x*x;
+    compose(square, sum)(2,3) // => 25; el cuadrado de la suma</code></pre>
+    <p>Las funciones <codeinline>partial()</codeinline> y <codeinline>memoize()</codeinline> definidas en las secciones siguientes son dos funciones de orden superior más importantes.</p>
+  </section>
+  <section id="8-3">
+    <h2>8.8.3 Aplicación parcial de funciones</h2>
+    <p>El método <codeinline>bind()</codeinline> de una función <codeinline>f</codeinline> (véase <a href="#7-5">§8.7.5</a>) devuelve una nueva función que invoca a <codeinline>f</codeinline> en un contexto especificado y con un conjunto especificado de argumentos. Decimos que vincula la función a un objeto y aplica parcialmente los argumentos. El método <codeinline>bind()</codeinline> aplica parcialmente los argumentos por la izquierda, es decir, los argumentos que se pasan a <codeinline>bind()</codeinline> se colocan al principio de la lista de argumentos que se pasa a la función original. Pero también es posible aplicar parcialmente los argumentos por la derecha:</p>
+    <pre>
+    <code class="language-js">// Los argumentos de esta función se pasan a la izquierda.
+    function partialLeft(f, ...outerArgs) &lbrace;
+      return function(...innerArgs) &lbrace;            // Devuelve esta función
+        let args = [...outerArgs, ...innerArgs]; // Construir la lista de argumentos
+        return f.apply(this, args);              // Luego invoca f con él
+      };
+    }
+
+    // Los argumentos de esta función se pasan a la derecha.
+    function partialRight(f, ...outerArgs) &lbrace;
+      return function(...innerArgs) &lbrace;            // Devuelve esta función
+        let args = [...innerArgs, ...outerArgs]; // Construir la lista de argumentos
+        return f.apply(this, args);              // Luego invoca f con él
+      };
+    }
+
+    // Los argumentos de esta función sirven como plantilla. Los valores no 
+    // definidos en la lista de argumentos se completan con valores del conjunto interno.
+    function partial(f, ...outerArgs) &lbrace;
+      return function(...innerArgs) &lbrace;
+        let args = [...outerArgs]; // copia local de la plantilla de argumentos externos
+        let innerIndex=0;          // ¿Cuál es el siguiente argumento interno?
+        // Recorre los argumentos y completa los valores no definidos con los argumentos internos
+        for(let i = 0; i &lt; args.length; i++) &lbrace;
+          if (args[i] === undefined) args[i] = innerArgs[innerIndex++];
+        }
+        // Ahora agregue cualquier argumento interno restante
+        args.push(...innerArgs.slice(innerIndex));
+        return f.apply(this, args);
+      };
+    }
+
+    // Aquí hay una función con tres argumentos.
+    const f = function(x,y,z) &lbrace; return x * (y - z); };
+    // Observe cómo difieren estas tres aplicaciones parciales
+    partialLeft(f, 2)(3,4)        // => -2: Vincular el primer argumento: 2 * (3 - 4)
+    partialRight(f, 2)(3,4)       // => 6: Vincular el último argumento: 3 * (4 - 2)
+    partial(f, undefined, 2)(3,4) // => -6: Vincular argumento intermedio: 3 * (2 - 4)</code></pre>
+    <p>Estas funciones de aplicación parcial nos permiten definir fácilmente funciones interesantes a partir de funciones que ya tenemos definidas. He aquí algunos ejemplos:</p>
+    <pre>
+    <code class="language-js">const increment = partialLeft(sum, 1);
+    const cuberoot = partialRight(Math.pow, 1/3);
+    cuberoot(increment(26)) // => 3</code></pre>
+    <p>La aplicación parcial se vuelve aún más interesante cuando la combinamos con otras funciones de orden superior. He aquí, por ejemplo, una forma de definir la función precedente <codeinline>not()</codeinline> que acabamos de mostrar utilizando la composición y la aplicación parcial:</p>
+    <pre>
+    <code class="language-js">const not = partialLeft(compose, x => !x);
+    const even = x => x % 2 === 0;
+    const odd = not(even);
+    const isNumber = not(isNaN);
+    odd(3) && isNumber(2) // => true</code></pre>
+    <p>También podemos utilizar la composición y la aplicación parcial para rehacer nuestros cálculos de la media y la desviación estándar en un estilo funcional extremo:</p>
+    <pre>
+    <code class="language-js">// Las funciones sum() y square() se definen arriba. A continuación se muestran algunas más:
+    const product = (x,y) => x*y;
+    const neg = partial(product, -1);
+    const sqrt = partial(Math.pow, undefined, .5);
+    const reciprocal = partial(Math.pow, undefined, neg(1));
+
+    // Ahora calcule la media y la desviación estándar.
+    let data = [1,1,3,5,5]; // Nuestros datos
+    let mean = product(reduce(data, sum), reciprocal(data.length));
+    let stddev = sqrt(product(reduce(map(data,compose(square,partial(sum, neg(mean)))),sum),
+    reciprocal(sum(data.length,neg(1)))));
+    [mean, stddev] // => [3, 2]</code></pre>
+    <p>Nótese que este código para calcular la media y la desviación estándar es enteramente invocaciones a funciones; no hay operadores involucrados, y el número de paréntesis ha crecido tanto que este JavaScript está empezando a parecerse al código Lisp. De nuevo, este no es un estilo que yo defienda para la programación en JavaScript, pero es un ejercicio interesante para ver lo profundamente funcional que puede ser el código JavaScript.</p>
+  </section>
+  <section id="8-4" class="py-4 xs:py-5 sm:py-6">
+    <h2>8.8.4 Memoización</h2>
+    <p>En <a href="#4-1">§8.4.1</a>, definimos una función factorial que almacenaba en caché sus resultados previamente calculados. En programación funcional, este tipo de almacenamiento en caché se denomina <em>memoización</em>. El código siguiente muestra una función de orden superior, <codeinline>memoize()</codeinline>, que acepta una función como argumento y devuelve una versión memoizada de la función:</p>
+    <pre>
+    <code class="language-js">// Devuelve una versión memorizada de f.
+    // Sólo funciona si todos los argumentos de f tienen representaciones de cadenas distintas.
+    function memoize(f) &lbrace;
+      const cache = new Map(); // Caché de valores almacenado en el cierre.
+
+      return function(...args) &lbrace;
+        // Crea una versión de cadena de los argumentos para usar como clave de caché.
+        let key = args.length + args.join("+");
+        if (cache.has(key)) &lbrace;
+          return cache.get(key);
+        } else &lbrace;
+          let result = f.apply(this, args);
+          cache.set(key, result);
+          return result;
+        }
+      };
+    }</code></pre>
+    <p>La función <codeinline>memoize()</codeinline> crea un nuevo objeto para utilizarlo como caché y asigna este objeto a una variable local para que sea privado (en el cierre) de la función devuelta. La función devuelta convierte su matriz de argumentos en una cadena y utiliza esa cadena como nombre de propiedad para el objeto de caché. Si existe un valor en la caché, lo devuelve directamente. En caso contrario, llama a la función especificada para calcular el valor de estos argumentos, lo almacena en caché y lo devuelve. Así es como podemos utilizar <codeinline>memoize()</codeinline>:</p>
+    <pre>
+    <code class="language-js">// Devuelve el máximo común divisor de dos números enteros utilizando el 
+    // algoritmo euclidiano: https://es.wikipedia.org/wiki/Algoritmo_de_Euclides
+    function gcd(a,b) &lbrace;  // Se ha omitido la comprobación de tipos para a y b
+      if (a &lt; b) &lbrace;       // Asegúrese de que a >= b cuando comenzamos
+        [a, b] = [b, a]; // Asignación de desestructuración para intercambiar variables
+      }
+      while(b !== 0) &lbrace;   // Este es el algoritmo de Euclides para MCD
+        [a, b] = [b, a%b];
+      }
+      return a;
+    }
+
+    const gcdmemo = memoize(gcd);
+    gcdmemo(85, 187)    // => 17
+    
+    // Tenga en cuenta que cuando escribimos una función recursiva que vamos a memorizar, 
+    // generalmente queremos recurrir a la versión memorizada, no a la original.
+    const factorial = memoize(function(n) &lbrace;
+      return (n &lt;= 1) ? 1 : n * factorial(n-1);
+    });
+    factorial(5)        // => 120: also caches values for 4, 3, 2 and 1.</code></pre>
+  </section>
+  <section id="9" class="pb-4 xs:pb-5 sm:pb-6">
+    <h2>8.9 Resumen</h2>
+    <p>Algunos puntos clave que conviene recordar sobre este capítulo son los siguientes:</p>
+    <ul class="flex flex-col gap-4 xs:gap-5 sm:gap-6">
+      <li class="font-normal">Puede definir funciones con la palabra clave <codeinline>function</codeinline> y con la sintaxis de flecha <codeinline>=&gt;</codeinline> de ES6.</li>
+      <li class="font-normal">Puede invocar funciones, que pueden utilizarse como métodos y constructores.</li>
+      <li class="font-normal">Algunas funciones de ES6 permiten definir valores por defecto para parámetros de función opcionales, reunir varios argumentos en una matriz mediante un parámetro rest y desestructurar argumentos de objetos y matrices en parámetros de función.</li>
+      <li class="font-normal">Puede utilizar el operador de extensión <codeinline>...</codeinline> para pasar los elementos de una matriz u otro objeto iterable como argumentos en una invocación de función.</li>
+      <li class="font-normal">Una función definida dentro de una función envolvente y devuelta por ésta conserva el acceso a su ámbito léxico y, por tanto, puede leer y escribir las variables definidas dentro de la función externa. Las funciones utilizadas de este modo se denominan <em>closures</em>, y se trata de una técnica que merece la pena comprender.</li>
+      <li class="font-normal">Las funciones son objetos que pueden ser manipulados por JavaScript, y esto permite un estilo funcional de programación.</li>
+    </ul>
   </section>
 </Layoutjavascript>
