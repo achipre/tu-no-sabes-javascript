@@ -12,4 +12,321 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>JavaScript siempre ha permitido la definición de clases. ES6 introdujo una nueva sintaxis (incluyendo una palabra clave <codeinline>class</codeinline>) que hace aún más fácil crear clases. Estas nuevas clases de JavaScript funcionan de la misma forma que las clases antiguas, y este capítulo comienza explicando la forma antigua de crear clases porque demuestra más claramente lo que sucede entre bastidores para que las clases funcionen. Una vez que hayamos explicados estos fundamentos, cambiaremos y empezaremos a utilizar la nueva sintaxis simplificada de definición de clases.</p>
     <p>Si está familiarizado con lenguajes de programación orientados a objetos fuertemente tipados como Java o C++, se dará cuenta de que las clases de JavaScript son bastante diferentes de las clases de esos lenguajes. Hay algunas similitudes sintácticas, y puede emular muchas características de las clases "clásicas" en JavaScript, pero es mejor entender de antemano que las clases de JavaScript y el mecanismo de herencia basado en prototipos son sustancialmente diferentes de las clases y el mecanismo de herencia basado en clases de Java y lenguajes similares.</p>
   </section>
+  <section id="1" class="py-4 xs:py-5 sm:py-6">
+    <h2>9.1 Clases y prototipos</h2>
+    <p>En JavaScript, una clase es un conjunto de objetos que heredan propiedades del mismo objeto prototipo. El objeto prototipo, por lo tanto, es la característica central de una clase. El <a href="capitulo-6">Capítulo 6</a> cubrió la función <codeinline>Object.create()</codeinline> que devuelve un objeto recién creado que hereda de un objeto prototipo especificado. Si definimos un objeto prototipo y luego utilizamos <codeinline>Object.create()</codeinline> para crear objetos que hereden de él, habremos definido una clase JavaScript. Normalmente, las instancias de una clase requieren una inicialización adicional, y es común definir una función que cree e inicialice el nuevo objeto. El <a href="#ejemplo9-1">Ejemplo 9-1</a> demuestra esto: define un objeto prototipo para una clase que representa un rango de valores y también define una <em>función de fábrica</em> que crea e inicializa una nueva instancia de la clase.</p>
+    <p id="ejemplo9-1"><em>Ejemplo 9-1. Una clase JavaScript sencilla</em></p>
+    <pre>
+    <code class="language-js">
+    // Esta es una función de fábrica que devuelve un nuevo objeto de rango.
+    function range(from, to) &lbrace;
+      // Utilice Object.create() para crear un objeto que herede del objeto
+      // prototipo definido a continuación. El objeto prototipo se almacena 
+      // como una propiedad de esta función y define los métodos compartidos
+      // (comportamiento) para todos los objetos de rango.
+      let r = Object.create(range.methods);
+      
+      // Almacene los puntos de inicio y final (estado) de este nuevo objeto de rango.
+      // Estas son propiedades no heredadas que son exclusivas de este objeto.
+      r.from = from;
+      r.to = to;
+
+      // Finalmente devuelve el nuevo objeto
+      return r;
+    }
+
+    // Este objeto prototipo define métodos heredados por todos los objetos de rango.
+      range.methods = &lbrace;
+      // Devuelve verdadero si x está en el rango, falso en caso contrario
+      // Este método funciona tanto para rangos textuales y de fechas como para números.
+      includes(x) &lbrace; return this.from &lt;= x && x &lt;= this.to; },
+      // Una función generadora que hace que las instancias de la clase sean iterables.
+      // Tenga en cuenta que solo funciona para rangos numéricos.
+      *[Symbol.iterator]() &lbrace;
+        for(let x = Math.ceil(this.from); x &lt;= this.to; x++) yield x;
+      },
+      
+      // Devuelve una representación de cadena del rango
+      toString() &lbrace; return "(" + this.from + "..." + this.to + ")"; }
+    };
+
+    // A continuación se muestran ejemplos de uso de un objeto de rango.
+    let r = range(1,3); // Create a range object
+    r.includes(2) // => true: 2 is in the range
+    r.toString() // => "(1...3)"
+    [...r] // => [1, 2, 3]; convertir a una matriz mediante iterador</code></pre>
+    <p>Hay algunas cosas dignas de mención en el código del <a href="#ejemplo9-1">Ejemplo 9-1</a>:</p>
+    <ul>
+      <li class="font-normal">Este código define una función de fábrica <codeinline>range()</codeinline> para crear nuevos objetos Range.</li>
+      <li class="font-normal">Utiliza la propiedad <codeinline>methods</codeinline> de esta función <codeinline>range()</codeinline> como un lugar conveniente para almacenar el objeto prototipo que define la clase. No hay nada especial o idiomático en poner el objeto prototipo aquí.</li>
+      <li class="font-normal">La función <codeinline>range()</codeinline> define las propiedades <codeinline>from</codeinline> y <codeinline>to</codeinline> en cada objeto Range. Estas son las propiedades no compartidas y no heredadas que definen el estado único de cada objeto Range individual.</li>
+      <li class="font-normal">El objeto <codeinline>range.methods</codeinline> utiliza la sintaxis abreviada de ES6 para definir métodos, razón por la cual no se ve la palabra clave <codeinline>function</codeinline> en ninguna parte. (Véase <a href="capitulo-6#10-5">§6.10.5</a> para revisar la sintaxis abreviada de métodos del literal de objeto).</li>
+      <li class="font-normal">Uno de los métodos del prototipo tiene el nombre computado (<a href="capitulo-6#10-2">§6.10.2</a>) <codeinline>Symbol.iterator</codeinline>, lo que significa que está definiendo un iterador para objetos Range. El nombre de este método está prefijado con <codeinline>*</codeinline>, lo que indica que es una función generadora en lugar de una función normal. Los iteradores y generadores se tratan en detalle en el <a href="capitulo-12">Capítulo 12</a>. Por ahora, el resultado es que las instancias de esta clase Range pueden utilizarse con el bucle <codeinline>for/of</codeinline> y con el operador de extensión <codeinline>...</codeinline>.</li>
+      <li class="font-normal">Todos los métodos compartidos y heredados definidos en <codeinline>range.methods</codeinline> utilizan las propiedades <codeinline>from</codeinline> y <codeinline>to</codeinline> que se inicializaron en la función de fábrica <codeinline>range()</codeinline>. Para referirse a ellos, utilizan la palabra clave <codeinline>this</codeinline> para referirse al objeto a través del cual fueron invocados. Este uso de <codeinline>this</codeinline> es una característica fundamental de los métodos de cualquier clase.</li>
+    </ul>
+  </section>
+  <section id="2">
+    <h2>9.2 Clases y constructores</h2>
+    <p>El <a href="#ejemplo9-1">Ejemplo 9-1</a> demuestra una forma simple de definir una clase JavaScript. Sin embargo, no es la forma idiomática de hacerlo, porque no define un <em>constructor</em>. Un constructor es una función diseñada para la inicialización de objetos recién creados. Los constructores se invocan mediante la palabra clave <codeinline>new</codeinline>, tal y como se describe en <a href="capitulo-8#2-3">§8.2.3</a>. Las invocaciones a constructores utilizando <codeinline>new</codeinline> crean automáticamente el nuevo objeto, por lo que el propio constructor sólo necesita inicializar el estado de ese nuevo objeto. La característica crítica de las invocaciones a constructores es que la propiedad <codeinline>prototype</codeinline> del constructor se utiliza como prototipo del nuevo objeto. En <a href="capitulo-6#2-3">§6.2.3</a> se introdujeron los prototipos y se hizo hincapié en que, si bien casi todos los objetos tienen un prototipo, sólo unos pocos objetos tienen una propiedad <codeinline>prototype</codeinline>. Finalmente, podemos aclararlo: son los objetos función los que tienen una propiedad prototipo. Esto significa que todos los objetos creados con la misma función constructora heredan del mismo objeto y, por tanto, son miembros de la misma clase. El <a href="#ejemplo9-2">Ejemplo 9-2</a> muestra cómo podríamos modificar la clase Range del <a href="#ejemplo9-1">Ejemplo 9-1</a> para utilizar una función constructora en lugar de una función de fábrica. El <a href="#ejemplo9-2">Ejemplo 9-2</a> demuestra la forma idiomática de crear una clase en versiones de Java-Script que no soportan la palabra clave <codeinline>class</codeinline> de ES6. Aunque class está bien soportado ahora, todavía hay mucho código JavaScript antiguo que define clases como esta, y deberías estar familiarizado con el modismo para que puedas leer código antiguo y para que entiendas lo que está pasando "bajo el capó" cuando usas la palabra clave <codeinline>class</codeinline>.</p>
+    <p><em>Ejemplo 9-2. Una clase Range que utiliza un constructor</em></p>
+    <pre>
+    <code class="language-js">// Esta es una función constructora que inicializa nuevos objetos Range.
+    // Tenga en cuenta que no crea ni devuelve el objeto. Solo lo inicializa.
+    function Range(from, to) &lbrace;
+      // Almacene los puntos de inicio y final (estado) de este nuevo objeto de rango.
+      // Estas son propiedades no heredadas que son exclusivas de este objeto.
+      this.from = from;
+      this.to = to;
+    }
+
+    // Todos los objetos Range heredan de este objeto.
+    // Tenga en cuenta que el nombre de la propiedad debe ser "prototipo" para que esto funcione.
+    Range.prototype = &lbrace;
+      // Devuelve verdadero si x está en el rango, falso en caso contrario
+      // Este método funciona tanto para rangos textuales y de fechas como para números.
+      includes: function(x) &lbrace; return this.from &lt;= x && x &lt;= this.to; },
+
+      // Una función generadora que hace que las instancias de la clase sean iterables.
+      // Tenga en cuenta que solo funciona para rangos numéricos.
+      [Symbol.iterator]: function*() &lbrace;
+        for(let x = Math.ceil(this.from); x &lt;= this.to; x++) yield x;
+      },
+
+      // Devuelve una representación de cadena del rango
+      toString: function() &lbrace; return "(" + this.from + "..." + this.to + ")"; }
+    };
+
+    // A continuación se muestran ejemplos de uso de esta nueva clase Range
+    let r = new Range(1,3); // Cree un objeto Range; observe el uso de new
+    r.includes(2) // => true: 2 está en el rango
+    r.toString() // => "(1...3)"
+    [...r] // => [1, 2, 3]; convertir a una matriz mediante iterador</code></pre>
+    <p>Merece la pena comparar los Ejemplos <a href="#ejemplo9-1">9-1</a> y <a href="#ejemplo9-2">9-2</a> con bastante cuidado y observar las diferencias entre estas dos técnicas para definir clases. Primero, observe que renombramos la función de fábrica <codeinline>range()</codeinline> a <codeinline>Range()</codeinline> cuando la convertimos en un constructor. Esta es una convención de codificación muy común: las funciones constructoras definen, en cierto sentido, clases, y las clases tienen nombres que (por convención) comienzan con mayúsculas. Las funciones y métodos normales tienen nombres que empiezan con minúsculas.</p>
+    <p>A continuación, observe que el constructor <codeinline>Range()</codeinline> es invocado (al final del ejemplo) con la palabra clave new mientras que la función de fábrica <codeinline>range()</codeinline> fue invocada sin ella. El <a href="#ejemplo9-1">Ejemplo 9-1</a> utiliza la invocación regular de la función (<a href="capitulo-8#2-1">§8.2.1</a>) para crear el nuevo objeto, y el <a href="#ejemplo9-2">Ejemplo 9-2</a> utiliza la invocación del constructor (<a href="capitulo-8#2-3">§8.2.3</a>). Como el constructor <codeinline>Range()</codeinline> se invoca con <codeinline>new</codeinline>, no tiene que llamar a <codeinline>Object.create()</codeinline> ni realizar ninguna acción para crear un nuevo objeto. El nuevo objeto se crea automáticamente antes de llamar al constructor, y es accesible como el valor <codeinline>this</codeinline>. El constructor <codeinline>Range()</codeinline> simplemente tiene que inicializar <codeinline>this</codeinline>. Los constructores ni siquiera tienen que devolver el objeto recién creado. La invocación del constructor crea automáticamente un nuevo objeto, invoca al constructor como un método de ese objeto y devuelve el nuevo objeto. El hecho de que la invocación de constructores sea tan diferente de la invocación de funciones normales es otra de las razones por las que damos a los constructores nombres que empiezan con mayúsculas. Los constructores están escritos para ser invocados como constructores, con la palabra clave <codeinline>new</codeinline>, y normalmente no funcionarán correctamente si se invocan como funciones normales. Una convención de nomenclatura que mantenga las funciones constructoras diferenciadas de las funciones normales ayuda a los programadores a saber cuándo usar <codeinline>new</codeinline>.</p>
+    <article>
+      <p class="title-article">Constructores y new.target</p>
+      <p>Dentro del cuerpo de una función, puede saber si la función ha sido invocada como constructor con la expresión especial <codeinline>new.target</codeinline>. Si el valor de esa expresión está definido, entonces sabe que la función fue invocada como un constructor, con la palabra clave <codeinline>new</codeinline>. Cuando hablemos de subclases en <a href="#5">§9.5</a>, veremos que <codeinline>new.target</codeinline> no siempre es una referencia al constructor en el que se usa: también puede referirse a la función constructora de una subclase.</p>
+      <p>Si <codeinline>new.target</codeinline> es <codeinline>undefined</codeinline>, entonces la función contenedora fue invocada como una función, sin la palabra clave <codeinline>new</codeinline>. Los diversos constructores de error de JavaScript pueden ser invocados sin <codeinline>new</codeinline>, y si quieres emular esta característica en tus propios constructores, debes puede escribirlas así:</p>
+    <pre>
+    <code class="language-js">function C() &lbrace;
+      if (!new.target) return new C();
+      // El código de inicialización va aquí
+    }</code></pre>
+      <p>Esta técnica sólo funciona para constructores definidos de esta forma anticuada. Las clases creadas con la palabra clave <codeinline>class</codeinline> no permiten invocar sus constructores sin <codeinline>new</codeinline>.</p>
+    </article>
+    <p>Otra diferencia crítica entre los Ejemplos <a href="#ejemplo9-1">9-1</a> y <a href="#ejemplo9-2">9-2</a> es la forma en que se nombra el objeto prototipo. En el primer ejemplo, el prototipo era <codeinline>range.methods</codeinline>. Era un nombre conveniente y descriptivo, pero arbitrario. En el segundo ejemplo, el prototipo es <codeinline>Range.prototype</codeinline>, y este nombre es obligatorio. Una invocación del constructor <codeinline>Range()</codeinline> utiliza automáticamente <codeinline>Range.prototype</codeinline> como prototipo del nuevo objeto Range.</p>
+    <p>Finalmente, observe también las cosas que no cambian entre los Ejemplos <a href="#ejemplo9-1">9-1</a> y <a href="#ejemplo9-2">9-2</a> : los métodos range se definen e invocan de la misma manera para ambas clases. Debido a que el <a href="#ejemplo9-2">Ejemplo 9-2</a> demuestra la forma idiomática de crear clases en versiones de Java-Script anteriores a ES6, no utiliza la sintaxis abreviada de métodos de ES6 en el objeto prototipo y deletrea explícitamente los métodos con la palabra clave <codeinline>function</codeinline>. Pero puede ver que la implementación de los métodos es la misma en ambos ejemplos.</p>
+    <p>Es importante notar que ninguno de los dos ejemplos de rangos utiliza funciones flecha al definir constructores o métodos. Recuerde de <a href="capitulo-8#1-3">§8.1.3</a> que las funciones definidas de esta manera no tienen una propiedad <codeinline>prototype</codeinline> y por lo tanto no pueden ser utilizadas como constructores. Además, las funciones flecha heredan la palabra clave <codeinline>this</codeinline> del contexto en el que se definen en lugar de establecerla en función del objeto a través del cual se invocan, y esto las hace inútiles para los métodos porque la característica definitoria de los métodos es que utilizan <codeinline>this</codeinline> para referirse a la instancia sobre la que se invocaron.</p>
+    <p>Afortunadamente, la nueva sintaxis de <codeinline>class</codeinline> ES6 no permite la opción de definir métodos con funciones de flecha, así que este no es un error que puedas cometer accidentalmente al usar esa sintaxis. Cubriremos la palabra clave de la clase ES6 pronto, pero primero, hay más detalles que cubrir sobre los constructores.</p>
+  </section>
+  <section id="2-1" class="py-4 xs:py-5 sm:py-6">
+    <h2>9.2.1 Constructores, identidad de clase e instanceof</h2>
+    <p>Como hemos visto, el objeto prototipo es fundamental para la identidad de una clase: dos objetos son instancias de la misma clase si y sólo si heredan del mismo objeto prototipo. La función constructora que inicializa el estado de un nuevo objeto no es fundamental: dos funciones constructoras pueden tener propiedades <codeinline>prototype</codeinline> que el mismo objeto prototipo. Entonces, ambos constructores se pueden utilizar para crear instancias de la misma clase.</p>
+    <p>Aunque los constructores no son tan fundamentales como los prototipos, el constructor sirve como la cara pública de una clase. Lo más obvio es que el nombre de la función del constructor suele adoptarse como nombre de la clase. Decimos, por ejemplo, que el constructor <codeinline>Range()</codeinline> crea objetos Range. Pero, fundamentalmente, los constructores se utilizan como operando derecho del operador <codeinline>instanceof</codeinline> cuando se comprueba la pertenencia de los objetos a una clase. Si tenemos un objeto <codeinline>r</codeinline> y queremos saber si es un objeto Range, podemos escribir:</p>
+    <pre>
+    <code class="language-js">r instanceof Range // => true: r hereda de Range.prototype</code></pre>
+    <p>El operador <codeinline>instanceof</codeinline> se describió en <a href="capitulo-4#9-4">§4.9.4</a>. El operando izquierdo debe ser el objeto que se está probando, y el operando derecho debe ser una función constructora que nombre una clase. La expresión <codeinline>o instanceof C</codeinline> es <codeinline>true</codeinline> si <codeinline>o</codeinline> hereda de <codeinline>C.prototype</codeinline>. No es necesario que la herencia sea directa: si <codeinline>o</codeinline> hereda de un objeto que a su vez hereda de un objeto que hereda de <codeinline>C.prototype</codeinline>, la expresión seguirá siendo <codeinline>true</codeinline>.</p>
+    <p>Técnicamente hablando, en el ejemplo de código anterior, el operador <codeinline>instanceof</codeinline> no está comprobando si <codeinline>r</codeinline> fue realmente inicializado por el constructor <codeinline>Range</codeinline>. En su lugar, está comprobando si <codeinline>r</codeinline> hereda de <codeinline>Range.prototype</codeinline>. Si definimos una función <codeinline>Strange()</codeinline> y establecemos que su prototipo sea el mismo que <codeinline>Range.prototype</codeinline>, entonces los objetos creados con <codeinline>new Strange()</codeinline> contarán como objetos Range en lo que respecta a <codeinline>instanceof</codeinline> (no funcionarán realmente como objetos Range, sin embargo, porque sus propiedades <codeinline>from</codeinline> y <codeinline>to</codeinline> no han sido inicializadas):</p>
+    <pre>
+    <code class="language-js">function Strange() &lbrace;}
+    Strange.prototype = Range.prototype;
+    new Strange() instanceof Range // => true</code></pre>
+    <p>Aunque <codeinline>instanceof</codeinline> no puede verificar realmente el uso de un constructor, sigue utilizando una función constructora como su lado derecho porque los constructores son la identidad pública de una clase.</p>
+    <p>Si desea probar la cadena de prototipos de un objeto para un prototipo específico y no desea utilizar la función constructora como intermediaria, puede utilizar el método <codeinline>isPrototypeOf()</codeinline>. En el <a href="#ejemplo9-1">Ejemplo 9-1</a>, por ejemplo, definimos una clase sin función constructora, por lo que no hay forma de utilizar <codeinline>instanceof</codeinline> con esa clase. En su lugar, sin embargo, podríamos comprobar si un objeto <codeinline>r</codeinline> es miembro de esa clase sin constructor con este código:</p>
+    <pre>
+    <code class="language-js">range.methods.isPrototypeOf(r); // range.methods es el objeto prototipo.</code></pre>
+  </section>
+  <section id="2-2">
+    <h2>9.2.2 El constructor Propiedad</h2>
+    <p>En el <a href="#ejemplo9-2">Ejemplo 9-2</a>, establecimos <codeinline>Range.prototype</codeinline> en un nuevo objeto que contenía los métodos de nuestra clase. Aunque era conveniente expresar esos métodos como propiedades de un único objeto literal, en realidad no era necesario crear un nuevo objeto. Cualquier función JavaScript normal (excluidas las funciones de flecha, las funciones generadoras y las funciones asíncronas) puede utilizarse como constructor, y las invocaciones de constructores necesitan una propiedad <codeinline>prototype</codeinline>. Por lo tanto, todas las funciones normales de JavaScript<sup>1</sup> tienen automáticamente una propiedad <codeinline>prototype</codeinline>. El valor de esta propiedad es un objeto que tiene una única propiedad <codeinline>constructor</codeinline> no enumerable. El valor de la propiedad <codeinline>constructor</codeinline> es el objeto función:</p>
+    <pre>
+    <code class="language-js">let F = function() &lbrace;}; // Este es un objeto de función.
+    let p = F.prototype;    // Este es el objeto prototipo asociado con F.
+    let c = p.constructor;  // Esta es la función asociada al prototipo.
+    c === F                 // => true: F.prototype.constructor === F para cualquier F</code></pre>
+    <p>La existencia de este objeto prototipo predefinido con su propiedad <codeinline>constructor</codeinline> significa que los objetos suelen heredar una propiedad <codeinline>constructor</codeinline> que hace referencia a su con- structor. Dado que los constructores sirven como identidad pública de una clase, esta propiedad constructor da la clase de un objeto:</p>
+    <pre>
+    <code class="language-js">let o = new F(); // Crear un objeto o de clase F
+    o.constructor === F // => true: La propiedad del constructor especifica la clase.</code></pre>
+    <p>La <a href="#figure9-1">Figura 9-1</a> ilustra esta relación entre la función constructora, su objeto prototipo, la referencia del prototipo al constructor y las instancias creadas con el constructor.</p>
+    <figure id="figure9-1" class="flex flex-col items-center">
+      <img src="/public/javascript/capitulo-9/figure9-1.png" alt="función constructora">
+      <figcaption>Figura 9-1. Una función constructora, su prototipo e instancia</figcaption>
+    </figure>
+    <p>Observe que la <a href="#figure9-1">Figura 9-1</a> utiliza nuestro constructor <codeinline>Range()</codeinline> como ejemplo. De hecho, sin embargo, la clase Range definida en el <a href="#ejemplo9-2">Ejemplo 9-2</a> sobrescribe el objeto predefinido <codeinline>Range.prototype</codeinline> con un objeto propio. Y el nuevo objeto prototipo que define no tiene una propiedad <codeinline>constructor</codeinline>. Así que las instancias de la clase Range, tal y como están definidas, no tienen una propiedad <codeinline>constructor</codeinline>. Podemos remediar este problema añadiendo explícitamente un constructor al prototipo:</p>
+    <pre>
+    <code class="language-js">Range.prototype = &lbrace;
+      constructor: Range, // Establezca explícitamente la referencia anterior del constructor
+      
+      /* Las definiciones de métodos van aquí */
+    };</code></pre>
+    <p>Otra técnica común que es probable que veas en código JavaScript antiguo es utilizar el objeto prototipo predefinido con su propiedad <codeinline>constructor</codeinline> y añadirle métodos de uno en uno con código como este:</p>
+    <pre>
+    <code class="language-js">// Amplíe el objeto Range.prototype predefinido para que no lo sobrescribamos
+    // la propiedad Range.prototype.constructor creada automáticamente.
+    Range.prototype.includes = function(x) &lbrace;
+      return this.from &lt;= x && x &lt;= this.to;
+    };
+    Range.prototype.toString = function() &lbrace;
+      return "(" + this.from + "..." + this.to + ")";
+    };</code></pre>
+  </section>
+  <section id="3" class="py-4 xs:py-5 sm:py-6">
+    <h2>9.3 Clases con la clase Palabra clave</h2>
+    <p>Las clases han sido parte de JavaScript desde la primera versión del lenguaje, pero en ES6, finalmente obtuvieron su propia sintaxis con la introducción de la palabra clave <codeinline>class</codeinline>. El <a href="#ejemplo9-3">Ejemplo 9-3</a> muestra el aspecto de nuestra clase Range cuando se escribe con esta nueva sintaxis.</p>
+    <p><em>Ejemplo 9-3. La clase Range reescrita utilizando la clase</em></p>
+    <pre>
+    <code class="language-js">class Range &lbrace;
+      constructor(from, to) &lbrace;
+        // Almacene los puntos de inicio y final (estado) de este nuevo objeto de rango.
+        // Estas son propiedades no heredadas que son exclusivas de este objeto.
+        this.from = from;
+        this.to = to;
+      }
+
+      // Devuelve verdadero si x está en el rango, falso en caso contrario
+      // Este método funciona tanto para rangos textuales y de fechas como para números.
+      includes(x) &lbrace; return this.from &lt;= x && x &lt;= this.to; }
+
+      // Una función generadora que hace que las instancias de la clase sean iterables.
+      // Tenga en cuenta que solo funciona para rangos numéricos.
+      *[Symbol.iterator]() &lbrace;
+        for(let x = Math.ceil(this.from); x &lt;= this.to; x++) yield x;
+      }
+
+      // Devuelve una representación de cadena del rango
+      toString() &lbrace; return `($&lbrace;this.from}...$&lbrace;this.to})`; }
+    }
+    // A continuación se muestran ejemplos de uso de esta nueva clase Range
+    let r = new Range(1,3); // Crear un objeto Range
+    r.includes(2)           // => true: 2 está en el rango
+    r.toString()            // => "(1...3)"
+    [...r]                  // => [1, 2, 3]; convertir a una matriz mediante iterador</code></pre>
+    <p>Es importante entender que las clases definidas en los Ejemplos <a href="#ejemplo9-2">9-2</a> y <a href="#ejemplo9-3">9-3</a> funcionan exactamente de la misma manera. La introducción de la palabra clave <codeinline>class</codeinline> en el lenguaje no altera la naturaleza fundamental de las clases basadas en prototipos de JavaScript. Y aunque el <a href="#ejemplo9-3">Ejemplo 9-3</a> utiliza la palabra clave <codeinline>class</codeinline>, el objeto Range resultante es una función constructor, igual que la versión definida en el <a href="#ejemplo9-2">Ejemplo 9-2</a>. La nueva sintaxis de <codeinline>class</codeinline> es limpia y conveniente, pero es mejor considerarla como "azúcar sintáctico" para el mecanismo de definición de clases más fundamental mostrado en el <a href="#ejemplo9-2">Ejemplo 9-2</a>.</p>
+    <p>Observe lo siguiente sobre la sintaxis de la clase en el <a href="#ejemplo9-3">Ejemplo 9-3</a>:</p>
+    <ul>
+      <li class="font-normal">La clase se declara con la palabra clave <codeinline>class</codeinline>, que va seguida del nombre de la clase y de un cuerpo de clase entre llaves.</li>
+      <li class="font-normal">El cuerpo de la clase incluye definiciones de métodos que utilizan la abreviatura de método literal de objeto (que también utilizamos en el <a href="#ejemplo9-1">Ejemplo 9-1</a>), donde se omite la palabra clave <codeinline>function</codeinline>. Sin embargo, a diferencia de los literales de objeto, no se utilizan comas para separar los métodos entre sí. (Aunque los cuerpos de clase son superficialmente similares a los literales de objeto, no son lo mismo. En particular, no admiten la definición de propiedades con pares nombre/valor).</li>
+      <li class="font-normal">La palabra clave <codeinline>constructor</codeinline> se utiliza para definir la función constructora de la clase. Sin embargo, la función definida no se llama realmente "constructor". La declaración de la <codeinline>class</codeinline> define una nueva variable <codeinline>Range</codeinline> y le asigna el valor de esta función <codeinline>constructor</codeinline> especial.</li>
+      <li class="font-normal">Si su clase no necesita hacer ninguna inicialización, puede omitir la palabra clave constructor y su cuerpo, y una función constructora vacía será implícitamente creada para usted.</li>
+    </ul>
+    <p>Si desea definir una clase que subclase -o <em>herede</em>- de otra clase, puede utilizar la palabra clave <codeinline>extends</codeinline> junto con la palabra clave <codeinline>class</codeinline>:</p>
+    <pre>
+    <code class="language-js">// Un Span es como un Range, pero en lugar de inicializarlo con un inicio y 
+    // un final, lo inicializamos con un inicio y una longitud.
+    class Span extends Range &lbrace;
+      constructor(start, length) &lbrace;
+        if (length >= 0) &lbrace;
+          super(start, start + length);
+        } else &lbrace;
+          super(start + length, start);
+        }
+      }
+    }</code></pre>
+    <p>La creación de subclases es un tema aparte. Volveremos a tratarlo y explicaremos las palabras clave <codeinline>extends</codeinline> y <codeinline>super</codeinline> que se muestran aquí en <a href="#5">§9.5</a>.</p>
+    <p>Al igual que las declaraciones de funciones, las declaraciones de clases tienen forma de declaración y de expresión. Del mismo modo que podemos escribir</p>
+    <pre>
+    <code class="language-js">let square = function(x) &lbrace; return x * x; };
+    square(3) // => 9</code></pre>
+    <p>también podemos escribir:</p>
+    <pre>
+    <code class="language-js">let Square = class &lbrace; constructor(x) &lbrace; this.area = x * x; } };
+    new Square(3).area // => 9</code></pre>
+    <p>Al igual que ocurre con las expresiones de definición de funciones, las expresiones de definición de clases pueden incluir un nombre de clase opcional. Si se proporciona dicho nombre, éste sólo se define dentro del propio cuerpo de la clase.</p>
+    <p>Aunque las expresiones de función son bastante comunes (sobre todo con la abreviatura arrow func- tion), en la programación JavaScript, las expresiones de definición de clase no son algo que vaya a utilizar mucho, a menos que se encuentre escribiendo una función que tome una clase como argumento y devuelva una subclase.</p>
+    <p>Concluiremos esta introducción a la palabra clave <codeinline>class</codeinline> mencionando un par de cosas importantes que deberías saber y que no son evidentes en la sintaxis de <codeinline>class</codeinline>.</p>
+    <ul>
+      <li class="font-normal">Todo el código dentro del cuerpo de una declaración de <codeinline>class</codeinline> está implícitamente en modo estricto (<a href="capitulo-5#6-3">§5.6.3</a>), incluso si no aparece ninguna directiva <codeinline>"use strict"</codeinline>. Esto significa, por ejemplo, que no puede utilizar literales enteros octales o la sentencia <codeinline>with</codeinline> dentro de los cuerpos de las clases y que es más probable que obtenga errores de sintaxis si olvida declarar una variable antes de utilizarla.</li>
+      <li class="font-normal">A diferencia de las declaraciones de funciones, las declaraciones de clases no se “hoisted.” Recordemos que <a href="capitulo-8#1-1">§8.1.1</a> que las definiciones de función se comportan como si se hubieran movido a la parte superior del fichero o función que las encierra, lo que significa que puede invocar una función en el código que viene antes de la definición real de la función. Aunque las declaraciones de clases se parecen a las declaraciones de funciones en algunos aspectos, no comparten este comportamiento de elevación: <em>no se puede</em> instanciar una clase antes de declararla.</li>
+    </ul>
+  </section>
+  <section id="3-1">
+    <h2>9.3.1 Métodos estáticos</h2>
+    <p>Puede definir un método estático dentro del cuerpo de una <codeinline>class</codeinline> anteponiendo a la declaración del método la palabra clave static. Los métodos <codeinline>static</codeinline> se definen como propiedades de la función constructora y no como propiedades del objeto prototipo.</p>
+    <p>Por ejemplo, supongamos que añadimos el siguiente código al <a href="#ejemplo9-3">Ejemplo 9-3</a>:</p>
+    <pre>
+    <code class="language-js"></code>static parse(s) &lbrace;
+      let matches = s.match(/^\((\d+)\.\.\.(\d+)\)$/);
+      if (!matches) &lbrace;
+        throw new TypeError(`Cannot parse Range from "$&lbrace;s}".`)
+      }
+      return new Range(parseInt(matches[1]), parseInt(matches[2]));
+    }</pre>
+    <p>El método definido por este código es <codeinline>Range.parse()</codeinline>, no <codeinline>Range.prototype.parse()</codeinline>, y debes invocarlo a través del constructor, no a través de una instancia:</p>
+    <pre>
+    <code class="language-js">let r = Range.parse('(1...10)'); // Devuelve un nuevo objeto Range
+    r.parse('(1...10)'); // TypeError: r.parse no es una función</code></pre>
+    <p>A veces verás métodos estáticos llamados <em>métodos</em> de clase porque son invocados usando el nombre de la clase/constructor. Cuando se utiliza este término, es para contrastar los métodos de clase con los <em>métodos de instancia</em> regulares que se invocan sobre instancias de la clase. Debido a que los métodos estáticos son invocados en el constructor en lugar de en cualquier instancia en particular, casi nunca tiene sentido utilizar la palabra clave this en un método estático.</p>
+    <p>Veremos ejemplos de métodos estáticos en el <a href="#ejemplo9-4">Ejemplo 9-4</a>.</p>
+  </section>
+  <section id="3-2" class="py-4 xs:py-5 sm:py-6">
+    <h2>9.3.2 Getters, Setters y otras formas de métodos</h2>
+    <p>Dentro del cuerpo de una <codeinline>class</codeinline> se pueden definir métodos getter y setter (<a href="capitulo-6#10-6">§6.10.6</a>) igual que en los literales de objeto. La única diferencia es que en los cuerpos de clase, no se pone una coma después del getter o setter. El <a href="ejemplo9-4">Ejemplo 9-4</a> incluye un ejemplo práctico de un método getter en una clase.</p>
+    <p>En general, todas las sintaxis abreviadas de definición de métodos permitidas en los literales de objetos también están permitidas en los cuerpos de las clases. Esto incluye métodos generadores (marcados con <codeinline>*</codeinline>) y métodos cuyos nombres son el valor de una expresión entre corchetes. De hecho, ya has visto (en el <a href="#ejemplo9-3">Ejemplo 9-3</a>) un método generador con un nombre calculado que hace iterable la clase Range:</p>
+    <pre>
+    <code class="language-js">*[Symbol.iterator]() &lbrace;
+      for(let x = Math.ceil(this.from); x &lt;= this.to; x++) yield x;
+    }</code></pre>
+  </section>
+  <section id="3-3">
+    <h2>9.3.3 Campos públicos, privados y estáticos</h2>
+    <p>En la discusión aquí de clases definidas con la palabra clave <codeinline>class</codeinline>, sólo hemos descrito la definición de métodos dentro del cuerpo de la clase. El estándar ES6 sólo permite la creación de métodos (incluyendo getters, setters y generadores) y métodos estáticos; no incluye sintaxis para definir campos. Si desea definir un campo (que no es más que un sinónimo orientado a objetos de "propiedad") en una instancia de clase, debe hacerlo en la función constructora o en uno de los métodos. Y si desea definir un campo estático para una clase, debe hacerlo fuera del cuerpo de la clase, después de que la clase haya sido definida. El <a href="#ejemplo9-4">Ejemplo 9-4</a> incluye ejemplos de ambos tipos de campos.</p>
+    <p>Sin embargo, se está normalizando una sintaxis de clase ampliada que permite definir campos de instancia y estáticos, tanto públicos como privados. El código que se muestra en el resto de esta sección aún no es JavaScript estándar a principios de 2020, pero ya es compatible con Chrome y parcialmente compatible (solo campos de instancia públicos) con Firefox. La sintaxis de los campos de instancia públicos es de uso común entre los programadores de JavaScript que utilizan el framework React y el transpilador Babel.</p>
+    <p>Supongamos que estás escribiendo una clase como ésta, con un constructor que inicializa tres campos:</p>
+    <pre>
+    <code class="language-js">class Buffer &lbrace;
+      constructor() &lbrace;
+        this.size = 0;
+        this.capacity = 4096;
+        this.buffer = new Uint8Array(this.capacity);
+      }
+    }</code></pre>
+    <p>Con la nueva sintaxis de campo de instancia que probablemente se estandarizará, podría escribir en su lugar:</p>
+    <pre>
+    <code class="language-js">class Buffer &lbrace;
+      size = 0;
+      capacity = 4096;
+      buffer = new Uint8Array(this.capacity);
+    }</code></pre>
+    <p>Con la nueva sintaxis de campo de instancia que probablemente se estandarizará, podría escribir en su lugar:</p>
+    <pre>
+    <code class="language-js">class Buffer &lbrace;
+    #size = 0;
+    get size() &lbrace; return this.#size; }
+    }</code></pre>
+    <p>El código de inicialización del campo se ha movido fuera del constructor y ahora aparece directamente en el cuerpo de la clase. (Por supuesto, ese código se sigue ejecutando como parte del constructor. Si no defines un constructor, los campos se inicializan como parte del constructor implícitamente creado). Los prefijos <codeinline>this.</codeinline> que aparecían en la parte izquierda de las asignaciones han desaparecido, pero tenga en cuenta que todavía debe utilizar <codeinline>this.</codeinline> para referirse a estos campos, incluso en la parte derecha de las asignaciones inicializadoras. La ventaja de inicializar los campos de instancia de esta forma es que esta sintaxis permite (pero no obliga) a poner los inicializadores en la parte superior de la definición de la clase, dejando claro a los lectores exactamente qué campos contendrán el estado de cada instancia. Puede declarar los campos sin un inicializador escribiendo simplemente el nombre del campo seguido de un punto y coma. Si lo haces así, el valor inicial del campo será <codeinline>undefined</codeinline>. Es mejor hacer siempre explícito el valor inicial de todos los campos de la clase.</p>
+    <p>Antes de añadir esta sintaxis de campo, los cuerpos de clase se parecían mucho a los literales de objeto que utilizaban la sintaxis abreviada de método, salvo que se habían eliminado las comas. Esta sintaxis de campo -con signos de igual y punto y coma en lugar de dos puntos y comas- deja claro que los cuerpos de clase no son en absoluto lo mismo que los literales de objeto.</p>
+    <p>La misma propuesta que pretende estandarizar estos campos de instancia también define los campos de instancia privados. Si utiliza la sintaxis de inicialización de campos de instancia mostrada en el ejemplo anterior para definir un campo cuyo nombre comience por <codeinline>#</codeinline> (que normalmente no es un carácter legal en los identificadores de JavaScript), ese campo se podrá utilizar (con el prefijo <codeinline>#</codeinline>) dentro del cuerpo de la clase, pero será invisible e inaccesible (y, por tanto, inmutable) para cualquier código fuera del cuerpo de la clase. Si, para la clase Buffer hipotética anterior, desea asegurarse de que los usuarios de la clase no puedan modificar inadvertidamente el campo de <codeinline>size</codeinline> de una instancia, podría utilizar un campo <codeinline>#size</codeinline> privado en su lugar y, a continuación, definir una función getter para proporcionar acceso de sólo lectura al valor:</p>
+    <pre>
+    <code class="language-js">class Buffer &lbrace;
+      #size = 0;
+      get size() &lbrace; return this.#size; }
+    }</code></pre>
+    <p>Tenga en cuenta que los campos privados deben ser declarados utilizando esta nueva sintaxis de campo antes de que puedan ser utilizados. No se puede escribir <codeinline>this.#size = 0;</codeinline> en el constructor de una clase a menos que se incluya una "declaración" del campo directamente en el cuerpo de la clase.</p>
+    <p>Por último, una propuesta relacionada pretende normalizar el uso de la palabra clave <codeinline>static</codeinline> para los campos. Si añades <codeinline>static</codeinline> antes de una declaración de campo público o privado, esos campos se crearán como propiedades de la función constructora en lugar de propiedades de instancias. Considere el método estático <codeinline>Range.parse()</codeinline> que hemos definido. Incluye una expresión regular bastante compleja que podría ser bueno factorizar en su propio campo estático. Con la nueva sintaxis de campo estático propuesta, podríamos hacerlo así:</p>
+    <pre>
+    <code class="language-js">static integerRangePattern = /^\((\d+)\.\.\.(\d+)\)$/;
+    static parse(s) &lbrace;
+      let matches = s.match(Range.integerRangePattern);
+      if (!matches) &lbrace;
+        throw new TypeError(`Cannot parse Range from "$&lbrace;s}".`)
+      }
+      return new Range(parseInt(matches[1]), matches[2]);
+    }</code></pre>
+    <p>Si quisiéramos que este campo estático fuera accesible sólo dentro de la clase, podríamos hacerlo privado usando un nombre como <codeinline>#pattern</codeinline>.</p>
+  </section>
+  <section id="3-4" class="py-4 xs:py-5 sm:py-6">
+    <h2>9.3.4 Ejemplo: Una clase de números complejos</h2>
+    <p></p>
+    <p><em></em></p>
+    <p></p>
+  </section>
+  <section id="4">
+    <h2>9.3.4 Ejemplo: Una clase de números complejos</h2>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+  </section>
 </Layoutjavascript>
