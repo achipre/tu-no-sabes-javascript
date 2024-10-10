@@ -317,16 +317,502 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   </section>
   <section id="3-4" class="py-4 xs:py-5 sm:py-6">
     <h2>9.3.4 Ejemplo: Una clase de números complejos</h2>
-    <p></p>
-    <p><em></em></p>
-    <p></p>
+    <p>El <a href="#ejemplo9-4">Ejemplo 9-4</a> define una clase para representar números complejos. La clase es relativamente simple, pero incluye métodos de instancia (incluyendo getters), métodos estáticos, campos de instancia y campos estáticos. Incluye algo de código comentado que demuestra cómo podríamos utilizar la sintaxis aún no estándar para definir campos de instancia y campos estáticos dentro del cuerpo de la clase.</p>
+    <p><em>Ejemplo 9-4. Complex.js: una clase de números complejos</em></p>
+    <pre>
+    <code class="language-js">
+    /**
+    * Instances of this Complex class represent complex numbers.
+    * Recall that a complex number is the sum of a real number and an
+    * imaginary number and that the imaginary number i is the square root of -1.
+    */
+    class Complex &lbrace;
+      // Once class field declarations are standardized, we could declare
+      // private fields to hold the real and imaginary parts of a complex number
+      // here, with code like this:
+      //
+      // #r = 0;
+      // #i = 0;
+
+      // This constructor function defines the instance fields r and i on every
+      // instance it creates. These fields hold the real and imaginary parts of
+      // the complex number: they are the state of the object.
+      constructor(real, imaginary) &lbrace;
+        this.r = real; // This field holds the real part of the number.
+        this.i = imaginary; // This field holds the imaginary part.
+      }
+
+      // Here are two instance methods for addition and multiplication
+      // of complex numbers. If c and d are instances of this class, we
+      // might write c.plus(d) or d.times(c)
+      plus(that) &lbrace;
+        return new Complex(this.r + that.r, this.i + that.i);
+      }
+      times(that) &lbrace;
+        return new Complex(this.r * that.r - this.i * that.i, this.r * that.i + this.i * that.r);
+      }
+
+      // And here are static variants of the complex arithmetic methods.
+      // We could write Complex.sum(c,d) and Complex.product(c,d)
+      static sum(c, d) &lbrace; return c.plus(d); }
+      static product(c, d) &lbrace; return c.times(d); }
+
+      // These are some instance methods that are defined as getters
+      // so they're used like fields. The real and imaginary getters would
+      // be useful if we were using private fields this.#r and this.#i
+      get real() &lbrace; return this.r; }
+      get imaginary() &lbrace; return this.i; }
+      get magnitude() &lbrace; return Math.hypot(this.r, this.i); }
+
+      // Classes should almost always have a toString() method
+      toString() &lbrace; return `&lbrace;$&lbrace;this.r},$&lbrace;this.i}}`; }
+
+      // It is often useful to define a method for testing whether
+      // two instances of your class represent the same value
+      equals(that) &lbrace;
+        return that instanceof Complex && this.r === that.r && this.i === that.i;
+      }
+      // Once static fields are supported inside class bodies, we could
+      // define a useful Complex.ZERO constant like this:
+      // static ZERO = new Complex(0,0);
+    }
+    // Here are some class fields that hold useful predefined complex numbers.
+    Complex.ZERO = new Complex(0,0);
+    Complex.ONE = new Complex(1,0);
+    Complex.I = new Complex(0,1);</code></pre>
+    <p>Con la clase Complex del <a href="#ejemplo9-4">Ejemplo 9-4</a> definida, podemos utilizar el constructor, los campos de instancia, los métodos de instancia, los campos de clase y los métodos de clase con código como éste:</p>
+    <pre>
+    <code class="language-js">let c = new Complex(2, 3);     // Crear un nuevo objeto con el constructor
+    let d = new Complex(c.i, c.r); // Usar campos de instancia de c
+    c.plus(d).toString()           // => "&lbrace;5,5}"; usa métodos de instancia
+    c.magnitude                    // => Math.hypot(2,3); usa una función getter
+    Complex.product(c, d)          // => new Complex(0, 13); un método estático
+    Complex.ZERO.toString()        // => "&lbrace;0,0}"; una propiedad estática</code></pre>
   </section>
   <section id="4">
-    <h2>9.3.4 Ejemplo: Una clase de números complejos</h2>
-    <p></p>
-    <p></p>
-    <p></p>
-    <p></p>
-    <p></p>
+    <h2>9.4 Añadir métodos a clases existentes</h2>
+    <p>El mecanismo de herencia basado en prototipos de JavaScript es dinámico: un objeto hereda propiedades de su prototipo, incluso si las propiedades del prototipo cambian después de la creación del objeto. Esto significa que podemos aumentar las clases de JavaScript simplemente añadiendo nuevos métodos a sus objetos prototipo.</p>
+    <p>Aquí, por ejemplo, hay código que añade un método para calcular el conjugado complejo a la clase Complex del <a href="#ejemplo9-4">Ejemplo 9-4</a>:</p>
+    <pre>
+    <code class="language-js">// Devuelve un número complejo que es el conjugado complejo de éste.
+    Complex.prototype.conj = function() &lbrace; return new Complex(this.r, -this.i); };</code></pre>
+    <p>El objeto prototipo de las clases incorporadas de JavaScript también está abierto de esta forma, lo que significa que podemos añadir métodos a números, cadenas, matrices, funciones, etc. Esto es útil para implementar nuevas características del lenguaje en versiones antiguas del mismo:</p>
+    <pre>
+    <code class="language-js">// Si el nuevo método String startsWith() no está ya definido...
+    if (!String.prototype.startsWith) &lbrace;
+      // ...entonces defínelo así usando el antiguo método indexOf().
+      String.prototype.startsWith = function(s) &lbrace;
+        return this.indexOf(s) === 0;
+      };
+    }</code></pre>
+    <p>He aquí otro ejemplo:</p>
+    <pre>
+    <code class="language-js">// Invoca la función f este número de veces, pasando el número de iteración
+    // Por ejemplo, para imprimir "hola" 3 veces:
+    // let n = 3;
+    // n.times(i => &lbrace; console.log(`hello $&lbrace;i}`); });
+    Number.prototype.times = function(f, context) &lbrace;
+    let n = this.valueOf();
+    for(let i = 0; i &lt; n; i++) f.call(context, i);
+    };</code></pre>
+    <p>Añadir métodos a los prototipos de los tipos incorporados se considera generalmente una mala idea porque causará confusión y problemas de compatibilidad en el futuro si una nueva versión de JavaScript define un método con el mismo nombre. Incluso es posible añadir métodos a <codeinline>Object.prototype</codeinline>, haciéndolos disponibles para todos los objetos. Pero esto nunca es bueno porque las propiedades añadidas a <codeinline>Object.prototype</codeinline> son visibles para los bucles <codeinline>for/in</codeinline> (aunque puede evitarlo utilizando <codeinline>Object.defineProperty()</codeinline> [<a href="capitulo-14#1">§14.1</a>] para hacer que la nueva propiedad no sea enumerable).</p>
+  </section>
+  <section id="5">
+    <h2>9.5 Subclases</h2>
+    <p>En programación orientada a objetos, una clase B puede <em>extender</em> o <em>subclasificar</em> a otra clase A. Decimos que A es la <em>superclase</em> y B es la <em>subclase</em>. Las instancias de B heredan los métodos de A. La clase B puede definir sus propios métodos, algunos de los cuales pueden <em>sobreescribir</em> métodos del mismo nombre definidos por la clase A. Si un método de B anula un método de A, el método de anulación en B a menudo tiene que invocar el método anulado en A. Del mismo modo, el constructor de la subclase <codeinline>B()</codeinline> normalmente debe invocar el constructor de la superclase <codeinline>A()</codeinline> con el fin de garantizar que las instancias estén completamente inicializadas.</p>
+    <p>Esta sección comienza mostrando cómo definir subclases a la antigua, pre-ES6 manera, y luego pasa rápidamente a demostrar subclasificación utilizando la <codeinline>class</codeinline> y se <codeinline>extends</codeinline> palabras clave y constructor superclase método de invocación con la palabra clave <codeinline>super</codeinline>. A continuación hay una subsección sobre cómo evitar las subclases y confiar en la composición de objetos en lugar de la herencia. La sección termina con un ejemplo extendido que define una jerarquía de clases Set y demuestra cómo se pueden utilizar las clases abstractas para separar la interfaz de la implementación.</p>
+  </section>
+  <section id="5-1">
+    <h2>9.5.1 Subclases y prototipos</h2>
+    <p>Supongamos que queremos definir una subclase Span de la clase Range del <a href="#ejemplo9-2">Ejemplo 9-2</a>. Esta subclase funcionará igual que un Range, pero en lugar de inicializarla con un inicio y un final, especificaremos un inicio y una distancia, o span. Una instancia de esta clase Span es también una instancia de la superclase Range. Una instancia de Span hereda un método personalizado <codeinline>toString()</codeinline> de <codeinline>Span.prototype</codeinline>, pero para ser una subclase de Range, también debe heredar métodos (como <codeinline>includes()</codeinline>) de <codeinline>Range.prototype</codeinline>.</p>
+    <p><em>Ejemplo 9-5. Span.js: una subclase simple de Range</em></p>
+    <pre>
+    <code class="language-js">// Esta es la función constructora para nuestra subclase
+    function Span(start, span) &lbrace;
+      if (span >= 0) &lbrace;
+        this.from = start;
+        this.to = start + span;
+      } else &lbrace;
+        this.to = start;
+        this.from = start + span;
+      }
+    }
+
+    // Asegúrese de que el prototipo Span hereda del prototipo Range
+    Span.prototype = Object.create(Range.prototype);
+    
+    // No queremos heredar Range.prototype.constructor, así que
+    // definir nuestra propia propiedad constructora.
+    Span.prototype.constructor = Span;
+    
+    // Al definir su propio método toString(), Span anula el método
+    // toString() que de otro modo heredaría de Range.
+    Span.prototype.toString = function() &lbrace;
+      return `($&lbrace;this.from}... +$&lbrace;this.to - this.from})`;
+    };</code></pre>
+    <p>Para que Span sea una subclase de Range, tenemos que hacer que <codeinline>Span.prototype</codeinline> herede de <codeinline>Range.prototype</codeinline>. La línea de código clave en el ejemplo anterior es ésta, y si tiene sentido para ti, entiendes cómo funcionan las subclases en JavaScript:</p>
+    <pre>
+    <code class="language-js">Span.prototype = Object.create(Range.prototype);</code></pre>
+    <p>Los objetos creados con el constructor <codeinline>Span()</codeinline> heredarán del objeto <codeinline>Span.prototype</codeinline>. Pero hemos creado ese objeto para que herede de <codeinline>Range.prototype</codeinline>, por lo que los objetos Span heredarán tanto de <codeinline>Span.prototype</codeinline> como de <codeinline>Range.prototype</codeinline>.</p>
+    <p>Puede observar que nuestro constructor <codeinline>Span()</codeinline> establece las mismas propiedades <codeinline>from</codeinline> y <codeinline>to</codeinline> que el constructor <codeinline>Range()</codeinline>, por lo que no necesita invocar al constructor <codeinline>Range()</codeinline> para inicializar el nuevo objeto. Del mismo modo, el método <codeinline>toString()</codeinline> de Span reimplementa completamente la conversión de cadenas sin necesidad de llamar a la versión de Range de <codeinline>toString()</codeinline>. Esto convierte a Span en un caso especial, y sólo podemos salirnos con la nuestra con este tipo de subclase porque conocemos los detalles de implementación de la superclase. Un mecanismo de subclasificación robusto necesita permitir a las clases invocar los métodos y el constructor de su superclase, pero antes de ES6, JavaScript no tenía una forma sencilla de hacer estas cosas.</p>
+    <p>Afortunadamente, ES6 resuelve estos problemas con la palabra clave <codeinline>super</codeinline> como parte de la <codeinline>class</codeinline> sintaxis. La siguiente sección muestra cómo funciona.</p>
+  </section>
+  <section id="5-2">
+    <h2>9.5.2 Subclases con extends y super</h2>
+    <p>En ES6 y posteriores, puede crear una superclase simplemente añadiendo una cláusula extends a la declaración de una clase, y puede hacerlo incluso para clases incorporadas:</p>
+    <pre>
+    <code class="language-js">// Una subclase de matriz trivial que agrega captadores para el primer y el último elemento.
+    class EZArray extends Array &lbrace;
+      get first() &lbrace; return this[0]; }
+      get last() &lbrace; return this[this.length-1]; }
+    }
+    let a = new EZArray();
+    a instanceof EZArray  // => true: a es una instancia de subclase
+    a instanceof Array    // => true: a también es una instancia de superclase.
+    a.push(1,2,3,4);      // a.length == 4; podemos usar métodos heredados
+    a.pop()               // => 4: Otro método heredado
+    a.first               // => 1: primer captador definido por la subclase
+    a.last                // => 3: último captador definido por la subclase
+    a[1]                  // => 2: la sintaxis de acceso al array regular todavía funciona.
+    Array.isArray(a)      // => true: la instancia de subclase en realidad es un array
+    EZArray.isArray(a)    // => true: la subclase también hereda métodos estáticos</code></pre>
+    <p>Esta subclase de EZArray define dos métodos getter simples. Las instancias de EZArray se comportan como matrices ordinarias, y podemos utilizar métodos y propiedades heredadas como <codeinline>push()</codeinline>, <codeinline>pop()</codeinline>, y <codeinline>length</codeinline>. Pero también podemos utilizar el <codeinline>first</codeinline> y el <codeinline>last</codeinline> getter definidos en la subclase. No sólo se heredan métodos de instancia como <codeinline>pop()</codeinline>, sino también métodos estáticos como <codeinline>Array.isArray</codeinline>. Esta es una nueva característica habilitada por la sintaxis de clases ES6: <codeinline>EZArray()</codeinline> es una función, pero hereda de <codeinline>Array()</codeinline>:</p>
+    <pre>
+    <code class="language-js">// EZArray hereda los métodos de instancia porque 
+    // EZArray.prototype hereda de Array.prototype
+    Array.prototype.isPrototypeOf(EZArray.prototype) // => true
+    // Además, EZArray hereda los métodos y propiedades estáticos
+    // porque EZArray hereda de Array. Esta es una característica especial
+    // de la palabra clave extends y no era posible antes de ES6.
+    Array.isPrototypeOf(EZArray)                     // => true</code></pre>
+    <p>Nuestra subclase EZArray es demasiado simple para ser muy instructiva. El <a href="#ejemplo9-6">Ejemplo 9-6</a> es un ejemplo más completo. Define una subclase TypedMap de la clase Map incorporada que añade comprobación de tipos para asegurar que las claves y valores del mapa son de los tipos especificados (según <codeinline>typeof</codeinline>). Es importante destacar que este ejemplo demuestra el uso de la palabra clave super para invocar el constructor y los métodos de la superclase.</p>
+    <p><em>Ejemplo 9-6. TypedMap.js: una subclase de Map que comprueba los tipos de clave y valor</em></p>
+    <pre>
+    <code class="language-js">class TypedMap extends Map &lbrace;
+      constructor(keyType, valueType, entries) &lbrace;
+        // Si se especifican entradas, verifique sus tipos
+        if (entries) &lbrace;
+          for(let [k, v] of entries) &lbrace;
+            if (typeof k !== keyType || typeof v !== valueType) &lbrace;
+              throw new TypeError(`Wrong type for entry [$&lbrace;k}, $&lbrace;v}]`);
+            }
+          }
+        }
+
+        // Inicializar la superclase con las entradas iniciales (con verificación de tipo)
+        super(entries);
+
+        // Y luego inicialice esta subclase almacenando los tipos
+        this.keyType = keyType;
+        this.valueType = valueType;
+      }
+
+      // Ahora redefina el método set() para agregar verificación de 
+      // tipo para cualquier entrada nueva agregada al mapa.
+      set(key, value) &lbrace;
+        // Generar un error si la clave o el valor son del tipo incorrecto
+        if (this.keyType && typeof key !== this.keyType) &lbrace;
+          throw new TypeError(`$&lbrace;key} is not of type $&lbrace;this.keyType}`);
+        }
+        if (this.valueType && typeof value !== this.valueType) &lbrace;
+          throw new TypeError(`$&lbrace;value} is not of type $&lbrace;this.valueType}`);
+        }
+        // Si los tipos son correctos, invocamos la versión de la superclase 
+        // del método set() para agregar la entrada al mapa y devolvemos 
+        // lo que devuelva el método de la superclase.
+        return super.set(key, value);
+      }
+    }</code></pre>
+    <p>Los dos primeros argumentos del constructor <codeinline>TypedMap()</codeinline> son los tipos de clave y valor deseados. Deben ser cadenas, como "number" y "boolean", que devuelve el operador <codeinline>typeof</codeinline>. También puede especificar un tercer argumento: una matriz (o cualquier objeto iterable) de matrices <codeinline>[key,value]</codeinline> que especifiquen las entradas iniciales en el mapa. Si especifica alguna entrada inicial, lo primero que hace el constructor es verificar que sus tipos son correctos. A continuación, el constructor invoca al constructor de la superclase, utilizando la palabra clave super como si fuera el nombre de una función. El constructor <codeinline>Map()</codeinline> toma un argumento opcional: un objeto iterable de matrices <codeinline>[key,value]</codeinline>. Así que el tercer argumento opcional del constructor <codeinline>TypedMap()</codeinline> es el primer argumento opcional del constructor <codeinline>Map()</codeinline>, y se lo pasamos al constructor de la superclase con <codeinline>super(entries)</codeinline>.</p>
+    <p>Después de invocar al constructor de la superclase para inicializar el estado de la superclase, el constructor de <codeinline>TypedMap()</codeinline> inicializa su propio estado de subclase estableciendo <codeinline>this.keyType</codeinline> y <codeinline>this.valueType</codeinline> a los tipos especificados. Necesita establecer estas propiedades para poder utilizarlas de nuevo en el método <codeinline>set()</codeinline>.</p>
+    <p>Hay algunas reglas importantes que necesitas saber sobre el uso de <codeinline>super()</codeinline> en los constructores:</p>
+    <ul>
+      <li class="font-normal">Si defines una clase con la palabra clave <codeinline>extends</codeinline>, entonces el constructor de tu clase debe usar <codeinline>super()</codeinline> para invocar al constructor de la superclase.</li>
+      <li class="font-normal">Si no defines un constructor en tu subclase, se definirá uno automáticamente. Este constructor definido implícitamente simplemente toma los valores que se le pasen y los pasa a <codeinline>super()</codeinline>.</li>
+      <li class="font-normal">No puede utilizar la palabra clave <codeinline>this</codeinline> en su constructor hasta después de haber invocado al constructor de la superclase con <codeinline>super()</codeinline>. Esto impone la regla de que las superclases se inicializan a sí mismas antes que las subclases.</li>
+      <li class="font-normal">La expresión especial <codeinline>new.target</codeinline> es indefinida en funciones que se invocan sin la palabra clave <codeinline>new</codeinline>. En funciones constructoras, sin embargo, <codeinline>new.target</codeinline> es una referencia al constructor que fue invocado. Cuando un constructor de una subclase es invocado y usa <codeinline>super()</codeinline> para invocar al constructor de la superclase, ese constructor de la superclase verá al constructor de la subclase como el valor de <codeinline>new.target</codeinline>. Una superclase bien diseñada no debería necesitar saber si ha sido subclasificada, pero podría ser útil poder utilizar <codeinline>new.target.name</codeinline> en mensajes de registro, por ejemplo.</li>
+    </ul>
+    <p>Después del constructor, la siguiente parte del <a href="#ejemplo9-6">Ejemplo 9-6</a> es un método llamado <codeinline>set()</codeinline>. La superclase Map define un método llamado <codeinline>set()</codeinline> para añadir una nueva entrada al mapa. Decimos que este método <codeinline>set()</codeinline> en TypedMap <em>sobrescribe</em> al método <codeinline>set()</codeinline> de su superclase. Esta simple subclase de TypedMap no sabe nada sobre añadir nuevas entradas al mapa, pero sí sabe cómo comprobar tipos, así que eso es lo que hace primero, verificando que la clave y el valor a añadir al mapa tienen los tipos correctos y lanzando un error si no es así. Este método <codeinline>set()</codeinline> no tiene ninguna forma de añadir la clave y el valor al propio mapa, pero para eso está el método <codeinline>set()</codeinline> de la superclase. Así que usamos la palabra clave <codeinline>super</codeinline> de nuevo para invocar la versión del método de la superclase. En este contexto, super funciona de forma muy parecida a la palabra clave this: se refiere al objeto actual pero permite el acceso a métodos sobrescritos definidos en la superclase.</p>
+    <p>En los constructores, es necesario invocar al constructor de la superclase antes de poder acceder a <codeinline>this</codeinline> e inicializar el nuevo objeto uno mismo. No existen estas reglas cuando se sobrescribe un método. Un método que sobrescribe un método de la superclase no está obligado a invocar el método de la superclase. Si utiliza <codeinline>super</codeinline> para invocar el método invocado (o cualquier método) en la superclase, puede hacerlo al principio, en medio o al final del método invocado.</p>
+    <p>Por último, antes de dejar atrás el ejemplo de TypedMap, vale la pena señalar que esta clase es una candidata ideal para el uso de campos privados. Tal y como está escrita la clase ahora, un usuario podría cambiar las propiedades <codeinline>keyType</codeinline> o <codeinline>valueType</codeinline> para subvertir la comprobación de tipos.</p>
+    <p>Una vez que se admitan los campos privados, podríamos cambiar estas propiedades a <codeinline>#keyType</codeinline> y <codeinline>#valueType</codeinline> para que no puedan ser alterados desde el exterior.</p>
+  </section>
+  <section id="5-3">
+    <h2>9.5.3 Delegación en lugar de herencia</h2>
+    <p>La palabra clave <codeinline>extends</codeinline> facilita la creación de subclases. Pero eso no significa que <em>deba</em> crear muchas subclases. Si quiere escribir una clase que comparta el comportamiento de otra clase, puede intentar heredar ese comportamiento creando una subclase. Pero a menudo es más fácil y más flexible obtener ese comportamiento deseado en su clase haciendo que su clase cree una instancia de la otra clase y simplemente delegando en esa instancia según sea necesario. No se crea una nueva clase subclasificando, sino envolviendo o "componiendo" otras clases. Este enfoque de la delegación se denomina a menudo "composición", y es una máxima muy citada de la programación orientada a objetos que uno debe "favorecer la composición sobre la herencia".<sup>2</sup></p>
+    <p>Supongamos, por ejemplo, que queremos una clase Histograma que se comporte como la clase Set de JavaScript, excepto que en lugar de llevar la cuenta de si un valor ha sido añadido a set o no, mantiene un recuento del número de veces que el valor ha sido añadido. Dado que la API de esta clase Histograma es similar a Set, podríamos considerar subclasificar Set y añadir un método <codeinline>count()</codeinline>. Por otro lado, una vez que empezamos a pensar en cómo podríamos implementar este método <codeinline>count()</codeinline>, podríamos darnos cuenta de que la clase Histograma es más parecida a Map que a Set porque necesita mantener un mapeo entre valores y el número de veces que han sido añadidos. Así que en lugar de subclasificar Set, podemos crear una clase que defina una API similar a Set pero que implemente esos métodos delegando en un objeto Map interno. El <a href="#ejemplo9-7">Ejemplo 9-7</a> muestra cómo podemos hacer esto.</p>
+    <p><em>Ejemplo 9-7. Histogram.js: una clase tipo Set implementada con delegación</em></p>
+    <pre>
+    <code class="language-js">/**
+    * Una clase similar a un conjunto que lleva un registro de cuántas veces
+    * se ha agregado un valor. Llame a add() y remove() como lo haría
+    * para un conjunto, y llame a count() para averiguar cuántas veces
+    * se ha agregado un valor determinado.
+    * El iterador predeterminado genera los valores que se han agregado al
+    * menos una vez. Use entries() si desea iterar pares [valor, conteo].
+    */
+    class Histogram &lbrace;
+      // Para inicializar, simplemente creamos un objeto Mapa para delegar.
+      constructor() &lbrace; this.map = new Map(); }
+
+      // Para cualquier clave dada, el recuento es el valor en el Mapa, 
+      // o cero si la clave no aparece en el Mapa.
+      count(key) &lbrace; return this.map.get(key) || 0; }
+
+      // El método similar a Set has() devuelve verdadero si el recuento no es cero
+      has(key) &lbrace; return this.count(key) > 0; }
+
+      // El tamaño del histograma es solo el número de entradas en el mapa.
+      get size() &lbrace; return this.map.size; }
+
+      // Para agregar una clave, simplemente incremente su conteo en el Mapa.
+      add(key) &lbrace; this.map.set(key, this.count(key) + 1); }
+
+      // Eliminar una clave es un poco más complicado porque tenemos 
+      // que eliminar la clave del Mapa si el recuento vuelve a cero.
+      delete(key) &lbrace;
+        let count = this.count(key);
+        if (count === 1) &lbrace;
+          this.map.delete(key);
+        } else if (count > 1) &lbrace;
+          this.map.set(key, count - 1);
+        }
+      }
+
+      // Iterar un histograma solo devuelve las claves almacenadas en él
+      [Symbol.iterator]() &lbrace; return this.map.keys(); }
+
+      // Estos otros métodos iteradores simplemente delegan al objeto Mapa
+      keys() &lbrace; return this.map.keys(); }
+      values() &lbrace; return this.map.values(); }
+      entries() &lbrace; return this.map.entries(); }
+    }</code></pre>
+    <p>Todo lo que hace el constructor <codeinline>Histogram()</codeinline> en el <a href="#ejemplo9-7">Ejemplo 9-7</a> es crear un objeto Map. Y la mayoría de los métodos son de una sola línea que simplemente delegan a un método del mapa, haciendo la implementación bastante simple. Debido a que usamos delegación en lugar de herencia, un objeto Histograma no es una instancia de Set o Map. Pero Histogram implementa una serie de métodos Set de uso común, y en un lenguaje no tipado como JavaScript, que a menudo es lo suficientemente bueno: una relación de herencia formal es a veces agradable, pero a menudo opcional.</p>
+  </section>
+  <section id="5-4">
+    <h2>9.5.4 Jerarquías de clases y clases abstractas</h2>
+    <p>El <a href="#ejemplo9-6">Ejemplo 9-6</a> muestra cómo podemos subclasificar Map. El <a href="#ejemplo9-7">Ejemplo 9-7</a> demuestra cómo podemos delegar en un objeto Map sin subclasificar nada. Usar clases JavaScript para encapsular datos y modularizar tu código es a menudo una gran técnica, y puedes encontrarte usando la palabra clave <codeinline>class</codeinline> frecuentemente. Pero puedes encontrar que prefieres la composición a la herencia y que raramente necesitas usar <codeinline>extends</codeinline> (excepto cuando estás usando una librería o framework que requiere que extiendas sus clases base).</p>
+    <p>Hay algunas circunstancias en las que múltiples niveles de subclase son apropiados, sin embargo, y terminaremos este capítulo con un ejemplo extendido que demuestra una jerarquía de clases que representan diferentes tipos de conjuntos. (Las clases de conjuntos definidas en el <a href="#ejemplo9-8">Ejemplo 9-8</a> son similares, pero no completamente compatibles, con la clase incorporada Set de JavaScript).</p>
+    <p>El <a href="#ejemplo9-8">Ejemplo 9-8</a> define muchas subclases, pero también demuestra cómo se pueden definir <em>clases abstractas</em> - clases que no incluyen una implementación completa - para servir como superclase común para un grupo de subclases relacionadas. Una superclase abstracta puede definir una implementación parcial que todas las subclases heredan y comparten. Así, las subclases sólo tienen que definir su propio comportamiento implementando los métodos abstractos definidos (pero no implementados) por la superclase. Tenga en cuenta que JavaScript no tiene ninguna definición formal de métodos abstractos o clases abstractas; simplemente estoy usando ese nombre aquí para los métodos no implementados y las clases incompletamente implementadas.</p>
+    <p>El <a href="#ejemplo9-8">Ejemplo 9-8</a> está bien comentado y se sostiene por sí mismo. Le animo a que lo lea como ejemplo final de este capítulo sobre clases. La clase final en el <a href="#ejemplo9-8">Ejemplo 9-8</a> hace mucha manipulación de bits con los operadores <codeinline>&</codeinline>, <codeinline>|</codeinline>, y <codeinline>~</codeinline>, que puedes revisar en <a href="capitulo-4#8-3">§4.8.3</a>.</p>
+    <p id="ejemplo9-8"><em>Ejemplo 9-8. Sets.js: una jerarquía de clases de conjuntos abstractos y concretos</em></p>
+    <pre>
+    <code class="language-js">/**
+    * La clase AbstractSet define un único método abstracto, has().
+    */
+    class AbstractSet &lbrace;
+      // Lanza un error aquí para que las subclases se vean obligadas
+      // a definir su propia versión funcional de este método.
+      has(x) &lbrace; throw new Error("Abstract method"); }
+    }
+
+    /**
+    * NotSet es una subclase concreta de AbstractSet.
+    * Los miembros de este conjunto son todos los valores que no son 
+    * miembros de otro conjunto. Como está definido en términos de 
+    * otro conjunto, no se puede escribir y, como tiene infinitos 
+    * miembros, no se puede enumerar.
+    * Todo lo que podemos hacer con él es comprobar su pertenencia y 
+    * convertirlo en una cadena mediante notación matemática.
+    */
+    class NotSet extends AbstractSet &lbrace;
+      constructor(set) &lbrace;
+        super();
+        this.set = set;
+      }
+
+      // Nuestra implementación del método abstracto que heredamos
+      has(x) &lbrace; return !this.set.has(x); }
+      // Y también anulamos este método de objeto.
+      toString() &lbrace; return `&lbrace; x| x ∉ $&lbrace;this.set.toString()} }`; }
+    }
+
+    /**
+    * El conjunto de rangos es una subclase concreta de AbstractSet. 
+    * Sus miembros son todos los valores que se encuentran entre los 
+    * límites de origen y destino, ambos incluidos. Dado que sus 
+    * miembros pueden ser números de punto flotante, no es 
+    * enumerable y no tiene un tamaño significativo.
+    */
+    class RangeSet extends AbstractSet &lbrace;
+      constructor(from, to) &lbrace;
+        super();
+        this.from = from;
+        this.to = to;
+      }
+
+      has(x) &lbrace; return x >= this.from && x &lt;= this.to; }
+      toString() &lbrace; return `&lbrace; x| $&lbrace;this.from} ≤ x ≤ $&lbrace;this.to} }`; }
+    }
+
+    /*
+    * AbstractEnumerableSet es una subclase abstracta de AbstractSet. 
+    * Define un captador abstracto que devuelve el tamaño del conjunto 
+    * y también define un iterador abstracto. Y luego implementa los 
+    * métodos isEmpty(), toString() y equals() concretos sobre estos. 
+    * Las subclases que implementan el iterador, el captador de tamaño y 
+    * el método has() obtienen estos métodos concretos de forma gratuita.
+    */
+    class AbstractEnumerableSet extends AbstractSet &lbrace;
+      get size() &lbrace; throw new Error("Abstract method"); }
+      [Symbol.iterator]() &lbrace; throw new Error("Abstract method"); }
+
+      isEmpty() &lbrace; return this.size === 0; }
+      toString() &lbrace; return `&lbrace;$&lbrace;Array.from(this).join(", ")}}`; }
+      equals(set) &lbrace;
+        // Si el otro conjunto tampoco es Enumerable, no es igual a éste
+        if (!(set instanceof AbstractEnumerableSet)) return false;
+
+        // Si no tienen el mismo tamaño, no son iguales.
+        if (this.size !== set.size) return false;
+
+        // Recorrer los elementos de este conjunto
+        for(let element of this) &lbrace;
+          // Si un elemento no está en el otro conjunto, no son iguales
+          if (!set.has(element)) return false;
+        }
+
+        // Los elementos coinciden, por lo que los conjuntos son iguales.
+        return true;
+      }
+    }
+    /*
+    * SingletonSet es una subclase concreta de AbstractEnumerableSet.
+    * Un conjunto singleton es un conjunto de solo lectura con un solo miembro.
+    */
+    class SingletonSet extends AbstractEnumerableSet &lbrace;
+      constructor(member) &lbrace;
+        super();
+        this.member = member;
+      }
+
+      // Implementamos estos tres métodos y heredamos las implementaciones 
+      // de isEmpty, equals() y toString() basadas en estos métodos.
+      has(x) &lbrace; return x === this.member; }
+      get size() &lbrace; return 1; }
+      *[Symbol.iterator]() &lbrace; yield this.member; }
+    }
+
+    /*
+    * AbstractWritableSet es una subclase abstracta de AbstractEnumerableSet.
+    * Define los métodos abstractos insert() y remove() que insertan y eliminan
+    * elementos individuales del conjunto y, luego, implementa los métodos add(),
+    * subtract() e intersect() concretos sobre ellos. Tenga en cuenta
+    * que nuestra API difiere aquí de la clase Set estándar de JavaScript.
+    */
+    class AbstractWritableSet extends AbstractEnumerableSet &lbrace;
+      insert(x) &lbrace; throw new Error("Abstract method"); }
+      remove(x) &lbrace; throw new Error("Abstract method"); }
+
+      add(set) &lbrace;
+        for(let element of set) &lbrace;
+          this.insert(element);
+        }
+      }
+
+      subtract(set) &lbrace;
+        for(let element of set) &lbrace;
+          this.remove(element);
+        }
+      }
+
+      intersect(set) &lbrace;
+        for(let element of this) &lbrace;
+          if (!set.has(element)) &lbrace;
+            this.remove(element);
+          }
+        }
+      }
+    }
+
+    /**
+    * Un BitSet es una subclase concreta de AbstractWritableSet con
+    * una implementación de conjunto de tamaño fijo muy eficiente 
+    * para conjuntos cuyos elementos son números enteros no 
+    * negativos menores que un tamaño máximo.
+    */
+    class BitSet extends AbstractWritableSet &lbrace;
+      constructor(max) &lbrace;
+        super();
+        this.max = max; // El entero máximo que podemos almacenar.
+        this.n = 0;     // ¿Cuántos números enteros hay en el conjunto?
+        this.numBytes = Math.floor(max / 8) + 1;   // ¿Cuántos bytes necesitamos?
+        this.data = new Uint8Array(this.numBytes); // Los bytes
+      }
+
+      // Método interno para comprobar si un valor es un miembro legal de este conjunto
+      _valid(x) &lbrace; return Number.isInteger(x) && x >= 0 && x &lt;= this.max; }
+
+      // Comprueba si el bit especificado del byte especificado de nuestra 
+      // matriz de datos está configurado o no. Devuelve verdadero o falso.
+      _has(byte, bit) &lbrace; return (this.data[byte] & BitSet.bits[bit]) !== 0; }
+
+      // ¿El valor x está en este BitSet?
+      has(x) &lbrace;
+        if (this._valid(x)) &lbrace;
+          let byte = Math.floor(x / 8);
+          let bit = x % 8;
+          return this._has(byte, bit);
+        } else &lbrace;
+          return false;
+        }
+      }
+
+      // Inserte el valor x en el BitSet
+      insert(x) &lbrace;
+        if (this._valid(x)) &lbrace;            // Si el valor es válido
+          let byte = Math.floor(x / 8);  // convertir a byte y bit
+          let bit = x % 8;
+          if (!this._has(byte, bit)) &lbrace;           // Si ese bit aún no está configurado
+            this.data[byte] |= BitSet.bits[bit]; // Luego configúrelo
+            this.n++;                            // y aumentar el tamaño del conjunto
+          }
+        } else &lbrace;
+          throw new TypeError("Invalid set element: " + x );
+        }
+      }
+
+      remove(x) &lbrace;
+        if (this._valid(x)) &lbrace;           // Si el valor es válido
+          let byte = Math.floor(x / 8); // Calcular el byte y el bit
+          let bit = x % 8;
+          if (this._has(byte, bit)) &lbrace;   // Si ese bit ya está configurado
+            this.data[byte] &= BitSet.masks[bit]; // then unset it
+            this.n--;                             // y disminuir el tamaño
+          }
+        } else &lbrace;
+          throw new TypeError("Invalid set element: " + x );
+        }
+      }
+
+      // Un captador para devolver el tamaño del conjunto
+      get size() &lbrace; return this.n; }
+
+      // Itere el conjunto simplemente comprobando cada bit por turno.
+      // (Podríamos ser mucho más inteligentes y optimizar esto sustancialmente)
+      *[Symbol.iterator]() &lbrace;
+        for(let i = 0; i &lt;= this.max; i++) &lbrace;
+          if (this.has(i)) &lbrace;
+            yield i;
+          }
+        }
+      }
+    }
+
+    // Algunos valores precalculados utilizados por los 
+    // métodos has(), insert() y remove()
+    BitSet.bits = new Uint8Array([1, 2, 4, 8, 16, 32, 64, 128]);
+    BitSet.masks = new Uint8Array([~1, ~2, ~4, ~8, ~16, ~32, ~64, ~128]);</code></pre>
+  </section>
+  <section id="6">
+    <h2>9.6 Resumen</h2>
+    <p>En este capítulo se han explicado las principales características de las clases de JavaScript:</p>
+    <ul>
+      <li class="font-normal">Los objetos que son miembros de la misma clase heredan propiedades del mismo objeto prototipo. El objeto prototipo es la característica clave de las clases de JavaScript, y es posible definir clases con nada más que el método <codeinline>Object.create()</codeinline>.</li>
+      <li class="font-normal">Antes de ES6, las clases se definían más típicamente definiendo primero una función constructora. Las funciones creadas con la palabra clave <codeinline>function</codeinline> tienen una propiedad <codeinline>prototype</codeinline>, y el valor de esta propiedad es un objeto que se utiliza como prototipo de todos los objetos creados cuando la función se invoca con <codeinline>new</codeinline> como constructor. Al inicializar este objeto prototipo, puede definir los métodos compartidos de su clase. Aunque el objeto prototipo es la característica clave de la clase, la función constructora es la identidad pública de la clase.</li>
+      <li class="font-normal">ES6 introduce una palabra clave <codeinline>class</codeinline> que facilita la definición de clases, pero bajo el capó, el mecanismo de constructores y prototipos sigue siendo el mismo.</li>
+      <li class="font-normal">Las subclases se definen mediante la palabra clave <codeinline>extends</codeinline> en la declaración de una clase.</li>
+      <li class="font-normal">Las subclases pueden invocar el constructor de su superclase o métodos sobrescritos de su superclase con la palabra clave <codeinline>super</codeinline>.</li>
+    </ul>
   </section>
 </Layoutjavascript>

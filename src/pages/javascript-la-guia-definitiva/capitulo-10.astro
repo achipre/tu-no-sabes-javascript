@@ -1,0 +1,65 @@
+---
+import Navegation from "../../components/Navegation.astro";
+import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
+---
+<Layoutjavascript title="JavaScript: La guia definitiva">
+  <Navegation capAnterior="capitulo-9" capSiguiente="capitulo-11" />
+  <section class="fadeIn">
+    <h1>Módulos</h1>
+    <p>El objetivo de la programación modular es permitir que los programas grandes se ensamblen utilizando módulos de código de autores y fuentes dispares y que todo ese código se ejecute correctamente incluso en presencia de código que los diversos autores de los módulos no antici- paron. En la práctica, la modularidad consiste sobre todo en encapsular u ocultar detalles de implementación privados y mantener ordenado el espacio de nombres global para que los módulos no puedan modificar accidentalmente las variables, funciones y clases definidas por otros módulos.</p>
+    <p>Hasta hace poco, JavaScript no tenía soporte integrado para módulos, y los programadores que trabajaban con grandes bases de código hacían todo lo posible por utilizar la débil modularidad disponible a través de clases, objetos y cierres. La modularidad basada en cierres, con el apoyo de herramientas de agrupación de código, condujo a una forma práctica de modularidad basada en una función <codeinline>require()</codeinline>, que fue adoptada por Node. Los módulos basados en <codeinline>require()</codeinline> son una parte fundamental del entorno de programación Node, pero nunca se adoptaron como parte oficial del lenguaje JavaScript. En su lugar, ES6 define los módulos mediante las palabras clave <codeinline>import</codeinline> y <codeinline>export</codeinline>. Aunque la <codeinline>import</codeinline> y <codeinline>export</codeinline> forman parte del lenguaje desde hace años, no han sido implementadas por los navegadores web y Node hasta hace relativamente poco. En la práctica, la modularidad de JavaScript sigue dependiendo de las herramientas de agrupación de código.</p>
+    <p>Las secciones siguientes tratan de ello:</p>
+    <ul>
+      <li class="font-normal">Módulos "hágalo usted mismo" con clases, objetos y cierres</li>
+      <li class="font-normal">Módulos Node con <codeinline>require()</codeinline></li>
+      <li class="font-normal">Módulos ES6 con <codeinline>export</codeinline>, <codeinline>import</codeinline> e <codeinline>import()</codeinline></li>
+    </ul>
+  </section>
+  <section>
+    <h2>10.1 Módulos con clases, objetos y cierres</h2>
+    <p>Aunque pueda resultar obvio, vale la pena señalar que una de las características importantes de las clases es que actúan como módulos para sus métodos. Piense en el <a href="#ejemplo9-8">Ejemplo 9-8</a>. Ese ejemplo definía un número de clases diferentes, todas las cuales tenían un método llamado <codeinline>has()</codeinline>. Pero no tendrías ningún problema en escribir un programa que utilizara múltiples clases de conjuntos de ese ejemplo: no hay peligro de que la implementación de <codeinline>has()</codeinline> de SingletonSet sobrescriba el método <codeinline>has()</codeinline> de BitSet, por ejemplo.</p>
+    <p>La razón por la que los métodos de una clase son independientes de los métodos de otras clases no relacionadas es que los métodos de cada clase se definen como propiedades de objetos prototipo independientes. La razón por la que las clases son modulares es que los objetos son modulares: definir una propiedad en un objeto JavaScript es muy parecido a declarar una variable, pero añadir propiedades a los objetos no afecta al espacio de nombres global de un programa ni a las propiedades de otros objetos. JavaScript define bastantes funciones y constantes matemáticas, pero en lugar de definirlas todas globalmente, se agrupan como propiedades de un único objeto Math global. Esta misma técnica podría haberse utilizado en el <a href="#ejemplo9-8">Ejemplo 9-8</a>. En lugar de definir clases globales con nombres como En lugar de definir clases globales con nombres como SingletonSet y BitSet, ese ejemplo podría haberse escrito para definir sólo un único objeto global Sets, con propiedades que referencien a las distintas clases. Los usuarios de esta librería Sets podrían entonces referirse a las clases con nombres como <codeinline>Sets.Singleton</codeinline> y <codeinline>Sets.Bit</codeinline>.</p>
+    <p>El uso de clases y objetos para la modularidad es una técnica común y útil en la programación JavaScript, pero no va lo suficientemente lejos. En particular, no nos ofrece ninguna manera de ocultar los detalles de implementación interna dentro del módulo. Consideremos de nuevo el <a href="#ejemplo9-8">Ejemplo 9-8</a>. Si estuviéramos escribiendo ese ejemplo como un módulo, tal vez hubiéramos querido mantener las diversas clases abstractas internas al módulo, sólo haciendo las subclases concretas disponibles para los usuarios del módulo. De forma similar, en la clase BitSet, los métodos <codeinline>_valid()</codeinline> y <codeinline>_has()</codeinline> son utilidades internas que no deberían estar expuestas a los usuarios de la clase. Y <codeinline>BitSet.bits</codeinline> y <codeinline>BitSet.masks</codeinline> son detalles de implementación que sería mejor ocultar.</p>
+    <p>Como vimos en <a href="capitulo-8#6">§8.6</a>, las variables locales y las funciones anidadas declaradas dentro de una función son privadas para esa función. Esto significa que podemos usar expresiones de función invocadas inmediatamente para conseguir un tipo de modularidad dejando los detalles de implementación y las funciones de utilidad ocultas dentro de la función que las encierra, pero haciendo que la API pública del módulo sea el valor de retorno de la función. En el caso de la clase BitSet, podríamos estructurar el módulo así:</p>
+    <pre>
+    <code class="language-js">const BitSet = (function() &lbrace; // Set BitSet to the return value of this function
+      // Private implementation details here
+      function isValid(set, n) &lbrace; ... }
+      function has(set, byte, bit) &lbrace; ... }
+      const BITS = new Uint8Array([1, 2, 4, 8, 16, 32, 64, 128]);
+      const MASKS = new Uint8Array([~1, ~2, ~4, ~8, ~16, ~32, ~64, ~128]);
+      // The public API of the module is just the BitSet class, which we define
+      // and return here. The class can use the private functions and constants
+      // defined above, but they will be hidden from users of the class
+      return class BitSet extends AbstractWritableSet &lbrace;
+        // ... implementation omitted ...
+      };
+    }());</code></pre>
+    <p>Este enfoque de la modularidad se vuelve un poco más interesante cuando el módulo contiene más de un elemento. El código siguiente, por ejemplo, define un minimódulo estadístico que exporta las funciones <codeinline>mean()</codeinline> y <codeinline>stddev()</codeinline>, dejando ocultos los detalles de implementación:</p>
+    <pre>
+    <code class="language-js">// This is how we could define a stats module
+    const stats = (function() &lbrace;
+      // Utility functions private to the module
+      const sum = (x, y) => x + y;
+      const square = x => x * x;
+
+      // A public function that will be exported
+      function mean(data) &lbrace;
+        return data.reduce(sum)/data.length;
+      }
+
+      // A public function that we will export
+      function stddev(data) &lbrace;
+        let m = mean(data);
+        return Math.sqrt(data.map(x => x - m).map(square).reduce(sum)/(data.length-1));
+      }
+      
+      // We export the public function as properties of an object
+      return &lbrace; mean, stddev };
+    }());
+
+    // And here is how we might use the module
+    stats.mean([1, 3, 5, 7, 9]) // => 5
+    stats.stddev([1, 3, 5, 7, 9]) // => Math.sqrt(10)</code></pre>
+  </section>
+</Layoutjavascript>
