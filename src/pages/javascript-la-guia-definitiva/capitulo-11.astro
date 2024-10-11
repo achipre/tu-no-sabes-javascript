@@ -1,0 +1,485 @@
+---
+import Navegation from "../../components/Navegation.astro";
+import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
+---
+<Layoutjavascript title="JavaScript: La guia definitiva">
+  <Navegation capAnterior="capitulo-10" capSiguiente="capitulo-12" />
+  <section class="fadeIn">
+    <h1>La biblioteca estándar de JavaScript</h1>
+    <p>Algunos tipos de datos, como los números y las cadenas (Capítulo 3), los objetos (Capítulo 6) y las matrices (Capítulo 7), son tan fundamentales para JavaScript que podemos considerarlos parte del propio lenguaje. Este capítulo cubre otras API importantes pero menos fundamentales que pueden considerarse como la definición de la "biblioteca estándar" de JavaScript: se trata de clases y funciones útiles que están integradas en JavaScript y disponibles para todos los programas Java-Script tanto en navegadores web como en Node.1</p>
+    <p>Las secciones de este capítulo son independientes entre sí y puede leerlas en cualquier orden. Abarcan:</p>
+    <ul>
+      <li class="font-normal">Las clases Set y Map para representar conjuntos de valores y mapeos de un conjunto de valores a otro conjunto de valores.</li>
+      <li class="font-normal">Objetos tipo array conocidos como TypedArrays que representan arrays de datos binarios, junto con una clase relacionada para extraer valores de datos binarios no arrays.</li>
+      <li class="font-normal">Las expresiones regulares y la clase RegExp, que definen patrones textuales y son útiles para el tratamiento de textos. Esta sección también cubre en detalle la sintaxis de las expresiones regulares.</li>
+      <li class="font-normal">La clase Date para representar y manipular fechas y horas.</li>
+      <li class="font-normal">La clase Error y sus diversas subclases, cuyas instancias se lanzan cuando se producen errores en los programas JavaScript.</li>
+      <li class="font-normal">El objeto JSON, cuyos métodos admiten la serialización y deserialización de estructuras de datos JavaScript compuestas por objetos, matrices, cadenas, números y booleanos.</li>
+      <li class="font-normal">El objeto Intl y las clases que define que pueden ayudarle a localizar sus programas JavaScript.</li>
+      <li class="font-normal">El objeto Console, cuyos métodos producen cadenas de salida que son particularmente útiles para depurar programas y registrar el comportamiento de esos programas.</li>
+      <li class="font-normal">La clase URL, que simplifica la tarea de analizar y manipular URLs. Esta sección también cubre funciones globales para codificar y decodificar URLs y sus partes componentes.</li>
+      <li class="font-normal">setTimeout() y funciones relacionadas para especificar el código que se ejecutará una vez transcurrido un intervalo de tiempo determinado.</li>
+    </ul>
+    <p>Algunas de las secciones de este capítulo -en particular, las secciones sobre arrays tipados y expresiones regulares- son bastante largas porque hay información de fondo importante que debe comprender antes de poder utilizar esos tipos de forma eficaz. Muchas de las otras secciones, sin embargo, son cortas: simplemente introducen una nueva API y muestran algunos ejemplos de su uso.</p>
+  </section>
+  <section id="1" class="py-4 xs:py-5 sm:py-6">
+    <h2>11.1 Conjuntos y mapas</h2>
+    <p>El tipo Object de JavaScript es una estructura de datos versátil que puede utilizarse para asignar cadenas (los nombres de las propiedades del objeto) a valores arbitrarios. Y cuando el valor al que se asigna es algo fijo como true, entonces el objeto es efectivamente un conjunto de cadenas.</p>
+    <p>En realidad, los objetos se utilizan como mapas y conjuntos de forma bastante habitual en la programación JavaScript, pero esto se ve limitado por la restricción a las cadenas y complicado por el hecho de que los objetos normalmente heredan propiedades con nombres como "toString", que no suelen estar pensadas para formar parte del mapa o conjunto.</p>
+    <p>Por esta razón, ES6 introduce las verdaderas clases Set y Map, que trataremos en las subsecciones siguientes.</p>
+  </section>
+  <section id="1-1">
+    <h2>11.1.1 La clase Set</h2>
+    <p>Un conjunto es una colección de valores, como una matriz. Sin embargo, a diferencia de las matrices, los conjuntos no están ordenados ni indexados, y no admiten duplicados: un valor o es miembro de un conjunto o no lo es; no es posible preguntar cuántas veces aparece un valor en un conjunto.</p>
+    <p>Crea un objeto Set con el constructor Set():</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>No es necesario que el argumento del constructor Set() cualquier objeto iterable (incluidos otros objetos Set):</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>La propiedad tamaño de un conjunto es como la propiedad longitud de un array indica cuántos valores contiene el  conjunto:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Los conjuntos no necesitan inicializarse cuando se crean. Puede añadir y eliminar elementos en cualquier momento con add(), delete() y clear(). Recuerde que los conjuntos no pueden contener duplicados, por lo que añadir un valor a un conjunto cuando ya contiene ese valor no tiene ningún efecto:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Hay algunos puntos importantes a tener en cuenta sobre este código:</p>
+    <ul>
+      <li class="font-normal">El método add() toma un único argumento; si pasas un array, añade el propio array al conjunto, no los elementos individuales del array. Sin embargo, add() siempre devuelve el conjunto sobre el que se invoca, así que si quieres añadir múltiples valores a un conjunto, puedes usar llamadas encadenadas a métodos como s.add('a').add('b').add('c');.</li>
+      <li class="font-normal">El método delete() también elimina un único elemento del conjunto cada vez. Sin embargo, a diferencia de add(), delete() devuelve un valor booleano. Si el valor especificado era realmente un miembro del conjunto, delete() lo elimina y devuelve true. En caso contrario, no hace nada y devuelve false.</li>
+      <li class="font-normal">Por último, es muy importante entender que la pertenencia a un conjunto se basa en comprobaciones de igualdad estrictas, como las que realiza el operador ===. Un conjunto puede contener tanto el número 1 como la cadena "1", porque los considera valores distintos. Cuando los valores son objetos (o matrices o funciones), también se comparan como si fueran con ===Esta es la razón por la que no pudimos eliminar el elemento del array del conjunto en este código. Añadimos un array al conjunto y luego intentamos eliminarlo pasando un array diferente (aunque con los mismos elementos) al método delete(). Para que esto funcionara, tendríamos que haber pasado una referencia exactamente al mismo array.</li>
+    </ul>
+    <nota>
+      <img class="self-start" src="/public/javascript/nota_gral.png" alt="Nota de la grandesa">
+      <div class="">
+        <p>Los programadores de Python toman nota: ésta es una diferencia significativa entre los conjuntos de JavaScript y los de Python. Los conjuntos de Python comparan los miembros por igualdad, no por identidad, pero la contrapartida es que los conjuntos de Python sólo permiten miembros inmutables, como las tuplas, y no permiten añadir listas y dicts a los conjuntos.</p>
+      </div>
+    </nota>
+    <p>En la práctica, lo más importante que hacemos con los conjuntos no es añadir y eliminar elementos de ellos, sino comprobar si un valor especificado es miembro del conjunto. Esto se hace con el método has():</p>
+    <pre>
+      <code class="language-js"></code></pre>
+    <p>Lo más importante que hay que entender sobre los conjuntos es que están optimizados para la comprobación de miembros, y no importa cuántos miembros tenga el conjunto, el método has() será muy rápido. El método includes() de un array también realiza pruebas de pertenencia, pero el tiempo que tarda es proporcional al tamaño del array, y usar un array como set puede ser mucho, mucho más lento que usar un objeto Set real.</p>
+    <p>La clase Set es iterable, lo que significa que puede utilizar un bucle for/of para enumerar todos los elementos de un conjunto:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Dado que los objetos Set son iterables, puede convertirlos en matrices y listas de argumentos con el operador de extensión ...:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Los conjuntos se describen a menudo como "colecciones desordenadas". Sin embargo, esto no es exactamente cierto para la clase Set de Java Script. Un conjunto JavaScript no está indexado: no se puede preguntar por el primer o tercer elemento de un conjunto como se hace con un array. Pero la clase Set de JavaScript siempre recuerda el orden en el que se insertaron los elementos, y siempre utiliza este orden cuando iteras un conjunto: el primer elemento insertado será el primero iterado (suponiendo que no lo hayas borrado antes), y el elemento insertado más recientemente será el último iterado.<sup>2</sup></p>
+    <p>Además de ser iterable, la clase Set también implementa un método forEach() que es similar al método array del mismo nombre:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>El método forEach() de una matriz pasa los índices de la matriz como segundo argumento de la función especificada. Los conjuntos no tienen índices, por lo que la versión de la clase Set de este método simplemente pasa el valor del elemento como primer y segundo argumento.</p>
+  </section>
+  <section id="1-2" class="py-4 xs:py-5 sm:py-6">
+    <h2>11.1.2 La clase Mapa</h2>
+    <p>Un objeto Map representa un conjunto de valores conocidos como claves, donde cada clave tiene otro valor asociado (o "mapeado"). En cierto sentido, un mapa es como un array, pero en lugar de utilizar un conjunto de enteros secuenciales como claves, los mapas nos permiten utilizar valores arbitrarios como "índices". Al igual que las matrices, los mapas son rápidos: buscar el valor asociado a una clave será rápido (aunque no tanto como indexar una matriz) independientemente de lo grande que sea el mapa.</p>
+    <p>Crea un nuevo mapa con el constructor Map():</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>El argumento opcional del constructor Map() debe ser un objeto iterable que produzca matrices de dos elementos [clave, valor]. En la práctica, esto significa que si desea inicializar un mapa al crearlo, normalmente escribirá las claves deseadas y los valores asociados como una matriz de matrices. Pero también puedes utilizar el constructor Map() para copiar otros mapas o para copiar los nombres y valores de las propiedades de un objeto existente:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Una vez creado un objeto Map, puede consultar el valor asociado a una clave dada con get() y puede añadir un nuevo par clave/valor con set(). Recuerda, sin embargo, que un mapa es un conjunto de claves, cada una de las cuales tiene un valor asociado. Esto no es exactamente lo mismo que un conjunto de pares clave/valor. Si llamas a set() con una clave que ya existe en el mapa, cambiarás el valor asociado a esa clave, no añadirás un nuevo mapeo clave/valor. Además de get() y set(), la clase Map también define métodos que son como los métodos Set: utilizar has() para comprobar si un mapa incluye la clave especificada; utilizar delete() para eliminar una clave (y su valor asociado) del mapa; utilizar clear() para eliminar todos los pares clave/valor del mapa; y utilizar la propiedad size para averiguar cuántas claves contiene un mapa.</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Al igual que el método add() de Set, el método set() de Map puede encadenarse, lo que permite inicializar mapas sin utilizar matrices de matrices:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Al igual que con Set, cualquier valor JavaScript puede utilizarse como clave o valor en Map. Esto incluye null, undefined y NaN, así como tipos de referencia como objetos y matrices. Y al igual que con la clase Set, Map compara las claves por identidad, no por igualdad, por lo que si se utiliza un objeto o matriz como clave, se considerará diferente de cualquier otro objeto y matriz, incluso de aquellos que tengan exactamente las mismas propiedades o elementos:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Los objetos Map son iterables, y cada valor iterado es un array de dos elementos donde el primer elemento es una clave y el segundo elemento es el valor asociado a esa clave. Si utilizas el operador spread con un objeto Map, obtendrás un array de arrays como los siguientes que pasamos al constructor Map(). Y al iterar un mapa con un bucle for/of, es idiomático utilizar la asignación de desestructuración para asignar la clave y el valor a variables separadas:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Al igual que la clase Set, la clase Map itera en orden de inserción. El primer par clave/valor iterado será el que se haya añadido menos recientemente al mapa, y el último par iterado será el que se haya añadido más recientemente.</p>
+    <p>Si desea iterar sólo las claves o sólo los valores asociados de un mapa, utilice los métodos keys() y values(): éstos devuelven objetos iterables que iteran claves y valores, en orden de inserción. (El método entries() devuelve un objeto iterable que itera pares clave/valor, pero esto es exactamente lo mismo que iterar el mapa directamente).</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Los objetos Map también pueden ser iterados utilizando el método forEach() que fue implementado por primera vez por la clase Array.</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Puede parecer extraño que el parámetro valor vaya antes que el parámetro clave en el código anterior, ya que con la iteración for/of, la clave va primero. Como se indicó al principio de esta sección, se puede pensar en un mapa como una matriz generalizada en la que los índices enteros de la matriz se sustituyen por valores clave arbitrarios. El método forEach() de los arrays pasa el elemento del array primero y el índice del array después, así que, por analogía, el método forEach() de un mapa pasa el valor del mapa primero y la clave del mapa después.</p>
+  </section>
+  <section id="1-3">
+    <h2>11.1.3 WeakMap y WeakSet</h2>
+    <p>La clase WeakMap es una variante (pero no una subclase real) de la clase Map que no impide que sus valores clave sean recolectados por la basura. La recolección de basura es el proceso por el cual el intérprete de JavaScript recupera la memoria de los objetos que ya no son "accesibles" y no pueden ser utilizados por el programa. Un mapa normal mantiene referencias "fuertes" a sus valores clave, y siguen siendo accesibles a través del mapa, incluso si todas las demás referencias a ellos han desaparecido. El WeakMap, por el contrario, mantiene referencias " débiles" a sus valores clave para que no sean accesibles a través del WeakMap, y su presencia en el mapa no impida que se recupere su memoria.</p>
+    <p>El constructor WeakMap() es igual que el constructor Map(), pero hay algunas diferencias significativas entre WeakMap y Map:</p>
+    <ul>
+      <li class="font-normal">Las claves de WeakMap deben ser objetos o matrices; los valores primitivos no están sujetos a la recolección de basura y no pueden utilizarse como claves.</li>
+      <li class="font-normal">WeakMap sólo implementa los métodos get(), set(), has() y delete(). En particular, WeakMap no es iterable y no define keys(), values(), o forEach(). Si WeakMap fuera iterable, sus claves serían alcanzables y no sería débil.</li>
+      <li class="font-normal">Del mismo modo, WeakMap no implementa la propiedad size porque el tamaño de un WeakMap podría cambiar en cualquier momento a medida que los objetos son recolectados.</li>
+    </ul>
+    <p>El uso previsto de WeakMap es permitirle asociar valores con objetos sin causar fugas de memoria. Supongamos, por ejemplo, que estás escribiendo una función que toma como argumento un objeto y necesita realizar algún cálculo que consume tiempo en ese objeto. Por eficiencia, te gustaría almacenar en caché el valor calculado para reutilizarlo más tarde. Si utilizas un objeto Map para implementar la caché, impedirás q u e cualquiera de los objetos sea recuperado, pero si utilizas un WeakMap, evitarás este problema. (A menudo se puede conseguir un resultado similar utilizando una propiedad Symbol privada para almacenar en caché el valor com- puesto directamente en el objeto. Véase §6.10.3.)</p>
+    <p>WeakSet implementa un conjunto de objetos que no impide que dichos objetos sean recolectados. El constructor WeakSet() funciona como el constructor Set(), pero los objetos WeakSet difieren de los objetos Set de la misma forma que los objetos WeakMap difieren de los objetos Map:</p>
+    <ul>
+      <li class="font-normal">WeakSet no permite valores primitivos como miembros.</li>
+      <li class="font-normal">WeakSet sólo implementa los métodos add(), has() y delete() y no es iterable.</li>
+      <li class="font-normal">WeakSet no tiene una propiedad de tamaño.</li>
+    </ul>
+    <p>WeakSet no se utiliza con frecuencia: sus casos de uso son como los de WeakMap. Por ejemplo, si desea marcar (o "marcar") un objeto como poseedor de alguna propiedad o tipo especial, puede añadirlo a un WeakSet. Luego, cuando quiera comprobar esa propiedad o tipo, puede comprobar si pertenece a ese WeakSet. Hacer esto con un conjunto regular impediría que todos los objetos marcados fueran recolectados, pero esto no es un problema cuando se utiliza WeakSet.</p>
+  </section>
+  <section id="2" class="py-4 xs:py-5 sm:py-6">
+    <h2>11.2 Matrices tipificadas y datos binarios</h2>
+    <p>Las matrices normales de JavaScript pueden tener elementos de cualquier tipo y crecer o decrecer dinámicamente. Las implementaciones de JavaScript realizan muchas optimizaciones, por lo que los usos típicos de las matrices de JavaScript son muy rápidos. Sin embargo, siguen siendo bastante diferentes de los tipos de arrays de lenguajes de bajo nivel como C y Java. Los arrays tipados, que son nuevos en ES6,3 son mucho más parecidos a los arrays de bajo nivel de esos lenguajes. Los arrays tipados no son técnicamente arrays (Array.isArray() devuelve false para ellos), pero implementan todos los métodos de arrays descritos en §7.8 más algunos propios. Sin embargo, difieren de las matrices normales en algunos aspectos muy importantes:</p>
+    <ul>
+      <li class="font-normal">Los elementos de una matriz tipada son todos números. Sin embargo, a diferencia de los números normales de JavaScript, las matrices tipadas permiten especificar el tipo (enteros con y sin signo y coma flotante IEEE-754) y el tamaño (de 8 a 64 bits) de los números que se almacenarán en la matriz.</li>
+      <li class="font-normal">Debes especificar la longitud de un array tipado cuando lo creas, y esa longitud nunca puede cambiar.</li>
+      <li class="font-normal">Los elementos de un array tipado siempre se inicializan a 0 cuando se crea el array.</li>
+    </ul>
+  </section>
+  <section id="2-1">
+    <h2>11.2.1 Tipos de matrices tipificadas</h2>
+    <p>JavaScript no define una clase TypedArray. En su lugar, existen 11 clases de arrays tipados, cada una con un tipo de elemento y un constructor diferentes:</p>
+    <div id="tabla11-0" class="flex flex-col items-center">
+      <table>
+        <thead class="bg-amber-900 text-[#f6e4c5]">
+          <tr>
+            <td class="max-w-lg pl-4">ConstructorTipo</td>
+            <td class="max-w-lg pl-4">numérico</td>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">Int8Array()</codeinline></td>
+              <td class="max-w-lg px-4">bytes con signo</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">Uint8Array()</codeinline></td>
+              <td class="max-w-lg px-4">bytes sin signo</td>
+            </tr>
+            <tr>
+              <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">Uint8ClampedArray()</codeinline></td>
+              <td class="max-w-lg px-4">bytes sin signo sin rollover</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">Int16Array()</codeinline></td>
+              <td class="max-w-lg px-4">Enteros cortos de 16 bits con signo</td>
+            </tr>
+            <tr>
+              <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">Uint16Array()</codeinline></td>
+              <td class="max-w-lg px-4">Enteros cortos de 16 bits sin signo</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">Int32Array()</codeinline></td>
+              <td class="max-w-lg px-4">enteros de 32 bits con signo</td>
+            </tr>
+            <tr>
+              <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">Uint32Array()</codeinline></td>
+              <td class="max-w-lg px-4">Enteros de 32 bits sin signo</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">BigInt64Array()</codeinline></td>
+              <td class="max-w-lg px-4">Valores BigInt de 64 bits con signo (ES2020)</td>
+            </tr>
+            <tr>
+              <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">BigUint64Array() </codeinline></td>
+              <td class="max-w-lg px-4">valores BigInt de 64 bitssin signo (ES2020)</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">Float32Array()</codeinline></td>
+              <td class="max-w-lg px-4">Valor en coma flotantede de 32 bits</td>
+            </tr>
+            <tr>
+              <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">Float64Array()</codeinline></td>
+              <td class="max-w-lg px-4">Valor de coma flotante de 64 bits: un número normal de JavaScript</td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Los tipos cuyo nombre comienza por Int contienen enteros con signo de 1, 2 ó 4 bytes (8, 16 ó 32 bits). Los tipos cuyo nombre comienza por Uint contienen enteros sin signo de la misma longitud. Los tipos "BigInt" y "BigUint" contienen enteros de 64 bits, representados en JavaScript como valores BigInt (véase §3.2.5). Los tipos que empiezan por Float contienen números de coma flotante. Los elementos de un Float64Array son del mismo tipo que los números normales de Java-Script. Los elementos de un Float32Array tienen menor precisión y un rango más pequeño, pero requieren sólo la mitad de memoria. (Este tipo se denomina float en C y Java).</p>
+    <p>Uint8ClampedArray es una variante especial de Uint8Array. Ambos tipos contienen bytes sin signo y pueden representar números entre 0 y 255. Con Uint8Array, si almacenas un valor mayor que 255 o menor que cero en un elemento del array, éste se "envuelve" y obtienes otro valor. Así es como funciona la memoria del ordenador a bajo nivel, por lo que es muy rápido. Uint8ClampedArray realiza una comprobación de tipo adicional para que, si almacenas un valor mayor que 255 o menor que 0, se "sujete" a 255 o 0 y no se desplace. (Este comportamiento de sujeción es requerido por la API de bajo nivel del elemento HTML &lt;canvas> para manipular los colores de los píxeles).</p>
+    <p>Cada uno de los constructores de array tipados tiene una propiedad BYTES_PER_ELEMENT con el valor 1, 2, 4 u 8, dependiendo del tipo.</p>
+  </section>
+  <section id="2-2" class="py-4 xs:py-5 sm:py-6">
+    <h2>11.2.2 Creación de matrices tipadas</h2>
+    <p>La forma más sencilla de crear un array tipado es llamar al constructor apropiado con un argumento numérico que especifique el número de elementos que quieres en el array:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Cuando se crean arrays tipados de esta forma, se garantiza que todos los elementos del array se inicializan a 0, 0n, o 0.0. Pero si conoces los valores que quieres en tu array tipado, también puedes especificar esos valores cuando crees el array. Cada uno de los constructores de matrices tipadas tiene métodos de fábrica estáticos from() y of() que funcionan como Array.from() y Array.of():</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Recordemos que el método de fábrica Array.from() espera un objeto iterable o similar a un array como primer argumento. Lo mismo ocurre con las variantes tipadas de array, excepto que el objeto iterable o tipo array también debe tener elementos numéricos. Las cadenas son iterables, por ejemplo, pero no tendría sentido pasarlas al método de fábrica from() de un array tipado.</p>
+    <p>Si sólo está utilizando la versión de un argumento de from(), puede omitir el .from y pasar su objeto iterable o tipo array directamente a la función constructora, que se comporta exactamente igual. Tenga en cuenta que tanto el constructor como el método de fábrica from() le permiten copiar matrices tipadas existentes, aunque posiblemente cambiando el tipo:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Cuando se crea un nuevo array tipado a partir de un array, iterable u objeto tipo array existente, los valores pueden truncarse para ajustarse a las restricciones de tipo del array. No hay advertencias ni errores cuando esto ocurre:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Por último, hay otra forma de crear matrices tipadas que implica el tipo ArrayBuffer. Un ArrayBuffer es una referencia opaca a un trozo de memoria. Puedes crear uno con el constructor; sólo tienes que pasar el número de bytes de memoria que deseas asignar:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>La clase ArrayBuffer no permite leer ni escribir ninguno de los bytes que tiene asignados. Pero puedes crear arrays tipados que utilicen la memoria del buffer y que sí te permitan leer y escribir esa memoria. Para hacer esto, llama al constructor de arrays tipados con un ArrayBuffer como primer argumento, un desplazamiento de bytes dentro del buffer del array como segundo argumento, y la longitud del array (en elementos, no en bytes) como tercer argumento. El segundo y el tercer argumento son opcionales. Si omite ambos, la matriz utilizará toda la memoria del búfer de la matriz. Si sólo omite el argumento longitud, la matriz utilizará toda la memoria disponible entre la posición de inicio y el final de la matriz. Una cosa más a tener en cuenta sobre esta forma del constructor de array tipado: los arrays deben estar alineados con la memoria, por lo que si especifica un desplazamiento de byte, el valor debe ser un múltiplo del tamaño de su tipo. El constructor Int32Array() requiere un múltiplo de cuatro, por ejemplo, y Float64Array() requiere un múltiplo de ocho.</p>
+    <p>Dado el ArrayBuffer creado anteriormente, podrías crear arrays tipados como estos:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Estos cuatro arrays tipados ofrecen cuatro vistas diferentes de la memoria representada por el ArrayBuffer. Es importante entender que todos los arrays tipados tienen un ArrayBuffer subyacente, incluso si no se especifica explícitamente. Si llamas a un constructor de arrays tipados sin pasarle un objeto buffer, se creará automáticamente un buffer del tamaño apropiado. Como se describe más adelante, la propiedad buffer de cualquier array tipado se refiere a su objeto subyacente ArrayBuffer. La razón para trabajar directamente con objetos ArrayBuffer es que a veces puedes querer tener múltiples vistas de matrices tipadas de un único buffer.</p>
+  </section>
+  <section id="2-3">
+    <h2>11.2.3 Uso de matrices tipadas</h2>
+    <p>Una vez creado un array tipado, puedes leer y escribir sus elementos con la notación normal de corchetes, como harías con cualquier otro objeto tipo array:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Esta función calcula el mayor número primo menor que el número especificado. El código es exactamente el mismo que con una matriz JavaScript normal, pero el uso de Uint8Array() en lugar de Array() hace que el código se ejecute más de cuatro veces más rápido y utilice ocho veces menos memoria en mis pruebas.</p>
+    <p>Las matrices tipadas no son verdaderas matrices, pero reimplementan la mayoría de los métodos de matrices, por lo que se pueden utilizar prácticamente igual que las matrices normales:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Recuerde que los arrays tipados tienen longitudes fijas, por lo que la propiedad length es de sólo lectura, y los métodos que cambian la longitud del array (como push(), pop(), unshift(), shift(), y splice()) no están implementados para arrays tipados. Los métodos que alteran el contenido de una matriz sin cambiar su longitud (como sort(), reverse() y fill()) están implementados. Los métodos como map() y slice() que devuelven nuevas matrices, devuelven una matriz tipada del mismo tipo que aquella a la que se llama.</p>
+  </section>
+  <section id="2-4" class="py-4 xs:py-5 sm:py-6">
+    <h2>11.2.4 Métodos y propiedades de matrices tipificadas</h2>
+    <p>Además de los métodos estándar de las matrices, las matrices tipadas también implementan algunos métodos propios. El método set() establece múltiples elementos de una matriz tipada a la vez copiando los elementos de una matriz normal o tipada en una matriz tipada:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>El método set() toma un array o un array tipado como primer argumento y un desplazamiento de elemento como segundo argumento opcional, que por defecto es 0 si no se especifica. Si está copiando valores de una matriz tipada a otra, es probable que la operación sea extremadamente rápida.</p>
+    <p>Los arrays tipados también tienen un método subarray que devuelve una parte del array sobre el que se llama:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>subarray() toma los mismos argumentos que el método slice() y parece funcionar de la misma manera. Pero hay una diferencia importante. slice() devuelve los elementos especificados en una nueva matriz de tipo independiente que no comparte memoria con la matriz original. subarray() no copia ninguna memoria; sólo devuelve una nueva vista de los mismos valores subyacentes:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>El hecho de que el método subarray() devuelva una nueva vista de un array existente nos devuelve al tema de los ArrayBuffers. Cada array tipado tiene tres propiedades que se relacionan con el buffer subyacente:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>La propiedad buffer es el ArrayBuffer del array. byteOffset es la posición inicial de los datos del array dentro del buffer subyacente. Y byteLength es la longitud de los datos del array en bytes. Para cualquier tipo de array, a, esta invariante debe ser siempre verdadera:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Los ArrayBuffers son simplemente trozos opacos de bytes. Puedes acceder a esos bytes con arrays tipados, pero un ArrayBufffer no es en sí mismo un array tipado. Ten cuidado, sin embargo: puedes usar indexación numérica de arrays con ArrayBuffers igual que con cualquier objeto JavaScript. Hacerlo no te da acceso a los bytes del buffer, pero puede causar errores de confusión:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Anteriormente vimos que se puede crear un ArrayBuffer con el constructor ArrayBuffer() y luego crear arrays tipados que utilicen ese buffer. Otro enfoque es crear un array tipado inicial, y luego usar el buffer de ese array para crear otras vistas:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+  </section>
+  <section id="2-5">
+    <h2>11.2.5 DataView y Endianness</h2>
+    <p>Las matrices tipadas permiten ver la misma secuencia de bytes en trozos de 8, 16, 32 o 64 bits. De este modo, queda al descubierto la "endianidad": el orden en que los bytes se organizan en palabras más largas. En aras de la eficiencia, las matrices tipadas utilizan el "endianness" nativo del hardware subyacente. En los sistemas little-endian, los bytes de un número se ordenan en un Array-Buffer de menor a mayor significación. En las plataformas big-endian, los bytes se ordenan del más significativo al menos significativo. Usted puede determinar el endian- ness de la plataforma subyacente con código como este:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Hoy en día, las arquitecturas de CPU más comunes son little-endian. Sin embargo, muchos protocolos de red y algunos formatos de archivos binarios requieren un orden de bytes big-endian. Si estás usando matrices tipadas con datos que provienen de la red o de un archivo, no puedes asumir que el orden de la plataforma coincide con el orden de los bytes de los datos. En general, cuando se trabaja con datos externos, puede utilizar Int8Array y Uint8Array para ver los datos como una matriz de bytes individuales, pero no debe utilizar las otras matrices tipadas con tamaños de palabra multibyte. En su lugar, puedes utilizar la clase DataView, que define métodos para leer y escribir valores desde un ArrayBuffer con un orden de bytes explícitamente especificado:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>DataView define 10 métodos get para cada una de las 10 clases de matrices tipadas (excluyendo Uint8ClampedArray). Tienen nombres como getInt16(), getUint32(), getBigInt64(), y getFloat64(). El primer argumento es el desplazamiento de bytes dentro del ArrayBuffer en el que comienza el valor. Todos estos métodos getter, excepto getInt8() y getUint8(), aceptan un valor booleano opcional como segundo argumento. Si el segundo argumento se omite o es falso, se utiliza el orden big- endian. Si el segundo argumento es verdadero, se utiliza el orden little-endian.</p>
+    <p>DataView también define 10 métodos Set correspondientes que escriben valores en el ArrayBuffer subyacente. El primer argumento es el offset en el que comienza el valor. El segundo argumento es el valor a escribir. Cada uno de los métodos, excepto setInt8() y setUint8(), acepta un tercer argumento opcional. Si el argumento se omite o es falso, el valor se escribe en formato big-endian con el byte más significativo primero. Si el argumento es verdadero, el valor se escribe en formato little-endian con el byte menos significativo primero.</p>
+    <p>Las matrices tipadas y la clase DataView le proporcionan todas las herramientas necesarias para procesar datos binarios y le permiten escribir programas JavaScript que hagan cosas como descomprimir archivos ZIP o extraer metadatos de archivos JPEG.</p>
+  </section>
+  <section id="3" class="py-4 xs:py-5 sm:py-6">
+    <h2>11.3 Comparación de patrones con expresiones regulares</h2>
+    <p>Una expresión regular es un objeto que describe un patrón textual. La clase RegExp de JavaScript representa expresiones regulares, y tanto String como RegExp definen métodos que utilizan expresiones regulares para realizar potentes funciones de concordancia de patrones y de búsqueda y reemplazo en texto. Sin embargo, para utilizar la API RegExp con eficacia, también debes aprender a describir patrones de texto utilizando la gramática de expresiones regulares, que es esencialmente un mini lenguaje de programación propio. Afortunadamente, la gramática de expresiones regulares de JavaScript es bastante similar a la gramática utilizada por muchos otros lenguajes de programación, por lo que es posible que ya esté familiarizado con ella. (Y si no lo está, el esfuerzo que invierta en aprender las expresiones regulares de JavaScript probablemente le será útil también en otros contextos de programación).</p>
+    <p>Las subsecciones que siguen describen primero la gramática de las expresiones regulares, y luego, después de explicar cómo escribir expresiones regulares, explican cómo puedes usarlas con los métodos de las clases String y RegExp.</p>
+  </section>
+  <section id="3-1">
+    <h2>11.3.1 Definición de expresiones regulares</h2>
+    <p>En JavaScript, las expresiones regulares se representan mediante objetos RegExp. Los objetos RegExp pueden crearse con el constructor RegExp(), por supuesto, pero suelen crearse utilizando una sintaxis literal especial. Así como los literales de cadena se especifican como caracteres entre comillas, los literales de expresión regular se especifican como caracteres dentro de un par de caracteres de barra (/). Así, su código JavaScript puede contener líneas como ésta:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Esta línea crea un nuevo objeto RegExp y lo asigna a la variable pattern. Este objeto RegExp en particular coincide con cualquier cadena que termine con la letra "s". Este regular podría haberse definido de forma equivalente con el constructor RegExp(), de esta forma:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Las especificaciones de patrones de expresiones regulares consisten en una serie de caracteres. La mayoría de los caracteres, incluidos todos los alfanuméricos, describen simplemente los caracteres que deben coincidir literalmente. Así, la expresión regular /java/ coincide con cualquier cadena que contenga la subcadena "java". Otros caracteres de las expresiones regulares no se comparan literalmente, pero tienen un significado especial. Por ejemplo, la expresión regular /s$/ contiene dos caracteres. El primero, "s", coincide literalmente. El segundo, "$", es un metacarácter especial que coincide con el final de una cadena. Así, esta expresión regular coincide con cualquier cadena que contenga la letra "s" como último carácter.</p>
+    <p>Como veremos, las expresiones regulares también pueden tener uno o más caracteres de bandera que afectan a su funcionamiento. Los indicadores se especifican a continuación del segundo carácter de barra en las literales RegExp, o como un segundo argumento de cadena para el constructor RegExp(). Si, por ejemplo, quisiéramos buscar cadenas que terminen en "s" o "S", podríamos utilizar la bandera i con nuestra expresión regular para indicar que queremos que no se distinga entre mayúsculas y minúsculas:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Las siguientes secciones describen los distintos caracteres y metacaracteres utilizados en las expresiones regulares de JavaScript.</p>
+    <p class="title-article text-left">Caracteres literales</p>
+    <p>Todos los caracteres alfabéticos y dígitos coinciden literalmente en las expresiones regulares. La sintaxis de las expresiones regulares de JavaScript también admite determinados caracteres no alfabéticos mediante secuencias de escape que comienzan con una barra invertida (\). Por ejemplo, la secuencia \n coincide con un carácter literal de nueva línea en una cadena. La Tabla 11-1 enumera estos caracteres.</p>
+    <div id="tabla11-1" class="flex flex-col items-center">
+      <table>
+        <thead class="bg-amber-900 text-[#f6e4c5]">
+          <tr>
+            <td class="max-w-lg pl-4">Carácter</td>
+            <td class="max-w-lg pl-4">Partidos</td>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td class="max-w-lg pl-2">Carácter alfanumérico</td>
+              <td class="max-w-lg px-4">Itself</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">\0</codeinline></td>
+              <td class="max-w-lg px-4">El carácter NUL (\u0000)</td>
+            </tr>
+            <tr>
+              <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">\t</codeinline></td>
+              <td class="max-w-lg px-4">Tab (\u0009)</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">\n</codeinline></td>
+              <td class="max-w-lg px-4">Nueva línea (\u000A)</td>
+            </tr>
+            <tr>
+              <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">\v</codeinline></td>
+              <td class="max-w-lg px-4">Pestaña vertical (\u000B)</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">\f</codeinline></td>
+              <td class="max-w-lg px-4">Alimentación del formulario (\u000C)</td>
+            </tr>
+            <tr>
+              <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">\r</codeinline></td>
+              <td class="max-w-lg px-4">Retorno de carro (\u000D)</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">\xnn</codeinline></td>
+              <td class="max-w-lg px-4">El carácter latino especificado por el número hexadecimal nn; por ejemplo, \x0A es lo mismo que \n.</td>
+            </tr>
+            <tr>
+              <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">\uxxxx </codeinline></td>
+              <td class="max-w-lg px-4">El carácter Unicode especificado por el número hexadecimal xxxx; por ejemplo, \u0009 es lo mismo que \t.</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">\u&lbrace;n} </codeinline></td>
+              <td class="max-w-lg px-4">El carácter Unicode especificado por el punto de código n, donde n es de uno a seis dígitos hexadecimales entre 0 y 10FFFF. Tenga en cuenta que esta sintaxis sólo se admite en expresiones regulares que utilizan el indicador u.</td>
+            </tr>
+            <tr>
+              <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">\cX</codeinline></td>
+              <td class="max-w-lg px-4">El carácter de control ^X; por ejemplo, \cJ equivale al carácter de nueva línea \n</td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Algunos caracteres de puntuación tienen un significado especial en las expresiones regulares. Estos son:</p>
+    <pre>^ $ . ¡* + ? = ! : | \ / ( ) [ ] &lbrace; }</pre>
+    <p>Los significados de estos caracteres se tratan en las secciones siguientes. Algunos de estos caracteres tienen un significado especial sólo en determinados contextos de una expresión regular y se tratan literalmente en otros contextos. Sin embargo, como regla general, s i desea incluir cualquiera de estos caracteres de puntuación literalmente en una expresión regular, debe precederlos de un \. Otros caracteres de puntuación, como las comillas y @, no tienen un significado especial y simplemente coinciden literalmente en una expresión regular.</p>
+    <p>Si no recuerda exactamente qué caracteres de puntuación deben escaparse con una barra invertida, puede colocar una barra invertida antes de cualquier carácter de puntuación. Por otro lado, tenga en cuenta que muchas letras y números tienen un significado especial cuando van precedidos de una barra invertida, por lo que las letras o números que desee que coincidan literalmente no deben escaparse con una barra invertida. Para incluir un carácter de barra invertida literalmente en una expresión regular, debe escaparlo con una barra invertida, por supuesto. Por ejemplo, la siguiente expresión regular coincide con cualquier cadena que incluya una barra invertida: /\\/. (Y si usa el constructor RegExp(), tenga en cuenta que cualquier barra invertida en su expresión regu- lar debe ser duplicada, ya que las cadenas también usan barras invertidas como carácter de escape).</p>
+    <p class="title-article text-left">Clases de personajes</p>
+    <p>Los caracteres literales individuales pueden combinarse en clases de caracteres colocándolos entre corchetes. Una clase de caracteres coincide con cualquier carácter contenido en ella. Así, la expresión regular /[abc]/ coincide con cualquiera de las letras a, b o c. También se pueden definir clases de caracteres negados, que coinciden con cualquier carácter excepto los que están entre corchetes. Una clase de caracteres negada se especifica colocando un signo de intercalación (^) como primer carácter dentro del corchete izquierdo. La RegExp /[^abc]/ coincide con cualquier carácter que no sea a, b o c. Las clases de caracteres pueden usar un guión para indicar un rango de caracteres. Para coincidir con cualquier carácter en minúscula del alfabeto latino, use /[a-z]/, y para coincidir con cualquier letra o dígito del alfabeto latino, use /[a-zA- Z0-9]/. (Y si desea incluir un guión real en su clase de caracteres, simplemente hágalo el último carácter antes del corchete derecho).</p>
+    <p>Debido a que ciertas clases de caracteres se utilizan comúnmente, la sintaxis de expresiones regulares de JavaScript incluye caracteres especiales y secuencias de escape para representar estas clases comunes. Por ejemplo, \s coincide con el carácter de espacio, el carácter de tabulación y cualquier otro carácter de espacio en blanco Unicode; \S coincide con cualquier carácter que no sea un espacio en blanco Unicode. La Tabla 11-2 enumera estos caracteres y resume la sintaxis de las clases de caracteres. (Tenga en cuenta que varias de estas secuencias de escape de clases de caracteres sólo coinciden con caracteres ASCII y no se han ampliado para funcionar con caracteres Unicode. Sin embargo, puede definir explícitamente sus propias clases d e caracteres Unicode; por ejemplo, /[\u0400-\u04FF]/ coincide con cualquier carácter cirílico).</p>
+    <div id="tabla11-2" class="flex flex-col items-center">
+      <p><em>Tabla 11-2. Clases de caracteres de expresiones regulares</em></p>
+      <table>
+        <thead class="bg-amber-900 text-[#f6e4c5]">
+          <tr>
+            <td class="max-w-lg pl-4"></td>
+            <td class="max-w-lg pl-4"></td>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">[...]</codeinline></td>
+              <td class="max-w-lg px-4">Un carácter cualquiera entre los corchetes.</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">[^...]</codeinline></td>
+              <td class="max-w-lg px-4">Cualquier carácter que no esté entre paréntesis.</td>
+            </tr>
+            <tr>
+              <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">.</codeinline></td>
+              <td class="max-w-lg px-4">Cualquier carácter excepto nueva línea u otro terminador de línea Unicode. O, si la RegExp utiliza el indicador s, entonces un punto coincide con cualquier carácter, incluidos los terminadores de línea.</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">\w</codeinline></td>
+              <td class="max-w-lg px-4">Cualquier carácter ASCII de palabra. Equivale a [a-zA-Z0-9_].</td>
+            </tr>
+            <tr>
+              <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">\W</codeinline></td>
+              <td class="max-w-lg px-4">Cualquier carácter que no sea un carácter de palabra ASCII. Equivale a [^a-zA-Z0-9_].</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">\s</codeinline></td>
+              <td class="max-w-lg px-4">Cualquier carácter Unicode de espacio en blanco.</td>
+            </tr>
+            <tr>
+              <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">\S</codeinline></td>
+              <td class="max-w-lg px-4">Cualquier carácter que no sea un espacio en blanco Unicode.</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">\d</codeinline></td>
+              <td class="max-w-lg px-4">Cualquier dígito ASCII. Equivale a [0-9].</td>
+            </tr>
+            <tr>
+              <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">\D</codeinline></td>
+              <td class="max-w-lg px-4">Cualquier carácter que no sea un dígito ASCII. Equivale a [^0-9].</td>
+            </tr>
+            <tr class="bg-[#f6e4c5]">
+              <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">[\b]</codeinline></td>
+              <td class="max-w-lg px-4">Un retroceso literal (caso especial).</td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Tenga en cuenta que los escapes especiales de clase de caracteres pueden utilizarse entre corchetes. \s coincide con cualquier carácter de espacio en blanco, y \d coincide con cualquier dígito, por lo que /[\s\d]/ coincide con cualquier carácter de espacio en blanco o dígito. Tenga en cuenta que hay un caso especial. Como verás más adelante, el escape \b tiene un significado especial. Sin embargo, cuando se usa dentro de una clase de caracteres, representa el carácter de retroceso. Así, para representar un carácter de retroceso literalmente en una expresión regular, utilice la clase de caracteres con un elemento: /[\b]/.</p>
+    <article>
+      <p class="title-article">Clases de caracteres Unicode</p>
+      <p>En ES2018, si una expresión regular utiliza el indicador u, se admiten las clases de
+        caracteres \p&lbrace;...} y su negación \P&lbrace;...}. (A partir de principios de 2020, esto se
+        implementa en Node, Chrome, Edge y Safari, pero no en Firefox). Estas clases de
+        caracteres se basan en propiedades definidas por el estándar Unicode, y el conjunto
+        de caracteres que representan puede cambiar a medida que Unicode evoluciona.</p>
+    <pre>
+    <code class="language-js">let billion = 1_000_000_000;  // Subguion como separador de miles.
+    let bytes = 0x89_AB_CD_EF;    // Como separador de bytes.
+    let bits = 0b0001_1101_0111;  // Como separador de nibble.
+    let fraction = 0.123_456_789; // Funciona también en la parte fraccionaria.</code></pre>
+      <p>En el momento de escribir este artículo, a principios de 2020, los guiones bajos en literales numéricos aún no están formalmente estandarizados como parte de JavaScript. Pero se encuentran en fases avanzadas del proceso de estandarización y están implementados por los principales navegadores y por Node.</p>
+      <p>La clase de caracteres \d sólo coincide con dígitos ASCII. Si desea que coincida con un dígito decimal de cualquiera de los sistemas de escritura del mundo, puede utilizar /\p&lbrace;Decimal_Number}/u.</p>
+      <p>Y si quieres que coincida con cualquier carácter que no sea un dígito decimal en cualquier lan- puede escribir la p en mayúsculas y \P&lbrace;Número_Decimal}. Si desea que coincida con cualquier carácter numérico, incluyendo fracciones y números romanos, puede utilizar \p&lbrace;Número}. Tenga en cuenta que "Decimal_Number" y "Number" no son específicos de Java-Script o de la gramática de expresiones regulares: es el nombre de una categoría de caracteres definida por el estándar Unicode.</p>
+      <p>La clase de caracteres \w sólo funciona para texto ASCII, pero con \p, podemos aproximarnos a una versión internacionalizada como ésta:</p>
+      <pre>
+      <code class="language-js"></code></pre>
+      <p>(Aunque para ser totalmente compatibles con la complejidad de las lenguas del mundo, realmente necesitamos añadir también las categorías "Conector_Puntuación" y "Join_Control").</p>
+      <p>Como último ejemplo, la sintaxis \p también nos permite definir expresiones regulares que coincidan con caracteres de un alfabeto o escritura concretos:</p>
+      <pre>
+      <code class="language-js"></code></pre>
+    </article>
+    <p class="title-article text-left">Clases de personajes</p>
+  </section>
+  <section id="3-2" class="py-4 xs:py-5 sm:py-6">
+    <h2>11.3.2 Métodos de cadena para la concordancia de patrones</h2>
+  </section>
+  <section id="3-3">
+    <h2>11.3.3 La clase RegExp</h2>
+  </section>
+  <section id="4" class="py-4 xs:py-5 sm:py-6">
+    <h2>11.4 Fechas y horarios</h2>
+  </section>
+  <section id="4-1">
+    <h2>11.4.1 Marcas de tiempo</h2>
+  </section>
+  <section id="4-2" class="py-4 xs:py-5 sm:py-6">
+    <h2>11.4.2 Aritmética de fechas</h2>
+  </section>
+  <section id="4-3">
+    <h2>11.4.3 Formateo y análisis sintáctico de cadenas de fecha</h2>
+  </section>
+  <section id="5" class="py-4 xs:py-5 sm:py-6">
+    <h2>11.5 Clases de error</h2>
+  </section>
+  <section id="6">
+    <h2>11.6 Serialización y análisis JSON</h2>
+  </section>
+  <section id="6-1" class="py-4 xs:py-5 sm:py-6">
+    <h2>11.6.1 Personalizaciones JSON</h2>
+  </section>
+  <section id="7">
+    <h2>11.7 API de internacionalización</h2>
+  </section>
+  <section id="7-1" class="py-4 xs:py-5 sm:py-6">
+    <h2>11.7.1 Formato de números</h2>
+  </section>
+  <section id="7-2">
+    <h2>11.7.2 Formato de fechas y horas</h2>
+  </section>
+  <section id="7-3" class="py-4 xs:py-5 sm:py-6">
+    <h2>11.7.3 Comparación de cadenas</h2>
+  </section>
+  <section id="8">
+    <h2>11.8 La API de la consola</h2>
+  </section>
+  <section id="8-1" class="py-4 xs:py-5 sm:py-6">
+    <h2>11.8.1 Salida formateada con consola</h2>
+  </section>
+  <section id="9">
+    <h2>11.9 API de URL</h2>
+  </section>
+  <section id="9-1" class="py-4 xs:py-5 sm:py-6">
+    <h2>11.9.1 Funciones URL heredadas</h2>
+  </section>
+  <section id="10">
+    <h2>11.10 Temporizadores</h2>
+  </section>
+  <section id="11" class="py-4 xs:py-5 sm:py-6">
+    <h2>11.11 Resumen</h2>
+  </section>
+</Layoutjavascript>
