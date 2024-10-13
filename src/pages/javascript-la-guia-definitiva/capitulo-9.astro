@@ -417,7 +417,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     };</code></pre>
     <p>Añadir métodos a los prototipos de los tipos incorporados se considera generalmente una mala idea porque causará confusión y problemas de compatibilidad en el futuro si una nueva versión de JavaScript define un método con el mismo nombre. Incluso es posible añadir métodos a <codeinline>Object.prototype</codeinline>, haciéndolos disponibles para todos los objetos. Pero esto nunca es bueno porque las propiedades añadidas a <codeinline>Object.prototype</codeinline> son visibles para los bucles <codeinline>for/in</codeinline> (aunque puede evitarlo utilizando <codeinline>Object.defineProperty()</codeinline> [<a href="capitulo-14#1">§14.1</a>] para hacer que la nueva propiedad no sea enumerable).</p>
   </section>
-  <section id="5">
+  <section id="5" class="py-4 xs:py-5 sm:py-6">
     <h2>9.5 Subclases</h2>
     <p>En programación orientada a objetos, una clase B puede <em>extender</em> o <em>subclasificar</em> a otra clase A. Decimos que A es la <em>superclase</em> y B es la <em>subclase</em>. Las instancias de B heredan los métodos de A. La clase B puede definir sus propios métodos, algunos de los cuales pueden <em>sobreescribir</em> métodos del mismo nombre definidos por la clase A. Si un método de B anula un método de A, el método de anulación en B a menudo tiene que invocar el método anulado en A. Del mismo modo, el constructor de la subclase <codeinline>B()</codeinline> normalmente debe invocar el constructor de la superclase <codeinline>A()</codeinline> con el fin de garantizar que las instancias estén completamente inicializadas.</p>
     <p>Esta sección comienza mostrando cómo definir subclases a la antigua, pre-ES6 manera, y luego pasa rápidamente a demostrar subclasificación utilizando la <codeinline>class</codeinline> y se <codeinline>extends</codeinline> palabras clave y constructor superclase método de invocación con la palabra clave <codeinline>super</codeinline>. A continuación hay una subsección sobre cómo evitar las subclases y confiar en la composición de objetos en lugar de la herencia. La sección termina con un ejemplo extendido que define una jerarquía de clases Set y demuestra cómo se pueden utilizar las clases abstractas para separar la interfaz de la implementación.</p>
@@ -457,7 +457,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Puede observar que nuestro constructor <codeinline>Span()</codeinline> establece las mismas propiedades <codeinline>from</codeinline> y <codeinline>to</codeinline> que el constructor <codeinline>Range()</codeinline>, por lo que no necesita invocar al constructor <codeinline>Range()</codeinline> para inicializar el nuevo objeto. Del mismo modo, el método <codeinline>toString()</codeinline> de Span reimplementa completamente la conversión de cadenas sin necesidad de llamar a la versión de Range de <codeinline>toString()</codeinline>. Esto convierte a Span en un caso especial, y sólo podemos salirnos con la nuestra con este tipo de subclase porque conocemos los detalles de implementación de la superclase. Un mecanismo de subclasificación robusto necesita permitir a las clases invocar los métodos y el constructor de su superclase, pero antes de ES6, JavaScript no tenía una forma sencilla de hacer estas cosas.</p>
     <p>Afortunadamente, ES6 resuelve estos problemas con la palabra clave <codeinline>super</codeinline> como parte de la <codeinline>class</codeinline> sintaxis. La siguiente sección muestra cómo funciona.</p>
   </section>
-  <section id="5-2">
+  <section id="5-2" class="py-4 xs:py-5 sm:py-6">
     <h2>9.5.2 Subclases con extends y super</h2>
     <p>En ES6 y posteriores, puede crear una superclase simplemente añadiendo una cláusula extends a la declaración de una clase, y puede hacerlo incluso para clases incorporadas:</p>
     <pre>
@@ -589,7 +589,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     }</code></pre>
     <p>Todo lo que hace el constructor <codeinline>Histogram()</codeinline> en el <a href="#ejemplo9-7">Ejemplo 9-7</a> es crear un objeto Map. Y la mayoría de los métodos son de una sola línea que simplemente delegan a un método del mapa, haciendo la implementación bastante simple. Debido a que usamos delegación en lugar de herencia, un objeto Histograma no es una instancia de Set o Map. Pero Histogram implementa una serie de métodos Set de uso común, y en un lenguaje no tipado como JavaScript, que a menudo es lo suficientemente bueno: una relación de herencia formal es a veces agradable, pero a menudo opcional.</p>
   </section>
-  <section id="5-4">
+  <section id="5-4" class="py-4 xs:py-5 sm:py-6">
     <h2>9.5.4 Jerarquías de clases y clases abstractas</h2>
     <p>El <a href="#ejemplo9-6">Ejemplo 9-6</a> muestra cómo podemos subclasificar Map. El <a href="#ejemplo9-7">Ejemplo 9-7</a> demuestra cómo podemos delegar en un objeto Map sin subclasificar nada. Usar clases JavaScript para encapsular datos y modularizar tu código es a menudo una gran técnica, y puedes encontrarte usando la palabra clave <codeinline>class</codeinline> frecuentemente. Pero puedes encontrar que prefieres la composición a la herencia y que raramente necesitas usar <codeinline>extends</codeinline> (excepto cuando estás usando una librería o framework que requiere que extiendas sus clases base).</p>
     <p>Hay algunas circunstancias en las que múltiples niveles de subclase son apropiados, sin embargo, y terminaremos este capítulo con un ejemplo extendido que demuestra una jerarquía de clases que representan diferentes tipos de conjuntos. (Las clases de conjuntos definidas en el <a href="#ejemplo9-8">Ejemplo 9-8</a> son similares, pero no completamente compatibles, con la clase incorporada Set de JavaScript).</p>
@@ -804,7 +804,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     BitSet.bits = new Uint8Array([1, 2, 4, 8, 16, 32, 64, 128]);
     BitSet.masks = new Uint8Array([~1, ~2, ~4, ~8, ~16, ~32, ~64, ~128]);</code></pre>
   </section>
-  <section id="6">
+  <section id="6" class="pb-4 xs:pb-5 sm:pb-6">
     <h2>9.6 Resumen</h2>
     <p>En este capítulo se han explicado las principales características de las clases de JavaScript:</p>
     <ul>

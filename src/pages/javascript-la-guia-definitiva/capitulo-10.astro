@@ -22,43 +22,43 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>El uso de clases y objetos para la modularidad es una técnica común y útil en la programación JavaScript, pero no va lo suficientemente lejos. En particular, no nos ofrece ninguna manera de ocultar los detalles de implementación interna dentro del módulo. Consideremos de nuevo el <a href="#ejemplo9-8">Ejemplo 9-8</a>. Si estuviéramos escribiendo ese ejemplo como un módulo, tal vez hubiéramos querido mantener las diversas clases abstractas internas al módulo, sólo haciendo las subclases concretas disponibles para los usuarios del módulo. De forma similar, en la clase BitSet, los métodos <codeinline>_valid()</codeinline> y <codeinline>_has()</codeinline> son utilidades internas que no deberían estar expuestas a los usuarios de la clase. Y <codeinline>BitSet.bits</codeinline> y <codeinline>BitSet.masks</codeinline> son detalles de implementación que sería mejor ocultar.</p>
     <p>Como vimos en <a href="capitulo-8#6">§8.6</a>, las variables locales y las funciones anidadas declaradas dentro de una función son privadas para esa función. Esto significa que podemos usar expresiones de función invocadas inmediatamente para conseguir un tipo de modularidad dejando los detalles de implementación y las funciones de utilidad ocultas dentro de la función que las encierra, pero haciendo que la API pública del módulo sea el valor de retorno de la función. En el caso de la clase BitSet, podríamos estructurar el módulo así:</p>
     <pre>
-    <code class="language-js">const BitSet = (function() &lbrace; // Set BitSet to the return value of this function
-      // Private implementation details here
+    <code class="language-js">const BitSet = (function() &lbrace; // Establezca BitSet en el valor de retorno de esta función
+      // Detalles de implementación privada aquí
       function isValid(set, n) &lbrace; ... }
       function has(set, byte, bit) &lbrace; ... }
       const BITS = new Uint8Array([1, 2, 4, 8, 16, 32, 64, 128]);
       const MASKS = new Uint8Array([~1, ~2, ~4, ~8, ~16, ~32, ~64, ~128]);
-      // The public API of the module is just the BitSet class, which we define
-      // and return here. The class can use the private functions and constants
-      // defined above, but they will be hidden from users of the class
+      // La API pública del módulo es simplemente la clase BitSet, que definimos 
+      // y devolvemos aquí. La clase puede usar las funciones y constantes privadas 
+      // definidas anteriormente, pero estarán ocultas para los usuarios de la clase.
       return class BitSet extends AbstractWritableSet &lbrace;
-        // ... implementation omitted ...
+        // ... Se omite la implementación ...
       };
     }());</code></pre>
     <p>Este enfoque de la modularidad se vuelve un poco más interesante cuando el módulo contiene más de un elemento. El código siguiente, por ejemplo, define un minimódulo estadístico que exporta las funciones <codeinline>mean()</codeinline> y <codeinline>stddev()</codeinline>, dejando ocultos los detalles de implementación:</p>
     <pre>
-    <code class="language-js">// This is how we could define a stats module
+    <code class="language-js">// Así podríamos definir un módulo de estadísticas
     const stats = (function() &lbrace;
-      // Utility functions private to the module
+      // Funciones de utilidad privadas del módulo
       const sum = (x, y) => x + y;
       const square = x => x * x;
 
-      // A public function that will be exported
+      // Una función pública que se exportará
       function mean(data) &lbrace;
         return data.reduce(sum)/data.length;
       }
 
-      // A public function that we will export
+      // Una función pública que exportaremos
       function stddev(data) &lbrace;
         let m = mean(data);
         return Math.sqrt(data.map(x => x - m).map(square).reduce(sum)/(data.length-1));
       }
       
-      // We export the public function as properties of an object
+      // Exportamos la función pública como propiedades de un objeto
       return &lbrace; mean, stddev };
     }());
 
-    // And here is how we might use the module
+    // Y aquí está cómo podríamos usar el módulo.
     stats.mean([1, 3, 5, 7, 9]) // => 5
     stats.stddev([1, 3, 5, 7, 9]) // => Math.sqrt(10)</code></pre>
   </section>
@@ -67,141 +67,241 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Tenga en cuenta que es un proceso bastante mecánico transformar un archivo de código JavaScript en este tipo de módulo insertando algo de texto al principio y al final del archivo. Todo lo que se necesita es alguna convención para que el archivo de código JavaScript indique qué valores deben exportarse y cuáles no.</p>
     <p>Imagine una herramienta que toma un conjunto de archivos, envuelve el contenido de cada uno de esos archivos dentro de una expresión de función invocada inmediatamente, mantiene un registro del valor de retorno de cada y concatena todo en un gran archivo. El resultado podría parecerse a esto:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">
+    const modules = &lbrace;};
+    function require(moduleName) &lbrace; return modules[moduleName]; }
+
+    modules["sets.js"] = (function() &lbrace;
+      const exports = &lbrace;};
+      
+      // El contenido del archivo sets.js va aquí:
+      exports.BitSet = class BitSet &lbrace; ... };
+      
+      return exports;
+    }());
+    
+    modules["stats.js"] = (function() &lbrace;
+      const exports = &lbrace;};
+
+      // El contenido del archivo stats.js va aquí:
+      const sum = (x, y) => x + y;
+      const square = x = > x * x;
+      exports.mean = function(data) &lbrace; ... };
+      exports.stddev = function(data) &lbrace; ... };
+
+      return exports;
+    }());</code></pre>
     <p>Con los módulos agrupados en un único archivo como el que se muestra en el ejemplo anterior, puede imaginarse escribiendo código como el siguiente para hacer uso de esos módulos:</p>
     <pre>
-    <code class="language-js"></code></pre>
-    <p>Este código es un esbozo de cómo funcionan las herramientas de agrupación de código (como webpack y Parcel) para navegadores web, y también es una sencilla introducción a la función require() como la que se utiliza en los programas Node.</p>
+    <code class="language-js">// Obtener referencias a los módulos (o al contenido del módulo) que necesitamos
+    const stats = require("stats.js");
+    const BitSet = require("sets.js").BitSet;
+
+    // Ahora escribe código usando esos módulos.
+    let s = new BitSet(100);
+    s.insert(10);
+    s.insert(20);
+    s.insert(30);
+    let average = stats.mean([...s]); // El promedio es 20</code></pre>
+    <p>Este código es un esbozo de cómo funcionan las herramientas de agrupación de código (como webpack y Parcel) para navegadores web, y también es una sencilla introducción a la función <codeinline>require()</codeinline> como la que se utiliza en los programas Node.</p>
   </section>
   <section id="2" class="py-4 xs:py-5 sm:py-6">
     <h2>10.2 Módulos en Node</h2>
     <p>En la programación Node, es normal dividir los programas en tantos archivos como parezca natural. Se supone que todos estos archivos de código JavaScript viven en un sistema de archivos rápido. A diferencia de los navegadores web, que tienen que leer archivos de JavaScript a través de una conexión de red relativamente lenta, no hay necesidad o beneficio de agrupar un programa Node en un único archivo JavaScript.</p>
     <p>En Node, cada archivo es un módulo independiente con un espacio de nombres privado. Las constantes, variables, funciones y clases definidas en un archivo son privadas para ese archivo a menos que el archivo las exporte. Y los valores exportados por un módulo sólo son visibles en otro módulo si éste los importa explícitamente.</p>
-    <p>Los módulos de Node importan otros módulos con la función require() y exportan su API pública estableciendo propiedades del objeto Exports o sustituyendo el objeto module.exportsobject por completo.</p>
+    <p>Los módulos de Node importan otros módulos con la función <codeinline>require()</codeinline> y exportan su API pública estableciendo propiedades del objeto Exports o sustituyendo el objeto <codeinline>module.exports</codeinline> object por completo.</p>
   </section>
   <section id="2-1">
     <h2>10.2.1 Exportación de nodos</h2>
-    <p>Node define un objeto global de exportación que siempre está definido. Si estás escribiendo un módulo Node que exporta múltiples valores, puedes simplemente asignarlos a las propiedades de este objeto:</p>
+    <p>Node define un objeto global de <codeinline>exports</codeinline> que siempre está definido. Si estás escribiendo un módulo Node que exporta múltiples valores, puedes simplemente asignarlos a las propiedades de este objeto:</p>
     <pre>
-    <code class="language-js"></code>
-    <p>Sin embargo, a menudo se desea definir un módulo que exporte una única función o clase en lugar de un objeto lleno de funciones o clases. Para ello, basta con asignar el único valor que desea exportar a module.exports:</p>
+    <code class="language-js">const sum = (x, y) => x + y;
+    const square = x => x * x;
+
+    exports.mean = data => data.reduce(sum)/data.length;
+    exports.stddev = function(d) &lbrace;
+      let m = exports.mean(d);
+      return Math.sqrt(d.map(x => x - m).map(square).reduce(sum)/(d.length-1));
+    };</code></pre>
+    <p>Sin embargo, a menudo se desea definir un módulo que exporte una única función o clase en lugar de un objeto lleno de funciones o clases. Para ello, basta con asignar el único valor que desea exportar a <codeinline>module.exports</codeinline>:</p>
     <pre>
-    <code class="language-js"></code>
-    <p>El valor por defecto de module.exports es el mismo objeto al que se refiere exports. En el módulo stats anterior, podríamos haber asignado la función media a module.exports.mean en lugar de a exports.mean. Otro enfoque con módulos como el de estadísticas es exportar un único objeto al final del módulo en lugar de exportar funciones una a una a medida que se avanza:</p>
+    <code class="language-js">module.exports = class BitSet extends AbstractWritableSet &lbrace;
+      // Se omite la implementación
+    };</code></pre>
+    <p>El valor por defecto de <codeinline>module.exports</codeinline> es el mismo objeto al que se refiere exports. En el módulo stats anterior, podríamos haber asignado la función media a <codeinline>module.exports.mean</codeinline> en lugar de a <codeinline>exports.mean</codeinline>. Otro enfoque con módulos como el de estadísticas es exportar un único objeto al final del módulo en lugar de exportar funciones una a una a medida que se avanza:</p>
     <pre>
-    <code class="language-js"></code>
+    <code class="language-js">// Definir todas las funciones, públicas y privadas.
+    const sum = (x, y) => x + y;
+    const square = x => x * x;
+    const mean = data => data.reduce(sum)/data.length;
+    const stddev = d => &lbrace;
+      let m = mean(d);
+      return Math.sqrt(d.map(x => x - m).map(square).reduce(sum)/(d.length-1));
+    };
+
+    // Ahora exporta solo los públicos
+    module.exports = &lbrace; mean, stddev };</code>
   </section>
   <section id="2-2" class="py-4 xs:py-5 sm:py-6">
     <h2>10.2.2 Importación de nodos</h2>
-    <p>Un módulo Node importa otro módulo llamando a la función require(). El argumento de esta función es el nombre del módulo a importar, y el valor de retorno es cualquier valor (normalmente una función, clase u objeto) que exporte el módulo.</p>
-    <p>Si quieres importar un módulo del sistema integrado en Node o un módulo que has instalado en tu sistema a través de un gestor de paquetes, simplemente utiliza el nombre no cualificado del módulo, sin ningún carácter "/" que lo convertiría en una ruta del sistema de archivos:</p>
-    <p>Cuando quieras importar un módulo de tu propio código, el nombre del módulo debe ser la ruta al archivo que contiene ese código, relativa al archivo del módulo actual. Es legal utilizar rutas absolutas que comiencen con un carácter /, pero normalmente, cuando se importan módulos que forman parte de su propio programa, los nombres de los módulos comenzarán con ./ o a veces ../ para indicar que son relativos al directorio actual o al directorio padre. Por ejemplo:</p>
-    <p>(También puedes omitir el sufijo .js en los archivos que estás importando y Node seguirá encontrando los archivos, pero es común ver estas extensiones de archivo explícitamente incluidas).</p>
+    <p>Un módulo Node importa otro módulo llamando a la función <codeinline>require()</codeinline>. El argumento de esta función es el nombre del módulo a importar, y el valor de retorno es cualquier valor (normalmente una función, clase u objeto) que exporte el módulo.</p>
+    <p>Si quieres importar un módulo del sistema integrado en Node o un módulo que has instalado en tu sistema a través de un gestor de paquetes, simplemente utiliza el nombre no cualificado del módulo, sin ningún carácter "<codeinline>/</codeinline>" que lo convertiría en una ruta del sistema de archivos:</p>
+    <pre>
+    <code class="language-js">// Estos módulos están integrados en Node
+    const fs = require("fs"); // El módulo de sistema de archivos integrado
+    const http = require("http"); // El módulo HTTP integrado
+
+    // El marco del servidor HTTP Express es un módulo de terceros.
+    // No es parte de Node pero se ha instalado localmente
+    const express = require("express");</code></pre>
+    <p>Cuando quieras importar un módulo de tu propio código, el nombre del módulo debe ser la ruta al archivo que contiene ese código, relativa al archivo del módulo actual. Es legal utilizar rutas absolutas que comiencen con un carácter <codeinline>/</codeinline>, pero normalmente, cuando se importan módulos que forman parte de su propio programa, los nombres de los módulos comenzarán con <codeinline>./</codeinline> o a veces <codeinline>../</codeinline> para indicar que son relativos al directorio actual o al directorio padre. Por ejemplo:</p>
+    <pre>
+    <code class="language-js">const stats = require('./stats.js');
+    const BitSet = require('./utils/bitset.js');</code></pre>
+    <p>(También puedes omitir el sufijo <em>.js</em> en los archivos que estás importando y Node seguirá encontrando los archivos, pero es común ver estas extensiones de archivo explícitamente incluidas).</p>
     <p>Cuando un módulo exporta una única función o clase, todo lo que tienes que hacer es requerirla. Cuando un módulo exporta un objeto con múltiples propiedades, puede elegir entre importar el objeto completo o importar sólo las propiedades específicas (utilizando la asignación de desestructuración) del objeto que desea utilizar. Compare estos dos enfoques:</p>
+    <pre>
+    <code class="language-js">// Importar el objeto de estadísticas completo, con todas sus funciones
+    const stats = require('./stats.js');
+
+    // Tenemos más funciones de las que necesitamos, pero están perfectamente 
+    // organizadas en un conveniente espacio de nombres llamado "estadísticas".
+    let average = stats.mean(data);
+
+    // Como alternativa, podemos utilizar la asignación de desestructuración 
+    // idiomática para importar exactamente las funciones que queremos 
+    // directamente en el espacio de nombres local:
+    const &lbrace; stddev } = require('./stats.js');
+
+    // Esto es agradable y conciso, aunque perdemos un poco de contexto sin el
+    // prefijo 'stats' como espacio de nombres para la función stdev().
+    let sd = stddev(data);</code></pre>
   </section>
   <section id="2-3">
     <h2>10.2.3 Módulos de estilo nodo en la Web</h2>
-    <p>Los módulos con un objeto Exports y una función require() están integrados en Node. Pero si estás dispuesto a procesar tu código con una herramienta de empaquetado como webpack, entonces también es posible usar este estilo de módulos para código que está destinado a ejecutarse en navegadores web. Hasta hace poco, esto era algo muy común de hacer, y puede que veas mucho código basado en web que todavía lo hace.</p>
-    <p>Sin embargo, ahora que JavaScript tiene su propia sintaxis de módulos estándar, es más probable que los desarrolladores que utilizan bundlers utilicen los módulos oficiales de JavaScript con sentencias import y export.</p>
+    <p>Los módulos con un objeto Exports y una función <codeinline>require()</codeinline> están integrados en Node. Pero si estás dispuesto a procesar tu código con una herramienta de empaquetado como webpack, entonces también es posible usar este estilo de módulos para código que está destinado a ejecutarse en navegadores web. Hasta hace poco, esto era algo muy común de hacer, y puede que veas mucho código basado en web que todavía lo hace.</p>
+    <p>Sin embargo, ahora que JavaScript tiene su propia sintaxis de módulos estándar, es más probable que los desarrolladores que utilizan bundlers utilicen los módulos oficiales de JavaScript con sentencias <codeinline>import</codeinline> y <codeinline>export</codeinline>.</p>
   </section>
   <section id="3" class="py-4 xs:py-5 sm:py-6">
     <h2>10.3 Módulos en ES6</h2>
-    <p>ES6 añade las palabras clave import y export a JavaScript y, por fin, admite la modularidad real como característica básica del lenguaje. La modularidad de ES6 es conceptualmente la misma que la de Node: cada archivo es su propio módulo, y las constantes, variables, funciones y clases definidas en un archivo son privadas para ese módulo a menos que se exporten explícitamente. Los valores que se exportan de un módulo están disponibles para su uso en módulos que los importen explícitamente. Los módulos ES6 difieren de los módulos Node en la sintaxis utilizada para exportar e importar y también en la forma en que se definen los módulos en los navegadores web. Las secciones que siguen explican estas cosas en detalle.</p>
-    <p>En primer lugar, hay que tener en cuenta que los módulos ES6 también se diferencian de los "scripts" normales de JavaScript en algunos aspectos importantes. La diferencia más obvia es la propia modularidad: en los scripts normales, las declaraciones de nivel superior de variables, funciones y clases van a un único contexto global compartido por todos los scripts. Con los módulos, cada archivo tiene su propio contexto privado y puede utilizar las sentencias import y export, que es de lo que se trata, después de todo. Pero también hay otras diferencias entre módulos y scripts. El código dentro de un módulo ES6 (como el código dentro de cualquier definición de clase ES6) está automáticamente en modo estricto (véase §5.6.3). Esto significa que, cuando empiece a usar módulos ES6, nunca tendrá que volver a escribir "use strict". Y significa que el código en los módulos no puede usar la sentencia with o el objeto arguments o variables no declaradas. Los módulos ES6 son incluso un poco más estrictos que el m o d o estricto: en modo estricto, en las funciones invocadas como funciones, esto es indefinido. En los módulos, esto es indefinido incluso en el código de nivel superior. (Por el contrario, los scripts en navegadores web y Node establecen esto en el objeto global).</p>
+    <p>ES6 añade las palabras clave <codeinline>import</codeinline> y <codeinline>export</codeinline> a JavaScript y, por fin, admite la modularidad real como característica básica del lenguaje. La modularidad de ES6 es conceptualmente la misma que la de Node: cada archivo es su propio módulo, y las constantes, variables, funciones y clases definidas en un archivo son privadas para ese módulo a menos que se exporten explícitamente. Los valores que se exportan de un módulo están disponibles para su uso en módulos que los importen explícitamente. Los módulos ES6 difieren de los módulos Node en la sintaxis utilizada para exportar e importar y también en la forma en que se definen los módulos en los navegadores web. Las secciones que siguen explican estas cosas en detalle.</p>
+    <p>En primer lugar, hay que tener en cuenta que los módulos ES6 también se diferencian de los "scripts" normales de JavaScript en algunos aspectos importantes. La diferencia más obvia es la propia modularidad: en los scripts normales, las declaraciones de nivel superior de variables, funciones y clases van a un único contexto global compartido por todos los scripts. Con los módulos, cada archivo tiene su propio contexto privado y puede utilizar las sentencias <codeinline>import</codeinline> y <codeinline>export</codeinline>, que es de lo que se trata, después de todo. Pero también hay otras diferencias entre módulos y scripts. El código dentro de un módulo ES6 (como el código dentro de cualquier definición de <codeinline>class</codeinline> ES6) está automáticamente en modo estricto (véase <a href="capitulo-5#6-3">§5.6.3</a>). Esto significa que, cuando empiece a usar módulos ES6, nunca tendrá que volver a escribir "<codeinline>use strict</codeinline>". Y significa que el código en los módulos no puede usar la sentencia <codenline>with</codenline> o el objeto <codeinline>arguments</codeinline> o variables no declaradas. Los módulos ES6 son incluso un poco más estrictos que el modo estricto: en modo estricto, en las funciones invocadas como funciones, <codeinline>this</codeinline> como <codeinline>undefined</codeinline>. En los módulos, <codeinline>this</codeinline> es <codeinline>undefined</codeinline> incluso en el código de nivel superior. (Por el contrario, los scripts en navegadores web y Node establecen esto en el objeto global).</p>
     <nota>
       <img class="self-start" src="/public/javascript/nota_gral.png" alt="Nota de la grandesa">
       <div class="">
         <p class="title-article text-left">Módulos ES6 en la Web y en Node</p>
-        <p>Los módulos ES6 llevan años utilizándose en la web con la ayuda de agrupadores de código como webpack, que combinan módulos independientes de código JavaScript en grandes paquetes no modulares adecuados para su inclusión en páginas web. Sin embargo, en el momento de escribir estas líneas, todos los navegadores web, salvo Internet Explorer, admiten por fin los módulos ES6 de forma nativa. Cuando se utilizan de forma nativa, los módulos ES6 se añaden a las páginas HTML con una etiqueta especial &lt;script type="module">, que se describe más adelante en este capítulo.</p>
+        <p>Los módulos ES6 llevan años utilizándose en la web con la ayuda de agrupadores de código como webpack, que combinan módulos independientes de código JavaScript en grandes paquetes no modulares adecuados para su inclusión en páginas web. Sin embargo, en el momento de escribir estas líneas, todos los navegadores web, salvo Internet Explorer, admiten por fin los módulos ES6 de forma nativa. Cuando se utilizan de forma nativa, los módulos ES6 se añaden a las páginas HTML con una etiqueta especial <codeinline>&lt;script type="module"></codeinline>, que se describe más adelante en este capítulo.</p>
         <p>Mientras tanto, Node, pionero de la modularidad de JavaScript, se encuentra en la incómoda situación de tener que soportar dos sistemas de módulos no del todo compatibles. Node 13 soporta módulos ES6, pero por ahora, la gran mayoría de los programas Node siguen utilizando módulos Node.</p>
       </div>
     </nota>
   </section>
   <section id="3-1">
     <h2>10.3.1 Exportaciones ES6</h2>
-    <p>Para exportar una constante, variable, función o clase de un módulo ES6, basta con añadir la palabra clave export antes de la declaración:</p>
+    <p>Para exportar una constante, variable, función o clase de un módulo ES6, basta con añadir la palabra clave <codeinline>export</codeinline> antes de la declaración:</p>
     <pre>
-    <code class="language-js"></code></pre>
-    <p>Como alternativa a la dispersión de palabras clave de exportación a lo largo de su módulo, puede definir sus constantes, variables, funciones y clases como lo haría normalmente, sin declaración de exportación, y luego (normalmente al final de su módulo) escribir una sola declaración de exportación que declare exactamente lo que se exporta en un solo lugar. Así, en lugar de escribir tres exportaciones individuales en el código anterior, podríamos haber escrito equivalentemente una sola línea al final:</p>
+    <code class="language-js">export const PI = Math.PI;
+
+    export function degreesToRadians(d) &lbrace; return d * PI / 180; }
+
+    export class Circle &lbrace;
+      constructor(r) &lbrace; this.r = r; }
+      area() &lbrace; return PI * this.r * this.r; }
+    }</code></pre>
+    <p>Como alternativa a la dispersión de palabras clave de <codeinline>export</codeinline> a lo largo de su módulo, puede definir sus constantes, variables, funciones y clases como lo haría normalmente, sin declaración de <codeinline>export</codeinline>, y luego (normalmente al final de su módulo) escribir una sola declaración de <codeinline>export</codeinline> que declare exactamente lo que se exporta en un solo lugar. Así, en lugar de escribir tres exportaciones individuales en el código anterior, podríamos haber escrito equivalentemente una sola línea al final:</p>
     <pre>
-    <code class="language-js"></code></pre>
-    <p>Esta sintaxis se parece a la palabra clave export seguida de un literal de objeto (utilizando la notación manual abreviada). Pero en este caso, las llaves no definen realmente un objeto literal. Esta sintaxis de exportación simplemente requiere una lista de identificadores separados por comas entre llaves.</p>
-    <p>Es común escribir módulos que exportan sólo un valor (típicamente una función o clase), y en este caso, usualmente usamos export default en lugar de export:</p>
+    <code class="language-js">export &lbrace; Circle, degreesToRadians, PI };</code></pre>
+    <p>Esta sintaxis se parece a la palabra clave <codeinline>export</codeinline> seguida de un literal de objeto (utilizando la notación manual abreviada). Pero en este caso, las llaves no definen realmente un objeto literal. Esta sintaxis de exportación simplemente requiere una lista de identificadores separados por comas entre llaves.</p>
+    <p>Es común escribir módulos que exportan sólo un valor (típicamente una función o clase), y en este caso, usualmente usamos <codeinline>export default</codeinline> en lugar de <codeinline>export</codeinline>:</p>
     <pre>
-    <code class="language-js"></code></pre>
-    <p>Las exportaciones por defecto son ligeramente más fáciles de importar que las exportaciones no por defecto, por lo que cuando sólo hay un valor exportado, el uso de la exportación por defecto hace las cosas más fáciles para los módulos que utilizan su valor exportado.</p>
-    <p>Las exportaciones regulares con export sólo pueden realizarse en declaraciones que tengan un nombre. Las exportaciones por defecto con export default pueden exportar cualquier expresión, incluyendo expresiones de función anónimas y expresiones de clase anónimas. Esto significa que si utilizas export default, puedes exportar literales de objetos. Así que, a diferencia de la sintaxis de exportación, si ves llaves después de export default, es realmente un literal de objeto lo que se está exportando.</p>
+    <code class="language-js">export default class BitSet &lbrace;
+      // Se omite la implementación
+    }</code></pre>
+    <p>Las exportaciones por defecto son ligeramente más fáciles de importar que las exportaciones no por defecto, por lo que cuando sólo hay un valor exportado, usando <codeinline>export default</codeinline> hace las cosas más fáciles para los módulos que utilizan su valor exportado.</p>
+    <p>Las exportaciones regulares con <codeinline>export</codeinline> sólo pueden realizarse en declaraciones que tengan un nombre. Las exportaciones por defecto con <codeinline>export default</codeinline> pueden exportar cualquier expresión, incluyendo expresiones de función anónimas y expresiones de clase anónimas. Esto significa que si utilizas <codeinline>export default</codeinline>, puedes exportar literales de objetos. Así que, a diferencia de la sintaxis de <codeinline>export</codeinline>, si ves llaves después de <codeinline>export default</codeinline>, es realmente un literal de objeto lo que se está exportando.</p>
     <p>Es legal, aunque poco común, que los módulos tengan un conjunto de exportaciones regulares y también una exportación por defecto. Si un módulo tiene una exportación por defecto, sólo puede tener una.</p>
-    <p>Por último, tenga en cuenta que la palabra clave export sólo puede aparecer en el nivel superior de su código Java-Script. No puede exportar un valor desde dentro de una clase, función, bucle o condicional. (Esta es una característica importante del sistema de módulos ES6 y permite el análisis estático: la exportación de un módulo será la misma en cada ejecución, y los símbolos exportados pueden determinarse antes de que el módulo se ejecute realmente).</p>
+    <p>Por último, tenga en cuenta que la palabra clave <codeinline>export</codeinline> sólo puede aparecer en el nivel superior de su código Java-Script. No puede exportar un valor desde dentro de una clase, función, bucle o condicional. (Esta es una característica importante del sistema de módulos ES6 y permite el análisis estático: la exportación de un módulo será la misma en cada ejecución, y los símbolos exportados pueden determinarse antes de que el módulo se ejecute realmente).</p>
   </section>
   <section id="3-2" class="py-4 xs:py-5 sm:py-6">
     <h2>10.3.2 Importaciones ES6</h2>
-    <p>Los valores exportados por otros módulos se importan con la palabra clave import. La forma más sencilla de importación se utiliza para los módulos que definen una exportación por defecto:</p>
+    <p>Los valores exportados por otros módulos se importan con la palabra clave <codeinline>import</codeinline>. La forma más sencilla de importación se utiliza para los módulos que definen una exportación por defecto:</p>
     <pre>
-    <code class="language-js"></code></pre>
-    <p>Es la palabra clave import, seguida de un identificador, seguida de la palabra clave from, seguida de una cadena literal que nombra el módulo cuya exportación por defecto estamos importando. El valor de exportación por defecto del módulo especificado se convierte en el valor del identificador especificado en el módulo actual.</p>
-    <p>El identificador al que se asigna el valor importado es una constante, como si se hubiera declarado con la palabra clave const. Al igual que las exportaciones, las importaciones sólo pueden aparecer en el nivel superior de un módulo y no están permitidas dentro de clases, funciones, bucles o condicionales. Por convención casi universal, las importaciones que necesita un módulo se colocan al principio del módulo. Curiosamente, esto no es necesario: al igual que las declaraciones de funciones, las importaciones se "elevan" a la parte superior, y todos los valores importados están disponibles para cualquiera de las ejecuciones de código del módulo.</p>
-    <p>El módulo del que se importa un valor se especifica como un literal de cadena constante entre comillas simples o dobles. (No puede utilizar una variable u otra expresión cuyo valor sea una cadena, y no puede utilizar una cadena entre comillas porque los literales de plantilla pueden interpolar variables y no siempre tienen valores constantes). En los navegadores web, esta cadena se interpreta como una URL relativa a la ubicación del módulo que está realizando la importación. (En Node, o cuando se utiliza una herramienta de empaquetado, la cadena se inter- preta como un nombre de archivo relativo al módulo actual, pero esto supone poca diferencia en la práctica). Una cadena especificadora de módulo debe ser una ruta absoluta que empiece por "/", o una ruta relativa que empiece por "./" o "../", o una URL completa con protocolo y nombre de host. La especificación ES6 no permite cadenas de especificadores de módulos no cualificados como "util.js" porque es ambiguo si se pretende nombrar un módulo en la misma dirección que el actual o algún tipo de módulo del sistema que está instalado en alguna ubicación especial. (Esta restricción contra "especificadores de módulos desnudos" no es respetada por herramientas de empaquetado de código como webpack, que pueden configurarse fácilmente para encontrar módulos desnudos en un directorio de biblioteca que especifiques). Una futura versión del lenguaje podría permitir "especificadores de módulo desnudos", pero por ahora no están permitidos. Si desea importar un módulo desde el mismo directorio que el actual, simplemente coloque "./" antes del nombre del módulo e importe desde "./util.js" en lugar de "util.js".</p>
-    <p>Hasta ahora, sólo hemos considerado el caso de importar un único valor de un módulo que utiliza export default. Para importar valores de un módulo que exporta múltiples valores, utilizamos una sintaxis ligeramente diferente:</p>
+    <code class="language-js">import BitSet from './bitset.js';</code></pre>
+    <p>Es la palabra clave <codeinline>import</codeinline>, seguida de un identificador, seguida de la palabra clave <codeinline>from</codeinline>, seguida de una cadena literal que nombra el módulo cuya exportación por defecto estamos importando. El valor de exportación por defecto del módulo especificado se convierte en el valor del identificador especificado en el módulo actual.</p>
+    <p>El identificador al que se asigna el valor importado es una constante, como si se hubiera declarado con la palabra clave <codeinline>const</codeinline>. Al igual que las exportaciones, las importaciones sólo pueden aparecer en el nivel superior de un módulo y no están permitidas dentro de clases, funciones, bucles o condicionales. Por convención casi universal, las importaciones que necesita un módulo se colocan al principio del módulo. Curiosamente, esto no es necesario: al igual que las declaraciones de funciones, las importaciones se "elevan" a la parte superior, y todos los valores importados están disponibles para cualquiera de las ejecuciones de código del módulo.</p>
+    <p>El módulo del que se importa un valor se especifica como un literal de cadena constante entre comillas simples o dobles. (No puede utilizar una variable u otra expresión cuyo valor sea una cadena, y no puede utilizar una cadena entre comillas porque los literales de plantilla pueden interpolar variables y no siempre tienen valores constantes). En los navegadores web, esta cadena se interpreta como una URL relativa a la ubicación del módulo que está realizando la importación. (En Node, o cuando se utiliza una herramienta de empaquetado, la cadena se interpreta como un nombre de archivo relativo al módulo actual, pero esto supone poca diferencia en la práctica). Una cadena de <em>especificador de módulo</em> debe ser una ruta absoluta que comience con “<codeinline>/</codeinline>”, o una ruta relativa que comience con “<codeinline>./</codeinline>” o “<codeinline>../</codeinline>”, o una URL completa con protocolo y nombre de host. La especificación ES6 no permite cadenas de especificadores de módulos no cualificados como "util.js" porque es ambiguo si se pretende nombrar un módulo en la misma dirección que el actual o algún tipo de módulo del sistema que está instalado en alguna ubicación especial. (Esta restricción contra "especificadores de módulos desnudos" no es respetada por herramientas de empaquetado de código como webpack, que pueden configurarse fácilmente para encontrar módulos desnudos en un directorio de biblioteca que especifiques). Una futura versión del lenguaje podría permitir "especificadores de módulo desnudos", pero por ahora no están permitidos. Si desea importar un módulo desde el mismo directorio que el actual, simplemente coloque "<codeinline>./</codeinline>" antes del nombre del módulo e importe desde "<em>./util.js</em>" en lugar de "<em>util.js</em>".</p>
+    <p>Hasta ahora, sólo hemos considerado el caso de importar un único valor de un módulo que utiliza <codeinline>export default</codeinline>. Para importar valores de un módulo que exporta múltiples valores, utilizamos una sintaxis ligeramente diferente:</p>
     <pre>
-    <code class="language-js"></code></pre>
-    <p>Recordemos que las exportaciones por defecto no necesitan tener un nombre en el módulo que las define. En su lugar, proporcionamos un nombre local cuando importamos esos valores. Pero las exportaciones no predeterminadas de un módulo tienen nombres en el módulo exportador, y cuando importamos esos valores, nos referimos a ellos por esos nombres. El módulo exportador puede exportar cualquier número de valores con nombre. Una sentencia import que haga referencia a ese módulo puede importar cualquier subconjunto de esos valores simplemente listando sus nombres entre llaves. Las llaves hacen que este tipo de declaración de importación se parezca a una asignación de desestructuración, y la asignación de desestructuración es en realidad una buena analogía de lo que hace este estilo de importación. Los identificadores entre llaves se elevan a l a parte superior del módulo importador y se comportan como constantes.</p>
+    <code class="language-js">import &lbrace; mean, stddev } from "./stats.js";</code></pre>
+    <p>Recordemos que las exportaciones por defecto no necesitan tener un nombre en el módulo que las define. En su lugar, proporcionamos un nombre local cuando importamos esos valores. Pero las exportaciones no predeterminadas de un módulo tienen nombres en el módulo exportador, y cuando importamos esos valores, nos referimos a ellos por esos nombres. El módulo exportador puede exportar cualquier número de valores con nombre. Una sentencia <codeinline>import</codeinline> que haga referencia a ese módulo puede importar cualquier subconjunto de esos valores simplemente listando sus nombres entre llaves. Las llaves hacen que este tipo de declaración de <codeinline>import</codeinline> se parezca a una asignación de desestructuración, y la asignación de desestructuración es en realidad una buena analogía de lo que hace este estilo de importación. Los identificadores entre llaves se elevan a l a parte superior del módulo <codeinline>import</codeinline> y se comportan como constantes.</p>
     <p>A veces, las guías de estilo recomiendan importar explícitamente todos los símbolos que vaya a utilizar el módulo. Sin embargo, al importar desde un módulo que define muchas exportaciones, puedes importar todo fácilmente con una sentencia import como esta:</p>
     <pre>
-    <code class="language-js"></code></pre>
-    <p>Una sentencia import como ésta crea un objeto y lo asigna a una constante llamada stats. Cada una de las exportaciones no predeterminadas del módulo que se importa se convierte en una propiedad de este objeto stats. Las exportaciones no predeterminadas siempre tienen nombres, y éstos son utilizados como nombres de propiedades dentro del objeto. Estas propiedades son constantes: no pueden sobrescribirse ni borrarse. Con la importación comodín mostrada en el ejemplo anterior, el módulo importador utilizaría las funciones importadas mean() y stddev() a través del objeto stats, invocándolas como stats.mean() y stats.stddev().</p>
-    <p>Los módulos suelen definir una exportación por defecto o varias exportaciones con nombre. Es legal, aunque poco común, que un módulo utilice tanto la exportación como la exportación por defecto. Pero cuando un módulo hace eso, puede importar tanto el valor por defecto como los valores con nombre con una sentencia import como ésta:</p>
+    <code class="language-js">import * as stats from "./stats.js";</code></pre>
+    <p>Una sentencia <codeinline>import</codeinline> como ésta crea un objeto y lo asigna a una constante llamada <codeinline>stats</codeinline>. Cada una de las exportaciones no predeterminadas del módulo que se importa se convierte en una propiedad de este objeto <codeinline>stats</codeinline>. Las exportaciones no predeterminadas siempre tienen nombres, y éstos son utilizados como nombres de propiedades dentro del objeto. Estas propiedades son constantes: no pueden sobrescribirse ni borrarse. Con la importación comodín mostrada en el ejemplo anterior, el módulo importador utilizaría las funciones importadas <codeinline>mean()</codeinline> y <codeinline>stddev()</codeinline> a través del objeto <codeinline>stats</codeinline>, invocándolas como <codeinline>stats.mean()</codeinline> y <codeinline>stats.stddev()</codeinline>.</p>
+    <p>Los módulos suelen definir una exportación por defecto o varias exportaciones con nombre. Es legal, aunque poco común, que un módulo utilice tanto la <codeinline>export</codeinline> como la <codeinline>export default</codeinline>. Pero cuando un módulo hace eso, puede importar tanto el valor por defecto como los valores con nombre con una sentencia <codeinline>import</codeinline> como ésta:</p>
     <pre>
-    <code class="language-js"></code></pre>
-    <p>Hasta ahora, hemos visto cómo importar desde módulos con una exportación por defecto y desde módulos con exportaciones no por defecto o con nombre. Pero hay otra forma de la sentencia import que se utiliza con módulos que no tienen ninguna exportación. Para incluir un módulo sin exportaciones en su programa, simplemente utilice la palabra clave import con el especificador module:</p>
+    <code class="language-js">import Histogram, &lbrace; mean, stddev } from "./histogram-stats.js";</code></pre>
+    <p>Hasta ahora, hemos visto cómo importar desde módulos con una exportación por defecto y desde módulos con exportaciones no por defecto o con nombre. Pero hay otra forma de la sentencia <codeinline>import</codeinline> que se utiliza con módulos que no tienen ninguna exportación. Para incluir un módulo sin exportaciones en su programa, simplemente utilice la palabra clave <codeinline>import</codeinline> con el especificador <codeinline>module</codeinline>:</p>
     <pre>
-    <code class="language-js"></code></pre>
-    <p>Un módulo de este tipo se ejecuta la primera vez que se importa. (Y las importaciones posteriores no hacen nada.) Un módulo que sólo define funciones sólo es útil si exporta al menos una de esas funciones. Pero si un módulo ejecuta algún código, entonces puede ser útil importarlo incluso sin símbolos. Un módulo de análisis para una aplicación web podría ejecutar código para registrar varios manejadores de eventos y luego usar esos manejadores de eventos para enviar datos de telemetría al servidor en los momentos apropiados. El módulo es autónomo y no necesita exportar nada, pero aún así n</p>
-    <p>Tenga en cuenta que puede utilizar esta sintaxis de importación "import-nothing" incluso con módulos que tienen exportaciones. Si un módulo define un comportamiento útil independiente de los valores que exporta, y si tu programa no necesita ninguno de esos valores exportados, puedes importar el módulo . sólo para ese comportamiento por defecto.</p>
+    <code class="language-js">import "./analytics.js";</code></pre>
+    <p>Un módulo de este tipo se ejecuta la primera vez que se importa. (Y las importaciones posteriores no hacen nada.) Un módulo que sólo define funciones sólo es útil si exporta al menos una de esas funciones. Pero si un módulo ejecuta algún código, entonces puede ser útil importarlo incluso sin símbolos. Un módulo de análisis para una aplicación web podría ejecutar código para registrar varios manejadores de eventos y luego usar esos manejadores de eventos para enviar datos de telemetría al servidor en los momentos apropiados. El módulo es autónomo y no necesita exportar nada, pero aún necesitamos <codeinline>import</codeinline> para que realmente se ejecute como parte de nuestro programa.</p>
+    <p>Tenga en cuenta que puede utilizar esta sintaxis de <codeinline>import</codeinline> "import-nothing" incluso con módulos que tienen exportaciones. Si un módulo define un comportamiento útil independiente de los valores que exporta, y si tu programa no necesita ninguno de esos valores exportados, puedes importar el módulo . sólo para ese comportamiento por defecto.</p>
   </section>
   <section id="3-3">
     <h2>10.3.3 Importación y exportación con cambio de nombre</h2>
     <p>Si dos módulos exportan dos valores diferentes con el mismo nombre y quieres importar ambos valores, tendrás que renombrar uno o ambos valores cuando lo importes. Del mismo modo, si quieres importar un valor cuyo nombre ya está en uso en tu módulo, tendrás que renombrar el valor importado. Puede utilizar la palabra clave as con las importaciones con nombre para renombrarlas a medida que las importa:</p>
     <pre>
-    <code class="language-js"></code></pre>
-    <p>Estas líneas importan dos funciones al módulo actual. Las funciones se llaman render() en los módulos que las definen, pero se importan con los nombres más descriptivos y desambiguadores renderImage() y renderUI().</p>
+    <code class="language-js">import &lbrace; render as renderImage } from "./imageutils.js";
+    import &lbrace; render as renderUI } from "./ui.js";</code></pre>
+    <p>Estas líneas importan dos funciones al módulo actual. Las funciones se llaman <codeinline>render()</codeinline> en los módulos que las definen, pero se importan con los nombres más descriptivos y desambiguadores <codeinline>renderImage()</codeinline> y <codeinline>renderUI()</codeinline>.</p>
     <p>Recuerde que las exportaciones por defecto no tienen nombre. El módulo importador siempre elige el nombre cuando importa una exportación por defecto. Así que no hay necesidad de una sintaxis especial para renombrar en ese caso.</p>
     <p>Dicho esto, sin embargo, la posibilidad de renombrar en la importación proporciona otra forma de importar desde módulos que definen tanto una exportación por defecto como exportaciones con nombre. Recuerda el módulo "./histogram-stats.js" de la sección anterior. Aquí tienes otra forma de importar tanto las exportaciones por defecto como las exportaciones con nombre de ese módulo:</p>
     <pre>
-    <code class="language-js"></code></pre>
-    <p>En este caso, la palabra clave default de JavaScript sirve como marcador de posición y nos permite indicar que queremos importar y proporcionar un nombre para la exportación por defecto del módulo.</p>
-    <p>También es posible cambiar el nombre de los valores a medida que los exporta, pero sólo cuando se utiliza la variante "curly brace" de la sentencia export. No es habitual tener que hacer esto, pero si ha elegido nombres cortos y concisos para utilizarlos dentro de su módulo, puede que prefiera exportar sus valores con nombres más descriptivos que tengan menos probabilidades de entrar en conflicto con otros módulos. Al igual que con las importaciones, se utiliza la palabra clave as para hacer esto:</p>
+    <code class="language-js">import &lbrace; default as Histogram, mean, stddev } from "./histogram-stats.js";</code></pre>
+    <p>En este caso, la palabra clave <codeinline>default</codeinline> de JavaScript sirve como marcador de posición y nos permite indicar que queremos importar y proporcionar un nombre para la exportación por defecto del módulo.</p>
+    <p>También es posible cambiar el nombre de los valores a medida que los exporta, pero sólo cuando se utiliza la variante "curly brace" de la sentencia <codeinline>export</codeinline>. No es habitual tener que hacer esto, pero si ha elegido nombres cortos y concisos para utilizarlos dentro de su módulo, puede que prefiera exportar sus valores con nombres más descriptivos que tengan menos probabilidades de entrar en conflicto con otros módulos. Al igual que con las importaciones, se utiliza la palabra clave <codeinline>as</codeinline> para hacer esto:</p>
     <pre>
-    <code class="language-js"></code></pre>
-    <p>Tenga en cuenta que, aunque las llaves parecen literales de objeto, no lo son, y la palabra clave export espera un único identificador antes del as, no una expresión. Esto significa, desafortunadamente, que no puedes usar export renaming de esta manera:</p>
+    <code class="language-js">export &lbrace;
+      layout as calculateLayout,
+      render as renderLayout
+    };</code></pre>
+    <p>Tenga en cuenta que, aunque las llaves parecen literales de objeto, no lo son, y la palabra clave <codeinline>export</codeinline> espera un único identificador antes del <codeinline>as</codeinline>, no una expresión. Esto significa, desafortunadamente, que no puedes usar export renaming de esta manera:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">export &lbrace; Math.sin as sin, Math.cos as cos }; // SyntaxError</code></pre>
   </section>
   <section id="3-4" class="py-4 xs:py-5 sm:py-6">
     <h2>10.3.4 Reexportaciones</h2>
-    <p>A lo largo de este capítulo, hemos discutido un módulo hipotético "./stats.js" que exporta las funciones mean() y stddev(). Si estuviéramos escribiendo un módulo de este tipo y pensáramos que muchos usuarios del módulo querrían sólo una función o la otra, entonces podríamos definir mean() en un módulo "./stats/mean.js" y definir stddev() en "./stats/stddev.js". De esta forma, los programas sólo tienen que importar exactamente las funciones que necesitan y no se hinchan importando código que no necesitan.</p>
+    <p>A lo largo de este capítulo, hemos discutido un módulo hipotético "./stats.js" que exporta las funciones <codeinline>mean()</codeinline> y <codeinline>stddev()</codeinline>. Si estuviéramos escribiendo un módulo de este tipo y pensáramos que muchos usuarios del módulo querrían sólo una función o la otra, entonces podríamos definir <codeinline>mean()</codeinline> en un módulo "./stats/mean.js" y definir <codeinline>stddev()</codeinline> en "./stats/stddev.js". De esta forma, los programas sólo tienen que importar exactamente las funciones que necesitan y no se hinchan importando código que no necesitan.</p>
     <p>Sin embargo, aunque hubiéramos definido estas funciones estadísticas en módulos individuales, cabría esperar que hubiera un montón de programas que quisieran ambas funciones y agradecerían un práctico módulo "./stats.js" desde el que pudieran importar ambas cosas en una sola línea.</p>
     <p>Dado que las implementaciones están ahora en archivos separados, definir este modulo "./stat.js" es sencillo:</p>
     <pre>
-    <code class="language-js"></code></pre>
-    <p>Los módulos ES6 anticipan este caso de uso y proporcionan una sintaxis especial para ello. En lugar de importar un símbolo simplemente para exportarlo de nuevo, puede combinar los pasos de importación y exportación en una única sentencia "re-export" que utilice la palabra clave export y la palabra clave from:</p>
+    <code class="language-js">import &lbrace; mean } from "./stats/mean.js";
+    import &lbrace; stddev } from "./stats/stddev.js";
+    export &lbrace; mean, stdev };</code></pre>
+    <p>Los módulos ES6 anticipan este caso de uso y proporcionan una sintaxis especial para ello. En lugar de importar un símbolo simplemente para exportarlo de nuevo, puede combinar los pasos de importación y exportación en una única sentencia "re-export" que utilice la palabra clave <codeinline>export</codeinline> y la palabra clave <codeinline>from</codeinline>:</p>
     <pre>
-    <code class="language-js"></code></pre>
-    <p>Tenga en cuenta que los nombres media y stddev no se utilizan realmente en este código. Si no estamos siendo selectivos con una re-exportación y simplemente queremos exportar todos los valores nombrados de otro módulo, podemos utilizar un comodín:</p>
+    <code class="language-js">export &lbrace; mean } from "./stats/mean.js";
+    export &lbrace; stddev } from "./stats/stddev.js";</code></pre>
+    <p>Tenga en cuenta que los nombres <codeinline>mean</codeinline> y <codeinline>stddev</codeinline> no se utilizan realmente en este código. Si no estamos siendo selectivos con una re-exportación y simplemente queremos exportar todos los valores nombrados de otro módulo, podemos utilizar un comodín:</p>
     <pre>
-    <code class="language-js"></code></pre>
-    <p>La sintaxis de re-exportación permite renombrar con como lo hacen los estados regulares de importación y exportación. Supongamos que queremos reexportar la función mean() pero también definir average() como otro nombre para la función. Podríamos hacerlo así:</p>
+    <code class="language-js">export * from "./stats/mean.js";
+    export * from "./stats/stddev.js";</code></pre>
+    <p>La sintaxis de re-exportación permite renombrar con como lo hacen los estados regulares de <codeinline>import</codeinline> y <codeinline>export</codeinline>. Supongamos que queremos reexportar la función <codeinline>mean()</codeinline> pero también definir <codeinline>average()</codeinline> como otro nombre para la función. Podríamos hacerlo así:</p>
     <pre>
-    <code class="language-js"></code></pre>
-    <p>Todas las reexportaciones de este ejemplo asumen que los módulos "./stats/mean.js" y "./stats/ stddev.js" exportan sus funciones utilizando export en lugar de export default. En realidad, sin embargo, dado que se trata de módulos con una única exportación, habría tenido sentido definirlos con export default. Si lo hubiéramos hecho así, entonces la reexportación syn- tax es un poco más complicada porque necesita definir un nombre para las exportaciones por defecto sin nombre. Podemos hacerlo así:</p>
+    <code class="language-js">export &lbrace; mean, mean as average } from "./stats/mean.js";
+    export &lbrace; stddev } from "./stats/stddev.js";</code></pre>
+    <p>Todas las reexportaciones de este ejemplo asumen que los módulos "./stats/mean.js" y "./stats/ stddev.js" exportan sus funciones utilizando <codeinline>export</codeinline> en lugar de <codeinline>export default</codeinline>. En realidad, sin embargo, dado que se trata de módulos con una única exportación, habría tenido sentido definirlos con <codeinline>export default</codeinline>. Si lo hubiéramos hecho así, entonces la reexportación syntax es un poco más complicada porque necesita definir un nombre para las exportaciones por defecto sin nombre. Podemos hacerlo así:</p>
     <pre>
-    <code class="language-js"></code></pre>
-    <p>Si desea volver a exportar un símbolo con nombre de otro módulo como la exportación por defecto de su módulo, podría hacer una importación seguida de una exportación por defecto, o podría combinar las dos declaraciones de la siguiente manera:</p>
+    <code class="language-js">export &lbrace; default as mean } from "./stats/mean.js";
+    export &lbrace; default as stddev } from "./stats/stddev.js";</code></pre>
+    <p>Si desea volver a exportar un símbolo con nombre de otro módulo como la exportación por defecto de su módulo, podría hacer una <codeinline>import</codeinline> seguida de una <codeinline>export default</codeinline>, o podría combinar las dos declaraciones de la siguiente manera:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">// Importa la función mean() desde ./stats.js y conviértela 
+    // en la exportación predeterminada de este módulo
+    export &lbrace; mean as default } from "./stats.js"</code></pre>
     <p>Y finalmente, para re-exportar la exportación por defecto de otro módulo como la exportación por defecto de tu módulo (aunque no está claro por qué querrías hacer esto, ya que los usuarios podrían simplemente importar el otro módulo directamente), puedes escribir:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">// El módulo average.js simplemente reexporta la exportación predeterminada de stats/mean.js
+    export &lbrace; default } from "./stats/mean.js"</code></pre>
   </section>
   <section id="3-5">
     <h2>10.3.5 Módulos JavaScript en la Web</h2>
