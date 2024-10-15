@@ -1,0 +1,190 @@
+---
+import Navegation from "../../components/Navegation.astro";
+import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
+---
+<Layoutjavascript title="JavaScript: La guia definitiva">
+  <Navegation capAnterior="capitulo-12" capSiguiente="capitulo-14" />
+  <section class="fadeIn">
+    <h1>JavaScript asíncrono</h1>
+    <p>Algunos programas informáticos, como las simulaciones científicas y los modelos de aprendizaje automático, están ligados al cálculo: se ejecutan continuamente, sin pausa, hasta que obtienen su resultado. Sin embargo, la mayoría de los programas informáticos del mundo real son bastante asíncronos. Esto significa que a menudo tienen que dejar de computar mientras esperan a que lleguen los datos de o a que ocurra algún evento. Los programas JavaScript de un navegador web suelen estar orientados a eventos, lo que significa que esperan a que el usuario haga clic o toque antes de hacer nada. Y los servidores basados en JavaScript suelen esperar a que las peticiones de los clientes lleguen a través de la red antes de hacer nada.</p>
+    <p>Este tipo de programación asíncrona es habitual en JavaScript, y este capítulo documenta tres importantes características del lenguaje que ayudan a facilitar el trabajo con código asíncrono. Las promesas, nuevas en ES6, son objetos que representan el resultado aún no disponible - de una operación asíncrona. Las palabras clave async y await se introdujeron en ES2017 y proporcionan una nueva sintaxis que simplifica la programación asíncrona al permitir estructurar el código basado en promesas como si fuera síncrono. Por último, los iteradores asíncronos y el bucle for/await se introdujeron en ES2018 y permiten trabajar con flujos de eventos asíncronos utilizando bucles sencillos que parecen síncronos.</p>
+    <p>Irónicamente, aunque JavaScript proporciona estas potentes características para trabajar con código asíncrono, no hay características del núcleo del lenguaje que sean en sí mismas asíncronas. Para demostrar Promises, async, await, y for/await, por lo tanto, primero daremos un rodeo en JavaScript del lado del cliente y del lado del servidor para explicar algunas de las características asíncronas de los navegadores web y Node. (Puedes aprender más sobre JavaScript del lado del cliente y del lado del servidor en los Capítulos 15 y 16.)</p>
+  </section>
+  <section id="1" class="py-4 xs:py-5 sm:py-6">
+    <h2>13.1 Programación asíncrona con callbacks</h2>
+    <p>En su nivel más fundamental, la programación asíncrona en JavaScript se realiza con retrollamadas. Una llamada de retorno es una función que se escribe y se pasa a otra función. Esa otra función invoca ("devuelve la llamada") a su función cuando se cumple alguna condición o se produce algún evento (asíncrono). La invocación de la función de devolución de llamada que usted proporciona le notifica la condición o el evento y, a veces, la invocación incluirá argumentos de función que proporcionan detalles adicionales. Esto es más fácil de entender con algunos ejemplos concretos, y las subsecciones siguientes demuestran varias formas de programación asíncrona basada en callbacks utilizando tanto JavaScript del lado del cliente como Node.</p>
+  </section>
+  <section id="1-1">
+    <h2>13.1.1 Temporizadores</h2>
+    <p>Uno de los tipos más simples de asincronía es cuando quieres ejecutar algún código después de que haya transcurrido una cierta cantidad de tiempo . Como vimos en §11.10, puedes hacer esto con la función setTimeout():</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>El primer argumento de setTimeout() es una función y el segundo es un intervalo de tiempo medido en milisegundos. En el código anterior, una hipotética función checkForUpdates() será llamada 60.000 milisegundos (1 minuto) después de la llamada a setTimeout(). checkForUpdates() es una función callback que su programa podría definir, y setTi meout() es la función que usted invoca para registrar su función callback y especificar bajo qué condiciones asíncronas debería ser invocada.</p>
+    <p>setTimeout() llama a la función callback especificada una vez, sin pasar argumentos, y luego se olvida de ella. Si está escribiendo una función que realmente busca actualizaciones, probablemente quiera que se ejecute repetidamente. Puede hacerlo utilizando setInterval() en lugar de setTimeout():</p>
+    <pre>
+    <code class="language-js"></code></pre>
+  </section>
+  <section id="1-2" class="py-4 xs:py-5 sm:py-6">
+    <h2>13.1.2 Eventos</h2>
+    <p>Los programas JavaScript del lado del cliente están casi siempre orientados a eventos: en lugar de ejecutar algún tipo de cálculo predeterminado, suelen esperar a que el usuario haga algo y luego responden a sus acciones. El navegador web genera un evento cuando el usuario pulsa una tecla del teclado, mueve el ratón, hace clic en un botón del ratón o toca un dispositivo de pantalla táctil. Los programas JavaScript basados en eventos registran funciones de retrollamada para determinados tipos de eventos en contextos específicos, y el navegador web invoca esas funciones cada vez que se producen los eventos especificados. Estas funciones de callback se llaman manejadores de eventos o escuchadores de eventos, y se registran con addEventListener():</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>En este ejemplo, applyUpdate() es una función callback hipotética que suponemos está implementada en algún otro lugar. La llamada a document.querySelector() devuelve un objeto que representa un único elemento especificado en la página web. Llamamos a addEventLis tener() en ese elemento para registrar nuestra llamada de retorno. El primer argumento de addEven tListener() es una cadena que especifica el tipo de evento que nos interesa: un clic del ratón o un toque de la pantalla táctil, en este caso. Si el usuario hace clic o toca en ese elemento específico de la página web, entonces el navegador invocará nuestra función de devolución de llamada applyUpdate(), pasando un objeto que incluye detalles (como la hora y las coordenadas del puntero del ratón) sobre el evento.</p>
+  </section>
+  <section id="1-3">
+    <h2>13.1.3 Eventos en red</h2>
+    <p>Otra fuente común de asincronía en la programación JavaScript son las peticiones de red. JavaScript que se ejecuta en el navegador puede obtener datos de un servidor web con código como este:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>El código JavaScript del lado del cliente puede utilizar la clase XMLHttpRequest más funciones de devolución de llamada para realizar peticiones HTTP y gestionar de forma asíncrona la respuesta del servidor cuando llegue.1 La función getCurrentVersionNumber() definida aquí (podemos imaginar que la utiliza la hipotética función checkForUpdates() que comentamos en §13.1.1) realiza una petición HTTP y define los manejadores de eventos que serán invocados cuando se reciba la respuesta del servidor o cuando un tiempo de espera u otro error haga que la petición falle.</p>
+    <p>Observe que el código del ejemplo anterior no llama a addEventListener() como hizo nuestro ejemplo anterior. Para la mayoría de las API web (incluida ésta), los controladores de eventos pueden definirse invocando addEventListener() en el objeto que genera el evento y pasando el nombre del evento de interés junto con la función de devolución de llamada. Sin embargo, también se puede registrar un único receptor de eventos asignándolo directamente a una propiedad del objeto. Esto es lo que hacemos en este código de ejemplo, asignando funciones a las propiedades onload, onerror y ontimeout. Por convención, las propiedades listener de eventos como estas siempre tienen nombres que comienzan con on. addEventListener() es la técnica más flexible porque permite múltiples manejadores de eventos. Pero en los casos en los que estés seguro de que ningún otro código necesitará registrar un receptor para el mismo objeto y tipo de evento, puede ser más simple simplemente establecer la propiedad apropiada a tu callback.</p>
+    <p>Otra cosa a tener en cuenta sobre la función getCurrentVersionNumber() en este código de ejemplo es que, debido a que realiza una petición asíncrona, no puede devolver de forma síncrona el valor (el número de versión actual) en el que está interesado el llamante. En su lugar, el autor de la llamada pasa una función de devolución de llamada, que se invoca cuando el resultado está listo o cuando se produce un error. En este caso, el autor de la llamada proporciona una función de devolución de llamada que espera dos argumentos. Si el XMLHttpRequest funciona correctamente, entonces getCurrentVersionNum ber() invoca la llamada de retorno con un primer argumento nulo y el número de versión como segundo argumento. O, si se produce un error, entonces getCurrentVersionNumber() invoca la llamada de retorno con los detalles del error en el primer argumento y null como segundo argumento.</p>
+  </section>
+  <section id="1-4" class="py-4 xs:py-5 sm:py-6">
+    <h2>13.1.4 Callbacks y Eventos en Node</h2>
+    <p>El entorno JavaScript del lado del servidor de Node.js es profundamente asíncrono y define muchas APIs que utilizan callbacks y eventos. La API predeterminada para leer el contenido de un archivo, por ejemplo, es asíncrona e invoca una función de devolución de llamada cuando se han leído los contenidos del archivo:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>La función fs.readFile() de Node toma una llamada de retorno de dos parámetros como último argumento. Lee el archivo especificado de forma asíncrona y luego invoca la llamada de retorno. Si el fichero se ha leído correctamente, pasa el contenido del fichero como segundo argumento de la llamada de retorno. Si hubo un error, pasa el error como primer argumento de la llamada de retorno. En este ejemplo, expresamos la llamada de retorno como una función de flecha, que es una sintaxis sucinta y natural para este tipo de operación simple.</p>
+    <p>Node también define una serie de APIs basadas en eventos. La siguiente función muestra cómo hacer una petición HTTP del contenido de una URL en Node. Tiene dos capas de código asíncrono manejadas con escuchadores de eventos. Observa que Node utiliza un método on() para registrar escuchadores de eventos en lugar de addEventListener():</p>
+    <pre>
+    <code class="language-js"></code></pre>
+  </section>
+  <section id="2">
+    <h2>13.2 Promesas</h2>
+    <p>Ahora que hemos visto ejemplos de programación asíncrona basada en llamadas de retorno y eventos en entornos JavaScript del lado del cliente y del lado del servidor, podemos introducir Prom- ises, una característica central del lenguaje diseñada para simplificar la programación asíncrona.</p>
+    <p>Una promesa es un objeto que representa el resultado de un cálculo asíncrono. Ese resultado puede o no estar listo todavía, y la API Promise es intencionadamente imprecisa al respecto: no hay forma de obtener de forma sincrónica el valor de una Promise; sólo puedes pedir a la Promise que llame a una función de devolución de llamada cuando el valor esté listo. Si estás definiendo una API asíncrona como la función getText() de la sección anterior, pero quieres que esté basada en promesas, omite el argumento callback, y en su lugar devuelve un objeto Promise. La persona que llama puede entonces registrar una o más llamadas de retorno en este objeto Promise, y serán invocadas cuando el cálculo asíncrono haya terminado.</p>
+    <p>Así que, en el nivel más simple, las promesas son sólo una forma diferente de trabajar con devoluciones de llamada. Sin embargo, su uso tiene ventajas prácticas. Un problema real con la programación asíncrona basada en callbacks es que es común terminar con callbacks dentro de callbacks dentro de callbacks, con líneas de código tan altamente sangradas que es difi- cult leer. Las promesas permiten que este tipo de devolución de llamada anidada se reexprese como una cadena de promesas más lineal que tiende a ser más fácil de leer y más fácil de razonar.</p>
+    <p>Otro problema de las retrollamadas es que pueden dificultar la gestión de errores. Si una función asíncrona (o una llamada de retorno invocada de forma asíncrona) lanza una excepción, no hay forma de que esa excepción se propague de vuelta al iniciador de la operación asíncrona. Este es un hecho fundamental sobre la programación asíncrona: rompe el manejo de excepciones. La alternativa es rastrear y propagar meticulosamente los errores con argumentos de devolución de llamada y valores de retorno, pero esto es tedioso y difícil de hacer bien. Las promesas ayudan aquí estandarizando una forma de manejar los errores y proporcionando una forma de que los errores se propaguen correctamente a través de una cadena de promesas.</p>
+    <p>Tenga en cuenta que las promesas representan los resultados futuros de cálculos asíncronos individuales. Sin embargo, no pueden utilizarse para representar cálculos asíncronos repetidos. Más adelante en este capítulo, escribiremos una alternativa basada en Promises a la función setTimeout(), por ejemplo. Pero no podemos usar Promises para reemplazar setInterval() porque esa función invoca una función callback repetidamente, que es algo para lo que las Promises no están diseñadas. De forma similar, podríamos usar una Promise en lugar del manejador de eventos "load" de un objeto XMLHttpRequest, ya que esa llamada de retorno sólo se invoca una vez. Pero normalmente no usaríamos una Promise en lugar de un manejador de eventos "click" de un objeto botón HTML, ya que normalmente queremos permitir al usuario hacer click en un botón múltiples veces.</p>
+    <p>En las subsecciones siguientes:</p>
+    <ul>
+      <li class="font-normal">Explicar la terminología Promise y mostrar el uso básico de Promise</li>
+      <li class="font-normal">Mostrar cómo encadenar promesas</li>
+      <li class="font-normal">Demuestre cómo crear sus propias API basadas en promesas</li>
+    </ul>
+    <nota>
+      <img class="self-start" src="/public/javascript/nota_warning.svg" alt="Nota de la warning">
+      <div class="">
+        <p>Las promesas parecen sencillas a primera vista, y el caso de uso básico de las promesas es, de hecho, sencillo y simple. Pero pueden llegar a ser sorprendentemente confusas para cualquier cosa más allá de los casos de uso más simples. Las promesas son un poderoso lenguaje para la programación asíncrona, pero es necesario entenderlas en profundidad para utilizarlas correctamente y con confianza. Sin embargo, merece la pena dedicar tiempo a desarrollar ese profundo conocimiento, y te insto a que estudies detenidamente este largo capítulo.</p>
+      </div>
+    </nota>
+  </section>
+  <section id="2-1" class="py-4 xs:py-5 sm:py-6">
+    <h2>13.2.1 Uso de promesas</h2>
+    <p>Con la llegada de Promises al núcleo del lenguaje JavaScript, los navegadores web han comenzado a implementar APIs basadas en Promises. En la sección anterior, implementamos una función getText() que realizaba una petición HTTP asíncrona y pasaba el cuerpo de la respuesta HTTP a una función callback especificada como una cadena. Imagina una variante de esta función, getJSON(), que analiza el cuerpo de la respuesta HTTP como JSON y devuelve una Promise en lugar de aceptar un argumento de devolución de llamada. Implementaremos una función getJSON() más adelante en este capítulo, pero por ahora, veamos cómo utilizar esta función de utilidad que devuelve promesas:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>getJSON() inicia una petición HTTP asíncrona para la URL que especifiques y luego, mientras esa petición está pendiente, devuelve un objeto Promise. El objeto Promise define un método de instancia then(). En lugar de pasar nuestra función callback directamente a getJSON(), la pasamos al método then(). Cuando llega la respuesta HTTP, el cuerpo de esa respuesta se analiza como JSON, y el valor analizado resultante se pasa a la función que pasamos a then().</p>
+    <p>Puedes pensar en el método then() como un método de registro de callback como el método addEventListener() utilizado para registrar manejadores de eventos en Java-Script del lado del cliente. Si llamas al método then() de un objeto Promise varias veces, cada una de las funciones que especifiques será llamada cuando se complete el cálculo prometido.</p>
+    <p>Sin embargo, a diferencia de muchos escuchadores de eventos, una Promise representa una sola computación, y cada función registrada con then() será invocada sólo una vez. Vale la pena señalar que la función que se pasa a then() se invoca de forma asíncrona, incluso si la computación asíncrona ya se ha completado cuando se llama a then().</p>
+    <p>A un nivel sintáctico simple, el método then() es la característica distintiva de las Promesas, y es idiomático añadir .then() directamente a la invocación de la función que devuelve la Promesa, sin el paso intermedio de asignar el objeto Promesa a una variable.</p>
+    <p>También es idiomático nombrar las funciones que devuelven promesas y las funciones que utilizan los resultados de las promesas con verbos, y estos modismos conducen a un código que es particularmente fácil de leer:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p class="title-article text-left">Gestión de errores con promesas</p>
+    <p>Las operaciones asíncronas, sobre todo las que implican trabajo en red, pueden fallar de varias maneras, por lo que hay que escribir código robusto para gestionar los errores que inevitablemente se producirán.</p>
+    <p>Para Promises, podemos hacer esto pasando una segunda función al método then():</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Una Promise representa el resultado futuro de una computación asíncrona que ocurre después de la creación del objeto Promise. Dado que el cálculo se realiza después de que se nos devuelva el objeto Promise, no hay forma de que el cálculo devuelva tradicionalmente un valor o lance una excepción que podamos capturar. Las funciones que pasamos a then() proporcionan alternativas. Cuando una computación sincrónica se completa normalmente, simplemente devuelve el resultado a su invocador. Cuando un cálculo asíncrono basado en promesas se completa normalmente, pasa su resultado a la función que es el primer argumento de then().</p>
+    <p>Cuando algo va mal en un cálculo síncrono, se lanza una excepción que se propaga por la pila de llamadas hasta que hay una cláusula catch para manejarla. Cuando se ejecuta una computación asíncrona, su invocador ya no está en la pila, por lo que si algo va mal, simplemente no es posible lanzar una excepción de vuelta al invocador.</p>
+    <p>En su lugar, los cálculos asíncronos basados en promesas pasan la excepción (normalmente como un objeto Error de algún tipo, aunque esto no es necesario) a la segunda función pasada a then(). Así, en el código anterior, si getJSON() se ejecuta normalmente, pasa su resultado a displayUserProfile(). Si hay un error (el usuario no ha iniciado sesión, el servidor está caído, la conexión a Internet del usuario se ha caído, la solicitud ha expirado, etc.), entonces getJSON() pasa un objeto Error a handleProfileError().</p>
+    <p>En la práctica, es raro ver dos funciones pasadas a then(). Hay una forma mejor y más idiomática de manejar los errores cuando se trabaja con promesas. Para entenderlo, primero considere lo que ocurre si getJSON() se completa normalmente pero se produce un error en displayUserProfile(). Esa función de llamada de retorno es invocada de forma asíncrona cuando getJSON() retorna, por lo que también es asíncrona y no puede lanzar una excepción de forma significativa (porque no hay código en la pila de llamadas para manejarla).</p>
+    <p>La forma más idiomática de manejar los errores en este código es la siguiente:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Con este código, un resultado normal de getJSON() todavía se pasa a displayUserProfile(), pero cualquier error en getJSON() o en displayUserProfile() (incluyendo cualquier excepción lanzada por displayUserProfile) se pasa a handleProfileError(). El método catch() es una forma abreviada de llamar a then() con un primer argumento nulo y la función de gestión de errores especificada como segundo argumento.</p>
+    <p>Tendremos más que decir sobre catch() y este lenguaje de gestión de errores cuando hablemos de Promise chains en la siguiente sección.</p>
+    <article>
+      <p class="title-article">Terminología de la promesa</p>
+      <p>Antes de seguir hablando de promesas, merece la pena detenerse a definir algunos términos. Cuando no estamos programando y hablamos de promesas humanas, decimos que una promesa se "cumple" o se "rompe". Cuando hablamos de promesas en JavaScript, los términos equivalentes son "cumplida" y "rechazada". Imagina que has llamado al método then() de una Promise y le has pasado dos funciones callback. Decimos que la promesa se ha cumplido siempre y cuando se llame a la primera llamada de retorno. Y decimos que la promesa ha sido rechazada cuando se llama a la segunda llamada de retorno. Si una promesa no se cumple ni se rechaza, entonces está pendiente. Y una vez que una promesa se cumple o se rechaza, decimos que está resuelta. Ten en cuenta que una promesa nunca puede cumplirse ni rechazarse a la vez. Una vez que una promesa se resuelve, nunca cambiará de cumplida a rechazada o viceversa.</p>
+      <p>Recuerda cómo definimos las Promesas al principio de esta sección: "una Promise es un objeto que representa el resultado de una operación asíncrona". Es importante recordar que las Promesas no son sólo formas abstractas de registrar retrollamadas para que se ejecuten cuando algún código asíncrono termine: representan los resultados de ese código asíncrono. Si el código asíncrono se ejecuta normalmente (y la Promesa se cumple), entonces ese resultado es esencialmente el valor de retorno del código. Y si el código asíncrono no se completa normalmente (y la Promesa es rechazada), entonces el resultado es un objeto Error o algún otro valor que el código podría haber lanzado si no fuera asíncrono. Cualquier Promise que se haya cumplido tiene un valor asociado, y ese valor no cambiará. Si la Promise se cumple, entonces el valor es un valor de retorno que se pasa a cualquier función callback registrada como primer argumento de then(). Si la Promesa es rechazada, entonces el valor es un error de algún tipo que se pasa a cualquier función callback registrada con catch() o como segundo argumento de then().</p>
+      <p>La razón por la que quiero ser preciso sobre la terminología de las promesas es que éstas también pueden resolverse. Es fácil confundir este estado resuelto con el estado cumplido o con el estado resuelto, pero no es precisamente lo mismo que ninguno de los dos. Entender el estado resuelto es una de las claves para una comprensión profunda de las Promesas, y volveré a ello después de que hayamos hablado de las cadenas de Promesas más adelante.</p>
+    </article>
+  </section>
+  <section id="2-2">
+    <h2>13.2.2 Encadenar promesas</h2>
+    <p>Una de las ventajas más importantes de las promesas es que proporcionan una forma natural de expresar una secuencia de operaciones asíncronas como una cadena lineal de invocaciones al método then(), sin tener que anidar cada operación dentro de la llamada de retorno de la anterior. He aquí, por ejemplo, una hipotética cadena Promise:</p>
+    <p>Este código ilustra cómo una cadena de Promises puede facilitar la expresión de una secuencia de operaciones asíncronas. Sin embargo, no vamos a discutir esta cadena Promise en particular. Sin embargo, continuaremos explorando la idea de usar cadenas Promise para hacer peticiones HTTP.</p>
+    <p>Anteriormente en este capítulo, vimos el objeto XMLHttpRequest utilizado para hacer una petición HTTP en JavaScript. Este objeto de nombre extraño tiene una API antigua y complicada, y ha sido reemplazada en gran parte por la nueva API Fetch basada en promesas (§15.11.1). En su forma más simple, esta nueva API HTTP es sólo la función fetch(). Le pasas una URL y te devuelve una promesa. Esa promesa se cumple cuando la respuesta HTTP comienza a llegar y el estado HTTP y las cabeceras están disponibles:</p>
+    <p>Cuando la Promesa devuelta por fetch() se cumple, pasa un objeto Response a la función que pasaste a su método then(). Este objeto response te da acceso al estado de la petición y a las cabeceras, y también define métodos como text() y json(), que te dan acceso al cuerpo de la respuesta en forma de texto y JSON, respectivamente. Pero aunque la Promesa inicial se cumpla, el cuerpo de la respuesta puede no haber llegado todavía. Así que estos métodos text() y json() para acceder al cuerpo de la respuesta devuelven Promesas. He aquí una forma ingenua de utilizar fetch() y el método response.json() para obtener el cuerpo de una respuesta HTTP:</p>
+    <p>Esta es una forma ingenua de usar Promises porque las anidamos, como callbacks, lo que contradice el propósito. El lenguaje preferido es utilizar promesas en una cadena secuencial con código como este:</p>
+    <p>Veamos las invocaciones a métodos en este código, ignorando los argumentos que se pasan a los métodos:</p>
+    <p>Cuando se invoca más de un método en una sola expresión como ésta, la llamamos cadena de métodos. Sabemos que la función fetch() devuelve un objeto Promise, y podemos ver que el primer .then() de esta cadena invoca un método sobre ese objeto Promise devuelto. Pero hay un segundo .then() en la cadena, lo que significa que la primera invocación del método then() debe devolver a su vez una Promise.</p>
+    <p>A veces, cuando una API está diseñada para utilizar este tipo de encadenamiento de métodos, sólo hay un único objeto, y cada método de ese objeto devuelve el propio objeto para facilitar el encadenamiento. Sin embargo, no es así como funcionan las promesas. Cuando escribimos una cadena de invocaciones .then(), no estamos registrando múltiples llamadas de retorno en un único objeto Promise. En su lugar, cada invocación del método then() devuelve un nuevo objeto Promise. Ese nuevo objeto Promise no se cumple hasta que la función pasada a then() se haya completado.</p>
+    <p>Volvamos a una forma simplificada de la cadena fetch() original anterior. Si definimos las funciones pasadas a las invocaciones then() en otro lugar, podríamos refactorizar el código para que se vea así:</p>
+    <p>Veamos este código en detalle:</p>
+    <ul>
+      <li class="font-normal list-decimal">En la primera línea, fetch() se invoca con una URL. Inicia una petición HTTP GET para esa URL y devuelve una Promise. Llamaremos a esta petición HTTP "tarea 1" y llamaremos a la Promesa "promesa 1".</li>
+      <li class="font-normal list-decimal">En la segunda línea, invocamos el método then() de la promesa 1, pasando la función callback1 que queremos que se invoque cuando se cumpla la promesa 1. El método then() almacena nuestra llamada de retorno en algún lugar, y luego devuelve una nueva Promise. Llamaremos a la nueva Promise devuelta en este paso "promesa 2", y diremos que la "tarea 2" comienza cuando se invoca a callback1.</li>
+      <li class="font-normal list-decimal">En la tercera línea, invocamos el método then() de la promesa 2, pasando la función callback2 que queremos que se invoque cuando la promesa 2 se cumpla. Este método then() recuerda nuestra devolución de llamada y devuelve otra promesa más. Diremos que la "tarea 3" comienza cuando se invoca la llamada de retorno2. Podemos llamar a esta última Promise "promesa 3", pero realmente no necesitamos un nombre para ella porque no la usaremos en absoluto.</li>
+      <li class="font-normal list-decimal">Los tres pasos anteriores ocurren de forma sincrónica cuando la expresión se ejecuta por primera vez. Ahora tenemos una pausa asíncrona mientras la petición HTTP iniciada en el paso 1 se envía a través de Internet.</li>
+      <li class="font-normal list-decimal">Finalmente, la respuesta HTTP comienza a llegar. La parte asíncrona de la llamada fetch() envuelve el estado HTTP y las cabeceras en un objeto Response y cumple la promesa 1 con ese objeto Response como valor.</li>
+      <li class="font-normal list-decimal">Cuando se cumple la promesa 1, su valor (el objeto Response) se pasa a nuestra función call back1(), y comienza la tarea 2. El trabajo de esta tarea, dado un objeto Response como entrada, es obtener el cuerpo de la respuesta como un objeto JSON.</li>
+      <li class="font-normal list-decimal">Supongamos que la tarea 2 se completa normalmente y es capaz de analizar el cuerpo de la respuesta HTTP para producir un objeto JSON. Este objeto JSON se utiliza para cumplir la promesa 2.</li>
+      <li class="font-normal list-decimal">El valor que cumple la promesa 2 se convierte en la entrada de la tarea 3 cuando se pasa a la función callback2(). Esta tercera tarea muestra ahora los datos al usuario de alguna forma no especificada. Cuando la tarea 3 se complete (suponiendo que lo haga normalmente), la promesa 3 se cumplirá. Pero como nunca hemos hecho nada con la promesa 3, no pasa nada cuando esa promesa se cumple, y la cadena de computación asíncrona termina en este punto.</li>
+    </ul>
+  </section>
+  <section id="2-3" class="py-4 xs:py-5 sm:py-6">
+    <h2>13.2.3 Resolver promesas</h2>
+    <p>Mientras explicábamos la cadena de promesas de obtención de URL con la lista en la última sección, hablamos de las promesas 1, 2 y 3. Pero en realidad hay un cuarto objeto Promise involucrado también. Pero en realidad hay un cuarto objeto Promise involucrado también, y esto nos lleva a nuestra importante discusión de lo que significa que una Promise sea "resuelta".</p>
+    <p>Recuerda que fetch() devuelve un objeto Promise que, cuando se cumple, pasa un objeto Response a la función callback que registramos. Este o b j e t o Response tiene .text(), .json(), y otros métodos para solicitar el cuerpo de la respuesta HTTP en varias formas. Pero como el cuerpo puede no haber llegado todavía, estos métodos deben devolver objetos Promise. En el ejemplo que hemos estado estudiando, la "tarea 2" llama al método .json() y devuelve su valor. Este es el cuarto objeto Promise, y es el valor de retorno de la función callback1().</p>
+    <p>Volvamos a escribir el código de obtención de URL una vez más de una forma verbosa y no idiomática que haga explícitas las devoluciones de llamada y las promesas:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Para que las cadenas Promise funcionen de forma útil, la salida de la tarea 2 debe convertirse en la entrada de la tarea 3. Y en el ejemplo que estamos considerando aquí, la entrada a la tarea 3 es el cuerpo de la URL que se obtuvo, analizado como un objeto JSON. Pero, como acabamos de explicar, el valor de retorno de la llamada de retorno c1 no es un objeto JSON, sino la Promesa p4 para ese objeto JSON. Esto parece una contradicción, pero no lo es: cuando p1 se cumple, c1 es invocado, y la tarea 2 comienza. Y cuando se cumple p2, se invoca a c2 y comienza la tarea 3. Pero que la tarea 2 comience cuando se invoca a c1 no significa que la tarea 2 deba terminar cuando c1 regrese. Las promesas sirven para gestionar tareas asíncronas, después de todo, y si la tarea 2 es asíncrona (como lo es, en este caso), entonces esa tarea no se habrá completado cuando vuelva la llamada de retorno.</p>
+    <p>Ahora estamos listos para discutir el detalle final que necesitas entender para dominar realmente las Promesas. Cuando pasas una llamada de retorno c al método then(), then() devuelve una Promesa p y se encarga de invocar asíncronamente a c en algún momento posterior. La llamada de retorno realiza algún cálculo y devuelve un valor v. Cuando la llamada de retorno regresa, p se resuelve con el valor v. Cuando una Promise se resuelve con un valor que no es a su vez una Promise, se cumple inmediatamente con ese valor. Por lo tanto, si c devuelve un valor que no es una Promise, ese valor devuelto se convierte en el valor de p, p se cumple y hemos terminado. Pero si el valor de retorno v es en sí mismo una Promise, entonces p se resuelve pero aún no se cumple. En esta etapa, p no puede resolverse hasta que se resuelva la Promesa v. Si v se cumple, entonces p se cumplirá con el mismo valor. Si v se rechaza, entonces p se rechazará por la misma razón. Esto es lo que significa el estado "resuelto" de una promesa: la promesa se ha asociado o "bloqueado" con otra promesa. Aún no sabemos si p se cumplirá o será rechazada, pero nuestra llamada de retorno c ya no tiene ningún control sobre eso. p está "resuelta" en el sentido de que su destino ahora depende enteramente de lo que ocurra con la promesa v.</p>
+    <p>Volvamos a nuestro ejemplo de obtención de URL. Cuando c1 devuelve p4, p2 está resuelto. Pero estar resuelto no es lo mismo que estar realizado, por lo que la tarea 3 no comienza todavía. Cuando el cuerpo completo de la respuesta HTTP esté disponible, el método .json() podrá analizarlo y utilizar el valor analizado para completar p4. Cuando se cumple p4, p2 se cumple automáticamente también, con el mismo valor JSON analizado. En este punto, el objeto JSON analizado se pasa a c2 y comienza la tarea 3.</p>
+    <p>Esta puede ser una de las partes de JavaScript más difíciles de entender, y puede que necesites leer esta sección más de una vez. La Figura 13-1 presenta el proceso de forma visual y puede ayudarle a clarificarlo.</p>
+    <figure id="figure1-1" class="mx-auto">
+      <img src="/public/javascript/capitulo-13/figure13-1.jpg" alt="imagen de como obtener una URL">
+      <figcaption>Figura 13-1. Obtención de una URL con promesas</figcaption>
+    </figure>
+  </section>
+  <section id="2-4">
+    <h2>13.2.4 Más sobre promesas y errores</h2>
+  </section>
+  <section id="2-5" class="py-4 xs:py-5 sm:py-6">
+    <h2>13.2.5 Promesas en paralelo</h2>
+  </section>
+  <section id="2-6">
+    <h2>13.2.6 Hacer promesas</h2>
+  </section>
+  <section id="2-7" class="py-4 xs:py-5 sm:py-6">
+    <h2>13.2.7 Promesas en secuencia</h2>
+  </section>
+  <section id="3">
+    <h2>13.3 async y await</h2>
+  </section>
+  <section id="3-1" class="py-4 xs:py-5 sm:py-6">
+    <h2>13.3.1 Expresiones de espera</h2>
+  </section>
+  <section id="3-2">
+    <h2>13.3.2 Funciones asíncronas</h2>
+  </section>
+  <section id="3-3" class="py-4 xs:py-5 sm:py-6">
+    <h2>13.3.3 A la espera de múltiples promesas</h2>
+  </section>
+  <section id="3-4">
+    <h2>13.3.4 Detalles de la aplicación</h2>
+  </section>
+  <section id="4" class="py-4 xs:py-5 sm:py-6">
+    <h2>13.4 Iteración asíncrona</h2>
+  </section>
+  <section id="4-1">
+    <h2>13.4.1 El bucle for/await</h2>
+  </section>
+  <section id="4-2" class="py-4 xs:py-5 sm:py-6">
+    <h2>13.4.2 Iteradores asíncronos</h2>
+  </section>
+  <section id="4-3">
+    <h2>13.4.3 Generadores asíncronos</h2>
+  </section>
+  <section id="4-4" class="py-4 xs:py-5 sm:py-6">
+    <h2>13.4.4 Implementación de iteradores asíncronos</h2>
+  </section>
+  <section id="5">
+    <h2>13.5 Resumen</h2>
+  </section>
+</Layoutjavascript>

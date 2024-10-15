@@ -1,0 +1,155 @@
+---
+import Navegation from "../../components/Navegation.astro";
+import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
+---
+<Layoutjavascript title="JavaScript: La guia definitiva">
+  <Navegation capAnterior="capitulo-11" capSiguiente="capitulo-13" />
+  <section class="fadeIn">
+    <h1>Iteradores y generadores</h1>
+    <p>Los objetos iterables y sus iteradores asociados son una característica de ES6 que hemos visto varias veces a lo largo de este libro. Las matrices (incluyendo TypedArrays) son iterables, al igual que las cadenas y los objetos Set y Map. Esto significa que el contenido de estas estructuras de datos puede ser iterado -en bucle- con el bucle for/of, como vimos en §5.4.4:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Los iteradores también pueden utilizarse con el operador ... para expandir o "extender" un objeto iterable en un inicializador de array o en una invocación de función, como vimos en §7.1.2:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Los iteradores pueden utilizarse con la asignación de desestructuración:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Cuando se itera un objeto Map, los valores devueltos son pares [clave, valor], que  funcionan bien con la asignación de desestructuración en un bucle for/of:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Si desea iterar sólo las claves o sólo los valores en lugar de los pares, puede utilizar los métodos keys() y values():</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Por último, varias funciones integradas y constructores que se utilizan habitualmente con objetos Array están escritos (en ES6 y posteriores) para aceptar iteradores arbitrarios. El constructor Set() es uno de ellos:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Este capítulo explica cómo funcionan los iteradores y demuestra cómo crear tus propias estructuras de datos iterables. Después de explicar los iteradores básicos, este capítulo cubre los generadores, una nueva y potente característica de ES6 que se utiliza principalmente como una forma particularmente fácil de crear iteradores.</p>
+  </section>
+  <section id="1" class="py-4 xs:py-5 sm:py-6">
+    <h2>12.1 Cómo funcionan los iteradores</h2>
+    <p>El bucle for/of y el operador spread funcionan a la perfección con objetos iterables, pero merece la pena entender qué ocurre realmente para que la iteración funcione. Hay tres tipos distintos que necesitas entender para comprender la iteración en Java- Script. Primero, están los objetos iterables: estos son tipos como Array, Set y Map que pueden ser iterados. En segundo lugar, está el propio objeto iterador, que realiza la iteración. Y tercero, está el objeto resultado de la iteración que contiene el resultado de cada paso de la iteración.</p>
+    <p>Un objeto iterable es cualquier objeto con un método iterador especial que devuelve un objeto iterador. Un iterador es cualquier objeto con un mé todo next() que devuelve un objeto resultado de iteración. Y un objeto resultado de iteración es un objeto con propiedades llamadas value y done. Para iterar un objeto iterable, primero se llama a su método iterator para obtener un objeto iterador. Luego, se llama al método next() del objeto iterador repetidamente hasta que el valor devuelto tenga su propiedad done establecida a true. Lo complicado de esto es que el método iterador de un objeto iterable no tiene un nombre convencional, sino que utiliza el símbolo Symbol.iterator como nombre. Así que un simple bucle for/of sobre un objeto iterable iterable también podría escribirse de la manera difícil, así:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>El objeto iterador de los tipos de datos iterables incorporados es a su vez iterable. (Es decir, tiene un método llamado Symbol.iterator que sólo se devuelve a sí mismo.) Esto es ocasionalmente útil en código como el siguiente cuando se desea iterar a través de un iterador "parcialmente utilizado":</p>
+    <pre>
+    <code class="language-js"></code></pre>
+  </section>
+  <section id="2">
+    <h2>12.2 Implementación de objetos iterables</h2>
+    <p>Los objetos iterables son tan útiles en ES6 que deberías considerar hacer iterables tus propios tipos de datos siempre que representen algo que pueda ser iterado. Las clases Range mostradas en los Ejemplos 9-2 y 9-3 del Capítulo 9 eran iterables. Esas clases usaban funciones generadoras para hacerse iterables. Documentaremos los generadores más adelante en este capítulo, pero primero, implementaremos la clase Range una vez más, haciéndola iterable sin depender de un generador.</p>
+    <p>Para que una clase sea iterable, debe implementar un método cuyo nombre sea el Símbolo Symbol.iterator. Ese método debe devolver un objeto iterador que tenga un método next(). Y el mé todo next() debe devolver un objeto resultado de iteración que tenga una propiedad value y/o una propiedad boolean done. El Ejemplo 12-1 implementa una clase iterable Range y demuestra cómo crear objetos iterable, iterador y resultado de iteración.</p>
+    <p><em>Ejemplo 12-1. Una clase Range numérica iterable</em></p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Además de hacer tus clases iterables, puede ser muy útil definir funciones que devuelvan valores iterables. Considere estas alternativas basadas en iterables a los métodos map() y filter() de las matrices de JavaScript:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Una característica clave de los objetos iterables y los iteradores es que son intrínsecamente perezosos: cuando se requiere cálculo para calcular el siguiente valor, ese cálculo se puede aplazar hasta que el valor sea realmente necesario. Supongamos, por ejemplo, que tenemos una cadena de texto muy larga que queremos dividir en palabras separadas por espacios. Podría simplemente utilizar el método split() de su cadena, pero si hace esto, entonces toda la cadena tiene que ser procesada antes de que pueda utilizar incluso la primera palabra. Y acabas asignando mucha memoria al array devuelto y a todas las cadenas que contiene. Aquí hay una función que le permite iterar perezosamente las palabras de una cadena sin mantenerlas todas en memoria a la vez (en ES2020, esta función sería mucho más fácil de implementar usando el método matchAll() que devuelve el iterador descrito en §11.3.2):</p>
+    <pre>
+    <code class="language-js"></code></pre>
+  </section>
+  <section id="2-1" class="py-4 xs:py-5 sm:py-6">
+    <h2>12.2.1 "Cerrando" un Iterador: El método Return</h2>
+    <p>Imagine una variante JavaScript (del lado del servidor) del iterador words() que, en lugar de tomar una cadena fuente como argumento, toma el nombre de un archivo, abre el archivo, lee líneas de él e itera las palabras de esas líneas. En la mayoría de los sistemas operativos, los programas que abren archivos para leer de ellos necesitan recordar cerrar esos archivos cuando terminan de leer, por lo que este iterador hipotético se aseguraría de cerrar el archivo después de que el método next() devuelva la última palabra en él.</p>
+    <p>Pero los iteradores no siempre llegan hasta el final: un bucle for/of puede terminar con un break, un return o una excepción. Del mismo modo, cuando se utiliza un iterador con una asignación de desestructuración, el método next() sólo se llama las veces suficientes para obtener valores para cada una de las variables especificadas. El iterador puede tener muchos más valores que podría devolver, pero nunca serán solicitados.</p>
+    <p>Si nuestro hipotético iterador palabras-en-un-archivo nunca recorre todo el camino hasta el final, todavía necesita cerrar el archivo que abrió. Por esta razón, los objetos iteradores pueden implementar un método return() para acompañar al método next(). Si la iteración se detiene antes de que next() haya devuelto un resultado de iteración con la propiedad done puesta a true (normalmente porque se ha salido de un bucle for/of antes de tiempo mediante una sentencia break), entonces el intérprete comprobará si el objeto iterador tiene un método return(). Si este método existe, el intérprete lo invocará sin argumentos, dándole al iterador la oportunidad de cerrar archivos, liberar memoria, y de alguna otra manera limpiar después de sí mismo. El método return() debe devolver un objeto resultado del iterador. Las propiedades del objeto se ignoran, pero es un error devolver un valor que no sea un objeto.</p>
+    <p>El bucle for/of y el operador spread son características realmente útiles de JavaScript, por lo que cuando se crean APIs, es una buena idea utilizarlas siempre que sea posible. Pero tener que trabajar con un objeto iterable, su objeto iterador y los objetos resultado del iterador hace que el proceso sea algo complicado. Afortunadamente, los generadores pueden simplificar drásticamente la creación de iteradores personalizados, como veremos en el resto de este capítulo.</p>
+  </section>
+  <section id="3">
+    <h2>12.3 Generadores</h2>
+    <p>Un generador es un tipo de iterador definido con la nueva y potente sintaxis de ES6; es especialmente útil cuando los valores que se van a iterar no son los elementos de una estructura de datos, sino el resultado de un cálculo.</p>
+    <p>Para crear un generador, primero debe definir una función generadora. Una función generadora es sintácticamente como una función JavaScript normal, pero se define con la palabra clave function* en lugar de function. (Técnicamente, no se trata de una palabra clave nueva, sino simplemente de un * después de la palabra clave function y antes del nombre de la función). Cuando se invoca una función generadora, ésta no ejecuta el cuerpo de la función, sino que devuelve un objeto generador. Este objeto generador es un iterador. Llamar a su método next() hace que el cuerpo de la función generadora se ejecute desde el principio (o cualquiera que sea su posición actual) hasta que llega a una sentencia yield. yield es nuevo en ES6 y es algo así como una sentencia return. El valor de la sentencia yield se convierte en el valor devuelto por la llamada next() en el iterador. Un ejemplo lo aclara:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>En este ejemplo, hemos utilizado una funció n* para definir un generador. Sin embargo, al igual que las funciones regulares, también podemos definir generadores en forma de expresión. Una vez más, basta con poner un asterisco después de la palabra clave function:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>En las clases y los literales de objetos, podemos utilizar la notación abreviada para omitir por completo la palabra clave function cuando definimos métodos. Para definir un generador en este contexto, basta con poner un asterisco delante del nombre del método donde habría estado la palabra clave function, si la hubiéramos utilizado:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Tenga en cuenta que no hay forma de escribir una función generadora utilizando la sintaxis de función de flecha.</p>
+    <p>Los generadores a menudo facilitan la definición de clases iterables. Podemos reemplazar el método [Symbol.iterator]() mostrado en el Ejemplo 12-1 por una función generadora *[Sym bol.iterator&rbrack;() mucho más corta que tiene este aspecto:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Véase el Ejemplo 9-3 en el Capítulo 9 para ver esta función iteradora basada en generador en contexto.</p>
+  </section>
+  <section id="3-1" class="py-4 xs:py-5 sm:py-6">
+    <h2>12.3.1 Ejemplos de generadores</h2>
+    <p>Los generadores son más interesantes si generan los valores que producen mediante algún tipo de cálculo. He aquí, por ejemplo, una función generadora que produce números de Fibonacci:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Observe que la función generadora fibonacciSequence() tiene aquí un bucle infinito y cede valores para siempre sin retornar. Si este generador se utiliza con el operador de propagación ..., formará un bucle hasta que se agote la memoria y el programa se bloquee. Sin embargo, con cuidado, es posible usarlo en un bucle for/of:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Este tipo de generador infinito resulta más útil con un generador take() como éste:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>He aquí otra útil función generadora que intercala los elementos de múltiples objetos iterables:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+  </section>
+  <section id="3-2">
+    <h2>12.3.2 generadores yield* y recursivos</h2>
+    <p>Además del generador zip() definido en el ejemplo anterior, puede ser útil tener una función generadora similar que proporcione los elementos de múltiples objetos iterables secuencialmente en lugar de intercalarlos. Podríamos escribir ese generador así:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Este proceso de ceder los elementos de algún otro objeto iterable es tan común en las funciones generadoras que ES6 tiene una sintaxis especial para ello. La palabra clave yield* es como yield excepto que, en lugar de devolver un único valor, itera un objeto iterable y devuelve cada uno de los valores resultantes. La función generadora sequence() que hemos utilizado puede simplificarse con yield* de la siguiente manera:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>El método array forEach() es a menudo una forma elegante de hacer un bucle sobre los elementos de un array, por lo que puedes tener la tentación de escribir la función sequence() así:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Sin embargo, esto no funciona. yield y yield* sólo pueden utilizarse dentro de funciones generadoras, pero la función de flecha anidada en este código es una función normal, no una función generadora de funciones*, por lo que yield no está permitido.</p>
+    <p>yield* puede utilizarse con cualquier tipo de objeto iterable, incluidos los iterables implementados con generadores. Esto significa que yield* nos permite definir generadores recursivos, y podrías utilizar esta característica para permitir una simple iteración no recursiva sobre una estructura de árbol definida recursivamente, por ejemplo.</p>
+  </section>
+  <section id="4" class="py-4 xs:py-5 sm:py-6">
+    <h2>12.4 Funciones avanzadas del generador</h2>
+    <p>El uso más común de las funciones generadoras es crear iteradores, pero la característica fundamental de los generadores es que nos permiten pausar un cálculo, obtener resultados intermedios y reanudar el cálculo más tarde. Esto significa que los generadores tienen características que van más allá de las de los iteradores, y exploraremos esas características en las secciones siguientes.</p>
+  </section>
+  <section id="4-1">
+    <h2>12.4.1 Valor de retorno de una función generadora</h2>
+    <p>Las funciones generadoras que hemos visto hasta ahora no han tenido declaraciones de retorno, o si las han tenido, se han utilizado para provocar un retorno anticipado, no para devolver un valor. Sin embargo, como cualquier función, una función generadora puede devolver un valor. Para entender lo que ocurre en este caso, recuerda cómo funciona la iteración. El valor de retorno de la función next() es un objeto que tiene una propiedad value y/o una propiedad done. Con los iteradores y generadores típicos, si la propiedad value está definida, entonces la propiedad done está indefinida o es falsa. Y si done es true, entonces value es undefined. Pero en el caso de un generador que devuelve un valor, la llamada final a next devuelve un objeto que tiene definidas las propiedades value y done. La propiedad value contiene el valor devuelto por la función generadora, y la propiedad done es true, indicando que no hay más valores para iterar. Este valor final es ignorado por el bucle for/of y por el operador spread, pero está disponible para el código que itera manualmente con llamadas explícitas a next():</p>
+    <pre>
+    <code class="language-js"></code></pre>
+  </section>
+  <section id="4-2" class="py-4 xs:py-5 sm:py-6">
+    <h2>12.4.2 El valor de una expresión de rendimiento</h2>
+    <p>En la discusión anterior, hemos tratado yield como una sentencia que toma un valor pero no tiene valor propio. Sin embargo, yield es una expresión y puede tener un valor.</p>
+    <p>Cuando se invoca el método next() de un generador, la función del generador se ejecuta hasta que alcanza una expresión yield. La expresión que sigue a la palabra clave yield se evalúa, y ese valor se convierte en el valor de retorno de la invocación a next(). En este punto, la función generadora deja de ejecutarse justo en medio de la evaluación de la expresión yield. La próxima vez que se llame al método next() del generador, el argumento pasado a next() se convertirá en el valor de la expresión yield que estaba en pausa. Así que el generador devuelve valores a su llamador con yield, y el llamador pasa valores al generador con next(). El generador y el invocador son dos flujos separados de ejecución que pasan valores (y control) de un lado a otro. El siguiente código lo ilustra:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Cuando este código se ejecuta, produce la siguiente salida que demuestra el vaivén entre los dos bloques de código:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Observe la asimetría de este código. La primera invocación de next() inicia el generador, pero el valor pasado a esa invocación no es accesible al generador.</p>
+  </section>
+  <section id="4-3">
+    <h2>12.4.3 Los métodos return() y throw() de un generador</h2>
+    <p>Hemos visto que puedes recibir valores producidos o devueltos por una función generadora. Y puedes pasar valores a un generador en ejecución pasando esos valores cuando llamas al método next() del generador.</p>
+    <p>Además de proporcionar entrada a un generador con next(), también puede alterar el flujo de control dentro del generador llamando a sus métodos return() y throw(). Como sus nombres sugieren, llamar a estos métodos en un generador hace que devuelva un valor o lance una excepción como si la siguiente sentencia en el generador fuera un return o throw.</p>
+    <p>Recuerde que, si un iterador define un método return() y la iteración se detiene antes de tiempo, entonces el intérprete llama automáticamente al método return() para dar al iterador la oportunidad de cerrar archivos o hacer otro tipo de limpieza. En el caso de los generadores, no se puede definir un método return() personalizado para manejar la limpieza, pero se puede estructurar el código del generador para utilizar una sentencia try/finally que asegure que se realiza la limpieza necesaria (en el bloque finally) cuando el generador retorna. Al forzar el retorno del generador, el método return() incorporado en el generador asegura que el código de limpieza se ejecuta cuando el generador ya no se va a utilizar.</p>
+    <p>Al igual que el método next() de un generador nos permite pasar valores arbitrarios a un generador en ejecución, el método throw() de un generador nos ofrece una forma de enviar señales arbitrarias (en forma de excepciones) a un generador. Llamar al método throw() siempre provoca una excepción dentro del generador. Pero si la función del generador está escrita con el código de gestión de excepciones adecuado, la excepción no tiene por qué ser fatal, sino que puede ser un medio para alterar el comportamiento del generador. Imaginemos, por ejemplo, un generador de contadores que produzca una secuencia creciente de números enteros. Podría escribirse de forma que una excepción enviada con throw() pusiera el contador a cero.</p>
+    <p>Cuando un generador utiliza yield* para obtener valores de otro objeto iterable, una llamada al mé todo next() del generador provoca una llamada al método next() del objeto iterable. Lo mismo ocurre con los métodos return() y throw(). Si un generador utiliza yield* en un objeto iterable que tiene definidos estos métodos, la llamada a return() o throw() en el generador hace que el método return() o throw() del iterador sea llamado a su vez. Todos los iteradores deben tener un método next(). Los iteradores que necesitan limpiarse después de una iteración incompleta deben definir un método return(). Y cualquier iterador puede definir un método throw(), aunque no conozco ninguna razón práctica para hacerlo.</p>
+  </section>
+  <section id="4-4" class="py-4 xs:py-5 sm:py-6">
+    <h2>12.4.4 Nota final sobre los generadores</h2>
+    <p>Los generadores son una estructura de control generalizada muy potente. Nos dan la capacidad de pausar un cálculo con rendimiento y reiniciarlo de nuevo en algún momento posterior arbitrario con un valor de entrada arbitrario. Es posible utilizar generadores para crear una especie de sistema de hilos cooperativos dentro de un código JavaScript de un solo hilo. Y es posible utilizar generadores para enmascarar partes asíncronas de su programa para que su código parezca secuencial y síncrono, a pesar de que algunas de sus llamadas a funciones son en realidad asíncronas y dependen de eventos de la red.</p>
+    <p>Intentar hacer estas cosas con generadores lleva a un código que es alucinantemente difícil de entender o explicar. Se ha hecho, sin embargo, y el único caso de uso realmente práctico ha sido para gestionar código asíncrono. JavaScript tiene ahora las palabras clave async y await (ver Capítulo 13) para este mismo propósito, sin embargo, y ya no hay ninguna razón para abusar de los generadores de esta manera.</p>
+  </section>
+  <section id="3-2">
+    <h2>12.5 Resumen</h2>
+    <p>En este capítulo has aprendido:</p>
+    <ul>
+      <li class="font-normal">El bucle for/of y el operador ... spread funcionan con objetos iterables.</li>
+      <li class="font-normal">Un objeto es iterable si tiene un método con el nombre simbólico [Symbol.itera tor] que devuelve un objeto iterador.</li>
+      <li class="font-normal">Un objeto iterador tiene un método next() que devuelve un objeto resultado de iteración.</li>
+      <li class="font-normal">Un objeto resultado de iteración tiene una propiedad value que contiene el siguiente valor iterado, si existe. Si la iteración ha finalizado, entonces el objeto resultado debe tener una propiedad done establecida a true.</li>
+      <li class="font-normal">Puedes implementar tus propios objetos iterables definiendo un método [Symbol.iterator] () que devuelva un objeto con un método next() que devuelva objetos resultado de la iteración. También puedes implementar funciones que acepten argumentos iteradores y devuelvan valores iteradores.</li>
+      <li class="font-normal">Las funciones generadoras (funciones definidas con function* en lugar de function) son otra forma de definir iteradores.</li>
+      <li class="font-normal">Cuando se invoca una función generadora, el cuerpo de la función no se ejecuta inmediatamente; en su lugar, el valor de retorno es un objeto iterable iterador. Cada vez que se ejecuta la función Cuando se llama al método next() del iterador, se ejecuta otra parte de la función generadora.</li>
+      <li class="font-normal">Las funciones generadoras pueden utilizar el operador yield para especificar los valores devueltos por el iterador. Cada llamada a next() hace que la función generadora se ejecute hasta la siguiente expresión yield. El valor de esa expresión yield se convierte entonces en el valor devuelto por el iterador. Cuando no hay más expresiones yield, la función generadora regresa y la iteración se ha completado.</li>
+    </ul>
+  </section>
+</Layoutjavascript>
