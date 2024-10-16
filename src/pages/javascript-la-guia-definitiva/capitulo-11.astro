@@ -727,53 +727,93 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p class="title-article text-left">search()</p>
     <p>Las cadenas admiten cuatro métodos que utilizan expresiones regulares. El más sencillo es search(). Este método toma un argumento de expresión regular y devuelve la posición del carácter del inicio de la primera subcadena coincidente o -1 si no hay coincidencia:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">"JavaScript".search(/script/ui) // => 4
+    "Python".search(/script/ui) // => -1</code></pre>
     <p>Si el argumento de search() no es una expresión regular, primero se convierte en una pasándola al constructor RegExp. search() no admite búsquedas globales; ignora la bandera g de su argumento de expresión regular.</p>
     <p class="title-article text-left">replace()</p>
     <p>El método replace() realiza una operación de búsqueda y sustitución. Toma una expresión regular como primer argumento y una cadena de sustitución como segundo. Busca en la cadena a la que se llama coincidencias con el patrón especificado. Si la expresión regular tiene el indicador g activado, el método replace() sustituye todas las coincidencias de la cadena por la cadena de sustitución; en caso contrario, sólo sustituye la primera coincidencia que encuentra. Si el primer argumento de replace() es una cadena en lugar de una expresión regular, el método busca esa cadena literalmente en lugar de convertirla en una expresión regular con el constructor RegExp(), como hace search(). Como ejemplo, puede utilizar replace() de la siguiente manera para proporcionar mayúsculas y minúsculas uniformes de la palabra "JavaScript" a lo largo de una cadena de texto:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">// No matter how it is capitalized, replace it with the correct capitalization
+    text.replace(/javascript/gi, "JavaScript");</code></pre>
     <p>Sin embargo, replace() es más potente que esto. Recuerde que las subexpresiones entre paréntesis de una expresión regular se numeran de izquierda a derecha y que la expresión regular recuerda el texto con el que coincide cada subexpresión. Si en la cadena de sustitución aparece un $ seguido de un dígito, replace() sustituye esos dos caracteres por el texto que coincide con la subexpresión especificada. Se trata de una función muy útil. Puede utilizarla, por ejemplo, para sustituir las comillas de una cadena por otros caracteres:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">// A quote is a quotation mark, followed by any number of
+    // nonquotation mark characters (which we capture), followed
+    // by another quotation mark.
+    let quote = /"([^"]*)"/g;
+    // Replace the straight quotation marks with guillemets
+    // leaving the quoted text (stored in $1) unchanged.
+    'He said "stop"'.replace(quote, '«$1»') // => 'He said «stop»'</code></pre>
     <p>Si su RegExp utiliza grupos de captura con nombre, entonces puede referirse al texto coincidente por nombre en lugar de por número:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">let quote = /"(?<quotedText>[^"]*)"/g;
+    'He said "stop"'.replace(quote, '«$<quotedText>»') // => 'He said «stop»'</code></pre>
     <p>En lugar de pasar una cadena de sustitución como segundo argumento a replace(), también puede pasar una función que se invocará para calcular el valor de sustitución. La función de sustitución se invoca con varios argumentos. El primero es el texto completo. A continuación, si la RegExp tiene grupos de captura, se pasan como argumentos las subcadenas capturadas por esos grupos. El siguiente argumento es la posición dentro de la cadena en la que se encontró la coincidencia. A continuación, se pasa la cadena completa sobre la que se llamó a replace(). Y finalmente, si la RegExp contenía algún nombre grupos de captura, el último argumento de la función de sustitución es un objeto cuyos nombres de propiedad coinciden con los nombres de los grupos de captura y cuyos valores son el texto coincidente. Como ejemplo, he aquí un código que utiliza una función de sustitución para convertir enteros decimales de una cadena a hexadecimal:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">let s = "15 times 15 is 225";
+    s.replace(/\d+/gu, n => parseInt(n).toString(16)) // => "f times f is e1"</code></pre>
     <p class="title-article text-left">match()</p>
     <p>El método match() es el más general de los métodos de expresión regular de cadenas. Toma una expresión regular como único argumento (o convierte su argumento en una expresión regular pasándolo al constructor RegExp()) y devuelve una matriz que contiene los resultados de la coincidencia, o null si no se encuentra ninguna coincidencia. Si la expresión regular tiene el indicador g activado, el método devuelve una matriz con todas las coincidencias que aparecen en la cadena. Por ejemplo:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">"7 plus 8 equals 15".match(/\d+/g) // => ["7", "8", "15"]</code></pre>
     <p>Si la expresión regular no tiene activada la bandera g, match() no realiza una búsqueda global; simplemente busca la primera coincidencia. En este caso no global, match() sigue devolviendo una matriz, pero los elementos de la matriz son completamente diferentes. Sin el indicador g, el primer elemento de la matriz devuelta es la cadena coincidente, y los elementos restantes son las subcadenas que coinciden con los grupos de captura entre paréntesis de la expresión regular. Así, si match() devuelve una matriz a, a[0] contiene la coincidencia completa, a[1] contiene la subcadena que coincide con la primera expresión entre paréntesis, y así sucesivamente. Para establecer un paralelismo con el método replace(), a[1] es la misma cadena que $1, a[2] es la misma que $2, y así sucesivamente.</p>
     <p>Por ejemplo, analice una URL5 con el siguiente código:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">// A very simple URL parsing RegExp
+    let url = /(\w+):\/\/([\w.]+)\/(\S*)/;
+    let text = "Visit my blog at http://www.example.com/~david";
+    let match = text.match(url);
+    let fullurl, protocol, host, path;
+    if (match !== null) &lbrace;
+      fullurl = match[0]; // fullurl == "http://www.example.com/~david"
+      protocol = match[1]; // protocol == "http"
+      host = match[2]; // host == "www.example.com"
+      path = match[3]; // path == "~david"
+    }</code></pre>
     <p>En este caso no global, la matriz devuelta por match() también tiene algunas propiedades de objeto además de los elementos numerados de la matriz. La propiedad input se refiere a la cadena sobre la que se ha llamado a match(). La propiedad index es la posición dentro de esa cadena en la que comienza la coincidencia. Y si la expresión regular contiene grupos de captura con nombre, entonces el array devuelto también tiene una propiedad groups cuyo valor es un objeto. Las propiedades de este objeto coinciden con los nombres de los grupos nombrados, y los valores son el texto coincidente. Podríamos reescribir el ejemplo anterior de análisis de URL, por ejemplo, así:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">let url = /(?&lt;protocol>\w+):\/\/(?&lt;host>[\w.]+)\/(?&lt;path>\S*)/;
+    let text = "Visit my blog at http://www.example.com/~david";
+    let match = text.match(url);
+    match[0] // => "http://www.example.com/~david"
+    match.input // => text
+    match.index // => 17
+    match.groups.protocol // => "http"
+    match.groups.host // => "www.example.com"
+    match.groups.path // => "~david"</code></pre>
     <p>Hemos visto que match() se comporta de forma bastante diferente dependiendo de si la RegExp tiene el indicador g activado o no. También hay diferencias importantes pero menos dramáticas en el comportamiento cuando la bandera y está activada. Recuerde que la bandera y hace que una expresión regular sea "pegajosa" al restringir en qué parte de la cadena pueden comenzar las coincidencias. Si una RegExp tiene los indicadores g e y activados, match() devuelve una matriz de cadenas coincidentes, igual que cuando g está activada sin y. Pero la primera coincidencia debe comenzar al principio de la cadena, y cada coincidencia posterior debe comenzar en el carácter inmediatamente posterior a la coincidencia anterior.</p>
     <p>Si el indicador y se establece sin g, entonces match() intenta encontrar una única coincidencia y, por defecto, esta coincidencia se limita al inicio de la cadena. Sin embargo, puede cambiar esta posición de inicio por defecto, estableciendo la propiedad lastIndex del objeto RegExp en el índice en el que desea encontrar la coincidencia. Si se encuentra una coincidencia, entonces este lastIndex se actualizará automáticamente al primer carácter después de la coincidencia, de modo que si vuelve a llamar a match(), en este caso, buscará una coincidencia posterior. (lastIndex puede parecer un nombre extraño para una propiedad que especifica la posición en la que comenzar la siguiente coincidencia. Lo veremos de nuevo cuando cubramos el método RegExp exec(), y su nombre puede tener más sentido en ese contexto).</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">let vowel = /[aeiou]/y; // Sticky vowel match
+    "test".match(vowel) // => null: "test" does not begin with a vowel
+    vowel.lastIndex = 1; // Specify a different match position
+    "test".match(vowel)[0] // => "e": we found a vowel at position 1
+    vowel.lastIndex // => 2: lastIndex was automatically updated
+    "test".match(vowel) // => null: no vowel at position 2
+    vowel.lastIndex // => 0: lastIndex gets reset after failed match</code></pre>
     <p>Cabe señalar que pasar una expresión regular no global al mé todo match() de una cadena es lo mismo que pasar la cadena al método exec() de la expresión regular: la matriz devuelta y sus propiedades son las mismas en ambos casos.</p>
     <p class="title-article text-left">matchAll()</p>
     <p>El método matchAll() está definido en ES2020, y desde principios de 2020 está implementado por los navegadores web modernos y Node. matchAll() espera una RegExp con la bandera g activada. Sin embargo, en lugar de devolver una matriz de subcadenas coincidentes como hace match(), devuelve un iterador que devuelve el tipo de objetos coincidentes que devuelve match() cuando se usa con una RegExp no global. Esto hace que matchAll() sea la forma más sencilla y general de recorrer todas las coincidencias de una cadena.</p>
     <p>Puede utilizar matchAll() para recorrer en bucle las palabras de una cadena de texto como ésta:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">// One or more Unicode alphabetic characters between word boundaries
+    const words = /\b\p&lbrace;Alphabetic}+\b/gu; // \p is not supported in Firefox yet
+    const text = "This is a naïve test of the matchAll() method.";
+    for(let word of text.matchAll(words)) &lbrace;
+      console.log(`Found '$&lbrace;word[0]}' at index $&lbrace;word.index}.`);
+    }</code></pre>
     <p>Puede establecer la propiedad lastIndex de un objeto RegExp para decirle a matchAll() en qué índice de la cadena debe empezar a coincidir. Sin embargo, a diferencia de los otros métodos de concordancia de patrones, matchAll() nunca modifica la propiedad lastIndex del RegExp al que se llama, y esto hace que sea mucho menos probable que cause errores en el código.</p>
     <p class="title-article text-left">split()</p>
     <p>El último de los métodos de expresión regular del objeto String es split(). Este método divide la cadena sobre la que se llama en una matriz de subcadenas, utilizando el argumento como separador. Puede utilizarse con un argumento de cadena como éste:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">"123,456,789".split(",") // => ["123", "456", "789"]</code></pre>
     <p>El método split() también puede tomar una expresión regular como argumento, lo que permite especificar separadores más generales. Aquí lo llamamos con un separador que incluye una cantidad arbitraria de espacios en blanco a cada lado:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">"1, 2, 3,\n4, 5".split(/\s*,\s*/) // => ["1", "2", "3", "4", "5"]</code></pre>
     <p>Sorprendentemente, si llama a split() con un delimitador RegExp y la expresión regular incluye grupos de captura, el texto que coincida con los grupos de captura se incluirá en la matriz devuelta. Por ejemplo:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">const htmlTag = /&lt;([^>]+)>/; // &lt; followed by one or more non->, followed by >
+    "Testing<br/>1,2,3".split(htmlTag) // => ["Testing", "br/", "1,2,3"]</code></pre>
   </section>
   <section id="3-3">
     <h2>11.3.3 La clase RegExp</h2>
@@ -781,11 +821,13 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>El constructor RegExp() toma uno o dos argumentos de cadena y crea un nuevo objeto RegExp. El primer argumento de este constructor es una cadena que contiene el cuerpo de la expresión regular-el texto que aparecería entre barras en un literal de expresión regular. Tenga en cuenta que tanto los literales de cadena como las expresiones regulares utilizan el carácter \ para las secuencias de escape, por lo que cuando pase una expresión regular a RegExp() como un literal de cadena, debe sustituir cada carácter \ por \\. El segundo argumento de RegExp() es opcional. Si se proporciona, indica los indicadores de la expresión regular. Debe ser g, i, m, s, u, y, o cualquier combinación de estas letras.</p>
     <p>Por ejemplo:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">// Find all five-digit numbers in a string. Note the double \\ in this case.
+    let zipcode = new RegExp("\\d&lbrace;5}", "g");</code></pre>
     <p>El constructor RegExp() es útil cuando una expresión regular se crea dinámicamente y, por tanto, no puede representarse con la sintaxis literal de expresión regular. Por ejemplo, para buscar una cadena introducida por el usuario, debe crearse una expresión regular en tiempo de ejecución con RegExp().</p>
     <p>En lugar de pasar una cadena como primer argumento a RegExp(), también puede pasar un objeto RegExp. Esto le permite copiar una expresión regular y cambiar sus indicadores:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">let exactMatch = /JavaScript/;
+    let caseInsensitive = new RegExp(exactMatch, "i");</code></pre>
     <p class="title-article text-left">Propiedades RegExp</p>
     <p><codeinline>source</codeinline></p>
     <p>Esta propiedad de sólo lectura es el texto fuente de la expresión regular: los caracteres que aparecen entre las barras en un literal RegExp.</p>
@@ -812,21 +854,34 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>El método RegExp exec() es la forma más general y potente de utilizar expresiones regulares. Toma un único argumento de cadena y busca una coincidencia en esa cadena. Si no encuentra ninguna, devuelve null. Sin embargo, si se encuentra una coincidencia, devuelve una matriz igual a la devuelta por el método match() para búsquedas no globales. El elemento 0 de la matriz contiene la cadena que coincide con la expresión regular, y cualquier elemento subsiguiente de la matriz contiene las subcadenas que coinciden con cualquier grupo de captura. La matriz devuelta también tiene propiedades con nombre: la propiedad index contiene la posición del carácter en la que se produjo la coincidencia, y la propiedad input especifica la cadena en la que se buscó, y la propiedad groups, si está definida, se refiere a un objeto que contiene las subcadenas que coinciden con cualquier grupo de captura con nombre.</p>
     <p>A diferencia del método String match(), exec() devuelve el mismo tipo de matriz tanto si la expresión regular tiene el indicador global g como si no. Recuerde que match() devuelve una matriz de coincidencias cuando se le pasa una expresión regular global. exec(), por el contrario, siempre devuelve una única coincidencia y proporciona información completa sobre esa coincidencia. Cuando exec() es llamada sobre una expresión regular que tiene la bandera global g o la bandera pegajosa y, consulta la propiedad lastIndex del objeto RegExp para determinar dónde empezar a buscar una coincidencia. (Y si la bandera y está activada, también restringe la coincidencia a comienza en esa posición). Para un objeto RegExp recién creado, lastIndex es 0, y la búsqueda comienza al principio de la cadena. Pero cada vez que exec() encuentra una coincidencia, actualiza la propiedad lastIndex al índice del carácter inmediatamente posterior al texto coincidente. Si exec() no encuentra ninguna coincidencia, restablece lastIndex a 0. Este comportamiento especial le permite llamar a exec() repetidamente para recorrer todas las coincidencias de expresiones regulares en una cadena. (Aunque, como hemos descrito, en ES2020 y posteriores, el método matchAll() de String es una forma más fácil de recorrer todas las coincidencias). Por ejemplo, el bucle en el siguiente código se ejecutará dos veces:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">let pattern = /Java/g;
+    let text = "JavaScript > Java";
+    let match;
+    while((match = pattern.exec(text)) !== null) &lbrace;
+      console.log(`Matched $&lbrace;match[0]} at $&lbrace;match.index}`);
+      console.log(`Next search begins at $&lbrace;pattern.lastIndex}`);
+    }</code></pre>
     <article>
       <p class="title-article">La propiedad lastIndex y la reutilización de RegExp</p>
       <p>Como ya has visto, la API de expresiones regulares de JavaScript es complicada. El uso de la propiedad lastIndex con los indicadores g e y es una parte particularmente complicada de esta API. Cuando usas estas banderas, necesitas ser particularmente cuidadoso cuando llames a los métodos match(), exec(), o test() porque el comportamiento de estos métodos depende de lastIndex, y el valor de lastIndex depende de lo que hayas hecho previamente con el objeto RegExp. Esto hace facil escribir codigo con errores.</p>
       <p>Supongamos, por ejemplo, que queremos encontrar el índice de todas las etiquetas &lt;p> dentro de una cadena de texto HTML. Podríamos escribir un código como éste:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">let match, positions = [];
+    while((match = /&lt;p>/g.exec(html)) !== null) &lbrace; // POSSIBLE INFINITE LOOP
+      positions.push(match.index);
+    }</code></pre>
       <p>Este código no hace lo que queremos. Si la cadena html contiene al menos una etiqueta &lt;p>, el bucle será eterno. El problema es que usamos un literal RegExp en la condición del bucle while. Para cada iteración del bucle, estamos creando un nuevo objeto RegExp con lastIndex a 0, por lo que exec() siempre comienza al principio de la cadena, y si hay una coincidencia, seguirá coincidiendo una y otra vez. La solución, por supuesto, es definir el RegExp una vez, y guardarlo en una variable para que estemos usando el mismo objeto RegExp para cada iteración del bucle.</p>
       <p>Por otro lado, a veces reutilizar un objeto RegExp no es lo correcto. Supongamos, por ejemplo, que queremos recorrer todas las palabras de un diccionario para encontrar palabras que contengan pares de letras dobles:</p>
-      <pre>
-      <code class="language-js"></code></pre>
-      <p>(Aunque para ser totalmente compatibles con la complejidad de las lenguas del mundo, realmente necesitamos añadir también las categorías "Conector_Puntuación" y "Join_Control").</p>
-      <p>Como último ejemplo, la sintaxis \p también nos permite definir expresiones regulares que coincidan con caracteres de un alfabeto o escritura concretos:</p>
-      <pre>
-      <code class="language-js"></code></pre>
+    <pre>
+    <code class="language-js">let dictionary = [ "apple", "book", "coffee" ];
+    let doubleLetterWords = [];
+    let doubleLetter = /(\w)\1/g;
+    for(let word of dictionary) &lbrace;
+      if (doubleLetter.test(word)) &lbrace;
+        doubleLetterWords.push(word);
+      }
+    }
+    doubleLetterWords // => ["apple", "coffee"]: "book" is missing!</code></pre>
       <p>Como hemos puesto la bandera g en la RegExp, la propiedad lastIndex cambia después de coincidencias exitosas, y el método test() (que está basado en exec()) empieza a buscar una coincidencia en la posición especificada por lastIndex. Después de encontrar la "pp" en "apple", lastIndex es 3, por lo que empezamos a buscar la palabra "book" en la posición 3 y no vemos la "oo" que contiene.</p>
       <p>Podríamos solucionar este problema eliminando la bandera g (que en realidad no es necesaria en este ejemplo concreto), o moviendo el literal RegExp al cuerpo del bucle para que se vuelva a crear en cada iteración, o poniendo explícitamente a cero lastIndex antes de cada llamada a test().</p>
       <p>La moraleja aquí es que lastIndex hace que la API RegExp sea propensa a errores. Así que tenga mucho cuidado cuando use las banderas g o y y haga bucles. Y en ES2020 y posteriores, use el método String matchAll() en lugar de exec() para evitar este problema ya que match All() no modifica lastIndex.</p>
@@ -836,24 +891,29 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>11.4 Fechas y horarios</h2>
     <p>La clase Date es la API de JavaScript para trabajar con fechas y horas. Crea un objeto Date con el constructor Date(). Sin argumentos, devuelve un objeto Date que representa la fecha y hora actuales:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">let now = new Date(); // The current time</code></pre>
     <p>Si pasa un argumento numérico, el constructor Date() interpreta ese argumento como el número de milisegundos desde la época de 1970:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">let epoch = new Date(0); // Midnight, January 1st, 1970, GMT</code></pre>
     <p>Si especifica dos o más argumentos enteros, se interpretan como el año, mes, día del mes, hora, minuto, segundo y milisegundo en su zona horaria local, como en lo siguiente:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">let century = new Date(2100, // Year 2100
+          0, // January
+          1, // 1st
+          2, 3, 4, 5); // 02:03:04.005, local time</code></pre>
     <p>Una peculiaridad de la API de fecha es que el primer mes de un año es el número 0, pero el primer día de un mes es el número 1. Si se omiten los campos de hora, el constructor de Date() los pone todos a 0 por defecto, fijando la hora en medianoche. Si se omiten los campos de hora, el constructor de Date() los pone todos a 0 por defecto, estableciendo la hora a medianoche.</p>
     <p>Tenga en cuenta que cuando se invoca con varios números, el constructor Date() los interpreta utilizando la zona horaria a la que esté configurado el ordenador local. Si desea especificar una fecha y hora en UTC (Tiempo Universal Coordinado, también conocido como GMT), puede utilizar Date.UTC(). Este método estático toma los mismos argumentos que el constructor Date(), los interpreta en UTC y devuelve una marca de tiempo en milisegundos que puedes pasar al constructor Date():</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">// Midnight in England, January 1, 2100
+    let century = new Date(Date.UTC(2100, 0, 1));</code></pre>
     <p>Si imprime una fecha (con console.log(century), por ejemplo), se imprimirá, por defecto, en su zona horaria local. Si desea mostrar una fecha en UTC, debe convertirla explícitamente en una cadena con toUTCString() o toISOString().</p>
     <p>Por último, si se pasa una cadena al constructor de Date(), éste intentará parsear esa cadena como una especificación de fecha y hora. El constructor puede analizar fechas especificadas en los formatos producidos por los métodos toString(), toUTCString() y toISOString():</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">let century = new Date("2100-01-01T00:00:00Z"); // An ISO format date</code></pre>
     <p>Una vez que se tiene un objeto Date, varios métodos get y set permiten consultar y modificar los campos año, mes, día-del-mes, hora, minuto, segundo y milisegundo de la Date. Cada uno de estos métodos tiene dos formas: una que obtiene o establece utilizando la hora local y otra que obtiene o establece utilizando la hora UTC. Para obtener o establecer el año de un objeto Date, por ejemplo, se utiliza getFullYear(), getUTCFullYear(), setFullYear() o setUTCFullYear():</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">let d = new Date(); // Start with the current date
+    d.setFullYear(d.getFullYear() + 1); // Increment the year</code></pre>
     <p>Para obtener o establecer los demás campos de una fecha, sustituya "FullYear" en el nombre del método por "Month", "Date", "Hours", "Minutes", "Seconds" o "Milliseconds". Algunos de los métodos de establecimiento de fecha permiten establecer más de un campo a la vez. setFullYear() y setUTC FullYear() también permiten establecer opcionalmente el mes y el día del mes. Y setHours() y setUTCHours() permiten especificar los campos minutos, segundos y milisegundos además del campo horas.</p>
     <p>Tenga en cuenta que los métodos para consultar el día del mes son getDate() y getUTC Date(). Las funciones getDay() y getUTCDay() devuelven el día de la semana (de 0 para el domingo a 6 para el sábado). El día de la semana es de sólo lectura, por lo que no existe el correspondiente método setDay().</p>
   </section>
@@ -862,16 +922,19 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>JavaScript representa las fechas internamente como enteros que especifican el número de milisegundos transcurridos desde (o antes de) la medianoche del 1 de enero de 1970, hora UTC. Se admiten números enteros de hasta 8.640.000.000.000.000, por lo que JavaScript no se quedará sin milisegundos en más de 270.000 años.</p>
     <p>Para cualquier objeto Date, el método getTime() devuelve este valor interno, y el método set Time() lo establece. Así que puedes añadir 30 segundos a un Date con código como este, por ejemplo:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">d.setTime(d.getTime() + 30000);</code></pre>
     <p>Estos valores en milisegundos se denominan a veces timestamps, y a veces es útil trabajar con ellos directamente en lugar de con objetos Date. El método estático Date.now() devuelve la hora actual como una marca de tiempo y es útil cuando se desea medir cuánto tiempo tarda en ejecutarse el código:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">let startTime = Date.now();
+    reticulateSplines(); // Do some time-consuming operation
+    let endTime = Date.now();
+    console.log(`Spline reticulation took $&lbrace;endTime - startTime}ms.`);</code></pre>
     <article>
       <p class="title-article">Marcas de tiempo de alta resolución</p>
       <p>Las marcas de tiempo devueltas por Date.now() se miden en milisegundos. En realidad, un milisegundo es un tiempo relativamente largo para un ordenador, y a veces es posible que d e s e e medir el tiempo transcurrido con mayor precisión. La función performance.now() lo permite: también devuelve una marca de tiempo basada en milisegundos, pero el valor devuelto no es un entero, por lo que incluye fracciones de milisegundo. El valor devuelto por perfor mance.now() no es una marca de tiempo absoluta como lo es el valor Date.now(). En su lugar, simplemente indica cuánto tiempo ha transcurrido desde que se cargó una página web o desde que se inició el proceso Node.</p>
       <p>El objeto performance forma parte de una API de rendimiento más amplia que no está definida por el estándar ECMAScript pero que está implementada por los navegadores web y por Node. Para utilizar el objeto performance en Node, debes importarlo con:</p>
-      <pre>
-      <code class="language-js"></code></pre>
+    <pre>
+    <code class="language-js">const &lbrace; performance } = require("perf_hooks");</code></pre>
       <p>Permitir un cronometraje de alta precisión en la web puede permitir a sitios web sin escrúpulos averiguar la identidad de los visitantes, por lo que los navegadores (especialmente Firefox) pueden reducir la precisión de perfor mance.now() por defecto. Como desarrollador web, deberías poder volver a habilitar la temporización de alta precisión de algún modo (como estableciendo privacy.reduceTimerPrecision en false en Firefox).</p>
     </article>
   </section>
@@ -880,14 +943,20 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Los objetos Date pueden compararse con los operadores de comparación estándar &lt;, &lt;=, > y >= de JavaScript. Y puedes restar un objeto Date de otro para determinar el número de milisegundos entre las dos fechas. (Esto funciona porque la clase Date define un método valueOf() que devuelve una marca de tiempo).</p>
     <p>Si desea añadir o restar un número determinado de segundos, minutos u horas a una fecha, lo más sencillo es modificar la marca de tiempo, como se muestra en el ejemplo anterior, en el que añadimos 30 segundos a una fecha. Esta técnica se vuelve más engorrosa si desea añadir días, y no funciona en absoluto para meses y años, ya que tienen un número variable de días. Para hacer aritmética de fechas involucrando días, meses y años, puede usar setDate(), setMonth() y setYear(). Aquí, por ejemplo, hay un código que añade tres meses y dos semanas a la fecha actual:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">let d = new Date();
+    d.setMonth(d.getMonth() + 3, d.getDate() + 14);</code></pre>
     <p>Los métodos de ajuste de fecha funcionan correctamente incluso cuando se desbordan. Cuando añadimos tres meses al mes actual, podemos acabar con un valor superior a 11 (que representa diciembre). La función setMonth() se encarga de esto incrementando el año según sea necesario. Del mismo modo, cuando establecemos el día del mes en un valor mayor que el número de días del mes, el mes se incrementa adecuadamente.</p>
   </section>
   <section id="4-3">
     <h2>11.4.3 Formateo y análisis sintáctico de cadenas de fecha</h2>
     <p>Si utilizas la clase Date para realizar un seguimiento de fechas y horas (en lugar de simplemente medir intervalos de tiempo), es probable que necesites mostrar fechas y horas a los usuarios de tu código. La clase Date define varios métodos para convertir objetos Date en cadenas. He aquí algunos ejemplos:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">let d = new Date(2020, 0, 1, 17, 10, 30); // 5:10:30pm on New Year's Day 2020
+    d.toString() // => "Wed Jan 01 2020 17:10:30 GMT-0800 (Pacific Standard Time)"
+    d.toUTCString() // => "Thu, 02 Jan 2020 01:10:30 GMT"
+    d.toLocaleDateString() // => "1/1/2020": 'en-US' locale
+    d.toLocaleTimeString() // => "5:10:30 PM": 'en-US' locale
+    d.toISOString() // => "2020-01-02T01:10:30.000Z"</code></pre>
     <p>Esta es una lista completa de los métodos de formato de cadena de la clase Date:</p>
     <p><codeinline>toString()</codeinline></p>
     <p>Este método utiliza la zona horaria local, pero no formatea la fecha y la hora segun la zona.</p>
@@ -917,7 +986,21 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Puede definir sus propias subclases de Error que mejor encapsulen las condiciones de error de su propio programa. Tenga en cuenta que no está limitado a las propiedades de nombre y mensaje. Si crea una subclase, puede definir nuevas propiedades para proporcionar detalles del error. Si está escribiendo un analizador sintáctico, por ejemplo, puede resultarle útil definir una clase ParseError con propiedades de línea y columna que especifiquen la ubicación exacta del fallo de análisis sintáctico. O si estás trabajando con peticiones HTTP, puede que quieras definir una clase HTTPError que tenga una propiedad status que contenga el código de estado HTTP (como 404 o 500) de la petición fallida.</p>
     <p>Por ejemplo:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">class HTTPError extends Error &lbrace;
+      constructor(status, statusText, url) &lbrace;
+        super(`$&lbrace;status} $&lbrace;statusText}: $&lbrace;url}`);
+        this.status = status;
+        this.statusText = statusText;
+        this.url = url;
+      }
+
+      get name() &lbrace; return "HTTPError"; }
+    }
+
+    let error = new HTTPError(404, "Not Found", "http://example.com/");
+    error.status // => 404
+    error.message // => "404 Not Found: http://example.com/"
+    error.name // => "HTTPError"</code></pre>
   </section>
   <section id="6">
     <h2>11.6 Serialización y análisis JSON</h2>
@@ -925,10 +1008,15 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>La forma más sencilla de serializar datos en JavaScript utiliza un formato de serialización conocido como JSON. Este acrónimo significa "JavaScript Object Notation" y, como su nombre indica, el formato utiliza la sintaxis literal de objetos y matrices de JavaScript para convertir estructuras de datos formadas por objetos y matrices en cadenas. JSON admite números y cadenas primitivas, así como los valores true, false y null, además de matrices y objetos construidos a partir de esos valores primitivos. JSON no admite otros tipos de JavaScript como Map, Set, RegExp, Date o matrices tipadas. No obstante, ha demostrado ser un formato de datos extraordinariamente versátil y es de uso común incluso en programas no basados en JavaScript.</p>
     <p>JavaScript soporta la serialización y deserialización de JSON con las dos funciones JSON.stringify() y JSON.parse(), que se trataron brevemente en §6.8. Dado un objeto o array (anidado a una profundidad arbitraria) que no contenga ningún valor no serializable como objetos RegExp o arrays tipados, puedes serializar el objeto simplemente pasándolo a JSON.stringify(). Como su nombre indica, el valor de retorno de esta función es una cadena. Y dada una cadena devuelta por JSON.stringify(), puede volver a crear la estructura de datos original pasando la cadena a JSON.parse():</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">let o = &lbrace;s: "", n: 0, a: [true, false, null]};
+    let s = JSON.stringify(o); // s == '&lbrace;"s":"","n":0,"a":[true,false,null]}'
+    let copy = JSON.parse(s); // copy == &lbrace;s: "", n: 0, a: [true, false, null]}</code></pre>
     <p>Si omitimos la parte en la que los datos serializados se guardan en un archivo o se envían a través de la red, podemos utilizar este par de funciones como una forma algo ineficiente de crear una copia en profundidad de un objeto:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">// Make a deep copy of any serializable object or array
+      function deepcopy(o) &lbrace;
+        return JSON.parse(JSON.stringify(o));
+      }</code></pre>
     <nota>
       <img class="self-start" src="/public/javascript/nota_gral.png" alt="Nota de la grandesa">
       <div class="">
@@ -939,7 +1027,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     </nota>
     <p>Normalmente, sólo se pasa un único argumento a JSON.stringify() y JSON.parse(). Ambas funciones aceptan un segundo argumento opcional que nos permite extender el formato JSON, y que describiremos a continuación. JSON.stringify() también acepta un tercer argumento opcional que discutiremos primero. Si quieres que tu cadena con formato JSON sea legible por humanos (si se está utilizando como un archivo de configuración, por ejemplo), entonces debes pasar null como segundo argumento y pasar un número o cadena como tercer argumento. Este tercer argumento indica a JSON.stringify() que debe formatear los datos en varias líneas sangradas. Si el tercer argumento es un número, utilizará ese número de espacios para cada nivel de sangría. Si el tercer argumento es una cadena de espacios en blanco (como '\t'), usará esa cadena para cada nivel de sangría.</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">let o = &lbrace;s: "test", n: 0};
+    JSON.stringify(o, null, 2) // => '&lbrace;\n "s": "test",\n "n": 0\n}'</code></pre>
     <p>JSON.parse() ignora los espacios en blanco, por lo que pasar un tercer argumento a JSON.stringify() no tiene ningún impacto en nuestra capacidad de volver a convertir la cadena en una estructura de datos.</p>
   </section>
   <section id="6-1" class="py-4 xs:py-5 sm:py-6">
@@ -949,12 +1038,28 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>El valor de retorno de la función reviver se convierte en el nuevo valor de la propiedad nombrada. Si devuelve su segundo argumento, la propiedad permanecerá sin cambios. Si devuelve undefined, entonces la propiedad nombrada será borrada del objeto o array antes de que JSON.parse() vuelva al usuario</p>
     <p>Como ejemplo, he aquí una llamada a JSON.parse() que utiliza una función reviver para filtrar algunas propiedades y volver a crear objetos Date:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">let data = JSON.parse(text, function(key, value) &lbrace;
+      // Remove any values whose property name begins with an underscore
+      if (key[0] === "_") return undefined;
+
+      // If the value is a string in ISO 8601 date format convert it to a Date.
+      if (typeof value === "string" &&
+        /^\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d.\d\d\dZ$/.test(value)) &lbrace;
+        return new Date(value);
+      }
+
+      // Otherwise, return the value unchanged
+      return value;
+    });</code></pre>
     <p>Además del uso de toJSON() descrito anteriormente, JSON.stringify() también permite personalizar su salida pasando una matriz o una función como segundo argumento opcional.</p>
     <p>Si en su lugar se pasa una matriz de cadenas (o números, que se convierten en cadenas) como segundo argumento, se utilizarán como nombres de las propiedades del objeto (o elementos de la matriz). Cualquier propiedad cuyo nombre no se encuentre en la matriz se omitirá de la cadena. Además, la cadena devuelta incluirá las propiedades en el mismo orden en que aparecen en la matriz (lo que puede ser muy útil al escribir pruebas).</p>
     <p>Si se pasa una función, se trata de una función de sustitución, es decir, la inversa de la función opcional de sustitución que se puede pasar a JSON.parse(). Si se especifica, la función de sustitución se invoca para cada valor que se va a encadenar. El primer argumento de la función de sustitución es el nombre de la propiedad del objeto o el índice de la matriz del valor dentro de ese objeto, y el segundo argumento es el valor en sí. La función de sustitución se invoca como un método del objeto o matriz que contiene el valor que se va a e n c a d e n a r . El valor de retorno de la función en lugar del valor original. Si el sustituto devuelve un valor indefinido o no devuelve nada, ese valor (y su elemento de matriz o propiedad de objeto) se omite en la encadenación.</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">// Specify what fields to serialize, and what order to serialize them in
+    let text = JSON.stringify(address, ["city","state","country"]);
+
+    // Specify a replacer function that omits RegExp-value properties
+    let json = JSON.stringify(o, (k, v) => v instanceof RegExp ? undefined : v);</code></pre>
     <p>Las dos llamadas a JSON.stringify() utilizan el segundo argumento de una manera benigna, produciendo una salida serializada que puede ser deserializada sin requerir una función especial. En general, sin embargo, si defines un método toJSON() para un tipo, o si usas una función replacer que realmente reemplaza valores no serializables por valores serializables, entonces típicamente necesitarás usar una función reviver personalizada con JSON.parse() para recuperar tu estructura de datos original. Si haces esto, debes entender que estás definiendo un formato de datos personalizado y sacrificando la portabilidad y compatibilidad con un gran ecosistema de herramientas y lenguajes compatibles con JSON.</p>
   </section>
   <section id="7">
@@ -983,16 +1088,29 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Estas propiedades controlan el número de dígitos significativos utilizados al formatear un número, por lo que son adecuadas para formatear datos científicos, por ejemplo. Si se especifican, estas propiedades anulan las propiedades de dígitos enteros y fraccionarios enumeradas anteriormente. Los valores legales están comprendidos entre 1 y 21.</p>
     <p>Una vez creado un objeto Intl.NumberFormat con la configuración regional y las opciones deseadas, se utiliza pasando un número a su método format(), que devuelve una cadena con el formato adecuado. Por ejemplo</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">let euros = Intl.NumberFormat("es", &lbrace;style: "currency", currency: "EUR"});
+    euros.format(10) // => "10,00 €": ten euros, Spanish formatting
+
+    let pounds = Intl.NumberFormat("en", &lbrace;style: "currency", currency: "GBP"});
+    pounds.format(1000) // => "£1,000.00": One thousand pounds, English formatting</code></pre>
     <p>Una característica útil de Intl.NumberFormat (y también de las otras clases Intl) es que su método format() está ligado al objeto NumberFormat al que pertenece. Así, en lugar de definir una variable que haga referencia al objeto formateador y luego invocar el método format() sobre ella, puede simplemente asignar el mé todo format() a una variable y utilizarlo como si fuera una función independiente, como en este ejemplo:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">let data = [0.05, .75, 1];
+    let formatData = Intl.NumberFormat(undefined, &lbrace;
+      style: "percent",
+      minimumFractionDigits: 1,
+      maximumFractionDigits: 1
+    }).format;
+
+    data.map(formatData) // => ["5.0%", "75.0%", "100.0%"]: in en-US locale</code></pre>
     <p>Algunas lenguas, como el árabe, utilizan su propia escritura para los dígitos decimales:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">let arabic = Intl.NumberFormat("ar", &lbrace;useGrouping: false}).format;
+      arabic(1234567890) // => "١٢٣٤٥٦٧٨٩٠"</code></pre>
     <p>Otros idiomas, como el hindi, utilizan una escritura que tiene su propio conjunto de dígitos, pero tienden a utilizar los dígitos ASCII 0-9 por defecto. Si desea anular el alfabeto utilizado por defecto para los dígitos, añada -u-nu- a la configuración regional y escriba a continuación el nombre abreviado del alfabeto. Por ejemplo, puede dar formato a los números con agrupación al estilo indio y dígitos en devanagari:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">let hindi = Intl.NumberFormat("hi-IN-u-nu-deva").format;
+      hindi(1234567890) // => "१,२३,४५,६७,८९०"</code></pre>
     <p>-nu es el nombre de extensión para el sistema de numeración, y deva es la abreviatura de Devanagari. La API Intl define los nombres de otros sistemas de numeración, principalmente para las lenguas índicas del sur y el sudeste asiático.</p>
   </section>
   <section id="7-2">
@@ -1022,10 +1140,32 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Esta propiedad permite especificar si la medianoche se escribe como 0 horas, 12 horas o 24 horas. El valor por defecto depende de la configuración regional, pero puede anularlo con esta propiedad. Tenga en cuenta que hora12 tiene prioridad sobre esta propiedad. Utilice el valor "h11" para especificar que la medianoche es 0 y la hora anterior a la medianoche es 11pm. Utilice "h12" para especificar que la medianoche son las 12. Utilice "h23" para especificar que la medianoche es 0 y la hora antes de medianoche es 23. Y utiliza "h24" para especificar que la medianoche es 24.</p>
     <p>He aquí algunos ejemplos:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">let d = new Date("2020-01-02T13:14:15Z"); // January 2nd, 2020, 13:14:15 UTC
+
+    // With no options, we get a basic numeric date format
+    Intl.DateTimeFormat("en-US").format(d) // => "1/2/2020"
+    Intl.DateTimeFormat("fr-FR").format(d) // => "02/01/2020"
+
+    // Spelled out weekday and month
+    let opts = &lbrace; weekday: "long", month: "long", year: "numeric", day: "numeric" };
+    Intl.DateTimeFormat("en-US", opts).format(d) // => "Thursday, January 2, 2020"
+    Intl.DateTimeFormat("es-ES", opts).format(d) // => "jueves, 2 de enero de 2020"
+
+    // The time in New York, for a French-speaking Canadian
+    opts = &lbrace; hour: "numeric", minute: "2-digit", timeZone: "America/New_York" };
+    Intl.DateTimeFormat("fr-CA", opts).format(d) // => "8 h 14"</code></pre>
     <p>Intl.DateTimeFormat puede mostrar fechas utilizando calendarios distintos al calendario juliano por defecto basado en la era cristiana. Aunque algunas localizaciones pueden utilizar un calendario no cristiano por defecto, siempre se puede especificar explícitamente el calendario a utilizar añadiendo -u-ca- a la localidad y a continuación el nombre del calendario. Los posibles nombres de calen- dar son "budista", "chino", "copto", "etiópico", "gregoriano", "hebreo", "indio", "islámico", "iso8601", "japonés" y "persa". Siguiendo con el ejemplo anterior, podemos determinar el año en varios calendarios no cristianos:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">let opts = &lbarec; year: "numeric", era: "short" };
+    Intl.DateTimeFormat("en", opts).format(d) // => "2020 AD"
+    Intl.DateTimeFormat("en-u-ca-iso8601", opts).format(d) // => "2020 AD"
+    Intl.DateTimeFormat("en-u-ca-hebrew", opts).format(d) // => "5780 AM"
+    Intl.DateTimeFormat("en-u-ca-buddhist", opts).format(d) // => "2563 BE"
+    Intl.DateTimeFormat("en-u-ca-islamic", opts).format(d) // => "1441 AH"
+    Intl.DateTimeFormat("en-u-ca-persian", opts).format(d) // => "1398 AP"
+    Intl.DateTimeFormat("en-u-ca-indian", opts).format(d) // => "1941 Saka"
+    Intl.DateTimeFormat("en-u-ca-chinese", opts).format(d) // => "36 78"
+    Intl.DateTimeFormat("en-u-ca-japanese", opts).format(d) // => "2 Reiwa"</code></pre>
   </section>
   <section id="7-3" class="py-4 xs:py-5 sm:py-6">
     <h2>11.7.3 Comparación de cadenas</h2>
@@ -1045,10 +1185,27 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Una vez creado un objeto Intl.Collator para la configuración regional y las opciones deseadas, puede utilizar su método compare() para comparar dos cadenas. Este método devuelve un número. Si el valor devuelto es menor que cero, entonces la primera cadena va antes que la segunda. Si es mayor que cero, la primera cadena va después de la segunda. Y si compare() devuelve cero, entonces las dos cadenas son iguales en lo que respecta a este intercalador.</p>
     <p>Este método compare() que toma dos cadenas y devuelve un número menor, igual o mayor que cero es exactamente lo que el método Array sort() espera para su argumento opcional. Además, Intl.Collator vincula automáticamente el mé todo compare() a su instancia, por lo que puede pasarlo directamente a sort() sin tener que escribir una función envolvente e invocarla a través del objeto collator. He aquí algunos ejemplos:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">// A basic comparator for sorting in the user's locale.
+    // Never sort human-readable strings without passing something like this:
+    const collator = new Intl.Collator().compare;
+    ["a", "z", "A", "Z"].sort(collator) // => ["a", "A", "z", "Z"]
+
+    // Filenames often include numbers, so we should sort those specially
+    const filenameOrder = new Intl.Collator(undefined, &lbrace; numeric: true }).compare;
+    ["page10", "page9"].sort(filenameOrder) // => ["page9", "page10"]
+    
+    // Find all strings that loosely match a target string
+    const fuzzyMatcher = new Intl.Collator(undefined, &lbrace; sensitivity: "base", ignorePunctuation: true }).compare;
+    let strings = ["food", "fool", "Føø Bar"];
+    strings.findIndex(s => fuzzyMatcher(s, "foobar") === 0) // => 2</code></pre>
     <p>Algunas localidades tienen más de un orden de cotejo posible. En Alemania, por ejemplo, las guías telefónicas utilizan un orden ligeramente más fonético que los diccionarios. En España, antes de 1994, la "ch" y la "ll" se trataban como letras separadas, por lo que ese país tiene un orden de cotejo moderno y otro tradicional. Y en China, el orden de cotejo puede basarse en la codificación de los caracteres, en el radical base y los trazos de cada carácter, o en la romanización Pinyin de los caracteres. Estas variantes de intercalación no pueden seleccionarse mediante el argumento de opciones Intl.Collator, pero pueden seleccionarse añadiendo -u- co- a la cadena de configuración regional y añadiendo el nombre de la variante deseada. Utilice "de-DE-u- co-phonebk" para pedir la guía telefónica en Alemania, por ejemplo, y "zh-TW-u-co- pinyin" para pedir Pinyin en Taiwán.</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">// Before 1994, CH and LL were treated as separate letters in Spain
+    const modernSpanish = Intl.Collator("es-ES").compare;
+    const traditionalSpanish = Intl.Collator("es-ES-u-co-trad").compare;
+    let palabras = ["luz", "llama", "como", "chico"];
+    palabras.sort(modernSpanish) // => ["chico", "como", "llama", "luz"]
+    palabras.sort(traditionalSpanish) // => ["como", "chico", "luz", "llama"]</code></pre>
   </section>
   <section id="8">
     <h2>11.8 La API de la consola</h2>
@@ -1106,24 +1263,74 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>La clase URL no forma parte de ningún estándar ECMAScript, pero funciona en Node y en todos los navegadores de Internet que no sean Internet Explorer. Está estandarizada en https:// url.spec.whatwg.org.</p>
     <p>Cree un objeto URL con el constructor URL(), pasando una cadena URL absoluta como argumento. También puede pasar una URL relativa como primer argumento y la URL absoluta a la que es relativa como segundo argumento. Una vez creado el objeto URL, sus distintas propiedades le permiten consultar versiones no descifradas de las distintas partes de la URL:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">let url = new URL("https://example.com:8000/path/name?q=term#fragment");
+    url.href // => "https://example.com:8000/path/name?q=term#fragment"
+    url.origin // => "https://example.com:8000"
+    url.protocol // => "https:"
+    url.host // => "example.com:8000"
+    url.hostname // => "example.com"
+    url.port // => "8000"
+    url.pathname // => "/path/name"
+    url.search // => "?q=term"
+    url.hash // => "#fragment"</code></pre>
     <p>Aunque no se utiliza habitualmente, las URL pueden incluir un nombre de usuario o un nombre de usuario y una contraseña, y la clase URL también puede analizar estos componentes de URL:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">let url = new URL("ftp://admin:1337!@ftp.example.com/");
+    url.href // => "ftp://admin:1337!@ftp.example.com/"
+    url.origin // => "ftp://ftp.example.com"
+    url.username // => "admin"
+    url.password // => "1337!"</code></pre>
     <p>La propiedad de origen aquí es una simple combinación del protocolo URL y el host (incluyendo el puerto si se especifica uno). Como tal, es una propiedad de sólo lectura. Pero cada una de las otras propiedades demostradas en el ejemplo anterior es de lectura/escritura: puede establecer cualquiera de estas propiedades para establecer la parte correspondiente de la URL:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">let url = new URL("https://example.com"); // Start with our server
+    url.pathname = "api/search"; // Add a path to an API endpoint
+    url.search = "q=test"; // Add a query parameter
+    url.toString() // => "https://example.com/api/search?q=test"</code></pre>
     <p>Una de las características importantes de la clase URL es que añade correctamente la puntuación y escapa caracteres especiales en las URL cuando es necesario:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">let url = new URL("https://example.com");
+    url.pathname = "path with spaces";
+    url.search = "q=foo#bar";
+    url.pathname // => "/path%20with%20spaces"
+    url.search // => "?q=foo%23bar"
+    url.href // => "https://example.com/path%20with%20spaces?q=foo%23bar"</code></pre>
     <p>La propiedad href en estos ejemplos es especial: leer href es equivalente a llamar a toString(): reensambla todas las partes de la URL en la forma de cadena canónica de la URL. Y establecer href a una nueva cadena vuelve a ejecutar el analizador de URL en la nueva cadena como si hubiera llamado de nuevo al constructor URL().</p>
     <p>En los ejemplos anteriores, hemos estado utilizando la propiedad de búsqueda para referirnos a toda la parte de consulta de una URL, que consiste en los caracteres desde un signo de interrogación hasta el final de la URL o hasta el primer carácter hash. A veces, es suficiente tratar esto como una única propiedad URL. A menudo, sin embargo, las peticiones HTTP codifican los valores de múltiples campos de formulario o múltiples parámetros API en la parte de consulta de una URL utilizando el formato application/x-www-form-urlencoded. En este formato, la parte de consulta de la URL es un signo de interrogación seguido de uno o más pares nombre/valor, separados entre sí por ampersands. El mismo nombre puede aparecer más de una vez, lo que da lugar a un parámetro de búsqueda con más de un valor.</p>
     <p>Si desea codificar este tipo de pares nombre/valor en la parte de consulta de una URL, entonces la propiedad searchParams será más útil que la propiedad search. La propiedad search es una cadena de lectura/escritura que permite obtener y establecer toda la parte de consulta de la U R L . La propiedad searchParams es una referencia de sólo lectura a una propiedad Objeto URLSearchParams, que dispone de una API para obtener, establecer, añadir, eliminar y ordenar los parámetros codificados en la parte de consulta de la URL:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">let url = new URL("https://example.com/search");
+    url.search // => "": no query yet
+    url.searchParams.append("q", "term"); // Add a search parameter
+    url.search // => "?q=term"
+    url.searchParams.set("q", "x"); // Change the value of this parameter
+    url.search // => "?q=x"
+    url.searchParams.get("q") // => "x": query the parameter value
+    url.searchParams.has("q") // => true: there is a q parameter
+    url.searchParams.has("p") // => false: there is no p parameter
+    url.searchParams.append("opts", "1"); // Add another search parameter
+    url.search // => "?q=x&opts=1"
+    url.searchParams.append("opts", "&"); // Add another value for same name
+    url.search // => "?q=x&opts=1&opts=%26": note escape
+    url.searchParams.get("opts") // => "1": the first value
+    url.searchParams.getAll("opts") // => ["1", "&"]: all values
+    url.searchParams.sort(); // Put params in alphabetical order
+    url.search // => "?opts=1&opts=%26&q=x"
+    url.searchParams.set("opts", "y"); // Change the opts param
+    url.search // => "?opts=y&q=x"
+    // searchParams is iterable
+    [...url.searchParams] // => [["opts", "y"], ["q", "x"]]
+    url.searchParams.delete("opts"); // Delete the opts param
+    url.search // => "?q=x"
+    url.href // => "https://example.com/search?q=x"</code></pre>
     <p>El valor de la propiedad searchParams es un objeto URLSearchParams. Si desea codificar parámetros de URL en una cadena de consulta, puede crear un objeto URLSearchParams, añadir parámetros, convertirlo en una cadena y establecerlo en la propiedad de búsqueda de una URL:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">let url = new URL("http://example.com");
+    let params = new URLSearchParams();
+    params.append("q", "term");
+    params.append("opts", "exact");
+    params.toString() // => "q=term&opts=exact"
+    url.search = params;
+    url.href // => "http://example.com/?q=term&opts=exact"</code></pre>
   </section>
   <section id="9-1" class="py-4 xs:py-5 sm:py-6">
     <h2>11.9.1 Funciones URL heredadas</h2>
@@ -1140,14 +1347,23 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Desde los primeros días de JavaScript, los navegadores web han definido dos funciones -setTimeout() y setInterval()- que permiten a los programas pedir al navegador que invoque una función una vez transcurrido un tiempo determinado o que invoque la función repetidamente en un intervalo especificado. Estas funciones nunca se han estandarizado como parte del núcleo del lenguaje, pero funcionan en todos los navegadores y en Node y forman parte de facto de la biblioteca estándar de JavaScript.</p>
     <p>El primer argumento de setTimeout() es una función, y el segundo es un número que especifica cuántos milisegundos deben transcurrir antes de que se invoque la función. Después de la cantidad de tiempo especificada (y quizás un poco más si el sistema está ocupado), la función será invocada sin argumentos. Aquí, por ejemplo, hay tres llamadas a setTimeout() que imprimen mensajes de consola después de un segundo, dos segundos y tres segundos:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">setTimeout(() => &lbrace; console.log("Ready..."); }, 1000);
+    setTimeout(() => &lbrace; console.log("set..."); }, 2000);
+    setTimeout(() => &lbrace; console.log("go!"); }, 3000);</code></pre>
     <p>Observe que setTimeout() no espera a que transcurra el tiempo antes de volver. Las tres líneas de código de este ejemplo se ejecutan casi instantáneamente, pero luego no ocurre nada hasta que transcurren 1.000 milisegundos.</p>
     <p>Si omite el segundo argumento de setTimeout(), su valor por defecto es 0. Eso no significa, sin embargo, que la función que especifique sea invocada inmediatamente. En su lugar, la función se registra para ser llamada "tan pronto como sea posible". Si un navegador está particularmente ocupado manejando entradas del usuario u otros eventos, pueden pasar 10 milisegundos o más antes de que la función sea invocada.</p>
     <p>setTimeout() registra una función para ser invocada una vez. A veces, esa función llamará a su vez a setTimeout() para programar otra invocación en un momento futuro. Si desea invocar una función repetidamente, sin embargo, a menudo es más sencillo utilizar setInterval(). setInterval() toma los mismos dos argumentos que setTimeout() pero invoca la función repetidamente cada vez que el número especificado de milisegundos (aproximadamente) han transcurrido.</p>
     <p>Tanto setTimeout() como setInterval() devuelven un valor. Si guarda este valor en una variable, puede utilizarlo más tarde para cancelar la ejecución de la función pasándoselo a clearTimeout() o clearInterval(). El valor devuelto es típicamente un número en los navegadores web y es un objeto en Node. El tipo real no importa, y debes tratarlo como un valor opaco. Lo único que puede hacer con este valor es pasarlo a clearTimeout() para cancelar la ejecución de una función registrada con setTime out() (suponiendo que aún no haya sido invocada) o para detener la ejecución repetida de una función registrada con setInterval().</p>
     <p>A continuación se muestra un ejemplo que demuestra el uso de setTimeout(), setInterval() y clearInterval() para mostrar un simple reloj digital con la API de Consola:</p>
     <pre>
-    <code class="language-js"></code></pre>
+    <code class="language-js">// Once a second: clear the console and print the current time
+    let clock = setInterval(() => &lbrace;
+      console.clear();
+      console.log(new Date().toLocaleTimeString());
+    }, 1000);
+
+    // After 10 seconds: stop the repeating code above.
+    setTimeout(() => &lbrace; clearInterval(clock); }, 10000);</code></pre>
     <p>Volveremos a ver setTimeout() y setInterval() cuando tratemos la programación asíncrona en el capítulo 13.</p>
   </section>
   <section id="11" class="py-4 xs:py-5 sm:py-6">
