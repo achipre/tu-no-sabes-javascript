@@ -224,11 +224,11 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
             </tr>
             <tr class="bg-[#f6e4c5]">
               <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">Int16Array()</codeinline></td>
-              <td class="max-w-lg px-4">Enteros cortos de 16 bits con signo</td>
+              <td class="max-w-lg px-4">enteros cortos de 16 bits con signo</td>
             </tr>
             <tr>
               <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">Uint16Array()</codeinline></td>
-              <td class="max-w-lg px-4">Enteros cortos de 16 bits sin signo</td>
+              <td class="max-w-lg px-4">enteros cortos de 16 bits sin signo</td>
             </tr>
             <tr class="bg-[#f6e4c5]">
               <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">Int32Array()</codeinline></td>
@@ -236,11 +236,11 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
             </tr>
             <tr>
               <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">Uint32Array()</codeinline></td>
-              <td class="max-w-lg px-4">Enteros de 32 bits sin signo</td>
+              <td class="max-w-lg px-4">enteros de 32 bits sin signo</td>
             </tr>
             <tr class="bg-[#f6e4c5]">
               <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">BigInt64Array()</codeinline></td>
-              <td class="max-w-lg px-4">Valores BigInt de 64 bits con signo (ES2020)</td>
+              <td class="max-w-lg px-4">valores BigInt de 64 bits con signo (ES2020)</td>
             </tr>
             <tr>
               <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">BigUint64Array() </codeinline></td>
@@ -248,11 +248,11 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
             </tr>
             <tr class="bg-[#f6e4c5]">
               <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">Float32Array()</codeinline></td>
-              <td class="max-w-lg px-4">Valor en coma flotantede de 32 bits</td>
+              <td class="max-w-lg px-4">valor en coma flotantede de 32 bits</td>
             </tr>
             <tr>
               <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">Float64Array()</codeinline></td>
-              <td class="max-w-lg px-4">Valor de coma flotante de 64 bits: un número normal de JavaScript</td>
+              <td class="max-w-lg px-4">valor de coma flotante de 64 bits: un número normal de JavaScript</td>
             </tr>
         </tbody>
       </table>
@@ -300,67 +300,67 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <pre>
     <code class="language-js">// Return the largest prime smaller than n, using the sieve of Eratosthenes
     function sieve(n) &lbrace;
-      let a = new Uint8Array(n+1); // a[x] will be 1 if x is composite
+      let a = new Uint8Array(n+1);        // a[x] will be 1 if x is composite
       let max = Math.floor(Math.sqrt(n)); // Don't do factors higher than this
-      let p = 2; // 2 is the first prime
-      while(p &lt;= max) &lbrace; // For primes less than max
-        for(let i = 2*p; i &lt;= n; i += p) // Mark multiples of p as composite
+      let p = 2;                          // 2 is the first prime
+      while(p &lt;= max) &lbrace;                   // For primes less than max
+        for(let i = 2*p; i &lt;= n; i += p)  // Mark multiples of p as composite
           a[i] = 1;
-        while(a[++p]) /* empty */; // The next unmarked index is prime
+        while(a[++p])        /* empty */; // The next unmarked index is prime
       }
-      while(a[n]) n--; // Loop backward to find the last prime
-      return n; // And return it
+      while(a[n]) n--;       // Loop backward to find the last prime
+      return n;              // And return it
     }</code></pre>
-    <p>Esta función calcula el mayor número primo menor que el número especificado. El código es exactamente el mismo que con una matriz JavaScript normal, pero el uso de Uint8Array() en lugar de Array() hace que el código se ejecute más de cuatro veces más rápido y utilice ocho veces menos memoria en mis pruebas.</p>
+    <p>Esta función calcula el mayor número primo menor que el número especificado. El código es exactamente el mismo que con una matriz JavaScript normal, pero el uso de <codeinline>Uint8Array()</codeinline> en lugar de <codeinline>Array()</codeinline> hace que el código se ejecute más de cuatro veces más rápido y utilice ocho veces menos memoria en mis pruebas.</p>
     <p>Las matrices tipadas no son verdaderas matrices, pero reimplementan la mayoría de los métodos de matrices, por lo que se pueden utilizar prácticamente igual que las matrices normales:</p>
     <pre>
-    <code class="language-js">let ints = new Int16Array(10); // 10 short integers
+    <code class="language-js">let ints = new Int16Array(10);    // 10 short integers
     ints.fill(3).map(x=>x*x).join("") // => "9999999999"</code></pre>
-    <p>Recuerde que los arrays tipados tienen longitudes fijas, por lo que la propiedad length es de sólo lectura, y los métodos que cambian la longitud del array (como push(), pop(), unshift(), shift(), y splice()) no están implementados para arrays tipados. Los métodos que alteran el contenido de una matriz sin cambiar su longitud (como sort(), reverse() y fill()) están implementados. Los métodos como map() y slice() que devuelven nuevas matrices, devuelven una matriz tipada del mismo tipo que aquella a la que se llama.</p>
+    <p>Recuerde que los arrays tipados tienen longitudes fijas, por lo que la propiedad length es de sólo lectura, y los métodos que cambian la longitud del array (como <codeinline>push()</codeinline>, <codeinline>pop()</codeinline>, <codeinline>unshift()</codeinline>, <codeinline>shift()</codeinline>, y <codeinline>splice()</codeinline>) no están implementados para arrays tipados. Los métodos que alteran el contenido de una matriz sin cambiar su longitud (como <codeinline>sort()</codeinline>, <codeinline>reverse()</codeinline> y <codeinline>fill()</codeinline>) están implementados. Los métodos como <codeinline>map()</codeinline> y <codeinline>slice()</codeinline> que devuelven nuevas matrices, devuelven una matriz tipada del mismo tipo que aquella a la que se llama.</p>
   </section>
   <section id="2-4" class="py-4 xs:py-5 sm:py-6">
     <h2>11.2.4 Métodos y propiedades de matrices tipificadas</h2>
-    <p>Además de los métodos estándar de las matrices, las matrices tipadas también implementan algunos métodos propios. El método set() establece múltiples elementos de una matriz tipada a la vez copiando los elementos de una matriz normal o tipada en una matriz tipada:</p>
+    <p>Además de los métodos estándar de las matrices, las matrices tipadas también implementan algunos métodos propios. El método <codeinline>set()</codeinline> establece múltiples elementos de una matriz tipada a la vez copiando los elementos de una matriz normal o tipada en una matriz tipada:</p>
     <pre>
-    <code class="language-js">let bytes = new Uint8Array(1024); // A 1K buffer
+    <code class="language-js">let bytes = new Uint8Array(1024);        // A 1K buffer
     let pattern = new Uint8Array([0,1,2,3]); // An array of 4 bytes
-    bytes.set(pattern); // Copy them to the start of another byte array
-    bytes.set(pattern, 4); // Copy them again at a different offset
-    bytes.set([0,1,2,3], 8); // Or just copy values direct from a regular array
-    bytes.slice(0, 12) // => new Uint8Array([0,1,2,3,0,1,2,3,0,1,2,3])</code></pre>
-    <p>El método set() toma un array o un array tipado como primer argumento y un desplazamiento de elemento como segundo argumento opcional, que por defecto es 0 si no se especifica. Si está copiando valores de una matriz tipada a otra, es probable que la operación sea extremadamente rápida.</p>
-    <p>Los arrays tipados también tienen un método subarray que devuelve una parte del array sobre el que se llama:</p>
+    bytes.set(pattern);       // Copy them to the start of another byte array
+    bytes.set(pattern, 4);    // Copy them again at a different offset
+    bytes.set([0,1,2,3], 8);  // Or just copy values direct from a regular array
+    bytes.slice(0, 12)        // => new Uint8Array([0,1,2,3,0,1,2,3,0,1,2,3])</code></pre>
+    <p>El método <codeinline>set()</codeinline> toma un array o un array tipado como primer argumento y un desplazamiento de elemento como segundo argumento opcional, que por defecto es 0 si no se especifica. Si está copiando valores de una matriz tipada a otra, es probable que la operación sea extremadamente rápida.</p>
+    <p>Los arrays tipados también tienen un método <codeinline>subarray</codeinline> que devuelve una parte del array sobre el que se llama:</p>
     <pre>
-    <code class="language-js">let ints = new Int16Array([0,1,2,3,4,5,6,7,8,9]); // 10 short integers
+    <code class="language-js">let ints = new Int16Array([0,1,2,3,4,5,6,7,8,9]);      // 10 short integers
     let last3 = ints.subarray(ints.length-3, ints.length); // Last 3 of them
-    last3[0] // => 7: this is the same as ints[7]</code></pre>
-    <p>subarray() toma los mismos argumentos que el método slice() y parece funcionar de la misma manera. Pero hay una diferencia importante. slice() devuelve los elementos especificados en una nueva matriz de tipo independiente que no comparte memoria con la matriz original. subarray() no copia ninguna memoria; sólo devuelve una nueva vista de los mismos valores subyacentes:</p>
+    last3[0]          // => 7: this is the same as ints[7]</code></pre>
+    <p><codeinline>subarray()</codeinline> toma los mismos argumentos que el método <codeinline>slice()</codeinline> y parece funcionar de la misma manera. Pero hay una diferencia importante. <codeinline>slice()</codeinline> devuelve los elementos especificados en una nueva matriz de tipo independiente que no comparte memoria con la matriz original. <codeinline>subarray()</codeinline> no copia ninguna memoria; sólo devuelve una nueva vista de los mismos valores subyacentes:</p>
     <pre>
     <code class="language-js">ints[9] = -1; // Change a value in the original array and...
-    last3[2] // => -1: it also changes in the subarray</code></pre>
-    <p>El hecho de que el método subarray() devuelva una nueva vista de un array existente nos devuelve al tema de los ArrayBuffers. Cada array tipado tiene tres propiedades que se relacionan con el buffer subyacente:</p>
+    last3[2]      // => -1: it also changes in the subarray</code></pre>
+    <p>El hecho de que el método <codeinline>subarray()</codeinline> devuelva una nueva vista de un array existente nos devuelve al tema de los ArrayBuffers. Cada array tipado tiene tres propiedades que se relacionan con el buffer subyacente:</p>
     <pre>
-    <code class="language-js">last3.buffer // The ArrayBuffer object for a typed array
+    <code class="language-js">last3.buffer                 // The ArrayBuffer object for a typed array
     last3.buffer === ints.buffer // => true: both are views of the same buffer
-    last3.byteOffset // => 14: this view starts at byte 14 of the buffer
-    last3.byteLength // => 6: this view is 6 bytes (3 16-bit ints) long
-    last3.buffer.byteLength // => 20: but the underlying buffer has 20 bytes</code></pre>
-    <p>La propiedad buffer es el ArrayBuffer del array. byteOffset es la posición inicial de los datos del array dentro del buffer subyacente. Y byteLength es la longitud de los datos del array en bytes. Para cualquier tipo de array, a, esta invariante debe ser siempre verdadera:</p>
+    last3.byteOffset             // => 14: this view starts at byte 14 of the buffer
+    last3.byteLength             // => 6: this view is 6 bytes (3 16-bit ints) long
+    last3.buffer.byteLength      // => 20: but the underlying buffer has 20 bytes</code></pre>
+    <p>La propiedad <codeinline>buffer</codeinline> es el ArrayBuffer del array. <codeinline>byteOffset</codeinline> es la posición inicial de los datos del array dentro del buffer subyacente. Y <codeinline>byteLength</codeinline> es la longitud de los datos del array en bytes. Para cualquier tipo de array, a, esta invariante debe ser siempre verdadera:</p>
     <pre>
     <code class="language-js">a.length * a.BYTES_PER_ELEMENT === a.byteLength // => true</code></pre>
     <p>Los ArrayBuffers son simplemente trozos opacos de bytes. Puedes acceder a esos bytes con arrays tipados, pero un ArrayBufffer no es en sí mismo un array tipado. Ten cuidado, sin embargo: puedes usar indexación numérica de arrays con ArrayBuffers igual que con cualquier objeto JavaScript. Hacerlo no te da acceso a los bytes del buffer, pero puede causar errores de confusión:</p>
     <pre>
     <code class="language-js">let bytes = new Uint8Array(8);
-    bytes[0] = 1; // Set the first byte to 1
-    bytes.buffer[0] // => undefined: buffer doesn't have index 0
+    bytes[0] = 1;          // Set the first byte to 1
+    bytes.buffer[0]        // => undefined: buffer doesn't have index 0
     bytes.buffer[1] = 255; // Try incorrectly to set a byte in the buffer
-    bytes.buffer[1] // => 255: this just sets a regular JS property
-    bytes[1] // => 0: the line above did not set the byte</code></pre>
-    <p>Anteriormente vimos que se puede crear un ArrayBuffer con el constructor ArrayBuffer() y luego crear arrays tipados que utilicen ese buffer. Otro enfoque es crear un array tipado inicial, y luego usar el buffer de ese array para crear otras vistas:</p>
+    bytes.buffer[1]        // => 255: this just sets a regular JS property
+    bytes[1]               // => 0: the line above did not set the byte</code></pre>
+    <p>Anteriormente vimos que se puede crear un ArrayBuffer con el constructor <codeinline>ArrayBuffer()</codeinline> y luego crear arrays tipados que utilicen ese buffer. Otro enfoque es crear un array tipado inicial, y luego usar el buffer de ese array para crear otras vistas:</p>
     <pre>
-    <code class="language-js">let bytes = new Uint8Array(1024); // 1024 bytes
-    let ints = new Uint32Array(bytes.buffer); // or 256 integers
-    let floats = new Float64Array(bytes.buffer); // or 128 doubles</code></pre>
+    <code class="language-js">let bytes = new Uint8Array(1024);             // 1024 bytes
+    let ints = new Uint32Array(bytes.buffer);     // or 256 integers
+    let floats = new Float64Array(bytes.buffer);  // or 128 doubles</code></pre>
   </section>
   <section id="2-5">
     <h2>11.2.5 DataView y Endianness</h2>
@@ -377,34 +377,34 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     // values from those bytes
     let view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
     
-    let int = view.getInt32(0); // Read big-endian signed int from byte 0
+    let int = view.getInt32(0);    // Read big-endian signed int from byte 0
     int = view.getInt32(4, false); // Next int is also big-endian
     int = view.getUint32(8, true); // Next int is little-endian and unsigned
     view.setUint32(8, int, false); // Write it back in big-endian format</code></pre>
-    <p>DataView define 10 métodos get para cada una de las 10 clases de matrices tipadas (excluyendo Uint8ClampedArray). Tienen nombres como getInt16(), getUint32(), getBigInt64(), y getFloat64(). El primer argumento es el desplazamiento de bytes dentro del ArrayBuffer en el que comienza el valor. Todos estos métodos getter, excepto getInt8() y getUint8(), aceptan un valor booleano opcional como segundo argumento. Si el segundo argumento se omite o es falso, se utiliza el orden big- endian. Si el segundo argumento es verdadero, se utiliza el orden little-endian.</p>
-    <p>DataView también define 10 métodos Set correspondientes que escriben valores en el ArrayBuffer subyacente. El primer argumento es el offset en el que comienza el valor. El segundo argumento es el valor a escribir. Cada uno de los métodos, excepto setInt8() y setUint8(), acepta un tercer argumento opcional. Si el argumento se omite o es falso, el valor se escribe en formato big-endian con el byte más significativo primero. Si el argumento es verdadero, el valor se escribe en formato little-endian con el byte menos significativo primero.</p>
+    <p>DataView define 10 métodos <codeinline>get</codeinline> para cada una de las 10 clases de matrices tipadas (excluyendo Uint8ClampedArray). Tienen nombres como <codeinline>getInt16()</codeinline>, <codeinline>getUint32()</codeinline>, <codeinline>getBigInt64()</codeinline>, y <codeinline>getFloat64()</codeinline>. El primer argumento es el desplazamiento de bytes dentro del ArrayBuffer en el que comienza el valor. Todos estos métodos getter, excepto <codeinline>getInt8()</codeinline> y <codeinline>getUint8()</codeinline>, aceptan un valor booleano opcional como segundo argumento. Si el segundo argumento se omite o es <codeinline>false</codeinline>, se utiliza el orden big- endian. Si el segundo argumento es <codeinline>true</codeinline>, se utiliza el orden little-endian.</p>
+    <p>DataView también define 10 métodos Set correspondientes que escriben valores en el ArrayBuffer subyacente. El primer argumento es el offset en el que comienza el valor. El segundo argumento es el valor a escribir. Cada uno de los métodos, excepto <codeinline>setInt8()</codeinline> y <codeinline>setUint8()</codeinline>, acepta un tercer argumento opcional. Si el argumento se omite o es <codeinline>false</codeinline>, el valor se escribe en formato big-endian con el byte más significativo primero. Si el argumento es <codeinline>true</codeinline>, el valor se escribe en formato little-endian con el byte menos significativo primero.</p>
     <p>Las matrices tipadas y la clase DataView le proporcionan todas las herramientas necesarias para procesar datos binarios y le permiten escribir programas JavaScript que hagan cosas como descomprimir archivos ZIP o extraer metadatos de archivos JPEG.</p>
   </section>
   <section id="3" class="py-4 xs:py-5 sm:py-6">
     <h2>11.3 Comparación de patrones con expresiones regulares</h2>
-    <p>Una expresión regular es un objeto que describe un patrón textual. La clase RegExp de JavaScript representa expresiones regulares, y tanto String como RegExp definen métodos que utilizan expresiones regulares para realizar potentes funciones de concordancia de patrones y de búsqueda y reemplazo en texto. Sin embargo, para utilizar la API RegExp con eficacia, también debes aprender a describir patrones de texto utilizando la gramática de expresiones regulares, que es esencialmente un mini lenguaje de programación propio. Afortunadamente, la gramática de expresiones regulares de JavaScript es bastante similar a la gramática utilizada por muchos otros lenguajes de programación, por lo que es posible que ya esté familiarizado con ella. (Y si no lo está, el esfuerzo que invierta en aprender las expresiones regulares de JavaScript probablemente le será útil también en otros contextos de programación).</p>
+    <p>Una <em>expresión regular</em> es un objeto que describe un patrón textual. La clase RegExp de JavaScript representa expresiones regulares, y tanto String como RegExp definen métodos que utilizan expresiones regulares para realizar potentes funciones de concordancia de patrones y de búsqueda y reemplazo en texto. Sin embargo, para utilizar la API RegExp con eficacia, también debes aprender a describir patrones de texto utilizando la gramática de expresiones regulares, que es esencialmente un mini lenguaje de programación propio. Afortunadamente, la gramática de expresiones regulares de JavaScript es bastante similar a la gramática utilizada por muchos otros lenguajes de programación, por lo que es posible que ya esté familiarizado con ella. (Y si no lo está, el esfuerzo que invierta en aprender las expresiones regulares de JavaScript probablemente le será útil también en otros contextos de programación).</p>
     <p>Las subsecciones que siguen describen primero la gramática de las expresiones regulares, y luego, después de explicar cómo escribir expresiones regulares, explican cómo puedes usarlas con los métodos de las clases String y RegExp.</p>
   </section>
   <section id="3-1">
     <h2>11.3.1 Definición de expresiones regulares</h2>
-    <p>En JavaScript, las expresiones regulares se representan mediante objetos RegExp. Los objetos RegExp pueden crearse con el constructor RegExp(), por supuesto, pero suelen crearse utilizando una sintaxis literal especial. Así como los literales de cadena se especifican como caracteres entre comillas, los literales de expresión regular se especifican como caracteres dentro de un par de caracteres de barra (/). Así, su código JavaScript puede contener líneas como ésta:</p>
+    <p>En JavaScript, las expresiones regulares se representan mediante objetos RegExp. Los objetos RegExp pueden crearse con el constructor <codeinline>RegExp()</codeinline>, por supuesto, pero suelen crearse utilizando una sintaxis literal especial. Así como los literales de cadena se especifican como caracteres entre comillas, los literales de expresión regular se especifican como caracteres dentro de un par de caracteres de barra (<codeinline>/</codeinline>). Así, su código JavaScript puede contener líneas como ésta:</p>
     <pre>
     <code class="language-js">let pattern = /s$/;</code></pre>
-    <p>Esta línea crea un nuevo objeto RegExp y lo asigna a la variable pattern. Este objeto RegExp en particular coincide con cualquier cadena que termine con la letra "s". Este regular podría haberse definido de forma equivalente con el constructor RegExp(), de esta forma:</p>
+    <p>Esta línea crea un nuevo objeto RegExp y lo asigna a la variable <codeinline>pattern</codeinline>. Este objeto RegExp en particular coincide con cualquier cadena que termine con la letra "s". Este regular podría haberse definido de forma equivalente con el constructor <codeinline>RegExp()</codeinline>, de esta forma:</p>
     <pre>
     <code class="language-js">let pattern = new RegExp("s$");</code></pre>
-    <p>Las especificaciones de patrones de expresiones regulares consisten en una serie de caracteres. La mayoría de los caracteres, incluidos todos los alfanuméricos, describen simplemente los caracteres que deben coincidir literalmente. Así, la expresión regular /java/ coincide con cualquier cadena que contenga la subcadena "java". Otros caracteres de las expresiones regulares no se comparan literalmente, pero tienen un significado especial. Por ejemplo, la expresión regular /s$/ contiene dos caracteres. El primero, "s", coincide literalmente. El segundo, "$", es un metacarácter especial que coincide con el final de una cadena. Así, esta expresión regular coincide con cualquier cadena que contenga la letra "s" como último carácter.</p>
-    <p>Como veremos, las expresiones regulares también pueden tener uno o más caracteres de bandera que afectan a su funcionamiento. Los indicadores se especifican a continuación del segundo carácter de barra en las literales RegExp, o como un segundo argumento de cadena para el constructor RegExp(). Si, por ejemplo, quisiéramos buscar cadenas que terminen en "s" o "S", podríamos utilizar la bandera i con nuestra expresión regular para indicar que queremos que no se distinga entre mayúsculas y minúsculas:</p>
+    <p>Las especificaciones de patrones de expresiones regulares consisten en una serie de caracteres. La mayoría de los caracteres, incluidos todos los alfanuméricos, describen simplemente los caracteres que deben coincidir literalmente. Así, la expresión regular <codeinline>/java/</codeinline> coincide con cualquier cadena que contenga la subcadena "java". Otros caracteres de las expresiones regulares no se comparan literalmente, pero tienen un significado especial. Por ejemplo, la expresión regular <codeinline>/s$/</codeinline> contiene dos caracteres. El primero, "s", coincide literalmente. El segundo, "$", es un metacarácter especial que coincide con el final de una cadena. Así, esta expresión regular coincide con cualquier cadena que contenga la letra "s" como último carácter.</p>
+    <p>Como veremos, las expresiones regulares también pueden tener uno o más caracteres de bandera que afectan a su funcionamiento. Los indicadores se especifican a continuación del segundo carácter de barra en las literales RegExp, o como un segundo argumento de cadena para el constructor <codeinline>RegExp()</codeinline>. Si, por ejemplo, quisiéramos buscar cadenas que terminen en "s" o "S", podríamos utilizar la bandera <codeinline>i</codeinline> con nuestra expresión regular para indicar que queremos que no se distinga entre mayúsculas y minúsculas:</p>
     <pre>
     <code class="language-js">let pattern = /s$/i;</code></pre>
     <p>Las siguientes secciones describen los distintos caracteres y metacaracteres utilizados en las expresiones regulares de JavaScript.</p>
     <p class="title-article text-left">Caracteres literales</p>
-    <p>Todos los caracteres alfabéticos y dígitos coinciden literalmente en las expresiones regulares. La sintaxis de las expresiones regulares de JavaScript también admite determinados caracteres no alfabéticos mediante secuencias de escape que comienzan con una barra invertida (\). Por ejemplo, la secuencia \n coincide con un carácter literal de nueva línea en una cadena. La Tabla 11-1 enumera estos caracteres.</p>
+    <p>Todos los caracteres alfabéticos y dígitos coinciden literalmente en las expresiones regulares. La sintaxis de las expresiones regulares de JavaScript también admite determinados caracteres no alfabéticos mediante secuencias de escape que comienzan con una barra invertida (<codeinline>\</codeinline>). Por ejemplo, la secuencia <codeinline>\n</codeinline> coincide con un carácter literal de nueva línea en una cadena. La <a href="#tabla11-1">Tabla 11-1</a> enumera estos caracteres.</p>
     <div id="tabla11-1" class="flex flex-col items-center">
       <table>
         <thead class="bg-amber-900 text-[#f6e4c5]">
@@ -420,43 +420,43 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
             </tr>
             <tr class="bg-[#f6e4c5]">
               <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">\0</codeinline></td>
-              <td class="max-w-lg px-4">El carácter NUL (\u0000)</td>
+              <td class="max-w-lg px-4">El carácter NUL (<codeinline class="md:text-base bg-transparent">\u0000</codeinline>)</td>
             </tr>
             <tr>
               <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">\t</codeinline></td>
-              <td class="max-w-lg px-4">Tab (\u0009)</td>
+              <td class="max-w-lg px-4">Tab (<codeinline class="md:text-base bg-transparent">\u0009</codeinline>)</td>
             </tr>
             <tr class="bg-[#f6e4c5]">
               <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">\n</codeinline></td>
-              <td class="max-w-lg px-4">Nueva línea (\u000A)</td>
+              <td class="max-w-lg px-4">Nueva línea (<codeinline class="md:text-base bg-transparent">\u000A</codeinline>)</td>
             </tr>
             <tr>
               <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">\v</codeinline></td>
-              <td class="max-w-lg px-4">Pestaña vertical (\u000B)</td>
+              <td class="max-w-lg px-4">Pestaña vertical (<codeinline class="md:text-base bg-transparent">\u000B</codeinline>)</td>
             </tr>
             <tr class="bg-[#f6e4c5]">
               <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">\f</codeinline></td>
-              <td class="max-w-lg px-4">Alimentación del formulario (\u000C)</td>
+              <td class="max-w-lg px-4">Alimentación del formulario (<codeinline class="md:text-base bg-transparent">\u000C</codeinline>)</td>
             </tr>
             <tr>
               <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">\r</codeinline></td>
-              <td class="max-w-lg px-4">Retorno de carro (\u000D)</td>
+              <td class="max-w-lg px-4">Retorno de carro (<codeinline class="md:text-base bg-transparent">\u000D</codeinline>)</td>
             </tr>
             <tr class="bg-[#f6e4c5]">
               <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">\xnn</codeinline></td>
-              <td class="max-w-lg px-4">El carácter latino especificado por el número hexadecimal nn; por ejemplo, \x0A es lo mismo que \n.</td>
+              <td class="max-w-lg px-4">El carácter latino especificado por el número hexadecimal <em>nn</em>; por ejemplo, <codeinline class="md:text-base bg-transparent">\x0A</codeinline> es lo mismo que <codeinline class="md:text-base bg-transparent">\n</codeinline>.</td>
             </tr>
             <tr>
               <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">\uxxxx </codeinline></td>
-              <td class="max-w-lg px-4">El carácter Unicode especificado por el número hexadecimal xxxx; por ejemplo, \u0009 es lo mismo que \t.</td>
+              <td class="max-w-lg px-4">El carácter Unicode especificado por el número hexadecimal <em>xxxx</em>; por ejemplo, <codeinline class="md:text-base bg-transparent">\u0009</codeinline> es lo mismo que <codeinline class="md:text-base bg-transparent">\t</codeinline>.</td>
             </tr>
             <tr class="bg-[#f6e4c5]">
               <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">\u&lbrace;n} </codeinline></td>
-              <td class="max-w-lg px-4">El carácter Unicode especificado por el punto de código n, donde n es de uno a seis dígitos hexadecimales entre 0 y 10FFFF. Tenga en cuenta que esta sintaxis sólo se admite en expresiones regulares que utilizan el indicador u.</td>
+              <td class="max-w-lg px-4">El carácter Unicode especificado por el punto de código <em>n</em>, donde <em>n</em> es de uno a seis dígitos hexadecimales entre 0 y 10FFFF. Tenga en cuenta que esta sintaxis sólo se admite en expresiones regulares que utilizan el indicador <em>u</em>.</td>
             </tr>
             <tr>
               <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">\cX</codeinline></td>
-              <td class="max-w-lg px-4">El carácter de control ^X; por ejemplo, \cJ equivale al carácter de nueva línea \n</td>
+              <td class="max-w-lg px-4">El carácter de control <em>^X</em>; por ejemplo, <codeinline class="md:text-base bg-transparent">\cJ</codeinline> equivale al carácter de nueva línea <codeinline class="md:text-base bg-transparent">\n</codeinline></td>
             </tr>
         </tbody>
       </table>
@@ -464,18 +464,18 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Algunos caracteres de puntuación tienen un significado especial en las expresiones regulares. Estos son:</p>
     <pre class="language-js">
     ^ $ . ¡* + ? = ! : | \ / ( ) [ ] &lbrace; }</pre>
-    <p>Los significados de estos caracteres se tratan en las secciones siguientes. Algunos de estos caracteres tienen un significado especial sólo en determinados contextos de una expresión regular y se tratan literalmente en otros contextos. Sin embargo, como regla general, s i desea incluir cualquiera de estos caracteres de puntuación literalmente en una expresión regular, debe precederlos de un \. Otros caracteres de puntuación, como las comillas y @, no tienen un significado especial y simplemente coinciden literalmente en una expresión regular.</p>
-    <p>Si no recuerda exactamente qué caracteres de puntuación deben escaparse con una barra invertida, puede colocar una barra invertida antes de cualquier carácter de puntuación. Por otro lado, tenga en cuenta que muchas letras y números tienen un significado especial cuando van precedidos de una barra invertida, por lo que las letras o números que desee que coincidan literalmente no deben escaparse con una barra invertida. Para incluir un carácter de barra invertida literalmente en una expresión regular, debe escaparlo con una barra invertida, por supuesto. Por ejemplo, la siguiente expresión regular coincide con cualquier cadena que incluya una barra invertida: /\\/. (Y si usa el constructor RegExp(), tenga en cuenta que cualquier barra invertida en su expresión regu- lar debe ser duplicada, ya que las cadenas también usan barras invertidas como carácter de escape).</p>
+    <p>Los significados de estos caracteres se tratan en las secciones siguientes. Algunos de estos caracteres tienen un significado especial sólo en determinados contextos de una expresión regular y se tratan literalmente en otros contextos. Sin embargo, como regla general, s i desea incluir cualquiera de estos caracteres de puntuación literalmente en una expresión regular, debe precederlos de un <codeinline>\</codeinline>. Otros caracteres de puntuación, como las comillas y <codeinline>@</codeinline>, no tienen un significado especial y simplemente coinciden literalmente en una expresión regular.</p>
+    <p>Si no recuerda exactamente qué caracteres de puntuación deben escaparse con una barra invertida, puede colocar una barra invertida antes de cualquier carácter de puntuación. Por otro lado, tenga en cuenta que muchas letras y números tienen un significado especial cuando van precedidos de una barra invertida, por lo que las letras o números que desee que coincidan literalmente no deben escaparse con una barra invertida. Para incluir un carácter de barra invertida literalmente en una expresión regular, debe escaparlo con una barra invertida, por supuesto. Por ejemplo, la siguiente expresión regular coincide con cualquier cadena que incluya una barra invertida: <codeinline>/\\/</codeinline>. (Y si usa el constructor <codeinline>RegExp()</codeinline>, tenga en cuenta que cualquier barra invertida en su expresión regular debe ser duplicada, ya que las cadenas también usan barras invertidas como carácter de escape).</p>
     <p class="title-article text-left">Clases de personajes</p>
-    <p>Los caracteres literales individuales pueden combinarse en clases de caracteres colocándolos entre corchetes. Una clase de caracteres coincide con cualquier carácter contenido en ella. Así, la expresión regular /[abc]/ coincide con cualquiera de las letras a, b o c. También se pueden definir clases de caracteres negados, que coinciden con cualquier carácter excepto los que están entre corchetes. Una clase de caracteres negada se especifica colocando un signo de intercalación (^) como primer carácter dentro del corchete izquierdo. La RegExp /[^abc]/ coincide con cualquier carácter que no sea a, b o c. Las clases de caracteres pueden usar un guión para indicar un rango de caracteres. Para coincidir con cualquier carácter en minúscula del alfabeto latino, use /[a-z]/, y para coincidir con cualquier letra o dígito del alfabeto latino, use /[a-zA- Z0-9]/. (Y si desea incluir un guión real en su clase de caracteres, simplemente hágalo el último carácter antes del corchete derecho).</p>
-    <p>Debido a que ciertas clases de caracteres se utilizan comúnmente, la sintaxis de expresiones regulares de JavaScript incluye caracteres especiales y secuencias de escape para representar estas clases comunes. Por ejemplo, \s coincide con el carácter de espacio, el carácter de tabulación y cualquier otro carácter de espacio en blanco Unicode; \S coincide con cualquier carácter que no sea un espacio en blanco Unicode. La Tabla 11-2 enumera estos caracteres y resume la sintaxis de las clases de caracteres. (Tenga en cuenta que varias de estas secuencias de escape de clases de caracteres sólo coinciden con caracteres ASCII y no se han ampliado para funcionar con caracteres Unicode. Sin embargo, puede definir explícitamente sus propias clases d e caracteres Unicode; por ejemplo, /[\u0400-\u04FF]/ coincide con cualquier carácter cirílico).</p>
+    <p>Los caracteres literales individuales pueden combinarse en <em>clases de caracteres</em> colocándolos entre corchetes. Una clase de caracteres coincide con cualquier carácter contenido en ella. Así, la expresión regular <codeinline>/[abc]/</codeinline> coincide con cualquiera de las letras a, b o c. También se pueden definir clases de caracteres negados, que coinciden con cualquier carácter excepto los que están entre corchetes. Una clase de caracteres negada se especifica colocando un signo de caret (<codeinline>^</codeinline>) como primer carácter dentro del corchete izquierdo. La RegExp <codeinline>/[^abc]/</codeinline> coincide con cualquier carácter que no sea a, b o c. Las clases de caracteres pueden usar un guión para indicar un rango de caracteres. Para coincidir con cualquier carácter en minúscula del alfabeto latino, use <codeinline>/[a-z]/</codeinline>, y para coincidir con cualquier letra o dígito del alfabeto latino, use <codeinline>/[a-zA- Z0-9]/</codeinline>. (Y si desea incluir un guión real en su clase de caracteres, simplemente hágalo el último carácter antes del corchete derecho).</p>
+    <p>Debido a que ciertas clases de caracteres se utilizan comúnmente, la sintaxis de expresiones regulares de JavaScript incluye caracteres especiales y secuencias de escape para representar estas clases comunes. Por ejemplo, <codeinline>\s</codeinline> coincide con el carácter de espacio, el carácter de tabulación y cualquier otro carácter de espacio en blanco Unicode; <codeinline>\S</codeinline> coincide con cualquier carácter que <em>no</em> sea un espacio en blanco Unicode. La <a href="#tabla11-2">Tabla 11-2</a> enumera estos caracteres y resume la sintaxis de las clases de caracteres. (Tenga en cuenta que varias de estas secuencias de escape de clases de caracteres sólo coinciden con caracteres ASCII y no se han ampliado para funcionar con caracteres Unicode. Sin embargo, puede definir explícitamente sus propias clases de caracteres Unicode; por ejemplo, <codeinline>/[\u0400-\u04FF]/</codeinline> coincide con cualquier carácter cirílico).</p>
     <div id="tabla11-2" class="flex flex-col items-center">
       <p><em>Tabla 11-2. Clases de caracteres de expresiones regulares</em></p>
       <table>
         <thead class="bg-amber-900 text-[#f6e4c5]">
           <tr>
-            <td class="max-w-lg pl-4"></td>
-            <td class="max-w-lg pl-4"></td>
+            <td class="max-w-lg pl-4">Character</td>
+            <td class="max-w-lg pl-4">Matches</td>
           </tr>
         </thead>
         <tbody>
@@ -489,15 +489,15 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
             </tr>
             <tr>
               <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">.</codeinline></td>
-              <td class="max-w-lg px-4">Cualquier carácter excepto nueva línea u otro terminador de línea Unicode. O, si la RegExp utiliza el indicador s, entonces un punto coincide con cualquier carácter, incluidos los terminadores de línea.</td>
+              <td class="max-w-lg px-4">Cualquier carácter excepto nueva línea u otro terminador de línea Unicode. O, si la RegExp utiliza el indicador <codeinline class="md:text-base bg-transparent">s</codeinline>, entonces un punto coincide con cualquier carácter, incluidos los terminadores de línea.</td>
             </tr>
             <tr class="bg-[#f6e4c5]">
               <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">\w</codeinline></td>
-              <td class="max-w-lg px-4">Cualquier carácter ASCII de palabra. Equivale a [a-zA-Z0-9_].</td>
+              <td class="max-w-lg px-4">Cualquier carácter ASCII de palabra. Equivale a <codeinline class="md:text-base bg-transparent">[a-zA-Z0-9_]</codeinline>.</td>
             </tr>
             <tr>
               <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">\W</codeinline></td>
-              <td class="max-w-lg px-4">Cualquier carácter que no sea un carácter de palabra ASCII. Equivale a [^a-zA-Z0-9_].</td>
+              <td class="max-w-lg px-4">Cualquier carácter que no sea un carácter de palabra ASCII. Equivale a <codeinline class="md:text-base bg-transparent">[^a-zA-Z0-9_]</codeinline>.</td>
             </tr>
             <tr class="bg-[#f6e4c5]">
               <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">\s</codeinline></td>
@@ -509,11 +509,11 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
             </tr>
             <tr class="bg-[#f6e4c5]">
               <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">\d</codeinline></td>
-              <td class="max-w-lg px-4">Cualquier dígito ASCII. Equivale a [0-9].</td>
+              <td class="max-w-lg px-4">Cualquier dígito ASCII. Equivale a <codeinline class="md:text-base bg-transparent">[0-9]</codeinline>.</td>
             </tr>
             <tr>
               <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">\D</codeinline></td>
-              <td class="max-w-lg px-4">Cualquier carácter que no sea un dígito ASCII. Equivale a [^0-9].</td>
+              <td class="max-w-lg px-4">Cualquier carácter que no sea un dígito ASCII. Equivale a <codeinline class="md:text-base bg-transparent">[^0-9]</codeinline>.</td>
             </tr>
             <tr class="bg-[#f6e4c5]">
               <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">[\b]</codeinline></td>
@@ -522,26 +522,26 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
         </tbody>
       </table>
     </div>
-    <p>Tenga en cuenta que los escapes especiales de clase de caracteres pueden utilizarse entre corchetes. \s coincide con cualquier carácter de espacio en blanco, y \d coincide con cualquier dígito, por lo que /[\s\d]/ coincide con cualquier carácter de espacio en blanco o dígito. Tenga en cuenta que hay un caso especial. Como verás más adelante, el escape \b tiene un significado especial. Sin embargo, cuando se usa dentro de una clase de caracteres, representa el carácter de retroceso. Así, para representar un carácter de retroceso literalmente en una expresión regular, utilice la clase de caracteres con un elemento: /[\b]/.</p>
+    <p>Tenga en cuenta que los escapes especiales de clase de caracteres pueden utilizarse entre corchetes. <codeinline>\s</codeinline> coincide con cualquier carácter de espacio en blanco, y <codeinline>\d</codeinline> coincide con cualquier dígito, por lo que <codeinline>/[\s\d]/</codeinline> coincide con cualquier carácter de espacio en blanco o dígito. Tenga en cuenta que hay un caso especial. Como verás más adelante, el escape <codeinline>\b</codeinline> tiene un significado especial. Sin embargo, cuando se usa dentro de una clase de caracteres, representa el carácter de retroceso. Así, para representar un carácter de retroceso literalmente en una expresión regular, utilice la clase de caracteres con un elemento: <codeinline>/[\b]/</codeinline>.</p>
     <article>
       <p class="title-article">Clases de caracteres Unicode</p>
-      <p>En ES2018, si una expresión regular utiliza el indicador u, se admiten las clases de caracteres \p&lbrace;...} y su negación \P&lbrace;...}. (A partir de principios de 2020, esto se implementa en Node, Chrome, Edge y Safari, pero no en Firefox). Estas clases de caracteres se basan en propiedades definidas por el estándar Unicode, y el conjunto de caracteres que representan puede cambiar a medida que Unicode evoluciona.</p>
+      <p>En ES2018, si una expresión regular utiliza el indicador u, se admiten las clases de caracteres <codeinline>\p&lbrace;...}</codeinline> y su negación <codeinline>\P&lbrace;...}</codeinline>. (A partir de principios de 2020, esto se implementa en Node, Chrome, Edge y Safari, pero no en Firefox). Estas clases de caracteres se basan en propiedades definidas por el estándar Unicode, y el conjunto de caracteres que representan puede cambiar a medida que Unicode evoluciona.</p>
       <p>En el momento de escribir este artículo, a principios de 2020, los guiones bajos en literales numéricos aún no están formalmente estandarizados como parte de JavaScript. Pero se encuentran en fases avanzadas del proceso de estandarización y están implementados por los principales navegadores y por Node.</p>
-      <p>La clase de caracteres \d sólo coincide con dígitos ASCII. Si desea que coincida con un dígito decimal de cualquiera de los sistemas de escritura del mundo, puede utilizar /\p&lbrace;Decimal_Number}/u.</p>
-      <p>Y si quieres que coincida con cualquier carácter que no sea un dígito decimal en cualquier lan- puede escribir la p en mayúsculas y \P&lbrace;Número_Decimal}. Si desea que coincida con cualquier carácter numérico, incluyendo fracciones y números romanos, puede utilizar \p&lbrace;Número}. Tenga en cuenta que "Decimal_Number" y "Number" no son específicos de Java-Script o de la gramática de expresiones regulares: es el nombre de una categoría de caracteres definida por el estándar Unicode.</p>
-      <p>La clase de caracteres \w sólo funciona para texto ASCII, pero con \p, podemos aproximarnos a una versión internacionalizada como ésta:</p>
+      <p>La clase de caracteres <codeinline>\d</codeinline> sólo coincide con dígitos ASCII. Si desea que coincida con un dígito decimal de cualquiera de los sistemas de escritura del mundo, puede utilizar <codeinline>/\p&lbrace;Decimal_Number}/u</codeinline>.</p>
+      <p>Y si quieres que coincida con cualquier carácter que <em>no</em> sea un dígito decimal en cualquier idioma puede escribir la <codeinline>p</codeinline> en mayúsculas y <codeinline>\P&lbrace;Número_Decimal}</codeinline>. Si desea que coincida con cualquier carácter numérico, incluyendo fracciones y números romanos, puede utilizar <codeinline>\p&lbrace;Número}</codeinline>. Tenga en cuenta que "Decimal_Number" y "Number" no son específicos de Java-Script o de la gramática de expresiones regulares: es el nombre de una categoría de caracteres definida por el estándar Unicode.</p>
+      <p>La clase de caracteres <codeinline>\w</codeinline> sólo funciona para texto ASCII, pero con <codeinline>\p</codeinline>, podemos aproximarnos a una versión internacionalizada como ésta:</p>
     <pre>
     <code class="language-js">/[\p&lbrace;Alphabetic}\p&lbrace;Decimal_Number}\p&lbrace;Mark}]/u</code></pre>
       <p>(Aunque para ser totalmente compatibles con la complejidad de las lenguas del mundo, realmente necesitamos añadir también las categorías "Conector_Puntuación" y "Join_Control").</p>
-      <p>Como último ejemplo, la sintaxis \p también nos permite definir expresiones regulares que coincidan con caracteres de un alfabeto o escritura concretos:</p>
+      <p>Como último ejemplo, la sintaxis <codeinline>\p</codeinline> también nos permite definir expresiones regulares que coincidan con caracteres de un alfabeto o escritura concretos:</p>
     <pre>
     <code class="language-js">let greekLetter = /\p&lbrace;Script=Greek}/u;
     let cyrillicLetter = /\p&lbrace;Script=Cyrillic}/u;</code></pre>
     </article>
     <p class="title-article text-left">Repetición</p>
-    <p>Con la sintaxis de expresiones regulares que ha aprendido hasta ahora, puede describir un número de dos dígitos como /\d\d/ y un número de cuatro dígitos como /\d\d\d\d/. Pero no tienes forma de describir, por ejemplo, un número que puede tener cualquier número de dígitos o una cadena de tres letras seguidas de un dígito opcional. Estos patrones más complejos utilizan una sintaxis de expresión regular que especifica cuántas veces se puede repetir un elemento de una expresión regular.</p>
-    <p>Los caracteres que especifican la repetición siguen siempre el patrón al que se aplican. Dado que ciertos tipos de repetición se utilizan con bastante frecuencia, existen caracteres especiales para representar estos casos. Por ejemplo, + coincide con una o más repeticiones del patrón anterior.</p>
-    <p>La Tabla 11-3 resume la sintaxis de repetición.</p>
+    <p>Con la sintaxis de expresiones regulares que ha aprendido hasta ahora, puede describir un número de dos dígitos como <codeinline>/\d\d/</codeinline> y un número de cuatro dígitos como <codeinline>/\d\d\d\d/</codeinline>. Pero no tienes forma de describir, por ejemplo, un número que puede tener cualquier número de dígitos o una cadena de tres letras seguidas de un dígito opcional. Estos patrones más complejos utilizan una sintaxis de expresión regular que especifica cuántas veces se puede repetir un elemento de una expresión regular.</p>
+    <p>Los caracteres que especifican la repetición siguen siempre el patrón al que se aplican. Dado que ciertos tipos de repetición se utilizan con bastante frecuencia, existen caracteres especiales para representar estos casos. Por ejemplo, <codeinline>+</codeinline> coincide con una o más repeticiones del patrón anterior.</p>
+    <p>La <a href="#tabla11-3">Tabla 11-3</a> resume la sintaxis de repetición.</p>
     <div id="tabla11-3" class="flex flex-col items-center">
       <p><em>Tabla 11-3. Caracteres de repetición de expresiones regulares</em></p>
       <table>
@@ -554,27 +554,27 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
         <tbody>
             <tr>
               <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">&lbrace;n,m}</codeinline></td>
-              <td class="max-w-lg px-4">Coincide con el elemento anterior al menos n veces pero no más de m veces.</td>
+              <td class="max-w-lg px-4">Coincide con el elemento anterior al menos <em>n</em> veces pero no más de <em>m</em> veces.</td>
             </tr>
             <tr class="bg-[#f6e4c5]">
               <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">&lbrace;n,}</codeinline></td>
-              <td class="max-w-lg px-4">Coincide con el elemento anterior n o más veces.</td>
+              <td class="max-w-lg px-4">Coincide con el elemento anterior <em>n</em> o más veces.</td>
             </tr>
             <tr>
               <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">&lbrace;n}</codeinline></td>
-              <td class="max-w-lg px-4">Coincide exactamente con n ocurrencias del elemento anterior.</td>
+              <td class="max-w-lg px-4">Coincide exactamente con <em>n</em> ocurrencias del elemento anterior.</td>
             </tr>
             <tr class="bg-[#f6e4c5]">
               <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">?</codeinline></td>
-              <td class="max-w-lg px-4">Coincide con cero o una ocurrencia del elemento anterior. Es decir, el elemento anterior es opcional. Equivale a &lbrace;0,1}.</td>
+              <td class="max-w-lg px-4">Coincide con cero o una ocurrencia del elemento anterior. Es decir, el elemento anterior es opcional. Equivale a <codeinline class="md:text-base bg-transparent">&lbrace;0,1}</codeinline>.</td>
             </tr>
             <tr>
               <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">+</codeinline></td>
-              <td class="max-w-lg px-4">Coincide con una o más ocurrencias del elemento anterior. Equivale a &lbrace;1,}.</td>
+              <td class="max-w-lg px-4">Coincide con una o más ocurrencias del elemento anterior. Equivale a <codeinline class="md:text-base bg-transparent">&lbrace;1,}</codeinline>.</td>
             </tr>
             <tr class="bg-[#f6e4c5]">
               <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">*</codeinline></td>
-              <td class="max-w-lg px-4">Coincide con cero o más apariciones del elemento anterior. Equivalente a &lbrace;0,}.</td>
+              <td class="max-w-lg px-4">Coincide con cero o más apariciones del elemento anterior. Equivalente a <codeinline class="md:text-base bg-transparent">&lbrace;0,}</codeinline>.</td>
             </tr>
         </tbody>
       </table>
@@ -582,37 +582,37 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Las siguientes líneas muestran algunos ejemplos:</p>
     <pre>
     <code class="language-js">let r = /\d&lbrace;2,4}/; // Match between two and four digits
-    r = /\w&lbrace;3}\d?/; // Match exactly three word characters and an optional digit
-    r = /\s+java\s+/; // Match "java" with one or more spaces before and after
-    r = /[^(]*/; // Match zero or more characters that are not open parens</code></pre>
+    r = /\w&lbrace;3}\d?/;    // Match exactly three word characters and an optional digit
+    r = /\s+java\s+/;  // Match "java" with one or more spaces before and after
+    r = /[^(]*/;       // Match zero or more characters that are not open parens</code></pre>
     <p>Tenga en cuenta que en todos estos ejemplos, los especificadores de repetición se aplican al único carácter o clase de caracteres que los precede. Si desea hacer coincidir repeticiones de expresiones más complicadas, tendrá que definir un grupo con paréntesis, que se explican en las secciones siguientes.</p>
-    <p>Tenga cuidado al utilizar los caracteres de repetición * y ? Dado que estos caracteres pueden coincidir con cero apariciones de lo que les precede, se permite que no coincidan con nada. Por ejemplo, la expresión regular /a*/ en realidad coincide con la cadena "bbbb", ¡porque la cadena contiene cero apariciones de la letra a!</p>
+    <p>Tenga cuidado al utilizar los caracteres de repetición <codeinline>*</codeinline> y <codeinline>?</codeinline> Dado que estos caracteres pueden coincidir con cero apariciones de lo que les precede, se permite que no coincidan con nada. Por ejemplo, la expresión regular <codeinline>/a*/</codeinline> en realidad coincide con la cadena "bbbb", ¡porque la cadena contiene cero apariciones de la letra a!</p>
     <p class="title-article text-left">Repetición no codiciosa</p>
-    <p>Los caracteres de repetición enumerados en la Tabla 11-3 coinciden tantas veces como sea posible, permitiendo al mismo tiempo que coincidan las siguientes partes de la expresión regular. Decimos que esta repetición es "codiciosa". También es posible especificar que la repetición se haga de forma no codiciosa. Basta con que el carácter o caracteres de repetición vayan seguidos de un signo de interrogación: ??, +?, *?, o incluso &lbrace;1,5}?. Por ejemplo, la expresión regular /a+/ coincide con una o más apariciones de la letra a. Cuando se aplica a la cadena "aaa", coincide con las tres letras. Sin embargo, /a+?/ coincide con una o varias apariciones de la letra a, con el menor número de caracteres necesario. Cuando se aplica a la misma cadena, este patrón sólo coincide con la primera letra a.</p>
-    <p>El uso de la repetición no ávida no siempre produce los resultados esperados. Consideremos el patrón /a+b/, que coincide con una o más a seguidas de la letra b. Cuando se aplica a la cadena "aaab", coincide con toda la cadena. Utilicemos ahora la versión no codiciosa: /a+?b/. Debería coincidir con la letra b precedida por el menor número posible de aes. Cuando se aplica a la misma cadena "aaab", se podría esperar que coincidiera sólo con una a y la última letra b. Sin embargo, en realidad, este patrón coincide con toda la cadena, igual que la versión codiciosa del patrón. Esto se debe a que la coincidencia de patrones de expresiones regulares se realiza encontrando la primera posición en la cadena en la que es posible una coincidencia. Como la coincidencia es posible a partir del primer carácter de la cadena, las coincidencias más cortas a partir de los caracteres siguientes ni siquiera se tienen en cuenta.</p>
+    <p>Los caracteres de repetición enumerados en la <a href="#tabla11-3">Tabla 11-3</a> coinciden tantas veces como sea posible, permitiendo al mismo tiempo que coincidan las siguientes partes de la expresión regular. Decimos que esta repetición es "codiciosa". También es posible especificar que la repetición se haga de forma no codiciosa. Basta con que el carácter o caracteres de repetición vayan seguidos de un signo de interrogación: <codeinline>??, +?, *?</codeinline>, o incluso <codeinline>&lbrace;1,5}?</codeinline>. Por ejemplo, la expresión regular <codeinline>/a+/</codeinline> coincide con una o más apariciones de la letra a. Cuando se aplica a la cadena "aaa", coincide con las tres letras. Sin embargo, <codeinline>/a+?/</codeinline> coincide con una o varias apariciones de la letra a, con el menor número de caracteres necesario. Cuando se aplica a la misma cadena, este patrón sólo coincide con la primera letra a.</p>
+    <p>El uso de la repetición no ávida no siempre produce los resultados esperados. Consideremos el patrón <codeinline>/a+b/</codeinline>, que coincide con una o más a seguidas de la letra b. Cuando se aplica a la cadena "aaab", coincide con toda la cadena. Utilicemos ahora la versión no codiciosa: <codeinline>/a+?b/</codeinline>. Debería coincidir con la letra b precedida por el menor número posible de aes. Cuando se aplica a la misma cadena "aaab", se podría esperar que coincidiera sólo con una a y la última letra b. Sin embargo, en realidad, este patrón coincide con toda la cadena, igual que la versión codiciosa del patrón. Esto se debe a que la coincidencia de patrones de expresiones regulares se realiza encontrando la primera posición en la cadena en la que es posible una coincidencia. Como la coincidencia es posible a partir del primer carácter de la cadena, las coincidencias más cortas a partir de los caracteres siguientes ni siquiera se tienen en cuenta.</p>
     <p class="title-article text-left">Alternancia, agrupación y referencias</p>
-    <p>La gramática de las expresiones regulares incluye caracteres especiales para especificar alternativas, agrupar subexpresiones y hacer referencia a subexpresiones anteriores. El carácter | separa alternativas. Por ejemplo, /ab|cd|ef/ coincide con la cadena "ab" o la cadena la cadena "cd" o la cadena "ef ". Y /\d{3}|[a-z]{4}/ coincide con tres dígitos o cuatro letras minúsculas.</p>
-    <p>Tenga en cuenta que las alternativas se consideran de izquierda a derecha hasta que se encuentra una coincidencia. Si la alternativa de la izquierda coincide, la de la derecha se ignora, aunque hubiera producido una coincidencia "mejor". Así, cuando el patrón /a|ab/ se aplica a la cadena "ab", sólo coincide con la primera letra.</p>
-    <p>Los paréntesis tienen varias finalidades en las expresiones regulares. Uno de ellos es agrupar elementos separados en una única subexpresión para que los elementos puedan tratarse como una sola unidad mediante |, * , +, ?, etc. Por ejemplo, /java(script)?/ coincide con "java" seguido de "script" opcional. Y /(ab|cd)+|ef/ coincide con la cadena "ef " o con una o más repeticiones de cualquiera de las cadenas "ab" o "cd".</p>
-    <p>Otra finalidad de los paréntesis en las expresiones regulares es definir subpatrones dentro del patrón completo. Cuando una expresión regular se compara con éxito con una cadena objetivo, es posible extraer las partes de la cadena objetivo que coinciden con cualquier sub-patrón entre paréntesis. (Verá cómo se obtienen estas subcadenas coincidentes más adelante en esta sección). Por ejemplo, suponga que está buscando una o más letras minúsculas seguidas de uno o más dígitos. Puede utilizar el patrón /[a-z]+. \d+/. Pero supongamos que sólo le interesan los dígitos del final de cada coincidencia. Si pone esa parte del patrón entre paréntesis (/[a-z]+(\d+)/), podrá extraer los dígitos de cualquier coincidencia que encuentre, como se explica más adelante.</p>
-    <p>Un uso relacionado de las subexpresiones entre paréntesis es permitirle referirse a una subexpresión más adelante en la misma expresión regular. Esto se hace siguiendo un carácter \ por un dígito o dígitos. Los dígitos se refieren a la posición de la subexpresión entre paréntesis dentro de la expresión regular. Por ejemplo, \1 se refiere a la primera subexpresión, y \3 a la tercera. Tenga en cuenta que, como las subexpresiones pueden estar anidadas dentro de otras, lo que se cuenta es la posición del paréntesis izquierdo. En la siguiente expresión regu- lar, por ejemplo, la subexpresión anidada ([Ss]cript) se denomina \2:</p>
+    <p>La gramática de las expresiones regulares incluye caracteres especiales para especificar alternativas, agrupar subexpresiones y hacer referencia a subexpresiones anteriores. El carácter <codeinline>|</codeinline> separa alternativas. Por ejemplo, <codeinline>/ab|cd|ef/</codeinline> coincide con la cadena "ab" o la cadena la cadena "cd" o la cadena "ef ". Y <codeinline>/\d&lbrace;3}|[a-z]&lbrace;4}/</codeinline> coincide con tres dígitos o cuatro letras minúsculas.</p>
+    <p>Tenga en cuenta que las alternativas se consideran de izquierda a derecha hasta que se encuentra una coincidencia. Si la alternativa de la izquierda coincide, la de la derecha se ignora, aunque hubiera producido una coincidencia "mejor". Así, cuando el patrón <codeinline>/a|ab/</codeinline> se aplica a la cadena "ab", sólo coincide con la primera letra.</p>
+    <p>Los paréntesis tienen varias finalidades en las expresiones regulares. Uno de ellos es agrupar elementos separados en una única subexpresión para que los elementos puedan tratarse como una sola unidad mediante <codeinline>|, * , +, ?</codeinline>, etc. Por ejemplo, <codeinline>/java(script)?/</codeinline> coincide con "java" seguido de "script" opcional. Y <codeinline>/(ab|cd)+|ef/</codeinline> coincide con la cadena "ef " o con una o más repeticiones de cualquiera de las cadenas "ab" o "cd".</p>
+    <p>Otra finalidad de los paréntesis en las expresiones regulares es definir subpatrones dentro del patrón completo. Cuando una expresión regular se compara con éxito con una cadena objetivo, es posible extraer las partes de la cadena objetivo que coinciden con cualquier sub-patrón entre paréntesis. (Verá cómo se obtienen estas subcadenas coincidentes más adelante en esta sección). Por ejemplo, suponga que está buscando una o más letras minúsculas seguidas de uno o más dígitos. Puede utilizar el patrón <codeinline>/[a-z]+\d+/</codeinline>. . Pero supongamos que sólo le interesan los dígitos del final de cada coincidencia. Si pone esa parte del patrón entre paréntesis (<codeinline>/[a-z]+(\d+)/</codeinline>), podrá extraer los dígitos de cualquier coincidencia que encuentre, como se explica más adelante.</p>
+    <p>Un uso relacionado de las subexpresiones entre paréntesis es permitirle referirse a una subexpresión más adelante en la misma expresión regular. Esto se hace siguiendo un carácter <codeinline>\</codeinline> por un dígito o dígitos. Los dígitos se refieren a la posición de la subexpresión entre paréntesis dentro de la expresión regular. Por ejemplo, <codeinline>\1</codeinline> se refiere a la primera subexpresión, y <codeinline>\3</codeinline> a la tercera. Tenga en cuenta que, como las subexpresiones pueden estar anidadas dentro de otras, lo que se cuenta es la posición del paréntesis izquierdo. En la siguiente expresión regular, por ejemplo, la subexpresión anidada (<codeinline>[Ss]cript</codeinline>) se denomina <codeinline>\2</codeinline>:</p>
     <pre>
     <code class="language-js">/([Jj]ava([Ss]cript)?)\sis\s(fun\w*)/</code></pre>
-    <p>Una referencia a una subexpresión anterior de una expresión regular no se refiere al patrón de esa subexpresión, sino al texto que coincide con el patrón. Por lo tanto, las referencias se pueden utilizar para imponer la restricción de que partes separadas de una cadena contengan exactamente los mismos caracteres. Por ejemplo, la siguiente expresión regular coincide con cero o más caracteres entre comillas simples o dobles. Sin embargo, no requiere que las comillas de apertura y cierre coincidan (es decir, ambas comillas simples o ambas comillas dobles):</p>
+    <p>Una referencia a una subexpresión anterior de una expresión regular <em>no</em> se refiere al patrón de esa subexpresión, sino al texto que coincide con el patrón. Por lo tanto, las referencias se pueden utilizar para imponer la restricción de que partes separadas de una cadena contengan exactamente los mismos caracteres. Por ejemplo, la siguiente expresión regular coincide con cero o más caracteres entre comillas simples o dobles. Sin embargo, no requiere que las comillas de apertura y cierre coincidan (es decir, ambas comillas simples o ambas comillas dobles):</p>
     <pre>
     <code class="language-js">/['"][^'"]*['"]/</code></pre>
     <p>Para que las comillas coincidan, utilice una referencia:</p>
     <pre>
     <code class="language-js">/(['"])[^'"]*\1/</code></pre>
-    <p>El \1 coincide con lo que coincida con la primera subexpresión entre paréntesis. En este ejemplo, impone la restricción de que la comilla de cierre coincida con la comilla de apertura. Esta expresión regular no permite comillas simples dentro de cadenas con comillas dobles o viceversa. (No es legal utilizar una referencia dentro de una clase de caracteres, por lo que no puede escribir: /(['"])[^\1]*\1/.)</p>
+    <p>El <codeinline>\1</codeinline> coincide con lo que coincida con la primera subexpresión entre paréntesis. En este ejemplo, impone la restricción de que la comilla de cierre coincida con la comilla de apertura. Esta expresión regular no permite comillas simples dentro de cadenas con comillas dobles o viceversa. (No es legal utilizar una referencia dentro de una clase de caracteres, por lo que no puede escribir: <codeinline>/(['"])[^\1]*\1/</codeinline>.)</p>
     <p>Cuando cubramos la API RegExp más adelante, verás que este tipo de referencia a una subexpresión de tamaño par es una poderosa característica de las operaciones de búsqueda y reemplazo de expresiones regulares.</p>
-    <p>También es posible agrupar elementos en una expresión regular sin crear una referencia numerada a dichos elementos. En lugar de agrupar simplemente los elementos dentro de ( y ), comience el grupo con (?: y termínelo con ). Considere el siguiente patrón:</p>
+    <p>También es posible agrupar elementos en una expresión regular sin crear una referencia numerada a dichos elementos. En lugar de agrupar simplemente los elementos dentro de ( y ), comience el grupo con (<codeinline>?:</codeinline> y termínelo con ). Considere el siguiente patrón:</p>
     <pre>
     <code class="language-js">/([Jj]ava(?:[Ss]cript)?)\sis\s(fun\w*)/</code></pre>
-    <p>En este ejemplo, la subexpresión (?:[Ss]cript) se utiliza simplemente para agrupar, por lo que el carácter de repetición ? puede aplicarse al grupo. Estos paréntesis modificados no producen una referencia, por lo que en esta expresión regular, \2 se refiere al texto coincidente con (fun\w*).</p>
-    <p>La Tabla 11-4 resume los operadores de alternancia, agrupación y referenciación de expresiones regulares.</p>
-    <div id="tabla11-3" class="flex flex-col items-center">
-      <p><em>Tabla 11-3. Caracteres de repetición de expresiones regulares</em></p>
+    <p>En este ejemplo, la subexpresión (<codeinline>?:[Ss]cript</codeinline>) se utiliza simplemente para agrupar, por lo que el carácter de repetición <codeinline>?</codeinline> puede aplicarse al grupo. Estos paréntesis modificados no producen una referencia, por lo que en esta expresión regular, <codeinline>\2</codeinline> se refiere al texto coincidente con (<codeinline>fun\w*</codeinline>).</p>
+    <p>La <a href="#tabla11-3">Tabla 11-4</a> resume los operadores de alternancia, agrupación y referenciación de expresiones regulares.</p>
+    <div id="tabla11-4" class="flex flex-col items-center">
+      <p><em>Tabla 11-4. Caracteres de alternancia, agrupación y referencia de expresiones regulares</em></p>
       <table>
         <thead class="bg-amber-900 text-[#f6e4c5]">
           <tr>
@@ -637,7 +637,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
             </tr>
             <tr class="bg-[#f6e4c5]">
               <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">\n</codeinline></td>
-              <td class="max-w-lg px-4">Coinciden con los mismos caracteres que coincidieron cuando el grupo número n coincidió por primera vez. Los grupos son subexpresiones dentro de paréntesis (posiblemente anidados). Los números de grupo se asignan contando los paréntesis d e izquierda a derecha. Los grupos formados con (?: no se numeran.</td>
+              <td class="max-w-lg px-4">Coinciden con los mismos caracteres que coincidieron cuando el grupo número <em>n</em> coincidió por primera vez. Los grupos son subexpresiones dentro de paréntesis (posiblemente anidados). Los números de grupo se asignan contando los paréntesis d e izquierda a derecha. Los grupos formados con (<codeinline class="md:text-base bg-transparent">?:</codeinline> no se numeran.</td>
             </tr>
         </tbody>
       </table>
@@ -645,20 +645,20 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <article>
       <p class="title-article">Grupos de captura con nombre</p>
       <p>EES2018 estandariza una nueva característica que puede hacer que las expresiones regulares sean más autodocumentables y fáciles de entender. Esta nueva característica se conoce como "grupos de captura con nombre" y nos permite asociar un nombre a cada paréntesis izquierdo de una expresión regular para que podamos referirnos al texto coincidente por su nombre en lugar de por su número. Igualmente importante: el uso de nombres permite que alguien que lea el código comprenda más fácilmente el propósito de esa parte de la expresión regular. A principios de 2020, esta función está implementada en Node, Chrome, Edge y Safari, pero aún no en Firefox.</p>
-      <p>Para nombrar un grupo, utilice (?&lt;...> en lugar de ( y ponga el nombre entre el ángulo corchetes. Por ejemplo, he aquí una expresión regular que podría utilizarse para comprobar el formato de la última línea de una dirección postal de EE.UU:</p>
+      <p>Para nombrar un grupo, utilice <codeinline>(?&lt;...></codeinline> en lugar de <codeinline>(</codeinline> y ponga el nombre entre el ángulo corchetes. Por ejemplo, he aquí una expresión regular que podría utilizarse para comprobar el formato de la última línea de una dirección postal de EE.UU:</p>
     <pre>
     <code class="language-js">/(?&lt;city>\w+) (?&lt;state>[A-Z]&lbrace;2}) (?&lt;zipcode>\d&lbrace;5})(?<zip9>-\d&lbrace;4})?/</code></pre>
-      <p>Observe cuánto contexto proporcionan los nombres de grupo para hacer la expresión regular más fácil de entender. En §11.3.2, cuando discutamos los métodos String replace() y match() y el método RegExp exec(), verá cómo la API RegExp le permite referirse al texto que coincide con cada uno de estos grupos por su nombre en lugar de por su posición.</p>
+      <p>Observe cuánto contexto proporcionan los nombres de grupo para hacer la expresión regular más fácil de entender. En <a href="#3-2">§11.3.2</a>, cuando discutamos los métodos String <codeinline>replace()</codeinline> y <codeinline>match()</codeinline> y el método RegExp <codeinline>exec()</codeinline>, verá cómo la API RegExp le permite referirse al texto que coincide con cada uno de estos grupos por su nombre en lugar de por su posición.</p>
       <p>Si desea hacer referencia a un grupo de captura con nombre dentro de una expresión regular, también puede hacerlo por nombre. En el ejemplo anterior, pudimos usar una expresión regular "backreference" para escribir una RegExp que coincidiera con una cadena entre comillas simples o dobles donde las comillas de apertura y cierre tuvieran que coincidir. Podríamos reescribir esta RegExp usando un grupo de captura con nombre y una backreference con nombre como esta:</p>
     <pre>
     <code class="language-js">/(?&lt;quote>['"])[^'"]*\k&lt;quote>/</code></pre>
-      <p>El \k&lt;quote> es una referencia al grupo con nombre que captura la comilla abierta.</p>
+      <p>El <codeinline>\k&lt;quote></codeinline> es una referencia al grupo con nombre que captura la comilla abierta.</p>
     </article>
     <p class="title-article text-left">Especificación de la posición del partido</p>
-    <p>Como se ha descrito anteriormente, muchos elementos de una expresión regular coinciden con un único carácter de una cadena. Por ejemplo, \s coincide con un único carácter de espacio en blanco. Otros elementos de expresiones regulares coinciden con las posiciones entre caracteres en lugar de con caracteres reales. \b, por ejemplo, coincide con un límite de palabra ASCII -el límite entre un \w (carácter de palabra ASCII) y un \W (carácter no-palabra), o el límite entre un carácter de palabra ASCII y el principio o final de una cadena.4 Elementos como \b no especifican ningún carácter a utilizar en una cadena coincidente; lo que sí especifican, sin embargo, son posiciones legales en las que puede ocurrir una coincidencia. A veces, estos elementos se denominan anclas de expresión regular porque anclan el patrón a una posición específica en la cadena de búsqueda. Los elementos de anclaje más utilizados son ^, que ancla el patrón al principio de la cadena, y $, que ancla el patrón al final de la cadena.</p>
-    <p>Por ejemplo, para buscar la palabra "JavaScript" sola en una línea, puede utilizar la expresión regu- lar /^JavaScript$/. Si desea buscar "Java" como palabra en sí misma (no como prefijo, como ocurre con "JavaScript"), puede probar con el patrón /\sJava\s/, que requiere un espacio antes y después de la palabra. Pero esta solución tiene dos problemas. En primer lugar, no coincide con "Java" al principio o al final de una cadena, sino sólo si aparece con un espacio a cada lado. En segundo lugar, cuando este patrón encuentra una coincidencia, el que devuelve tiene espacios iniciales y finales, que no es exactamente lo que se necesita. Así que en lugar de coincidir con los caracteres de espacio reales con \s, coincide (o ancla a) los límites de la palabra con \b. La expresión resultante es /\bJava\b/. El elemento \B ancla la coincidencia a un lugar que no es un l í m i t e d e palabra. Así, el patrón /\B[Ss]cript/ coincide con "JavaScript" y "postscript", pero no con "script" o "Scripting".</p>
-    <p>También puede utilizar expresiones regulares arbitrarias como condiciones de anclaje. Si incluye una expresión dentro de caracteres (?= y ), se trata de una aserción lookahead, y especifica que los caracteres incluidos deben coincidir, sin coincidir realmente con ellos. Por ejemplo, para que coincida con el nombre de un lenguaje de programación común, pero sólo si va seguido de dos puntos, puede utilizar /[Jj]ava([Ss]cript)?(?=\:)/. Este patrón coincide con la palabra "JavaScript" en "JavaScript: The Definitive Guide", pero no coincide con "Java" en "Java in a Nutshell" porque no va seguida de dos puntos.</p>
-    <p>Si, por el contrario, introduce una aserción con (?!), se trata de una aserción lookahead negativa, que especifica que los caracteres siguientes no deben coincidir. Por ejemplo, /Java(?! Script)([A-Z]\w*)/ coincide con "Java" seguido de una letra mayúscula y cualquier número de caracteres ASCII adicionales, siempre que "Java" no vaya seguido de "Script". Coincide con "JavaBeans" pero no con "Javanese", y coincide con "JavaScrip" pero no con "Java- Script" o "JavaScripter". En la Tabla 11-5 se resumen las anclas de expresiones regulares.</p>
+    <p>Como se ha descrito anteriormente, muchos elementos de una expresión regular coinciden con un único carácter de una cadena. Por ejemplo, <codeinline>\s</codeinline> coincide con un único carácter de espacio en blanco. Otros elementos de expresiones regulares coinciden con las posiciones entre caracteres en lugar de con caracteres reales. <codeinline>\b</codeinline>, por ejemplo, coincide con un límite de palabra ASCII -el límite entre un <codeinline>\w</codeinline> (carácter de palabra ASCII) y un <codeinline>\W</codeinline> (carácter no-palabra), o el límite entre un carácter de palabra ASCII y el principio o final de una cadena.<sup>4</sup> Elementos como <codeinline>\b</codeinline> no especifican ningún carácter a utilizar en una cadena coincidente; lo que sí especifican, sin embargo, son posiciones legales en las que puede ocurrir una coincidencia. A veces, estos elementos se denominan <em>anclas de expresión regular</em> porque anclan el patrón a una posición específica en la cadena de búsqueda. Los elementos de anclaje más utilizados son <codeinline>^</codeinline>, que ancla el patrón al principio de la cadena, y <codeinline>$</codeinline>, que ancla el patrón al final de la cadena.</p>
+    <p>Por ejemplo, para buscar la palabra "JavaScript" sola en una línea, puede utilizar la expresión regu- lar <codeinline>/^JavaScript$/</codeinline>. Si desea buscar "Java" como palabra en sí misma (no como prefijo, como ocurre con "JavaScript"), puede probar con el patrón <codeinline>/\sJava\s/</codeinline>, que requiere un espacio antes y después de la palabra. Pero esta solución tiene dos problemas. En primer lugar, no coincide con "Java" al principio o al final de una cadena, sino sólo si aparece con un espacio a cada lado. En segundo lugar, cuando este patrón encuentra una coincidencia, el que devuelve tiene espacios iniciales y finales, que no es exactamente lo que se necesita. Así que en lugar de coincidir con los caracteres de espacio reales con <codeinline>\s</codeinline>, coincide (o ancla a) los límites de la palabra con <codeinline>\b</codeinline>. La expresión resultante es <codeinline>/\bJava\b/</codeinline>. El elemento <codeinline>\B</codeinline> ancla la coincidencia a un lugar que no es un límited e palabra. Así, el patrón <codeinline>/\B[Ss]cript/</codeinline> coincide con "JavaScript" y "postscript", pero no con "script" o "Scripting".</p>
+    <p>También puede utilizar expresiones regulares arbitrarias como condiciones de anclaje. Si incluye una expresión dentro de caracteres (<codeinline>?=</codeinline> y ), se trata de una aserción lookahead, y especifica que los caracteres incluidos deben coincidir, sin coincidir realmente con ellos. Por ejemplo, para que coincida con el nombre de un lenguaje de programación común, pero sólo si va seguido de dos puntos, puede utilizar <codeinline>/[Jj]ava([Ss]cript)?(?=\:)/</codeinline>. Este patrón coincide con la palabra "JavaScript" en "JavaScript: The Definitive Guide", pero no coincide con "Java" en "Java in a Nutshell" porque no va seguida de dos puntos.</p>
+    <p>Si, por el contrario, introduce una aserción con <codeinline>(?!</codeinline>, se trata de una aserción lookahead negativa, que especifica que los caracteres siguientes no deben coincidir. Por ejemplo, <codeinline>/Java(?! Script)([A-Z]\w*)/</codeinline> coincide con "Java" seguido de una letra mayúscula y cualquier número de caracteres ASCII adicionales, siempre que "Java" no vaya seguido de "Script". Coincide con "JavaBeans" pero no con "Javanese", y coincide con "JavaScrip" pero no con "Java- Script" o "JavaScripter". En la Tabla <a href="#tabla11-5">11-5</a> se resumen las anclas de expresiones regulares.</p>
     <div id="tabla11-5" class="flex flex-col items-center">
       <p><em>Tabla 11-5. Caracteres de anclaje de expresiones regulares</em></p>
       <table>
@@ -671,27 +671,27 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
         <tbody>
             <tr>
               <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">^</codeinline></td>
-              <td class="max-w-lg px-4">Alternancia: coincide con la subexpresión de la izquierda o con la subexpresión de la derecha.</td>
+              <td class="max-w-lg px-4">Coincide con el principio de la cadena o, con el indicador <codeinline class="md:text-base bg-transparent">m</codeinline>, con el principio de una línea.</td>
             </tr>
             <tr class="bg-[#f6e4c5]">
               <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">$</codeinline></td>
-              <td class="max-w-lg px-4">Coincide con el principio de la cadena o, con el indicador m, con el principio de una línea.</td>
+              <td class="max-w-lg px-4">Coincide con el final de la cadena y, con la bandera <codeinline class="md:text-base bg-transparent">m</codeinline>, con el final de una línea.</td>
             </tr>
             <tr>
               <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">\b</codeinline></td>
-              <td class="max-w-lg px-4">Coincide con el final de la cadena y, con la bandera m, con el final de una línea.</td>
+              <td class="max-w-lg px-4">Coincide con el límite de una palabra. Es decir, coincide con la posición entre un carácter <codeinline class="md:text-base bg-transparent">\w</codeinline> y un carácter <codeinline class="md:text-base bg-transparent">\W</codeinline> o entre un carácter <codeinline class="md:text-base bg-transparent">\w</codeinline> y el principio o el final de una cadena. (Tenga en cuenta, sin embargo, que <codeinline class="md:text-base bg-transparent">[\b]</codeinline> coincide con retroceso).</td>
             </tr>
             <tr class="bg-[#f6e4c5]">
               <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">\B</codeinline></td>
-              <td class="max-w-lg px-4">Coincide con el límite de una palabra. Es decir, coincide con la posición entre un carácter \w y un carácter \W o entre un carácter \w y el principio o el final de una cadena. (Tenga en cuenta, sin embargo, que [\b] coincide con retroceso).</td>
+              <td class="max-w-lg px-4">Coincide con una posición que no es un límite de palabra.</td>
             </tr>
             <tr>
               <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">(?=p)</codeinline></td>
-              <td class="max-w-lg px-4">Una aserción de búsqueda positiva. Requiere que los siguientes caracteres coincidan con el patrón p, pero no los incluye en la coincidencia.</td>
+              <td class="max-w-lg px-4">Una aserción de búsqueda positiva. Requiere que los siguientes caracteres coincidan con el patrón <em>p</em>, pero no los incluye en la coincidencia.</td>
             </tr>
             <tr class="bg-[#f6e4c5]">
               <td class="max-w-lg pl-2"><codeinline class="md:text-base bg-transparent">(?!p)</codeinline></td>
-              <td class="max-w-lg px-4">Una aserción lookahead negativa. Requiere que los siguientes caracteres no coincidan con el patrón p.</td>
+              <td class="max-w-lg px-4">Una aserción lookahead negativa. Requiere que los siguientes caracteres no coincidan con el patrón <em>p</em>.</td>
             </tr>
         </tbody>
       </table>
@@ -699,7 +699,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <article>
       <p class="title-article">Aserciones Lookbehind</p>
       <p>ES2018 amplía la sintaxis de las expresiones regulares para permitir aserciones "lookbehind". Son como las aserciones lookahead, pero se refieren al texto anterior a la posición de coincidencia actual. A principios de 2020, se implementarán en Node, Chrome y Edge, pero no en Firefox ni Safari.</p>
-      <p>Especifique una aserción lookbehind positiva con (?&lt;=...) y una aserción lookbehind negativa con (?&lt;!...). Por ejemplo, si trabaja con el correo de EE.UU.puede coincidir con un código postal de 5 dígitos, pero sólo si sigue a un código de dos letras. abreviatura del estado, así:</p>
+      <p>Especifique una aserción lookbehind positiva con <codeinline>(?&lt;=...)</codeinline> y una aserción lookbehind negativa con <codeinline>(?&lt;!...)</codeinline>. Por ejemplo, si trabaja con el correo de EE.UU.puede coincidir con un código postal de 5 dígitos, pero sólo si sigue a un código de dos letras. abreviatura del estado, así:</p>
     <pre>
     <code class="language-js">/(?&lt;= [A-Z]&lbrace;2} )\d&lbrace;5}/</code></pre>
       <p>Y podría hacer coincidir una cadena de dígitos que no esté precedida por un símbolo de moneda Unicode con una aserción lookbehind negativa como ésta:</p>
@@ -707,29 +707,30 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <code class="language-js">/(?&lt;![\p&lbrace;Currency_Symbol}\d.])\d+(\.\d+)?/u</code></pre>
     </article>
     <p class="title-article text-left">Flags</p>
+    <p>Cada expresión regular puede tener uno o varios indicadores asociados para modificar su comportamiento. JavaScript define seis indicadores posibles, cada uno de los cuales se representa con una sola letra. Los indicadores se especifican después del segundo carácter <codeinline>/</codeinline> de una expresión regular literal o como una cadena que se pasa como segundo argumento al constructor <codeinline>RegExp()</codeinline>. Los indicadores admitidos y sus significados son:</p>
     <p><codeinline>g</codeinline></p>
-    <p>La bandera g indica que la expresión regular es "global"-es decir, que pretendemos usarla para encontrar todas las coincidencias dentro de una cadena en lugar de sólo encontrar la primera coincidencia. Esta bandera no altera la forma en que se realiza la concordancia de patrones, pero, como veremos más adelante, sí altera el comportamiento del método String match() y del método RegExp exec() de forma importante.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">La bandera <codeinline>g</codeinline> indica que la expresión regular es "global"-es decir, que pretendemos usarla para encontrar todas las coincidencias dentro de una cadena en lugar de sólo encontrar la primera coincidencia. Esta bandera no altera la forma en que se realiza la concordancia de patrones, pero, como veremos más adelante, sí altera el comportamiento del método String <codeinline>match()</codeinline> y del método RegExp <codeinline>exec()</codeinline> de forma importante.</p>
     <p><codeinline>i</codeinline></p>
-    <p>La bandera i especifica que la coincidencia de patrones no debe distinguir entre mayúsculas y minúsculas.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">La bandera <codeinline>i</codeinline> especifica que la coincidencia de patrones no debe distinguir entre mayúsculas y minúsculas.</p>
     <p><codeinline>m</codeinline></p>
-    <p>El indicador m especifica que la búsqueda debe realizarse en modo "multilínea". Indica que la RegExp se utilizará con cadenas multilínea y que las anclas ^ y $ deben coincidir tanto con el principio y el final de la cadena como con el principio y el final de líneas individuales dentro de la cadena.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">El indicador <codeinline>m</codeinline> especifica que la búsqueda debe realizarse en modo "multilínea". Indica que la RegExp se utilizará con cadenas multilínea y que las anclas <codeinline>^</codeinline> y <codeinline>$</codeinline> deben coincidir tanto con el principio y el final de la cadena como con el principio y el final de líneas individuales dentro de la cadena.</p>
     <p><codeinline>s</codeinline></p>
-    <p>Al igual que el indicador m, el indicador s también es útil cuando se trabaja con texto que incluye líneas nuevas. Normalmente, una "." en una expresión regular coincide con cualquier carácter excepto con un terminador de línea. Sin embargo, cuando se utiliza el indicador s, "." coincide con cualquier carácter, incluidos los terminadores de línea. La bandera s se añadió a JavaScript en ES2018 y, desde principios de 2020, es compatible con Node, Chrome, Edge y Safari, pero no con Firefox.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Al igual que el indicador <codeinline>m</codeinline>, el indicador <codeinline>s</codeinline> también es útil cuando se trabaja con texto que incluye líneas nuevas. Normalmente, una "." en una expresión regular coincide con cualquier carácter excepto con un terminador de línea. Sin embargo, cuando se utiliza el indicador <codeinline>s</codeinline>, "." coincide con cualquier carácter, incluidos los terminadores de línea. La bandera <codeinline>s</codeinline> se añadió a JavaScript en ES2018 y, desde principios de 2020, es compatible con Node, Chrome, Edge y Safari, pero no con Firefox.</p>
     <p><codeinline>u</codeinline></p>
-    <p>La bandera u significa Unicode, y hace que la expresión regular coincida con puntos de código Unicode completos en lugar de coincidir con valores de 16 bits. Esta bandera fue introducida en ES6, y debería acostumbrarse a usarla en todas las expresiones regulares a menos que tenga alguna razón para no hacerlo. Si no usa esta bandera, sus RegExps serán no funciona bien con texto que incluya emoji y otros caracteres (incluidos muchos caracteres chinos) que requieran más de 16 bits. Sin el indicador u, el carácter "." coincide con cualquier valor UTF-16 de 16 bits. Sin embargo, con el indicador, "." coincide con un punto de código Unicode, incluidos los que tienen más de 16 bits. Establecer el indicador u en una RegExp también le permite usar la nueva secuencia de escape \u&lbrace;...} para caracteres Unicode y también habilita la notación \p&lbrace;...} para clases de caracteres Unicode.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">La bandera <codeinline>u</codeinline> significa Unicode, y hace que la expresión regular coincida con puntos de código Unicode completos en lugar de coincidir con valores de 16 bits. Esta bandera fue introducida en ES6, y debería acostumbrarse a usarla en todas las expresiones regulares a menos que tenga alguna razón para no hacerlo. Si no usa esta bandera, sus RegExps serán no funciona bien con texto que incluya emoji y otros caracteres (incluidos muchos caracteres chinos) que requieran más de 16 bits. Sin el indicador <codeinline>u</codeinline>, el carácter "." coincide con cualquier valor UTF-16 de 16 bits. Sin embargo, con el indicador, "." coincide con un punto de código Unicode, incluidos los que tienen más de 16 bits. Establecer el indicador <codeinline>u</codeinline> en una RegExp también le permite usar la nueva secuencia de escape <codeinline>\u&lbrace;...}</codeinline> para caracteres Unicode y también habilita la notación <codeinline>\p&lbrace;...}</codeinline> para clases de caracteres Unicode.</p>
     <p><codeinline>y</codeinline></p>
-    <p>La bandera y indica que la expresión regular es "pegajosa" y debe coincidir al principio de una cadena o en el primer carácter después de la coincidencia anterior. Cuando se utiliza con una expresión regular diseñada para encontrar una única coincidencia, trata dicha expresión regular como si empezara por ^ para anclarla al principio de la cadena. Esta bandera es más útil con expresiones regulares que se utilizan repetidamente para encontrar todas las coincidencias dentro de una cadena. En este caso, provoca un comportamiento especial del método String match() y del método RegExp exec() para forzar que cada coincidencia subsiguiente se ancle a la posición de la cadena en la que terminó la última.</p>
-    <p>Estos indicadores pueden especificarse en cualquier combinación y en cualquier orden. Por ejemplo, si desea que su expresión regular sea compatible con Unicode para que no distinga entre mayúsculas y minúsculas y desea utilizarla para encontrar múltiples coincidencias dentro de una cadena, deberá especificar los indicadores uig, gui o cualquier otra permutación de estas tres letras.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">La bandera <codeinline>y</codeinline> indica que la expresión regular es "pegajosa" y debe coincidir al principio de una cadena o en el primer carácter después de la coincidencia anterior. Cuando se utiliza con una expresión regular diseñada para encontrar una única coincidencia, trata dicha expresión regular como si empezara por <codeinline>^</codeinline> para anclarla al principio de la cadena. Esta bandera es más útil con expresiones regulares que se utilizan repetidamente para encontrar todas las coincidencias dentro de una cadena. En este caso, provoca un comportamiento especial del método String <codeinline>match()</codeinline> y del método RegExp <codeinline>exec()</codeinline> para forzar que cada coincidencia subsiguiente se ancle a la posición de la cadena en la que terminó la última.</p>
+    <p>Estos indicadores pueden especificarse en cualquier combinación y en cualquier orden. Por ejemplo, si desea que su expresión regular sea compatible con Unicode para que no distinga entre mayúsculas y minúsculas y desea utilizarla para encontrar múltiples coincidencias dentro de una cadena, deberá especificar los indicadores <codeinline>uig</codeinline>, <codeinline>gui</codeinline> o cualquier otra permutación de estas tres letras.</p>
   </section>
   <section id="3-2" class="py-4 xs:py-5 sm:py-6">
     <h2>11.3.2 Métodos de cadena para la concordancia de patrones</h2>
     <p>Hasta ahora, hemos estado describiendo la gramática usada para definir expresiones regulares, pero no explicando cómo esas expresiones regulares pueden usarse realmente en código JavaScript. Ahora pasamos a cubrir la API para usar objetos RegExp. Esta sección comienza explicando los métodos de cadena que usan expresiones regulares para realizar operaciones de coincidencia de patrones y de buscar y reemplazar. Las secciones que siguen a esta continúan la discusión de la concordancia de patrones con expresiones regulares de JavaScript discutiendo el objeto RegExp y sus métodos y propiedades.</p>
     <p class="title-article text-left">search()</p>
-    <p>Las cadenas admiten cuatro métodos que utilizan expresiones regulares. El más sencillo es search(). Este método toma un argumento de expresión regular y devuelve la posición del carácter del inicio de la primera subcadena coincidente o -1 si no hay coincidencia:</p>
+    <p>Las cadenas admiten cuatro métodos que utilizan expresiones regulares. El más sencillo es <codeinline>search()</codeinline>. Este método toma un argumento de expresión regular y devuelve la posición del carácter del inicio de la primera subcadena coincidente o -1 si no hay coincidencia:</p>
     <pre>
     <code class="language-js">"JavaScript".search(/script/ui) // => 4
     "Python".search(/script/ui) // => -1</code></pre>
-    <p>Si el argumento de search() no es una expresión regular, primero se convierte en una pasándola al constructor RegExp. search() no admite búsquedas globales; ignora la bandera g de su argumento de expresión regular.</p>
+    <p>Si el argumento de <codeinline>search()</codeinline> no es una expresión regular, primero se convierte en una pasándola al constructor <codeinline>RegExp</codeinline>. <codeinline>search()</codeinline> no admite búsquedas globales; ignora la bandera <codeinline>g</codeinline> de su argumento de expresión regular.</p>
     <p class="title-article text-left">replace()</p>
     <p>El método replace() realiza una operación de búsqueda y sustitución. Toma una expresión regular como primer argumento y una cadena de sustitución como segundo. Busca en la cadena a la que se llama coincidencias con el patrón especificado. Si la expresión regular tiene el indicador g activado, el método replace() sustituye todas las coincidencias de la cadena por la cadena de sustitución; en caso contrario, sólo sustituye la primera coincidencia que encuentra. Si el primer argumento de replace() es una cadena en lugar de una expresión regular, el método busca esa cadena literalmente en lugar de convertirla en una expresión regular con el constructor RegExp(), como hace search(). Como ejemplo, puede utilizar replace() de la siguiente manera para proporcionar mayúsculas y minúsculas uniformes de la palabra "JavaScript" a lo largo de una cadena de texto:</p>
     <pre>
