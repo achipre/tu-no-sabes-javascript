@@ -921,10 +921,10 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="4-1">
     <h2>11.4.1 Marcas de tiempo</h2>
     <p>JavaScript representa las fechas internamente como enteros que especifican el número de milisegundos transcurridos desde (o antes de) la medianoche del 1 de enero de 1970, hora UTC. Se admiten números enteros de hasta 8.640.000.000.000.000, por lo que JavaScript no se quedará sin milisegundos en más de 270.000 años.</p>
-    <p>Para cualquier objeto Date, el método getTime() devuelve este valor interno, y el método set Time() lo establece. Así que puedes añadir 30 segundos a un Date con código como este, por ejemplo:</p>
+    <p>Para cualquier objeto Date, el método <codeinline>getTime()</codeinline> devuelve este valor interno, y el método <codeinline>setTime()</codeinline> lo establece. Así que puedes añadir 30 segundos a un Date con código como este, por ejemplo:</p>
     <pre>
     <code class="language-js">d.setTime(d.getTime() + 30000);</code></pre>
-    <p>Estos valores en milisegundos se denominan a veces timestamps, y a veces es útil trabajar con ellos directamente en lugar de con objetos Date. El método estático Date.now() devuelve la hora actual como una marca de tiempo y es útil cuando se desea medir cuánto tiempo tarda en ejecutarse el código:</p>
+    <p>Estos valores en milisegundos se denominan a veces <em>timestamps</em>, y a veces es útil trabajar con ellos directamente en lugar de con objetos Date. El método estático <codeinline>Date.now()</codeinline> devuelve la hora actual como una marca de tiempo y es útil cuando se desea medir cuánto tiempo tarda en ejecutarse el código:</p>
     <pre>
     <code class="language-js">let startTime = Date.now();
     reticulateSplines(); // Do some time-consuming operation
@@ -932,11 +932,11 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     console.log(`Spline reticulation took $&lbrace;endTime - startTime}ms.`);</code></pre>
     <article>
       <p class="title-article">Marcas de tiempo de alta resolución</p>
-      <p>Las marcas de tiempo devueltas por Date.now() se miden en milisegundos. En realidad, un milisegundo es un tiempo relativamente largo para un ordenador, y a veces es posible que d e s e e medir el tiempo transcurrido con mayor precisión. La función performance.now() lo permite: también devuelve una marca de tiempo basada en milisegundos, pero el valor devuelto no es un entero, por lo que incluye fracciones de milisegundo. El valor devuelto por perfor mance.now() no es una marca de tiempo absoluta como lo es el valor Date.now(). En su lugar, simplemente indica cuánto tiempo ha transcurrido desde que se cargó una página web o desde que se inició el proceso Node.</p>
-      <p>El objeto performance forma parte de una API de rendimiento más amplia que no está definida por el estándar ECMAScript pero que está implementada por los navegadores web y por Node. Para utilizar el objeto performance en Node, debes importarlo con:</p>
+      <p>Las marcas de tiempo devueltas por <codeinline>Date.now()</codeinline> se miden en milisegundos. En realidad, un milisegundo es un tiempo relativamente largo para un ordenador, y a veces es posible que d e s e e medir el tiempo transcurrido con mayor precisión. La función <codeinline>performance.now()</codeinline> lo permite: también devuelve una marca de tiempo basada en milisegundos, pero el valor devuelto no es un entero, por lo que incluye fracciones de milisegundo. El valor devuelto por <codeinline>performance.now()</codeinline> no es una marca de tiempo absoluta como lo es el valor <codeinline>Date.now()</codeinline>. En su lugar, simplemente indica cuánto tiempo ha transcurrido desde que se cargó una página web o desde que se inició el proceso Node.</p>
+      <p>El objeto <codeinline>performance</codeinline> forma parte de una API de rendimiento más amplia que no está definida por el estándar ECMAScript pero que está implementada por los navegadores web y por Node. Para utilizar el objeto <codeinline>performance</codeinline> en Node, debes importarlo con:</p>
     <pre>
     <code class="language-js">const &lbrace; performance } = require("perf_hooks");</code></pre>
-      <p>Permitir un cronometraje de alta precisión en la web puede permitir a sitios web sin escrúpulos averiguar la identidad de los visitantes, por lo que los navegadores (especialmente Firefox) pueden reducir la precisión de perfor mance.now() por defecto. Como desarrollador web, deberías poder volver a habilitar la temporización de alta precisión de algún modo (como estableciendo privacy.reduceTimerPrecision en false en Firefox).</p>
+      <p>Permitir un cronometraje de alta precisión en la web puede permitir a sitios web sin escrúpulos averiguar la identidad de los visitantes, por lo que los navegadores (especialmente Firefox) pueden reducir la precisión de <codeinline>performance.now()</codeinline> por defecto. Como desarrollador web, deberías poder volver a habilitar la temporización de alta precisión de algún modo (como estableciendo <codeinline>privacy.reduceTimerPrecision</codeinline> en false en Firefox).</p>
     </article>
   </section>
   <section id="4-2" class="py-4 xs:py-5 sm:py-6">
