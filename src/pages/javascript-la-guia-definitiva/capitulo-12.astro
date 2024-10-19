@@ -6,18 +6,18 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <Navegation capAnterior="capitulo-11" capSiguiente="capitulo-13" />
   <section class="fadeIn">
     <h1>Iteradores y generadores</h1>
-    <p>Los objetos iterables y sus iteradores asociados son una característica de ES6 que hemos visto varias veces a lo largo de este libro. Las matrices (incluyendo TypedArrays) son iterables, al igual que las cadenas y los objetos Set y Map. Esto significa que el contenido de estas estructuras de datos puede ser iterado -en bucle- con el bucle for/of, como vimos en §5.4.4:</p>
+    <p>Los objetos iterables y sus iteradores asociados son una característica de ES6 que hemos visto varias veces a lo largo de este libro. Las matrices (incluyendo TypedArrays) son iterables, al igual que las cadenas y los objetos Set y Map. Esto significa que el contenido de estas estructuras de datos puede ser iterado -en bucle- con el bucle <codeinline>for/of</codeinline>, como vimos en <a href="capitulo-5#4-4">§5.4.4</a>:</p>
     <pre>
     <code class="language-js">let sum = 0;
     for(let i of [1,2,3]) &lbrace; // Loop once for each of these values
     sum += i;
     }
     sum // => 6</code></pre>
-    <p>Los iteradores también pueden utilizarse con el operador ... para expandir o "extender" un objeto iterable en un inicializador de array o en una invocación de función, como vimos en §7.1.2:</p>
+    <p>Los iteradores también pueden utilizarse con el operador <codeinline>...</codeinline> para expandir o "extender" un objeto iterable en un inicializador de array o en una invocación de función, como vimos en <a href="capitulo-7#1-2">§7.1.2</a>:</p>
     <pre>
     <code class="language-js">let chars = [..."abcd"]; // chars == ["a", "b", "c", "d"]
     let data = [1, 2, 3, 4, 5];
-    Math.max(...data) // => 5</code></pre>
+    Math.max(...data)        // => 5</code></pre>
     <p>Los iteradores pueden utilizarse con la asignación de desestructuración:</p>
     <pre>
     <code class="language-js">let purpleHaze = Uint8Array.of(255, 0, 255, 128);

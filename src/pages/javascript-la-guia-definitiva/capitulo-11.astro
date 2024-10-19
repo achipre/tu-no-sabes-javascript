@@ -358,9 +358,9 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     bytes[1]               // => 0: the line above did not set the byte</code></pre>
     <p>Anteriormente vimos que se puede crear un ArrayBuffer con el constructor <codeinline>ArrayBuffer()</codeinline> y luego crear arrays tipados que utilicen ese buffer. Otro enfoque es crear un array tipado inicial, y luego usar el buffer de ese array para crear otras vistas:</p>
     <pre>
-    <code class="language-js">let bytes = new Uint8Array(1024);             // 1024 bytes
-    let ints = new Uint32Array(bytes.buffer);     // or 256 integers
-    let floats = new Float64Array(bytes.buffer);  // or 128 doubles</code></pre>
+    <code class="language-js">let bytes = new Uint8Array(1024);            // 1024 bytes
+    let ints = new Uint32Array(bytes.buffer);    // or 256 integers
+    let floats = new Float64Array(bytes.buffer); // or 128 doubles</code></pre>
   </section>
   <section id="2-5">
     <h2>11.2.5 DataView y Endianness</h2>
@@ -406,6 +406,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p class="title-article text-left">Caracteres literales</p>
     <p>Todos los caracteres alfabéticos y dígitos coinciden literalmente en las expresiones regulares. La sintaxis de las expresiones regulares de JavaScript también admite determinados caracteres no alfabéticos mediante secuencias de escape que comienzan con una barra invertida (<codeinline>\</codeinline>). Por ejemplo, la secuencia <codeinline>\n</codeinline> coincide con un carácter literal de nueva línea en una cadena. La <a href="#tabla11-1">Tabla 11-1</a> enumera estos caracteres.</p>
     <div id="tabla11-1" class="flex flex-col items-center">
+      <p><em>Tabla 11-1. Caracteres literales de expresiones regulares</em></p>
       <table>
         <thead class="bg-amber-900 text-[#f6e4c5]">
           <tr>
@@ -729,7 +730,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Las cadenas admiten cuatro métodos que utilizan expresiones regulares. El más sencillo es <codeinline>search()</codeinline>. Este método toma un argumento de expresión regular y devuelve la posición del carácter del inicio de la primera subcadena coincidente o -1 si no hay coincidencia:</p>
     <pre>
     <code class="language-js">"JavaScript".search(/script/ui) // => 4
-    "Python".search(/script/ui) // => -1</code></pre>
+    "Python".search(/script/ui)     // => -1</code></pre>
     <p>Si el argumento de <codeinline>search()</codeinline> no es una expresión regular, primero se convierte en una pasándola al constructor <codeinline>RegExp</codeinline>. <codeinline>search()</codeinline> no admite búsquedas globales; ignora la bandera <codeinline>g</codeinline> de su argumento de expresión regular.</p>
     <p class="title-article text-left">replace()</p>
     <p>El método <codeinline>replace()</codeinline> realiza una operación de búsqueda y sustitución. Toma una expresión regular como primer argumento y una cadena de sustitución como segundo. Busca en la cadena a la que se llama coincidencias con el patrón especificado. Si la expresión regular tiene el indicador <codeinline>g</codeinline> activado, el método <codeinline>replace()</codeinline> sustituye todas las coincidencias de la cadena por la cadena de sustitución; en caso contrario, sólo sustituye la primera coincidencia que encuentra. Si el primer argumento de <codeinline>replace()</codeinline> es una cadena en lugar de una expresión regular, el método busca esa cadena literalmente en lugar de convertirla en una expresión regular con el constructor <codeinline>RegExp()</codeinline>, como hace <codeinline>search()</codeinline>. Como ejemplo, puede utilizar <codeinline>replace()</codeinline> de la siguiente manera para proporcionar mayúsculas y minúsculas uniformes de la palabra "JavaScript" a lo largo de una cadena de texto:</p>
@@ -766,39 +767,39 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     let match = text.match(url);
     let fullurl, protocol, host, path;
     if (match !== null) &lbrace;
-      fullurl = match[0]; // fullurl == "http://www.example.com/~david"
-      protocol = match[1]; // protocol == "http"
-      host = match[2]; // host == "www.example.com"
-      path = match[3]; // path == "~david"
+      fullurl = match[0];   // fullurl == "http://www.example.com/~david"
+      protocol = match[1];  // protocol == "http"
+      host = match[2];      // host == "www.example.com"
+      path = match[3];      // path == "~david"
     }</code></pre>
     <p>En este caso no global, la matriz devuelta por <codeinline>match()</codeinline> también tiene algunas propiedades de objeto además de los elementos numerados de la matriz. La propiedad <codeinline>input</codeinline> se refiere a la cadena sobre la que se ha llamado a <codeinline>match()</codeinline>. La propiedad <codeinline>index</codeinline> es la posición dentro de esa cadena en la que comienza la coincidencia. Y si la expresión regular contiene grupos de captura con nombre, entonces el array devuelto también tiene una propiedad <codeinline>groups</codeinline> cuyo valor es un objeto. Las propiedades de este objeto coinciden con los nombres de los grupos nombrados, y los valores son el texto coincidente. Podríamos reescribir el ejemplo anterior de análisis de URL, por ejemplo, así:</p>
     <pre>
     <code class="language-js">let url = /(?&lt;protocol>\w+):\/\/(?&lt;host>[\w.]+)\/(?&lt;path>\S*)/;
     let text = "Visit my blog at http://www.example.com/~david";
     let match = text.match(url);
-    match[0] // => "http://www.example.com/~david"
-    match.input // => text
-    match.index // => 17
+    match[0]              // => "http://www.example.com/~david"
+    match.input           // => text
+    match.index           // => 17
     match.groups.protocol // => "http"
-    match.groups.host // => "www.example.com"
-    match.groups.path // => "~david"</code></pre>
+    match.groups.host     // => "www.example.com"
+    match.groups.path     // => "~david"</code></pre>
     <p>Hemos visto que <codeinline>match()</codeinline> se comporta de forma bastante diferente dependiendo de si la RegExp tiene el indicador <codeinline>g</codeinline> activado o no. También hay diferencias importantes pero menos dramáticas en el comportamiento cuando la bandera <codeinline>y</codeinline> está activada. Recuerde que la bandera <codeinline>y</codeinline> hace que una expresión regular sea "pegajosa" al restringir en qué parte de la cadena pueden comenzar las coincidencias. Si una RegExp tiene los indicadores <codeinline>g</codeinline> e <codeinline>y</codeinline> activados, <codeinline>match()</codeinline> devuelve una matriz de cadenas coincidentes, igual que cuando <codeinline>g</codeinline> está activada sin <codeinline>y</codeinline>. Pero la primera coincidencia debe comenzar al principio de la cadena, y cada coincidencia posterior debe comenzar en el carácter inmediatamente posterior a la coincidencia anterior.</p>
     <p>Si el indicador <codeinline>y</codeinline> se establece sin <codeinline>g</codeinline>, entonces <codeinline>match()</codeinline> intenta encontrar una única coincidencia y, por defecto, esta coincidencia se limita al inicio de la cadena. Sin embargo, puede cambiar esta posición de inicio por defecto, estableciendo la propiedad <codeinline>lastIndex</codeinline> del objeto RegExp en el índice en el que desea encontrar la coincidencia. Si se encuentra una coincidencia, entonces este <codeinline>lastIndexy</codeinline> se actualizará automáticamente al primer carácter después de la coincidencia, de modo que si vuelve a llamar a <codeinline>match()</codeinline>, en este caso, buscará una coincidencia posterior. (<codeinline>lastIndex</codeinline> puede parecer un nombre extraño para una propiedad que especifica la posición en la que comenzar la <em>siguiente</em> coincidencia. Lo veremos de nuevo cuando cubramos el método RegExp <codeinline>exec()</codeinline>, y su nombre puede tener más sentido en ese contexto).</p>
     <pre>
     <code class="language-js">let vowel = /[aeiou]/y; // Sticky vowel match
-    "test".match(vowel) // => null: "test" does not begin with a vowel
-    vowel.lastIndex = 1; // Specify a different match position
-    "test".match(vowel)[0] // => "e": we found a vowel at position 1
-    vowel.lastIndex // => 2: lastIndex was automatically updated
-    "test".match(vowel) // => null: no vowel at position 2
-    vowel.lastIndex // => 0: lastIndex gets reset after failed match</code></pre>
+    "test".match(vowel)     // => null: "test" does not begin with a vowel
+    vowel.lastIndex = 1;    // Specify a different match position
+    "test".match(vowel)[0]  // => "e": we found a vowel at position 1
+    vowel.lastIndex         // => 2: lastIndex was automatically updated
+    "test".match(vowel)     // => null: no vowel at position 2
+    vowel.lastIndex         // => 0: lastIndex gets reset after failed match</code></pre>
     <p>Cabe señalar que pasar una expresión regular no global al mé todo <codeinline>match()</codeinline> de una cadena es lo mismo que pasar la cadena al método <codeinline>exec()</codeinline> de la expresión regular: la matriz devuelta y sus propiedades son las mismas en ambos casos.</p>
     <p class="title-article text-left">matchAll()</p>
     <p>El método <codeinline>matchAll()</codeinline> está definido en ES2020, y desde principios de 2020 está implementado por los navegadores web modernos y Node. <codeinline>matchAll()</codeinline> espera una RegExp con la bandera g activada. Sin embargo, en lugar de devolver una matriz de subcadenas coincidentes como hace <codeinline>match()</codeinline>, devuelve un iterador que devuelve el tipo de objetos coincidentes que devuelve <codeinline>match()</codeinline> cuando se usa con una RegExp no global. Esto hace que <codeinline>matchAll()</codeinline> sea la forma más sencilla y general de recorrer todas las coincidencias de una cadena.</p>
     <p>Puede utilizar <codeinline>matchAll()</codeinline> para recorrer en bucle las palabras de una cadena de texto como ésta:</p>
     <pre>
     <code class="language-js">// One or more Unicode alphabetic characters between word boundaries
-    const words = /\b\p&lbrace;Alphabetic}+\b/gu; // \p is not supported in Firefox yet
+    const words = /\b\p&lbrace;Alphabetic}+\b/gu;  // \p is not supported in Firefox yet
     const text = "This is a naïve test of the matchAll() method.";
     for(let word of text.matchAll(words)) &lbrace;
       console.log(`Found '$&lbrace;word[0]}' at index $&lbrace;word.index}.`);
@@ -813,8 +814,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <code class="language-js">"1, 2, 3,\n4, 5".split(/\s*,\s*/) // => ["1", "2", "3", "4", "5"]</code></pre>
     <p>Sorprendentemente, si llama a <codeinline>split()</codeinline> con un delimitador RegExp y la expresión regular incluye grupos de captura, el texto que coincida con los grupos de captura se incluirá en la matriz devuelta. Por ejemplo:</p>
     <pre>
-    <code class="language-js">const htmlTag = /&lt;([^>]+)>/; // &lt; followed by one or more non->, followed by >
-    "Testing<br/>1,2,3".split(htmlTag) // => ["Testing", "br/", "1,2,3"]</code></pre>
+    <code class="language-js">const htmlTag = /&lt;([^>]+)>/;   // &lt; followed by one or more non->, followed by >
+    "Testing<br/>1,2,3".split(htmlTag)  // => ["Testing", "br/", "1,2,3"]</code></pre>
   </section>
   <section id="3-3">
     <h2>11.3.3 La clase RegExp</h2>
@@ -899,9 +900,9 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Si especifica dos o más argumentos enteros, se interpretan como el año, mes, día del mes, hora, minuto, segundo y milisegundo en su zona horaria local, como en lo siguiente:</p>
     <pre>
     <code class="language-js">let century = new Date(2100, // Year 2100
-          0, // January
-          1, // 1st
-          2, 3, 4, 5); // 02:03:04.005, local time</code></pre>
+        0,                       // January
+        1,                       // 1st
+        2, 3, 4, 5);             // 02:03:04.005, local time</code></pre>
     <p>Una peculiaridad de la API de fecha es que el primer mes de un año es el número 0, pero el primer día de un mes es el número 1. Si se omiten los campos de hora, el constructor de <codeinline>Date()</codeinline> los pone todos a 0 por defecto, fijando la hora en medianoche.</p>
     <p>Tenga en cuenta que cuando se invoca con varios números, el constructor <codeinline>Date()</codeinline> los interpreta utilizando la zona horaria a la que esté configurado el ordenador local. Si desea especificar una fecha y hora en UTC (Tiempo Universal Coordinado, también conocido como GMT), puede utilizar <codeinline>Date.UTC()</codeinline>. Este método estático toma los mismos argumentos que el constructor <codeinline>Date()</codeinline>, los interpreta en UTC y devuelve una marca de tiempo en milisegundos que puedes pasar al constructor <codeinline>Date()</codeinline>:</p>
     <pre>
@@ -941,50 +942,50 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   </section>
   <section id="4-2" class="py-4 xs:py-5 sm:py-6">
     <h2>11.4.2 Aritmética de fechas</h2>
-    <p>Los objetos Date pueden compararse con los operadores de comparación estándar &lt;, &lt;=, > y >= de JavaScript. Y puedes restar un objeto Date de otro para determinar el número de milisegundos entre las dos fechas. (Esto funciona porque la clase Date define un método valueOf() que devuelve una marca de tiempo).</p>
-    <p>Si desea añadir o restar un número determinado de segundos, minutos u horas a una fecha, lo más sencillo es modificar la marca de tiempo, como se muestra en el ejemplo anterior, en el que añadimos 30 segundos a una fecha. Esta técnica se vuelve más engorrosa si desea añadir días, y no funciona en absoluto para meses y años, ya que tienen un número variable de días. Para hacer aritmética de fechas involucrando días, meses y años, puede usar setDate(), setMonth() y setYear(). Aquí, por ejemplo, hay un código que añade tres meses y dos semanas a la fecha actual:</p>
+    <p>Los objetos Date pueden compararse con los operadores de comparación estándar <codeinline>&lt;</codeinline>, <codeinline>&lt;=</codeinline>, <codeinline>></codeinline> y <codeinline>>=</codeinline> de JavaScript. Y puedes restar un objeto Date de otro para determinar el número de milisegundos entre las dos fechas. (Esto funciona porque la clase Date define un método valueOf() que devuelve una marca de tiempo).</p>
+    <p>Si desea añadir o restar un número determinado de segundos, minutos u horas a una fecha, lo más sencillo es modificar la marca de tiempo, como se muestra en el ejemplo anterior, en el que añadimos 30 segundos a una fecha. Esta técnica se vuelve más engorrosa si desea añadir días, y no funciona en absoluto para meses y años, ya que tienen un número variable de días. Para hacer aritmética de fechas involucrando días, meses y años, puede usar <codeinline>setDate()</codeinline>, <codeinline>setMonth()</codeinline> y <codeinline>setYear()</codeinline>. Aquí, por ejemplo, hay un código que añade tres meses y dos semanas a la fecha actual:</p>
     <pre>
     <code class="language-js">let d = new Date();
     d.setMonth(d.getMonth() + 3, d.getDate() + 14);</code></pre>
-    <p>Los métodos de ajuste de fecha funcionan correctamente incluso cuando se desbordan. Cuando añadimos tres meses al mes actual, podemos acabar con un valor superior a 11 (que representa diciembre). La función setMonth() se encarga de esto incrementando el año según sea necesario. Del mismo modo, cuando establecemos el día del mes en un valor mayor que el número de días del mes, el mes se incrementa adecuadamente.</p>
+    <p>Los métodos de ajuste de fecha funcionan correctamente incluso cuando se desbordan. Cuando añadimos tres meses al mes actual, podemos acabar con un valor superior a 11 (que representa diciembre). La función <codeinline>setMonth()</codeinline> se encarga de esto incrementando el año según sea necesario. Del mismo modo, cuando establecemos el día del mes en un valor mayor que el número de días del mes, el mes se incrementa adecuadamente.</p>
   </section>
   <section id="4-3">
     <h2>11.4.3 Formateo y análisis sintáctico de cadenas de fecha</h2>
     <p>Si utilizas la clase Date para realizar un seguimiento de fechas y horas (en lugar de simplemente medir intervalos de tiempo), es probable que necesites mostrar fechas y horas a los usuarios de tu código. La clase Date define varios métodos para convertir objetos Date en cadenas. He aquí algunos ejemplos:</p>
     <pre>
     <code class="language-js">let d = new Date(2020, 0, 1, 17, 10, 30); // 5:10:30pm on New Year's Day 2020
-    d.toString() // => "Wed Jan 01 2020 17:10:30 GMT-0800 (Pacific Standard Time)"
-    d.toUTCString() // => "Thu, 02 Jan 2020 01:10:30 GMT"
+    d.toString()           // => "Wed Jan 01 2020 17:10:30 GMT-0800 (Pacific Standard Time)"
+    d.toUTCString()        // => "Thu, 02 Jan 2020 01:10:30 GMT"
     d.toLocaleDateString() // => "1/1/2020": 'en-US' locale
     d.toLocaleTimeString() // => "5:10:30 PM": 'en-US' locale
-    d.toISOString() // => "2020-01-02T01:10:30.000Z"</code></pre>
+    d.toISOString()        // => "2020-01-02T01:10:30.000Z"</code></pre>
     <p>Esta es una lista completa de los métodos de formato de cadena de la clase Date:</p>
     <p><codeinline>toString()</codeinline></p>
-    <p>Este método utiliza la zona horaria local, pero no formatea la fecha y la hora segun la zona.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Este método utiliza la zona horaria local, pero no formatea la fecha y la hora segun la zona.</p>
     <p><codeinline>toUTCString()</codeinline></p>
-    <p>Este método utiliza la zona horaria UTC, pero no da formato a la fecha teniendo en cuenta la localización.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Este método utiliza la zona horaria UTC, pero no da formato a la fecha teniendo en cuenta la localización.</p>
     <p><codeinline>toISOString()</codeinline></p>
-    <p>Este método imprime la fecha y la hora en el formato estándar año-mes-día horas:minutos:segundos.ms de la norma ISO-8601. La letra "T" separa la parte de la fecha de la parte de la hora. La hora se expresa en UTC, y esto se indica con la letra "Z" como última letra de la salida.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Este método imprime la fecha y la hora en el formato estándar año-mes-día horas:minutos:segundos.ms de la norma ISO-8601. La letra "T" separa la parte de la fecha de la parte de la hora. La hora se expresa en UTC, y esto se indica con la letra "Z" como última letra de la salida.</p>
     <p><codeinline>toLocaleString()</codeinline></p>
-    <p>Este método utiliza la zona horaria local y un formato apropiado para la configuración regional del usuario.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Este método utiliza la zona horaria local y un formato apropiado para la configuración regional del usuario.</p>
     <p><codeinline>toDateString()</codeinline></p>
-    <p>Este método formatea sólo la parte de fecha de la Fecha y omite la hora. Utiliza la zona horaria local y no realiza el formateo apropiado para la zona.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Este método formatea sólo la parte de fecha de la Fecha y omite la hora. Utiliza la zona horaria local y no realiza el formateo apropiado para la zona.</p>
     <p><codeinline>toLocaleDateString()</codeinline></p>
-    <p>Este método sólo formatea la fecha. Utiliza la zona horaria local y un formato de fecha apropiado para la zona.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Este método sólo formatea la fecha. Utiliza la zona horaria local y un formato de fecha apropiado para la zona.</p>
     <p><codeinline>toTimeString()</codeinline></p>
-    <p>Este método sólo da formato a la hora y omite la fecha. Utiliza la zona horaria local pero no formatea la hora de forma local.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Este método sólo da formato a la hora y omite la fecha. Utiliza la zona horaria local pero no formatea la hora de forma local.</p>
     <p><codeinline>toLocaleTimeString()</codeinline></p>
-    <p>Este método formatea la hora de forma local y utiliza la zona horaria local.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Este método formatea la hora de forma local y utiliza la zona horaria local.</p>
     <p>Ninguno de estos métodos de conversión de fecha en cadena es ideal para dar formato a las fechas y horas que se mostrarán a los usuarios finales. Véase §11.7.2 para una técnica de formateo de fecha y hora más general y adaptada a la localización.</p>
-    <p>Por último, además de estos métodos que convierten un objeto Date en una cadena, también existe un método estático Date.parse() que toma una cadena como argumento, intenta analizarla como fecha y hora, y devuelve una marca de tiempo que representa esa fecha. Date.parse() puede analizar las mismas cadenas que el constructor Date() y se garantiza que puede analizar la salida de toISOString(), toUTCString() y toString().</p>
+    <p>Por último, además de estos métodos que convierten un objeto Date en una cadena, también existe un método estático <codeinline>Date.parse()</codeinline> que toma una cadena como argumento, intenta analizarla como fecha y hora, y devuelve una marca de tiempo que representa esa fecha. <codeinline>Date.parse()</codeinline> puede analizar las mismas cadenas que el constructor <codeinline>Date()</codeinline> y se garantiza que puede analizar la salida de <codeinline>toISOString()</codeinline>, <codeinline>toUTCString()</codeinline> y <codeinline>toString()</codeinline>.</p>
   </section>
   <section id="5" class="py-4 xs:py-5 sm:py-6">
     <h2>11.5 Clases de error</h2>
-    <p>Las sentencias throw y catch de JavaScript pueden lanzar y atrapar cualquier valor de JavaScript, incluidos los valores primitivos. No hay ningún tipo de excepción que deba utilizarse para señalar errores. JavaScript define una clase Error, sin embargo, y es tradicional usar instancias de Error o una subclase cuando se señala un error con throw. Una buena razón para utilizar un objeto Error es que, cuando se crea un Error, captura el estado de la pila de JavaScript, y si la excepción no es capturada, se mostrará la traza de la pila con el mensaje de error, que le ayudará a depurar el problema. (Tenga en cuenta que el seguimiento de pila muestra dónde se creó el objeto Error, no dónde lo lanza la sentencia throw. Si siempre crea el objeto justo antes de lanzarlo con throw new Error(), esto no causará ninguna confusión).</p>
-    <p>Los objetos Error tienen dos propiedades: mensaje y nombre, y un método toString(). El valor de la propiedad message es el valor pasado al constructor Error(), convertido a cadena si es necesario. Para los objetos de error creados con Error(), la propiedad name es siempre "Error". El método toString() simplemente devuelve el valor de la propiedad name seguido de dos puntos y un espacio y el valor de la propiedad message.</p>
-    <p>Aunque no forma parte del estándar ECMAScript, Node y todos los navegadores modernos también definen una propiedad stack en los objetos Error. El valor de esta propiedad es una cadena de varias líneas que contiene un seguimiento de la pila de llamadas de JavaScript en el momento en que se creó el objeto Error. Esta información puede ser útil cuando se detecta un error inesperado.</p>
-    <p>Además de la clase Error, JavaScript define una serie de subclases que utiliza para señalar determinados tipos de errores definidos por ECMAScript. Estas subclases son EvalError, RangeError, ReferenceError, SyntaxError, TypeError y URIError. Puede utilizar estas clases de error en su propio código si le parecen apropiadas. Al igual que la clase Error base, cada una de estas subclases tiene un constructor que toma un único argumento de mensaje. Y las instancias de cada una de estas subclases tienen una propiedad name cuyo valor es el mismo que el nombre del constructor.</p>
-    <p>Puede definir sus propias subclases de Error que mejor encapsulen las condiciones de error de su propio programa. Tenga en cuenta que no está limitado a las propiedades de nombre y mensaje. Si crea una subclase, puede definir nuevas propiedades para proporcionar detalles del error. Si está escribiendo un analizador sintáctico, por ejemplo, puede resultarle útil definir una clase ParseError con propiedades de línea y columna que especifiquen la ubicación exacta del fallo de análisis sintáctico. O si estás trabajando con peticiones HTTP, puede que quieras definir una clase HTTPError que tenga una propiedad status que contenga el código de estado HTTP (como 404 o 500) de la petición fallida.</p>
+    <p>Las sentencias <codeinline>throw</codeinline> y <codeinline>catch</codeinline> de JavaScript pueden lanzar y atrapar cualquier valor de JavaScript, incluidos los valores primitivos. No hay ningún tipo de excepción que deba utilizarse para señalar errores. JavaScript define una clase Error, sin embargo, y es tradicional usar instancias de Error o una subclase cuando se señala un error con <codeinline>throw</codeinline>. Una buena razón para utilizar un objeto Error es que, cuando se crea un Error, captura el estado de la pila de JavaScript, y si la excepción no es capturada, se mostrará la traza de la pila con el mensaje de error, que le ayudará a depurar el problema. (Tenga en cuenta que el seguimiento de pila muestra dónde se creó el objeto Error, no dónde lo lanza la sentencia <codeinline>throw</codeinline>. Si siempre crea el objeto justo antes de lanzarlo con <codeinline>throw new Error()</codeinline>, esto no causará ninguna confusión).</p>
+    <p>Los objetos Error tienen dos propiedades: <codeinline>menssage</codeinline> y <codeinline>name</codeinline>, y un método <codeinline>toString()</codeinline>. El valor de la propiedad <codeinline>message</codeinline> es el valor pasado al constructor <codeinline>Error()</codeinline>, convertido a cadena si es necesario. Para los objetos de error creados con <codeinline>Error()</codeinline>, la propiedad <codeinline>name</codeinline> es siempre "Error". El método <codeinline>toString()</codeinline> simplemente devuelve el valor de la propiedad <codeinline>name</codeinline> seguido de dos puntos y un espacio y el valor de la propiedad <codeinline>message</codeinline>.</p>
+    <p>Aunque no forma parte del estándar ECMAScript, Node y todos los navegadores modernos también definen una propiedad <codeinline>stack</codeinline> en los objetos Error. El valor de esta propiedad es una cadena de varias líneas que contiene un seguimiento de la pila de llamadas de JavaScript en el momento en que se creó el objeto Error. Esta información puede ser útil cuando se detecta un error inesperado.</p>
+    <p>Además de la clase Error, JavaScript define una serie de subclases que utiliza para señalar determinados tipos de errores definidos por ECMAScript. Estas subclases son EvalError, RangeError, ReferenceError, SyntaxError, TypeError y URIError. Puede utilizar estas clases de error en su propio código si le parecen apropiadas. Al igual que la clase Error base, cada una de estas subclases tiene un constructor que toma un único argumento de mensaje. Y las instancias de cada una de estas subclases tienen una propiedad <codeinline>name</codeinline> cuyo valor es el mismo que el nombre del constructor.</p>
+    <p>Puede definir sus propias subclases de Error que mejor encapsulen las condiciones de error de su propio programa. Tenga en cuenta que no está limitado a las propiedades de <codeinline>name</codeinline> y mensaje. Si crea una subclase, puede definir nuevas propiedades para proporcionar detalles del error. Si está escribiendo un analizador sintáctico, por ejemplo, puede resultarle útil definir una clase ParseError con propiedades de <codeinline>line</codeinline> y <codeinline>column</codeinline> que especifiquen la ubicación exacta del fallo de análisis sintáctico. O si estás trabajando con peticiones HTTP, puede que quieras definir una clase HTTPError que tenga una propiedad <codeinline>status</codeinline> que contenga el código de estado HTTP (como 404 o 500) de la petición fallida.</p>
     <p>Por ejemplo:</p>
     <pre>
     <code class="language-js">class HTTPError extends Error &lbrace;
@@ -999,19 +1000,19 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     }
 
     let error = new HTTPError(404, "Not Found", "http://example.com/");
-    error.status // => 404
+    error.status  // => 404
     error.message // => "404 Not Found: http://example.com/"
-    error.name // => "HTTPError"</code></pre>
+    error.name    // => "HTTPError"</code></pre>
   </section>
   <section id="6">
     <h2>11.6 Serialización y análisis JSON</h2>
-    <p>Cuando un programa necesita guardar datos o necesita transmitir datos a través de una conexión de red a otro programa, debe convertir sus estructuras de datos en memoria en una cadena de bytes o caracteres que puedan ser guardados o transmitidos y luego ser analizados para restaurar las estructuras de datos originales en memoria. Este proceso de conversión de estructuras de datos en cadenas de bytes o caracteres se conoce como serialización (o marshaling o incluso pickling).</p>
-    <p>La forma más sencilla de serializar datos en JavaScript utiliza un formato de serialización conocido como JSON. Este acrónimo significa "JavaScript Object Notation" y, como su nombre indica, el formato utiliza la sintaxis literal de objetos y matrices de JavaScript para convertir estructuras de datos formadas por objetos y matrices en cadenas. JSON admite números y cadenas primitivas, así como los valores true, false y null, además de matrices y objetos construidos a partir de esos valores primitivos. JSON no admite otros tipos de JavaScript como Map, Set, RegExp, Date o matrices tipadas. No obstante, ha demostrado ser un formato de datos extraordinariamente versátil y es de uso común incluso en programas no basados en JavaScript.</p>
-    <p>JavaScript soporta la serialización y deserialización de JSON con las dos funciones JSON.stringify() y JSON.parse(), que se trataron brevemente en §6.8. Dado un objeto o array (anidado a una profundidad arbitraria) que no contenga ningún valor no serializable como objetos RegExp o arrays tipados, puedes serializar el objeto simplemente pasándolo a JSON.stringify(). Como su nombre indica, el valor de retorno de esta función es una cadena. Y dada una cadena devuelta por JSON.stringify(), puede volver a crear la estructura de datos original pasando la cadena a JSON.parse():</p>
+    <p>Cuando un programa necesita guardar datos o necesita transmitir datos a través de una conexión de red a otro programa, debe convertir sus estructuras de datos en memoria en una cadena de bytes o caracteres que puedan ser guardados o transmitidos y luego ser analizados para restaurar las estructuras de datos originales en memoria. Este proceso de conversión de estructuras de datos en cadenas de bytes o caracteres se conoce como <em>serialización</em> (o <em>marshaling</em> o incluso <em>pickling</em>).</p>
+    <p>La forma más sencilla de serializar datos en JavaScript utiliza un formato de serialización conocido como JSON. Este acrónimo significa "JavaScript Object Notation" y, como su nombre indica, el formato utiliza la sintaxis literal de objetos y matrices de JavaScript para convertir estructuras de datos formadas por objetos y matrices en cadenas. JSON admite números y cadenas primitivas, así como los valores <codeinline>true</codeinline>, <codeinline>false</codeinline> y <codeinline>null</codeinline>, además de matrices y objetos construidos a partir de esos valores primitivos. JSON no admite otros tipos de JavaScript como Map, Set, RegExp, Date o matrices tipadas. No obstante, ha demostrado ser un formato de datos extraordinariamente versátil y es de uso común incluso en programas no basados en JavaScript.</p>
+    <p>JavaScript soporta la serialización y deserialización de JSON con las dos funciones <codeinline>JSON.stringify()</codeinline> y <codeinline>JSON.parse()</codeinline>, que se trataron brevemente en <a href="capitulo-6#8">§6.8</a>. Dado un objeto o array (anidado a una profundidad arbitraria) que no contenga ningún valor no serializable como objetos RegExp o arrays tipados, puedes serializar el objeto simplemente pasándolo a <codeinline>JSON.stringify()</codeinline>. Como su nombre indica, el valor de retorno de esta función es una cadena. Y dada una cadena devuelta por <codeinline>JSON.stringify()</codeinline>, puede volver a crear la estructura de datos original pasando la cadena a <codeinline>JSON.parse()</codeinline>:</p>
     <pre>
     <code class="language-js">let o = &lbrace;s: "", n: 0, a: [true, false, null]};
-    let s = JSON.stringify(o); // s == '&lbrace;"s":"","n":0,"a":[true,false,null]}'
-    let copy = JSON.parse(s); // copy == &lbrace;s: "", n: 0, a: [true, false, null]}</code></pre>
+    let s = JSON.stringify(o);  // s == '&lbrace;"s":"","n":0,"a":[true,false,null]}'
+    let copy = JSON.parse(s);   // copy == &lbrace;s: "", n: 0, a: [true, false, null]}</code></pre>
     <p>Si omitimos la parte en la que los datos serializados se guardan en un archivo o se envían a través de la red, podemos utilizar este par de funciones como una forma algo ineficiente de crear una copia en profundidad de un objeto:</p>
     <pre>
     <code class="language-js">// Make a deep copy of any serializable object or array
@@ -1022,22 +1023,22 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       <img class="self-start" src="/public/javascript/nota_gral.png" alt="Nota de la grandesa">
       <div class="">
         <p class="title-article text-left">JSON es un subconjunto de JavaScript</p>
-        <p>Cuando los datos se serializan en formato JSON, el resultado es un código fuente Java Script válido para una expresión que se evalúa como una copia de la estructura de datos original. Si antepone a una cadena JSON el prefijo var datos = y pasar el resultado a eval(), obtendrás una copia de la estructura de datos original asignada a los datos variables. Nunca debes hacer esto, sin embargo, porque es un enorme agujero de seguridad-si un atacante pudiera inyectar código JavaScript arbitrario en un archivo JSON, podría hacer que tu programa ejecutara su código. Es más rápido y seguro utilizar JSON.parse() para decodificar datos con formato JSON.</p>
+        <p>Cuando los datos se serializan en formato JSON, el resultado es un código fuente Java Script válido para una expresión que se evalúa como una copia de la estructura de datos original. Si antepone a una cadena JSON el prefijo <codeinline>var data =</codeinline> y pasar el resultado a <codeinline>eval()</codeinline>, obtendrás una copia de la estructura de datos original asignada a los <codeinline>data</codeinline> variables. Nunca debes hacer esto, sin embargo, porque es un enorme agujero de seguridad-si un atacante pudiera inyectar código JavaScript arbitrario en un archivo JSON, podría hacer que tu programa ejecutara su código. Es más rápido y seguro utilizar <codeinline>JSON.parse()</codeinline> para decodificar datos con formato JSON.</p>
         <p>JSON se utiliza a veces como formato de archivo de configuración legible por humanos. Si se encuentra editando a mano un archivo JSON, tenga en cuenta que el formato JSON es un subconjunto muy estricto de JavaScript. Los comentarios no están permitidos y los nombres de propiedades deben ir entre comillas dobles, incluso cuando JavaScript no lo requiera.</p>
       </div>
     </nota>
-    <p>Normalmente, sólo se pasa un único argumento a JSON.stringify() y JSON.parse(). Ambas funciones aceptan un segundo argumento opcional que nos permite extender el formato JSON, y que describiremos a continuación. JSON.stringify() también acepta un tercer argumento opcional que discutiremos primero. Si quieres que tu cadena con formato JSON sea legible por humanos (si se está utilizando como un archivo de configuración, por ejemplo), entonces debes pasar null como segundo argumento y pasar un número o cadena como tercer argumento. Este tercer argumento indica a JSON.stringify() que debe formatear los datos en varias líneas sangradas. Si el tercer argumento es un número, utilizará ese número de espacios para cada nivel de sangría. Si el tercer argumento es una cadena de espacios en blanco (como '\t'), usará esa cadena para cada nivel de sangría.</p>
+    <p>Normalmente, sólo se pasa un único argumento a <codeinline>JSON.stringify()</codeinline> y <codeinline>JSON.parse()</codeinline>. Ambas funciones aceptan un segundo argumento opcional que nos permite extender el formato JSON, y que describiremos a continuación. <codeinline>JSON.stringify()</codeinline> también acepta un tercer argumento opcional que discutiremos primero. Si quieres que tu cadena con formato JSON sea legible por humanos (si se está utilizando como un archivo de configuración, por ejemplo), entonces debes pasar <codeinline>null</codeinline> como segundo argumento y pasar un número o cadena como tercer argumento. Este tercer argumento indica a <codeinline>JSON.stringify()</codeinline> que debe formatear los datos en varias líneas sangradas. Si el tercer argumento es un número, utilizará ese número de espacios para cada nivel de sangría. Si el tercer argumento es una cadena de espacios en blanco (como <codeinline>'\t'</codeinline>), usará esa cadena para cada nivel de sangría.</p>
     <pre>
     <code class="language-js">let o = &lbrace;s: "test", n: 0};
     JSON.stringify(o, null, 2) // => '&lbrace;\n "s": "test",\n "n": 0\n}'</code></pre>
-    <p>JSON.parse() ignora los espacios en blanco, por lo que pasar un tercer argumento a JSON.stringify() no tiene ningún impacto en nuestra capacidad de volver a convertir la cadena en una estructura de datos.</p>
+    <p><codeinline>JSON.parse()</codeinline> ignora los espacios en blanco, por lo que pasar un tercer argumento a <codeinline>JSON.stringify()</codeinline> no tiene ningún impacto en nuestra capacidad de volver a convertir la cadena en una estructura de datos.</p>
   </section>
   <section id="6-1" class="py-4 xs:py-5 sm:py-6">
     <h2>11.6.1 Personalizaciones JSON</h2>
-    <p>Si se le pide a JSON.stringify() que serialice un valor que no está soportado de forma nativa por el formato JSON, busca si ese valor tiene un método toJSON(), y si es así, llama a ese método y luego encadena el valor devuelto en lugar del valor original. Los objetos Date implementan toJSON(): devuelve la misma cadena que el método toISOString(). Esto significa que si serializas un objeto que incluye un Date, la fecha se convertirá automáticamente en una cadena. Cuando analices la cadena serializada, la estructura de datos recreada no será exactamente la misma con la que empezaste porque tendrá una cadena donde el objeto original tenía una Fecha.</p>
-    <p>Si necesita volver a crear objetos Date (o modificar el objeto analizado de cualquier otra forma), puede pasar una función "reviver" como segundo argumento a JSON.parse(). Si se especifica, esta función "reviver" se invoca una vez por cada valor primitivo (pero no los objetos o matrices que contienen esos valores primitivos) analizado a partir de la cadena de entrada. La función se invoca con dos argumentos. El primero es un nombre de propiedad, ya sea un nombre de propiedad de objeto o un índice de matriz convertido a cadena. El segundo argumento es el valor primitivo de esa propiedad de objeto o elemento de matriz. Además, la función se invoca como un método del objeto o matriz que contiene el valor primitivo, por lo que puede hacer referencia a ese objeto contenedor con la palabra clave this.</p>
-    <p>El valor de retorno de la función reviver se convierte en el nuevo valor de la propiedad nombrada. Si devuelve su segundo argumento, la propiedad permanecerá sin cambios. Si devuelve undefined, entonces la propiedad nombrada será borrada del objeto o array antes de que JSON.parse() vuelva al usuario</p>
-    <p>Como ejemplo, he aquí una llamada a JSON.parse() que utiliza una función reviver para filtrar algunas propiedades y volver a crear objetos Date:</p>
+    <p>Si se le pide a <codeinline>JSON.stringify()</codeinline> que serialice un valor que no está soportado de forma nativa por el formato JSON, busca si ese valor tiene un método <codeinline>toJSON()</codeinline>, y si es así, llama a ese método y luego encadena el valor devuelto en lugar del valor original. Los objetos Date implementan <codeinline>toJSON()</codeinline>: devuelve la misma cadena que el método <codeinline>toISOString()</codeinline>. Esto significa que si serializas un objeto que incluye un Date, la fecha se convertirá automáticamente en una cadena. Cuando analices la cadena serializada, la estructura de datos recreada no será exactamente la misma con la que empezaste porque tendrá una cadena donde el objeto original tenía una Fecha.</p>
+    <p>Si necesita volver a crear objetos Date (o modificar el objeto analizado de cualquier otra forma), puede pasar una función "reviver" como segundo argumento a <codeinline>JSON.parse()</codeinline>. Si se especifica, esta función "reviver" se invoca una vez por cada valor primitivo (pero no los objetos o matrices que contienen esos valores primitivos) analizado a partir de la cadena de entrada. La función se invoca con dos argumentos. El primero es un nombre de propiedad, ya sea un nombre de propiedad de objeto o un índice de matriz convertido a cadena. El segundo argumento es el valor primitivo de esa propiedad de objeto o elemento de matriz. Además, la función se invoca como un método del objeto o matriz que contiene el valor primitivo, por lo que puede hacer referencia a ese objeto contenedor con la palabra clave <codeinline>this</codeinline>.</p>
+    <p>El valor de retorno de la función reviver se convierte en el nuevo valor de la propiedad nombrada. Si devuelve su segundo argumento, la propiedad permanecerá sin cambios. Si devuelve <codeinline>undefined</codeinline>, entonces la propiedad nombrada será borrada del objeto o array antes de que <codeinline>JSON.parse()</codeinline> vuelva al usuario</p>
+    <p>Como ejemplo, he aquí una llamada a <codeinline>JSON.parse()</codeinline> que utiliza una función reviver para filtrar algunas propiedades y volver a crear objetos Date:</p>
     <pre>
     <code class="language-js">let data = JSON.parse(text, function(key, value) &lbrace;
       // Remove any values whose property name begins with an underscore
@@ -1052,49 +1053,49 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       // Otherwise, return the value unchanged
       return value;
     });</code></pre>
-    <p>Además del uso de toJSON() descrito anteriormente, JSON.stringify() también permite personalizar su salida pasando una matriz o una función como segundo argumento opcional.</p>
+    <p>Además del uso de <codeinline>toJSON()</codeinline> descrito anteriormente, <codeinline>JSON.stringify()</codeinline> también permite personalizar su salida pasando una matriz o una función como segundo argumento opcional.</p>
     <p>Si en su lugar se pasa una matriz de cadenas (o números, que se convierten en cadenas) como segundo argumento, se utilizarán como nombres de las propiedades del objeto (o elementos de la matriz). Cualquier propiedad cuyo nombre no se encuentre en la matriz se omitirá de la cadena. Además, la cadena devuelta incluirá las propiedades en el mismo orden en que aparecen en la matriz (lo que puede ser muy útil al escribir pruebas).</p>
-    <p>Si se pasa una función, se trata de una función de sustitución, es decir, la inversa de la función opcional de sustitución que se puede pasar a JSON.parse(). Si se especifica, la función de sustitución se invoca para cada valor que se va a encadenar. El primer argumento de la función de sustitución es el nombre de la propiedad del objeto o el índice de la matriz del valor dentro de ese objeto, y el segundo argumento es el valor en sí. La función de sustitución se invoca como un método del objeto o matriz que contiene el valor que se va a e n c a d e n a r . El valor de retorno de la función en lugar del valor original. Si el sustituto devuelve un valor indefinido o no devuelve nada, ese valor (y su elemento de matriz o propiedad de objeto) se omite en la encadenación.</p>
+    <p>Si se pasa una función, se trata de una función de sustitución, es decir, la inversa de la función opcional de sustitución que se puede pasar a <codeinline>JSON.parse()</codeinline>. Si se especifica, la función de sustitución se invoca para cada valor que se va a encadenar. El primer argumento de la función de sustitución es el nombre de la propiedad del objeto o el índice de la matriz del valor dentro de ese objeto, y el segundo argumento es el valor en sí. La función de sustitución se invoca como un método del objeto o matriz que contiene el valor que se va a encadenar . El valor de retorno de la función en lugar del valor original. Si el sustituto devuelve un valor <codeinline>undefined</codeinline> o no devuelve nada, ese valor (y su elemento de matriz o propiedad de objeto) se omite en la encadenación.</p>
     <pre>
     <code class="language-js">// Specify what fields to serialize, and what order to serialize them in
     let text = JSON.stringify(address, ["city","state","country"]);
 
     // Specify a replacer function that omits RegExp-value properties
     let json = JSON.stringify(o, (k, v) => v instanceof RegExp ? undefined : v);</code></pre>
-    <p>Las dos llamadas a JSON.stringify() utilizan el segundo argumento de una manera benigna, produciendo una salida serializada que puede ser deserializada sin requerir una función especial. En general, sin embargo, si defines un método toJSON() para un tipo, o si usas una función replacer que realmente reemplaza valores no serializables por valores serializables, entonces típicamente necesitarás usar una función reviver personalizada con JSON.parse() para recuperar tu estructura de datos original. Si haces esto, debes entender que estás definiendo un formato de datos personalizado y sacrificando la portabilidad y compatibilidad con un gran ecosistema de herramientas y lenguajes compatibles con JSON.</p>
+    <p>Las dos llamadas a <codeinline>JSON.stringify()</codeinline> utilizan el segundo argumento de una manera benigna, produciendo una salida serializada que puede ser deserializada sin requerir una función especial. En general, sin embargo, si defines un método <codeinline>toJSON()</codeinline> para un tipo, o si usas una función replacer que realmente reemplaza valores no serializables por valores serializables, entonces típicamente necesitarás usar una función reviver personalizada con <codeinline>JSON.parse()</codeinline> para recuperar tu estructura de datos original. Si haces esto, debes entender que estás definiendo un formato de datos personalizado y sacrificando la portabilidad y compatibilidad con un gran ecosistema de herramientas y lenguajes compatibles con JSON.</p>
   </section>
   <section id="7">
     <h2>11.7 API de internacionalización</h2>
-    <p>La API de internacionalización de JavaScript consta de tres clases: Intl.NumberFor mat, Intl.DateTimeFormat e Intl.Collator, que nos permiten formatear números (incluidos importes monetarios y porcentajes), fechas y horas de forma adaptada a la localización y comparar cadenas de texto de forma adaptada a la localización. Estas clases no forman parte del estándar ECMAScript, pero están definidas en el estándar ECMA402 y son compatibles con los navegadores web. La API Intl también está soportada en Node, pero en el momento de escribir esto, los binarios precompilados de Node no incluyen los datos de localización necesarios para que funcionen con otras localizaciones distintas al inglés de EE.UU.. Por lo tanto, para utilizar estas clases con Node, es posible que tenga que descargar un paquete de datos independiente o utilizar una compilación personalizada de Node.</p>
+    <p>La API de internacionalización de JavaScript consta de tres clases: Intl.NumberFor mat, Intl.DateTimeFormat e Intl.Collator, que nos permiten formatear números (incluidos importes monetarios y porcentajes), fechas y horas de forma adaptada a la localización y comparar cadenas de texto de forma adaptada a la localización. Estas clases no forman parte del estándar ECMAScript, pero están definidas en el <a href="tc39.es/ecma402">estándar ECMA402</a> y son compatibles con los navegadores web. La API Intl también está soportada en Node, pero en el momento de escribir esto, los binarios precompilados de Node no incluyen los datos de localización necesarios para que funcionen con otras localizaciones distintas al inglés de EE.UU.. Por lo tanto, para utilizar estas clases con Node, es posible que tenga que descargar un paquete de datos independiente o utilizar una compilación personalizada de Node.</p>
     <p>Una de las partes más importantes de la internacionalización es mostrar el texto traducido al idioma del usuario. Hay varias formas de conseguirlo, pero ninguna de ellas entra dentro del ámbito de la API Intl que se describe aquí.</p>
   </section>
   <section id="7-1" class="py-4 xs:py-5 sm:py-6">
     <h2>11.7.1 Formato de números</h2>
     <p>Los usuarios de todo el mundo esperan que los números tengan distintos formatos. Los puntos decimales pueden ser puntos o comas. Los separadores de miles pueden ser comas o puntos, y no se utilizan cada tres dígitos en todos los lugares. Algunas monedas se dividen en centésimas, otras en milésimas y otras no tienen subdivisiones. Por último, aunque en muchos idiomas se utilizan los llamados "números arábigos" del 0 al 9, esto no es universal, y los usuarios de algunos países esperarán ver los números escritos utilizando los dígitos de sus propias escrituras.</p>
-    <p>La clase Intl.NumberFormat define un método format() que tiene en cuenta todas estas posibilidades de formato. El constructor recibe dos argumentos. El primer argumento especifica la configuración regional para la que debe formatearse el número y el segundo es un objeto que especifica más detalles sobre cómo debe formatearse el número. Si el primer argumento se omite o no se define, se utilizará la configuración regional del sistema (que suponemos que es la preferida por el usuario). Si el primer argumento es una cadena, especifica la configuración regional deseada, como "en-US" (inglés utilizado en Estados Unidos), "fr" (francés) o "zh-Hans-CN" (chino, utilizando el sistema de escritura Han simplificado, en China). El primer argumento también puede ser una matriz de cadenas de configuración regional y, en este caso, Intl.NumberFormat elegirá la más específica que esté bien soportada.</p>
-    <p>El segundo argumento del constructor Intl.NumberFormat(), si se especifica, debe ser un objeto que defina una o más de las siguientes propiedades:</p>
+    <p>La clase Intl.NumberFormat define un método <codeinline>format()</codeinline> que tiene en cuenta todas estas posibilidades de formato. El constructor recibe dos argumentos. El primer argumento especifica la configuración regional para la que debe formatearse el número y el segundo es un objeto que especifica más detalles sobre cómo debe formatearse el número. Si el primer argumento se omite o <codeinline>undefined</codeinline>, se utilizará la configuración regional del sistema (que suponemos que es la preferida por el usuario). Si el primer argumento es una cadena, especifica la configuración regional deseada, como <codeinline>"en-US"</codeinline> (inglés utilizado en Estados Unidos), <codeinline>"fr"</codeinline> (francés) o <codeinline>"zh-Hans-CN"</codeinline> (chino, utilizando el sistema de escritura Han simplificado, en China). El primer argumento también puede ser una matriz de cadenas de configuración regional y, en este caso, Intl.NumberFormat elegirá la más específica que esté bien soportada.</p>
+    <p>El segundo argumento del constructor <codeinline>Intl.NumberFormat()</codeinline>, si se especifica, debe ser un objeto que defina una o más de las siguientes propiedades:</p>
     <p><codeinline>style</codeinline></p>
-    <p>Especifica el tipo de formato numérico que se requiere. El valor predeterminado es "decimal". Especifique "porcentaje" para formatear un número como un porcentaje o especifique "moneda" para especificar un número como una cantidad de dinero.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Especifica el tipo de formato numérico que se requiere. El valor predeterminado es <codeinline>"decimal"</codeinline>. Especifique <codeinline>"percent"</codeinline> para formatear un número como un porcentaje o especifique <codeinline>"currency"</codeinline> para especificar un número como una cantidad de dinero.</p>
     <p><codeinline>currency</codeinline></p>
-    <p>Si el estilo es "moneda", esta propiedad es necesaria para especificar el código de moneda ISO de tres letras (como "USD" para dólares estadounidenses o "GBP" para libras esterlinas) de la moneda deseada.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Si el estilo es <codeinline>"currency"</codeinline> esta propiedad es necesaria para especificar el código de moneda ISO de tres letras (como <codeinline>"USD"</codeinline> para dólares estadounidenses o <codeinline>"GBP"</codeinline> para libras esterlinas) de la moneda deseada.</p>
     <p><codeinline>currencyDisplay</codeinline></p>
-    <p>Si el estilo es "moneda", esta propiedad especifica cómo se muestra la moneda. El valor por defecto "símbolo" utiliza un símbolo de moneda si la moneda tiene uno. El valor "code" utiliza el código ISO de tres letras, y el valor "name" escribe el nombre de la moneda en forma larga.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Si el estilo es <codeinline>"currency"</codeinline> esta propiedad especifica cómo se muestra la moneda. El valor por defecto <codeinline>"symbol"</codeinline> utiliza un símbolo de moneda si la moneda tiene uno. El valor <codeinline>"code"</codeinline> utiliza el código ISO de tres letras, y el valor <codeinline>"name"</codeinline> escribe el nombre de la moneda en forma larga.</p>
     <p><codeinline>useGrouping</codeinline></p>
-    <p>Establezca esta propiedad en false si no desea que los números tengan separadores de miles (o sus equivalentes locales).</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Establezca esta propiedad en <codeinline>false</codeinline> si no desea que los números tengan separadores de miles (o sus equivalentes locales).</p>
     <p><codeinline>minimumIntegerDigits</codeinline></p>
-    <p>El número mínimo de dígitos a utilizar para mostrar la parte entera del número. Si el número tiene menos dígitos que éste, se rellenará a la izquierda con ceros. El valor por defecto es 1, pero puede utilizar valores tan altos como 21.</p>
-    <p><codeinline>minimumFractionDigits, maximumFractionDigits</codeinline></p>
-    <p>Estas dos propiedades controlan el formato de la parte fraccionaria del número. Si un número tiene menos dígitos fraccionarios que el mínimo, se rellenará con ceros a la derecha. Si tiene más que el máximo, la parte fraccionaria se redondeará. Los valores legales para ambas propiedades están entre 0 y 20. El mínimo por defecto es 0 y el máximo por defecto es 3, excepto cuando se formatea moneda. cuando la longitud de la parte fraccionaria varía en función de la moneda especificada.</p>
-    <p><codeinline>minimumSignificantDigits, maximumSignificantDigits</codeinline></p>
-    <p>Estas propiedades controlan el número de dígitos significativos utilizados al formatear un número, por lo que son adecuadas para formatear datos científicos, por ejemplo. Si se especifican, estas propiedades anulan las propiedades de dígitos enteros y fraccionarios enumeradas anteriormente. Los valores legales están comprendidos entre 1 y 21.</p>
-    <p>Una vez creado un objeto Intl.NumberFormat con la configuración regional y las opciones deseadas, se utiliza pasando un número a su método format(), que devuelve una cadena con el formato adecuado. Por ejemplo</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">El número mínimo de dígitos a utilizar para mostrar la parte entera del número. Si el número tiene menos dígitos que éste, se rellenará a la izquierda con ceros. El valor por defecto es 1, pero puede utilizar valores tan altos como 21.</p>
+    <p><codeinline>minimumFractionDigits</codeinline>, <codeinline>maximumFractionDigits</codeinline></p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Estas dos propiedades controlan el formato de la parte fraccionaria del número. Si un número tiene menos dígitos fraccionarios que el mínimo, se rellenará con ceros a la derecha. Si tiene más que el máximo, la parte fraccionaria se redondeará. Los valores legales para ambas propiedades están entre 0 y 20. El mínimo por defecto es 0 y el máximo por defecto es 3, excepto cuando se formatea moneda. cuando la longitud de la parte fraccionaria varía en función de la moneda especificada.</p>
+    <p><codeinline>minimumSignificantDigits</codeinline>, <codeinline>maximumSignificantDigits</codeinline></p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Estas propiedades controlan el número de dígitos significativos utilizados al formatear un número, por lo que son adecuadas para formatear datos científicos, por ejemplo. Si se especifican, estas propiedades anulan las propiedades de dígitos enteros y fraccionarios enumeradas anteriormente. Los valores legales están comprendidos entre 1 y 21.</p>
+    <p>Una vez creado un objeto Intl.NumberFormat con la configuración regional y las opciones deseadas, se utiliza pasando un número a su método <codeinline>format()</codeinline>, que devuelve una cadena con el formato adecuado. Por ejemplo</p>
     <pre>
     <code class="language-js">let euros = Intl.NumberFormat("es", &lbrace;style: "currency", currency: "EUR"});
-    euros.format(10) // => "10,00 €": ten euros, Spanish formatting
+    euros.format(10)    // => "10,00 €": ten euros, Spanish formatting
 
     let pounds = Intl.NumberFormat("en", &lbrace;style: "currency", currency: "GBP"});
     pounds.format(1000) // => "£1,000.00": One thousand pounds, English formatting</code></pre>
-    <p>Una característica útil de Intl.NumberFormat (y también de las otras clases Intl) es que su método format() está ligado al objeto NumberFormat al que pertenece. Así, en lugar de definir una variable que haga referencia al objeto formateador y luego invocar el método format() sobre ella, puede simplemente asignar el mé todo format() a una variable y utilizarlo como si fuera una función independiente, como en este ejemplo:</p>
+    <p>Una característica útil de <codeinline>Intl.NumberFormat</codeinline> (y también de las otras clases Intl) es que su método <codeinline>format()</codeinline> está ligado al objeto NumberFormat al que pertenece. Así, en lugar de definir una variable que haga referencia al objeto formateador y luego invocar el método <codeinline>format()</codeinline> sobre ella, puede simplemente asignar el mé todo <codeinline>format()</codeinline> a una variable y utilizarlo como si fuera una función independiente, como en este ejemplo:</p>
     <pre>
     <code class="language-js">let data = [0.05, .75, 1];
     let formatData = Intl.NumberFormat(undefined, &lbrace;
@@ -1108,44 +1109,44 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <pre>
     <code class="language-js">let arabic = Intl.NumberFormat("ar", &lbrace;useGrouping: false}).format;
       arabic(1234567890) // => "١٢٣٤٥٦٧٨٩٠"</code></pre>
-    <p>Otros idiomas, como el hindi, utilizan una escritura que tiene su propio conjunto de dígitos, pero tienden a utilizar los dígitos ASCII 0-9 por defecto. Si desea anular el alfabeto utilizado por defecto para los dígitos, añada -u-nu- a la configuración regional y escriba a continuación el nombre abreviado del alfabeto. Por ejemplo, puede dar formato a los números con agrupación al estilo indio y dígitos en devanagari:</p>
+    <p>Otros idiomas, como el hindi, utilizan una escritura que tiene su propio conjunto de dígitos, pero tienden a utilizar los dígitos ASCII 0-9 por defecto. Si desea anular el alfabeto utilizado por defecto para los dígitos, añada <codeinline>-u-nu-</codeinline> a la configuración regional y escriba a continuación el nombre abreviado del alfabeto. Por ejemplo, puede dar formato a los números con agrupación al estilo indio y dígitos en devanagari:</p>
     <pre>
     <code class="language-js">let hindi = Intl.NumberFormat("hi-IN-u-nu-deva").format;
       hindi(1234567890) // => "१,२३,४५,६७,८९०"</code></pre>
-    <p>-nu es el nombre de extensión para el sistema de numeración, y deva es la abreviatura de Devanagari. La API Intl define los nombres de otros sistemas de numeración, principalmente para las lenguas índicas del sur y el sudeste asiático.</p>
+    <p><codeinline>nu</codeinline> es el nombre de extensión para el sistema de numeración, y <codeinline>deva</codeinline> es la abreviatura de Devanagari. La API Intl define los nombres de otros sistemas de numeración, principalmente para las lenguas índicas del sur y el sudeste asiático.</p>
   </section>
   <section id="7-2">
     <h2>11.7.2 Formato de fechas y horas</h2>
-    <p>La clase Intl.DateTimeFormat es muy parecida a la clase Intl.NumberFormat. El constructor de Intl.DateTimeFormat() toma los mismos dos argumentos que Intl.Num berFormat(): una configuración regional o matriz de configuraciones regionales y un objeto de opciones de formato. Y la forma de utilizar una instancia de Intl.DateTimeFormat es llamando a su método format() para convertir un objeto Date en una cadena.</p>
-    <p>Como se mencionó en §11.4, la clase Date define métodos simples toLocaleDateString() y toLocaleTimeString() que producen una salida apropiada para la configuración regional del usuario. Pero estos métodos no permiten controlar qué campos de la fecha y la hora se muestran. Tal vez desee omitir el año pero añadir un día de la semana al formato de la fecha. ¿Quiere que el mes se represente numéricamente o por su nombre? La clase Intl.DateTimeFormat proporciona un control preciso sobre lo que se muestra basándose en las propiedades del objeto options que se pasa como segundo argumento al constructor. Tenga en cuenta, sin embargo, que Intl.DateTimeFormat no siempre puede mostrar exactamente lo que usted pide. Si especifica opciones para formatear las horas y los segundos pero omite los minutos, verá que el formateador muestra los minutos de todos modos. La idea es que utilices el objeto options para especificar qué campos de fecha y hora te gustaría presentar al usuario y cómo te gustaría formatearlos (por nombre o por número, por ejemplo), entonces el formateador buscará un formato local apropiado que se acerque más a lo que has pedido.</p>
+    <p>La clase Intl.DateTimeFormat es muy parecida a la clase Intl.NumberFormat. El constructor de <codeinline>Intl.DateTimeFormat()</codeinline> toma los mismos dos argumentos que <codeinline>Intl.NumberFormat()</codeinline>: una configuración regional o matriz de configuraciones regionales y un objeto de opciones de formato. Y la forma de utilizar una instancia de Intl.DateTimeFormat es llamando a su método <codeinline>format()</codeinline> para convertir un objeto Date en una cadena.</p>
+    <p>Como se mencionó en <a href="#4">§11.4</a>, la clase Date define métodos simples <codeinline>toLocaleDateString()</codeinline> y <codeinline>toLocaleTimeString()</codeinline> que producen una salida apropiada para la configuración regional del usuario. Pero estos métodos no permiten controlar qué campos de la fecha y la hora se muestran. Tal vez desee omitir el año pero añadir un día de la semana al formato de la fecha. ¿Quiere que el mes se represente numéricamente o por su nombre? La clase Intl.DateTimeFormat proporciona un control preciso sobre lo que se muestra basándose en las propiedades del objeto options que se pasa como segundo argumento al constructor. Tenga en cuenta, sin embargo, que Intl.DateTimeFormat no siempre puede mostrar exactamente lo que usted pide. Si especifica opciones para formatear las horas y los segundos pero omite los minutos, verá que el formateador muestra los minutos de todos modos. La idea es que utilices el objeto options para especificar qué campos de fecha y hora te gustaría presentar al usuario y cómo te gustaría formatearlos (por nombre o por número, por ejemplo), entonces el formateador buscará un formato local apropiado que se acerque más a lo que has pedido.</p>
     <p>Las opciones disponibles son las siguientes. Especifique sólo las propiedades de los campos de fecha y hora que desea que aparezcan en la salida formateada.</p>
     <p><codeinline>year</codeinline></p>
-    <p>Utilice "numérico" para un año completo de cuatro dígitos o "2 dígitos" para una abreviatura de dos dígitos.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Utilice <codeinline>"numeric"</codeinline> para un año completo de cuatro dígitos o <codeinline>"2-digit"</codeinline> para una abreviatura de dos dígitos.</p>
     <p><codeinline>month</codeinline></p>
-    <p>Utilice "numérico" para un número posiblemente corto, como "1", o "2 dígitos" para una representación numérica que siempre tenga dos dígitos, como "01". Utilice "long" para un nombre completo como "January", "short" para un nombre abreviado como "Jan", y "narrow" para un nombre muy abreviado como "J" que no se garantiza que sea único.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Utilice <codeinline>"numeric"</codeinline> para un número posiblemente corto, como "1", o <codeinline>"2-digit"</codeinline> para una representación numérica que siempre tenga dos dígitos, como "01". Utilice <codeinline>"long"</codeinline> para un nombre completo como "January", <codeinline>"short"</codeinline> para un nombre abreviado como "Jan", y <codeinline>"narrow"</codeinline> para un nombre muy abreviado como "J" que no se garantiza que sea único.</p>
     <p><codeinline>day</codeinline></p>
-    <p>Utilice "numérico" para un número de uno o dos dígitos o "2 dígitos" para un número de dos dígitos para el día del mes.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Utilice <codeinline>"numeric"</codeinline> para un número de uno o dos dígitos o <codeinline>"2-digit"</codeinline> para un número de dos dígitos para el día del mes.</p>
     <p><codeinline>weekday</codeinline></p>
-    <p>Utilice "largo" para un nombre completo como "Monday", "corto" para un nombre abreviado como "Mon", y "estrecho" para un nombre muy abreviado como "M" que no se garantice que sea único.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Utilice <codeinline>"long"</codeinline> para un nombre completo como "Monday", <codeinline>"short"</codeinline> para un nombre abreviado como "Mon", y <codeinline>"narrow"</codeinline> para un nombre muy abreviado como "M" que no se garantice que sea único.</p>
     <p><codeinline>era</codeinline></p>
-    <p>Esta propiedad especifica si una fecha debe formatearse con una era, como CE o BCE. Esto puede ser útil si está formateando fechas de hace mucho tiempo o si está utilizando un calendario japonés. Los valores legales son "largo", "corto" y "estrecho"</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Esta propiedad especifica si una fecha debe formatearse con una era, como CE o BCE. Esto puede ser útil si está formateando fechas de hace mucho tiempo o si está utilizando un calendario japonés. Los valores legales son <codeinline>"long"</codeinline>, <codeinline>"short"</codeinline> y <codeinline>"narrow"</codeinline></p>
     <p><codeinline>hour, minute, second</codeinline></p>
-    <p>Estas propiedades especifican cómo desea que se muestre la hora. Utilice "numeric" para un campo de uno o dos dígitos o "2-digit" para forzar que los números de un solo dígito se rellenen a la izquierda con un 0.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Estas propiedades especifican cómo desea que se muestre la hora. Utilice <codeinline>"numeric"</codeinline> para un campo de uno o dos dígitos o <codeinline>"2-digit"</codeinline> para forzar que los números de un solo dígito se rellenen a la izquierda con un 0.</p>
     <p><codeinline>timeZone</codeinline></p>
-    <p>Esta propiedad especifica la zona horaria deseada para la que se debe for- mular la fecha. Si se omite, se utiliza la zona horaria local. Las implementaciones siempre reconocen "UTC" y también pueden reconocer nombres de zonas horarias de la Autoridad de Números Asignados de Internet (IANA), como "America/Los_Angeles".</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Esta propiedad especifica la zona horaria deseada para la que se debe for- mular la fecha. Si se omite, se utiliza la zona horaria local. Las implementaciones siempre reconocen "UTC" y también pueden reconocer nombres de zonas horarias de la Autoridad de Números Asignados de Internet (IANA), como "America/Los_Angeles".</p>
     <p><codeinline>timeZoneName</codeinline></p>
-    <p>Esta propiedad especifica cómo debe mostrarse la zona horaria en una fecha u hora formateada. Utilice "long" para un nombre de zona horaria completamente deletreado y "short" para una zona horaria abreviada o numérica.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Esta propiedad especifica cómo debe mostrarse la zona horaria en una fecha u hora formateada. Utilice <codeinline>"long"</codeinline> para un nombre de zona horaria completamente deletreado y <codeinline>"short"</codeinline> para una zona horaria abreviada o numérica.</p>
     <p><codeinline>hour12</codeinline></p>
-    <p>Esta propiedad booleana especifica si se utiliza o no la hora de 12 horas. E l valor predeterminado depende de la configuración regional, pero puede anularlo con esta propiedad.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Esta propiedad booleana especifica si se utiliza o no la hora de 12 horas. E l valor predeterminado depende de la configuración regional, pero puede anularlo con esta propiedad.</p>
     <p><codeinline>hourCycle</codeinline></p>
-    <p>Esta propiedad permite especificar si la medianoche se escribe como 0 horas, 12 horas o 24 horas. El valor por defecto depende de la configuración regional, pero puede anularlo con esta propiedad. Tenga en cuenta que hora12 tiene prioridad sobre esta propiedad. Utilice el valor "h11" para especificar que la medianoche es 0 y la hora anterior a la medianoche es 11pm. Utilice "h12" para especificar que la medianoche son las 12. Utilice "h23" para especificar que la medianoche es 0 y la hora antes de medianoche es 23. Y utiliza "h24" para especificar que la medianoche es 24.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Esta propiedad permite especificar si la medianoche se escribe como 0 horas, 12 horas o 24 horas. El valor por defecto depende de la configuración regional, pero puede anularlo con esta propiedad. Tenga en cuenta que <codeinline>hora12</codeinline> tiene prioridad sobre esta propiedad. Utilice el valor <codeinline>"h11"</codeinline> para especificar que la medianoche es 0 y la hora anterior a la medianoche es 11pm. Utilice <codeinline>"h12"</codeinline> para especificar que la medianoche son las 12. Utilice <codeinline>"h23"</codeinline> para especificar que la medianoche es 0 y la hora antes de medianoche es 23. Y utiliza <codeinline>"h24"</codeinline> para especificar que la medianoche es 24.</p>
     <p>He aquí algunos ejemplos:</p>
     <pre>
     <code class="language-js">let d = new Date("2020-01-02T13:14:15Z"); // January 2nd, 2020, 13:14:15 UTC
 
     // With no options, we get a basic numeric date format
-    Intl.DateTimeFormat("en-US").format(d) // => "1/2/2020"
-    Intl.DateTimeFormat("fr-FR").format(d) // => "02/01/2020"
+    Intl.DateTimeFormat("en-US").format(d)       // => "1/2/2020"
+    Intl.DateTimeFormat("fr-FR").format(d)       // => "02/01/2020"
 
     // Spelled out weekday and month
     let opts = &lbrace; weekday: "long", month: "long", year: "numeric", day: "numeric" };
@@ -1155,36 +1156,36 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     // The time in New York, for a French-speaking Canadian
     opts = &lbrace; hour: "numeric", minute: "2-digit", timeZone: "America/New_York" };
     Intl.DateTimeFormat("fr-CA", opts).format(d) // => "8 h 14"</code></pre>
-    <p>Intl.DateTimeFormat puede mostrar fechas utilizando calendarios distintos al calendario juliano por defecto basado en la era cristiana. Aunque algunas localizaciones pueden utilizar un calendario no cristiano por defecto, siempre se puede especificar explícitamente el calendario a utilizar añadiendo -u-ca- a la localidad y a continuación el nombre del calendario. Los posibles nombres de calen- dar son "budista", "chino", "copto", "etiópico", "gregoriano", "hebreo", "indio", "islámico", "iso8601", "japonés" y "persa". Siguiendo con el ejemplo anterior, podemos determinar el año en varios calendarios no cristianos:</p>
+    <p>Intl.DateTimeFormat puede mostrar fechas utilizando calendarios distintos al calendario juliano por defecto basado en la era cristiana. Aunque algunas localizaciones pueden utilizar un calendario no cristiano por defecto, siempre se puede especificar explícitamente el calendario a utilizar añadiendo <codeinline>-u-ca-</codeinline> a la localidad y a continuación el nombre del calendario. Los posibles nombres de calen- dar son "budista", "chino", "copto", "etiópico", "gregoriano", "hebreo", "indio", "islámico", "iso8601", "japonés" y "persa". Siguiendo con el ejemplo anterior, podemos determinar el año en varios calendarios no cristianos:</p>
     <pre>
     <code class="language-js">let opts = &lbarec; year: "numeric", era: "short" };
-    Intl.DateTimeFormat("en", opts).format(d) // => "2020 AD"
-    Intl.DateTimeFormat("en-u-ca-iso8601", opts).format(d) // => "2020 AD"
-    Intl.DateTimeFormat("en-u-ca-hebrew", opts).format(d) // => "5780 AM"
+    Intl.DateTimeFormat("en", opts).format(d)               // => "2020 AD"
+    Intl.DateTimeFormat("en-u-ca-iso8601", opts).format(d)  // => "2020 AD"
+    Intl.DateTimeFormat("en-u-ca-hebrew", opts).format(d)   // => "5780 AM"
     Intl.DateTimeFormat("en-u-ca-buddhist", opts).format(d) // => "2563 BE"
-    Intl.DateTimeFormat("en-u-ca-islamic", opts).format(d) // => "1441 AH"
-    Intl.DateTimeFormat("en-u-ca-persian", opts).format(d) // => "1398 AP"
-    Intl.DateTimeFormat("en-u-ca-indian", opts).format(d) // => "1941 Saka"
-    Intl.DateTimeFormat("en-u-ca-chinese", opts).format(d) // => "36 78"
+    Intl.DateTimeFormat("en-u-ca-islamic", opts).format(d)  // => "1441 AH"
+    Intl.DateTimeFormat("en-u-ca-persian", opts).format(d)  // => "1398 AP"
+    Intl.DateTimeFormat("en-u-ca-indian", opts).format(d)   // => "1941 Saka"
+    Intl.DateTimeFormat("en-u-ca-chinese", opts).format(d)  // => "36 78"
     Intl.DateTimeFormat("en-u-ca-japanese", opts).format(d) // => "2 Reiwa"</code></pre>
   </section>
   <section id="7-3" class="py-4 xs:py-5 sm:py-6">
     <h2>11.7.3 Comparación de cadenas</h2>
     <p>El problema de ordenar cadenas en orden alfabético (o en un "orden de collación" más general para escrituras no alfabéticas) es más difícil de lo que los angloparlantes suelen creer. El inglés utiliza un alfabeto relativamente pequeño, sin letras acentuadas, y tenemos la ventaja de contar con una codificación de caracteres (ASCII, incorporada desde entonces a Unicode) cuyos valores numéricos se ajustan perfectamente a nuestro orden estándar de clasificación de cadenas. Las cosas no son tan sencillas en otros idiomas. El español, por ejemplo, trata la ñ como una letra distinta que va después de la n y antes de la o. El lituano alfabetiza la Y antes que la J, y el galés trata los dígrafos como CH y DD como letras únicas, con la CH después de la C y la DD después de la D.</p>
-    <p>Si desea mostrar cadenas a un usuario en un orden que le resulte natural, no basta con utilizar el método sort() en una matriz de cadenas. Pero si crea un objeto Intl.Colla- tor, puede pasar el método compare() de ese objeto al método sort() para realizar una ordenación de las cadenas adecuada a la localización. Los objetos Intl.Collator pueden configurarse para que el método compare() realice comparaciones que no distingan mayúsculas de minúsculas o incluso comparaciones que sólo tengan en cuenta la letra base e ignoren los acentos y otros signos diacríticos.</p>
-    <p>Al igual que Intl.NumberFormat() e Intl.DateTimeFormat(), el conector Intl.Collator() recibe dos argumentos. El primero especifica una configuración regional o una matriz de configuraciones regionales, y el segundo es un objeto opcional cuyas propiedades especifican exactamente qué tipo de comparación de cadenas se va a realizar. Las propiedades admitidas son las siguientes:</p>
+    <p>Si desea mostrar cadenas a un usuario en un orden que le resulte natural, no basta con utilizar el método <codeinline>sort()</codeinline> en una matriz de cadenas. Pero si crea un objeto Intl.Collator, puede pasar el método <codeinline>compare()</codeinline> de ese objeto al método <codeinline>sort()</codeinline> para realizar una ordenación de las cadenas adecuada a la localización. Los objetos Intl.Collator pueden configurarse para que el método <codeinline>compare()</codeinline> realice comparaciones que no distingan mayúsculas de minúsculas o incluso comparaciones que sólo tengan en cuenta la letra base e ignoren los acentos y otros signos diacríticos.</p>
+    <p>Al igual que <codeinline>Intl.NumberFormat()</codeinline> e <codeinline>Intl.DateTimeFormat()</codeinline>, el conector <codeinline>Intl.Collator()</codeinline> recibe dos argumentos. El primero especifica una configuración regional o una matriz de configuraciones regionales, y el segundo es un objeto opcional cuyas propiedades especifican exactamente qué tipo de comparación de cadenas se va a realizar. Las propiedades admitidas son las siguientes:</p>
     <p><codeinline>usage</codeinline></p>
-    <p>Esta propiedad especifica cómo se utilizará el objeto intercalador. El valor predeterminado es "ordenar", pero también puede especificar "buscar". La idea es que, al ordenar cadenas, normalmente se desea un intercalador que diferencie tantas cadenas como sea posible para producir un orden fiable. Pero al comparar dos cadenas, algunas localizaciones pueden querer una comparación menos estricta que ignore los acentos, por ejemplo.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Esta propiedad especifica cómo se utilizará el objeto intercalador. El valor predeterminado es <codeinline>"sort"</codeinline>, pero también puede especificar <codeinline>"search"</codeinline>. La idea es que, al ordenar cadenas, normalmente se desea un intercalador que diferencie tantas cadenas como sea posible para producir un orden fiable. Pero al comparar dos cadenas, algunas localizaciones pueden querer una comparación menos estricta que ignore los acentos, por ejemplo.</p>
     <p><codeinline>sensitivity</codeinline></p>
-    <p>Esta propiedad especifica si el comparador es sensible a las mayúsculas y minúsculas y a los acentos al comparar cadenas. El valor "base" provoca comparaciones que ignoran mayúsculas y acentos, considerando sólo la letra base para cada carácter. (Tenga en cuenta, sin embargo, que algunos idiomas consideran ciertos caracteres acentuados como letras base distintas). "acento" tiene en cuenta los acentos en las comparaciones, pero ignora las mayúsculas y minúsculas. "case" tiene en cuenta las mayúsculas e ignora los acentos. Y "variant" realiza comparaciones estrictas que tienen en cuenta tanto las mayúsculas como los acentos. El valor por defecto de esta propiedad es "variant" cuando el uso es "sort". Si el uso es "buscar", la sensibilidad por defecto depende de la configuración regional.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Esta propiedad especifica si el comparador es sensible a las mayúsculas y minúsculas y a los acentos al comparar cadenas. El valor <codeinline>"base"</codeinline> provoca comparaciones que ignoran mayúsculas y acentos, considerando sólo la letra base para cada carácter. (Tenga en cuenta, sin embargo, que algunos idiomas consideran ciertos caracteres acentuados como letras base distintas). "acento" tiene en cuenta los acentos en las comparaciones, pero ignora las mayúsculas y minúsculas. <codeinline>"case"</codeinline> tiene en cuenta las mayúsculas e ignora los acentos. Y <codeinline>"variant"</codeinline> realiza comparaciones estrictas que tienen en cuenta tanto las mayúsculas como los acentos. El valor por defecto de esta propiedad es <codeinline>"variant"</codeinline> cuando el <codeinline>usage</codeinline> es <codeinline>"sort"</codeinline>. Si el uso es <codeinline>"search"</codeinline>, la sensibilidad por defecto depende de la configuración regional.</p>
     <p><codeinline>ignorePunctuation</codeinline></p>
-    <p>Establezca esta propiedad a true para ignorar espacios y signos de puntuación al comparar cadenas. Con esta propiedad en true, las cadenas "cualquiera" y "cualquiera", por ejemplo, se considerarán iguales.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Establezca esta propiedad a <codeinline>true</codeinline> para ignorar espacios y signos de puntuación al comparar cadenas. Con esta propiedad en <codeinline>true</codeinline>, las cadenas "cualquiera" y "cualquiera", por ejemplo, se considerarán iguales.</p>
     <p><codeinline>numeric</codeinline></p>
-    <p>Establezca esta propiedad a true si las cadenas que está comparando son enteras o contienen enteros y desea que se ordenen por orden numérico en lugar de por orden alfabético. Con esta opción activada, la cadena "Versión 9" se ordenará antes que "Versión 10", por ejemplo.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Establezca esta propiedad a <codeinline>true</codeinline> si las cadenas que está comparando son enteras o contienen enteros y desea que se ordenen por orden numérico en lugar de por orden alfabético. Con esta opción activada, la cadena "Versión 9" se ordenará antes que "Versión 10", por ejemplo.</p>
     <p><codeinline>caseFirst</codeinline></p>
-    <p>Esta propiedad especifica qué letra debe ir primero. Si especifica "upper", entonces "A" se ordenará antes que "a". Y si especifica "minúsculas", entonces "a" se ordenará antes que "A". En cualquier caso, tenga en cuenta que las variantes en mayúsculas y minúsculas de la misma letra estarán una al lado de la otra en el orden de clasificación, que es diferente del orden lexicográfico de código Uni (el comportamiento por defecto del método Array sort()) en el que todas las letras ASCII mayúsculas van antes que todas las letras ASCII minúsculas. El valor predeterminado de esta propiedad depende de la localización, y las implementaciones pueden ignorar esta propiedad y no permitirle modificar el orden de las mayúsculas y minúsculas.</p>
-    <p>Una vez creado un objeto Intl.Collator para la configuración regional y las opciones deseadas, puede utilizar su método compare() para comparar dos cadenas. Este método devuelve un número. Si el valor devuelto es menor que cero, entonces la primera cadena va antes que la segunda. Si es mayor que cero, la primera cadena va después de la segunda. Y si compare() devuelve cero, entonces las dos cadenas son iguales en lo que respecta a este intercalador.</p>
-    <p>Este método compare() que toma dos cadenas y devuelve un número menor, igual o mayor que cero es exactamente lo que el método Array sort() espera para su argumento opcional. Además, Intl.Collator vincula automáticamente el mé todo compare() a su instancia, por lo que puede pasarlo directamente a sort() sin tener que escribir una función envolvente e invocarla a través del objeto collator. He aquí algunos ejemplos:</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Esta propiedad especifica qué letra debe ir primero. Si especifica <codeinline>"upper"</codeinline>, entonces "A" se ordenará antes que "a". Y si especifica <codeinline>"lower"</codeinline>, entonces "a" se ordenará antes que "A". En cualquier caso, tenga en cuenta que las variantes en mayúsculas y minúsculas de la misma letra estarán una al lado de la otra en el orden de clasificación, que es diferente del orden lexicográfico de código Uni (el comportamiento por defecto del método Array <codeinline>sort()</codeinline>) en el que todas las letras ASCII mayúsculas van antes que todas las letras ASCII minúsculas. El valor predeterminado de esta propiedad depende de la localización, y las implementaciones pueden ignorar esta propiedad y no permitirle modificar el orden de las mayúsculas y minúsculas.</p>
+    <p>Una vez creado un objeto Intl.Collator para la configuración regional y las opciones deseadas, puede utilizar su método <codeinline>compare()</codeinline> para comparar dos cadenas. Este método devuelve un número. Si el valor devuelto es menor que cero, entonces la primera cadena va antes que la segunda. Si es mayor que cero, la primera cadena va después de la segunda. Y si <codeinline>compare()</codeinline> devuelve cero, entonces las dos cadenas son iguales en lo que respecta a este intercalador.</p>
+    <p>Este método <codeinline>compare()</codeinline> que toma dos cadenas y devuelve un número menor, igual o mayor que cero es exactamente lo que el método Array <codeinline>sort()</codeinline> espera para su argumento opcional. Además, Intl.Collator vincula automáticamente el mé todo <codeinline>compare()</codeinline> a su instancia, por lo que puede pasarlo directamente a <codeinline>sort()</codeinline> sin tener que escribir una función envolvente e invocarla a través del objeto collator. He aquí algunos ejemplos:</p>
     <pre>
     <code class="language-js">// A basic comparator for sorting in the user's locale.
     // Never sort human-readable strings without passing something like this:
@@ -1199,131 +1200,131 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     const fuzzyMatcher = new Intl.Collator(undefined, &lbrace; sensitivity: "base", ignorePunctuation: true }).compare;
     let strings = ["food", "fool", "Føø Bar"];
     strings.findIndex(s => fuzzyMatcher(s, "foobar") === 0) // => 2</code></pre>
-    <p>Algunas localidades tienen más de un orden de cotejo posible. En Alemania, por ejemplo, las guías telefónicas utilizan un orden ligeramente más fonético que los diccionarios. En España, antes de 1994, la "ch" y la "ll" se trataban como letras separadas, por lo que ese país tiene un orden de cotejo moderno y otro tradicional. Y en China, el orden de cotejo puede basarse en la codificación de los caracteres, en el radical base y los trazos de cada carácter, o en la romanización Pinyin de los caracteres. Estas variantes de intercalación no pueden seleccionarse mediante el argumento de opciones Intl.Collator, pero pueden seleccionarse añadiendo -u- co- a la cadena de configuración regional y añadiendo el nombre de la variante deseada. Utilice "de-DE-u- co-phonebk" para pedir la guía telefónica en Alemania, por ejemplo, y "zh-TW-u-co- pinyin" para pedir Pinyin en Taiwán.</p>
+    <p>Algunas localidades tienen más de un orden de cotejo posible. En Alemania, por ejemplo, las guías telefónicas utilizan un orden ligeramente más fonético que los diccionarios. En España, antes de 1994, la "ch" y la "ll" se trataban como letras separadas, por lo que ese país tiene un orden de cotejo moderno y otro tradicional. Y en China, el orden de cotejo puede basarse en la codificación de los caracteres, en el radical base y los trazos de cada carácter, o en la romanización Pinyin de los caracteres. Estas variantes de intercalación no pueden seleccionarse mediante el argumento de opciones Intl.Collator, pero pueden seleccionarse añadiendo <codeinline>-u-co-</codeinline> a la cadena de configuración regional y añadiendo el nombre de la variante deseada. Utilice <codeinline>"de-DE-u- co-phonebk"</codeinline> para pedir la guía telefónica en Alemania, por ejemplo, y <codeinline>"zh-TW-u-co-pinyin"</codeinline> para pedir Pinyin en Taiwán.</p>
     <pre>
     <code class="language-js">// Before 1994, CH and LL were treated as separate letters in Spain
     const modernSpanish = Intl.Collator("es-ES").compare;
     const traditionalSpanish = Intl.Collator("es-ES-u-co-trad").compare;
     let palabras = ["luz", "llama", "como", "chico"];
-    palabras.sort(modernSpanish) // => ["chico", "como", "llama", "luz"]
+    palabras.sort(modernSpanish)      // => ["chico", "como", "llama", "luz"]
     palabras.sort(traditionalSpanish) // => ["como", "chico", "luz", "llama"]</code></pre>
   </section>
   <section id="8">
     <h2>11.8 La API de la consola</h2>
-    <p>Usted ha visto la función console.log() utilizada a lo largo de este libro: en los navegadores web, imprime una cadena en la pestaña "Consola" del panel de herramientas de desarrollo del navegador, que puede ser muy útil cuando se depura. En Node, console.log() es una función de salida de propósito general e imprime sus argumentos al flujo stdout del proceso, donde típicamente aparece al usuario en una ventana de terminal como salida del programa.</p>
-    <p>La API de consola define una serie de funciones útiles además de console.log(). La API no forma parte de ningún estándar ECMAScript, pero está soportada por navegadores y por Node y ha sido formalmente escrita y estandarizada en https:// console.spec.whatwg.org.</p>
+    <p>Usted ha visto la función <codeinline>console.log()</codeinline> utilizada a lo largo de este libro: en los navegadores web, imprime una cadena en la pestaña "Consola" del panel de herramientas de desarrollo del navegador, que puede ser muy útil cuando se depura. En Node, <codeinline>console.log()</codeinline> es una función de salida de propósito general e imprime sus argumentos al flujo stdout del proceso, donde típicamente aparece al usuario en una ventana de terminal como salida del programa.</p>
+    <p>La API de consola define una serie de funciones útiles además de <codeinline>console.log()</codeinline>. La API no forma parte de ningún estándar ECMAScript, pero está soportada por navegadores y por Node y ha sido formalmente escrita y estandarizada en <a href="https://console.spec.whatwg.org">https://console.spec.whatwg.org</a>.</p>
     <p>La API de la consola define las siguientes funciones:</p>
     <p><codeinline>console.log()</codeinline></p>
-    <p>Es la función de consola más conocida. Convierte sus argumentos en cadenas y las muestra en la consola. Incluye espacios entre los argumentos e inicia una nueva línea después de mostrar todos los argumentos.</p>
-    <p><codeinline>console.debug(), console.info(), console.warn(), console.error()</codeinline></p>
-    <p>Estas funciones son casi idénticas a c o n s o l e .log(). En Node, con sole.error() envía su salida al flujo stderr en lugar de al flujo stdout, pero las otras funciones son alias de console.log(). En los navegadores, l o s mensajes de salida generados por cada una de estas funciones pueden ir precedidos de un icono que indica su nivel o gravedad, y la consola del desarrollador también puede permitir a los desarrolladores filtrar los mensajes de la consola por nivel.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Es la función de consola más conocida. Convierte sus argumentos en cadenas y las muestra en la consola. Incluye espacios entre los argumentos e inicia una nueva línea después de mostrar todos los argumentos.</p>
+    <p><codeinline>console.debug()</codeinline>, <codeinline>console.info()</codeinline>, <codeinline>console.warn()</codeinline>, <codeinline>console.error()</codeinline></p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Estas funciones son casi idénticas a <codeinline>console.log()</codeinline>. En Node, <codeinline>console.error()</codeinline> envía su salida al flujo stderr en lugar de al flujo stdout, pero las otras funciones son alias de <codeinline>console.log()</codeinline>. En los navegadores, l o s mensajes de salida generados por cada una de estas funciones pueden ir precedidos de un icono que indica su nivel o gravedad, y la consola del desarrollador también puede permitir a los desarrolladores filtrar los mensajes de la consola por nivel.</p>
     <p><codeinline>console.assert()</codeinline></p>
-    <p>Si el primer argumento es verdadero (es decir, si la aserción pasa), entonces esta función no hace nada. Pero si el primer argumento es falso u otro valor falso, los argumentos restantes se imprimen como si se hubieran pasado a console.error() con el prefijo "Aserción fallida". Tenga en cuenta que, a diferencia de las funciones assert() típicas, console.assert() no lanza una excepción cuando falla una aserción.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Si el primer argumento es verdadero (es decir, si la aserción pasa), entonces esta función no hace nada. Pero si el primer argumento es <codeinline>false</codeinline> u otro valor falso, los argumentos restantes se imprimen como si se hubieran pasado a <codeinline>console.error()</codeinline> con el prefijo "Aserción fallida". Tenga en cuenta que, a diferencia de las funciones <codeinline>assert()</codeinline> típicas, <codeinline>console.assert()</codeinline> no lanza una excepción cuando falla una aserción.</p>
     <p><codeinline>console.clear()</codeinline></p>
-    <p>Esta función borra la consola cuando eso es posible. Esto funciona en navegadores y en Node cuando Node está mostrando su salida a un terminal. Sin embargo, si la salida de Node ha sido redirigida a un archivo o a una tubería, entonces llamar a esta función no tiene ningún efecto.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Esta función borra la consola cuando eso es posible. Esto funciona en navegadores y en Node cuando Node está mostrando su salida a un terminal. Sin embargo, si la salida de Node ha sido redirigida a un archivo o a una tubería, entonces llamar a esta función no tiene ningún efecto.</p>
     <p><codeinline>console.table()</codeinline></p>
-    <p>Esta función es una característica muy potente pero poco conocida para producir una salida tabular, y es particularmente útil en programas Node que necesitan producir una salida que resuma los datos. console.table() intenta mostrar su en forma tabular (aunque, si no puede hacerlo, lo muestra utilizando el formato normal de console.log()). Esto funciona mejor cuando el argumento es una matriz relativamente corta de objetos y todos los objetos de la matriz tienen el mismo conjunto (relativamente pequeño) de propiedades. En este caso, cada objeto de la matriz se formatea como una fila de la tabla, y cada propiedad es una columna de la tabla. También puede pasar una matriz de nombres de propiedades como segundo argumento opcional para especificar el conjunto de columnas deseado. Si pasa un objeto en lugar de una matriz de objetos, la salida será una tabla con una columna para los nombres de las propiedades y otra para los valores de las propiedades. O, si los valores de las propiedades son a su vez objetos, sus nombres se convertirán en columnas de la tabla.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Esta función es una característica muy potente pero poco conocida para producir una salida tabular, y es particularmente útil en programas Node que necesitan producir una salida que resuma los datos. <codeinline>console.table()</codeinline> intenta mostrar su en forma tabular (aunque, si no puede hacerlo, lo muestra utilizando el formato normal de <codeinline>console.log()</codeinline>). Esto funciona mejor cuando el argumento es una matriz relativamente corta de objetos y todos los objetos de la matriz tienen el mismo conjunto (relativamente pequeño) de propiedades. En este caso, cada objeto de la matriz se formatea como una fila de la tabla, y cada propiedad es una columna de la tabla. También puede pasar una matriz de nombres de propiedades como segundo argumento opcional para especificar el conjunto de columnas deseado. Si pasa un objeto en lugar de una matriz de objetos, la salida será una tabla con una columna para los nombres de las propiedades y otra para los valores de las propiedades. O, si los valores de las propiedades son a su vez objetos, sus nombres se convertirán en columnas de la tabla.</p>
     <p><codeinline>console.trace()</codeinline></p>
-    <p>Esta función registra sus argumentos como lo hace console.log() y, además, sigue su salida con un seguimiento de pila. En Node, la salida va a stderr en lugar de stdout.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Esta función registra sus argumentos como lo hace <codeinline>console.log()</codeinline> y, además, sigue su salida con un seguimiento de pila. En Node, la salida va a stderr en lugar de stdout.</p>
     <p><codeinline>console.count()</codeinline></p>
-    <p>Esta función toma un argumento de cadena y registra esa cadena, seguida del número de veces que ha sido llamada con esa cadena. Esto puede ser útil cuando se depura un manejador de eventos, por ejemplo, si necesita hacer un seguimiento de cuántas veces se ha disparado el manejador de eventos.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Esta función toma un argumento de cadena y registra esa cadena, seguida del número de veces que ha sido llamada con esa cadena. Esto puede ser útil cuando se depura un manejador de eventos, por ejemplo, si necesita hacer un seguimiento de cuántas veces se ha disparado el manejador de eventos.</p>
     <p><codeinline>console.countReset()</codeinline></p>
-    <p>Esta función toma una cadena como argumento y reinicia el contador de esa cadena.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Esta función toma una cadena como argumento y reinicia el contador de esa cadena.</p>
     <p><codeinline>console.group()</codeinline></p>
-    <p>Esta función imprime sus argumentos en la consola como si se hubieran pasado a console.log(), luego establece el estado interno de la consola para que todos los mensajes de consola posteriores (hasta la siguiente llamada a console.groupEnd()) tengan una sangría relativa al mensaje que acaba de imprimir. Esto permite agrupar visualmente con sangría un grupo de mensajes relacionados. En los navegadores web, la consola del desarrollador suele permitir que los mensajes agrupados se contraigan y expandan como un grupo. Los argumentos de console.group() suelen utilizarse para dar un nombre explicativo al grupo.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Esta función imprime sus argumentos en la consola como si se hubieran pasado a <codeinline>console.log()</codeinline>, luego establece el estado interno de la consola para que todos los mensajes de consola posteriores (hasta la siguiente llamada a <codeinline>console.groupEnd()</codeinline>) tengan una sangría relativa al mensaje que acaba de imprimir. Esto permite agrupar visualmente con sangría un grupo de mensajes relacionados. En los navegadores web, la consola del desarrollador suele permitir que los mensajes agrupados se contraigan y expandan como un grupo. Los argumentos de <codeinline>console.group()</codeinline> suelen utilizarse para dar un nombre explicativo al grupo.</p>
     <p><codeinline>console.groupCollapsed()</codeinline></p>
-    <p>Esta función funciona como console.group() excepto que en los navegadores web, el grupo estará "colapsado" por defecto y los mensajes que contenga estarán ocultos a menos que el usuario haga clic para expandir el grupo. En Node, esta función es un sinónimo de console.group().</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Esta función funciona como <codeinline>console.group()</codeinline> excepto que en los navegadores web, el grupo estará "colapsado" por defecto y los mensajes que contenga estarán ocultos a menos que el usuario haga clic para expandir el grupo. En Node, esta función es un sinónimo de <codeinline>console.group()</codeinline>.</p>
     <p><codeinline>console.groupEnd()</codeinline></p>
-    <p>Esta función no toma argumentos. No produce ninguna salida propia, pero termina la sangría y el agrupamiento causados por la llamada más reciente a console.group() o console.groupCollapsed().</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Esta función no toma argumentos. No produce ninguna salida propia, pero termina la sangría y el agrupamiento causados por la llamada más reciente a <codeinline>console.group()</codeinline> o <codeinline>console.groupCollapsed()</codeinline>.</p>
     <p><codeinline>console.time()</codeinline></p>
-    <p>Esta función toma un único argumento de cadena, anota la hora a la que se llamó con esa cadena y no produce ninguna salida.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Esta función toma un único argumento de cadena, anota la hora a la que se llamó con esa cadena y no produce ninguna salida.</p>
     <p><codeinline>console.timeLog()</codeinline></p>
-    <p>Esta función toma una cadena como primer argumento. Si esa cadena s e h a pasado previamente a console.time(), entonces imprime esa cadena seguida del tiempo transcurrido desde la llamada a console.time(). Si hay argumentos adicionales a console.timeLog(), se imprimen como si se hubieran pasado a console.log().</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Esta función toma una cadena como primer argumento. Si esa cadena s e h a pasado previamente a <codeinline>console.time()</codeinline>, entonces imprime esa cadena seguida del tiempo transcurrido desde la llamada a <codeinline>console.time()</codeinline>. Si hay argumentos adicionales a <codeinline>console.timeLog()</codeinline>, se imprimen como si se hubieran pasado a <codeinline>console.log()</codeinline>.</p>
     <p><codeinline>console.timeEnd()</codeinline></p>
-    <p>Esta función toma un único argumento de cadena. Si ese argumento había sido pasado previamente a console.time(), entonces imprime ese argumento y el tiempo transcurrido. Después de llamar a console.timeEnd(), ya no es legal llamar a console.time Log() sin antes volver a llamar a console.time().</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Esta función toma un único argumento de cadena. Si ese argumento había sido pasado previamente a <codeinline>console.time()</codeinline>, entonces imprime ese argumento y el tiempo transcurrido. Después de llamar a <codeinline>console.timeEnd()</codeinline>, ya no es legal llamar a <codeinline>console.timeLog()</codeinline> sin antes volver a llamar a <codeinline>console.time()</codeinline>.</p>
   </section>
   <section id="8-1" class="py-4 xs:py-5 sm:py-6">
     <h2>11.8.1 Salida formateada con consola</h2>
-    <p>Las funciones de consola que imprimen sus argumentos como console.log() tienen una característica poco conocida: si el primer argumento es una cadena que incluye %s, %i, %d, %f, %o, %O, o %c, entonces este primer argumento se trata como cadena de formato,6 y los valores de los argumentos subsiguientes se sustituyen en la cadena en lugar de las secuencias de dos caracteres %.</p>
+    <p>Las funciones de consola que imprimen sus argumentos como <codeinline>console.log()</codeinline> tienen una característica poco conocida: si el primer argumento es una cadena que incluye <codeinline>%s</codeinline>, <codeinline>%i</codeinline>, <codeinline>%d</codeinline>, <codeinline>%f</codeinline>, <codeinline>%o</codeinline>, <codeinline>%0</codeinline>, o <codeinline>%c</codeinline>, entonces este primer argumento se trata como cadena de formato,<sup>6</sup> y los valores de los argumentos subsiguientes se sustituyen en la cadena en lugar de las secuencias de dos caracteres <codeinline>%</codeinline>.</p>
     <p>Los significados de las secuencias son los siguientes:</p>
     <p><codeinline>%s</codeinline></p>
-    <p>El argumento se convierte en una cadena.</p>
-    <p><codeinline>%i and %d</codeinline></p>
-    <p>El argumento se convierte en un número y luego se trunca a un entero.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">El argumento se convierte en una cadena.</p>
+    <p><codeinline>%i</codeinline> <em>y</em> <codeinline>%d</codeinline></p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">El argumento se convierte en un número y luego se trunca a un entero.</p>
     <p><codeinline>%f</codeinline></p>
-    <p>El argumento se convierte en un número</p>
-    <p><codeinline>%o and %O</codeinline></p>
-    <p>El argumento se trata como un objeto y se muestran los nombres y valores de las propiedades. (En los navegadores web, esta visualización suele ser interactiva, y los usuarios pueden expandir y contraer propiedades para explorar una estructura de datos anidada). %o y %O muestran detalles del objeto. La variante en mayúsculas utiliza un formato de salida dependiente de la implementación que se considera más útil para los desarrolladores de software.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">El argumento se convierte en un número</p>
+    <p><codeinline>%o</codeinline> <em>y</em> <codeinline>%O</codeinline></p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">El argumento se trata como un objeto y se muestran los nombres y valores de las propiedades. (En los navegadores web, esta visualización suele ser interactiva, y los usuarios pueden expandir y contraer propiedades para explorar una estructura de datos anidada). <codeinline>%o</codeinline> y <codeinline>%O</codeinline> muestran detalles del objeto. La variante en mayúsculas utiliza un formato de salida dependiente de la implementación que se considera más útil para los desarrolladores de software.</p>
     <p><codeinline>%c</codeinline></p>
-    <p>En los navegadores web, el argumento se interpreta como una cadena de estilos CSS y se utiliza para dar estilo al texto que le sigue (hasta la siguiente secuencia %c o el final de la cadena). En Node, la secuencia %c y su correspondiente argumento son simplemente ignorados.</p>
-    <p>Tenga en cuenta que a menudo no es necesario utilizar una cadena de formato con las funciones de consola: normalmente es fácil obtener una salida adecuada simplemente pasando uno o más valores (incluyendo objetos) a la función y permitiendo que la implementación los muestre de forma útil. Como ejemplo, observe que, si pasa un objeto Error a console.log(), se imprime automáticamente junto con su rastro de pila.</p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">En los navegadores web, el argumento se interpreta como una cadena de estilos CSS y se utiliza para dar estilo al texto que le sigue (hasta la siguiente secuencia <codeinline>%c</codeinline> o el final de la cadena). En Node, la secuencia <codeinline>%c</codeinline> y su correspondiente argumento son simplemente ignorados.</p>
+    <p>Tenga en cuenta que a menudo no es necesario utilizar una cadena de formato con las funciones de consola: normalmente es fácil obtener una salida adecuada simplemente pasando uno o más valores (incluyendo objetos) a la función y permitiendo que la implementación los muestre de forma útil. Como ejemplo, observe que, si pasa un objeto Error a <codeinline>console.log()</codeinline>, se imprime automáticamente junto con su rastro de pila.</p>
   </section>
   <section id="9">
     <h2>11.9 API de URL</h2>
     <p>Dado que JavaScript se utiliza con tanta frecuencia en navegadores y servidores web, es habitual que el código JavaScript necesite manipular URLs. La clase URL analiza las URL y también permite modificarlas (añadiendo parámetros de búsqueda o alterando las rutas, por ejemplo). También maneja adecuadamente el complicado tema de escapar y desescapar los diversos componentes de una URL.</p>
-    <p>La clase URL no forma parte de ningún estándar ECMAScript, pero funciona en Node y en todos los navegadores de Internet que no sean Internet Explorer. Está estandarizada en https:// url.spec.whatwg.org.</p>
-    <p>Cree un objeto URL con el constructor URL(), pasando una cadena URL absoluta como argumento. También puede pasar una URL relativa como primer argumento y la URL absoluta a la que es relativa como segundo argumento. Una vez creado el objeto URL, sus distintas propiedades le permiten consultar versiones no descifradas de las distintas partes de la URL:</p>
+    <p>La clase URL no forma parte de ningún estándar ECMAScript, pero funciona en Node y en todos los navegadores de Internet que no sean Internet Explorer. Está estandarizada en <a href="https://url.spec.whatwg.org">https://url.spec.whatwg.org</a>.</p>
+    <p>Cree un objeto URL con el constructor <codeinline>URL()</codeinline>, pasando una cadena URL absoluta como argumento. También puede pasar una URL relativa como primer argumento y la URL absoluta a la que es relativa como segundo argumento. Una vez creado el objeto URL, sus distintas propiedades le permiten consultar versiones no descifradas de las distintas partes de la URL:</p>
     <pre>
     <code class="language-js">let url = new URL("https://example.com:8000/path/name?q=term#fragment");
-    url.href // => "https://example.com:8000/path/name?q=term#fragment"
-    url.origin // => "https://example.com:8000"
-    url.protocol // => "https:"
-    url.host // => "example.com:8000"
-    url.hostname // => "example.com"
-    url.port // => "8000"
-    url.pathname // => "/path/name"
-    url.search // => "?q=term"
-    url.hash // => "#fragment"</code></pre>
+    url.href      // => "https://example.com:8000/path/name?q=term#fragment"
+    url.origin    // => "https://example.com:8000"
+    url.protocol  // => "https:"
+    url.host      // => "example.com:8000"
+    url.hostname  // => "example.com"
+    url.port      // => "8000"
+    url.pathname  // => "/path/name"
+    url.search    // => "?q=term"
+    url.hash      // => "#fragment"</code></pre>
     <p>Aunque no se utiliza habitualmente, las URL pueden incluir un nombre de usuario o un nombre de usuario y una contraseña, y la clase URL también puede analizar estos componentes de URL:</p>
     <pre>
     <code class="language-js">let url = new URL("ftp://admin:1337!@ftp.example.com/");
-    url.href // => "ftp://admin:1337!@ftp.example.com/"
-    url.origin // => "ftp://ftp.example.com"
-    url.username // => "admin"
-    url.password // => "1337!"</code></pre>
-    <p>La propiedad de origen aquí es una simple combinación del protocolo URL y el host (incluyendo el puerto si se especifica uno). Como tal, es una propiedad de sólo lectura. Pero cada una de las otras propiedades demostradas en el ejemplo anterior es de lectura/escritura: puede establecer cualquiera de estas propiedades para establecer la parte correspondiente de la URL:</p>
+    url.href      // => "ftp://admin:1337!@ftp.example.com/"
+    url.origin    // => "ftp://ftp.example.com"
+    url.username  // => "admin"
+    url.password  // => "1337!"</code></pre>
+    <p>La propiedad de <codeinline>origin</codeinline> aquí es una simple combinación del protocolo URL y el host (incluyendo el puerto si se especifica uno). Como tal, es una propiedad de sólo lectura. Pero cada una de las otras propiedades demostradas en el ejemplo anterior es de lectura/escritura: puede establecer cualquiera de estas propiedades para establecer la parte correspondiente de la URL:</p>
     <pre>
     <code class="language-js">let url = new URL("https://example.com"); // Start with our server
-    url.pathname = "api/search"; // Add a path to an API endpoint
-    url.search = "q=test"; // Add a query parameter
-    url.toString() // => "https://example.com/api/search?q=test"</code></pre>
+    url.pathname = "api/search";  // Add a path to an API endpoint
+    url.search = "q=test";        // Add a query parameter
+    url.toString()                // => "https://example.com/api/search?q=test"</code></pre>
     <p>Una de las características importantes de la clase URL es que añade correctamente la puntuación y escapa caracteres especiales en las URL cuando es necesario:</p>
     <pre>
     <code class="language-js">let url = new URL("https://example.com");
     url.pathname = "path with spaces";
     url.search = "q=foo#bar";
-    url.pathname // => "/path%20with%20spaces"
-    url.search // => "?q=foo%23bar"
-    url.href // => "https://example.com/path%20with%20spaces?q=foo%23bar"</code></pre>
-    <p>La propiedad href en estos ejemplos es especial: leer href es equivalente a llamar a toString(): reensambla todas las partes de la URL en la forma de cadena canónica de la URL. Y establecer href a una nueva cadena vuelve a ejecutar el analizador de URL en la nueva cadena como si hubiera llamado de nuevo al constructor URL().</p>
-    <p>En los ejemplos anteriores, hemos estado utilizando la propiedad de búsqueda para referirnos a toda la parte de consulta de una URL, que consiste en los caracteres desde un signo de interrogación hasta el final de la URL o hasta el primer carácter hash. A veces, es suficiente tratar esto como una única propiedad URL. A menudo, sin embargo, las peticiones HTTP codifican los valores de múltiples campos de formulario o múltiples parámetros API en la parte de consulta de una URL utilizando el formato application/x-www-form-urlencoded. En este formato, la parte de consulta de la URL es un signo de interrogación seguido de uno o más pares nombre/valor, separados entre sí por ampersands. El mismo nombre puede aparecer más de una vez, lo que da lugar a un parámetro de búsqueda con más de un valor.</p>
-    <p>Si desea codificar este tipo de pares nombre/valor en la parte de consulta de una URL, entonces la propiedad searchParams será más útil que la propiedad search. La propiedad search es una cadena de lectura/escritura que permite obtener y establecer toda la parte de consulta de la U R L . La propiedad searchParams es una referencia de sólo lectura a una propiedad Objeto URLSearchParams, que dispone de una API para obtener, establecer, añadir, eliminar y ordenar los parámetros codificados en la parte de consulta de la URL:</p>
+    url.pathname  // => "/path%20with%20spaces"
+    url.search    // => "?q=foo%23bar"
+    url.href      // => "https://example.com/path%20with%20spaces?q=foo%23bar"</code></pre>
+    <p>La propiedad <codeinline>href</codeinline> en estos ejemplos es especial: leer <codeinline>href</codeinline> es equivalente a llamar a <codeinline>toString()</codeinline>: reensambla todas las partes de la URL en la forma de cadena canónica de la URL. Y establecer <codeinline>href</codeinline> a una nueva cadena vuelve a ejecutar el analizador de URL en la nueva cadena como si hubiera llamado de nuevo al constructor <codeinline>URL()</codeinline>.</p>
+    <p>En los ejemplos anteriores, hemos estado utilizando la propiedad <codeinline>search</codeinline> para referirnos a toda la parte de consulta de una URL, que consiste en los caracteres desde un signo de interrogación hasta el final de la URL o hasta el primer carácter hash. A veces, es suficiente tratar esto como una única propiedad URL. A menudo, sin embargo, las peticiones HTTP codifican los valores de múltiples campos de formulario o múltiples parámetros API en la parte de consulta de una URL utilizando el formato <codeinline>application/x-www-form-urlencoded</codeinline>. En este formato, la parte de consulta de la URL es un signo de interrogación seguido de uno o más pares nombre/valor, separados entre sí por ampersands. El mismo nombre puede aparecer más de una vez, lo que da lugar a un parámetro de búsqueda con más de un valor.</p>
+    <p>Si desea codificar este tipo de pares nombre/valor en la parte de consulta de una URL, entonces la propiedad <codeinline>searchParams</codeinline> será más útil que la propiedad <codeinline>search</codeinline>. La propiedad <codeinline>search</codeinline> es una cadena de lectura/escritura que permite obtener y establecer toda la parte de consulta de la URL . La propiedad <codeinline>searchParams</codeinline> es una referencia de sólo lectura a una propiedad Objeto URLSearchParams, que dispone de una API para obtener, establecer, añadir, eliminar y ordenar los parámetros codificados en la parte de consulta de la URL:</p>
     <pre>
     <code class="language-js">let url = new URL("https://example.com/search");
-    url.search // => "": no query yet
+    url.search                            // => "": no query yet
     url.searchParams.append("q", "term"); // Add a search parameter
-    url.search // => "?q=term"
-    url.searchParams.set("q", "x"); // Change the value of this parameter
-    url.search // => "?q=x"
-    url.searchParams.get("q") // => "x": query the parameter value
-    url.searchParams.has("q") // => true: there is a q parameter
-    url.searchParams.has("p") // => false: there is no p parameter
+    url.search                            // => "?q=term"
+    url.searchParams.set("q", "x");       // Change the value of this parameter
+    url.search                            // => "?q=x"
+    url.searchParams.get("q")             // => "x": query the parameter value
+    url.searchParams.has("q")             // => true: there is a q parameter
+    url.searchParams.has("p")             // => false: there is no p parameter
     url.searchParams.append("opts", "1"); // Add another search parameter
-    url.search // => "?q=x&opts=1"
+    url.search                            // => "?q=x&opts=1"
     url.searchParams.append("opts", "&"); // Add another value for same name
-    url.search // => "?q=x&opts=1&opts=%26": note escape
-    url.searchParams.get("opts") // => "1": the first value
-    url.searchParams.getAll("opts") // => ["1", "&"]: all values
-    url.searchParams.sort(); // Put params in alphabetical order
-    url.search // => "?opts=1&opts=%26&q=x"
-    url.searchParams.set("opts", "y"); // Change the opts param
-    url.search // => "?opts=y&q=x"
+    url.search                            // => "?q=x&opts=1&opts=%26": note escape
+    url.searchParams.get("opts")          // => "1": the first value
+    url.searchParams.getAll("opts")       // => ["1", "&"]: all values
+    url.searchParams.sort();              // Put params in alphabetical order
+    url.search                            // => "?opts=1&opts=%26&q=x"
+    url.searchParams.set("opts", "y");    // Change the opts param
+    url.search                            // => "?opts=y&q=x"
     // searchParams is iterable
-    [...url.searchParams] // => [["opts", "y"], ["q", "x"]]
-    url.searchParams.delete("opts"); // Delete the opts param
-    url.search // => "?q=x"
-    url.href // => "https://example.com/search?q=x"</code></pre>
-    <p>El valor de la propiedad searchParams es un objeto URLSearchParams. Si desea codificar parámetros de URL en una cadena de consulta, puede crear un objeto URLSearchParams, añadir parámetros, convertirlo en una cadena y establecerlo en la propiedad de búsqueda de una URL:</p>
+    [...url.searchParams]                 // => [["opts", "y"], ["q", "x"]]
+    url.searchParams.delete("opts");      // Delete the opts param
+    url.search                            // => "?q=x"
+    url.href                              // => "https://example.com/search?q=x"</code></pre>
+    <p>El valor de la propiedad <codeinline>searchParams</codeinline> es un objeto URLSearchParams. Si desea codificar parámetros de URL en una cadena de consulta, puede crear un objeto URLSearchParams, añadir parámetros, convertirlo en una cadena y establecerlo en la propiedad <codeinline>search</codeinline> de una URL:</p>
     <pre>
     <code class="language-js">let url = new URL("http://example.com");
     let params = new URLSearchParams();
@@ -1331,31 +1332,31 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     params.append("opts", "exact");
     params.toString() // => "q=term&opts=exact"
     url.search = params;
-    url.href // => "http://example.com/?q=term&opts=exact"</code></pre>
+    url.href          // => "http://example.com/?q=term&opts=exact"</code></pre>
   </section>
   <section id="9-1" class="py-4 xs:py-5 sm:py-6">
     <h2>11.9.1 Funciones URL heredadas</h2>
-    <p>Antes de la definición de la API de URL descrita anteriormente, ha habido múltiples intentos de soportar el escapado y desescapado de URLs en el núcleo del lenguaje JavaScript. El primer intento fueron las funciones definidas globalmente escape() y unescape(), que ahora están obsoletas pero todavía ampliamente implementadas. No deberían utilizarse.</p>
-    <p>Cuando escape() y unescape() quedaron obsoletas, ECMAScript introdujo dos pares de funciones globales alternativas:</p>
-    <p><codeinline>encodeURI() and decodeURI()</codeinline></p>
-    <p>encodeURI() toma una cadena como argumento y devuelve una nueva cadena en la que se escapan los caracteres no ASCII y determinados caracteres ASCII (como el espacio). decodeURI() invierte el proceso. Los caracteres que deben escaparse se convierten primero a su codificación UTF-8 y, a continuación, cada byte de esa codificación se sustituye por una secuencia de escape %xx, donde xx son dos dígitos hexadecimales. Dado que encodeURI() está pensada para codificar URLs completas, no escapa caracteres separadores de URL como /, ? y #. Pero esto significa que encodeURI() no puede funcionar correctamente con URLs que contengan esos caracteres en sus distintos componentes.</p>
-    <p><codeinline>encodeURIComponent() and decodeURIComponent()</codeinline></p>
-    <p>Este par de funciones funcionan igual que encodeURI() y decodeURI(), salvo que están pensadas para escapar componentes individuales de un URI, por lo que también escapan caracteres como /, ? y # que se utilizan para separar dichos componentes. Estas son las más útiles de las funciones URL heredadas, pero tenga en cuenta que encodeURICompo nent() escapará caracteres / en un nombre de ruta que probablemente no desee escapar. Y convertirá los espacios en un parámetro de consulta a %20, aunque se supone que los espacios deben escaparse con un + en esa parte de una URL.</p>
+    <p>Antes de la definición de la API de URL descrita anteriormente, ha habido múltiples intentos de soportar el escapado y desescapado de URLs en el núcleo del lenguaje JavaScript. El primer intento fueron las funciones definidas globalmente <codeinline>escape()</codeinline> y <codeinline>unescape()</codeinline>, que ahora están obsoletas pero todavía ampliamente implementadas. No deberían utilizarse.</p>
+    <p>Cuando <codeinline>escape()</codeinline> y <codeinline>unescape()</codeinline> quedaron obsoletas, ECMAScript introdujo dos pares de funciones globales alternativas:</p>
+    <p><codeinline>encodeURI()</codeinline> <em>y</em> <codeinline>decodeURI()</codeinline></p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9"><codeinline>encodeURI()</codeinline> toma una cadena como argumento y devuelve una nueva cadena en la que se escapan los caracteres no ASCII y determinados caracteres ASCII (como el espacio). <codeinline>decodeURI()</codeinline> invierte el proceso. Los caracteres que deben escaparse se convierten primero a su codificación UTF-8 y, a continuación, cada byte de esa codificación se sustituye por una secuencia de escape <em>%xx</em>, donde <em>xx</em> son dos dígitos hexadecimales. Dado que <codeinline>encodeURI()</codeinline> está pensada para codificar URLs completas, no escapa caracteres separadores de URL como <codeinline>/</codeinline>, <codeinline>?</codeinline> y <codeinline>#</codeinline>. Pero esto significa que <codeinline>encodeURI()</codeinline> no puede funcionar correctamente con URLs que contengan esos caracteres en sus distintos componentes.</p>
+    <p><codeinline>encodeURIComponent()</codeinline> <em>y</em> <codeinline>decodeURIComponent()</codeinline></p>
+    <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Este par de funciones funcionan igual que <codeinline>encodeURI()</codeinline> y <codeinline>decodeURI()</codeinline>, salvo que están pensadas para escapar componentes individuales de un URI, por lo que también escapan caracteres como <codeinline>/</codeinline>, <codeinline>?</codeinline> y <codeinline>#</codeinline> que se utilizan para separar dichos componentes. Estas son las más útiles de las funciones URL heredadas, pero tenga en cuenta que <codeinline>encodeURIComponent()</codeinline> escapará caracteres <codeinline>/</codeinline> en un nombre de ruta que probablemente no desee escapar. Y convertirá los espacios en un parámetro de consulta a <codeinline>%20</codeinline>, aunque se supone que los espacios deben escaparse con un <codeinline>+</codeinline> en esa parte de una URL.</p>
     <p>El problema fundamental de todas estas funciones heredadas es que pretenden aplicar un único esquema de codificación a todas las partes de una URL, cuando lo cierto es que las distintas partes de una URL utilizan codificaciones diferentes. Si quieres una U R L correctamente formateada y codificada, la solución es simplemente utilizar la clase URL para todas las manipulaciones de URL que hagas.</p>
   </section>
   <section id="10">
     <h2>11.10 Temporizadores</h2>
-    <p>Desde los primeros días de JavaScript, los navegadores web han definido dos funciones -setTimeout() y setInterval()- que permiten a los programas pedir al navegador que invoque una función una vez transcurrido un tiempo determinado o que invoque la función repetidamente en un intervalo especificado. Estas funciones nunca se han estandarizado como parte del núcleo del lenguaje, pero funcionan en todos los navegadores y en Node y forman parte de facto de la biblioteca estándar de JavaScript.</p>
-    <p>El primer argumento de setTimeout() es una función, y el segundo es un número que especifica cuántos milisegundos deben transcurrir antes de que se invoque la función. Después de la cantidad de tiempo especificada (y quizás un poco más si el sistema está ocupado), la función será invocada sin argumentos. Aquí, por ejemplo, hay tres llamadas a setTimeout() que imprimen mensajes de consola después de un segundo, dos segundos y tres segundos:</p>
+    <p>Desde los primeros días de JavaScript, los navegadores web han definido dos funciones -<codeinline>setTimeout()</codeinline> y <codeinline>setInterval()</codeinline>- que permiten a los programas pedir al navegador que invoque una función una vez transcurrido un tiempo determinado o que invoque la función repetidamente en un intervalo especificado. Estas funciones nunca se han estandarizado como parte del núcleo del lenguaje, pero funcionan en todos los navegadores y en Node y forman parte de facto de la biblioteca estándar de JavaScript.</p>
+    <p>El primer argumento de <codeinline>setTimeout()</codeinline> es una función, y el segundo es un número que especifica cuántos milisegundos deben transcurrir antes de que se invoque la función. Después de la cantidad de tiempo especificada (y quizás un poco más si el sistema está ocupado), la función será invocada sin argumentos. Aquí, por ejemplo, hay tres llamadas a <codeinline>setTimeout()</codeinline> que imprimen mensajes de consola después de un segundo, dos segundos y tres segundos:</p>
     <pre>
     <code class="language-js">setTimeout(() => &lbrace; console.log("Ready..."); }, 1000);
     setTimeout(() => &lbrace; console.log("set..."); }, 2000);
     setTimeout(() => &lbrace; console.log("go!"); }, 3000);</code></pre>
-    <p>Observe que setTimeout() no espera a que transcurra el tiempo antes de volver. Las tres líneas de código de este ejemplo se ejecutan casi instantáneamente, pero luego no ocurre nada hasta que transcurren 1.000 milisegundos.</p>
-    <p>Si omite el segundo argumento de setTimeout(), su valor por defecto es 0. Eso no significa, sin embargo, que la función que especifique sea invocada inmediatamente. En su lugar, la función se registra para ser llamada "tan pronto como sea posible". Si un navegador está particularmente ocupado manejando entradas del usuario u otros eventos, pueden pasar 10 milisegundos o más antes de que la función sea invocada.</p>
-    <p>setTimeout() registra una función para ser invocada una vez. A veces, esa función llamará a su vez a setTimeout() para programar otra invocación en un momento futuro. Si desea invocar una función repetidamente, sin embargo, a menudo es más sencillo utilizar setInterval(). setInterval() toma los mismos dos argumentos que setTimeout() pero invoca la función repetidamente cada vez que el número especificado de milisegundos (aproximadamente) han transcurrido.</p>
-    <p>Tanto setTimeout() como setInterval() devuelven un valor. Si guarda este valor en una variable, puede utilizarlo más tarde para cancelar la ejecución de la función pasándoselo a clearTimeout() o clearInterval(). El valor devuelto es típicamente un número en los navegadores web y es un objeto en Node. El tipo real no importa, y debes tratarlo como un valor opaco. Lo único que puede hacer con este valor es pasarlo a clearTimeout() para cancelar la ejecución de una función registrada con setTime out() (suponiendo que aún no haya sido invocada) o para detener la ejecución repetida de una función registrada con setInterval().</p>
-    <p>A continuación se muestra un ejemplo que demuestra el uso de setTimeout(), setInterval() y clearInterval() para mostrar un simple reloj digital con la API de Consola:</p>
+    <p>Observe que <codeinline>setTimeout()</codeinline> no espera a que transcurra el tiempo antes de volver. Las tres líneas de código de este ejemplo se ejecutan casi instantáneamente, pero luego no ocurre nada hasta que transcurren 1.000 milisegundos.</p>
+    <p>Si omite el segundo argumento de <codeinline>setTimeout()</codeinline>, su valor por defecto es 0. Eso no significa, sin embargo, que la función que especifique sea invocada inmediatamente. En su lugar, la función se registra para ser llamada "tan pronto como sea posible". Si un navegador está particularmente ocupado manejando entradas del usuario u otros eventos, pueden pasar 10 milisegundos o más antes de que la función sea invocada.</p>
+    <p><codeinline>setTimeout()</codeinline> registra una función para ser invocada una vez. A veces, esa función llamará a su vez a <codeinline>setTimeout()</codeinline> para programar otra invocación en un momento futuro. Si desea invocar una función repetidamente, sin embargo, a menudo es más sencillo utilizar <codeinline>setInterval()</codeinline>. <codeinline>setInterval()</codeinline> toma los mismos dos argumentos que <codeinline>setTimeout()</codeinline> pero invoca la función repetidamente cada vez que el número especificado de milisegundos (aproximadamente) han transcurrido.</p>
+    <p>Tanto <codeinline>setTimeout()</codeinline> como <codeinline>setInterval()</codeinline> devuelven un valor. Si guarda este valor en una variable, puede utilizarlo más tarde para cancelar la ejecución de la función pasándoselo a <codeinline>clearTimeout()</codeinline> o <codeinline>clearInterval()</codeinline>. El valor devuelto es típicamente un número en los navegadores web y es un objeto en Node. El tipo real no importa, y debes tratarlo como un valor opaco. Lo único que puede hacer con este valor es pasarlo a <codeinline>clearTimeout()</codeinline> para cancelar la ejecución de una función registrada con <codeinline>setTimeout()</codeinline> (suponiendo que aún no haya sido invocada) o para detener la ejecución repetida de una función registrada con <codeinline>setInterval()</codeinline>.</p>
+    <p>A continuación se muestra un ejemplo que demuestra el uso de <codeinline>setTimeout()</codeinline>, <codeinline>setInterval()</codeinline> y <codeinline>clearInterval()</codeinline> para mostrar un simple reloj digital con la API de Consola:</p>
     <pre>
     <code class="language-js">// Once a second: clear the console and print the current time
     let clock = setInterval(() => &lbrace;
@@ -1365,7 +1366,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
 
     // After 10 seconds: stop the repeating code above.
     setTimeout(() => &lbrace; clearInterval(clock); }, 10000);</code></pre>
-    <p>Volveremos a ver setTimeout() y setInterval() cuando tratemos la programación asíncrona en el capítulo 13.</p>
+    <p>Volveremos a ver <codeinline>setTimeout()</codeinline> y <codeinline>setInterval()</codeinline> cuando tratemos la programación asíncrona en el <a href="capitulo-13">Capítulo 13</a>.</p>
   </section>
   <section id="11" class="py-4 xs:py-5 sm:py-6">
     <h2>11.11 Resumen</h2>
@@ -1375,7 +1376,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       <li class="font-normal">Las clases Date y URL para trabajar con fechas y URLs.</li>
       <li class="font-normal">Gramática de expresiones regulares de JavaScript y su clase RegExp para la concordancia de patrones textuales.</li>
       <li class="font-normal">Biblioteca de internacionalización de JavaScript para dar formato a fechas, horas y números y para ordenar cadenas.</li>
-      <li class="font-normal">El objeto JSON para serializar y deserializar estructuras de datos simples y el objeto objeto de consola para el registro de mensajes.</li>
+      <li class="font-normal">El objeto <codeinline>JSON</codeinline> para serializar y deserializar estructuras de datos simples y el objeto objeto de <codeinline>console</codeinline> para el registro de mensajes.</li>
     </ul>
   </section>
 </Layoutjavascript>
