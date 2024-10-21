@@ -1,0 +1,132 @@
+---
+import Navegation from "../../components/Navegation.astro";
+import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
+---
+<Layoutjavascript title="JavaScript: La guia definitiva">
+  <Navegation capAnterior="capitulo-15" capSiguiente="capitulo-17" />
+  <section class="fadeIn">
+    <h1>JavaScript del lado del servidor con Node</h1>
+    <p>Node es JavaScript con enlaces al sistema operativo subyacente, lo que permite escribir programas JavaScript que leen y escriben archivos, ejecutan procesos hijo y se comunican a través de la red. Esto hace que Node sea útil como:</p>
+    <ul>
+      <li class="font-normal">Alternativa moderna a los scripts de shell que no adolece de la sintaxis arcana de bash y otros shells de Unix.</li>
+      <li class="font-normal">Lenguaje de programación de uso general para ejecutar programas fiables, no sujeto a las restricciones de seguridad impuestas por los navegadores web al código no fiable.</li>
+      <li class="font-normal">Entorno popular para escribir servidores web eficientes y altamente concurrentes.</li>
+    </ul>
+    <p>La característica que define a Node es su concurrencia basada en eventos de un solo hilo, habilitada por una API asíncrona por defecto. Si has programado en otros lenguajes pero no has hecho mucho código JavaScript, o si eres un programador JavaScript experimentado acostumbrado a escribir código para navegadores web, usar Node será un poco de adaptación, como lo es cualquier lenguaje o entorno de programación nuevo. Este capítulo comienza explicando el modelo de programación de Node, con énfasis en la concurrencia, la API de Node para trabajar con datos en streaming y el tipo Buffer de Node para trabajar con datos binarios. Estas secciones iniciales son seguidas por secciones que resaltan y demuestran algunas de las APIs más importantes de Node, incluyendo aquellas para trabajar con archivos, redes, procesos e hilos.</p>
+    <p>Un capítulo no es suficiente para documentar todas las APIs de Node, pero mi esperanza es que este capítulo explique lo suficiente de los fundamentos para hacerte productivo con Node, y confiado en que puedes dominar cualquier nueva API que necesites.</p>
+    <article>
+      <p class="title-article">Instalación del nodo</p>
+      <p>Node es un software de código abierto. Visite https://nodejs.org para descargar e instalar Node para Windows y MacOS. En Linux, puede instalar Node con su gestor de paquetes nor- mal, o puede visitar https://nodejs.org/en/download para descargar los binarios directamente. Si trabajas con software en contenedores, puedes encontrar imágenes Docker oficiales de Node en https://hub.docker.com.</p>
+      <p>Además del ejecutable de Node, una instalación de Node también incluye npm, un gestor de paquetes que permite acceder fácilmente a un vasto ecosistema de herramientas y librerías JavaScript. Los ejemplos de este capítulo utilizarán únicamente los paquetes integrados de Node y no requerirán npm ni ninguna librería externa</p>
+      <p>Por último, no pases por alto la documentación oficial de Node, disponible en https:// nodejs.org/api y https://nodejs.org/docs/guides. La he encontrado bien organizada y bien escrita.</p>
+    </article>
+  </section>
+  <section id="1" class="py-4 xs:py-5 sm:py-6">
+    <h2>16.1 Conceptos básicos de programación de nodos</h2>
+  </section>
+  <section id="1-1">
+    <h2>16.1.1 Salida de la consola</h2>
+  </section>
+  <section id="1-2" class="py-4 xs:py-5 sm:py-6">
+    <h2>16.1.2 Argumentos de la línea de comandos y variables de entorno</h2>
+  </section>
+  <section id="1-3">
+    <h2>16.1.3 Ciclo de vida del programa</h2>
+  </section>
+  <section id="1-4" class="py-4 xs:py-5 sm:py-6">
+    <h2>16.1.4 Módulos de nodo</h2>
+  </section>
+  <section id="1-5">
+    <h2>16.1.5 El gestor de paquetes Node</h2>
+  </section>
+  <section id="2" class="py-4 xs:py-5 sm:py-6">
+    <h2>16.2 Node es asíncrono por defecto </h2>
+  </section>
+  <section id="3">
+    <h2>16.3 Búferes</h2>
+  </section>
+  <section id="4" class="py-4 xs:py-5 sm:py-6">
+    <h2>16.4 Eventos y EventEmitter</h2>
+  </section>
+  <section id="5">
+    <h2>16.5 Arroyos</h2>
+  </section>
+  <section id="5-1" class="py-4 xs:py-5 sm:py-6">
+    <h2>16.5.1 Tuberías</h2>
+  </section>
+  <section id="5-2">
+    <h2>16.5.2 Iteración asíncrona</h2>
+  </section>
+  <section id="5-3" class="py-4 xs:py-5 sm:py-6">
+    <h2>16.5.3 Escribir en Streams y manejar la contrapresión</h2>
+  </section>
+  <section id="5-4">
+    <h2>16.5.4 Lectura de flujos con eventos</h2>
+  </section>
+  <section id="6" class="py-4 xs:py-5 sm:py-6">
+    <h2>16.6 Detalles del proceso, la CPU y el sistema operativo</h2>
+  </section>
+  <section id="7">
+    <h2>16.7 Trabajar con archivos</h2>
+  </section>
+  <section id="7-1" class="py-4 xs:py-5 sm:py-6">
+    <h2>16.7.1 Rutas, descriptores de archivos y FileHandles</h2>
+  </section>
+  <section id="7-2">
+    <h2>16.7.2 Archivos de lectura</h2>
+  </section>
+  <section id="7-3" class="py-4 xs:py-5 sm:py-6">
+    <h2>16.7.3 Archivos de escritura</h2>
+  </section>
+  <section id="7-4">
+    <h2>16.7.4 Operaciones de archivo</h2>
+  </section>
+  <section id="7-5" class="py-4 xs:py-5 sm:py-6">
+    <h2>16.7.5 Metadatos de archivos</h2>
+  </section>
+  <section id="7-6">
+    <h2>16.7.6 Trabajar con directorios</h2>
+  </section>
+  <section id="8" class="py-4 xs:py-5 sm:py-6">
+    <h2>16.8 Clientes y servidores HTTP</h2>
+  </section>
+  <section id="9">
+    <h2>16.9 Servidores y clientes de red no HTTP </h2>
+  </section>
+  <section id="10" class="py-4 xs:py-5 sm:py-6">
+    <h2>16.10 Trabajar con procesos infantiles</h2>
+  </section>
+  <section id="10-1">
+    <h2>16.10.1 execSync() y execFileSync()</h2>
+  </section>
+  <section id="10-2" class="py-4 xs:py-5 sm:py-6">
+    <h2>16.10.2 exec() y execFile()</h2>
+  </section>
+  <section id="10-3">
+    <h2>16.10.3 spawn()</h2>
+  </section>
+  <section id="10-4" class="py-4 xs:py-5 sm:py-6">
+    <h2>16.10.4 bifurcarse()</h2>
+  </section>
+  <section id="11">
+    <h2>16.11 Hilos de trabajo</h2>
+  </section>
+  <section id="11-1" class="py-4 xs:py-5 sm:py-6">
+    <h2>16.11.1 Creación de trabajadores y transmisión de mensajes</h2>
+  </section>
+  <section id="11-2">
+    <h2>16.11.2 Entorno de ejecución del trabajador</h2>
+  </section>
+  <section id="11-3" class="py-4 xs:py-5 sm:py-6">
+    <h2>16.11.3 Canales de comunicación y MessagePorts</h2>
+  </section>
+  <section id="11-4">
+    <h2>16.11.4 Transferencia de MessagePorts y matrices tipificadas</h2>
+  </section>
+  <section id="11-5" class="py-4 xs:py-5 sm:py-6">
+    <h2>16.11.5 Compartir matrices tipadas entre subprocesos</h2>
+  </section>
+  <section id="12" class="pb-4 xs:pb-5 sm:pb-6">
+    <h2>16.12 Resume</h2>
+  </section>
+  </Layoutjavascript>

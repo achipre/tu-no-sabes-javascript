@@ -1,0 +1,73 @@
+---
+import Navegation from "../../components/Navegation.astro";
+import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
+---
+<Layoutjavascript title="JavaScript: La guia definitiva">
+  <Navegation capAnterior="capitulo-13" capSiguiente="capitulo-15" />
+  <section class="fadeIn">
+    <h1>Metaprogramación</h1>
+    <p>Este capítulo cubre una serie de características avanzadas de JavaScript que no se utilizan habitualmente en la programación diaria, pero que pueden ser valiosas para los programadores que escriben bibliotecas reutilizables y de interés para cualquiera que quiera juguetear con los detalles sobre cómo se comportan los objetos de JavaScript.</p>
+    <p>Muchas de las características descritas aquí pueden describirse vagamente como "metaprogramación": si la programación normal consiste en escribir código para manipular datos, la metaprogramación consiste en escribir código para manipular otro código. En un lenguaje dinámico como JavaScript, los límites entre programación y metaprogramación son difusos: incluso la simple capacidad de iterar sobre las propiedades de un objeto con un bucle <codeinline>for/in</codeinline> podría ser considerada "meta" por programadores acostumbrados a lenguajes más estáticos.</p>
+    <p>Los temas de metaprogramación tratados en este capítulo incluyen:</p>
+    <ul>
+      <li class="font-normal"><a href="#1">§14.1</a> Control de la enumerabilidad, suprimibilidad y configurabilidad de las propiedades de los objetos</li>
+      <li class="font-normal"><a href="#2">§14.2</a> Control de la extensibilidad de los objetos y creación de objetos "sellados" y "congelados</li>
+      <li class="font-normal"><a href="#3">§14.3</a> Consultar y establecer los prototipos de los objetos</li>
+      <li class="font-normal"><a href="#4">§14.4</a> Ajustar el comportamiento de los tipos con símbolos conocidos</li>
+      <li class="font-normal"><a href="#5">§14.5</a> Creación de DSL (lenguajes específicos de dominio) con funciones de etiquetas de plantilla</li>
+      <li class="font-normal"><a href="#6">§14.6</a> Sondear objetos con métodos <codeinline>reflect</codeinline></li>
+      <li class="font-normal"><a href="#7">§14.7</a> Controlar el comportamiento de los objetos con Proxy</li>
+    </ul>
+  </section>
+  <section id="1" class="py-4 xs:py-5 sm:py-6">
+    <h2>14.1 Atributos de la propiedad</h2>
+  </section>
+  <section id="2">
+    <h2>14.2 Extensibilidad de objetos</h2>
+  </section>
+  <section id="3" class="py-4 xs:py-5 sm:py-6">
+    <h2>14.3 El prototipo Atributo</h2>
+  </section>
+  <section id="4">
+    <h2>14.4 Símbolos conocidos</h2>
+  </section>
+  <section id="4-1" class="py-4 xs:py-5 sm:py-6">
+    <h2>14.4.1 Symbol.iterator y Symbol.asyncIterator</h2>
+  </section>
+  <section id="4-2">
+    <h2>14.4.2 Símbolo.hasInstance</h2>
+  </section>
+  <section id="4-3" class="py-4 xs:py-5 sm:py-6">
+    <h2>14.4.3 Símbolo.toStringTag</h2>
+  </section>
+  <section id="4-4">
+    <h2>14.4.4 Símbolo.especie</h2>
+  </section>
+  <section id="4-5" class="py-4 xs:py-5 sm:py-6">
+    <h2>14.4.5 Símbolo.isConcatSpreadable</h2>
+  </section>
+  <section id="4-6">
+    <h2>14.4.6 Símbolos de coincidencia de patrones</h2>
+  </section>
+  <section id="4-7" class="py-4 xs:py-5 sm:py-6">
+    <h2>14.4.7 Símbolo.toPrimitive</h2>
+  </section>
+  <section id="4-8">
+    <h2>14.4.8 Símbolo.unscopable</h2>
+  </section>
+  <section id="5" class="py-4 xs:py-5 sm:py-6">
+    <h2>14.5 Etiquetas de plantilla</h2>
+  </section>
+  <section id="6">
+    <h2>14.6 La API de Reflect</h2>
+  </section>
+  <section id="7" class="py-4 xs:py-5 sm:py-6">
+    <h2>14.7 Objetos proxy</h2>
+  </section>
+  <section id="7-1">
+    <h2>14.7.1 Invariantes de proxy</h2>
+  </section>
+  <section id="8" class="py-4 xs:py-5 sm:py-6">
+    <h2>14.8 Resumen</h2>
+  </section>
+  </Layoutjavascript>

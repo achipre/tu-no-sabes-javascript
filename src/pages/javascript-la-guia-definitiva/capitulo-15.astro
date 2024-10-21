@@ -1,0 +1,334 @@
+---
+import Navegation from "../../components/Navegation.astro";
+import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
+---
+<Layoutjavascript title="JavaScript: La guia definitiva">
+  <Navegation capAnterior="capitulo-14" capSiguiente="capitulo-16" />
+  <section class="fadeIn">
+    <h1>JavaScript en los navegadores web</h1>
+    <p>El lenguaje JavaScript se creó en 1994 con el propósito expreso de permitir el comportamiento dinámico de en los documentos mostrados por los navegadores web. Desde entonces, el lenguaje ha evolucionado significativamente y, al mismo tiempo, el alcance y las capacidades de la plataforma web han crecido de forma explosiva. Hoy en día, los programadores de JavaScript pueden considerar la web como una plataforma completa para el desarrollo de aplicaciones. Los navegadores web están especializados en la visualización de texto formateado e imágenes, pero, al igual que los sistemas operativos nativos, los navegadores también proporcionan otros servicios, como gráficos, vídeo, audio, redes, almacenamiento y subprocesos. JavaScript es el lenguaje que permite a las aplicaciones web utilizar los servicios proporcionados por la plataforma web, y este capítulo muestra cómo utilizar los más importantes de estos servicios.</p>
+    <p>El capítulo comienza con el modelo de programación de la plataforma web, explicando cómo se incrustan los scripts en las páginas HTML (§15.1) y cómo el código JavaScript se activa de forma asíncrona mediante eventos (§15.2). Las secciones que siguen a este material introductorio documentan las principales API de JavaScript que permiten a las aplicaciones web:</p>
+    <p>Los temas de metaprogramación tratados en este capítulo incluyen:</p>
+    <ul>
+      <li class="font-normal">Controlar el contenido del documento (§15.3) y el estilo (§15.4)</li>
+      <li class="font-normal">Determinar la posición en pantalla de los elementos del documento (§15.5)</li>
+      <li class="font-normal">Crear componentes de interfaz de usuario reutilizables (§15.6)</li>
+      <li class="font-normal">Dibujar gráficos (§15.7 y §15.8)</li>
+      <li class="font-normal">Reproducir y generar sonidos (§15.9)</li>
+      <li class="font-normal">Gestionar la navegación y el historial del navegador (§15.10)</li>
+      <li class="font-normal">Intercambiar datos a través de la red (§15.11)</li>
+      <li class="font-normal">Almacenar datos en el ordenador del usuario (§15.12)</li>
+      <li class="font-normal">Realizar cálculos concurrentes con hilos (§15.13)</li>
+    </ul>
+    <article>
+      <p class="title-article">JavaScript del lado del cliente</p>
+      <p>En este libro, y en la web, verás el término "JavaScript del lado del cliente". El término es simplemente un sinónimo de JavaScript escrito para ejecutarse en un navegador web, y se contrapone al código "del lado del servidor", que se ejecuta en servidores web.</p>
+      <p>Los dos "lados" se refieren a los dos extremos de la conexión de red que separan el servidor web y el navegador web, y el desarrollo de software para la web suele requerir que el código se escriba en ambos "lados". El lado del cliente y el lado del servidor también suelen llamarse "frontend" y "backend".</p>
+    </article>
+    <p>Las ediciones anteriores de este libro intentaban cubrir de forma exhaustiva todas las API de JavaScript definidas por los navegadores web y, como resultado, este libro era demasiado largo hace una década. El número y la complejidad de las API web no han dejado de crecer, y ya no creo que tenga sentido intentar abarcarlas todas en un solo libro. A partir de la séptima edición, mi objetivo es cubrir definitivamente el lenguaje JavaScript y proporcionar una introducción en profundidad al uso del lenguaje con Node y con los navegadores web. Este capítulo no puede cubrir todas las API web, pero presenta las más importantes con suficiente detalle como para que puedas empezar a usarlas de inmediato. Y, habiendo aprendido sobre las APIs principales cubiertas aquí, deberías ser capaz de coger nuevas APIs (como las resumidas en §15.15) cuando y si los necesita.</p>
+    <p>Node tiene una única implementación y una única fuente autorizada de documentación. En cambio, las API web se definen por consenso entre los principales proveedores de navegadores web, y la documentación autorizada adopta la forma de una especificación destinada a los programadores de C++ que implementan la API, no a los programadores de JavaScript que la utilizarán. Afortunadamente, el proyecto "MDN web docs" de Mozilla es una <sup>fuente1</sup> fiable y completa de documentación sobre API web.</p>
+    <article>
+      <p class="title-article">API heredadas</p>
+      <p>En los 25 años transcurridos desde el lanzamiento de JavaScript, los fabricantes de navegadores han ido añadiendo funciones y API para uso de los programadores. Muchas de esas API han quedado obsoletas. Entre ellas están:</p>
+      <ul>
+        <li class="font-normal">API propietarias que nunca se estandarizaron y/o nunca fueron implementadas
+          por otros proveedores de navegadores. Internet Explorer de Microsoft definió
+          muchas de estas API. Algunas (como la propiedad innerHTML) resultaron útiles y acabaron
+          estandarizándose. Otros (como el método attachEvent()) llevan años obsoletos.</li>
+        <li class="font-normal">APIs ineficientes (como el método document.write()) que tienen un impacto
+          tan severo en el rendimiento que su uso ya no se considera aceptable.</li>
+        <li class="font-normal">APIs obsoletas que hace tiempo que han sido sustituidas por nuevas APIs para
+          conseguir lo mismo. Un ejemplo es document.bgColor, que se definió para
+          permitir a Java Script establecer el color de fondo de un documento. Con la
+          llegada de CSS, document.bgColor se convirtió en un pintoresco caso especial
+          sin ningún propósito real.</li>
+        <li class="font-normal">API mal diseñadas que han sido sustituidas por otras mejores. En los inicios de la
+          web, los comités de normalización definieron la API clave del Modelo de Objetos
+          de Documento de forma agnóstica al lenguaje, de modo que la misma API
+          pudiera utilizarse en programas Java para trabajar con documentos XML y en
+          programas JavaScript para trabajar con documentos HTML. El resultado fue una
+          API que no se adaptaba bien al lenguaje JavaScript y que tenía características que
+          no interesaban especialmente a los programadores web. Se tardó décadas en
+          recuperarse de aquellos primeros errores de diseño, pero los navegadores web
+          actuales soportan un Modelo de Objetos de Documento muy mejorado.</li>
+      </ul>
+      <p>Los vendedores de navegadores pueden necesitar dar soporte a estas APIs heredadas
+        en un futuro previsible para asegurar la compatibilidad con versiones anteriores, pero
+        ya no hay necesidad de que este libro las documente o de que tú aprendas sobre ellas.
+        La plataforma web ha madurado y se ha estabilizado, y si eres un desarrollador web
+        experimentado que recuerda la cuarta o quinta edición de este libro, entonces puede
+        que tengas tanto conocimiento obsoleto que olvidar como nuevo material que
+        aprender.</p>
+    </article>
+  </section>
+  <section id="1" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.1 Conceptos básicos de programación web</h2>
+  </section>
+  <section id="1-1">
+    <h2>15.1.1 JavaScript en etiquetas HTML &lt;script></h2>
+  </section>
+  <section id="1-2" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.1.2 El modelo de objetos del documento</h2>
+  </section>
+  <section id="1-3">
+    <h2>15.1.3 El objeto global en los navegadores web</h2>
+  </section>
+  <section id="1-4" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.1.4 Los scripts comparten un espacio de nombres</h2>
+  </section>
+  <section id="1-5">
+    <h2>15.1.5 Ejecución de programas JavaScript</h2>
+  </section>
+  <section id="1-6" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.1.6 Entrada y salida de programas</h2>
+  </section>
+  <section id="1-7">
+    <h2>15.1.7 Errores del programa</h2>
+  </section>
+  <section id="1-8" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.1.8 El modelo de seguridad web</h2>
+  </section>
+  <section id="2">
+    <h2>15.2 Eventos</h2>
+  </section>
+  <section id="2-1" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.2.1 Categorías de eventos</h2>
+  </section>
+  <section id="2-2">
+    <h2>15.2.2 Registro de controladores de eventos</h2>
+  </section>
+  <section id="2-3" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.2.3 Invocación del manejador de eventos</h2>
+  </section>
+  <section id="2-4">
+    <h2>15.2.4 Propagación de eventos</h2>
+  </section>
+  <section id="2-5" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.2.5 Cancelación de eventos</h2>
+  </section>
+  <section id="2-6">
+    <h2>15.2.6 Envío de eventos personalizados</h2>
+  </section>
+  <section id="3" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.3 Documentos de secuencias de comandos</h2>
+  </section>
+  <section id="3-1">
+    <h2>15.3.1 Selección de elementos del documento</h2>
+  </section>
+  <section id="3-2" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.3.2 Estructura y desplazamiento de documentos</h2>
+  </section>
+  <section id="3-3">
+    <h2>15.3.3 Atributos</h2>
+  </section>
+  <section id="3-4" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.3.4 Elemento Contenido</h2>
+  </section>
+  <section id="3-5">
+    <h2>15.3.5 Creación, inserción y supresión de nodos</h2>
+  </section>
+  <section id="3-6" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.3.6 Ejemplo: Generación de un índice</h2>
+  </section>
+  <section id="4">
+    <h2>15.4 Secuencias de comandos CSS</h2>
+  </section>
+  <section id="4-1" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.4.1 Clases de CSS</h2>
+  </section>
+  <section id="4-2">
+    <h2>15.4.2 Estilos en línea</h2>
+  </section>
+  <section id="4-3" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.4.3 Estilos calculados</h2>
+  </section>
+  <section id="4-4">
+    <h2>15.4.4 Hojas de estilo de secuencias de comandos</h2>
+  </section>
+  <section id="4-5" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.4.5 Animaciones y eventos CSS</h2>
+  </section>
+  <section id="5">
+    <h2>15.5 Geometría del documento y desplazamiento</h2>
+  </section>
+  <section id="5-1" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.5.1 Coordenadas del documento y coordenadas de la ventana gráfica</h2>
+  </section>
+  <section id="5-2">
+    <h2>15.5.2 Consulta de la geometría de un elemento</h2>
+  </section>
+  <section id="5-3" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.5.3 Determinación del elemento en un punto</h2>
+  </section>
+  <section id="5-4">
+    <h2>15.5.4 Desplazamiento</h2>
+  </section>
+  <section id="5-5" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.5.5 Tamaño de la ventana, tamaño del contenido y posición de desplazamiento</h2>
+  </section>
+  <section id="6">
+    <h2>15.6 Componentes web</h2>
+  </section>
+  <section id="6-1" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.6.1 Uso de componentes web</h2>
+  </section>
+  <section id="6-2">
+    <h2>15.6.2 Plantillas HTML</h2>
+  </section>
+  <section id="6-3" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.6.3 Elementos personalizados</h2>
+  </section>
+  <section id="6-4">
+    <h2>15.6.4 DOM en la sombra</h2>
+  </section>
+  <section id="6-5" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.6.5 Ejemplo: un componente web &lt;search-box>.</h2>
+  </section>
+  <section id="7">
+    <h2>15.7 SVG: gráficos vectoriales escalables</h2>
+  </section>
+  <section id="7-1" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.7.1 SVG en HTML</h2>
+  </section>
+  <section id="7-2">
+    <h2>15.7.2 Secuencias de comandos SVG</h2>
+  </section>
+  <section id="7-3" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.7.3 Creación de imágenes SVG con JavaScript</h2>
+  </section>
+  <section id="8">
+    <h2>15.8 Gráficos en un &lt;canvas></h2>
+  </section>
+  <section id="8-1" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.8.1 Trayectorias y polígonos</h2>
+  </section>
+  <section id="8-2">
+    <h2>15.8.2 Dimensiones y coordenadas del lienzo</h2>
+  </section>
+  <section id="8-3" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.8.3 Atributos gráficos</h2>
+  </section>
+  <section id="8-4">
+    <h2>15.8.4 Operaciones de dibujo en el lienzo</h2>
+  </section>
+  <section id="8-5" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.8.5 Transformaciones de sistemas de coordenadas</h2>
+  </section>
+  <section id="8-6">
+    <h2>15.8.6 Recorte</h2>
+  </section>
+  <section id="8-7" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.8.7 Manipulación de píxeles</h2>
+  </section>
+  <section id="9">
+    <h2>15.9 API de audio</h2>
+  </section>
+  <section id="9-1" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.9.1 El constructor Audio()</h2>
+  </section>
+  <section id="9-2">
+    <h2>15.9.2 La API WebAudio</h2>
+  </section>
+  <section id="10" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.10 Localización, navegación e historia</h2>
+  </section>
+  <section id="10-1">
+    <h2>15.10.1 Carga de nuevos documentos</h2>
+  </section>
+  <section id="10-2" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.10.2 Historial de navegación</h2>
+  </section>
+  <section id="10-3">
+    <h2>15.10.3 Gestión del historial con hashchange Events</h2>
+  </section>
+  <section id="10-4" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.10.4 Gestión del historial con pushState()</h2>
+  </section>
+  <section id="10-1">
+    <h2>15.10.1 Carga de nuevos documentos</h2>
+  </section>
+  <section id="11" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.11 Red</h2>
+  </section>
+  <section id="11-1">
+    <h2>15.11.1 buscar()</h2>
+  </section>
+  <section id="11-2" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.11.2 Eventos enviados por el servidor</h2>
+  </section>
+  <section id="11-3">
+    <h2>15.11.3 WebSockets</h2>
+  </section>
+  <section id="12" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.12 Almacenamiento</h2>
+  </section>
+  <section id="12-1">
+    <h2>15.12.1 localStorage y sessionStorage</h2>
+  </section>
+  <section id="12-2" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.12.2 Cookies</h2>
+  </section>
+  <section id="12-3">
+    <h2>15.12.3 IndexedDB</h2>
+  </section>
+  <section id="13" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.13 Hilos de trabajo y mensajería</h2>
+  </section>
+  <section id="13-1">
+    <h2>15.13.1 Objetos de trabajo</h2>
+  </section>
+  <section id="13-2" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.13.2 El objeto global en los trabajadores</h2>
+  </section>
+  <section id="13-3">
+    <h2>15.13.3 Importar código a un trabajador</h2>
+  </section>
+  <section id="13-4" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.13.4 Modelo de ejecución de los trabajadores</h2>
+  </section>
+  <section id="13-5">
+    <h2>15.13.5 postMessage(), MessagePorts y MessageChannels</h2>
+  </section>
+  <section id="13-6" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.13.6 Mensajería entre orígenes con postMessage()</h2>
+  </section>
+  <section id="14">
+    <h2>15.14 Ejemplo: El conjunto de Mandelbrot</h2>
+  </section>
+  <section id="15" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.15 Resumen y sugerencias de lecturas complementarias</h2>
+  </section>
+  <section id="15-1">
+    <h2>15.15.1 HTML y CSS</h2>
+  </section>
+  <section id="15-2" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.15.2 Rendimiento</h2>
+  </section>
+  <section id="15-3">
+    <h2>15.15.3 Seguridad</h2>
+  </section>
+  <section id="15-4" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.15.4 WebAssembly</h2>
+  </section>
+  <section id="15-5">
+    <h2>15.15.5 Más funciones para documentos y ventanas</h2>
+  </section>
+  <section id="15-6" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.15.6 Eventos</h2>
+  </section>
+  <section id="15-7">
+    <h2>15.15.7 Aplicaciones web progresivas y Service Workers</h2>
+  </section>
+  <section id="15-8" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.15.8 API para dispositivos móviles</h2>
+  </section>
+  <section id="15-9">
+    <h2>15.15.9 API binarias</h2>
+  </section>
+  <section id="15-10" class="py-4 xs:py-5 sm:py-6">
+    <h2>15.15.10 API multimedia</h2>
+  </section>
+  <section id="15-11" class="pb-4 xs:pb-5 sm:pb-6">
+    <h2>15.15.11 Criptografía y API relacionadas</h2>
+  </section>
+  </Layoutjavascript>
