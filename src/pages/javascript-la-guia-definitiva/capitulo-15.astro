@@ -63,12 +63,67 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   </section>
   <section id="1" class="py-4 xs:py-5 sm:py-6">
     <h2>15.1 Conceptos básicos de programación web</h2>
+    <p>Esta sección explica cómo se estructuran los programas JavaScript para la web, cómo se cargan en un navegador web, cómo obtienen la entrada, cómo producen la salida y cómo se ejecutan de forma asíncrona respondiendo a eventos.</p>
   </section>
   <section id="1-1">
     <h2>15.1.1 JavaScript en etiquetas HTML &lt;script></h2>
+    <p>Los navegadores web muestran documentos HTML. Si desea que un navegador web ejecute código Java-Script, debe incluir (o hacer referencia a) ese código desde un documento HTML, y esto es lo que hace la etiqueta HTML &lt;script>.</p>
+    <p>El código JavaScript puede aparecer en línea dentro de un archivo HTML entre &lt;script> y &lt;/script>. He aquí, por ejemplo, un archivo HTML que incluye una etiqueta script con código JavaScript que actualiza dinámicamente un elemento del documento para que se comporte como un reloj digital:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Aunque el código JavaScript puede incrustarse directamente dentro de una etiqueta &lt;script>, es más habitual utilizar el atributo src de la etiqueta &lt;script> para especificar la URL (una URL absoluta o una URL relativa a la URL del archivo HTML que se muestra) de un archivo que contiene código JavaScript. Si sacáramos el código JavaScript de este archivo HTML y lo almacenáramos en su propio archivo scripts/digital_clock.js, entonces la etiqueta &lt;script> podría hacer referencia a ese archivo de código de la siguiente manera:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Un archivo JavaScript contiene JavaScript puro, sin etiquetas &lt;script> ni ningún otro HTML. Por convención, los archivos de código JavaScript tienen nombres que terminan en .js.</p>
+    <p>Una etiqueta &lt;script> con el atributo src se comporta exactamente igual que si el contenido del archivo JavaScript especificado apareciera directamente entre las etiquetas &lt;script> y &lt;/script>. Tenga en cuenta que la etiqueta &lt;/script> de cierre es necesaria en los documentos HTML incluso cuando se especifica el atributo src: HTML no admite la etiqueta &lt;script/>.</p>
+    <p>Utilizar el atributo src tiene una serie de ventajas:</p>
+    <ul>
+      <li class="font-normal">Simplifica sus archivos HTML al permitirle eliminar de ellos grandes bloques de código Java-Script, es decir, ayuda a mantener separados el contenido y el comportamiento.</li>
+      <li class="font-normal">Cuando varias páginas web comparten el mismo código JavaScript, el uso del atributo src permite mantener una sola copia de ese código, en lugar de tener que editar cada archivo HTML cuando cambia el código.</li>
+      <li class="font-normal">Si más de una página comparte un archivo de código JavaScript, sólo tendrá que descargarlo una vez la primera página que lo utilice; las siguientes podrán recuperarlo de la caché del navegador.</li>
+      <li class="font-normal">Dado que el atributo src toma como valor una URL arbitraria, un programa JavaScript o una página web de un servidor web pueden emplear código exportado por otros servidores web. Gran parte de la publicidad en Internet se basa en este hecho.</li>
+    </ul>
+    <p class="title-article text-left">Módulos</p>
+    <p>§10.3 documenta los módulos JavaScript y cubre sus directivas import y export. Si ha escrito su programa JavaScript utilizando módulos (y no ha utilizado una herramienta de agrupación de código para combinar todos sus módulos en un único archivo JavaScript no modular), debe cargar el módulo de nivel superior de su programa con una directiva &lt;script> que tenga un atributo type="module". Si haces esto, el módulo que especifiques se cargará, y todos los módulos que importe se cargarán, y (recur- sivamente) todos los módulos que importen se cargarán. Para más información, véase §10.3.5.</p>
+    <p class="title-article text-left">Especificación del tipo de script</p>
+    <p>En los primeros días de la web, se pensaba que los navegadores podrían implementar algún día lenguajes distintos de JavaScript, y los programadores añadían atributos como language="javascript" y type="application/javascript" a sus etiquetas &lt;script>. Esto es completamente innecesario. JavaScript es el lenguaje por defecto (y el único) de la web. El atributo language está obsoleto, y sólo hay dos razones para usar un atributo type en una etiqueta &lt;script>:</p>
+    <ul>
+      <li class="font-normal">Para especificar que el script es un módulo</li>
+      <li class="font-normal">Para incrustar datos en una página web sin mostrarlos (véase §15.3.4)</li>
+    </ul>
+    <p class="title-article text-left">Cuándo se ejecutan los scripts: async y diferido</p>
+    <p>Cuando JavaScript se incorporó por primera vez a los navegadores web, no existía una API para recorrer y manipular la estructura y el contenido de un documento ya renderizado. La única forma en que el código JavaScript podía afectar al contenido de un documento era generando ese contenido sobre la marcha mientras el documento estaba en proceso de carga. Para ello utilizando el método document.write() para inyectar texto HTML en el documento en la ubicación del script.</p>
+    <p>El uso de document.write() ya no se considera un buen estilo, pero el hecho de que sea posible significa que cuando el analizador HTML encuentra un elemento &lt;script>, debe, por defecto, ejecutar el script sólo para asegurarse de que no produce ninguna salida HTML antes de que pueda reanudar el análisis y la representación del documento. Esto puede ralentizar drásticamente el análisis y la representación de la página web.</p>
+    <p>Afortunadamente, este modo de ejecución de scripts síncrono o de bloqueo por defecto no es la única opción. La etiqueta &lt;script> puede tener atributos defer y async, que hacen que los scripts se ejecuten de forma diferente. Se trata de atributos booleanos: no tienen valor; sólo tienen que estar presentes en la etiqueta &lt;script>. Ten en cuenta que estos atributos sólo son significativos cuando se utilizan junto con el atributo src:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Tanto el atributo defer como el async son formas de indicar al navegador que el script enlazado no utiliza document.write() para generar la salida HTML, y que el navegador, por lo tanto, puede continuar analizando y renderizando el documento mientras descarga el script. El atributo defer hace que el navegador aplace la ejecución del script hasta que el documento haya sido completamente cargado y analizado y esté listo para ser manipulado. El atributo async hace que el navegador ejecute el script lo antes posible, pero no bloquea el análisis del documento mientras se descarga el script. Si una etiqueta &lt;script> tiene ambos atributos, el atributo async tiene preferencia.</p>
+    <p>Tenga en cuenta que los scripts diferidos se ejecutan en el orden en que aparecen en el documento. Los scripts asíncronos se ejecutan a medida que se cargan, lo que significa que pueden ejecutarse fuera de orden.</p>
+    <p>Los scripts con el atributo type="module" se ejecutan, por defecto, después de que el documento se haya cargado, como si tuvieran el atributo defer. Puedes anular este valor por defecto con el atributo async, que hará que el código se ejecute tan pronto como el módulo y todas sus dependencias se hayan cargado.</p>
+    <p>Una alternativa sencilla a los atributos async y defer -especialmente para el código que se incluye directamente en el HTML- es simplemente colocar tus scripts al final del archivo HTML. De esta forma, el script puede ejecutarse sabiendo que el contenido del documento que le precede ha sido analizado y está listo para ser manipulado.</p>
+    <p class="title-article text-left">Carga de guiones a petición</p>
+    <p>A veces, puede tener código JavaScript que no se utiliza cuando un documento se carga por primera vez y sólo se necesita si el usuario realiza alguna acción como pulsar un botón o abrir un menú. Si está desarrollando su código utilizando módulos, puede cargar un módulo bajo demanda con import(), como se describe en §10.3.6.</p>
+    <p>Si no utiliza módulos, puede cargar un archivo de JavaScript bajo demanda simplemente añadiendo una etiqueta &lbrace;script> a su documento cuando desee que se cargue el script:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>Esta función importScript() utiliza las API del DOM (§15.3) para crear una nueva etiqueta &lbrace;script> y añadirla al documento <head>. Y utiliza manejadores de eventos (§15.2) para determinar cuando el script se ha cargado correctamente o cuando la carga ha fallado.</p>
   </section>
   <section id="1-2" class="py-4 xs:py-5 sm:py-6">
     <h2>15.1.2 El modelo de objetos del documento</h2>
+    <p>Uno de los objetos más importantes en la programación JavaScript del lado del cliente es el objeto Document, que representa el documento HTML que se muestra en una ventana o pestaña del navegador. La API para trabajar con documentos HTML se conoce como el Modelo de Objetos de Documento, o DOM, y se cubre en detalle en §15.3. Pero el DOM es tan importante para la programación JavaScript del lado del cliente que merece ser introducido aquí.</p>
+    <p>Los documentos HTML contienen elementos HTML anidados unos dentro de otros, formando un árbol. Considere el siguiente documento HTML sencillo:</p>
+    <pre>
+    <code class="language-js"></code></pre>
+    <p>La etiqueta &lt;html> de nivel superior contiene las etiquetas &lt;head> y &lt;body>. La etiqueta &lt;head> contiene un &lt;title>. Y la etiqueta &lt;body> contiene las etiquetas &lt;h1> y &lt;p>. Las etiquetas &lt;title> y &lt;h1> contienen cadenas de texto, y la etiqueta &lt;p> contiene dos cadenas de texto con una etiqueta &lt;i> entre ellas.</p>
+    <p>La API DOM refleja la estructura de árbol de un documento HTML. A cada etiqueta HTML del documento le corresponde un objeto Elemento de JavaScript, y a cada segmento de texto del documento le corresponde un objeto Texto. Los objetos Element y las clases de texto, así como la propia clase Document, son todas subclases de la clase más general Node, y los objetos Node están organizados en una estructura de árbol que JavaScript puede consultar y recorrer utilizando la API DOM. La representación DOM de este documento e s el árbol que se muestra en la Figura 15-1.</p>
+    <figure id="figure15-1">
+      <img src="/public/javascript/capitulo-15/figure15-1.avif" alt="imagen de consola">
+      <figcaption>Figura 15-1. Representación en árbol de un documento HTML</figcaption>
+    </figure>
+    <p>Si aún no está familiarizado con las estructuras de árbol en programación informática, es útil saber que toman prestada la terminología de los árboles genealógicos. El nodo situado justo encima de un nodo es su padre. Los nodos situados un nivel por debajo de otro nodo son sus hijos. Los nodos del mismo nivel y con el mismo padre son hermanos. El conjunto de nodos situados cualquier número de niveles por debajo de otro nodo son los descendientes de ese nodo. Y el padre, el abuelo y todos los demás nodos situados por encima de un nodo son los antepasados de ese nodo.</p>
+    <p>La API DOM incluye métodos para crear nuevos nodos Element y Text, y para insertarlos en el documento como hijos de otros objetos Element. También hay métodos para mover elementos dentro del documento y para eliminarlos por completo. Mientras que una aplicación del lado del servidor puede producir una salida de texto plano escribiendo cadenas con console.log(), una aplicación JavaScript del lado del cliente puede producir una salida HTML formateada construyendo o manipulando el documento del árbol de documentos utilizando la API DOM.</p>
+    <p>Hay una clase de JavaScript que corresponde a cada tipo de etiqueta HTML, y cada aparición de la etiqueta en un documento está representada por una instancia de la clase. La etiqueta &lbrace;body>, por ejemplo, está representada por una instancia de HTMLBodyElement, y una etiqueta &lbrace;table> está representada por una instancia de HTMLTableElement. Los objetos elemento de JavaScript tienen propiedades que corresponden a los atributos HTML de las etiquetas. En</p>
+    <p>Por ejemplo, las instancias de HTMLImageElement, que representan etiquetas &lbrace;img>, tienen una propiedad src que corresponde al atributo src de la etiqueta. El valor inicial de la propiedad src es el valor del atributo que aparece en la etiqueta HTML, y establecer esta propiedad con JavaScript cambia el valor del atributo HTML (y hace que el navegador cargue y muestre una nueva imagen). La mayoría de las clases de elementos de JavaScript se limitan a reflejar los atributos de una etiqueta HTML, pero algunas definen métodos adicionales. Las clases HTMLAu- dioElement y HTMLVideoElement, por ejemplo, definen métodos como play() y pause() para controlar la reproducción de archivos de audio y vídeo.</p>
   </section>
   <section id="1-3">
     <h2>15.1.3 El objeto global en los navegadores web</h2>
