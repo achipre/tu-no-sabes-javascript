@@ -23,7 +23,30 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>17.1 Linting con ESLint</h2>
     <p>En programación, el término lint se refiere a código que, aunque técnicamente correcto, es antiestético, o un posible bug, o subóptimo de alguna manera. Un linter es una herramienta para detectar pelusas en tu código, y linting es el proceso de ejecutar un linter en tu código (y luego arreglar tu código para eliminar las pelusas de modo que el linter ya no se queje).</p>
     <p>El linter más utilizado para JavaScript hoy en día es ESLint. Si lo ejecutas y luego te tomas el tiempo de arreglar los problemas que señala, hará que tu código sea más limpio y menos propenso a tener errores. Considere el siguiente código:</p>
+    <pre>
+    <code class="language-js">var x = 'unused';
+
+    export function factorial(x) &lbrace;
+      if (x == 1) &lbrace;
+        return 1;
+      } else &lbrace;
+        return x * factorial(x-1)
+      }
+    }</code></pre>
     <p>Si ejecutas ESLint en este código, puede que obtengas una salida como esta:</p>
+    <pre class="language-js">
+    $ eslint code/ch17/linty.js
+
+    code/ch17/linty.js
+      1:1   error   Unexpected var, use let or const instead      no-var
+      1:5   error   'x' is assigned a value but never used        no-unused-vars
+      1:9   warning Strings must use doublequote                  quotes
+      4:11  error   Expected '===' and instead saw '=='           eqeqeq
+      5:1   error   Expected indentation of 8 spaces but found 6  indent
+      7:28  error   Missing semicolon                             semi
+
+    ✖ 6 problems (5 errors, 1 warning)
+      3 errors and 1 warning potentially fixable with the `--fix` option.</pre>
     <p>A veces, las cadenas pueden parecer puntillosas. ¿Realmente importa si usamos comillas dobles o simples para nuestras cadenas? Por otra parte, la sangría correcta es importante para la legibilidad, y el uso de === y let en lugar de == y var te protege. de errores sutiles. Y las variables no utilizadas son peso muerto en su código, no hay razón para mantenerlos alrededor.</p>
     <p>ESLint define muchas reglas de linting y tiene un ecosistema de plug-ins que añaden muchas más. Pero ESLint es totalmente configurable, y puedes definir un archivo de configuración que ajuste ESLint para que aplique exactamente las reglas que quieras y sólo esas reglas.</p>
   </section>
@@ -32,7 +55,22 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Una de las razones por las que algunos proyectos utilizan linters es para imponer un estilo de codificación coherente, de modo que cuando un equipo de programadores trabaje en una base de código compartida, utilice convenciones de código compatibles. Esto incluye reglas de sangrado de código, pero también puede incluir cosas como qué tipo de comillas son preferibles y si debe haber un espacio entre la palabra clave for y el paréntesis abierto que le sigue.</p>
     <p>Una alternativa moderna a la aplicación de reglas de formato de código mediante un linter es adoptar una herramienta como Prettier para analizar y reformatear automáticamente todo el código.</p>
     <p>Supongamos que ha escrito la siguiente función, que funciona, pero tiene un formato poco convencional:</p>
+    <pre>
+    <code class="language-js">function factorial(x)
+    &lbrace;
+      if(x===1)&lbrace;return 1}
+      else&lbrace;return x*factorial(x-1)}
+    }</code></pre>
     <p>Al ejecutar Prettier en este código se corrige la sangría, se añaden los puntos y comas que faltan, se añaden espacios alrededor de los operadores binarios y se insertan saltos de línea después de &lbrace; y antes de }, lo que da como resultado un código de aspecto mucho más convencional:</p>
+    <pre>
+    <code class="language-js">$ prettier factorial.js
+    function factorial(x) &lbrace;
+      if (x === 1) &lbrace;
+        return 1;
+      } else &lbrace;
+        return x * factorial(x - 1);
+      }
+    }</code></pre>
     <p>Si invoca Prettier con la opció n --write, simplemente reformateará el archivo especificado en su lugar en lugar de imprimir una versión reformateada. Si utiliza git para gestionar su código fuente, puede invocar Prettier con la opció n --write en un hook de confirmación para que el código se formatee automáticamente antes de ser registrado.</p>
     <p>Prettier es especialmente potente si configuras tu editor de código para que lo ejecute automáticamente cada vez que guardes un archivo. A mí me resulta liberador escribir código descuidado y ver cómo se corrige automáticamente.</p>
     <p>Prettier es configurable, pero sólo tiene unas pocas opciones. Puede seleccionar la longitud máxima de línea, la cantidad de sangría, si se debe usar punto y coma, si las cadenas deben estar entre comillas simples o dobles, y algunas otras cosas. En general, las opciones por defecto de Pretti- er son bastante razonables. La idea es que adopte Prettier para su proyecto y no tenga que pensar nunca más en el formato del código.</p>
@@ -42,9 +80,107 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>17.3 Pruebas unitarias con Jest </h2>
     <p>Escribir pruebas es una parte importante de cualquier proyecto de programación no trivial. Los lenguajes dinámicos como JavaScript soportan marcos de pruebas que reducen drásticamente el esfuerzo necesario para escribir pruebas, ¡y casi hacen que escribir pruebas sea divertido! Hay muchas herramientas y librerías de pruebas para JavaScript, y muchas están escritas de forma modular, de modo que es posible elegir una librería como ejecutor de pruebas, otra librería para aserciones y una tercera para mocking. En esta sección, sin embargo, describiremos Jest, que es un framework popular que incluye todo lo que necesitas en un solo paquete.</p>
     <p>Suponga que ha escrito la siguiente función:</p>
+    <pre>
+    <code class="language-js">const getJSON = require("./getJSON.js");
+
+    /**
+    * getTemperature() takes the name of a city as its input, and returns
+    * a Promise that will resolve to the current temperature of that city,
+    * in degrees Fahrenheit. It relies on a (fake) web service that returns
+    * world temperatures in degrees Celsius.
+    */
+    module.exports = async function getTemperature(city) &lbrace;
+      // Get the temperature in Celsius from the web service
+      let c = await getJSON(
+        `https://globaltemps.example.com/api/city/$&lbrace;city.toLowerCase()}`
+      );
+      // Convert to Fahrenheit and return that value.
+      return (c * 5 / 9) + 32; // TODO: double-check this formula
+    };</code></pre>
     <p>Un buen conjunto de pruebas para esta función podría verificar que getTemperature() está obteniendo la URL correcta, y que está convirtiendo las escalas de temperatura correctamente. Podemos hacer esto con una prueba basada en Jest como la siguiente. Este código define una implementación simulada de getJSON() para que la prueba no haga realmente una petición de red. Y como getTemperature() es una función asíncrona, las pruebas también son asíncronas; puede ser complicado probar funciones asíncronas, pero Jest lo hace relativamente fácil:</p>
+    <pre>
+    <code class="language-js">// Import the function we are going to test
+    const getTemperature = require("./getTemperature.js");
+
+    // And mock the getJSON() module that getTemperature() depends on
+    jest.mock("./getJSON");
+    const getJSON = require("./getJSON.js");
+
+    // Tell the mock getJSON() function to return an already resolved Promise
+    // with fulfillment value 0.
+    getJSON.mockResolvedValue(0);
+
+    // Our set of tests for getTemperature() begins here
+    describe("getTemperature()", () => &lbrace;
+      // This is the first test. We're ensuring that getTemperature() calls
+      // getJSON() with the URL that we expect
+      test("Invokes the correct API", async () => &lbrace;
+        let expectedURL = "https://globaltemps.example.com/api/city/vancouver";
+        let t = await(getTemperature("Vancouver"));
+        // Jest mocks remember how they were called, and we can check that.
+        expect(getJSON).toHaveBeenCalledWith(expectedURL);
+      });
+
+      // This second test verifies that getTemperature() converts
+      // Celsius to Fahrenheit correctly
+      test("Converts C to F correctly", async () => &lbrace;
+        getJSON.mockResolvedValue(0); // If getJSON returns 0C
+        expect(await getTemperature("x")).toBe(32); // We expect 32F
+
+        // 100C should convert to 212F
+        getJSON.mockResolvedValue(100); // If getJSON returns 100C
+        expect(await getTemperature("x")).toBe(212); // We expect 212F
+      });
+    });</code></pre>
     <p>Con la prueba escrita, podemos utilizar el comando jest para ejecutarla, y descubrimos que una de nuestras pruebas falla:</p>
+    <pre class="language-js">
+    $ jest getTemperature
+      FAIL ch17/getTemperature.test.js
+        getTemperature()
+          ✓ Invokes the correct API (4ms)
+          ✕ Converts C to F correctly (3ms)
+
+        ● getTemperature() › Converts C to F correctly
+
+        expect(received).toBe(expected) // Object.is equality
+
+        Expected: 212
+        Received: 87.55555555555556
+
+        29 |    // 100C should convert to 212F
+        30 |    getJSON.mockResolvedValue(100); // If getJSON returns 100C
+      > 31 |    expect(await getTemperature("x")).toBe(212); // Expect 212F
+           |                                         ^
+        32 | });
+        33 | });
+        34 |
+
+        at Object.&lt;anonymous> (ch17/getTemperature.test.js:31:43)
+
+    Test Suites:  1 failed, 1 total
+    Tests:        1 failed, 1 passed, 2 total
+    Snapshots:    0 total
+    Time:         1.403s
+    Ran all test suites matching /getTemperature/i.</pre>
     <p>Nuestra implementación de getTemperature() está utilizando una fórmula incorrecta para convertir C a F. Multiplica por 5 y divide por 9 en lugar de multiplicar por 9 y dividir por 5. Si corregimos el código y ejecutamos Jest de nuevo, podemos ver que las pruebas pasan. Y, como extra, si añadimos el argumento --coverage cuando invoquemos a jest, calculará y mostrará la cobertura del código para nuestras pruebas:</p>
+    <pre class="language-js">
+    $ jest --coverage getTemperature
+      PASS ch17/getTemperature.test.js
+        getTemperature()
+          ✓ Invokes the correct API (3ms)
+          ✓ Converts C to F correctly (1ms)
+    ------------------|--------|---------|---------|---------|------------------|
+    File              | % Stmts| % Branch| % Funcs | % Lines | Uncovered Line #s|
+    ------------------|--------|---------|---------|---------|------------------|
+    All files         |   71.43|      100|    33.33|    83.33|                  |
+    getJSON.js        |   33.33|      100|        0|       50|                 2|
+    getTemperature.js |     100|      100|      100|      100|                  |
+    ------------------|--------|---------|---------|---------|------------------|
+    Test Suites:  1 passed, 1 total
+    Tests:        2 passed, 2 total
+    Snapshots:    0 total
+    Time:         1.508s
+    Ran all test suites matching /getTemperature/i.</pre>
     <p>La ejecución de nuestra prueba nos dio una cobertura de código del 100% para el módulo que estábamos probando, que es exactamente lo que queríamos. Sólo nos dio una cobertura parcial de getJSON(), pero nos burlamos de ese módulo y no estábamos tratando de probarlo, así que es de esperar.</p>
   </section>
   <section id="4">
@@ -53,10 +189,31 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>npm es el gestor de paquetes que se incluye con Node, y se introdujo en §16.1.5. Sin embargo, es tan útil para la programación JavaScript del lado del cliente como para la programación del lado del servidor con Node.</p>
     <p>Si estás probando el proyecto JavaScript de otra persona, una de las primeras cosas que harás después de descargar su código es escribir npm install. Esto lee las dependencias listadas en el archivo package.json y descarga los paquetes de terceros que el proyecto necesita y los guarda en un directorio node_modules/.</p>
     <p>También puedes escribir npm install &lt;nombre-paquete> para instalar un paquete concreto en el directorio node_modules/ de tu proyecto:</p>
+    <pre>
+    <code class="language-js">$ npm install express</code></pre>
     <p>Además de instalar el paquete nombrado, npm también hace un registro de la dependencia en el archivo package.json para el proyecto. Registrar las dependencias de esta manera es lo que permite a otros instalar esas dependencias simplemente escribiendo npm install.</p>
     <p>El otro tipo de dependencia son las herramientas de desarrollo que necesitan los desarrolladores que quieren trabajar en su proyecto, pero que en realidad no son necesarias para ejecutar el código. Si un proyecto utiliza Prettier, por ejemplo, para asegurar que todo su código tiene un formato consistente, entonces Prettier es una "dependencia dev", y puede instalar y grabar una de ellas con --save-dev:</p>
+    <pre>
+    <code class="language-js">$ npm install --save-dev prettier</code></pre>
     <p>A veces es posible que desee instalar herramientas de desarrollo a nivel mundial para que sean accesibles en cualquier lugar, incluso para el código que no forma parte de un proyecto formal con un archivo package.json y un directorio node_modules/. Para ello puedes utilizar la opción -g (for global):</p>
+    <pre class="language-js">
+    $ npm install -g eslint jest
+    /usr/local/bin/eslint -> /usr/local/lib/node_modules/eslint/bin/eslint.js
+    /usr/local/bin/jest -> /usr/local/lib/node_modules/jest/bin/jest.js
+    + jest@24.9.0
+    + eslint@6.7.2
+    added 653 packages from 414 contributors in 25.596s
+
+    $ which eslint
+    /usr/local/bin/eslint
+    $ which jest
+    /usr/local/bin/jest</pre>
     <p>Además del comando "install", npm soporta los comandos "uninstall" y "update", que hacen lo que su nombre indica. npm también tiene un interesante comando "audit" que puedes usar para encontrar y corregir vulnerabilidades de seguridad en tus dependencias:</p>
+    <pre class="language-js">
+    $ npm audit --fix
+                    === npm audit security report ===
+    found 0 vulnerabilities
+      in 876354 scanned packages</pre>
     <p>Cuando se instala una herramienta como ESLint localmente para un proyecto, el script eslint termina en ./ node_modules/.bin/eslint, lo que hace que el comando sea incómodo de ejecutar. Afortunadamente, npm viene con un comando conocido como "npx", que puede utilizar para ejecutar herramientas instaladas localmente con comandos como npx eslint o npx jest. (Y si usas npx para invocar una herramienta que aún no ha sido instalada, la instalará por ti).</p>
     <p>La empresa detrás de npm también mantiene el repositorio de paquetes https://npmjs.com, que contiene cientos de miles de paquetes de código abierto. Pero no es necesario utilizar el gestor de paquetes npm para acceder a este repositorio de paquetes. Otras alternativas son yarn y pnpm.</p>
   </section>
@@ -90,26 +247,121 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>17.7 JSX: Expresiones de marcado en JavaScript</h2>
     <p>JSX es una extensión del núcleo de JavaScript que utiliza sintaxis de estilo HTML para definir un árbol de elementos. JSX se asocia más estrechamente con el marco React para interfaces de usuario en la web. En React, los árboles de elementos definidos con JSX se renderizan en última instancia en un navegador web como HTML. Incluso si no tienes planes de utilizar React, su popularidad significa que es probable que veas código que utiliza JSX. Esta sección explica lo que necesitas saber para darle sentido. (Esta sección es sobre la extensión de lenguaje JSX, no sobre React, y explica sólo lo suficiente de React para proporcionar contexto para la sintaxis JSX).</p>
     <p>Los elementos JSX son un nuevo tipo de sintaxis de expresión de JavaScript. Los literales de cadena de Java Script se delimitan con comillas, y los literales de expresión regular se delimitan con barras oblicuas. Del mismo modo, los literales de expresiones JSX se delimitan con corchetes angulares. He aquí una muy sencilla:</p>
+    <pre>
+    <code class="language-js">let line = &lt;hr/>;</code></pre>
     <p>Si utiliza JSX, tendrá que utilizar Babel (o una herramienta similar) para compilar las expresiones JSX en JavaScript normal. La transformación es tan sencilla que algunos desarrolladores optan por utilizar React sin usar JSX. Babel transforma la expresión JSX de esta sentencia de asignación en una simple llamada a una función:</p>
+    <pre>
+    <code class="language-js">let line = React.createElement("hr", null);</code></pre>
     <p>La sintaxis JSX es similar a HTML, y al igual que los elementos HTML, los elementos React pueden tener atributos como estos:</p>
+    <pre>
+    <code class="language-js">let image = &lt;img src="logo.png" alt="The JSX logo" hidden/>;</code></pre>
     <p>Cuando un elemento tiene uno o más atributos, éstos se convierten en propiedades de un objeto pasado como segundo argumento a createElement():</p>
+    <pre>
+    <code class="language-js">let image = React.createElement("img", &lbrace;
+      src: "logo.png",
+      alt: "The JSX logo",
+      hidden: true
+    });</code></pre>
     <p>Al igual que los elementos HTML, los elementos JSX pueden tener cadenas y otros elementos como hijos. Al igual que los operadores aritméticos de JavaScript pueden utilizarse para escribir expresiones aritméticas de complejidad arbitraria, los elementos JSX también pueden anidarse a una profundidad arbitraria para crear árboles de elementos:</p>
+    <pre>
+    <code class="language-js">let sidebar = (
+      &lt;div className="sidebar">
+        &lt;h1>Title&lt;/h1>
+        &lt;hr/>
+        &lt;p>This is the sidebar content&lt;/p>
+      &lt;/div>
+    );</code></pre>
     <p>Las expresiones regulares de llamadas a funciones JavaScript también pueden anidarse a una profundidad arbitraria, y estas expresiones JSX anidadas se traducen en un conjunto de llamadas createElement() anidadas. Cuando un elemento JSX tiene hijos, esos hijos (que suelen ser cadenas y otros elementos JSX) se pasan como argumentos tercero y siguientes:</p>
+    <pre>
+    <code class="language-js">let sidebar = React.createElement(
+      "div", &lbrace; className: "sidebar"},  // This outer call creates a &lt;div>
+      React.createElement("h1", null,  // This is the first child of the &lt;div/>
+                             "Title"), // and its own first child.
+      React.createElement("hr", null), // The second child of the &lt;div/>.
+      React.createElement("p", null,   // And the third child.
+                        "This is the sidebar content"));</code></pre>
     <p>El valor devuelto por React.createElement() es un objeto JavaScript ordinario que es utilizado por React para renderizar la salida en una ventana del navegador. Dado que esta sección trata sobre la sintaxis JSX y no sobre React, no vamos a entrar en detalles sobre los objetos Element devueltos o el proceso de renderizado. Vale la pena señalar que puedes configurar Babel para compilar elementos JSX a invocaciones de una función diferente, por lo que si crees que la sintaxis JSX sería una forma útil de expresar otros tipos de estructuras de datos anidadas, puedes adoptarla para tus propios usos no relacionados con React.</p>
     <p>Una característica importante de la sintaxis JSX es que puede incrustar expresiones JavaScript regulares dentro de expresiones JSX. Dentro de una expresión JSX, el texto entre llaves se interpreta como JavaScript plano. Estas expresiones anidadas están permitidas como valores de atributo y como elementos hijos. Por ejemplo:</p>
+    <pre>
+    <code class="language-js">function sidebar(className, title, content, drawLine=true) &lbrace;
+      return (
+        &lt;div className=&lbrace;className}>
+          &lt;h1>&lbrace;title}&lt;/h1>
+          &lbrace; drawLine && &lt;hr/> }
+          &lt;p>&lbrace;content}&lt;/p>
+        &lt;/div>
+      );
+    }</code></pre>
     <p>La función sidebar() devuelve un elemento JSX. Toma cuatro argumentos que utiliza dentro del elemento JSX. La sintaxis de llaves puede recordarle los literales de plantilla que utilizan $&lbrace;} para incluir expresiones JavaScript dentro de cadenas. Como sabemos que las expresiones JSX se compilan en invocaciones de funciones, no debería sorprendernos que se puedan incluir expresiones JavaScript arbitrarias, ya que las invocaciones de funciones también se pueden escribir con expresiones arbitrarias. Este código de ejemplo es traducido por Babel a lo siguiente:</p>
+    <pre>
+    <code class="language-js">function sidebar(className, title, content, drawLine=true) &lbrace;
+      return React.createElement("div", &lbrace; className: className },
+                    React.createElement("h1", null, title),
+                    drawLine && React.createElement("hr", null),
+                    React.createElement("p", null, content));
+    }</code></pre>
     <p>Este código es fácil de leer y entender: las llaves han desaparecido y el código resultante pasa los parámetros de la función entrante a React.createElement() de forma natural. Fíjate en el truco que hemos hecho aquí con el parámetro drawLine y el operador && de cortocircuito. Si llamas a sidebar() con sólo tres argumentos, entonces drawLine por defecto es true, y el cuarto argumento de la llamada externa a createElement() es el elemento &lt;hr/>. Pero si pasa false como cuarto argumento a sidebar(), entonces el cuarto argumento de la llamada externa a createElement() se evalúa como false, y no se crea ningún elemento &lt;hr/>. Este uso del operador && es un lenguaje común en JSX para incluir o excluir condicionalmente un elemento hijo dependiendo del valor de alguna otra expresión. (Este modismo funciona con React porque React simplemente ignora los hijos que son falsos o nulos y no produce ninguna salida para ellos).</p>
     <p>Cuando utiliza expresiones JavaScript dentro de expresiones JSX, no está limitado a valores simples como los valores de cadena y booleano del ejemplo anterior. Cualquier valor Java Script está permitido. De hecho, es bastante común en la programación React utilizar objetos, matrices y funciones. Considera la siguiente función, por ejemplo:</p>
+    <pre>
+    <code class="language-js">// Given an array of strings and a callback function return a JSX element
+    // representing an HTML &lt;ul> list with an array of &lt;li> elements as its child.
+    function list(items, callback) &lbrace;
+      return (
+        &lt;ul style=&lbrace; &lbrace;padding:10, border:"solid red 4px"} }>
+          &lbrace;items.map((item,index) => &lbrace;
+            &lt;li onClick=&lbrace;() => callback(index)} key=&lbrace;index}>&lbrace;item}&lt;/li>
+          })}
+        &lt;/ul>
+      );
+    }</code></pre>
     <p>Esta función utiliza un objeto literal como valor del atributo style del elemento &lt;ul>. (El elemento &lt;ul> tiene un único hijo, pero el valor de ese hijo es una matriz. La matriz hija es la matriz creada mediante la función map() en la matriz de entrada para crear una matriz de elementos &lt;li>.</p>
     <p>(Esto funciona con React porque la librería React aplana los hijos de un elemento cuando los renderiza. Un elemento con un array hijo es lo mismo que ese elemento con cada uno de esos elementos del array como hijos). Por último, ten en cuenta que cada una de las matrices anidadas &lt;li> tiene un atributo manejador de eventos onClick cuyo valor es una función de flecha. El código JSX compila al siguiente código JavaScript puro (que he formatulado con Prettier):</p>
+    <pre>
+    <code class="language-js">function list(items, callback) &lbrace;
+      return React.createElement(
+        "ul",
+        &lbrace; style: &lbrace; padding: 10, border: "solid red 4px" } },
+        items.map((item, index) =>
+          React.createElement(
+            "li",
+            &lbrace; onClick: () => callback(index), key: index },
+            item
+          )
+        )
+      );
+    }</code></pre>
     <p>Otro uso de las expresiones de objeto en JSX es con el operador de extensión de objeto (§6.10.4) para especificar múltiples atributos a la vez. Supón que te encuentras escribiendo muchas expresiones JSX que repiten un conjunto común de atributos. Puedes simplificar tus expresiones definiendo los atributos como propiedades de un objeto y "esparciéndolos" en tus elementos JSX:</p>
+    <pre>
+    <code class="language-js">let hebrew = &lbrace; lang: "he", dir: "rtl" }; // Specify language and direction
+    let shalom = &lt;span className="emphasis" &lbrace;...hebrew}>ם҇לқ&lt;/span>;</code></pre> 
     <p>Babel compila esto para utilizar una función _extends() (omitida aquí) que combina que atributo className con los atributos contenidos en el objeto hebreo:</p>
+    <pre>
+    <code class="language-js">let shalom = React.createElement("span",
+                  _extends(&lbrace;className: "emphasis"}, hebrew),
+                  "\u05E9\u05DC\u05D5\u05DD");</code></pre>
     <p>Por último, hay otra característica importante de JSX que aún no hemos cubierto. Como has visto, todos los elementos JSX comienzan con un identificador inmediatamente después del paréntesis angular de apertura. Si la primera letra de este identificador es minúscula (como ha sido en todos los ejemplos aquí), entonces el identificador se pasa a createElement() como una cadena. Pero si la primera letra del identificador es mayúscula, entonces se trata como un identificador real, y es el valor JavaScript de ese identificador el que se pasa como primer argumento a createElement(). Esto significa que la expresión JSX &lt;Math/> compila código JavaScript que pasa el objeto Math global a React.createElement().</p>
     <p>Para React, esta capacidad de pasar valores no string como primer argumento a createEle ment() permite la creación de componentes. Un componente es una forma de escribir un simple</p>
     <p>Expresión JSX (con un nombre de componente en mayúsculas) que representa una expresión más compleja (utilizando nombres de etiqueta HTML en minúsculas).</p>
     <p>La forma más sencilla de definir un nuevo componente en React es escribir una función que tome un "objeto props" como argumento y devuelva una expresión JSX. Un objeto props es simplemente un objeto JavaScript que representa valores de atributos, como los objetos que se pasan como segundo argumento a createElement(). He aquí, por ejemplo, otra versión de nuestra función sidebar():</p>
+    <pre>
+    <code class="language-js">function Sidebar(props) &lbrace;
+      return (
+        &lt;div>
+          &lt;h1>&lbrace;props.title}&lt;/h1>
+          &lbrace; props.drawLine && &lt;hr/> }
+          &lt;p>&lbrace;props.content}&lt;/p>
+        &lt;/div>
+      );
+    }</code></pre>
     <p>Esta nueva función Sidebar() es muy parecida a la función anterior sidebar(). Pero ésta tiene un nombre que empieza por mayúscula y toma un único argumento objeto en lugar de argumentos separados. Esto la convierte en un componente React y significa que puede utilizarse en lugar de un nombre de etiqueta HTML en expresiones JSX:</p>
+    <pre>
+    <code class="language-js">let sidebar = &lt;Sidebar title="Something snappy" content="Something wise"/>;</code></pre>
     <p>Este elemento &lt;Sidebar/> se compila así:</p>
+    <pre>
+    <code class="language-js">let sidebar = React.createElement(Sidebar, &lbrace;
+      title: "Something snappy",
+      content: "Something wise"
+    });</code></pre>
     <p>Es una simple expresión JSX, pero cuando React la renderice, pasará el segundo argumento (el objeto Props) al primer argumento (la función Sidebar()) y utilizará la expresión JSX devuelta por esa función en lugar de la expresión &lt;Sidebar>.</p>
   </section>
   <section id="8">
@@ -132,22 +384,88 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Cuando ejecutes Flow, encontrará todo el código fuente JavaScript de tu proyecto, pero sólo informará de errores de tipo para los archivos que hayan "optado" por la comprobación de tipo añadiendo un comentario // @flow en la parte superior del archivo. Este comportamiento es importante porque significa que puedes adoptar Flow para proyectos existentes y luego comenzar a verificar tu código archivo por archivo, sin ser molestado por errores y advertencias en archivos que aún no han sido convertidos.</p>
     <p>Flow puede ser capaz de encontrar errores en tu código incluso si todo lo que haces es optar por un comentario // @flow. Incluso si no utilizas la extensión de lenguaje Flow y no añades anotaciones de tipo a tu código, la herramienta de comprobación de tipos de Flow puede hacer inferencias sobre los valores de tu programa y alertarte cuando los utilices de forma inconsistente.</p>
     <p>Considere el siguiente mensaje de error Flow:</p>
+    <pre class="language-js">
+    Error ┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈ variableReassignment.js:6:3
+
+    Cannot assign 1 to i.r because:
+
+    • property r is missing in number [1].
+    
+        2│ let i = &lbrace; r: 0, i: 1 }; // The complex number 0+1i
+    [1] 3│ for(i = 0; i &lt; 10; i++) &lbrace; // Oops! The loop variable overwrites i
+        4│    console.log(i);
+        5│ }
+        6│ i.r = 1; // Flow detects the error here</pre>
     <p>En este caso, declaramos la variable i y le asignamos un objeto. Luego usamos i de nuevo como una variable de bucle, sobrescribiendo el objeto. Flow se da cuenta de esto y marca un error cuando intentamos usar i como si todavía contuviera un objeto. (Una solución sencilla sería escribir for(let i = 0; haciendo que la variable de bucle sea local al bucle).</p>
     <p>He aquí otro error que Flow detecta incluso sin anotaciones de tipo:</p>
+    <pre class="language-js">
+    Error ┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈ size.js:3:14
+      
+    Cannot get x.length because property length is missing in Number [1].
+        1│ // @flow
+        2│ function size(x) &lbrace;
+        3│    return x.length;
+        4│ }
+    [1] 5│ let s = size(1000);</pre>
     <p>Flow ve que la función size() toma un único argumento. No sabe el tipo de ese argumento, pero puede ver que se espera que el argumento tenga una propiedad de longitud. Cuando ve que se llama a esta función size() con un argumento numérico, correctamente lo marca como un error porque los números no tienen propiedades de longitud.</p>
   </section>
   <section id="8-2">
     <h2>17.8.2 Uso de anotaciones de tipo</h2>
     <p>Cuando declaras una variable JavaScript, puedes añadirle una anotación de tipo Flow siguiendo el nombre de la variable con dos puntos y el tipo:</p>
+    <pre>
+    <code class="language-js">let message: string = "Hello world";
+    let flag: boolean = false;
+    let n: number = 42;</code></pre>
     <p>Flow conocería los tipos de estas variables incluso si no las anotaras: puede ver qué valores asignas a cada variable, y hace un seguimiento de ello. Sin embargo, si añades anotaciones de tipo, Flow conoce tanto el tipo de la variable como que has expresado la intención de que la variable sea siempre de ese tipo. Así que si usas la anotación de tipo, Flow marcará un error si alguna vez asignas un valor de un tipo diferente a esa variable. Las anotaciones de tipo para variables también son particularmente útiles si tiendes a declarar todas tus variables en la parte superior de una función antes de que se utilicen.</p>
     <p>Las anotaciones de tipo para argumentos de función son como las anotaciones para variables: siguen al nombre del argumento de función con dos puntos y el nombre del tipo. Cuando se anota una función, normalmente también se añade una anotación para el tipo de retorno de la función.</p>
     <p>Va entre el paréntesis de cierre y la llave abierta del cuerpo de la función. Las funciones que no devuelven nada utilizan el tipo de flujo void.</p>
     <p>En el ejemplo anterior definimos una función size() que esperaba un argumento con una propiedad de longitud. Así es como podríamos cambiar esa función para especificar explícitamente que espera un argumento de cadena y devuelve un número. Fíjate, Flow ahora marca un error si pasamos un array a la función, aunque la función funcionaría en ese caso:</p>
+    <pre class="language-js">
+    Error ┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈ size2.js:5:18
+
+    Cannot call size with array literal bound to s because array literal [1]
+    is incompatible with string [2].
+
+    [2] 2│ function size(s: string): number &lbrace;
+        3│    return s.length;
+        4│ }
+    [1] 5│ console.log(size([1,2,3]));</pre>
     <p>También es posible utilizar anotaciones de tipo con funciones de flecha, aunque puede convertir esta sintaxis normalmente sucinta en algo más verboso:</p>
+    <pre>
+    <code class="language-js">const size = (s: string): number => s.length;</code></pre>
     <p>Una cosa importante a entender sobre Flow es que el valor JavaScript null tiene el tipo Flow null y el valor JavaScript undefined tiene el tipo Flow void. Pero ninguno de estos valores es miembro de ningún otro tipo (a menos que lo añadas explícitamente). Si declaras que un parámetro de función es una cadena, entonces debe ser una cadena, y es un error pasar null o pasar undefined u omitir el argumento (que es básicamente lo mismo que pasar undefined):</p>
+    <pre class="language-js">
+    Error ┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈ size3.js:3:18
+
+    Cannot call size with null bound to s because null [1] is incompatible
+    with string [2].
+        1│ // @flow
+    [2] 2│ const size = (s: string): number => s.length;
+    [1] 3│ console.log(size(null));</pre>
     <p>Si desea permitir null e indefinido como valores legales para una variable o argumento de función, simplemente anteponga un signo de interrogación al tipo. Por ejemplo, utiliza ?string o ?number en lugar de string o number. Si cambiamos nuestra función size() para que espere un argumento de tipo ?string, Flow no se quejará cuando pasemos null a la función. Pero ahora tiene algo más de lo que quejarse:</p>
+    <pre class="language-js">
+    Error ┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈ size4.js:3:14
+
+    Cannot get s.length because property length is missing in null or
+    undefined [1].
+        1│ // @flow
+    [1] 2│ function size(s: ?string): number &lbrace;
+        3│    return s.length;
+        4│ }
+        5│ console.log(size(null));</pre>
     <p>Lo que Flow nos está diciendo aquí es que no es seguro escribir s.length porque, en este lugar de nuestro código, s podría ser null o undefined, y esos valores no tienen propiedades de longitud. Aquí es donde Flow se asegura de que no tomemos atajos. Si un valor puede ser nulo, Flow insistirá en que comprobemos ese caso antes de hacer cualquier cosa que dependa de que el valor no sea nulo.</p>
     <p>En este caso, podemos solucionar el problema cambiando el cuerpo de la función de la siguiente manera:</p>
+    <pre>
+    <code class="language-js">function size(s: ?string): number &lbrace;
+      // At this point in the code, s could be a string or null or undefined.
+      if (s === null || s === undefined) &lbrace;
+        // In this block, Flow knows that s is null or undefined.
+        return -1;
+      } else &lbrace;
+        // And in this block, Flow knows that s is a string.
+        return s.length;
+      }
+    }</code></pre>
     <p>Cuando se llama a la función por primera vez, el parámetro puede tener más de un tipo. Pero añadiendo código de comprobación de tipo, creamos un bloque dentro del código donde Flow sabe con seguridad que el parámetro es una cadena. Cuando usamos s.length dentro de ese bloque, Flow no se queja. Ten en cuenta que Flow no requiere que escribas código verboso como este. Flow también estaría satisfecho si simplemente reemplazáramos el cuerpo de la función size() con return s ? s.length : -1;.</p>
     <p>La sintaxis de flujo permite un signo de interrogación antes de cualquier especificación de tipo para indicar que, además del tipo especificado, también se permiten null e indefinido. Los signos de interrogación también pueden aparecer después del nombre de un parámetro para indicar que el parámetro en sí es opcional. Así, si cambiamos la declaración del parámetro s de s: ?cadena a s? : cadena, eso significaría que está bien llamar a size() sin argumentos (o con el valor undefined, que es lo mismo que omitirlo), pero que si la llamamos con un parámetro distinto de undefined, ese parámetro debe ser una cadena. En este caso, null no es un valor legal.</p>
     <p>Hasta ahora, hemos discutido los tipos primitivos string, number, boolean, null y void y hemos demostrado cómo puedes usarlos con declaraciones de variables, parámetros de funciones y valores de retorno de funciones. Las subsecciones siguientes describen algunos tipos más complejos soportados por Flow.</p>
@@ -155,58 +473,267 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="8-3" class="py-4 xs:py-5 sm:py-6">
     <h2>17.8.3 Tipos de clases</h2>
     <p>Además de los tipos primitivos que Flow conoce, también conoce todas las clases incorporadas de JavaScript y te permite utilizar nombres de clases como tipos. La siguiente función, por ejemplo, utiliza anotaciones de tipo para indicar que debe ser invocada con un objeto Date y un objeto RegExp:</p>
+    <pre>
+    <code class="language-js">// @flow
+    // Return true if the ISO representation of the specified date
+    // matches the specified pattern, or false otherwise.
+    // E.g: const isTodayChristmas = dateMatches(new Date(), /^\d&lbrace;4}-12-25T/);
+    export function dateMatches(d: Date, p: RegExp): boolean &lbrace;
+      return p.test(d.toISOString());
+    }</code></pre>
     <p>Si defines tus propias clases con la palabra clave class, esas clases se convierten automáticamente en tipos Flow válidos. Sin embargo, para que esto funcione, Flow requiere que utilices anotaciones de tipo en la clase. En particular, cada propiedad de la clase debe tener su tipo declarado. Aquí hay una simple clase de números complejos que demuestra esto:</p>
+    <pre>
+    <code class="language-js">// @flow
+    export default class Complex &lbrace;
+      // Flow requires an extended class syntax that includes type annotations
+      // for each of the properties used by the class.
+      i: number;
+      r: number;
+      static i: Complex;
+
+      constructor(r: number, i:number) &lbrace;
+        // Any properties initialized by the constructor must have Flow type
+        // annotations above.
+        this.r = r;
+        this.i = i;
+      }
+
+      add(that: Complex) &lbrace;
+        return new Complex(this.r + that.r, this.i + that.i);
+      }
+    }
+
+    // This assignment would not be allowed by Flow if there was not a
+    // type annotation for i inside the class.
+    Complex.i = new Complex(0,1);</code></pre>
   </section>
   <section id="8-4">
     <h2>17.8.4 Tipos de objetos</h2>
     <p>El tipo Flow para describir un objeto se parece mucho a un literal de objeto, salvo que los valores de propiedad se sustituyen por tipos de propiedad. Aquí, por ejemplo, hay una función que espera un objeto con propiedades numéricas x e y:</p>
+    <pre>
+    <code class="language-js">// @flow
+    // Given an object with numeric x and y properties, return the
+    // distance from the origin to the point (x,y) as a number.
+    export default function distance(point: &lbrace;x:number, y:number}): number &lbrace;
+      return Math.hypot(point.x, point.y);
+    }</code></pre>
     <p>En este código, el texto &lbrace;x:number, y:number} es un tipo Flow, como lo son string o Date. Como con cualquier tipo, puedes añadir un signo de interrogación al principio para indicar que null e indefinido también deberían estar permitidos.</p>
     <p>Dentro de un tipo de objeto, cualquier nombre de propiedad puede ir seguido de un signo de interrogación para indicar que esa propiedad es opcional y puede omitirse. Por ejemplo, puede escribir así el tipo de un objeto que represente un punto 2D o 3D:</p>
+    <pre>
+    <code class="language-js">&lbrace;x: number, y: number, z?: number}</code></pre>
     <p>Si una propiedad no está marcada como opcional en un tipo de objeto, entonces es requerida, y Flow informará de un error si una propiedad apropiada no está presente en el valor real. Sin embargo, Flow no tolera propiedades extra. Si pasaras un objeto que tuviera una propiedad w a la función distance() anterior, Flow no se quejaría.</p>
     <p>Si quieres que Flow imponga estrictamente que un objeto no tiene propiedades distintas de las declaradas explícitamente en su tipo, puedes declarar un tipo de objeto exacto añadiendo barras verticales a las llaves:</p>
+    <pre>
+    <code class="language-js">&lbrace;| x: number, y: number |}</code></pre>
     <p>Los objetos de JavaScript se utilizan a veces como diccionarios o mapas de cadena a valor. Cuando se utilizan así, los nombres de las propiedades no se conocen de antemano y no pueden declararse en un tipo Flow. Si utilizas objetos de esta forma, puedes seguir utilizando Flow para describir la estructura de datos. Supongamos que tienes un objeto cuyas propiedades son los nombres de las principales ciudades del mundo y los valores de esas propiedades son objetos que especifican la ubicación geo- gráfica de esas ciudades. Podrías declarar esta estructura de datos así:</p>
+    <pre>
+    <code class="language-js">// @flow
+    const cityLocations : &lbrace;[string]: &lbrace;longitude:number, latitude:number}} = &lbrace;
+      "Seattle": &lbrace; longitude: 47.6062, latitude: -122.3321 },
+      // TODO: if there are any other important cities, add them here.
+    };
+    export default cityLocations;</code></pre>
   </section>
   <section id="8-5" class="py-4 xs:py-5 sm:py-6">
     <h2>17.8.5 Alias de tipo</h2>
     <p>Los objetos pueden tener muchas propiedades, y el tipo Flow que describe un objeto de este tipo será largo y difícil de escribir. E incluso los tipos de objeto relativamente cortos pueden ser confusos porque se parecen mucho a los literales de objeto. Una vez que vamos más allá de tipos simples como número y cadena, a menudo es útil poder definir nombres para nuestros tipos Flow. Y de hecho, Flow utiliza la palabra clave type para hacer exactamente eso. Sigue el tipo con un identificador, un signo igual y un tipo de flujo. Una vez hecho esto, el identificador será un alias para el tipo. He aquí, por ejemplo, cómo podríamos reescribir la función distancia() de la sección anterior con un tipo Punto definido explícitamente:</p>
+    <pre>
+    <code class="language-js">// @flow
+    export type Point = &lbrace;
+      x: number,
+      y: number
+    };
+
+    // Given a Point object return its distance from the origin
+    export default function distance(point: Point): number &lbrace;
+      return Math.hypot(point.x, point.y);
+    }</code></pre>
     <p>Ten en cuenta que este código exporta la función distance() y también exporta el tipo Point. Otros módulos pueden usar el tipo import Point de './distance.js' si quieren usar esa definición de tipo. Ten en cuenta, sin embargo, que import type es una extensión del lenguaje Flow y no una directiva real de importación de JavaScript. Las importaciones y exportaciones de tipos son utilizadas por el comprobador de tipos de Flow, pero como todas las demás extensiones del lenguaje Flow, son eliminadas del código antes de que se ejecute.</p>
     <p>Por último, cabe señalar que en lugar de definir un nombre para un tipo de objeto Flow que represente un punto, probablemente sería más sencillo y limpio definir simplemente una clase Point y utilizar esa clase como tipo.</p>
   </section>
   <section id="8-6">
     <h2>17.8.6 Tipos de matrices</h2>
     <p>El tipo de Flow para describir un array es un tipo compuesto que también incluye el tipo de los elementos del array. Aquí, por ejemplo, hay una función que espera un array de números, y el error que Flow reporta si intentas llamar a la función con un array que tiene elementos no numéricos:</p>
+    <pre class="language-js">
+    Error ┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈ average.js:8:16
+
+    Cannot call average with array literal bound to data because string [1]
+    is incompatible with number [2] in array element.
+    [2] 2│ function average(data: Array&lt;number>) &lbrace;
+        3│    let sum = 0;
+        4│    for(let x of data) sum += x;
+        5│    return sum/data.length;
+        6│ }
+        7│
+    [1] 8│ average([1, 2, "three"]);</pre>
     <p>El tipo de flujo para un array es Array seguido del tipo de elemento entre paréntesis angulares. También puedes expresar un tipo de matriz siguiendo el tipo de elemento con apertura y cierre corchetes. Así que en este ejemplo podríamos haber escrito número[] en lugar de Matriz&lt;número>. Prefiero la notación de corchetes angulares porque, como veremos, hay otros tipos de Flow que utilizan esta sintaxis de corchetes angulares.</p>
     <p>La sintaxis de tipo Array mostrada funciona para arrays con un número arbitrario de elementos, todos los cuales tienen el mismo tipo. Flow tiene una sintaxis diferente para describir el tipo de una tupla: una matriz con un número fijo de elementos, cada uno de los cuales puede tener un tipo diferente. Para expresar el tipo de una tupla, simplemente escribe el tipo de cada uno de sus elementos, sepáralos con comas y enciérralos entre corchetes.</p>
+    <pre>
+    <code class="language-js">function getStatus():[number, string] &lbrace;
+      return [getStatusCode(), getStatusMessage()];
+    }</code></pre>
     <p>Una función que devuelva un código de estado HTTP y un mensaje podría tener este aspecto, por ejemplo:</p>
+    <pre>
+    <code class="language-js">let [code, message] = getStatus();</code></pre>
     <p>Las funciones que devuelven tuplas son difíciles de manejar a menos que se utilice la asignación desestructurante:</p>
+    <pre>
+    <code class="language-js">// @flow
+    export type Color = [number, number, number, number]; // [r, g, b, opacity]
+
+    function gray(level: number): Color &lbrace;
+      return [level, level, level, 1];
+    }
+
+    function fade([r,g,b,a]: Color, factor: number): Color &lbrace;
+      return [r, g, b, a/factor];
+    }
+
+    let [r, g, b, a] = fade(gray(75), 3);</code></pre>
     <p>La asignación de desestructuración, además de las capacidades de aliasing de tipos de Flow, hacen que las tuplas sean lo suficientemente fáciles de trabajar como para considerarlas una alternativa a las clases para tipos de datos simples:</p>
     <p>Ahora que tenemos una forma de expresar el tipo de una matriz, volvamos a la función size() de antes y modifiquémosla para que espere un argumento de matriz en lugar de un argumento de cadena. Queremos que la función sea capaz de aceptar un array de cualquier longitud, por lo que un tipo tupla no es apropiado. Pero no queremos restringir nuestra función a trabajar sólo para matrices donde todos los elementos tienen el mismo tipo. La solución es el tipo Array&lt;mixto>:</p>
+    <pre>
+    <code class="language-js">// @flow
+    function size(s: Array&lt;mixed>): number &lbrace;
+      return s.length;
+    }
+    console.log(size([1,true,"three"]));</code></pre>
     <p>El tipo de elemento mixed indica que los elementos del array pueden ser de cualquier tipo. Si nuestra función realmente indexara el array e intentara usar cualquiera de esos elementos, Flow insistiría en que usáramos comprobaciones typeof u otras pruebas para determinar el tipo del elemento antes de realizar cualquier operación insegura sobre él. (Si estás dispuesto a renunciar a la comprobación de tipo, también puedes usar any en lugar de mixed: te permite hacer lo que quieras con los valores del array sin asegurarte de que los valores son del tipo que esperas).</p>
   </section>
   <section id="8-7" class="py-4 xs:py-5 sm:py-6">
     <h2>17.8.7 Otros tipos parametrizados</h2>
     <p>Hemos visto que cuando anotas un valor como Array, Flow requiere que especifiques también el tipo de los elementos del array dentro de los corchetes angulares. Este tipo adicional se conoce como un parámetro de tipo, y Array no es la única clase JavaScript que es parametrizada.</p>
     <p>La clase Set de JavaScript es una colección de elementos, como lo es un array, y no puedes usar Set como tipo por sí mismo, sino que tienes que incluir un parámetro de tipo entre paréntesis angulares para especificar el tipo de los valores contenidos en el conjunto. (Aunque puedes utilizar mixed o any si el conjunto puede contener valores de varios tipos). He aquí un ejemplo:</p>
+    <pre>
+    <code class="language-js">// @flow
+    // Return a set of numbers with members that are exactly twice those
+    // of the input set of numbers.
+    function double(s: Set&lt;number>): Set&lt;number> &lbrace;
+      let doubled: Set&lt;number> = new Set();
+      for(let n of s) doubled.add(n * 2);
+      return doubled;
+    }
+    console.log(double(new Set([1,2,3]))); // Prints "Set &lbrace;2, 4, 6}"</code></pre>
     <p>Map es otro tipo parametrizado. En este caso, hay dos parámetros de tipo que deben especificarse; el tipo de las claves y los tipos de los valores:</p>
+    <pre>
+    <code class="language-js">// @flow
+    import type &lbrace; Color } from "./Color.js";
+
+    let colorNames: Map&lt;string, Color> = new Map([
+      ["red", [1, 0, 0, 1]],
+      ["green", [0, 1, 0, 1]],
+      ["blue", [0, 0, 1, 1]]
+    ]);</code></pre>
     <p>Flow también te permite definir parámetros de tipo para tus propias clases. El siguiente código define una clase Resultado pero parametriza esa clase con un tipo Error y un tipo Valor. Utilizamos marcadores de posición E y V en el código para representar estos parámetros de tipo. Cuando el usuario de esta clase declare una variable de tipo Resultado, especificará los tipos reales a sustituir por E y V. La declaración de la variable podría tener este aspecto:</p>
+    <pre>
+    <code class="language-js">let result: Result&lt;TypeError, Set&lt;string>>;</code></pre>
     <p>Y así es como se define la clase parametrizada:</p>
+    <pre>
+    <code class="language-js">// @flow
+    // This class represents the result of an operation that can either
+    // throw an error of type E or a value of type V.
+    export class Result&lt;E, V> &lbrace;
+      error: ?E;
+      value: ?V;
+
+      constructor(error: ?E, value: ?V) &lbrace;
+        this.error = error;
+        this.value = value;
+      }
+
+      threw(): ?E &lbrace; return this.error; }
+      returned(): ?V &lbrace; return this.value; }
+      
+      get():V &lbrace;
+        if (this.error) &lbrace;
+          throw this.error;
+        } else if (this.value === null || this.value === undefined) &lbrace;
+          throw new TypeError("Error and value must not both be null");
+        } else &lbrace;
+          return this.value;
+        }
+      }
+    }</code></pre>
     <p>Incluso puede definir parámetros de tipo para las funciones:</p>
+    <pre>
+    <code class="language-js">// @flow
+    // Combine the elements of two arrays into an array of pairs
+    function zip&lt;A,B>(a:Array&lt;A>, b:Array&lt;B>): Array&lt;[?A,?B]> &lbrace;
+      let result:Array&lt;[?A,?B]> = [];
+      let len = Math.max(a.length, b.length);
+      for(let i = 0; i &lt; len; i++) &lbrace;
+        result.push([a[i], b[i]]);
+      }
+      return result;
+    }
+
+    // Create the array [[1,'a'], [2,'b'], [3,'c'], [4,undefined]]
+    let pairs: Array&lt;[?number,?string]> = zip([1,2,3,4], ['a','b','c'])</code></pre>
   </section>
   <section id="8-8">
     <h2>17.8.8 Tipos de sólo lectura</h2>
     <p>Flow define algunos "tipos de utilidad" parametrizados especiales que tienen nombres que comienzan con $. La mayoría de estos tipos tienen casos de uso avanzados que no vamos a cubrir aquí. Pero dos de ellos son bastante útiles en la práctica. Si tienes un tipo de objeto T y quieres hacer una versión de sólo lectura de ese tipo, simplemente escribe $ReadOnly&lt;T>. Del mismo modo, puedes escribir $ReadOnlyArray&lt;T> para describir un array de sólo lectura con elementos de tipo T.</p>
     <p>La razón para usar estos tipos no es porque ofrezcan alguna garantía de que un objeto o array no pueda ser modificado (ver Object.freeze() en §14.2 si quieres verdaderos objetos de sólo lectura) sino porque te permite detectar errores causados por modificaciones no intencionadas. Si escribes una función que toma un objeto o array como argumento y no cambia ninguna de las propiedades del objeto o los elementos del array, entonces puedes anotar el parámetro de la función con uno de los tipos de sólo lectura de Flow. Si haces esto, Flow informará de un error si te olvidas y accidentalmente modificas el valor de entrada. Aquí tienes dos ejemplos:</p>
+    <pre>
+    <code class="language-js">// @flow
+    type Point = &lbrace;x:number, y:number};
+    
+    // This function takes a Point object but promises not to modify it
+    function distance(p: $ReadOnly&lt;Point>): number &lbrace;
+      return Math.hypot(p.x, p.y);
+    }
+
+    let p: Point = &lbrace;x:3, y:4};
+    distance(p) // => 5
+    
+    // This function takes an array of numbers that it will not modify
+    function average(data: $ReadOnlyArray&lt;number>): number &lbrace;
+      let sum = 0;
+      for(let i = 0; i &lt; data.length; i++) sum += data[i];
+      return sum/data.length;
+    }
+
+    let data: Array&lt;number> = [1,2,3,4,5];
+    average(data) // => 3</code></pre>
   </section>
   <section id="8-9" class="py-4 xs:py-5 sm:py-6">
     <h2>17.8.9 Tipos de funciones</h2>
     <p>Hemos visto cómo añadir anotaciones de tipo para especificar los tipos de los parámetros de una función y su tipo de retorno. Pero cuando uno de los parámetros de una función es a su vez una función, necesitamos poder especificar el tipo de ese parámetro de función.</p>
     <p>Para expresar el tipo de una función con Flow, escriba los tipos de cada parámetro, sepárelos con comas, enciérrelos entre paréntesis y, a continuación, escriba una flecha y el tipo de retorno de la función.</p>
     <p>He aquí una función de ejemplo que espera que se le pase una función callback. Observe cómo hemos definido un alias de tipo para el tipo de la función de devolución de llamada:</p>
+    <pre>
+    <code class="language-js">// @flow
+    // The type of the callback function used in fetchText() below
+    export type FetchTextCallback = (?Error, ?number, ?string) => void;
+
+    export default function fetchText(url: string, callback: FetchTextCallback) &lbrace;
+      let status = null;
+      fetch(url)
+      .then(response => &lbrace;
+        status = response.status;
+        return response.text()
+      })
+      .then(body => &lbrace;
+        callback(null, status, body);
+      })
+      .catch(error => &lbrace;
+        callback(error, status, null);
+      });
+    }</code></pre>
   </section>
   <section id="8-10">
     <h2>17.8.10 Tipos de sindicatos</h2>
     <p>Volvamos una vez más a la función size(). Realmente no tiene sentido tener una función que no hace otra cosa que devolver la longitud de un array. Los arrays tienen una propiedad de longitud perfectamente buena para eso. Pero size() podría ser útil si pudiera tomar cualquier tipo de objeto de colección (una matriz, un conjunto o un mapa) y devolver el número de elementos de la colección. En JavaScript normal sin tipado sería fácil escribir una función size() como esa. Con Flow, necesitamos una forma de expresar un tipo que permita arrays, Sets y Maps, pero que no permita valores de ningún otro tipo.</p>
     <p>Flow denomina a los tipos de este tipo Tipos de unión y permite expresarlos simplemente enumerando los tipos deseados y separándolos con caracteres de barra vertical:</p>
+    <pre>
+    <code class="language-js">// @flow
+    function size(collection: Array&lt;mixed>|Set&lt;mixed>|Map&lt;mixed,mixed>): number &lbrace;
+      if (Array.isArray(collection)) &lbrace;
+        return collection.length;
+      } else &lbrace;
+        return collection.size;
+      }
+    }
+    size([1,true,"three"]) + size(new Set([true,false])) // => 5</code></pre>
     <p>Los tipos de unión pueden leerse utilizando la palabra "or" - "una matriz o un conjunto o un mapa"-, por lo que el hecho de que esta sintaxis de Flow utilice el mismo carácter de barra vertical que los operadores OR de JavaScript es intencionado.</p>
     <p>Hemos visto antes que anteponer un signo de interrogación a un tipo permite valores nulos e indefinidos. Y ahora puedes ver que un prefijo ? es simplemente un atajo para añadir un sufijo |null| void a un tipo.</p>
     <p>En general, cuando anotas un valor con un tipo Union, Flow no te permitirá usar ese valor hasta que hayas hecho suficientes pruebas para averiguar cuál es el tipo del valor real. En el ejemplo de size() que acabamos de ver, necesitamos comprobar explícitamente si el argumento es un array antes de intentar acceder a la propiedad length del argumento. Observe que no tenemos que distinguir un argumento Set de un argumento Map, sin embargo: ambas clases definen una propiedad size, por lo que el código de la cláusula else es seguro siempre que el argumento no sea un array.</p>
@@ -214,13 +741,72 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="8-11" class="py-4 xs:py-5 sm:py-6">
     <h2>17.8.11 Tipos enumerados y uniones discriminadas</h2>
     <p>Flow te permite usar literales primitivos como tipos que consisten en un único valor. Si escribes let x:3;, entonces Flow no te permitirá asignar ningún valor a esa variable que no sea 3. No suele ser útil definir tipos que tengan un único miembro, pero una unión de tipos literales puede ser útil. Probablemente puedes imaginar un uso para tipos como estos, por ejemplo:</p>
+    <pre>
+    <code class="language-js">type Answer = "yes" | "no";
+    type Digit = 0|1|2|3|4|5|6|7|8|9;</code></pre>
     <p>Si utiliza tipos formados por literales, debe comprender que sólo se permiten valores literales:</p>
+    <pre>
+    <code class="language-js">let a: Answer = "Yes".toLowerCase();    // Error: can't assign string to Answer
+    let d: Digit = 3+4;         // Error: can't assign number to Digit</code></pre>
     <p>Cuando Flow comprueba tus tipos, en realidad no hace los cálculos: sólo comprueba los tipos de los cálculos. Flow sabe que toLowerCase() devuelve una cadena y que el operador + en números devuelve un número. Aunque sabemos que ambos cálculos devuelven valores que están dentro del tipo, Flow no puede saberlo y marca errores en ambas líneas.</p>
     <p>Un tipo de unión de tipos literales como Answer y Digit es un ejemplo de tipo enumerado, o enum. Un caso de uso canónico para los tipos enum es representar los palos de las cartas:</p>
+    <pre>
+    <code class="language-js">type Suit = "Clubs" | "Diamonds" | "Hearts" | "Spades";</code></pre>
     <p>Un ejemplo más relevante podrían ser los códigos de estado HTTP:</p>
+    <pre>
+    <code class="language-js">type HTTPStatus =
+      | 200     // OK
+      | 304     // Not Modified
+      | 403     // Forbidden
+      | 404;    // Not Found</code></pre>
     <p>Uno de los consejos que escuchan a menudo los nuevos programadores es que eviten utilizar literales en su código y que, en su lugar, definan constantes simbólicas para representar esos valores. Una razón práctica para ello es evitar el problema de los errores tipográficos: si escribe mal una cadena literal como "Diamonds", JavaScript nunca se quejará, pero es posible que su código no funcione correctamente. En cambio, si escribes mal un identificador, es probable que JavaScript lance un error que notarás. Con Flow, este consejo no siempre se aplica. Si anotas una variable con el tipo Traje, y luego intentas asignarle un traje mal escrito, Flow te avisará del error.</p>
     <p>Otro uso importante de los tipos literales es la creación de uniones discriminadas. Cuando se trabaja con uniones (formadas por diferentes tipos, no por literales), normalmente hay que escribir código para discriminar entre los posibles tipos. En la sección anterior, escribimos una función que podía tomar un array o un Set o un Map como argumento y tuvimos que escribir código para discriminar la entrada array de la entrada Set o Map. Si quieres crear una unión de tipos Object, puedes hacer que estos tipos sean fáciles de discriminar utilizando un tipo literal dentro de cada uno de los tipos Object individuales.</p>
     <p>Un ejemplo lo aclarará. Supongamos que estás usando un hilo trabajador en Node (§16.11) y estás usando postMessage() y eventos "mensaje" para enviar mensajes basados en objetos entre el hilo principal y el hilo trabajador. Hay múltiples tipos de mensajes que el trabajador puede querer enviar al hilo principal, pero nos gustaría escribir un tipo de Flow Union que describa todos los mensajes posibles. Considera este código:</p>
+    <pre>
+    <code class="language-js">// @flow
+    // The worker sends a message of this type when it is done
+    // reticulating the splines we sent it.
+    export type ResultMessage = &lbrace;
+      messageType: "result",
+      result: Array&lt;ReticulatedSpline>, // Assume this type is defined elsewhere.
+    };
+
+    // The worker sends a message of this type if its code failed with an exception.
+    export type ErrorMessage = &lbrace;
+      messageType: "error",
+      error: Error,
+    };
+
+    // The worker sends a message of this type to report usage statistics.
+    export type StatisticsMessage = &lbrace;
+      messageType: "stats",
+      splinesReticulated: number,
+      splinesPerSecond: number
+    };
+
+    // When we receive a message from the worker it will be a WorkerMessage.
+    export type WorkerMessage = ResultMessage | ErrorMessage | StatisticsMessage;
+
+    // The main thread will have an event handler function that is passed
+    // a WorkerMessage. But because we've carefully defined each of the
+    // message types to have a messageType property with a literal type,
+    // the event handler can easily discriminate among the possible messages:
+    function handleMessageFromReticulator(message: WorkerMessage) &lbrace;
+      if (message.messageType === "result") &lbrace;
+        // Only ResultMessage has a messageType property with this value
+        // so Flow knows that it is safe to use message.result here.
+        // And Flow will complain if you try to use any other property.
+        console.log(message.result);
+      } else if (message.messageType === "error") &lbrace;
+        // Only ErrorMessage has a messageType property with value "error"
+        // so knows that it is safe to use message.error here.
+        throw message.error;
+      } else if (message.messageType === "stats") &lbrace;
+        // Only StatisticsMessage has a messageType property with value "stats"
+        // so knows that it is safe to use message.splinesPerSecond here.
+        console.info(message.splinesPerSecond);
+      }
+    }</code></pre>
   </section>
   <section id="9" class="pb-4 xs:pb-5 sm:pb-6">
     <h2>17.9 Resumen</h2>
