@@ -6,10 +6,10 @@ export default {
 			fontFamily: {
 				oswald: "Oswald",
 				bench: "BenchNine",
-				khand: ["Khand", "sans-serif"],
+				khand: ['Khand-Regular', "sans-serif"],
 				poppins: ["Poppins", "sans-serif"],
 				victor: '"Victor Mono", monospace',
-				victoritalic: '"Victor Mono Italic", monospace',
+				victoritalic: ["Victor Mono Italic", "monospace"],
 			},
 			screens: {
 				xs: "320px"
