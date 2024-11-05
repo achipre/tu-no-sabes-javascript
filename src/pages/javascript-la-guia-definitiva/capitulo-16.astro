@@ -16,9 +16,9 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Un capítulo no es suficiente para documentar todas las APIs de Node, pero mi esperanza es que este capítulo explique lo suficiente de los fundamentos para hacerte productivo con Node, y confiado en que puedes dominar cualquier nueva API que necesites.</p>
     <article>
       <p class="title-article">Instalación del nodo</p>
-      <p>Node es un software de código abierto. Visite https://nodejs.org para descargar e instalar Node para Windows y MacOS. En Linux, puede instalar Node con su gestor de paquetes nor- mal, o puede visitar https://nodejs.org/en/download para descargar los binarios directamente. Si trabajas con software en contenedores, puedes encontrar imágenes Docker oficiales de Node en https://hub.docker.com.</p>
+      <p>Node es un software de código abierto. Visite <a href="https://nodejs.org">https://nodejs.org</a> para descargar e instalar Node para Windows y MacOS. En Linux, puede instalar Node con su gestor de paquetes nor- mal, o puede visitar <a href="https://nodejs.org/en/download">https://nodejs.org/en/download</a> para descargar los binarios directamente. Si trabajas con software en contenedores, puedes encontrar imágenes Docker oficiales de Node en <a href="https://hub.docker.com">https://hub.docker.com</a>.</p>
       <p>Además del ejecutable de Node, una instalación de Node también incluye npm, un gestor de paquetes que permite acceder fácilmente a un vasto ecosistema de herramientas y librerías JavaScript. Los ejemplos de este capítulo utilizarán únicamente los paquetes integrados de Node y no requerirán npm ni ninguna librería externa</p>
-      <p>Por último, no pases por alto la documentación oficial de Node, disponible en https:// nodejs.org/api y https://nodejs.org/docs/guides. La he encontrado bien organizada y bien escrita.</p>
+      <p>Por último, no pases por alto la documentación oficial de Node, disponible en <a href="https://nodejs.org/api">https://nodejs.org/api</a> y <a href="https://nodejs.org/docs/guides">https://nodejs.org/docs/guides</a>. La he encontrado bien organizada y bien escrita.</p>
     </article>
   </section>
   <section id="1" class="py-4 xs:py-5 sm:py-6">
@@ -27,17 +27,17 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   </section>
   <section id="1-1">
     <h2>16.1.1 Salida de la consola</h2>
-    <p>Si está acostumbrado a programar en JavaScript para navegadores web, una de las pequeñas sorpresas de Node es que console.log() no sólo sirve para depurar, sino que es la forma más sencilla de Node de mostrar un mensaje al usuario o, más en general, de enviar la salida al flujo stdout de . Aquí está el clásico programa "Hola Mundo" en Node:</p>
+    <p>Si está acostumbrado a programar en JavaScript para navegadores web, una de las pequeñas sorpresas de Node es que <codeinline>console.log()</codeinline> no sólo sirve para depurar, sino que es la forma más sencilla de Node de mostrar un mensaje al usuario o, más en general, de enviar la salida al flujo stdout de . Aquí está el clásico programa "Hola Mundo" en Node:</p>
     <pre>
     <code class="language-js">console.log("Hello World!");</code></pre>
-    <p>Hay formas más sencillas de escribir en stdout, pero ninguna más elegante u oficial que simplemente llamar a console.log().</p>
-    <p>En los navegadores web, console.log(), console.warn() y console.error() suelen mostrar pequeños iconos junto a su salida en la consola del desarrollador para indicar la variedad del mensaje de registro. Node no hace esto, pero la salida mostrada con sole.error() se distingue de la salida mostrada con console.log() porque console.error() escribe en el flujo stderr. Si está utilizando Node para escribir un programa que está diseñado para tener stdout redirigido a un archivo o una tubería, puede utilizar console.error( ) para mostrar el texto a la consola donde el usuario lo verá, a pesar de que el texto impreso con console.log() está oculto.</p>
+    <p>Hay formas más sencillas de escribir en stdout, pero ninguna más elegante u oficial que simplemente llamar a <codeinline>console.log()</codeinline>.</p>
+    <p>En los navegadores web, <codeinline>console.log()</codeinline>, <codeinline>console.warn()</codeinline> y <codeinline>console.error()</codeinline> suelen mostrar pequeños iconos junto a su salida en la consola del desarrollador para indicar la variedad del mensaje de registro. Node no hace esto, pero la salida mostrada <codeinline>con sole.error()</codeinline> se distingue de la salida mostrada con <codeinline>console.log()</codeinline> porque <codeinline>console.error()</codeinline> escribe en el flujo stderr. Si está utilizando Node para escribir un programa que está diseñado para tener stdout redirigido a un archivo o una tubería, puede utilizar <codeinline>console.error()</codeinline> para mostrar el texto a la consola donde el usuario lo verá, a pesar de que el texto impreso con <codeinline>console.log()</codeinline> está oculto.</p>
   </section>
   <section id="1-2" class="py-4 xs:py-5 sm:py-6">
     <h2>16.1.2 Argumentos de la línea de comandos y variables de entorno</h2>
     <p>Si ha escrito anteriormente programas de estilo Unix diseñados para ser invocados desde un terminal u otra interfaz de línea de comandos, sabrá que estos programas suelen obtener su entrada principalmente de argumentos de línea de comandos y, en segundo lugar, de variables de entorno.</p>
-    <p>Node sigue estas convenciones de Unix. Un programa Node puede leer sus argumentos de línea de comandos de la matriz de cadenas process.argv. El primer elemento de este array es siempre la ruta al ejecutable de Node. El segundo argumento es la ruta al archivo de código JavaScript que Node está ejecutando. Cualquier elemento restante en este array son los argumentos separados por espacios que pasaste en la línea de comandos cuando invocaste a Node.</p>
-    <p>Por ejemplo, supongamos que guardas este programa Node muy corto en el archivo argv.js:</p>
+    <p>Node sigue estas convenciones de Unix. Un programa Node puede leer sus argumentos de línea de comandos de la matriz de cadenas <codeinline>process.argv</codeinline>. El primer elemento de este array es siempre la ruta al ejecutable de Node. El segundo argumento es la ruta al archivo de código JavaScript que Node está ejecutando. Cualquier elemento restante en este array son los argumentos separados por espacios que pasaste en la línea de comandos cuando invocaste a Node.</p>
+    <p>Por ejemplo, supongamos que guardas este programa Node muy corto en el archivo <em>argv.js</em>:</p>
     <pre>
     <code class="language-js">console.log(process.argv);</code></pre>
     <p>A continuación, puede ejecutar el programa y ver una salida como ésta:</p>
@@ -52,10 +52,10 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     ]</pre>
     <p>Hay que tener en cuenta un par de cosas:</p>
     <ul>
-      <li class="font-normal">El primer y segundo elemento de process.argv serán rutas de sistema de archivos completamente cualificadas al ejecutable Node y al archivo de JavaScript que se está ejecutando, incluso si no los has escrito de esa forma.</li>
-      <li class="font-normal">Los argumentos de línea de comandos que están destinados e interpretados por el propio ejecutable Node son consumidos por el ejecutable Node y no aparecen en pro cess.argv. (El argumento de línea de comandos --trace-uncaught en realidad no está haciendo nada útil en el ejemplo anterior; sólo está ahí para demostrar que no aparece en la salida). Cualquier argumento (como --arg1 y filename) que aparezca después del nombre del archivo JavaScript aparecerá en process.argv.</li>
+      <li class="font-normal">El primer y segundo elemento de <codeinline>process.argv</codeinline> serán rutas de sistema de archivos completamente cualificadas al ejecutable Node y al archivo de JavaScript que se está ejecutando, incluso si no los has escrito de esa forma.</li>
+      <li class="font-normal">Los argumentos de línea de comandos que están destinados e interpretados por el propio ejecutable Node son consumidos por el ejecutable Node y no aparecen en <codeinline>process.argv</codeinline>. (El argumento de línea de comandos <codeinline>--trace-uncaught</codeinline> en realidad no está haciendo nada útil en el ejemplo anterior; sólo está ahí para demostrar que no aparece en la salida). Cualquier argumento (como <codeinline>--arg1</codeinline> y <codeinline>filename</codeinline>) que aparezca después del nombre del archivo JavaScript aparecerá en <codeinline>process.argv</codeinline>.</li>
     </ul>
-    <p>Los programas Node también pueden tomar información de variables de entorno al estilo Unix. Node las hace disponibles a través del objeto process.env. Los nombres de las propiedades de este objeto son nombres de variables de entorno, y los valores de las propiedades (siempre cadenas) son los valores de esas variables.</p>
+    <p>Los programas Node también pueden tomar información de variables de entorno al estilo Unix. Node las hace disponibles a través del objeto <codeinline>process.env</codeinline>. Los nombres de las propiedades de este objeto son nombres de variables de entorno, y los valores de las propiedades (siempre cadenas) son los valores de esas variables.</p>
     <p>Aquí está una lista parcial de las variables de entorno en mi sistema:</p>
     <pre>
     <code class="language-js">$ node -p -e 'process.env'
@@ -67,7 +67,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       LANG: 'en_US.UTF-8',
       HOME: '/Users/david',
     }</code></pre>
-    <p>Puede utilizar node -h o node --help para averiguar qué hacen los argumentos de línea de comandos -p y -e. Sin embargo, como sugerencia, observe que podría reescribir la línea anterior como node --eval 'process.env' --print.</p>
+    <p>Puede utilizar <codeinline>node -h</codeinline> o <codeinline>node --help</codeinline> para averiguar qué hacen los argumentos de línea de comandos <codeinline>-p</codeinline> y <codeinline>-e</codeinline>. Sin embargo, como sugerencia, observe que podría reescribir la línea anterior como <codeinline>node --eval 'process.env' --print</codeinline>.</p>
   </section>
   <section id="1-3">
     <h2>16.1.3 Ciclo de vida del programa</h2>
