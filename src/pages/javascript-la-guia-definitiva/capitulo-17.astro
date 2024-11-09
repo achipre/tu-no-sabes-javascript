@@ -84,52 +84,52 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <code class="language-js">const getJSON = require("./getJSON.js");
 
     /**
-    * getTemperature() takes the name of a city as its input, and returns
-    * a Promise that will resolve to the current temperature of that city,
-    * in degrees Fahrenheit. It relies on a (fake) web service that returns
-    * world temperatures in degrees Celsius.
+    * getTemperature() toma el nombre de una ciudad como entrada y devuelve 
+    * una Promesa que se resolverá en la temperatura actual de esa ciudad, 
+    * en grados Fahrenheit. Se basa en un servicio web (falso) que devuelve 
+    * las temperaturas mundiales en grados Celsius.  
     */
     module.exports = async function getTemperature(city) &lbrace;
-      // Get the temperature in Celsius from the web service
+      // Obtén la temperatura en Celsius del servicio web
       let c = await getJSON(
         `https://globaltemps.example.com/api/city/$&lbrace;city.toLowerCase()}`
       );
-      // Convert to Fahrenheit and return that value.
-      return (c * 5 / 9) + 32; // TODO: double-check this formula
+      // Convierte a Fahrenheit y devuelve ese valor.
+      return (c * 5 / 9) + 32; // TODO: vuelve a comprobar esta fórmula
     };</code></pre>
     <p>Un buen conjunto de pruebas para esta función podría verificar que <codeinline>getTemperature()</codeinline> está obteniendo la URL correcta, y que está convirtiendo las escalas de temperatura correctamente. Podemos hacer esto con una prueba basada en Jest como la siguiente. Este código define una implementación simulada de <codeinline>getJSON()</codeinline> para que la prueba no haga realmente una petición de red. Y como <codeinline>getTemperature()</codeinline> es una función asíncrona, las pruebas también son asíncronas; puede ser complicado probar funciones asíncronas, pero Jest lo hace relativamente fácil:</p>
     <pre>
-    <code class="language-js">// Import the function we are going to test
+    <code class="language-js">// Importa la función que vamos a probar
     const getTemperature = require("./getTemperature.js");
 
-    // And mock the getJSON() module that getTemperature() depends on
+    // Y simula el módulo getJSON() del que depende getTemperature()
     jest.mock("./getJSON");
     const getJSON = require("./getJSON.js");
 
-    // Tell the mock getJSON() function to return an already resolved Promise
-    // with fulfillment value 0.
+    // Dile a la función simulada getJSON() que devuelva una Promesa 
+    // ya resuelta con el valor de cumplimiento 0.
     getJSON.mockResolvedValue(0);
 
-    // Our set of tests for getTemperature() begins here
+    // Nuestro conjunto de pruebas para getTemperature() comienza aquí
     describe("getTemperature()", () => &lbrace;
-      // This is the first test. We're ensuring that getTemperature() calls
-      // getJSON() with the URL that we expect
+      // Esta es la primera prueba. Nos aseguramos de que getTemperature() 
+      // llame a getJSON() con la URL que esperamos
       test("Invokes the correct API", async () => &lbrace;
         let expectedURL = "https://globaltemps.example.com/api/city/vancouver";
         let t = await(getTemperature("Vancouver"));
-        // Jest mocks remember how they were called, and we can check that.
+        // Las simulaciones de Jest recuerdan cómo se las llamó y podemos comprobarlo.
         expect(getJSON).toHaveBeenCalledWith(expectedURL);
       });
 
-      // This second test verifies that getTemperature() converts
-      // Celsius to Fahrenheit correctly
+      // Esta segunda prueba verifica que getTemperature() convierte 
+      // Celsius a Fahrenheit correctamente
       test("Converts C to F correctly", async () => &lbrace;
-        getJSON.mockResolvedValue(0); // If getJSON returns 0C
-        expect(await getTemperature("x")).toBe(32); // We expect 32F
+        getJSON.mockResolvedValue(0); // Si getJSON devuelve 0C
+        expect(await getTemperature("x")).toBe(32); // Esperamos 32F
 
-        // 100C should convert to 212F
-        getJSON.mockResolvedValue(100); // If getJSON returns 100C
-        expect(await getTemperature("x")).toBe(212); // We expect 212F
+        // 100C debería convertirse a 212F
+        getJSON.mockResolvedValue(100); // Si getJSON devuelve 100C
+        expect(await getTemperature("x")).toBe(212); // Esperamos 212F
       });
     });</code></pre>
     <p>Con la prueba escrita, podemos utilizar el comando <codeinline>jest</codeinline> para ejecutarla, y descubrimos que una de nuestras pruebas falla:</p>
@@ -273,11 +273,11 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Las expresiones regulares de llamadas a funciones JavaScript también pueden anidarse a una profundidad arbitraria, y estas expresiones JSX anidadas se traducen en un conjunto de llamadas <codeinline>createElement()</codeinline> anidadas. Cuando un elemento JSX tiene hijos, esos hijos (que suelen ser cadenas y otros elementos JSX) se pasan como argumentos tercero y siguientes:</p>
     <pre>
     <code class="language-js">let sidebar = React.createElement(
-      "div", &lbrace; className: "sidebar"},  // This outer call creates a &lt;div>
-      React.createElement("h1", null,  // This is the first child of the &lt;div/>
-                             "Title"), // and its own first child.
-      React.createElement("hr", null), // The second child of the &lt;div/>.
-      React.createElement("p", null,   // And the third child.
+      "div", &lbrace; className: "sidebar"},  // Esta llamada externa crea un &lt;div>
+      React.createElement("h1", null,  // Este es el primer elemento secundario del &lt;div/>
+                             "Title"), // y su propio primer elemento secundario.
+      React.createElement("hr", null), // El segundo elemento secundario del &lt;div/>.
+      React.createElement("p", null,   // Y el tercer elemento secundario.
                         "This is the sidebar content"));</code></pre>
     <p>El valor devuelto por <codeinline>React.createElement()</codeinline> es un objeto JavaScript ordinario que es utilizado por React para renderizar la salida en una ventana del navegador. Dado que esta sección trata sobre la sintaxis JSX y no sobre React, no vamos a entrar en detalles sobre los objetos Element devueltos o el proceso de renderizado. Vale la pena señalar que puedes configurar Babel para compilar elementos JSX a invocaciones de una función diferente, por lo que si crees que la sintaxis JSX sería una forma útil de expresar otros tipos de estructuras de datos anidadas, puedes adoptarla para tus propios usos no relacionados con React.</p>
     <p>Una característica importante de la sintaxis JSX es que puede incrustar expresiones JavaScript regulares dentro de expresiones JSX. Dentro de una expresión JSX, el texto entre llaves se interpreta como JavaScript plano. Estas expresiones anidadas están permitidas como valores de atributo y como elementos hijos. Por ejemplo:</p>
@@ -302,8 +302,9 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Este código es fácil de leer y entender: las llaves han desaparecido y el código resultante pasa los parámetros de la función entrante a <codeinline>React.createElement()</codeinline> de forma natural. Fíjate en el truco que hemos hecho aquí con el parámetro <codeinline>drawLine</codeinline> y el operador <codeinline>&&</codeinline> de cortocircuito. Si llamas a <codeinline>sidebar()</codeinline> con sólo tres argumentos, entonces <codeinline>drawLine</codeinline> por defecto es <codeinline>true</codeinline>, y el cuarto argumento de la llamada externa a <codeinline>createElement()</codeinline> es el elemento <codeinline>&lt;hr/></codeinline>. Pero si pasa <codeinline>false</codeinline> como cuarto argumento a <codeinline>sidebar()</codeinline>, entonces el cuarto argumento de la llamada externa a <codeinline>createElement()</codeinline> se evalúa como <codeinline>false</codeinline>, y no se crea ningún elemento <codeinline>&lt;hr/></codeinline>. Este uso del operador <codeinline>&&</codeinline> es un lenguaje común en JSX para incluir o excluir condicionalmente un elemento hijo dependiendo del valor de alguna otra expresión. (Este modismo funciona con React porque React simplemente ignora los hijos que son <codeinline>false</codeinline> o <codeinline>null</codeinline> y no produce ninguna salida para ellos).</p>
     <p>Cuando utiliza expresiones JavaScript dentro de expresiones JSX, no está limitado a valores simples como los valores de cadena y booleano del ejemplo anterior. Cualquier valor Java Script está permitido. De hecho, es bastante común en la programación React utilizar objetos, matrices y funciones. Considera la siguiente función, por ejemplo:</p>
     <pre>
-    <code class="language-js">// Given an array of strings and a callback function return a JSX element
-    // representing an HTML &lt;ul> list with an array of &lt;li> elements as its child.
+    <code class="language-js">// Dada un array de string y una función de devolución de llamada, devuelve un 
+    // elemento JSX que representa una lista HTML &lt;ul> con un array de 
+    // elementos &lt;li> como elementos hijos.
     function list(items, callback) &lbrace;
       return (
         &lt;ul style=&lbrace; &lbrace;padding:10, border:"solid red 4px"} }>
@@ -331,7 +332,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     }</code></pre>
     <p>Otro uso de las expresiones de objeto en JSX es con el operador de extensión de objeto (<a href="capitulo-6#10-4">§6.10.4</a>) para especificar múltiples atributos a la vez. Supón que te encuentras escribiendo muchas expresiones JSX que repiten un conjunto común de atributos. Puedes simplificar tus expresiones definiendo los atributos como propiedades de un objeto y "esparciéndolos" en tus elementos JSX:</p>
     <pre>
-    <code class="language-js">let hebrew = &lbrace; lang: "he", dir: "rtl" }; // Specify language and direction
+    <code class="language-js">let hebrew = &lbrace; lang: "he", dir: "rtl" }; // Especifica el idioma y la dirección
     let shalom = &lt;span className="emphasis" &lbrace;...hebrew}>ם҇לқ&lt;/span>;</code></pre> 
     <p>Babel compila esto para utilizar una función <codeinline>_extends()</codeinline> (omitida aquí) que combina que atributo <codeinline>className</codeinline> con los atributos contenidos en el objeto <codeinline>hebrew</codeinline>:</p>
     <pre>
@@ -390,11 +391,11 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
 
     • property r is missing in number [1].
     
-        2│ let i = &lbrace; r: 0, i: 1 }; // The complex number 0+1i
-    [1] 3│ for(i = 0; i &lt; 10; i++) &lbrace; // Oops! The loop variable overwrites i
+        2│ let i = &lbrace; r: 0, i: 1 }; // El número complejo 0+1i
+    [1] 3│ for(i = 0; i &lt; 10; i++) &lbrace; // ¡Ups! La variable de bucle sobrescribe i
         4│    console.log(i);
         5│ }
-        6│ i.r = 1; // Flow detects the error here</pre>
+        6│ i.r = 1; // Flow detecta el error aquí</pre>
     <p>En este caso, declaramos la variable i y le asignamos un objeto. Luego usamos i de nuevo como una variable de bucle, sobrescribiendo el objeto. Flow se da cuenta de esto y marca un error cuando intentamos usar <codeinline>i</codeinline> como si todavía contuviera un objeto. (Una solución sencilla sería escribir <codeinline>for(let i = 0;</codeinline> haciendo que la variable de bucle sea local al bucle).</p>
     <p>He aquí otro error que Flow detecta incluso sin anotaciones de tipo:</p>
     <pre class="language-js">
@@ -456,12 +457,12 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>En este caso, podemos solucionar el problema cambiando el cuerpo de la función de la siguiente manera:</p>
     <pre>
     <code class="language-js">function size(s: ?string): number &lbrace;
-      // At this point in the code, s could be a string or null or undefined.
+      // En este punto del código, s podría ser una cadena o nulo o indefinido.
       if (s === null || s === undefined) &lbrace;
-        // In this block, Flow knows that s is null or undefined.
+        // En este bloque, Flow sabe que s es nulo o indefinido.
         return -1;
       } else &lbrace;
-        // And in this block, Flow knows that s is a string.
+        // Y en este bloque, Flow sabe que s es una cadena.
         return s.length;
       }
     }</code></pre>
@@ -474,8 +475,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Además de los tipos primitivos que Flow conoce, también conoce todas las clases incorporadas de JavaScript y te permite utilizar nombres de clases como tipos. La siguiente función, por ejemplo, utiliza anotaciones de tipo para indicar que debe ser invocada con un objeto Date y un objeto RegExp:</p>
     <pre>
     <code class="language-js">// @flow
-    // Return true if the ISO representation of the specified date
-    // matches the specified pattern, or false otherwise.
+    // Devuelve verdadero si la representación ISO de la fecha especificada coincide
+    // con el patrón especificado, o falso en caso contrario. 
     // E.g: const isTodayChristmas = dateMatches(new Date(), /^\d&lbrace;4}-12-25T/);
     export function dateMatches(d: Date, p: RegExp): boolean &lbrace;
       return p.test(d.toISOString());
@@ -484,15 +485,16 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <pre>
     <code class="language-js">// @flow
     export default class Complex &lbrace;
-      // Flow requires an extended class syntax that includes type annotations
-      // for each of the properties used by the class.
+      // Flow requiere una sintaxis de clase extendida que incluya anotaciones
+      // de tipo para cada una de las propiedades utilizadas por la clase.
       i: number;
       r: number;
       static i: Complex;
 
       constructor(r: number, i:number) &lbrace;
-        // Any properties initialized by the constructor must have Flow type
-        // annotations above.
+        // Cualquier propiedad inicializada por el constructor debe tener 
+        // anotaciones de tipo Flow arriba.
+
         this.r = r;
         this.i = i;
       }
@@ -502,8 +504,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       }
     }
 
-    // This assignment would not be allowed by Flow if there was not a
-    // type annotation for i inside the class.
+    // Flow no permitiría esta asignación si no hubiera una anotación 
+    // de tipo para i dentro de la clase.
     Complex.i = new Complex(0,1);</code></pre>
   </section>
   <section id="8-4">
@@ -511,8 +513,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>El tipo Flow para describir un objeto se parece mucho a un literal de objeto, salvo que los valores de propiedad se sustituyen por tipos de propiedad. Aquí, por ejemplo, hay una función que espera un objeto con propiedades numéricas <codeinline>x</codeinline> e <codeinline>y</codeinline>:</p>
     <pre>
     <code class="language-js">// @flow
-    // Given an object with numeric x and y properties, return the
-    // distance from the origin to the point (x,y) as a number.
+    // Dado un objeto con propiedades numéricas x e y, devuelve la 
+    // distancia desde el origen hasta el punto (x,y) como un número.
     export default function distance(point: &lbrace;x:number, y:number}): number &lbrace;
       return Math.hypot(point.x, point.y);
     }</code></pre>
@@ -529,7 +531,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <code class="language-js">// @flow
     const cityLocations : &lbrace;[string]: &lbrace;longitude:number, latitude:number}} = &lbrace;
       "Seattle": &lbrace; longitude: 47.6062, latitude: -122.3321 },
-      // TODO: if there are any other important cities, add them here.
+      // TODO: si hay otras ciudades importantes, agrégalas aquí.
     };
     export default cityLocations;</code></pre>
   </section>
@@ -543,7 +545,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       y: number
     };
 
-    // Given a Point object return its distance from the origin
+    // Dado un objeto Point, devuelve su distancia desde el origen.
     export default function distance(point: Point): number &lbrace;
       return Math.hypot(point.x, point.y);
     }</code></pre>
@@ -604,14 +606,14 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>La clase Set de JavaScript es una colección de elementos, como lo es un array, y no puedes usar Set como tipo por sí mismo, sino que tienes que incluir un parámetro de tipo entre paréntesis angulares para especificar el tipo de los valores contenidos en el conjunto. (Aunque puedes utilizar <codeinline>mixed</codeinline> o <codeinline>any</codeinline> si el conjunto puede contener valores de varios tipos). He aquí un ejemplo:</p>
     <pre>
     <code class="language-js">// @flow
-    // Return a set of numbers with members that are exactly twice those
-    // of the input set of numbers.
+    // Devuelve un conjunto de números con miembros que sean exactamente 
+    // el doble de los del conjunto de números de entrada.
     function double(s: Set&lt;number>): Set&lt;number> &lbrace;
       let doubled: Set&lt;number> = new Set();
       for(let n of s) doubled.add(n * 2);
       return doubled;
     }
-    console.log(double(new Set([1,2,3]))); // Prints "Set &lbrace;2, 4, 6}"</code></pre>
+    console.log(double(new Set([1,2,3]))); // Imprime "Set &lbrace;2, 4, 6}"</code></pre>
     <p>Map es otro tipo parametrizado. En este caso, hay dos parámetros de tipo que deben especificarse; el tipo de las claves y los tipos de los valores:</p>
     <pre>
     <code class="language-js">// @flow
@@ -628,8 +630,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Y así es como se define la clase parametrizada:</p>
     <pre>
     <code class="language-js">// @flow
-    // This class represents the result of an operation that can either
-    // throw an error of type E or a value of type V.
+    // Esta clase representa el resultado de una operación que puede generar 
+    // un error de tipo E o un valor de tipo V.
     export class Result&lt;E, V> &lbrace;
       error: ?E;
       value: ?V;
@@ -655,7 +657,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Incluso puede definir parámetros de tipo para las funciones:</p>
     <pre>
     <code class="language-js">// @flow
-    // Combine the elements of two arrays into an array of pairs
+    // Combina los elementos de dos matrices en una matriz de pares
     function zip&lt;A,B>(a:Array&lt;A>, b:Array&lt;B>): Array&lt;[?A,?B]> &lbrace;
       let result:Array&lt;[?A,?B]> = [];
       let len = Math.max(a.length, b.length);
@@ -665,7 +667,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       return result;
     }
 
-    // Create the array [[1,'a'], [2,'b'], [3,'c'], [4,undefined]]
+    // Crea el array [[1,'a'], [2,'b'], [3,'c'], [4,undefined]]
     let pairs: Array&lt;[?number,?string]> = zip([1,2,3,4], ['a','b','c'])</code></pre>
   </section>
   <section id="8-8">
@@ -676,7 +678,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <code class="language-js">// @flow
     type Point = &lbrace;x:number, y:number};
     
-    // This function takes a Point object but promises not to modify it
+    // Esta función toma un objeto Point pero promete no modificarlo
     function distance(p: $ReadOnly&lt;Point>): number &lbrace;
       return Math.hypot(p.x, p.y);
     }
@@ -684,7 +686,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     let p: Point = &lbrace;x:3, y:4};
     distance(p) // => 5
     
-    // This function takes an array of numbers that it will not modify
+    // Esta función toma un array de números que no modificará
     function average(data: $ReadOnlyArray&lt;number>): number &lbrace;
       let sum = 0;
       for(let i = 0; i &lt; data.length; i++) sum += data[i];
@@ -701,7 +703,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>He aquí una función de ejemplo que espera que se le pase una función callback. Observe cómo hemos definido un alias de tipo para el tipo de la función de devolución de llamada:</p>
     <pre>
     <code class="language-js">// @flow
-    // The type of the callback function used in fetchText() below
+    // El tipo de la función de devolución de llamada utilizada en fetchText() a continuación
     export type FetchTextCallback = (?Error, ?number, ?string) => void;
 
     export default function fetchText(url: string, callback: FetchTextCallback) &lbrace;
@@ -745,8 +747,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     type Digit = 0|1|2|3|4|5|6|7|8|9;</code></pre>
     <p>Si utiliza tipos formados por literales, debe comprender que sólo se permiten valores literales:</p>
     <pre>
-    <code class="language-js">let a: Answer = "Yes".toLowerCase();    // Error: can't assign string to Answer
-    let d: Digit = 3+4;         // Error: can't assign number to Digit</code></pre>
+    <code class="language-js">let a: Answer = "Yes".toLowerCase();    // Error: no se puede asignar un string a Answer
+    let d: Digit = 3+4;         // Error: no se puede asignar un número a Dígito</code></pre>
     <p>Cuando Flow comprueba tus tipos, en realidad no hace los cálculos: sólo comprueba los tipos de los cálculos. Flow sabe que <codeinline>toLowerCase()</codeinline> devuelve una cadena y que el operador <codeinline>+</codeinline> en números devuelve un número. Aunque sabemos que ambos cálculos devuelven valores que están dentro del tipo, Flow no puede saberlo y marca errores en ambas líneas.</p>
     <p>Un tipo de unión de tipos literales como <codeinline>Answer</codeinline> y <codeinline>Digit</codeinline> es un ejemplo de <em>tipo enumerado</em>, o <em>enum</em>. Un caso de uso canónico para los tipos enum es representar los palos de las cartas:</p>
     <pre>
@@ -763,46 +765,47 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Un ejemplo lo aclarará. Supongamos que estás usando un hilo trabajador en Node (<a href="capitulo-16#11">§16.11</a>) y estás usando <codeinline>postMessage()</codeinline> y eventos "mensaje" para enviar mensajes basados en objetos entre el hilo principal y el hilo trabajador. Hay múltiples tipos de mensajes que el trabajador puede querer enviar al hilo principal, pero nos gustaría escribir un tipo de Flow Union que describa todos los mensajes posibles. Considera este código:</p>
     <pre>
     <code class="language-js">// @flow
-    // The worker sends a message of this type when it is done
-    // reticulating the splines we sent it.
+    // El trabajador envía un mensaje de este tipo cuando termina 
+    // de reticular las splines que le enviamos.
     export type ResultMessage = &lbrace;
       messageType: "result",
-      result: Array&lt;ReticulatedSpline>, // Assume this type is defined elsewhere.
+      result: Array&lt;ReticulatedSpline>, // Supongamos que este tipo está definido en otro lugar.
     };
 
-    // The worker sends a message of this type if its code failed with an exception.
+    // El trabajador envía un mensaje de este tipo si su código falló con una excepción.
     export type ErrorMessage = &lbrace;
       messageType: "error",
       error: Error,
     };
 
-    // The worker sends a message of this type to report usage statistics.
+    // El trabajador envía un mensaje de este tipo para informar las estadísticas de uso.
     export type StatisticsMessage = &lbrace;
       messageType: "stats",
       splinesReticulated: number,
       splinesPerSecond: number
     };
 
-    // When we receive a message from the worker it will be a WorkerMessage.
+    // Cuando recibimos un mensaje del trabajador, será un WorkerMessage.
     export type WorkerMessage = ResultMessage | ErrorMessage | StatisticsMessage;
 
-    // The main thread will have an event handler function that is passed
-    // a WorkerMessage. But because we've carefully defined each of the
-    // message types to have a messageType property with a literal type,
-    // the event handler can easily discriminate among the possible messages:
+    // El hilo principal tendrá una función de controlador de eventos a la que 
+    // se le pasa un WorkerMessage. Pero debido a que hemos definido cuidadosamente 
+    // cada uno de los tipos de mensajes para que tengan una propiedad messageType 
+    // con un tipo literal, el controlador de eventos puede discriminar 
+    // fácilmente entre los posibles mensajes:
     function handleMessageFromReticulator(message: WorkerMessage) &lbrace;
       if (message.messageType === "result") &lbrace;
-        // Only ResultMessage has a messageType property with this value
-        // so Flow knows that it is safe to use message.result here.
-        // And Flow will complain if you try to use any other property.
+        // Solo ResultMessage tiene una propiedad messageType con este valor, 
+        // por lo que Flow sabe que es seguro usar message.result aquí. 
+        // Y Flow se quejará si intenta usar cualquier otra propiedad.
         console.log(message.result);
       } else if (message.messageType === "error") &lbrace;
-        // Only ErrorMessage has a messageType property with value "error"
-        // so knows that it is safe to use message.error here.
+        // Solo ErrorMessage tiene una propiedad messageType con el valor "error", 
+        // por lo que sabe que es seguro usar message.error aquí.
         throw message.error;
       } else if (message.messageType === "stats") &lbrace;
-        // Only StatisticsMessage has a messageType property with value "stats"
-        // so knows that it is safe to use message.splinesPerSecond here.
+        // Solo StatisticsMessage tiene una propiedad messageType con el valor "stats", 
+        // por lo que sabe que es seguro usar message.splinesPerSecond aquí.
         console.info(message.splinesPerSecond);
       }
     }</code></pre>
