@@ -10,9 +10,24 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Hasta hace poco, JavaScript no tenía soporte integrado para módulos, y los programadores que trabajaban con grandes bases de código hacían todo lo posible por utilizar la débil modularidad disponible a través de clases, objetos y cierres. La modularidad basada en cierres, con el apoyo de herramientas de agrupación de código, condujo a una forma práctica de modularidad basada en una función <codeinline>require()</codeinline>, que fue adoptada por Node. Los módulos basados en <codeinline>require()</codeinline> son una parte fundamental del entorno de programación Node, pero nunca se adoptaron como parte oficial del lenguaje JavaScript. En su lugar, ES6 define los módulos mediante las palabras clave <codeinline>import</codeinline> y <codeinline>export</codeinline>. Aunque la <codeinline>import</codeinline> y <codeinline>export</codeinline> forman parte del lenguaje desde hace años, no han sido implementadas por los navegadores web y Node hasta hace relativamente poco. En la práctica, la modularidad de JavaScript sigue dependiendo de las herramientas de agrupación de código.</p>
     <p>Las secciones siguientes tratan de ello:</p>
     <ul>
-      <li class="font-normal">Módulos "hágalo usted mismo" con clases, objetos y cierres</li>
-      <li class="font-normal">Módulos Node con <codeinline>require()</codeinline></li>
-      <li class="font-normal">Módulos ES6 con <codeinline>export</codeinline>, <codeinline>import</codeinline> e <codeinline>import()</codeinline></li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Módulos "hágalo usted mismo" con clases, objetos y cierres
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Módulos Node con <codeinline>require()</codeinline>
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Módulos ES6 con <codeinline>export</codeinline>, <codeinline>import</codeinline> e <codeinline>import()</codeinline>
+        </p>
+      </li>
     </ul>
   </section>
   <section id="1" class="fadeIn py-4 xs:py-5 sm:py-6">
@@ -358,9 +373,24 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>10.4 Resumen</h2>
     <p>El objetivo de la modularidad es permitir a los programadores ocultar los detalles de implementación de su código, de modo que trozos de código de diversas fuentes puedan ensamblarse en programas grandes sin preocuparse de que un trozo sobrescriba funciones o variables de otro. En este capítulo se han explicado tres sistemas de módulos de JavaScript diferentes:</p>
     <ul>
-      <li class="font-normal">En los primeros tiempos de JavaScript, la modularidad sólo podía conseguirse mediante el uso inteligente de expresiones de función de invocación inmediata.</li>
-      <li class="font-normal">Node añadió su propio sistema de módulos sobre el lenguaje JavaScript. Los módulos de Node se importan con <codeinline>require()</codeinline> y definen sus exportaciones estableciendo propiedades del objeto Exports, o estableciendo la propiedad <codeinline>module.exports</codeinline>.</li>
-      <li class="font-normal">En ES6, JavaScript obtuvo por fin su propio sistema de módulos con <codeinline>import</codeinline> y <codeinline>export</codeinline> y ES2020 añade soporte para importaciones dinámicas con <codeinline>import()</codeinline>.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          En los primeros tiempos de JavaScript, la modularidad sólo podía conseguirse mediante el uso inteligente de expresiones de función de invocación inmediata.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Node añadió su propio sistema de módulos sobre el lenguaje JavaScript. Los módulos de Node se importan con <codeinline>require()</codeinline> y definen sus exportaciones estableciendo propiedades del objeto Exports, o estableciendo la propiedad <codeinline>module.exports</codeinline>.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          En ES6, JavaScript obtuvo por fin su propio sistema de módulos con <codeinline>import</codeinline> y <codeinline>export</codeinline> y ES2020 añade soporte para importaciones dinámicas con <codeinline>import()</codeinline>.
+        </p>
+      </li>
     </ul>
   </section>
 </Layoutjavascript>

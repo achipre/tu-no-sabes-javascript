@@ -9,16 +9,66 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Algunos tipos de datos, como los números y las cadenas (<a href="capitulo-3">Capítulo 3</a>), los objetos (<a href="capitulo-6">Capítulo 6</a>) y las matrices (<a href="capitulo-7">Capítulo 7</a>), son tan fundamentales para JavaScript que podemos considerarlos parte del propio lenguaje. Este capítulo cubre otras API importantes pero menos fundamentales que pueden considerarse como la definición de la "biblioteca estándar" de JavaScript: se trata de clases y funciones útiles que están integradas en JavaScript y disponibles para todos los programas Java-Script tanto en navegadores web como en Node.<sup>1</sup></p>
     <p>Las secciones de este capítulo son independientes entre sí y puede leerlas en cualquier orden. Abarcan:</p>
     <ul>
-      <li class="font-normal">Las clases Set y Map para representar conjuntos de valores y mapeos de un conjunto de valores a otro conjunto de valores.</li>
-      <li class="font-normal">Objetos tipo array conocidos como TypedArrays que representan arrays de datos binarios, junto con una clase relacionada para extraer valores de datos binarios no arrays.</li>
-      <li class="font-normal">Las expresiones regulares y la clase RegExp, que definen patrones textuales y son útiles para el tratamiento de textos. Esta sección también cubre en detalle la sintaxis de las expresiones regulares.</li>
-      <li class="font-normal">La clase Date para representar y manipular fechas y horas.</li>
-      <li class="font-normal">La clase Error y sus diversas subclases, cuyas instancias se lanzan cuando se producen errores en los programas JavaScript.</li>
-      <li class="font-normal">El objeto JSON, cuyos métodos admiten la serialización y deserialización de estructuras de datos JavaScript compuestas por objetos, matrices, cadenas, números y booleanos.</li>
-      <li class="font-normal">El objeto Intl y las clases que define que pueden ayudarle a localizar sus programas JavaScript.</li>
-      <li class="font-normal">El objeto Console, cuyos métodos producen cadenas de salida que son particularmente útiles para depurar programas y registrar el comportamiento de esos programas.</li>
-      <li class="font-normal">La clase URL, que simplifica la tarea de analizar y manipular URLs. Esta sección también cubre funciones globales para codificar y decodificar URLs y sus partes componentes.</li>
-      <li class="font-normal"><codeinline>setTimeout()</codeinline> y funciones relacionadas para especificar el código que se ejecutará una vez transcurrido un intervalo de tiempo determinado.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Las clases Set y Map para representar conjuntos de valores y mapeos de un conjunto de valores a otro conjunto de valores.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Objetos tipo array conocidos como TypedArrays que representan arrays de datos binarios, junto con una clase relacionada para extraer valores de datos binarios no arrays.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Las expresiones regulares y la clase RegExp, que definen patrones textuales y son útiles para el tratamiento de textos. Esta sección también cubre en detalle la sintaxis de las expresiones regulares.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          La clase Date para representar y manipular fechas y horas.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          La clase Error y sus diversas subclases, cuyas instancias se lanzan cuando se producen errores en los programas JavaScript.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          El objeto JSON, cuyos métodos admiten la serialización y deserialización de estructuras de datos JavaScript compuestas por objetos, matrices, cadenas, números y booleanos.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          El objeto Intl y las clases que define que pueden ayudarle a localizar sus programas JavaScript.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          El objeto Console, cuyos métodos producen cadenas de salida que son particularmente útiles para depurar programas y registrar el comportamiento de esos programas.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          La clase URL, que simplifica la tarea de analizar y manipular URLs. Esta sección también cubre funciones globales para codificar y decodificar URLs y sus partes componentes.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          <codeinline>setTimeout()</codeinline> y funciones relacionadas para especificar el código que se ejecutará una vez transcurrido un intervalo de tiempo determinado.
+        </p>
+      </li>
     </ul>
     <p>Algunas de las secciones de este capítulo -en particular, las secciones sobre arrays tipados y expresiones regulares- son bastante largas porque hay información de fondo importante que debe comprender antes de poder utilizar esos tipos de forma eficaz. Muchas de las otras secciones, sin embargo, son cortas: simplemente introducen una nueva API y muestran algunos ejemplos de su uso.</p>
   </section>
@@ -64,9 +114,24 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     s.size              // => 0</code></pre>
     <p>Hay algunos puntos importantes a tener en cuenta sobre este código:</p>
     <ul>
-      <li class="font-normal">El método <codeinline>add()</codeinline> toma un único argumento; si pasas un array, añade el propio array al conjunto, no los elementos individuales del array. Sin embargo, <codeinline>add()</codeinline> siempre devuelve el conjunto sobre el que se invoca, así que si quieres añadir múltiples valores a un conjunto, puedes usar llamadas encadenadas a métodos como <codeinline>s.add('a').add('b').add('c');</codeinline>.</li>
-      <li class="font-normal">El método <codeinline>delete()</codeinline> también elimina un único elemento del conjunto cada vez. Sin embargo, a diferencia de <codeinline>add()</codeinline>, <codeinline>delete()</codeinline> devuelve un valor booleano. Si el valor especificado era realmente un miembro del conjunto, <codeinline>delete()</codeinline> lo elimina y devuelve <codeinline>true</codeinline>. En caso contrario, no hace nada y devuelve <codeinline>false</codeinline>.</li>
-      <li class="font-normal">Por último, es muy importante entender que la pertenencia a un conjunto se basa en comprobaciones de igualdad estrictas, como las que realiza el operador <codeinline>===</codeinline>. Un conjunto puede contener tanto el número <codeinline>1</codeinline> como la cadena <codeinline>"1"</codeinline>, porque los considera valores distintos. Cuando los valores son objetos (o matrices o funciones), también se comparan como si fueran con <codeinline>===</codeinline> Esta es la razón por la que no pudimos eliminar el elemento del array del conjunto en este código. Añadimos un array al conjunto y luego intentamos eliminarlo pasando un array <em>diferente</em> (aunque con los mismos elementos) al método <codeinline>delete()</codeinline>. Para que esto funcionara, tendríamos que haber pasado una referencia exactamente al mismo array.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          El método <codeinline>add()</codeinline> toma un único argumento; si pasas un array, añade el propio array al conjunto, no los elementos individuales del array. Sin embargo, <codeinline>add()</codeinline> siempre devuelve el conjunto sobre el que se invoca, así que si quieres añadir múltiples valores a un conjunto, puedes usar llamadas encadenadas a métodos como <codeinline>s.add('a').add('b').add('c');</codeinline>.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          El método <codeinline>delete()</codeinline> también elimina un único elemento del conjunto cada vez. Sin embargo, a diferencia de <codeinline>add()</codeinline>, <codeinline>delete()</codeinline> devuelve un valor booleano. Si el valor especificado era realmente un miembro del conjunto, <codeinline>delete()</codeinline> lo elimina y devuelve <codeinline>true</codeinline>. En caso contrario, no hace nada y devuelve <codeinline>false</codeinline>.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Por último, es muy importante entender que la pertenencia a un conjunto se basa en comprobaciones de igualdad estrictas, como las que realiza el operador <codeinline>===</codeinline>. Un conjunto puede contener tanto el número <codeinline>1</codeinline> como la cadena <codeinline>"1"</codeinline>, porque los considera valores distintos. Cuando los valores son objetos (o matrices o funciones), también se comparan como si fueran con <codeinline>===</codeinline> Esta es la razón por la que no pudimos eliminar el elemento del array del conjunto en este código. Añadimos un array al conjunto y luego intentamos eliminarlo pasando un array <em>diferente</em> (aunque con los mismos elementos) al método <codeinline>delete()</codeinline>. Para que esto funcionara, tendríamos que haber pasado una referencia exactamente al mismo array.
+        </p>
+      </li>
     </ul>
     <nota>
       <img class="self-start" src="/public/javascript/nota_gral.png" alt="Nota de la grandesa">
@@ -76,11 +141,11 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     </nota>
     <p>En la práctica, lo más importante que hacemos con los conjuntos no es añadir y eliminar elementos de ellos, sino comprobar si un valor especificado es miembro del conjunto. Esto se hace con el método <codeinline>has()</codeinline>:</p>
     <pre>
-      <code class="language-js">let oneDigitPrimes = new Set([2,3,5,7]);
-      oneDigitPrimes.has(2)   // => true: 2 is a one-digit prime number
-      oneDigitPrimes.has(3)   // => true: so is 3
-      oneDigitPrimes.has(4)   // => false: 4 is not a prime
-      oneDigitPrimes.has("5") // => false: "5" is not even a number</code></pre>
+    <code class="language-js">let oneDigitPrimes = new Set([2,3,5,7]);
+    oneDigitPrimes.has(2)   // => true: 2 is a one-digit prime number
+    oneDigitPrimes.has(3)   // => true: so is 3
+    oneDigitPrimes.has(4)   // => false: 4 is not a prime
+    oneDigitPrimes.has("5") // => false: "5" is not even a number</code></pre>
     <p>Lo más importante que hay que entender sobre los conjuntos es que están optimizados para la comprobación de miembros, y no importa cuántos miembros tenga el conjunto, el método <codeinline>has()</codeinline> será muy rápido. El método <codeinline>includes()</codeinline> de un array también realiza pruebas de pertenencia, pero el tiempo que tarda es proporcional al tamaño del array, y usar un array como set puede ser mucho, mucho más lento que usar un objeto Set real.</p>
     <p>La clase Set es iterable, lo que significa que puede utilizar un bucle <codeinline>for/of</codeinline> para enumerar todos los elementos de un conjunto:</p>
     <pre>
@@ -176,16 +241,46 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>La clase WeakMap es una variante (pero no una subclase real) de la clase Map que no impide que sus valores clave sean recolectados por la basura. La recolección de basura es el proceso por el cual el intérprete de JavaScript recupera la memoria de los objetos que ya no son "accesibles" y no pueden ser utilizados por el programa. Un mapa normal mantiene referencias "fuertes" a sus valores clave, y siguen siendo accesibles a través del mapa, incluso si todas las demás referencias a ellos han desaparecido. El WeakMap, por el contrario, mantiene referencias " débiles" a sus valores clave para que no sean accesibles a través del WeakMap, y su presencia en el mapa no impida que se recupere su memoria.</p>
     <p>El constructor <codeinline>WeakMap()</codeinline> es igual que el constructor <codeinline>Map()</codeinline>, pero hay algunas diferencias significativas entre WeakMap y Map:</p>
     <ul>
-      <li class="font-normal">Las claves de WeakMap deben ser objetos o matrices; los valores primitivos no están sujetos a la recolección de basura y no pueden utilizarse como claves.</li>
-      <li class="font-normal">WeakMap sólo implementa los métodos <codeinline>get()</codeinline>, <codeinline>set()</codeinline>, <codeinline>has()</codeinline> y <codeinline>delete()</codeinline>. En particular, WeakMap no es iterable y no define <codeinline>keys()</codeinline>, <codeinline>values()</codeinline>, o <codeinline>forEach()</codeinline>. Si WeakMap fuera iterable, sus claves serían alcanzables y no sería débil.</li>
-      <li class="font-normal">Del mismo modo, WeakMap no implementa la propiedad <codeinline>size</codeinline> porque el tamaño de un WeakMap podría cambiar en cualquier momento a medida que los objetos son recolectados.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Las claves de WeakMap deben ser objetos o matrices; los valores primitivos no están sujetos a la recolección de basura y no pueden utilizarse como claves.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          WeakMap sólo implementa los métodos <codeinline>get()</codeinline>, <codeinline>set()</codeinline>, <codeinline>has()</codeinline> y <codeinline>delete()</codeinline>. En particular, WeakMap no es iterable y no define <codeinline>keys()</codeinline>, <codeinline>values()</codeinline>, o <codeinline>forEach()</codeinline>. Si WeakMap fuera iterable, sus claves serían alcanzables y no sería débil.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Del mismo modo, WeakMap no implementa la propiedad <codeinline>size</codeinline> porque el tamaño de un WeakMap podría cambiar en cualquier momento a medida que los objetos son recolectados.
+        </p>
+      </li>
     </ul>
     <p>El uso previsto de WeakMap es permitirle asociar valores con objetos sin causar fugas de memoria. Supongamos, por ejemplo, que estás escribiendo una función que toma como argumento un objeto y necesita realizar algún cálculo que consume tiempo en ese objeto. Por eficiencia, te gustaría almacenar en caché el valor calculado para reutilizarlo más tarde. Si utilizas un objeto Map para implementar la caché, impedirás q u e cualquiera de los objetos sea recuperado, pero si utilizas un WeakMap, evitarás este problema. (A menudo se puede conseguir un resultado similar utilizando una propiedad Symbol privada para almacenar en caché el valor compuesto directamente en el objeto. Véase <a href="capitulo-6#10-3">§6.10.3</a>.)</p>
     <p>WeakSet implementa un conjunto de objetos que no impide que dichos objetos sean recolectados. El constructor <codeinline>WeakSet()</codeinline> funciona como el constructor <codeinline>Set()</codeinline>, pero los objetos WeakSet difieren de los objetos Set de la misma forma que los objetos WeakMap difieren de los objetos Map:</p>
     <ul>
-      <li class="font-normal">WeakSet no permite valores primitivos como miembros.</li>
-      <li class="font-normal">WeakSet sólo implementa los métodos <codeinline>add()</codeinline>, <codeinline>has()</codeinline> y <codeinline>delete()</codeinline> y no es iterable.</li>
-      <li class="font-normal">WeakSet no tiene una propiedad de <codeinline>size</codeinline>.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          WeakSet no permite valores primitivos como miembros.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          WeakSet sólo implementa los métodos <codeinline>add()</codeinline>, <codeinline>has()</codeinline> y <codeinline>delete()</codeinline> y no es iterable.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          WeakSet no tiene una propiedad de <codeinline>size</codeinline>.
+        </p>
+      </li>
     </ul>
     <p>WeakSet no se utiliza con frecuencia: sus casos de uso son como los de WeakMap. Por ejemplo, si desea marcar (o "marcar") un objeto como poseedor de alguna propiedad o tipo especial, puede añadirlo a un WeakSet. Luego, cuando quiera comprobar esa propiedad o tipo, puede comprobar si pertenece a ese WeakSet. Hacer esto con un conjunto regular impediría que todos los objetos marcados fueran recolectados, pero esto no es un problema cuando se utiliza WeakSet.</p>
   </section>
@@ -193,9 +288,24 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>11.2 Matrices tipificadas y datos binarios</h2>
     <p>Las matrices normales de JavaScript pueden tener elementos de cualquier tipo y crecer o decrecer dinámicamente. Las implementaciones de JavaScript realizan muchas optimizaciones, por lo que los usos típicos de las matrices de JavaScript son muy rápidos. Sin embargo, siguen siendo bastante diferentes de los tipos de arrays de lenguajes de bajo nivel como C y Java. Los <em>arrays tipados</em>, que son nuevos en ES6,<sup>3</sup> son mucho más parecidos a los arrays de bajo nivel de esos lenguajes. Los arrays tipados no son técnicamente arrays (<codeinline>Array.isArray()</codeinline> devuelve <codeinline>false</codeinline> para ellos), pero implementan todos los métodos de arrays descritos en <a href="capitulo-7#8">§7.8</a> más algunos propios. Sin embargo, difieren de las matrices normales en algunos aspectos muy importantes:</p>
     <ul>
-      <li class="font-normal">Los elementos de una matriz tipada son todos números. Sin embargo, a diferencia de los números normales de JavaScript, las matrices tipadas permiten especificar el tipo (enteros con y sin signo y coma flotante IEEE-754) y el tamaño (de 8 a 64 bits) de los números que se almacenarán en la matriz.</li>
-      <li class="font-normal">Debes especificar la longitud de un array tipado cuando lo creas, y esa longitud nunca puede cambiar.</li>
-      <li class="font-normal">Los elementos de un array tipado siempre se inicializan a 0 cuando se crea el array.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Los elementos de una matriz tipada son todos números. Sin embargo, a diferencia de los números normales de JavaScript, las matrices tipadas permiten especificar el tipo (enteros con y sin signo y coma flotante IEEE-754) y el tamaño (de 8 a 64 bits) de los números que se almacenarán en la matriz.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Debes especificar la longitud de un array tipado cuando lo creas, y esa longitud nunca puede cambiar.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Los elementos de un array tipado siempre se inicializan a 0 cuando se crea el array.
+        </p>
+      </li>
     </ul>
   </section>
   <section id="2-1">
@@ -1372,11 +1482,36 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>11.11 Resumen</h2>
     <p>Aprender un lenguaje de programación no consiste sólo en dominar la gramática. Es igualmente importante estudiar la biblioteca estándar para familiarizarse con todas las herramientas que se suministran con el lenguaje. En este capítulo se ha documentado la biblioteca estándar de JavaScript, que incluye:</p>
     <ul>
-      <li class="font-normal">Estructuras de datos importantes, como Set, Map y matrices tipadas.</li>
-      <li class="font-normal">Las clases Date y URL para trabajar con fechas y URLs.</li>
-      <li class="font-normal">Gramática de expresiones regulares de JavaScript y su clase RegExp para la concordancia de patrones textuales.</li>
-      <li class="font-normal">Biblioteca de internacionalización de JavaScript para dar formato a fechas, horas y números y para ordenar cadenas.</li>
-      <li class="font-normal">El objeto <codeinline>JSON</codeinline> para serializar y deserializar estructuras de datos simples y el objeto objeto de <codeinline>console</codeinline> para el registro de mensajes.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Estructuras de datos importantes, como Set, Map y matrices tipadas.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Las clases Date y URL para trabajar con fechas y URLs.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Gramática de expresiones regulares de JavaScript y su clase RegExp para la concordancia de patrones textuales.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Biblioteca de internacionalización de JavaScript para dar formato a fechas, horas y números y para ordenar cadenas.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          El objeto <codeinline>JSON</codeinline> para serializar y deserializar estructuras de datos simples y el objeto objeto de <codeinline>console</codeinline> para el registro de mensajes.
+        </p>
+      </li>
     </ul>
   </section>
 </Layoutjavascript>

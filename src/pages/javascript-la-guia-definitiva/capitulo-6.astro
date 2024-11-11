@@ -19,52 +19,36 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   </section>
   <section id="1" class="fadeIn py-4 xs:py-5 sm:py-6">
     <h2>6.1 Introducción a los objetos</h2>
-    <p>Un objeto es un valor compuesto: agrega múltiples valores (valores primitivos u otros
-      objetos) y permite almacenar y recuperar esos valores por su nombre. Un objeto es
-      una colección desordenada de <em>propiedades</em>, cada una de las cuales tiene un nombre y
-      un valor. Los nombres de las propiedades suelen ser cadenas (aunque, como veremos
-      en <a href="#6-10-3">§6.10.3</a>, los nombres de las propiedades también pueden ser símbolos), por lo que
-      podemos decir que los objetos convierten cadenas en valores. Este mapeo de cadena a
-      valor recibe varios nombres, probablemente ya estés familiarizado con la estructura
-      de datos fundamental bajo el nombre de "hash", "hashtable", "diccionario" o "array
-      asociativo". Sin embargo, un objeto es más que un simple mapa cadena-valor.
-      Además de mantener su propio conjunto de propiedades, un objeto JavaScript
-      también hereda las propiedades de otro objeto, conocido como su "prototipo". Los
-      métodos de un objeto suelen ser propiedades heredadas, y esta "herencia prototípica"
-      es una característica clave de JavaScript.</p>
-    <p>Los objetos JavaScript son dinámicos (normalmente se pueden añadir y eliminar
-      propiedades), pero se pueden utilizar para simular los objetos estáticos y los "structs" de los lenguajes tipados estáticamente. También pueden utilizarse (ignorando la parte
-      de valor del mapeo cadena-valor) para representar conjuntos de cadenas.</p>
-    <p>Cualquier valor en JavaScript que no sea una cadena, un número, un Símbolo, o
-      <codeinline>true</codeinline>, <codeinline>false</codeinline>, <codeinline>null</codeinline> o <codeinline>undefined</codeinline> es un objeto. Y aunque las cadenas, los
-      números y los booleanos no son objetos, pueden comportarse como objetos
-      inmutables.</p>
-    <p>Recordemos de <a href="capitulo-3#8">§3.8</a> que los objetos son <em>mutables</em> y se manipulan por referencia en
-      lugar de por valor. Si la variable <codeinline>x</codeinline> se refiere a un objeto y se ejecuta el código <codeinline>let y = x;</codeinline> la variable <codeinline>y</codeinline> contiene una referencia al mismo objeto, no una copia de ese objeto. Cualquier modificación hecha al objeto a través de la variable <codeinline>y</codeinline> es también visible a través de la variable <codeinline>x</codeinline>.</p>
-    <p>Lo más habitual con los objetos es crearlos y establecer, consultar, borrar, comprobar
-      y enumerar sus propiedades. Estas operaciones fundamentales se describen en las
-      primeras secciones de este capítulo. Las secciones siguientes tratan temas más
-      avanzados.</p>
-    <p>Una <em>propiedad</em> tiene un nombre y un valor. El nombre de una propiedad puede ser
-      cualquier cadena, incluida la cadena vacía (o cualquier Símbolo), pero ningún objeto
-      puede tener dos propiedades con el mismo nombre. El valor puede ser cualquier
-      valor JavaScript, o puede ser una función getter o setter (o ambas). Aprenderemos
-      sobre las funciones getter y setter en <a href="#6-10-6">§6.10.6</a>.</p>
-    <p>A veces es importante saber distinguir entre las propiedades definidas directamente
-      en un objeto y las que se heredan de un objeto prototipo. JavaScript utiliza el término
-      <em>propiedad propia</em> para referirse a las propiedades no heredadas.</p>
+    <p>Un objeto es un valor compuesto: agrega múltiples valores (valores primitivos u otros objetos) y permite almacenar y recuperar esos valores por su nombre. Un objeto es una colección desordenada de <em>propiedades</em>, cada una de las cuales tiene un nombre y un valor. Los nombres de las propiedades suelen ser cadenas (aunque, como veremos en <a href="#6-10-3">§6.10.3</a>, los nombres de las propiedades también pueden ser símbolos), por lo que podemos decir que los objetos convierten cadenas en valores. Este mapeo de cadena a valor recibe varios nombres, probablemente ya estés familiarizado con la estructura de datos fundamental bajo el nombre de "hash", "hashtable", "diccionario" o "array asociativo". Sin embargo, un objeto es más que un simple mapa cadena-valor. Además de mantener su propio conjunto de propiedades, un objeto JavaScript también hereda las propiedades de otro objeto, conocido como su "prototipo". Los métodos de un objeto suelen ser propiedades heredadas, y esta "herencia prototípica" es una característica clave de JavaScript.</p>
+    <p>Los objetos JavaScript son dinámicos (normalmente se pueden añadir y eliminar propiedades), pero se pueden utilizar para simular los objetos estáticos y los "structs" de los lenguajes tipados estáticamente. También pueden utilizarse (ignorando la parte de valor del mapeo cadena-valor) para representar conjuntos de cadenas.</p>
+    <p>Cualquier valor en JavaScript que no sea una cadena, un número, un Símbolo, o <codeinline>true</codeinline>, <codeinline>false</codeinline>, <codeinline>null</codeinline> o <codeinline>undefined</codeinline> es un objeto. Y aunque las cadenas, los números y los booleanos no son objetos, pueden comportarse como objetos inmutables.</p>
+    <p>Recordemos de <a href="capitulo-3#8">§3.8</a> que los objetos son <em>mutables</em> y se manipulan por referencia en lugar de por valor. Si la variable <codeinline>x</codeinline> se refiere a un objeto y se ejecuta el código <codeinline>let y = x;</codeinline> la variable <codeinline>y</codeinline> contiene una referencia al mismo objeto, no una copia de ese objeto. Cualquier modificación hecha al objeto a través de la variable <codeinline>y</codeinline> es también visible a través de la variable <codeinline>x</codeinline>.</p>
+    <p>Lo más habitual con los objetos es crearlos y establecer, consultar, borrar, comprobar y enumerar sus propiedades. Estas operaciones fundamentales se describen en las primeras secciones de este capítulo. Las secciones siguientes tratan temas más avanzados.</p>
+    <p>Una <em>propiedad</em> tiene un nombre y un valor. El nombre de una propiedad puede ser cualquier cadena, incluida la cadena vacía (o cualquier Símbolo), pero ningún objeto puede tener dos propiedades con el mismo nombre. El valor puede ser cualquier valor JavaScript, o puede ser una función getter o setter (o ambas). Aprenderemos sobre las funciones getter y setter en <a href="#6-10-6">§6.10.6</a>.</p>
+    <p>A veces es importante saber distinguir entre las propiedades definidas directamente en un objeto y las que se heredan de un objeto prototipo. JavaScript utiliza el término <em>propiedad propia</em> para referirse a las propiedades no heredadas.</p>
     <p>Además de su nombre y valor, cada propiedad tiene tres <em>atributos</em>:</p>
     <ul>
-      <li class="font-normal">El atributo <em>writable</em> especifica si se puede establecer el valor de la propiedad.</li>
-      <li class="font-normal">El atributo <em>enumerable</em> especifica si el nombre de la propiedad es devuelto por un bucle <codeinline>for/in</codeinline>.</li>
-      <li class="font-normal">El atributo <em>configurable</em> especifica si la propiedad se puede eliminar y si se
-        pueden modificar sus atributos.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          El atributo <em>writable</em> especifica si se puede establecer el valor de la propiedad.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          El atributo <em>enumerable</em> especifica si el nombre de la propiedad es devuelto por un bucle <codeinline>for/in</codeinline>.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          El atributo <em>configurable</em> especifica si la propiedad se puede eliminar y si se
+        pueden modificar sus atributos.
+        </p>
+      </li>
     </ul>
-    <p>Muchos de los objetos incorporados de JavaScript tienen propiedades que son de sólo
-      lectura, no enumerables o no configurables. Por defecto, sin embargo, todas las
-      propiedades de los objetos que creas son escribibles, enumerables y configurables. En
-      <a href="capitulo-14#1">§14.1</a> se explican técnicas para especificar valores de atributos de propiedades no
-      predeterminados para los objetos.</p>
+    <p>Muchos de los objetos incorporados de JavaScript tienen propiedades que son de sólo lectura, no enumerables o no configurables. Por defecto, sin embargo, todas las propiedades de los objetos que creas son escribibles, enumerables y configurables. En <a href="capitulo-14#1">§14.1</a> se explican técnicas para especificar valores de atributos de propiedades no predeterminados para los objetos.</p>
   </section>
   <section id="2">
     <h3>6.2 Creación de objetos</h3>
@@ -329,9 +313,24 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Intentar establecer una propiedad en <codeinline>null</codeinline> o <codeinline>undefined</codeinline> también causa un TypeError. Los intentos de establecer propiedades sobre otros valores no siempre tienen éxito: algunas propiedades son de sólo lectura y no pueden establecerse, y algunos objetos no permiten la adición de nuevas propiedades. En modo estricto (<a href="capitulo-5#6-3">§5.6.3</a>), se lanza un TypeError cada vez que falla un intento de establecer una propiedad. Fuera del modo estricto, estos fallos suelen ser silenciosos.</p>
     <p>Las reglas que especifican cuándo una asignación de propiedad tiene éxito y cuándo falla son intuitivas pero difíciles de expresar de forma concisa. Un intento de establecer una propiedad <codeinline>p</codeinline> de un objeto <codeinline>o</codeinline> falla en estas circunstancias:</p>
     <ul>
-      <li class="font-normal"><codeinline>o</codeinline> tiene una propiedad propia <codeinline>p</codeinline> que es de sólo lectura: no es posible establecer propiedades de sólo lectura.</li>
-      <li class="font-normal"><codeinline>o</codeinline> tiene una propiedad heredada <codeinline>p</codeinline> que es de sólo lectura: no es posible ocultar una propiedad heredada de sólo lectura con una propiedad propia del mismo nombre.</li>
-      <li class="font-normal"><codeinline>o</codeinline> no tiene una propiedad propia <codeinline>p</codeinline>; <codeinline>o</codeinline> no hereda una propiedad <codeinline>p</codeinline> con un método setter, y el atributo <em>extensible</em> de <codeinline>o</codeinline> (véase <a href="capitulo-14#2">§14.2</a>) es <codeinline>false</codeinline>. Como <codeinline>p</codeinline> no existe ya en <codeinline>o</codeinline>, y si no hay ningún método setter al que llamar, entonces <codeinline>p</codeinline> debe añadirse a <codeinline>o</codeinline>. Pero si <codeinline>o</codeinline> no es extensible, entonces no pueden definirse nuevas propiedades en él.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          <codeinline>o</codeinline> tiene una propiedad propia <codeinline>p</codeinline> que es de sólo lectura: no es posible establecer propiedades de sólo lectura.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          <codeinline>o</codeinline> tiene una propiedad heredada <codeinline>p</codeinline> que es de sólo lectura: no es posible ocultar una propiedad heredada de sólo lectura con una propiedad propia del mismo nombre.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          <codeinline>o</codeinline> no tiene una propiedad propia <codeinline>p</codeinline>; <codeinline>o</codeinline> no hereda una propiedad <codeinline>p</codeinline> con un método setter, y el atributo <em>extensible</em> de <codeinline>o</codeinline> (véase <a href="capitulo-14#2">§14.2</a>) es <codeinline>false</codeinline>. Como <codeinline>p</codeinline> no existe ya en <codeinline>o</codeinline>, y si no hay ningún método setter al que llamar, entonces <codeinline>p</codeinline> debe añadirse a <codeinline>o</codeinline>. Pero si <codeinline>o</codeinline> no es extensible, entonces no pueden definirse nuevas propiedades en él.
+        </p>
+      </li>
     </ul>
   </section>
   <section id="4" class="py-4 xs:py-5 sm:py-6">
@@ -422,10 +421,30 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     }</code></pre>
     <p>Como alternativa al uso de un bucle <codeinline>for/in</codeinline>, a menudo es más fácil obtener una matriz de nombres de propiedades para un objeto y luego recorrer esa matriz con un bucle <codeinline>for/of</codeinline>. Hay cuatro funciones que puedes utilizar para obtener un array de nombres de propiedades:</p>
     <ul>
-      <li class="font-normal"><codeinline>Object.keys()</codeinline> devuelve una matriz con los nombres de las propiedades propias enumerables de un objeto. No incluye propiedades no enumerables, propiedades heredadas o propiedades cuyo nombre es un Símbolo (véase <a href="capitulo-6#10-3">§6.10.3</a>).</li>
-      <li class="font-normal"><codeinline>Object.getOwnPropertyNames()</codeinline> funciona como <codeinline>Object.keys()</codeinline> pero devuelve también una matriz con los nombres de las propiedades propias no enumerables, siempre que sus nombres sean cadenas.</li>
-      <li class="font-normal"><codeinline>Object.getOwnPropertySymbols()</codeinline> devuelve las propiedades propias cuyos nombres son Symbols, sean o no enumerables.</li>
-      <li class="font-normal"><codeinline>Reflect.ownKeys()</codeinline> devuelve todos los nombres de propiedades propias, tanto enumerables como no enumerables, y tanto de cadena como de símbolo. (Véase <a href="capitulo-14#6">§14.6</a>.)</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          <codeinline>Object.keys()</codeinline> devuelve una matriz con los nombres de las propiedades propias enumerables de un objeto. No incluye propiedades no enumerables, propiedades heredadas o propiedades cuyo nombre es un Símbolo (véase <a href="capitulo-6#10-3">§6.10.3</a>).
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          <codeinline>Object.getOwnPropertyNames()</codeinline> funciona como <codeinline>Object.keys()</codeinline> pero devuelve también una matriz con los nombres de las propiedades propias no enumerables, siempre que sus nombres sean cadenas.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          <codeinline>Object.getOwnPropertySymbols()</codeinline> devuelve las propiedades propias cuyos nombres son Symbols, sean o no enumerables.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          <codeinline>Reflect.ownKeys()</codeinline> devuelve todos los nombres de propiedades propias, tanto enumerables como no enumerables, y tanto de cadena como de símbolo. (Véase <a href="capitulo-14#6">§14.6</a>.)
+        </p>
+      </li>
     </ul>
     <p>Hay ejemplos del uso de <codeinline>Object.keys()</codeinline> con un bucle <codeinline>for/of</codeinline> en <a href="capitulo-6#7">§6.7</a>.</p>
   </section>
@@ -433,9 +452,24 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>6.6.1 Orden de enumeración de propiedades</h2>
     <p>ES6 define formalmente el orden en que se enumeran las propiedades propias de un objeto. <codeinline>Object.keys()</codeinline>, <codeinline>Object.getOwnPropertyNames()</codeinline>, <codeinline>Object.getOwnPropertySymbols()</codeinline>, <codeinline>Reflect.ownKeys()</codeinline> y métodos relacionados como <codeinline>JSON.stringify()</codeinline> enumeran todas las propiedades en el siguiente orden, sujeto a sus propias restricciones adicionales sobre si enumeran propiedades no enumerables o propiedades cuyos nombres son cadenas o símbolos:</p>
     <ul>
-      <li class="font-normal">Las propiedades de cadena cuyos nombres son enteros no negativos se enumeran primero, en orden numérico de menor a mayor. Esta regla significa que las matrices y los objetos similares a matrices tendrán sus propiedades enumeradas en orden.</li>
-      <li class="font-normal">Después de enumerar todas las propiedades que parecen índices de matrices, se enumeran todas las propiedades restantes con nombres de cadena (incluidas las propiedades que parecen números negativos o números de coma flotante). Estas propiedades se enumeran en el orden en que se añadieron al objeto. Para las propiedades definidas en un literal de objeto, este orden es el mismo en el que aparecen en el literal.</li>
-      <li class="font-normal">Por último, las propiedades cuyos nombres son objetos Symbol se enumeran en el orden en que se añadieron al objeto.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Las propiedades de cadena cuyos nombres son enteros no negativos se enumeran primero, en orden numérico de menor a mayor. Esta regla significa que las matrices y los objetos similares a matrices tendrán sus propiedades enumeradas en orden.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Después de enumerar todas las propiedades que parecen índices de matrices, se enumeran todas las propiedades restantes con nombres de cadena (incluidas las propiedades que parecen números negativos o números de coma flotante). Estas propiedades se enumeran en el orden en que se añadieron al objeto. Para las propiedades definidas en un literal de objeto, este orden es el mismo en el que aparecen en el literal.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Por último, las propiedades cuyos nombres son objetos Symbol se enumeran en el orden en que se añadieron al objeto.
+        </p>
+      </li>
     </ul>
     <p>El orden de enumeración para el bucle <codeinline>for/in</codeinline> no está tan especificado como para estas funciones de enumeración, pero las implementaciones suelen enumerar las propiedades propias en el orden que se acaba de describir, y luego viajan por la cadena de prototipos enumerando las propiedades en el mismo orden para cada objeto prototipo. Tenga en cuenta, sin embargo, que una propiedad no será enumerada si ya se ha enumerado una propiedad con ese mismo nombre, o incluso si ya se ha considerado una propiedad no enumerable con el mismo nombre.</p>
   </section>
@@ -753,11 +787,36 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>6.11 Resumen</h2>
     <p>En este capítulo se han documentado los objetos de JavaScript con gran detalle, cubriendo temas que incluyen:</p>
     <ul>
-      <li class="font-normal">Terminología básica de objetos, incluido el significado de términos como <em>enumerable</em> y <em>propiedad</em>.</li>
-      <li class="font-normal">Sintaxis literal de objetos, incluidas las numerosas novedades de ES6 y versiones posteriores.</li>
-      <li class="font-normal">Cómo leer, escribir, borrar, enumerar y comprobar la presencia de las propiedades de un objeto.</li>
-      <li class="font-normal">Cómo funciona la herencia basada en prototipos en JavaScript y cómo crear un objeto que hereda de otro objeto con <codeinline>Object.create()</codeinline>.</li>
-      <li class="font-normal">Cómo copiar propiedades de un objeto a otro con <codeinline>Object.assign()</codeinline>.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Terminología básica de objetos, incluido el significado de términos como <em>enumerable</em> y <em>propiedad</em>.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Sintaxis literal de objetos, incluidas las numerosas novedades de ES6 y versiones posteriores.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Cómo leer, escribir, borrar, enumerar y comprobar la presencia de las propiedades de un objeto.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Cómo funciona la herencia basada en prototipos en JavaScript y cómo crear un objeto que hereda de otro objeto con <codeinline>Object.create()</codeinline>.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Cómo copiar propiedades de un objeto a otro con <codeinline>Object.assign()</codeinline>.
+        </p>
+      </li>
     </ul>
     <p>Todos los valores de JavaScript que no son valores primitivos son objetos. Esto incluye tanto las matrices como las funciones, que son los temas de los dos capítulos siguientes.</p>
   </section>

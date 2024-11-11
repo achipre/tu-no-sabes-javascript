@@ -22,9 +22,24 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>8.1.1 Declaraciones de funciones</h2>
     <p>Las declaraciones de funciones constan de la palabra clave <codeinline>function</codeinline>, seguida de estos componentes:</p>
     <ul>
-      <li class="font-normal">Identificador que da nombre a la función. El nombre es una parte obligatoria de las declaraciones de función: se utiliza como nombre de una variable, y el objeto de función recién definido se asigna a la variable.</li>
-      <li class="font-normal">Un par de paréntesis alrededor de una lista separada por comas de cero o más identificadores. Estos identificadores son los nombres de los parámetros de la función y se comportan como variables locales dentro del cuerpo de la función.</li>
-      <li class="font-normal">Un par de llaves con cero o más sentencias JavaScript en su interior. Estas sentencias son el cuerpo de la función: se ejecutan cada vez que se invoca la función.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Identificador que da nombre a la función. El nombre es una parte obligatoria de las declaraciones de función: se utiliza como nombre de una variable, y el objeto de función recién definido se asigna a la variable.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Un par de paréntesis alrededor de una lista separada por comas de cero o más identificadores. Estos identificadores son los nombres de los parámetros de la función y se comportan como variables locales dentro del cuerpo de la función.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Un par de llaves con cero o más sentencias JavaScript en su interior. Estas sentencias son el cuerpo de la función: se ejecutan cada vez que se invoca la función.
+        </p>
+      </li>
     </ul>
     <p>He aquí algunos ejemplos de declaración de funciones:</p>
     <pre>
@@ -119,11 +134,36 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       define la función, sino cuando se invoca. Las funciones JavaScript pueden invocarse
       de cinco maneras:</p>
     <ul>
-      <li class="font-normal">Como funciones</li>
-      <li class="font-normal">Como métodos</li>
-      <li class="font-normal">Como constructores</li>
-      <li class="font-normal">Indirectamente a través de sus métodos <codeinline>call()</codeinline> y <codeinline>apply()</codeinline></li>
-      <li class="font-normal">Implícitamente, mediante funciones de</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Como funciones
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Como métodos
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Como constructores
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Indirectamente a través de sus métodos <codeinline>call()</codeinline> y <codeinline>apply()</codeinline>
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Implícitamente, mediante funciones de
+        </p>
+      </li>
     </ul>
   </section>
   <section id="2-1" class="py-4 xs:py-5 sm:py-6">
@@ -248,11 +288,36 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Hay varias características del lenguaje JavaScript que no parecen invocaciones de funciones pero que hacen que se invoquen funciones. Tenga mucho cuidado al escribir funciones que puedan ser invocadas implícitamente, ya que los errores, efectos secundarios y problemas de rendimiento en estas funciones son más difíciles de diagnosticar y solucionar que en las funciones normales por la sencilla razón de que puede que no sea obvio a partir de una simple inspección de su código cuándo están siendo invocadas.</p>
     <p>Las características del lenguaje que pueden causar la invocación implícita de funciones incluyen:</p>
     <ul>
-      <li class="font-normal">Si un objeto tiene definidos getters o setters, entonces la consulta o el establecimiento del valor de sus propiedades puede invocar esos métodos. Para más información, véase <a href="capitulo-6#10-6">§6.10.6</a>.</li>
-      <li class="font-normal">Cuando un objeto se utiliza en un contexto de cadena (como cuando se concatena con una cadena), se llama a su método <codeinline>toString()</codeinline>. Del mismo modo, cuando un objeto se utiliza en un contexto numérico, se invoca a su método <codeinline>valueOf()</codeinline>. Para más detalles, véase <a href="capitulo-3#3-9">§3.9.3</a>.</li>
-      <li class="font-normal">Cuando se realiza un bucle sobre los elementos de un objeto iterable, se producen una serie de llamadas a métodos. El <a href="capitulo-12">Capítulo 12</a> explica cómo funcionan los iteradores a nivel de llamada a funciones y demuestra cómo escribir estos métodos para que puedas definir tus propios tipos de iterables.</li>
-      <li class="font-normal">Un literal de plantilla etiquetado es una invocación a una función disfrazada. <a href="capitulo-14#5">§14.5</a> muestra cómo escribir funciones que pueden usarse junto con cadenas de literales de plantilla.</li>
-      <li class="font-normal">Los objetos proxy (descritos en <a href="capitulo-14#7">§14.7</a>) tienen su comportamiento completamente controlado por funciones. Casi cualquier operación sobre uno de estos objetos hará que se invoque una función.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Si un objeto tiene definidos getters o setters, entonces la consulta o el establecimiento del valor de sus propiedades puede invocar esos métodos. Para más información, véase <a href="capitulo-6#10-6">§6.10.6</a>.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Cuando un objeto se utiliza en un contexto de cadena (como cuando se concatena con una cadena), se llama a su método <codeinline>toString()</codeinline>. Del mismo modo, cuando un objeto se utiliza en un contexto numérico, se invoca a su método <codeinline>valueOf()</codeinline>. Para más detalles, véase <a href="capitulo-3#3-9">§3.9.3</a>.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Cuando se realiza un bucle sobre los elementos de un objeto iterable, se producen una serie de llamadas a métodos. El <a href="capitulo-12">Capítulo 12</a> explica cómo funcionan los iteradores a nivel de llamada a funciones y demuestra cómo escribir estos métodos para que puedas definir tus propios tipos de iterables.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Un literal de plantilla etiquetado es una invocación a una función disfrazada. <a href="capitulo-14#5">§14.5</a> muestra cómo escribir funciones que pueden usarse junto con cadenas de literales de plantilla.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Los objetos proxy (descritos en <a href="capitulo-14#7">§14.7</a>) tienen su comportamiento completamente controlado por funciones. Casi cualquier operación sobre uno de estos objetos hará que se invoque una función.
+        </p>
+      </li>
     </ul>
   </section >
   <section id="3">
@@ -805,9 +870,23 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Observe que al constructor <codeinline>Function()</codeinline> no se le pasa ningún argumento que especifique un nombre para la función que crea. Al igual que los literales de función, el constructor <codeinline>Function()</codeinline> crea funciones anónimas.</p>
     <p>Hay algunos puntos que es importante comprender sobre la función <codeinline>Function()</codeinline> constructor:</p>
     <ul class="flex flex-col gap-4 xs:gap-5 sm:gap-6">
-      <li class="font-normal">El constructor <codeinline>Function()</codeinline> permite crear y compilar dinámicamente funciones JavaScript en tiempo de ejecución.</li>
-      <li class="font-normal">El constructor <codeinline>Function()</codeinline> analiza el cuerpo de la función y crea un nuevo objeto función cada vez que es llamado. Si la llamada al constructor aparece dentro de un bucle o dentro de una función llamada con frecuencia, este proceso puede resultar ineficiente. Por el contrario, las funciones anidadas y las expresiones de función que aparecen dentro de bucles no se recompilan cada vez que se encuentran.</li>
-      <li class="font-normal">Un último punto muy importante sobre el constructor <codeinline>Function()</codeinline> es que las funciones que crea no utilizan ámbito léxico; en su lugar, siempre se compilan como si fueran funciones de nivel superior, como demuestra el siguiente código:
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          El constructor <codeinline>Function()</codeinline> permite crear y compilar dinámicamente funciones JavaScript en tiempo de ejecución.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          El constructor <codeinline>Function()</codeinline> analiza el cuerpo de la función y crea un nuevo objeto función cada vez que es llamado. Si la llamada al constructor aparece dentro de un bucle o dentro de una función llamada con frecuencia, este proceso puede resultar ineficiente. Por el contrario, las funciones anidadas y las expresiones de función que aparecen dentro de bucles no se recompilan cada vez que se encuentran.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Un último punto muy importante sobre el constructor <codeinline>Function()</codeinline> es que las funciones que crea no utilizan ámbito léxico; en su lugar, siempre se compilan como si fueran funciones de nivel superior, como demuestra el siguiente código:
+        </p>
       </li>
     <pre>
     <code class="language-js">let scope = "global";
@@ -1035,13 +1114,43 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="9" class="pb-4 xs:pb-5 sm:pb-6">
     <h2>8.9 Resumen</h2>
     <p>Algunos puntos clave que conviene recordar sobre este capítulo son los siguientes:</p>
-    <ul class="flex flex-col gap-4 xs:gap-5 sm:gap-6">
-      <li class="font-normal">Puede definir funciones con la palabra clave <codeinline>function</codeinline> y con la sintaxis de flecha <codeinline>=&gt;</codeinline> de ES6.</li>
-      <li class="font-normal">Puede invocar funciones, que pueden utilizarse como métodos y constructores.</li>
-      <li class="font-normal">Algunas funciones de ES6 permiten definir valores por defecto para parámetros de función opcionales, reunir varios argumentos en una matriz mediante un parámetro rest y desestructurar argumentos de objetos y matrices en parámetros de función.</li>
-      <li class="font-normal">Puede utilizar el operador de extensión <codeinline>...</codeinline> para pasar los elementos de una matriz u otro objeto iterable como argumentos en una invocación de función.</li>
-      <li class="font-normal">Una función definida dentro de una función envolvente y devuelta por ésta conserva el acceso a su ámbito léxico y, por tanto, puede leer y escribir las variables definidas dentro de la función externa. Las funciones utilizadas de este modo se denominan <em>closures</em>, y se trata de una técnica que merece la pena comprender.</li>
-      <li class="font-normal">Las funciones son objetos que pueden ser manipulados por JavaScript, y esto permite un estilo funcional de programación.</li>
+    <ul>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Puede definir funciones con la palabra clave <codeinline>function</codeinline> y con la sintaxis de flecha <codeinline>=&gt;</codeinline> de ES6.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Puede invocar funciones, que pueden utilizarse como métodos y constructores.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Algunas funciones de ES6 permiten definir valores por defecto para parámetros de función opcionales, reunir varios argumentos en una matriz mediante un parámetro rest y desestructurar argumentos de objetos y matrices en parámetros de función.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Puede utilizar el operador de extensión <codeinline>...</codeinline> para pasar los elementos de una matriz u otro objeto iterable como argumentos en una invocación de función.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Una función definida dentro de una función envolvente y devuelta por ésta conserva el acceso a su ámbito léxico y, por tanto, puede leer y escribir las variables definidas dentro de la función externa. Las funciones utilizadas de este modo se denominan <em>closures</em>, y se trata de una técnica que merece la pena comprender.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Las funciones son objetos que pueden ser manipulados por JavaScript, y esto permite un estilo funcional de programación.
+        </p>
+      </li>
     </ul>
   </section>
 </Layoutjavascript>

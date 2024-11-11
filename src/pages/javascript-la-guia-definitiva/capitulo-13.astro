@@ -143,9 +143,24 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Tenga en cuenta que las promesas representan los resultados futuros de cálculos asíncronos individuales. Sin embargo, no pueden utilizarse para representar cálculos asíncronos repetidos. Más adelante en este capítulo, escribiremos una alternativa basada en Promises a la función <codeinline>setTimeout()</codeinline>, por ejemplo. Pero no podemos usar Promises para reemplazar <codeinline>setInterval()</codeinline> porque esa función invoca una función callback repetidamente, que es algo para lo que las Promises no están diseñadas. De forma similar, podríamos usar una Promise en lugar del manejador de eventos "load" de un objeto XMLHttpRequest, ya que esa llamada de retorno sólo se invoca una vez. Pero normalmente no usaríamos una Promise en lugar de un manejador de eventos "click" de un objeto botón HTML, ya que normalmente queremos permitir al usuario hacer click en un botón múltiples veces.</p>
     <p>En las subsecciones siguientes:</p>
     <ul>
-      <li class="font-normal">Explicar la terminología Promise y mostrar el uso básico de Promise</li>
-      <li class="font-normal">Mostrar cómo encadenar promesas</li>
-      <li class="font-normal">Demuestre cómo crear sus propias API basadas en promesas</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Explicar la terminología Promise y mostrar el uso básico de Promise
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Mostrar cómo encadenar promesas
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Demuestre cómo crear sus propias API basadas en promesas
+        </p>
+      </li>
     </ul>
     <nota>
       <img class="self-start" src="/public/javascript/nota_warning.svg" alt="Nota de la warning">
@@ -847,11 +862,36 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>13.5 Resumen</h2>
     <p>En este capítulo has aprendido:</p>
     <ul>
-      <li class="font-normal">La mayor parte de la programación JavaScript del mundo real es asíncrona.</li>
-      <li class="font-normal">Tradicionalmente, la asincronía se ha manejado con eventos y funciones callback. Esto puede ser complicado, sin embargo, porque usted puede terminar con múltiples niveles de devoluciones de llamada anidadas dentro de otras devoluciones de llamada, y porque es difícil hacer un manejo robusto de errores.</li>
-      <li class="font-normal">Las promesas proporcionan una nueva forma de estructurar las funciones de devolución de llamada. Si se utilizan correctamente (y, por desgracia, las promesas son fáciles de utilizar incorrectamente), pueden convertir el código asíncrono que habría sido anidado en cadenas lineales de llamadas <codeinline>then()</codeinline> donde un paso asíncrono de un cálculo sigue a otro. Además, las promesas permiten centralizar el código de gestión de errores en una única llamada <codeinline>catch()</codeinline> al final de una cadena de llamadas <codeinline>then()</codeinline>.</li>
-      <li class="font-normal">Las palabras clave <codeinline>async</codeinline> y <codeinline>await</codeinline> nos permiten escribir código asíncrono basado en promesas pero que parece código síncrono. Esto hace que el código sea más fácil de entender y razonar. Si una función se declara <codeinline>async</codeinline>, devolverá implícitamente una promesa. Dentro de una función <codeinline>async</codeinline>, puedes <codeinline>await</codeinline> una Promise (o una función que devuelva una Promise) como si el valor de la Promise se hubiera calculado sincrónicamente.</li>
-      <li class="font-normal">Los objetos que son asíncronamente iterables pueden ser utilizados con un bucle <codeinline>for/await</codeinline>. Puedes crear objetos iterables asíncronamente implementando un método <codeinline>[Symbol.asyncIterator]()</codeinline> o invocando una función generadora <codeinline>async function *</codeinline>. Los iteradores asíncronos proporcionan una alternativa a los eventos de "datos" en los flujos en Node y se pueden utilizar para representar un flujo de eventos de entrada de usuario en JavaScript del lado del cliente.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          La mayor parte de la programación JavaScript del mundo real es asíncrona.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Tradicionalmente, la asincronía se ha manejado con eventos y funciones callback. Esto puede ser complicado, sin embargo, porque usted puede terminar con múltiples niveles de devoluciones de llamada anidadas dentro de otras devoluciones de llamada, y porque es difícil hacer un manejo robusto de errores.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Las promesas proporcionan una nueva forma de estructurar las funciones de devolución de llamada. Si se utilizan correctamente (y, por desgracia, las promesas son fáciles de utilizar incorrectamente), pueden convertir el código asíncrono que habría sido anidado en cadenas lineales de llamadas <codeinline>then()</codeinline> donde un paso asíncrono de un cálculo sigue a otro. Además, las promesas permiten centralizar el código de gestión de errores en una única llamada <codeinline>catch()</codeinline> al final de una cadena de llamadas <codeinline>then()</codeinline>.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Las palabras clave <codeinline>async</codeinline> y <codeinline>await</codeinline> nos permiten escribir código asíncrono basado en promesas pero que parece código síncrono. Esto hace que el código sea más fácil de entender y razonar. Si una función se declara <codeinline>async</codeinline>, devolverá implícitamente una promesa. Dentro de una función <codeinline>async</codeinline>, puedes <codeinline>await</codeinline> una Promise (o una función que devuelva una Promise) como si el valor de la Promise se hubiera calculado sincrónicamente.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Los objetos que son asíncronamente iterables pueden ser utilizados con un bucle <codeinline>for/await</codeinline>. Puedes crear objetos iterables asíncronamente implementando un método <codeinline>[Symbol.asyncIterator]()</codeinline> o invocando una función generadora <codeinline>async function *</codeinline>. Los iteradores asíncronos proporcionan una alternativa a los eventos de "datos" en los flujos en Node y se pueden utilizar para representar un flujo de eventos de entrada de usuario en JavaScript del lado del cliente.
+        </p>
+      </li>
     </ul>
   </section>
 </Layoutjavascript>

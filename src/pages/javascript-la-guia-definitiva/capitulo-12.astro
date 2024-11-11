@@ -399,14 +399,54 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>12.5 Resumen</h2>
     <p>En este capítulo has aprendido:</p>
     <ul>
-      <li class="font-normal">El bucle <codeinline>for/of</codeinline> y el operador <codeinline>...</codeinline> spread funcionan con objetos iterables.</li>
-      <li class="font-normal">Un objeto es iterable si tiene un método con el nombre simbólico <codeinline>[Symbol.iterator]</codeinline> que devuelve un objeto iterador.</li>
-      <li class="font-normal">Un objeto iterador tiene un método <codeinline>next()</codeinline> que devuelve un objeto resultado de iteración.</li>
-      <li class="font-normal">Un objeto resultado de iteración tiene una propiedad <codeinline>value</codeinline> que contiene el siguiente valor iterado, si existe. Si la iteración ha finalizado, entonces el objeto resultado debe tener una propiedad <codeinline>done</codeinline> establecida a <codeinline>true</codeinline>.</li>
-      <li class="font-normal">Puedes implementar tus propios objetos iterables definiendo un método <codeinline>[Symbol.iterator]()</codeinline> que devuelva un objeto con un método <codeinline>next()</codeinline> que devuelva objetos resultado de la iteración. También puedes implementar funciones que acepten argumentos iteradores y devuelvan valores iteradores.</li>
-      <li class="font-normal">Las funciones generadoras (funciones definidas con <codeinline>function*</codeinline> en lugar de <codeinline>function</codeinline>) son otra forma de definir iteradores.</li>
-      <li class="font-normal">Cuando se invoca una función generadora, el cuerpo de la función no se ejecuta inmediatamente; en su lugar, el valor de retorno es un objeto iterable iterador. Cada vez que se ejecuta la función Cuando se llama al método <codeinline>next()</codeinline> del iterador, se ejecuta otra parte de la función generadora.</li>
-      <li class="font-normal">Las funciones generadoras pueden utilizar el operador <codeinline>yield</codeinline> para especificar los valores devueltos por el iterador. Cada llamada a <codeinline>next()</codeinline> hace que la función generadora se ejecute hasta la siguiente expresión <codeinline>yield</codeinline>. El valor de esa expresión <codeinline>yield</codeinline> se convierte entonces en el valor devuelto por el iterador. Cuando no hay más expresiones <codeinline>yield</codeinline>, la función generadora regresa y la iteración se ha completado.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          El bucle <codeinline>for/of</codeinline> y el operador <codeinline>...</codeinline> spread funcionan con objetos iterables.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Un objeto es iterable si tiene un método con el nombre simbólico <codeinline>[Symbol.iterator]</codeinline> que devuelve un objeto iterador.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Un objeto iterador tiene un método <codeinline>next()</codeinline> que devuelve un objeto resultado de iteración.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Un objeto resultado de iteración tiene una propiedad <codeinline>value</codeinline> que contiene el siguiente valor iterado, si existe. Si la iteración ha finalizado, entonces el objeto resultado debe tener una propiedad <codeinline>done</codeinline> establecida a <codeinline>true</codeinline>.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Puedes implementar tus propios objetos iterables definiendo un método <codeinline>[Symbol.iterator]()</codeinline> que devuelva un objeto con un método <codeinline>next()</codeinline> que devuelva objetos resultado de la iteración. También puedes implementar funciones que acepten argumentos iteradores y devuelvan valores iteradores.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Las funciones generadoras (funciones definidas con <codeinline>function*</codeinline> en lugar de <codeinline>function</codeinline>) son otra forma de definir iteradores.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Cuando se invoca una función generadora, el cuerpo de la función no se ejecuta inmediatamente; en su lugar, el valor de retorno es un objeto iterable iterador. Cada vez que se ejecuta la función Cuando se llama al método <codeinline>next()</codeinline> del iterador, se ejecuta otra parte de la función generadora.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Las funciones generadoras pueden utilizar el operador <codeinline>yield</codeinline> para especificar los valores devueltos por el iterador. Cada llamada a <codeinline>next()</codeinline> hace que la función generadora se ejecute hasta la siguiente expresión <codeinline>yield</codeinline>. El valor de esa expresión <codeinline>yield</codeinline> se convierte entonces en el valor devuelto por el iterador. Cuando no hay más expresiones <codeinline>yield</codeinline>, la función generadora regresa y la iteración se ha completado.
+        </p>
+      </li>
     </ul>
   </section>
 </Layoutjavascript>

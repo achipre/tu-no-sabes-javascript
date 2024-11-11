@@ -475,10 +475,30 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>La sentencia <codeinline>continue</codeinline>, tanto en su forma etiquetada como sin etiquetar, sólo puede utilizarse dentro del cuerpo de un bucle. Su uso en cualquier otro lugar provoca un error de sintaxis.</p>
     <p>Cuando se ejecuta la sentencia <codeinline>continue</codeinline>, finaliza la iteración actual del bucle que lo encierra y comienza la siguiente iteración. Esto significa cosas diferentes para los distintos tipos de bucles:</p>
     <ul>
-      <li class="font-normal">En un bucle <codeinline>while</codeinline>, la <em>expresión</em> especificada al principio del bucle se comprueba de nuevo y, si es <codeinline>true</codeinline>, el cuerpo del bucle se ejecuta empezando por arriba.</li>
-      <li class="font-normal">En un bucle <codeinline>do/while</codeinline>, la ejecución salta a la parte inferior del bucle, donde la condición del bucle se comprueba de nuevo antes de reiniciar el bucle en la parte superior.</li>
-      <li class="font-normal">En un bucle <codeinline>for</codeinline>, se evalúa la expresión de <em>incremento</em> y se vuelve a comprobar la expresión de <em>prueba</em> para determinar si debe realizarse otra iteración.</li>
-      <li class="font-normal">En un bucle <codeinline>for/of</codeinline> o <codeinline>for/in</codeinline>, el bucle comienza de nuevo con el siguiente valor iterado o el siguiente nombre de propiedad que se asigna a la variable especificada.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          En un bucle <codeinline>while</codeinline>, la <em>expresión</em> especificada al principio del bucle se comprueba de nuevo y, si es <codeinline>true</codeinline>, el cuerpo del bucle se ejecuta empezando por arriba.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          En un bucle <codeinline>do/while</codeinline>, la ejecución salta a la parte inferior del bucle, donde la condición del bucle se comprueba de nuevo antes de reiniciar el bucle en la parte superior.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          En un bucle <codeinline>for</codeinline>, se evalúa la expresión de <em>incremento</em> y se vuelve a comprobar la expresión de <em>prueba</em> para determinar si debe realizarse otra iteración.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          En un bucle <codeinline>for/of</codeinline> o <codeinline>for/in</codeinline>, el bucle comienza de nuevo con el siguiente valor iterado o el siguiente nombre de propiedad que se asigna a la variable especificada.
+        </p>
+      </li>
     </ul>
     <p>Observe la diferencia en el comportamiento de la sentencia <codeinline>continue</codeinline> en los bucles <codeinline>while</codeinline> y <codeinline>for</codeinline>: un bucle <codeinline>while</codeinline> vuelve directamente a su condición, pero un bucle <codeinline>for</codeinline> evalúa primero su expresión de <em>incremento</em> y luego vuelve a su condición. Anteriormente, consideramos el comportamiento del bucle <codeinline>for</codeinline> en términos de un bucle <codeinline>while</codeinline> "equivalente". Sin embargo, debido a que el estado <codeinline>continue</codeinline> se comporta de forma diferente para estos dos bucles, en realidad no es posible simular perfectamente un bucle <codeinline>for</codeinline> sólo con un bucle <codeinline>while</codeinline>.</p>
     <p>El siguiente ejemplo muestra una sentencia <codeinline>continue</codeinline> sin etiquetar que se utiliza para saltarse el resto de la iteración actual de un bucle cuando se produce un error:</p>
@@ -659,25 +679,100 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>5.6.3 "use strict"</h2>
     <p><codeinline>"use strict"</codeinline> es una <em>directiva</em> introducida en ES5. Las directivas no son sentencias (pero se parecen lo suficiente como para que <codeinline>"use strict"</codeinline> se documente aquí). Hay dos diferencias importantes entre la directiva <codeinline>"use strict"</codeinline> y las sentencias normales:</p>
     <ul>
-      <li class="font-normal">No incluye ninguna palabra clave del lenguaje: la directiva es sólo una declaración de expresión que consiste en un literal de cadena especial (entre comillas simples o dobles).</li>
-      <li class="font-normal">Sólo puede aparecer al principio de una secuencia de comandos o al principio del cuerpo de una función, antes de que aparezca ninguna sentencia real.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          No incluye ninguna palabra clave del lenguaje: la directiva es sólo una declaración de expresión que consiste en un literal de cadena especial (entre comillas simples o dobles).
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Sólo puede aparecer al principio de una secuencia de comandos o al principio del cuerpo de una función, antes de que aparezca ninguna sentencia real.
+        </p>
+      </li>
     </ul>
     <p>El propósito de una directiva <codeinline>"use strict"</codeinline> es indicar que el código que sigue (en el script o función) es <em>código estricto</em>. El código de nivel superior (no función) de un script es código estricto si el script tiene una directiva <codeinline>"use strict"</codeinline>. El cuerpo de una función es código estricto si está definido dentro de código estricto o si tiene una directiva <codeinline>"use strict"</codeinline>. El código pasado al método <codeinline>eval()</codeinline> es código estricto si <codeinline>eval()</codeinline> se llama desde código estricto o si la cadena de código incluye una directiva <codeinline>"use strict"</codeinline>. Además del código declarado explícitamente como estricto, cualquier código en el cuerpo de una <codeinline>class</codeinline> (<a href="capitulo-9">Capítulo 9</a>) o en un módulo ES6 (<a href="capitulo-10#3">§10.3</a>) es automáticamente código estricto. Esto significa que si todo tu código JavaScript está escrito como módulos, entonces es automáticamente estricto, y nunca necesitarás usar una directiva <codeinline>"use strict"</codeinline> explícita.</p>
     <p>El código estricto se ejecuta en <em>modo estricto</em>. El modo estricto es un subconjunto restringido del lenguaje que corrige importantes deficiencias del lenguaje y proporciona una comprobación de errores más sólida y una mayor seguridad. Dado que el modo estricto no es el predeterminado, el código JavaScript antiguo que aún utiliza las características heredadas deficientes del lenguaje seguirá ejecutándose correctamente. Las diferencias entre el modo estricto y el modo no estricto son las siguientes (las tres primeras son especialmente importantes):</p>
     <ul>
-      <li class="font-normal">La sentencia <codeinline>with</codeinline> no está permitida en modo estricto.</li>
-      <li class="font-normal">En modo estricto, todas las variables deben ser declaradas: se lanza un ReferenceError si asignas un valor a un identificador que no es una variable declarada, función, parámetro de función, parámetro de cláusula <codeinline>catch</codeinline>, o propiedad del objeto global. (En modo no estricto, esto declara implícitamente una variable global añadiendo una nueva propiedad al objeto global).</li>
-      <li class="font-normal">En modo estricto, las funciones invocadas como funciones (en lugar de como métodos) tienen un valor <codeinline>this</codeinline> de <codeinline>undefined</codeinline>. (En modo no estricto, a las funciones invocadas como funciones siempre se les pasa el objeto global como su valor <codeinline>this</codeinline>). Además, en modo estricto, cuando una función se invoca con <codeinline>call()</codeinline> o <codeinline>apply()</codeinline> (<a href="capitulo-8#7-4">§8.7.4</a>) el valor <codeinline>this</codeinline> es exactamente el valor pasado como primer argumento a <codeinline>call()</codeinline> o <codeinline>apply()</codeinline>. (En modo no estricto, los valores <codeinline>null</codeinline> e <codeinline>undefined</codeinline> se sustituyen por el objeto global y los valores que no son objetos se convierten en objetos).</li>
-      <li class="font-normal">En modo estricto, las asignaciones a propiedades no escribibles y los intentos de crear nuevas propiedades en objetos no extensibles lanzan un TypeError. (En modo no estricto, estos intentos fallan silenciosamente).</li>
-      <li class="font-normal">En modo estricto, el código pasado a <codeinline>eval()</codeinline> no puede declarar variables o definir funciones en el ámbito del invocador, como puede hacerlo en modo no estricto. En su lugar, las definiciones de variables y funciones viven en un nuevo ámbito creado para <codeinline>eval()</codeinline>. Este ámbito se descarta cuando vuelve <codeinline>eval()</codeinline>.</li>
-      <li class="font-normal">En modo estricto, el objeto Arguments (<a href="capitulo-8#8-3-3">§8.3.3</a>) de una función contiene una copia estática de los valores pasados a la función. En modo no estricto, el objeto Arguments tiene un comportamiento <codeinline>"mágico"</codeinline> en el que los elementos de la matriz y los parámetros con nombre de la función se refieren al mismo valor.</li>
-      <li class="font-normal">En modo estricto, se lanza un SyntaxError si el operador <codeinline>delete</codeinline> va seguido de un identificador no cualificado como una variable, función o parámetro de función. (En modo no estricto, una expresión <codeinline>delete</codeinline> de este tipo no hace nada y se evalúa como <codeinline>false</codeinline>).</li>
-      <li class="font-normal">En modo estricto, un intento de borrar una propiedad no configurable lanza un TypeError. (En modo no estricto, el intento falla y la expresión de <codeinline>delete</codeinline> se evalúa como <codeinline>false</codeinline>).</li>
-      <li class="font-normal">En modo estricto, es un error sintáctico que un literal de objeto defina dos o más propiedades con el mismo nombre. (En modo no estricto, no se produce ningún error).</li>
-      <li class="font-normal">En modo estricto, es un error sintáctico que una declaración de función tenga dos o más parámetros con el mismo nombre. (En modo no estricto, no se produce ningún error).</li>
-      <li class="font-normal">En modo estricto, no se permiten los literales enteros octales (que empiezan por 0 y no van seguidos de una x). (En modo no estricto, algunas implementaciones permiten literales octales).</li>
-      <li class="font-normal">En modo estricto, los identificadores <codeinline>eval</codeinline> y <codeinline>arguments</codeinline> se tratan como palabras clave, y no se permite cambiar su valor. No puedes asignar un valor a estos identificadores, declararlos como variables, usarlos como nombres de función, usarlos como nombres de parámetros de función o usarlos como identificador de un bloque <codeinline>catch</codeinline>.</li>
-      <li class="font-normal">En modo estricto, la capacidad de examinar la pila de llamadas está restringida. <codeinline>arguments.caller</codeinline> y <codeinline>arguments.callee</codeinline> lanzan un TypeError dentro de una función en modo estricto o . Las funciones en modo estricto también tienen propiedades <codeinline>caller</codeinline> y <codeinline>arguments</codeinline> que lanzan un TypeError cuando se leen. (Algunas implementaciones definen estas propiedades no estándar en funciones no estrictas).</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          La sentencia <codeinline>with</codeinline> no está permitida en modo estricto.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          En modo estricto, todas las variables deben ser declaradas: se lanza un ReferenceError si asignas un valor a un identificador que no es una variable declarada, función, parámetro de función, parámetro de cláusula <codeinline>catch</codeinline>, o propiedad del objeto global. (En modo no estricto, esto declara implícitamente una variable global añadiendo una nueva propiedad al objeto global).
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          En modo estricto, las funciones invocadas como funciones (en lugar de como métodos) tienen un valor <codeinline>this</codeinline> de <codeinline>undefined</codeinline>. (En modo no estricto, a las funciones invocadas como funciones siempre se les pasa el objeto global como su valor <codeinline>this</codeinline>). Además, en modo estricto, cuando una función se invoca con <codeinline>call()</codeinline> o <codeinline>apply()</codeinline> (<a href="capitulo-8#7-4">§8.7.4</a>) el valor <codeinline>this</codeinline> es exactamente el valor pasado como primer argumento a <codeinline>call()</codeinline> o <codeinline>apply()</codeinline>. (En modo no estricto, los valores <codeinline>null</codeinline> e <codeinline>undefined</codeinline> se sustituyen por el objeto global y los valores que no son objetos se convierten en objetos).
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          En modo estricto, las asignaciones a propiedades no escribibles y los intentos de crear nuevas propiedades en objetos no extensibles lanzan un TypeError. (En modo no estricto, estos intentos fallan silenciosamente).
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          En modo estricto, el código pasado a <codeinline>eval()</codeinline> no puede declarar variables o definir funciones en el ámbito del invocador, como puede hacerlo en modo no estricto. En su lugar, las definiciones de variables y funciones viven en un nuevo ámbito creado para <codeinline>eval()</codeinline>. Este ámbito se descarta cuando vuelve <codeinline>eval()</codeinline>.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          En modo estricto, el objeto Arguments (<a href="capitulo-8#8-3-3">§8.3.3</a>) de una función contiene una copia estática de los valores pasados a la función. En modo no estricto, el objeto Arguments tiene un comportamiento <codeinline>"mágico"</codeinline> en el que los elementos de la matriz y los parámetros con nombre de la función se refieren al mismo valor.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          En modo estricto, se lanza un SyntaxError si el operador <codeinline>delete</codeinline> va seguido de un identificador no cualificado como una variable, función o parámetro de función. (En modo no estricto, una expresión <codeinline>delete</codeinline> de este tipo no hace nada y se evalúa como <codeinline>false</codeinline>).
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          En modo estricto, un intento de borrar una propiedad no configurable lanza un TypeError. (En modo no estricto, el intento falla y la expresión de <codeinline>delete</codeinline> se evalúa como <codeinline>false</codeinline>).
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          En modo estricto, es un error sintáctico que un literal de objeto defina dos o más propiedades con el mismo nombre. (En modo no estricto, no se produce ningún error).
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          En modo estricto, es un error sintáctico que una declaración de función tenga dos o más parámetros con el mismo nombre. (En modo no estricto, no se produce ningún error).
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          En modo estricto, no se permiten los literales enteros octales (que empiezan por 0 y no van seguidos de una x). (En modo no estricto, algunas implementaciones permiten literales octales).
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          En modo estricto, los identificadores <codeinline>eval</codeinline> y <codeinline>arguments</codeinline> se tratan como palabras clave, y no se permite cambiar su valor. No puedes asignar un valor a estos identificadores, declararlos como variables, usarlos como nombres de función, usarlos como nombres de parámetros de función o usarlos como identificador de un bloque <codeinline>catch</codeinline>.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          En modo estricto, la capacidad de examinar la pila de llamadas está restringida. <codeinline>arguments.caller</codeinline> y <codeinline>arguments.callee</codeinline> lanzan un TypeError dentro de una función en modo estricto o . Las funciones en modo estricto también tienen propiedades <codeinline>caller</codeinline> y <codeinline>arguments</codeinline> que lanzan un TypeError cuando se leen. (Algunas implementaciones definen estas propiedades no estándar en funciones no estrictas).
+        </p>
+      </li>
     </ul>
   </section>
   <section id="7" class="py-4 xs:py-5 sm:py-6">

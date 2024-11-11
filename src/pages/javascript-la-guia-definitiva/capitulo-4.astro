@@ -537,9 +537,24 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Cuando los valores de ambos operandos son números, o ambos son cadenas, entonces es obvio lo que hace el operador <codeinline>+</codeinline>. En cualquier otro caso, sin embargo, es necesaria la conversión de tipos, y la operación a realizar depende de la conversión efectuada. Las reglas de conversión de <codeinline>+</codeinline> dan prioridad a la concatenación de cadenas: si uno de los operandos es una cadena o un objeto que se convierte en cadena, el otro operando se convierte en cadena y se realiza la concatenación. La suma sólo se realiza si ninguno de los dos operandos es una cadena.</p>
     <p>Técnicamente, el operador <codeinline>+</codeinline> se comporta así:</p>
     <ul>
-      <li class="font-normal">Si alguno de los valores de su operando es un objeto, lo convierte en una primitiva mediante el algoritmo de conversión de objetos a primitivas descrito en <a href="capitulo-3#9-3">§3.9.3</a> Los objetos Date se convierten mediante su método <codeinline>toString()</codeinline>, y todos los demás objetos se convierten mediante <codeinline>valueOf()</codeinline>, si dicho método devuelve un valor primitivo. Sin embargo, la mayoría de los objetos no tienen un método <codeinline>valueOf()</codeinline> utilizable, por lo que también se convierten mediante <codeinline>toString()</codeinline>.</li>
-      <li class="font-normal">Tras la conversión de objeto a primitivo, si alguno de los operandos es una cadena, el otro se convierte en cadena y se realiza la concatenación.</li>
-      <li class="font-normal">En caso contrario, ambos operandos se convierten en números (o en <codeinline>NaN</codeinline> y se realiza la suma.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Si alguno de los valores de su operando es un objeto, lo convierte en una primitiva mediante el algoritmo de conversión de objetos a primitivas descrito en <a href="capitulo-3#9-3">§3.9.3</a> Los objetos Date se convierten mediante su método <codeinline>toString()</codeinline>, y todos los demás objetos se convierten mediante <codeinline>valueOf()</codeinline>, si dicho método devuelve un valor primitivo. Sin embargo, la mayoría de los objetos no tienen un método <codeinline>valueOf()</codeinline> utilizable, por lo que también se convierten mediante <codeinline>toString()</codeinline>.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Tras la conversión de objeto a primitivo, si alguno de los operandos es una cadena, el otro se convierte en cadena y se realiza la concatenación.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          En caso contrario, ambos operandos se convierten en números (o en <codeinline>NaN</codeinline> y se realiza la suma.
+        </p>
+      </li>
     </ul>
     <p>He aquí algunos ejemplos:</p>
     <pre>
@@ -637,26 +652,94 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Como se menciona en <a href="capitulo-3#8">§3.8</a>, los objetos JavaScript se comparan por referencia, no por valor. Un objeto es igual a sí mismo, pero no a cualquier otro objeto. Si dos objetos distintos tienen el mismo número de propiedades, con los mismos nombres y valores, siguen sin ser iguales. Del mismo modo, dos matrices que tienen los mismos elementos en el mismo orden no son iguales entre sí.</p>
     <p class="title-article text-left">Igualdad estricta</p>
     <p>El operador de igualdad estricta <codeinline>===</codeinline> evalúa sus operandos y luego compara los dos valores de la siguiente manera, sin realizar ninguna conversión de tipo:</p>
-    <ul class="flex flex-col gap-4 xs:gap-5 sm:gap-6">
-      <li class="font-normal">Si los dos valores tienen tipos diferentes, no son iguales.</li>
-      <li class="font-normal">Si ambos valores son <codeinline>null</codeinline> o ambos valores son <codeinline>undefined</codeinline>, son iguales.</li>
-      <li class="font-normal">Si ambos valores son el valor booleano <codeinline>true</codeinline> o ambos son el valor booleano <codeinline>false</codeinline>, son iguales.</li>
-      <li class="font-normal">Si uno o ambos valores son <codeinline>NAN</codeinline>, no son iguales. (Esto es sorprendente, pero el valor <codeinline>NaN</codeinline> nunca es igual a ningún otro valor, ¡incluido él mismo! Para comprobar si un valor <codeinline>x</codeinline> es <codeinline>NaN</codeinline>, utilice <codeinline>x !== x</codeinline>, o la función global <codeinline>isNaN()</codeinline>).</li>
-      <li class="font-normal">Si ambos valores son números y tienen el mismo valor, son iguales. Si un valor es <codeinline>0</codeinline> y el otro es <codeinline>-0</codeinline>, también son iguales.</li>
-      <li class="font-normal">Si ambos valores son cadenas y contienen exactamente los mismos valores de 16 bits (véase la barra lateral en <a href="capitulo-3#3-3">§3.3</a>) en las mismas posiciones, son iguales. Si las cadenas difieren en longitud o contenido, no son iguales. Dos cadenas pueden tener el mismo significado y la misma apariencia visual, pero aún así estar codificadas utilizando diferentes secuencias de valores de 16 bits. JavaScript no realiza ninguna normalización Unicode, y un par de cadenas como éstas no se considera igual con los operadores <codeinline>===</codeinline> o <codeinline>==</codeinline>.</li>
-      <li class="font-normal">Si ambos valores se refieren al mismo objeto, matriz o función, son iguales. Si se refieren a objetos diferentes, no son iguales, aunque ambos objetos tengan propiedades idénticas.</li>
+    <ul>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Si los dos valores tienen tipos diferentes, no son iguales.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Si ambos valores son <codeinline>null</codeinline> o ambos valores son <codeinline>undefined</codeinline>, son iguales.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Si ambos valores son el valor booleano <codeinline>true</codeinline> o ambos son el valor booleano <codeinline>false</codeinline>, son iguales.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Si uno o ambos valores son <codeinline>NAN</codeinline>, no son iguales. (Esto es sorprendente, pero el valor <codeinline>NaN</codeinline> nunca es igual a ningún otro valor, ¡incluido él mismo! Para comprobar si un valor <codeinline>x</codeinline> es <codeinline>NaN</codeinline>, utilice <codeinline>x !== x</codeinline>, o la función global <codeinline>isNaN()</codeinline>).
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Si ambos valores son números y tienen el mismo valor, son iguales. Si un valor es <codeinline>0</codeinline> y el otro es <codeinline>-0</codeinline>, también son iguales.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Si ambos valores son cadenas y contienen exactamente los mismos valores de 16 bits (véase la barra lateral en <a href="capitulo-3#3-3">§3.3</a>) en las mismas posiciones, son iguales. Si las cadenas difieren en longitud o contenido, no son iguales. Dos cadenas pueden tener el mismo significado y la misma apariencia visual, pero aún así estar codificadas utilizando diferentes secuencias de valores de 16 bits. JavaScript no realiza ninguna normalización Unicode, y un par de cadenas como éstas no se considera igual con los operadores <codeinline>===</codeinline> o <codeinline>==</codeinline>.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Si ambos valores se refieren al mismo objeto, matriz o función, son iguales. Si se refieren a objetos diferentes, no son iguales, aunque ambos objetos tengan propiedades idénticas.
+        </p>
+      </li>
     </ul>
     <p class="title-article text-left">Igualdad con conversión de tipos</p>
     <p>El operador de igualdad <codeinline>==</codeinline> es como el operador de igualdad estricta, pero menos estricto. Si los valores de los dos operandos no son del mismo tipo, intenta algunas conversiones de tipo y vuelve a intentar la comparación:</p>
     <ul class="flex flex-col gap-4 xs:gap-5 sm:gap-6">
-      <li class="font-normal">Si los dos valores tienen el mismo tipo, compruebe si son estrictamente iguales como se ha descrito anteriormente. Si son estrictamente iguales, son iguales. Si no son estrictamente iguales, no son iguales.</li>
-      <li class="font-normal">Si los dos valores no tienen el mismo tipo, el operador <codeinline>==</codeinline> puede considerarlos iguales. Utiliza las siguientes reglas y conversiones de tipo para comprobar la igualdad:
-        <li class="font-normal">Si un valor es <codeinline>null</codeinline> y el otro <codeinline>undefined</codeinline>, son iguales.</li>
-        <li class="font-normal">Si un valor es un número y el otro es una cadena, convierta la cadena en un
-          número e intente de nuevo la comparación utilizando el valor convertido.</li>
-        <li class="font-normal">Si alguno de los valores es <codeinline>true</codeinline>, conviértalo en 1 y vuelva a realizar la comparación. Si alguno de los valores es <codeinline>false</codeinline>, conviértalo en 0 y vuelva a intentar la comparación.</li>
-        <li class="font-normal">Si un valor es un objeto y el otro es un número o una cadena, convierta el objeto en una primitiva utilizando el algoritmo descrito en <a href="capitulo-3#9-3">§3.9.3</a> y vuelva a intentar la comparación. Un objeto se convierte en un valor primitivo mediantesufunción <codeinline>toString()</codeinline> o su método <codeinline>valueOf()</codeinline>. Las clases incorporadas del núcleo de JavaScript intentan la conversión <codeinline>valueOf()</codeinline> antes que la conversión <codeinline>toString()</codeinline>, excepto la clase <codeinline>Date</codeinline>, que realiza la conversión <codeinline>toString()</codeinline>.</li>
-        <li class="font-normal">Cualquier otra combinación de valores no es igual.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Si los dos valores tienen el mismo tipo, compruebe si son estrictamente iguales como se ha descrito anteriormente. Si son estrictamente iguales, son iguales. Si no son estrictamente iguales, no son iguales.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Si los dos valores no tienen el mismo tipo, el operador <codeinline>==</codeinline> puede considerarlos iguales. Utiliza las siguientes reglas y conversiones de tipo para comprobar la igualdad:
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Si un valor es <codeinline>null</codeinline> y el otro <codeinline>undefined</codeinline>, son iguales.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Si un valor es un número y el otro es una cadena, convierta la cadena en un número e intente de nuevo la comparación utilizando el valor convertido.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Si alguno de los valores es <codeinline>true</codeinline>, conviértalo en 1 y vuelva a realizar la comparación. Si alguno de los valores es <codeinline>false</codeinline>, conviértalo en 0 y vuelva a intentar la comparación.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Si un valor es un objeto y el otro es un número o una cadena, convierta el objeto en una primitiva utilizando el algoritmo descrito en <a href="capitulo-3#9-3">§3.9.3</a> y vuelva a intentar la comparación. Un objeto se convierte en un valor primitivo mediantesufunción <codeinline>toString()</codeinline> o su método <codeinline>valueOf()</codeinline>. Las clases incorporadas del núcleo de JavaScript intentan la conversión <codeinline>valueOf()</codeinline> antes que la conversión <codeinline>toString()</codeinline>, excepto la clase <codeinline>Date</codeinline>, que realiza la conversión <codeinline>toString()</codeinline>.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Cualquier otra combinación de valores no es igual.
+        </p>
       </li>
     </ul>
     <p>Como ejemplo de comprobación de la igualdad, considere la comparación:</p>
@@ -686,9 +769,24 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Los operandos de estos operadores de comparación pueden ser de cualquier tipo. Sin embargo, la comparación sólo puede realizarse con números y cadenas, por lo que los operandos que no son números o cadenas se convierten.</p>
     <p>La comparación y la conversión se producen del siguiente modo:</p>
     <ul class="flex flex-col gap-4 xs:gap-5 sm:gap-6">
-      <li class="font-normal">Si cualquiera de los operandos se evalúa como un objeto, dicho objeto se convierte en un valor primitivo, tal y como se describe al final de <a href="capitulo-3#9-3">§3.9.3</a>; si su método <codeinline>valueOf()</codeinline> devuelve un valor primitivo, se utiliza dicho valor. En caso contrario, se utiliza el valor devuelto por su método <codeinline>toString()</codeinline>.</li>
-      <li class="font-normal">Si, tras cualquier conversión objeto-primitivo necesaria, ambos operandos son cadenas, las dos cadenas se comparan, utilizando el orden alfabético, donde "orden alfabético" se define por el orden numérico de los valores Unicode de 16 bits que componen las cadenas.</li>
-      <li class="font-normal">Si, tras la conversión de objeto a primitivo, al menos un operando no es una cadena, ambos operandos se convierten en números y se comparan numéricamente. <codeinline>0</codeinline> y <codeinline>-0</codeinline> se consideran iguales. <codeinline>Infinity</codeinline> es mayor que cualquier número que no sea él mismo, y <codeinline>-Infinity</codeinline> es menor que cualquier número que no sea él mismo. Si cualquiera de los operandos es (o se convierte en) <codeinline>NaN</codeinline>, el operador de comparación siempre devuelve <codeinline>false</codeinline>. Aunque los operadores aritméticos no permiten mezclar valores BigInt con números normales, los operadores de comparación sí permiten realizar comparaciones entre números y BigInts.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Si cualquiera de los operandos se evalúa como un objeto, dicho objeto se convierte en un valor primitivo, tal y como se describe al final de <a href="capitulo-3#9-3">§3.9.3</a>; si su método <codeinline>valueOf()</codeinline> devuelve un valor primitivo, se utiliza dicho valor. En caso contrario, se utiliza el valor devuelto por su método <codeinline>toString()</codeinline>.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Si, tras cualquier conversión objeto-primitivo necesaria, ambos operandos son cadenas, las dos cadenas se comparan, utilizando el orden alfabético, donde "orden alfabético" se define por el orden numérico de los valores Unicode de 16 bits que componen las cadenas.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Si, tras la conversión de objeto a primitivo, al menos un operando no es una cadena, ambos operandos se convierten en números y se comparan numéricamente. <codeinline>0</codeinline> y <codeinline>-0</codeinline> se consideran iguales. <codeinline>Infinity</codeinline> es mayor que cualquier número que no sea él mismo, y <codeinline>-Infinity</codeinline> es menor que cualquier número que no sea él mismo. Si cualquiera de los operandos es (o se convierte en) <codeinline>NaN</codeinline>, el operador de comparación siempre devuelve <codeinline>false</codeinline>. Aunque los operadores aritméticos no permiten mezclar valores BigInt con números normales, los operadores de comparación sí permiten realizar comparaciones entre números y BigInts.
+        </p>
+      </li>
     </ul>
     <p>Recuerde que las cadenas JavaScript son secuencias de valores enteros de 16 bits, y que la comparación de cadenas es sólo una comparación numérica de los valores de las dos cadenas. El orden de codificación numérica definido por Unicode puede no coincidir con el orden de colla- ción tradicional utilizado en un idioma o configuración regional concretos. Tenga en cuenta, en particular, que la comparación de cadenas distingue entre mayúsculas y minúsculas, y que todas las letras ASCII mayúsculas son "menos que" todas las letras ASCII minúsculas. Esta regla puede dar lugar a resultados confusos si no se tiene en cuenta. Por ejemplo, según el operador <codeinline>&lt;</codeinline>, la cadena "Zoo" está antes que la cadena "aardvark".</p>
     <p>Para un algoritmo de comparación de cadenas más robusto, pruebe el método <codeinline>String.localeCompare()</codeinline>, que también tiene en c u e n t a las definiciones de orden alfabético específicas de cada localización. Para realizar comparaciones sin distinguir mayúsculas de minúsculas, puede convertir las cadenas a minúsculas o mayúsculas utilizando <codeinline>String.toLowerCase()</codeinline> o <codeinline>String.toUpperCase()</codeinline>. Y, para una herramienta de comparación de cadenas más general y mejor localizada, utilice la clase <codeinline>Intl.Collator</codeinline> descrita en <a href="capitulo-11#7-3">§11.7.3</a>.</p>
@@ -1129,13 +1227,48 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>4.14 Resumen</h2>
     <p>Este capítulo cubre una amplia variedad de temas, y hay mucho material de referencia aquí que puede que quieras releer en el futuro a medida que continúes aprendiendo JavaScript. Algunos puntos clave a recordar, sin embargo, son los siguientes:</p>
     <ul>
-      <li class="font-normal">Las expresiones son las frases de un programa JavaScript.</li>
-      <li class="font-normal">Cualquier expresión puede ser <em>evaluada</em> a un valor JavaScript.</li>
-      <li class="font-normal">Las expresiones también pueden tener efectos secundarios (como la asignación de variables) además de producir un valor.</li>
-      <li class="font-normal">Las expresiones sencillas, como los literales, las referencias a variables y los accesos a propiedades, pueden combinarse con operadores para producir expresiones más amplias.</li>
-      <li class="font-normal">JavaScript define operadores para aritmética, comparaciones, lógica booleana, asignación y manipulación de bits, junto con algunos operadores varios, incluido el operador condicional ternario.</li>
-      <li class="font-normal">El operador <codeinline>+</codeinline> de JavaScript se utiliza tanto para sumar números como para concatenar cadenas.</li>
-      <li class="font-normal">Los operadores lógicos <codeinline>&&</codeinline> y <codeinline>||</codeinline> tienen un comportamiento especial de "cortocircuito" y a veces sólo evalúan uno de sus argumentos. Los modismos comunes de JavaScript requieren que comprenda el comportamiento especial de estos operadores.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Las expresiones son las frases de un programa JavaScript.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Cualquier expresión puede ser <em>evaluada</em> a un valor JavaScript.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Las expresiones también pueden tener efectos secundarios (como la asignación de variables) además de producir un valor.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Las expresiones sencillas, como los literales, las referencias a variables y los accesos a propiedades, pueden combinarse con operadores para producir expresiones más amplias.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          JavaScript define operadores para aritmética, comparaciones, lógica booleana, asignación y manipulación de bits, junto con algunos operadores varios, incluido el operador condicional ternario.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          El operador <codeinline>+</codeinline> de JavaScript se utiliza tanto para sumar números como para concatenar cadenas.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Los operadores lógicos <codeinline>&&</codeinline> y <codeinline>||</codeinline> tienen un comportamiento especial de "cortocircuito" y a veces sólo evalúan uno de sus argumentos. Los modismos comunes de JavaScript requieren que comprenda el comportamiento especial de estos operadores.
+        </p>
+      </li>
     </ul>
   </section>
 </Layoutjavascript></section>

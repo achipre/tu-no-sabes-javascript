@@ -520,10 +520,29 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>3.7 El objeto global</h2>
     <p>En las secciones anteriores se han explicado los tipos y valores primitivos de JavaScript. Los tipos de objeto-objetos, arrays y funciones-son tratados en capítulos propios más adelante en este libro. Pero hay un valor de objeto muy importante que debemos cubrir ahora. El <em>objeto global</em> es un objeto normal de JavaScript que sirve a un propósito muy importante: las propiedades de este objeto son los identificadores definidos globalmente que están disponibles para un programa Java Script. Cuando se inicia el intérprete de JavaScript (o cada vez que un navegador web carga una nueva página), crea un nuevo objeto global y le da un conjunto inicial de propiedades que definen:</p>
     <ul>
-      <li>Constantes globales como <codeinline>undefined</codeinline>, <codeinline>Infinity</codeinline> y <codeinline>NaN</codeinline></li>
-      <li>Funciones globales como <codeinline>isNaN()</codeinline>, <codeinline>parseInt()</codeinline> (<a href="#9-2">§3.9.2</a>), y <codeinline>eval()</codeinline> (<a href="capitulo-4#12">§4.12</a>)</li>
-      <li>Funciones constructoras como <codeinline>Date()</codeinline>, <codeinline>RegExp()</codeinline>, <codeinline>String()</codeinline>, <codeinline>Object()</codeinline> y <codeinline>Array()</codeinline> (<a href="#9-2">§3.9.2</a>)</li>
-      <li>Objetos globales como <codeinline>Math</codeinline> y <codeinline>JSON</codeinline> (<a href="capitulo-6#8">§6.8</a>)</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Constantes globales como <codeinline>undefined</codeinline>, <codeinline>Infinity</codeinline> y <codeinline>NaN</codeinline>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Funciones globales como <codeinline>isNaN()</codeinline>, <codeinline>parseInt()</codeinline> (<a href="#9-2">§3.9.2</a>), y <codeinline>eval()</codeinline> (<a href="capitulo-4#12">§4.12</a>)
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Funciones constructoras como <codeinline>Date()</codeinline>, <codeinline>RegExp()</codeinline>, <codeinline>String()</codeinline>, <codeinline>Object()</codeinline> y <codeinline>Array()</codeinline> (<a href="#9-2">§3.9.2</a>)
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Objetos globales como <codeinline>Math</codeinline> y <codeinline>JSON</codeinline> (<a href="capitulo-6#8">§6.8</a>)
+        </p>
+      </li>
     </ul>
     <p>Las propiedades iniciales del objeto global no son palabras reservadas, pero merecen ser tratadas como si lo fueran. En este capítulo ya se han descrito algunas de estas propiedades globales. La mayoría de las demás se tratarán en otras partes de este libro</p>
     <p>En Node, el objeto global tiene una propiedad llamada <codeinline>global</codeinline> cuyo valor es el propio objeto global, por lo que siempre puedes referirte al objeto global por el nombre <codeinline>global</codeinline> en los programas Node.</p>
@@ -831,9 +850,24 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p class="title-article text-left">Algoritmos de conversión de objetos a primitivos</p>
     <p>Una vez explicados los métodos <codeinline>toString()</codeinline> y <codeinline>valueOf()</codeinline>, podemos explicar aproximadamente cómo funcionan los tres algoritmos de conversión de objeto a primitiva (los detalles completos se posponen hasta <a href="capitulo-14#4-7">§14.4.7</a></p>
     <ul>
-      <li class="font-normal">El algoritmo <em>prefer-string</em> prueba primero el método <codeinline>toString()</codeinline>. Si el método está definido y devuelve un valor primitivo, JavaScript utiliza ese valor primitivo (¡aunque no sea una cadena!). Si <codeinline>toString()</codeinline> no existe o devuelve un objeto, JavaScript prueba con el método <codeinline>valueOf()</codeinline>. Si ese método existe y devuelve un valor primitivo, JavaScript utiliza ese valor. En caso contrario, la conversión falla con un TypeError.</li>
-      <li class="font-normal">El algoritmo <em>prefer-number</em> funciona como el algoritmo <codeinline>prefer-string</codeinline>, con la diferencia de que primero prueba con <codeinline>valueOf()</codeinline> y después con <codeinline>toString()</codeinline>.</li>
-      <li class="font-normal">El algoritmo de <em>no-preferencia</em> depende de la clase del objeto que se está convirtiendo. Si se trata de un objeto Date, JavaScript utiliza el algoritmo <em>prefer-string</em>. Para cualquier otro objeto, JavaScript utiliza el algoritmo <em>prefer-number</em>.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          El algoritmo <em>prefer-string</em> prueba primero el método <codeinline>toString()</codeinline>. Si el método está definido y devuelve un valor primitivo, JavaScript utiliza ese valor primitivo (¡aunque no sea una cadena!). Si <codeinline>toString()</codeinline> no existe o devuelve un objeto, JavaScript prueba con el método <codeinline>valueOf()</codeinline>. Si ese método existe y devuelve un valor primitivo, JavaScript utiliza ese valor. En caso contrario, la conversión falla con un TypeError.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          El algoritmo <em>prefer-number</em> funciona como el algoritmo <codeinline>prefer-string</codeinline>, con la diferencia de que primero prueba con <codeinline>valueOf()</codeinline> y después con <codeinline>toString()</codeinline>.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          El algoritmo de <em>no-preferencia</em> depende de la clase del objeto que se está convirtiendo. Si se trata de un objeto Date, JavaScript utiliza el algoritmo <em>prefer-string</em>. Para cualquier otro objeto, JavaScript utiliza el algoritmo <em>prefer-number</em>.
+        </p>
+      </li>
     </ul>
     <p>Las reglas descritas aquí son válidas para todos los tipos JavaScript incorporados y son las reglas por defecto para cualquier clase que defina usted mismo. <a href="capitulo-14#4-7">§14.4.7</a> explica cómo puede definir sus propios algoritmos de conversión de objeto a primitivo para las clases que defina.</p>
     <p>Antes de dejar este tema, vale la pena señalar que los detalles de la con versión de <em>prefer-number</em> explican por qué las matrices vacías se convierten en el número 0 y las matrices de un solo elemento también pueden convertirse en números:</p>
@@ -916,10 +950,30 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     for(var i = 0; i &lt; count; i++) console.log(data[i]);</code></pre>
     <p>Aunque <codeinline>var</codeinline> y <codeinline>let</codeinline> tienen la misma sintaxis, existen diferencias importantes en su funcionamiento:</p>
     <ul>
-      <li class="font-normal pl-2 xs:pl-3 sm:pl-4 md:pl-5">Las variables declaradas con <codeinline>var</codeinline> no tienen ámbito de bloque. En su lugar, tienen ámbito en el cuerpo de la función que las contiene, independientemente de la profundidad a la que estén anidadas dentro de esa función.</li>
-      <li class="font-normal pl-2 xs:pl-3 sm:pl-4 md:pl-5">Si se utiliza <codeinline>var</codeinline> fuera del cuerpo de una función, se declara una variable global. Pero las variables globales declaradas con <codeinline>var</codeinline> difieren de las globales declaradas con <codeinline>let</codeinline> en un aspecto importante. Las variables globales declaradas con <codeinline>var</codeinline> se implementan como propiedades del objeto global (<a href="#7">§3.7</a>). El objeto global puede ser referenciado como <codeinline>globalThis</codeinline>. Así, si escribes <codeinline>var x = 2;</codeinline> fuera de una función, es como si hubieras escrito <codeinline>globalThis.x = 2;</codeinline>. Nótese, sin embargo, que la analogía no es perfecta: las propiedades creadas con declaraciones de <codeinline>var</codeinline> globales no pueden borrarse con el operador <codeinline>delete</codeinline> (<a href="capitulo-4#13-4">§4.13.4</a>). Las variables y constantes globales declaradas con <codeinline>let</codeinline> y <codeinline>const</codeinline> no son propiedades del objeto global.</li>
-      <li class="font-normal pl-2 xs:pl-3 sm:pl-4 md:pl-5">A diferencia de las variables declaradas con <codeinline>let</codeinline>, es legal declarar la misma variable múltiples veces con <codeinline>var</codeinline>. Y como las variables <codeinline>var</codeinline> tienen scope de función en lugar de scope de bloque, es realmente común hacer este tipo de redeclaración. La variable <codeinline>i</codeinline> se utiliza frecuentemente para valores enteros, y especialmente como variable índice de los bucles <codeinline>for</codeinline>. En una función con múltiples bucles <codeinline>for</codeinline>, es típico que cada uno de ellos comience <codeinline>for(var i = 0; ...</codeinline>. Dado que <codeinline>var</codeinline> no tiene alcance de estas variables para el bucle cada uno de estos bucles está (inofensivamente) redeclarando y reinicializando la misma variable.</li>
-      <li class="font-normal pl-2 xs:pl-3 sm:pl-4 md:pl-5">Una de las características más inusuales de las declaraciones <codeinline>var</codeinline> se conoce como <em>hoisting</em>. Cuando se declara una variable con <codeinline>var</codeinline>, la declaración se eleva a la parte superior de la función que la contiene. La inicialización de la variable permanece donde la escribiste, pero la definición de la variable se mueve a la parte superior de la función. Así, las variables declaradas con <codeinline>var</codeinline> pueden utilizarse, sin error, en cualquier parte de la función que las encierra. Si el código de inicialización aún no se ha ejecutado, entonces el valor de la variable puede estar <codeinline>undefined</codeinline>, pero no obtendrá un error si utiliza la variable antes de que se inicialice. (Esto puede ser una fuente de errores y es uno de los errores importantes que <codeinline>let</codeinline> corrige: si declaras una variable con <codeinline>let</codeinline> pero intentas usarla antes de que se ejecute la sentencia <codeinline>let</codeinline>, obtendrás un error real en lugar de ver simplemente un valor <codeinline>undefined</codeinline>).</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Las variables declaradas con <codeinline>var</codeinline> no tienen ámbito de bloque. En su lugar, tienen ámbito en el cuerpo de la función que las contiene, independientemente de la profundidad a la que estén anidadas dentro de esa función.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Si se utiliza <codeinline>var</codeinline> fuera del cuerpo de una función, se declara una variable global. Pero las variables globales declaradas con <codeinline>var</codeinline> difieren de las globales declaradas con <codeinline>let</codeinline> en un aspecto importante. Las variables globales declaradas con <codeinline>var</codeinline> se implementan como propiedades del objeto global (<a href="#7">§3.7</a>). El objeto global puede ser referenciado como <codeinline>globalThis</codeinline>. Así, si escribes <codeinline>var x = 2;</codeinline> fuera de una función, es como si hubieras escrito <codeinline>globalThis.x = 2;</codeinline>. Nótese, sin embargo, que la analogía no es perfecta: las propiedades creadas con declaraciones de <codeinline>var</codeinline> globales no pueden borrarse con el operador <codeinline>delete</codeinline> (<a href="capitulo-4#13-4">§4.13.4</a>). Las variables y constantes globales declaradas con <codeinline>let</codeinline> y <codeinline>const</codeinline> no son propiedades del objeto global.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          A diferencia de las variables declaradas con <codeinline>let</codeinline>, es legal declarar la misma variable múltiples veces con <codeinline>var</codeinline>. Y como las variables <codeinline>var</codeinline> tienen scope de función en lugar de scope de bloque, es realmente común hacer este tipo de redeclaración. La variable <codeinline>i</codeinline> se utiliza frecuentemente para valores enteros, y especialmente como variable índice de los bucles <codeinline>for</codeinline>. En una función con múltiples bucles <codeinline>for</codeinline>, es típico que cada uno de ellos comience <codeinline>for(var i = 0; ...</codeinline>. Dado que <codeinline>var</codeinline> no tiene alcance de estas variables para el bucle cada uno de estos bucles está (inofensivamente) redeclarando y reinicializando la misma variable.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Una de las características más inusuales de las declaraciones <codeinline>var</codeinline> se conoce como <em>hoisting</em>. Cuando se declara una variable con <codeinline>var</codeinline>, la declaración se eleva a la parte superior de la función que la contiene. La inicialización de la variable permanece donde la escribiste, pero la definición de la variable se mueve a la parte superior de la función. Así, las variables declaradas con <codeinline>var</codeinline> pueden utilizarse, sin error, en cualquier parte de la función que las encierra. Si el código de inicialización aún no se ha ejecutado, entonces el valor de la variable puede estar <codeinline>undefined</codeinline>, pero no obtendrá un error si utiliza la variable antes de que se inicialice. (Esto puede ser una fuente de errores y es uno de los errores importantes que <codeinline>let</codeinline> corrige: si declaras una variable con <codeinline>let</codeinline> pero intentas usarla antes de que se ejecute la sentencia <codeinline>let</codeinline>, obtendrás un error real en lugar de ver simplemente un valor <codeinline>undefined</codeinline>).
+        </p>
+      </li>
     </ul>
     <nota>
       <img class="self-start" src="/public/javascript/nota_gral.png" alt="Nota de la grandesa">
@@ -1013,11 +1067,36 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>3.11 Resumen</h2>
     <p>Algunos puntos clave que conviene recordar sobre este capítulo:</p>
     <ul>
-      <li class="font-normal pl-2 xs:pl-3 sm:pl-4 md:pl-5">Cómo escribir y manipular números y cadenas de texto en JavaScript.</li>
-      <li class="font-normal pl-2 xs:pl-3 sm:pl-4 md:pl-5">Cómo trabajar con otros tipos primitivos de JavaScript: booleanos, símbolos, <codeinline>null</codeinline> e <codeinline>undefined</codeinline>.</li>
-      <li class="font-normal pl-2 xs:pl-3 sm:pl-4 md:pl-5">Diferencias entre tipos primitivos inmutables y tipos de referencia mutables.</li>
-      <li class="font-normal pl-2 xs:pl-3 sm:pl-4 md:pl-5">Cómo JavaScript convierte valores implícitamente de un tipo a otro y cómo puede hacerlo explícitamente en sus programas.</li>
-      <li class="font-normal pl-2 xs:pl-3 sm:pl-4 md:pl-5">Cómo declarar e inicializar constantes y variables (incluso con asignación desestructurante) y el ámbito léxico de las variables y constantes que se declaran.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Cómo escribir y manipular números y cadenas de texto en JavaScript.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Cómo trabajar con otros tipos primitivos de JavaScript: booleanos, símbolos, <codeinline>null</codeinline> e <codeinline>undefined</codeinline>.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Diferencias entre tipos primitivos inmutables y tipos de referencia mutables.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Cómo JavaScript convierte valores implícitamente de un tipo a otro y cómo puede hacerlo explícitamente en sus programas.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Cómo declarar e inicializar constantes y variables (incluso con asignación desestructurante) y el ámbito léxico de las variables y constantes que se declaran.
+        </p>
+      </li>
     </ul>
   </section>
 </Layoutjavascript>

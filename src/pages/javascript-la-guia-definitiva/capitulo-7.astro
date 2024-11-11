@@ -6,48 +6,39 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <Navegation capAnterior="capitulo-6" capSiguiente="capitulo-8" />
   <section class="fadeIn">
     <h1>Arrays</h1>
-    <p>Este capítulo documenta los arrays, un tipo de datos fundamental en JavaScript y en
-      la mayoría de los demás lenguajes de programación. Un <em>array</em> es una colección
-      ordenada de valores. Cada valor se llama <em>elemento</em>, y cada elemento tiene una
-      posición numérica en el array, conocida como su <em>índice</em>. Las matrices de JavaScript
-      son <em>no tipadas</em>: un elemento de una matriz puede ser de cualquier tipo, y distintos
-      elementos de la misma matriz pueden ser de tipos diferentes. Los elementos de una
-      matriz pueden ser incluso objetos u otras matrices, lo que permite crear estructuras
-      de datos complejas, como matrices de objetos y matrices de matrices. Las matrices de
-      JavaScript se <em>basan en ceros</em> y utilizan índices de 32 bits: el índice del primer elemento
-      es 0, y el índice más alto posible es 4294967294 (2<sup class="bg-transparent mx-0 px-1">32</sup>-2), para un tamaño máximo de matriz de 4.294.967.295 elementos. Las matrices de JavaScript son <em>dinámicas</em>: crecen
-      o decrecen según las necesidades, y no es necesario declarar un tamaño fijo para la
-      matriz cuando se crea ni reasignarla cuando cambia el tamaño. Las matrices de
-      JavaScript pueden ser <em>dispersas</em>: los elementos no tienen por qué tener índices
-      contiguos y puede haber huecos. Todas las matrices de JavaScript tienen una
-      propiedad de <codeinline>length</codeinline>. Para las matrices no dispersas, esta propiedad especifica el
-      número de elementos de la matriz. En las matrices dispersas, la <codeinline>length</codeinline> es mayor
-      que el índice más alto de cualquier elemento.</p>
-    <p>Los arrays JavaScript son una forma especializada de objeto JavaScript, y los índices
-      de los arrays son realmente poco más que nombres de propiedades que resultan ser
-      enteros. Hablaremos más sobre las especializaciones de los arrays en otra parte de
-      este capítulo. Las implementaciones suelen optimizar los arrays para que el acceso a
-      los elementos indexados numéricamente sea mucho más rápido que el acceso a las
-      propiedades de los objetos normales.</p>
-    <p>Los arrays heredan propiedades de <codeinline>Array.prototype</codeinline>, que define un rico conjunto de
-      métodos de manipulación de arrays, tratados en <a href="capitulo-7#8">§7.8</a>. La mayoría de estos métodos
-      son <em>genéricos</em>. La mayoría de estos métodos son genéricos, lo que significa que funcionan correctamente no sólo para arrays verdaderos, sino para cualquier "objeto
-      tipo array". Hablaremos de los objetos tipo array en <a href="capitulo-7#9">§7.9</a>. Por último, las cadenas de
-      JavaScript se comportan como matrices de caracteres, y hablaremos de ello en <a href="capitulo-7#10">§7.10</a>.</p>
-    <p>ES6 introduce un conjunto de nuevas clases de arrays conocidas colectivamente
-      como "arrays tipados". A diferencia de las matrices normales de JavaScript, las
-      matrices tipadas tienen una longitud fija y un tipo de elemento numérico fijo.
-      Ofrecen un alto rendimiento y acceso a nivel de byte a los datos binarios y se tratan
-      en <a href="capitulo-11#2">§11.2</a>.</p>
+    <p>Este capítulo documenta los arrays, un tipo de datos fundamental en JavaScript y en la mayoría de los demás lenguajes de programación. Un <em>array</em> es una colección ordenada de valores. Cada valor se llama <em>elemento</em>, y cada elemento tiene una posición numérica en el array, conocida como su <em>índice</em>. Las matrices de JavaScript son <em>no tipadas</em>: un elemento de una matriz puede ser de cualquier tipo, y distintos elementos de la misma matriz pueden ser de tipos diferentes. Los elementos de una matriz pueden ser incluso objetos u otras matrices, lo que permite crear estructuras de datos complejas, como matrices de objetos y matrices de matrices. Las matrices de JavaScript se <em>basan en ceros</em> y utilizan índices de 32 bits: el índice del primer elemento es 0, y el índice más alto posible es 4294967294 (2<sup class="bg-transparent mx-0 px-1">32</sup>-2), para un tamaño máximo de matriz de 4.294.967.295 elementos. Las matrices de JavaScript son <em>dinámicas</em>: crecen o decrecen según las necesidades, y no es necesario declarar un tamaño fijo para la matriz cuando se crea ni reasignarla cuando cambia el tamaño. Las matrices de JavaScript pueden ser <em>dispersas</em>: los elementos no tienen por qué tener índices contiguos y puede haber huecos. Todas las matrices de JavaScript tienen una propiedad de <codeinline>length</codeinline>. Para las matrices no dispersas, esta propiedad especifica el número de elementos de la matriz. En las matrices dispersas, la <codeinline>length</codeinline> es mayor que el índice más alto de cualquier elemento.</p>
+    <p>Los arrays JavaScript son una forma especializada de objeto JavaScript, y los índices de los arrays son realmente poco más que nombres de propiedades que resultan ser enteros. Hablaremos más sobre las especializaciones de los arrays en otra parte de este capítulo. Las implementaciones suelen optimizar los arrays para que el acceso a los elementos indexados numéricamente sea mucho más rápido que el acceso a las propiedades de los objetos normales.</p>
+    <p>Los arrays heredan propiedades de <codeinline>Array.prototype</codeinline>, que define un rico conjunto de métodos de manipulación de arrays, tratados en <a href="capitulo-7#8">§7.8</a>. La mayoría de estos métodos son <em>genéricos</em>. La mayoría de estos métodos son genéricos, lo que significa que funcionan correctamente no sólo para arrays verdaderos, sino para cualquier "objeto tipo array". Hablaremos de los objetos tipo array en <a href="capitulo-7#9">§7.9</a>. Por último, las cadenas de JavaScript se comportan como matrices de caracteres, y hablaremos de ello en <a href="capitulo-7#10">§7.10</a>.</p>
+    <p>ES6 introduce un conjunto de nuevas clases de arrays conocidas colectivamente como "arrays tipados". A diferencia de las matrices normales de JavaScript, las matrices tipadas tienen una longitud fija y un tipo de elemento numérico fijo. Ofrecen un alto rendimiento y acceso a nivel de byte a los datos binarios y se tratan en <a href="capitulo-11#2">§11.2</a>.</p>
   </section>
   <section id="1" class="py-4 xs:py-5 sm:py-6">
     <h2>7.1 Creación de Arrays</h2>
     <p>Existen varias formas de crear matrices. Las subsecciones siguientes explican cómo crear matrices con:</p>
     <ul>
-      <li class="font-normal">Matrices literales</li>
-      <li class="font-normal">El operador <codeinline>...</codeinline> spread sobre un objeto iterable</li>
-      <li class="font-normal">El constructor <codeinline>Array()</codeinline></li>
-      <li class="font-normal">Los métodos de fábrica <codeinline>Array.of()</codeinline> y <codeinline>Array.from()</codeinline></li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Matrices literales
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          El operador <codeinline>...</codeinline> spread sobre un objeto iterable
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          El constructor <codeinline>Array()</codeinline>
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Los métodos de fábrica <codeinline>Array.of()</codeinline> y <codeinline>Array.from()</codeinline>
+        </p>
+      </li>
     </ul>
   </section>
   <section id="1-1">
@@ -96,16 +87,30 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>7.1.3 El constructor Array()</h2>
     <p>Otra forma de crear un array es con el constructor <codeinline>Array()</codeinline>. Puedes invocar este constructor de tres formas distintas:</p>
     <ul class="flex flex-col gap-4 xs:gap-5 sm:gap-6">
-      <li class="font-normal">Llámalo sin argumentos:
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Llámalo sin argumentos:
+        </p>
       </li>
     <pre>
     <code class="language-js">let a = new Array();</code></pre>
       <li class="font-normal list-none pl-5 xs:pl-6 sm:pl-7 md:pl-8">Este método crea una matriz vacía sin elementos y es equivalente a la matriz literal <codeinline>[]</codeinline>.</li>
-      <li class="font-normal">Llámelo con un único argumento numérico, que especifica una longitud:</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Llámelo con un único argumento numérico, que especifica una longitud:
+        </p>
+      </li>
     <pre>
     <code class="language-js">let a = new Array(10);</code></pre>
       <li class="font-normal list-none pl-5 xs:pl-6 sm:pl-7 md:pl-8">Esta técnica crea un array con la longitud especificada. Esta forma del constructor <codeinline>Array()</codeinline> puede utilizarse para preasignar una matriz cuando se sabe de antemano cuántos elementos se necesitarán. Tenga en cuenta que no se almacenan valores en la matriz, y las propiedades de índice de matriz "0", "1", etc. ni siquiera están definidas para la matriz.</li>
-      <li class="font-normal">Especifique explícitamente dos o más elementos de matriz o un único elemento no numérico para la array:</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Especifique explícitamente dos o más elementos de matriz o un único elemento no numérico para la array:
+        </p>
+      </li>
     <pre>
     <code class="language-js">let a = new Array(5, 4, 3, 2, 1, "testing, testing");</code></pre>
       <li class="font-normal list-none pl-5 xs:pl-6 sm:pl-7 md:pl-8">De esta forma, los argumentos del constructor se convierten en los elementos del nuevo array. Utilizar un literal de array es casi siempre más sencillo que este uso del constructor <codeinline>Array()</codeinline>.</li>
@@ -307,17 +312,32 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       devolverá una referencia a la matriz modificada.</p>
     <p>Cada una de las subsecciones siguientes cubre un grupo de métodos de array relacionados:</p>
     <ul>
-      <li class="font-normal">Los métodos de iteración recorren los elementos de una matriz, normalmente
-        invocando una función especificada en cada uno de esos elementos.</li>
-      <li class="font-normal">Los métodos de pila y cola añaden y eliminan elementos de una matriz al
-        principio y al final de la misma.</li>
-      <li class="font-normal">Los métodos de submatrices sirven para extraer, borrar, insertar, rellenar y copiar
-        regiones con- tiguas de una matriz mayor.</li>
-      <li class="font-normal">Los métodos de búsqueda y ordenación sirven para localizar elementos dentro de
-        una matriz y para ordenar los elementos de una matriz.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Los métodos de iteración recorren los elementos de una matriz, normalmente invocando una función especificada en cada uno de esos elementos.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Los métodos de pila y cola añaden y eliminan elementos de una matriz al principio y al final de la misma.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Los métodos de submatrices sirven para extraer, borrar, insertar, rellenar y copiar regiones contiguas de una matriz mayor.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Los métodos de búsqueda y ordenación sirven para localizar elementos dentro de una matriz y para ordenar los elementos de una matriz.
+        </p>
+      </li>
     </ul>
-    <p>Las siguientes subsecciones también cubren los métodos estáticos de la clase Array y
-      algunos métodos misceláneos para concatenar arrays y convertir arrays en cadenas.</p>
+    <p>Las siguientes subsecciones también cubren los métodos estáticos de la clase Array y algunos métodos misceláneos para concatenar arrays y convertir arrays en cadenas.</p>
   </section>
   <section id="8-1">
     <h2>7.8.1 Metodos iterador de arrays</h2>
@@ -634,10 +654,30 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>7.9 Objetos similares a matrices</h2>
     <p>Como hemos visto, las matrices de JavaScript tienen algunas características especiales que otros objetos no tienen:</p>
     <ul>
-      <li class="font-normal">La propiedad de <codeinline>length</codeinline> se actualiza automáticamente a medida que se añaden nuevos elementos a la lista.</li>
-      <li class="font-normal">Si se ajusta la <codeinline>length</codeinline> a un valor menor, se trunca la matriz.</li>
-      <li class="font-normal">Las matrices heredan métodos útiles de <codeinline>Array.prototype</codeinline>.</li>
-      <li class="font-normal"><codeinline>Array.isArray()</codeinline> devuelve verdadero para las matrices.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          La propiedad de <codeinline>length</codeinline> se actualiza automáticamente a medida que se añaden nuevos elementos a la lista.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Si se ajusta la <codeinline>length</codeinline> a un valor menor, se trunca la matriz.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Las matrices heredan métodos útiles de <codeinline>Array.prototype</codeinline>.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          <codeinline>Array.isArray()</codeinline> devuelve verdadero para las matrices.
+        </p>
+      </li>
     </ul>
     <p>Estas son las características que distinguen a los arrays de JavaScript de los objetos normales. Pero no son las características esenciales que definen un array. A menudo es perfectamente razonable tratar cualquier objeto con una propiedad de <codeinline>length</codeinline> numérica y sus correspondientes propiedades de enteros no negativos como un tipo de array.</p>
     <p>Estos objetos "tipo array" aparecen ocasionalmente en la práctica, y aunque no puedes invocar directamente métodos de array sobre ellos o esperar un comportamiento especial de la propiedad <codeinline>length</codeinline>, puedes iterar a través de ellos con el mismo código que usarías para un array real. Resulta que muchos algoritmos de matrices funcionan igual de bien con objetos similares a matrices que con matrices reales. Esto es especialmente cierto si tus algoritmos tratan el array como de sólo lectura o si al menos dejan la longitud del array sin cambios.</p>
@@ -704,10 +744,30 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>7.11 Resumen</h2>
     <p>Este capítulo ha cubierto en profundidad los arrays de JavaScript, incluyendo detalles esotéricos sobre arrays dispersos y objetos tipo array. Los puntos principales de este capítulo son:</p>
     <ul>
-      <li class="font-normal">Los literales de matriz se escriben como listas de valores separados por comas entre corchetes.</li>
-      <li class="font-normal">Para acceder a cada elemento de la matriz, especifique el índice deseado entre corchetes.</li>
-      <li class="font-normal">El bucle <codeinline>for/of</codeinline> y el operador <codeinline>...</codeinline> spread introducidos en ES6 son formas especialmente útiles de iterar matrices.</li>
-      <li class="font-normal">La clase Array define un rico conjunto de métodos para manipular arrays, y deberías asegurarte de familiarizarte con la API Array.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Los literales de matriz se escriben como listas de valores separados por comas entre corchetes.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Para acceder a cada elemento de la matriz, especifique el índice deseado entre corchetes.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          El bucle <codeinline>for/of</codeinline> y el operador <codeinline>...</codeinline> spread introducidos en ES6 son formas especialmente útiles de iterar matrices.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          La clase Array define un rico conjunto de métodos para manipular arrays, y deberías asegurarte de familiarizarte con la API Array.
+        </p>
+      </li>
     </ul>
   </section>
 </Layoutjavascript>

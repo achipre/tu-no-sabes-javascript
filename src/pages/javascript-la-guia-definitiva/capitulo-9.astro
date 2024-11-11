@@ -57,12 +57,42 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     [...r] // => [1, 2, 3]; convertir a una matriz mediante iterador</code></pre>
     <p>Hay algunas cosas dignas de mención en el código del <a href="#ejemplo9-1">Ejemplo 9-1</a>:</p>
     <ul>
-      <li class="font-normal">Este código define una función de fábrica <codeinline>range()</codeinline> para crear nuevos objetos Range.</li>
-      <li class="font-normal">Utiliza la propiedad <codeinline>methods</codeinline> de esta función <codeinline>range()</codeinline> como un lugar conveniente para almacenar el objeto prototipo que define la clase. No hay nada especial o idiomático en poner el objeto prototipo aquí.</li>
-      <li class="font-normal">La función <codeinline>range()</codeinline> define las propiedades <codeinline>from</codeinline> y <codeinline>to</codeinline> en cada objeto Range. Estas son las propiedades no compartidas y no heredadas que definen el estado único de cada objeto Range individual.</li>
-      <li class="font-normal">El objeto <codeinline>range.methods</codeinline> utiliza la sintaxis abreviada de ES6 para definir métodos, razón por la cual no se ve la palabra clave <codeinline>function</codeinline> en ninguna parte. (Véase <a href="capitulo-6#10-5">§6.10.5</a> para revisar la sintaxis abreviada de métodos del literal de objeto).</li>
-      <li class="font-normal">Uno de los métodos del prototipo tiene el nombre computado (<a href="capitulo-6#10-2">§6.10.2</a>) <codeinline>Symbol.iterator</codeinline>, lo que significa que está definiendo un iterador para objetos Range. El nombre de este método está prefijado con <codeinline>*</codeinline>, lo que indica que es una función generadora en lugar de una función normal. Los iteradores y generadores se tratan en detalle en el <a href="capitulo-12">Capítulo 12</a>. Por ahora, el resultado es que las instancias de esta clase Range pueden utilizarse con el bucle <codeinline>for/of</codeinline> y con el operador de extensión <codeinline>...</codeinline>.</li>
-      <li class="font-normal">Todos los métodos compartidos y heredados definidos en <codeinline>range.methods</codeinline> utilizan las propiedades <codeinline>from</codeinline> y <codeinline>to</codeinline> que se inicializaron en la función de fábrica <codeinline>range()</codeinline>. Para referirse a ellos, utilizan la palabra clave <codeinline>this</codeinline> para referirse al objeto a través del cual fueron invocados. Este uso de <codeinline>this</codeinline> es una característica fundamental de los métodos de cualquier clase.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Este código define una función de fábrica <codeinline>range()</codeinline> para crear nuevos objetos Range.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Utiliza la propiedad <codeinline>methods</codeinline> de esta función <codeinline>range()</codeinline> como un lugar conveniente para almacenar el objeto prototipo que define la clase. No hay nada especial o idiomático en poner el objeto prototipo aquí.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          La función <codeinline>range()</codeinline> define las propiedades <codeinline>from</codeinline> y <codeinline>to</codeinline> en cada objeto Range. Estas son las propiedades no compartidas y no heredadas que definen el estado único de cada objeto Range individual.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          El objeto <codeinline>range.methods</codeinline> utiliza la sintaxis abreviada de ES6 para definir métodos, razón por la cual no se ve la palabra clave <codeinline>function</codeinline> en ninguna parte. (Véase <a href="capitulo-6#10-5">§6.10.5</a> para revisar la sintaxis abreviada de métodos del literal de objeto).
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Uno de los métodos del prototipo tiene el nombre computado (<a href="capitulo-6#10-2">§6.10.2</a>) <codeinline>Symbol.iterator</codeinline>, lo que significa que está definiendo un iterador para objetos Range. El nombre de este método está prefijado con <codeinline>*</codeinline>, lo que indica que es una función generadora en lugar de una función normal. Los iteradores y generadores se tratan en detalle en el <a href="capitulo-12">Capítulo 12</a>. Por ahora, el resultado es que las instancias de esta clase Range pueden utilizarse con el bucle <codeinline>for/of</codeinline> y con el operador de extensión <codeinline>...</codeinline>.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Todos los métodos compartidos y heredados definidos en <codeinline>range.methods</codeinline> utilizan las propiedades <codeinline>from</codeinline> y <codeinline>to</codeinline> que se inicializaron en la función de fábrica <codeinline>range()</codeinline>. Para referirse a ellos, utilizan la palabra clave <codeinline>this</codeinline> para referirse al objeto a través del cual fueron invocados. Este uso de <codeinline>this</codeinline> es una característica fundamental de los métodos de cualquier clase.
+        </p>
+      </li>
     </ul>
   </section>
   <section id="2">
@@ -205,10 +235,30 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Es importante entender que las clases definidas en los Ejemplos <a href="#ejemplo9-2">9-2</a> y <a href="#ejemplo9-3">9-3</a> funcionan exactamente de la misma manera. La introducción de la palabra clave <codeinline>class</codeinline> en el lenguaje no altera la naturaleza fundamental de las clases basadas en prototipos de JavaScript. Y aunque el <a href="#ejemplo9-3">Ejemplo 9-3</a> utiliza la palabra clave <codeinline>class</codeinline>, el objeto Range resultante es una función constructor, igual que la versión definida en el <a href="#ejemplo9-2">Ejemplo 9-2</a>. La nueva sintaxis de <codeinline>class</codeinline> es limpia y conveniente, pero es mejor considerarla como "azúcar sintáctico" para el mecanismo de definición de clases más fundamental mostrado en el <a href="#ejemplo9-2">Ejemplo 9-2</a>.</p>
     <p>Observe lo siguiente sobre la sintaxis de la clase en el <a href="#ejemplo9-3">Ejemplo 9-3</a>:</p>
     <ul>
-      <li class="font-normal">La clase se declara con la palabra clave <codeinline>class</codeinline>, que va seguida del nombre de la clase y de un cuerpo de clase entre llaves.</li>
-      <li class="font-normal">El cuerpo de la clase incluye definiciones de métodos que utilizan la abreviatura de método literal de objeto (que también utilizamos en el <a href="#ejemplo9-1">Ejemplo 9-1</a>), donde se omite la palabra clave <codeinline>function</codeinline>. Sin embargo, a diferencia de los literales de objeto, no se utilizan comas para separar los métodos entre sí. (Aunque los cuerpos de clase son superficialmente similares a los literales de objeto, no son lo mismo. En particular, no admiten la definición de propiedades con pares nombre/valor).</li>
-      <li class="font-normal">La palabra clave <codeinline>constructor</codeinline> se utiliza para definir la función constructora de la clase. Sin embargo, la función definida no se llama realmente "constructor". La declaración de la <codeinline>class</codeinline> define una nueva variable <codeinline>Range</codeinline> y le asigna el valor de esta función <codeinline>constructor</codeinline> especial.</li>
-      <li class="font-normal">Si su clase no necesita hacer ninguna inicialización, puede omitir la palabra clave constructor y su cuerpo, y una función constructora vacía será implícitamente creada para usted.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          La clase se declara con la palabra clave <codeinline>class</codeinline>, que va seguida del nombre de la clase y de un cuerpo de clase entre llaves.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          El cuerpo de la clase incluye definiciones de métodos que utilizan la abreviatura de método literal de objeto (que también utilizamos en el <a href="#ejemplo9-1">Ejemplo 9-1</a>), donde se omite la palabra clave <codeinline>function</codeinline>. Sin embargo, a diferencia de los literales de objeto, no se utilizan comas para separar los métodos entre sí. (Aunque los cuerpos de clase son superficialmente similares a los literales de objeto, no son lo mismo. En particular, no admiten la definición de propiedades con pares nombre/valor).
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          La palabra clave <codeinline>constructor</codeinline> se utiliza para definir la función constructora de la clase. Sin embargo, la función definida no se llama realmente "constructor". La declaración de la <codeinline>class</codeinline> define una nueva variable <codeinline>Range</codeinline> y le asigna el valor de esta función <codeinline>constructor</codeinline> especial.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Si su clase no necesita hacer ninguna inicialización, puede omitir la palabra clave constructor y su cuerpo, y una función constructora vacía será implícitamente creada para usted.
+        </p>
+      </li>
     </ul>
     <p>Si desea definir una clase que subclase -o <em>herede</em>- de otra clase, puede utilizar la palabra clave <codeinline>extends</codeinline> junto con la palabra clave <codeinline>class</codeinline>:</p>
     <pre>
@@ -236,8 +286,18 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Aunque las expresiones de función son bastante comunes (sobre todo con la abreviatura arrow func- tion), en la programación JavaScript, las expresiones de definición de clase no son algo que vaya a utilizar mucho, a menos que se encuentre escribiendo una función que tome una clase como argumento y devuelva una subclase.</p>
     <p>Concluiremos esta introducción a la palabra clave <codeinline>class</codeinline> mencionando un par de cosas importantes que deberías saber y que no son evidentes en la sintaxis de <codeinline>class</codeinline>.</p>
     <ul>
-      <li class="font-normal">Todo el código dentro del cuerpo de una declaración de <codeinline>class</codeinline> está implícitamente en modo estricto (<a href="capitulo-5#6-3">§5.6.3</a>), incluso si no aparece ninguna directiva <codeinline>"use strict"</codeinline>. Esto significa, por ejemplo, que no puede utilizar literales enteros octales o la sentencia <codeinline>with</codeinline> dentro de los cuerpos de las clases y que es más probable que obtenga errores de sintaxis si olvida declarar una variable antes de utilizarla.</li>
-      <li class="font-normal">A diferencia de las declaraciones de funciones, las declaraciones de clases no se “hoisted.” Recordemos que <a href="capitulo-8#1-1">§8.1.1</a> que las definiciones de función se comportan como si se hubieran movido a la parte superior del fichero o función que las encierra, lo que significa que puede invocar una función en el código que viene antes de la definición real de la función. Aunque las declaraciones de clases se parecen a las declaraciones de funciones en algunos aspectos, no comparten este comportamiento de elevación: <em>no se puede</em> instanciar una clase antes de declararla.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Todo el código dentro del cuerpo de una declaración de <codeinline>class</codeinline> está implícitamente en modo estricto (<a href="capitulo-5#6-3">§5.6.3</a>), incluso si no aparece ninguna directiva <codeinline>"use strict"</codeinline>. Esto significa, por ejemplo, que no puede utilizar literales enteros octales o la sentencia <codeinline>with</codeinline> dentro de los cuerpos de las clases y que es más probable que obtenga errores de sintaxis si olvida declarar una variable antes de utilizarla.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          A diferencia de las declaraciones de funciones, las declaraciones de clases no se “hoisted.” Recordemos que <a href="capitulo-8#1-1">§8.1.1</a> que las definiciones de función se comportan como si se hubieran movido a la parte superior del fichero o función que las encierra, lo que significa que puede invocar una función en el código que viene antes de la definición real de la función. Aunque las declaraciones de clases se parecen a las declaraciones de funciones en algunos aspectos, no comparten este comportamiento de elevación: <em>no se puede</em> instanciar una clase antes de declararla.
+        </p>
+      </li>
     </ul>
   </section>
   <section id="3-1">
@@ -527,10 +587,30 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Después de invocar al constructor de la superclase para inicializar el estado de la superclase, el constructor de <codeinline>TypedMap()</codeinline> inicializa su propio estado de subclase estableciendo <codeinline>this.keyType</codeinline> y <codeinline>this.valueType</codeinline> a los tipos especificados. Necesita establecer estas propiedades para poder utilizarlas de nuevo en el método <codeinline>set()</codeinline>.</p>
     <p>Hay algunas reglas importantes que necesitas saber sobre el uso de <codeinline>super()</codeinline> en los constructores:</p>
     <ul>
-      <li class="font-normal">Si defines una clase con la palabra clave <codeinline>extends</codeinline>, entonces el constructor de tu clase debe usar <codeinline>super()</codeinline> para invocar al constructor de la superclase.</li>
-      <li class="font-normal">Si no defines un constructor en tu subclase, se definirá uno automáticamente. Este constructor definido implícitamente simplemente toma los valores que se le pasen y los pasa a <codeinline>super()</codeinline>.</li>
-      <li class="font-normal">No puede utilizar la palabra clave <codeinline>this</codeinline> en su constructor hasta después de haber invocado al constructor de la superclase con <codeinline>super()</codeinline>. Esto impone la regla de que las superclases se inicializan a sí mismas antes que las subclases.</li>
-      <li class="font-normal">La expresión especial <codeinline>new.target</codeinline> es indefinida en funciones que se invocan sin la palabra clave <codeinline>new</codeinline>. En funciones constructoras, sin embargo, <codeinline>new.target</codeinline> es una referencia al constructor que fue invocado. Cuando un constructor de una subclase es invocado y usa <codeinline>super()</codeinline> para invocar al constructor de la superclase, ese constructor de la superclase verá al constructor de la subclase como el valor de <codeinline>new.target</codeinline>. Una superclase bien diseñada no debería necesitar saber si ha sido subclasificada, pero podría ser útil poder utilizar <codeinline>new.target.name</codeinline> en mensajes de registro, por ejemplo.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Si defines una clase con la palabra clave <codeinline>extends</codeinline>, entonces el constructor de tu clase debe usar <codeinline>super()</codeinline> para invocar al constructor de la superclase.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Si no defines un constructor en tu subclase, se definirá uno automáticamente. Este constructor definido implícitamente simplemente toma los valores que se le pasen y los pasa a <codeinline>super()</codeinline>.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          No puede utilizar la palabra clave <codeinline>this</codeinline> en su constructor hasta después de haber invocado al constructor de la superclase con <codeinline>super()</codeinline>. Esto impone la regla de que las superclases se inicializan a sí mismas antes que las subclases.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          La expresión especial <codeinline>new.target</codeinline> es indefinida en funciones que se invocan sin la palabra clave <codeinline>new</codeinline>. En funciones constructoras, sin embargo, <codeinline>new.target</codeinline> es una referencia al constructor que fue invocado. Cuando un constructor de una subclase es invocado y usa <codeinline>super()</codeinline> para invocar al constructor de la superclase, ese constructor de la superclase verá al constructor de la subclase como el valor de <codeinline>new.target</codeinline>. Una superclase bien diseñada no debería necesitar saber si ha sido subclasificada, pero podría ser útil poder utilizar <codeinline>new.target.name</codeinline> en mensajes de registro, por ejemplo.
+        </p>
+      </li>
     </ul>
     <p>Después del constructor, la siguiente parte del <a href="#ejemplo9-6">Ejemplo 9-6</a> es un método llamado <codeinline>set()</codeinline>. La superclase Map define un método llamado <codeinline>set()</codeinline> para añadir una nueva entrada al mapa. Decimos que este método <codeinline>set()</codeinline> en TypedMap <em>sobrescribe</em> al método <codeinline>set()</codeinline> de su superclase. Esta simple subclase de TypedMap no sabe nada sobre añadir nuevas entradas al mapa, pero sí sabe cómo comprobar tipos, así que eso es lo que hace primero, verificando que la clave y el valor a añadir al mapa tienen los tipos correctos y lanzando un error si no es así. Este método <codeinline>set()</codeinline> no tiene ninguna forma de añadir la clave y el valor al propio mapa, pero para eso está el método <codeinline>set()</codeinline> de la superclase. Así que usamos la palabra clave <codeinline>super</codeinline> de nuevo para invocar la versión del método de la superclase. En este contexto, super funciona de forma muy parecida a la palabra clave this: se refiere al objeto actual pero permite el acceso a métodos sobrescritos definidos en la superclase.</p>
     <p>En los constructores, es necesario invocar al constructor de la superclase antes de poder acceder a <codeinline>this</codeinline> e inicializar el nuevo objeto uno mismo. No existen estas reglas cuando se sobrescribe un método. Un método que sobrescribe un método de la superclase no está obligado a invocar el método de la superclase. Si utiliza <codeinline>super</codeinline> para invocar el método invocado (o cualquier método) en la superclase, puede hacerlo al principio, en medio o al final del método invocado.</p>
@@ -808,11 +888,36 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>9.6 Resumen</h2>
     <p>En este capítulo se han explicado las principales características de las clases de JavaScript:</p>
     <ul>
-      <li class="font-normal">Los objetos que son miembros de la misma clase heredan propiedades del mismo objeto prototipo. El objeto prototipo es la característica clave de las clases de JavaScript, y es posible definir clases con nada más que el método <codeinline>Object.create()</codeinline>.</li>
-      <li class="font-normal">Antes de ES6, las clases se definían más típicamente definiendo primero una función constructora. Las funciones creadas con la palabra clave <codeinline>function</codeinline> tienen una propiedad <codeinline>prototype</codeinline>, y el valor de esta propiedad es un objeto que se utiliza como prototipo de todos los objetos creados cuando la función se invoca con <codeinline>new</codeinline> como constructor. Al inicializar este objeto prototipo, puede definir los métodos compartidos de su clase. Aunque el objeto prototipo es la característica clave de la clase, la función constructora es la identidad pública de la clase.</li>
-      <li class="font-normal">ES6 introduce una palabra clave <codeinline>class</codeinline> que facilita la definición de clases, pero bajo el capó, el mecanismo de constructores y prototipos sigue siendo el mismo.</li>
-      <li class="font-normal">Las subclases se definen mediante la palabra clave <codeinline>extends</codeinline> en la declaración de una clase.</li>
-      <li class="font-normal">Las subclases pueden invocar el constructor de su superclase o métodos sobrescritos de su superclase con la palabra clave <codeinline>super</codeinline>.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Los objetos que son miembros de la misma clase heredan propiedades del mismo objeto prototipo. El objeto prototipo es la característica clave de las clases de JavaScript, y es posible definir clases con nada más que el método <codeinline>Object.create()</codeinline>.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Antes de ES6, las clases se definían más típicamente definiendo primero una función constructora. Las funciones creadas con la palabra clave <codeinline>function</codeinline> tienen una propiedad <codeinline>prototype</codeinline>, y el valor de esta propiedad es un objeto que se utiliza como prototipo de todos los objetos creados cuando la función se invoca con <codeinline>new</codeinline> como constructor. Al inicializar este objeto prototipo, puede definir los métodos compartidos de su clase. Aunque el objeto prototipo es la característica clave de la clase, la función constructora es la identidad pública de la clase.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          ES6 introduce una palabra clave <codeinline>class</codeinline> que facilita la definición de clases, pero bajo el capó, el mecanismo de constructores y prototipos sigue siendo el mismo.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Las subclases se definen mediante la palabra clave <codeinline>extends</codeinline> en la declaración de una clase.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Las subclases pueden invocar el constructor de su superclase o métodos sobrescritos de su superclase con la palabra clave <codeinline>super</codeinline>.
+        </p>
+      </li>
     </ul>
   </section>
 </Layoutjavascript>
