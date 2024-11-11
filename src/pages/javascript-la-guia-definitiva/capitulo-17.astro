@@ -8,14 +8,39 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h1>Herramientas y extensiones de JavaScript</h1>
     <p>Enhorabuena por haber llegado al último capítulo de este libro. Si has leído todo lo que viene antes, ahora tienes una comprensión detallada del lenguaje JavaScript y sabes cómo usarlo en Node y en los navegadores web. Este capítulo es una especie de regalo de graduación: introduce un puñado de herramientas de programación importantes que muchos programadores de JavaScript encuentran útiles, y también describe dos extensiones ampliamente utilizadas para el núcleo del lenguaje JavaScript. Tanto si decides utilizar estas herramientas y extensiones para tus propios proyectos como si no, es casi seguro que las verás utilizadas en otros proyectos, por lo que es importante que al menos sepas lo que son.</p>
     <p>Las herramientas y extensiones del lenguaje que se tratan en este capítulo son:</p>
-    <ul> <li class="font-normal">ESLint para encontrar posibles errores y problemas de estilo en tu código.</li>
-      <li class="font-normal">Prettier para dar formato a su código JavaScript de forma estandarizada.</li>
-      <li class="font-normal">Jest como una solución todo-en-uno para escribir pruebas unitarias de JavaScript.</li>
-      <li class="font-normal">npm para gestionar e instalar las bibliotecas de software de las que depende su programa.</li>
-      <li class="font-normal">Herramientas de agrupación de código, como webpack, Rollup y Parcel, que convierten tus módulos de código JavaScript en un único paquete para su uso en la web.</li>
-      <li class="font-normal">Babel para traducir código JavaScript que utiliza nuevas características del lenguaje (o que utiliza extensiones del lenguaje) en código JavaScript que puede ejecutarse en los navegadores web actuales.</li>
-      <li class="font-normal">La extensión de lenguaje JSX (utilizada por el framework React) que permite describir interfaces de usuario mediante expresiones JavaScript que parecen marcas HTML.</li>
-      <li class="font-normal">La extensión de lenguaje Flow (o la extensión similar TypeScript) que le permite anotar su código JavaScript con tipos y comprobar su código para la seguridad de tipos.</li>
+    <ul>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>ESLint para encontrar posibles errores y problemas de estilo en tu código.</p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>Prettier para dar formato a su código JavaScript de forma estandarizada.</p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>Jest como una solución todo-en-uno para escribir pruebas unitarias de JavaScript.</p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>npm para gestionar e instalar las bibliotecas de software de las que depende su programa.</p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>Herramientas de agrupación de código, como webpack, Rollup y Parcel, que convierten tus módulos de código JavaScript en un único paquete para su uso en la web.</p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>Babel para traducir código JavaScript que utiliza nuevas características del lenguaje (o que utiliza extensiones del lenguaje) en código JavaScript que puede ejecutarse en los navegadores web actuales.</p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>La extensión de lenguaje JSX (utilizada por el framework React) que permite describir interfaces de usuario mediante expresiones JavaScript que parecen marcas HTML.</p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>La extensión de lenguaje Flow (o la extensión similar TypeScript) que le permite anotar su código JavaScript con tipos y comprobar su código para la seguridad de tipos.</p>
+      </li>
     </ul>
     <p>Este capítulo no documenta estas herramientas y extensiones de forma exhaustiva. El objetivo es simplemente explicarlas con la suficiente profundidad como para que puedas entender por qué son útiles y cuándo podrías querer utilizarlas. Todo lo cubierto en este capítulo es ampliamente utilizado en el mundo de la programación JavaScript, y si decides adoptar una herramienta o extensión, encontrarás mucha documentación y tutoriales en línea.</p>
   </section>
@@ -23,8 +48,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>17.1 Linting con ESLint</h2>
     <p>En programación, el término <em>lint</em> se refiere a código que, aunque técnicamente correcto, es antiestético, o un posible bug, o subóptimo de alguna manera. Un <em>linter</em> es una herramienta para detectar pelusas en tu código, y <em>linting</em> es el proceso de ejecutar un linter en tu código (y luego arreglar tu código para eliminar las pelusas de modo que el linter ya no se queje).</p>
     <p>El linter más utilizado para JavaScript hoy en día es <a href="https://eslint.org/">ESLint</a>. Si lo ejecutas y luego te tomas el tiempo de arreglar los problemas que señala, hará que tu código sea más limpio y menos propenso a tener errores. Considere el siguiente código:</p>
-    <pre>
-    <code class="language-js">var x = 'unused';
+    <pre class="language-js">
+    <code>var x = 'unused';
 
     export function factorial(x) &lbrace;
       if (x == 1) &lbrace;
@@ -55,15 +80,15 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Una de las razones por las que algunos proyectos utilizan linters es para imponer un estilo de codificación coherente, de modo que cuando un equipo de programadores trabaje en una base de código compartida, utilice convenciones de código compatibles. Esto incluye reglas de sangrado de código, pero también puede incluir cosas como qué tipo de comillas son preferibles y si debe haber un espacio entre la palabra clave <codeinline>for</codeinline> y el paréntesis abierto que le sigue.</p>
     <p>Una alternativa moderna a la aplicación de reglas de formato de código mediante un linter es adoptar una herramienta como <a href="https://prettier.io/">Prettier</a> para analizar y reformatear automáticamente todo el código.</p>
     <p>Supongamos que ha escrito la siguiente función, que funciona, pero tiene un formato poco convencional:</p>
-    <pre>
-    <code class="language-js">function factorial(x)
+    <pre class="language-js">
+    <code>function factorial(x)
     &lbrace;
       if(x===1)&lbrace;return 1}
       else&lbrace;return x*factorial(x-1)}
     }</code></pre>
     <p>Al ejecutar Prettier en este código se corrige la sangría, se añaden los puntos y comas que faltan, se añaden espacios alrededor de los operadores binarios y se insertan saltos de línea después de <codeinline>&lbrace;</codeinline> y antes de <codeinline>}</codeinline>, lo que da como resultado un código de aspecto mucho más convencional:</p>
-    <pre>
-    <code class="language-js">$ prettier factorial.js
+    <pre class="language-js">
+    <code>$ prettier factorial.js
     function factorial(x) &lbrace;
       if (x === 1) &lbrace;
         return 1;
@@ -80,8 +105,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>17.3 Pruebas unitarias con Jest </h2>
     <p>Escribir pruebas es una parte importante de cualquier proyecto de programación no trivial. Los lenguajes dinámicos como JavaScript soportan marcos de pruebas que reducen drásticamente el esfuerzo necesario para escribir pruebas, ¡y casi hacen que escribir pruebas sea divertido! Hay muchas herramientas y librerías de pruebas para JavaScript, y muchas están escritas de forma modular, de modo que es posible elegir una librería como ejecutor de pruebas, otra librería para aserciones y una tercera para mocking. En esta sección, sin embargo, describiremos <a href="https://jestjs.io/">Jest</a>, que es un framework popular que incluye todo lo que necesitas en un solo paquete.</p>
     <p>Suponga que ha escrito la siguiente función:</p>
-    <pre>
-    <code class="language-js">const getJSON = require("./getJSON.js");
+    <pre class="language-js">
+    <code>const getJSON = require("./getJSON.js");
 
     /**
     * getTemperature() toma el nombre de una ciudad como entrada y devuelve 
@@ -98,8 +123,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       return (c * 5 / 9) + 32; // TODO: vuelve a comprobar esta fórmula
     };</code></pre>
     <p>Un buen conjunto de pruebas para esta función podría verificar que <codeinline>getTemperature()</codeinline> está obteniendo la URL correcta, y que está convirtiendo las escalas de temperatura correctamente. Podemos hacer esto con una prueba basada en Jest como la siguiente. Este código define una implementación simulada de <codeinline>getJSON()</codeinline> para que la prueba no haga realmente una petición de red. Y como <codeinline>getTemperature()</codeinline> es una función asíncrona, las pruebas también son asíncronas; puede ser complicado probar funciones asíncronas, pero Jest lo hace relativamente fácil:</p>
-    <pre>
-    <code class="language-js">// Importa la función que vamos a probar
+    <pre class="language-js">
+    <code>// Importa la función que vamos a probar
     const getTemperature = require("./getTemperature.js");
 
     // Y simula el módulo getJSON() del que depende getTemperature()
@@ -224,13 +249,42 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Existen varias herramientas de empaquetado de JavaScript. Entre los más utilizados se encuentran <a href="https://webpack.js.org/">webpack</a>, <a href="https://rollupjs.org/">Rollup</a> y <a href="https://parceljs.org/">Parcel</a>. Las características básicas de los bundlers son más o menos las mismas, y se diferencian en función de lo configurables que son o de lo fáciles que son de usar. Webpack existe desde hace mucho tiempo, tiene un gran ecosistema de plug-ins, es altamente configurable y puede soportar librerías antiguas que no son módulos. Pero también puede ser complejo y difícil de configurar. En el otro extremo del espectro está Parcel, que pretende ser una alternativa de configuración cero que simplemente hace lo correcto.</p>
     <p>Además de realizar la agrupación básica, las herramientas de agrupación también pueden proporcionar algunas funciones adicionales:</p>
     <ul>
-      <li class="font-normal">Algunos programas tienen más de un punto de entrada. Una aplicación web con múltiples páginas, por ejemplo, podría escribirse con un punto de entrada diferente para cada página. Por lo general, los agrupadores permiten crear un paquete por punto de entrada o crear un único paquete que admita varios puntos de entrada.</li>
-      <li class="font-normal">Los programas pueden usar <codeinline>import()</codeinline> en su forma funcional (<a href="capitulo-10#3-6">§10.3.6</a>) en lugar de su forma estática para cargar dinámicamente los módulos cuando son realmente necesarios en lugar de cargarlos estáticamente al iniciar el programa. Hacer esto es a menudo una buena manera de mejorar el tiempo de arranque de su programa. Las herramientas Bundler que soportan <codeinline>import()</codeinline> pueden ser capaces de producir múltiples paquetes de salida: uno para cargar en el momento de inicio, y uno o más que se cargan dinámicamente cuando sea necesario. Esto puede funcionar bien si sólo hay unas pocas llamadas a <codeinline>import()</codeinline> en su programa y cargan módulos con conjuntos relativamente disjuntos de dependencias. Si los módulos cargados dinámicamente comparten dependencias, entonces se vuelve complicado averiguar cuántos bundles producir, y es probable que tenga que configurar manualmente su bundler para resolver esto.</li>
-      <li class="font-normal">Por lo general, los empaquetadores pueden generar un archivo de <em>mapa de código</em> fuente que define una correspondencia entre las líneas de código del paquete y las líneas correspondientes de los archivos fuente originales. Esto permite que las herramientas de desarrollo de navegadores muestren automáticamente los errores de JavaScript en sus ubicaciones originales.</li>
-      <li class="font-normal">A veces, cuando importas un módulo a tu programa, sólo utilizas algunas de sus funciones. Una buena herramienta de bundler puede analizar el código para determinar qué partes no se utilizan y pueden omitirse de los bundles. Esta función recibe el caprichoso nombre de "tree-shaking".</li>
-      <li class="font-normal">Los agrupadores suelen tener una arquitectura basada en plug-ins y admiten plug-ins que permiten importar y agrupar "módulos" que en realidad no son archivos de código JavaScript. Supongamos que su programa incluye una gran estructura de datos compatible con JSON. Los agrupadores de código pueden configurarse para permitirle mover esa estructura de datos a un archivo JSON independiente y luego importarlo a su programa con una declaración como <codeinline>import widgets from "./big-widget-list.json"</codeinline>. Del mismo modo, los desarrolladores web que incrustan CSS en sus programas JavaScript pueden utilizar plug-ins de bundler que les permiten <codeinline>import</codeinline> archivos CSS con una directiva de importación. Tenga en cuenta, sin embargo, que si importa cualquier cosa que no sea un archivo JavaScript, está utilizando una extensión JavaScript no estándar y haciendo que su código dependa de la herramienta bundler.</li>
-      <li class="font-normal">En un lenguaje como JavaScript, que no requiere compilación, ejecutar una herramienta de bun- dler parece un paso de compilación, y es frustrante tener que ejecutar un bun- dler después de cada edición de código antes de poder ejecutar el código en el navegador. Los bundlers normalmente soportan vigilantes del sistema de archivos que detectan ediciones en cualquier archivo de un directorio de proyecto y regeneran automáticamente los bundles necesarios. C o n esta función, puedes guardar el código y volver a cargar inmediatamente la ventana del navegador para probarlo.</li>
-      <li class="font-normal">Algunos bundlers también admiten un modo de "sustitución de módulos en caliente" para desarrolladores en el que cada vez que se regenera un bundle, éste se carga automáticamente en el navegador. Cuando esto funciona, es una experiencia mágica para los desarrolladores, pero hay algunos trucos bajo el capó para que funcione, y no es adecuado para todos los proyectos.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Algunos programas tienen más de un punto de entrada. Una aplicación web con múltiples páginas, por ejemplo, podría escribirse con un punto de entrada diferente para cada página. Por lo general, los agrupadores permiten crear un paquete por punto de entrada o crear un único paquete que admita varios puntos de entrada.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>Los programas pueden usar <codeinline>import()</codeinline> en su forma funcional (<a href="capitulo-10#3-6">§10.3.6</a>) en lugar de su forma estática para cargar dinámicamente los módulos cuando son realmente necesarios en lugar de cargarlos estáticamente al iniciar el programa. Hacer esto es a menudo una buena manera de mejorar el tiempo de arranque de su programa. Las herramientas Bundler que soportan <codeinline class="inline-block">import()</codeinline> pueden ser capaces de producir múltiples paquetes de salida: uno para cargar en el momento de inicio, y uno o más que se cargan dinámicamente cuando sea necesario. Esto puede funcionar bien si sólo hay unas pocas llamadas a <codeinline class="inline-block">import()</codeinline> en su programa y cargan módulos con conjuntos relativamente disjuntos de dependencias. Si los módulos cargados dinámicamente comparten dependencias, entonces se vuelve complicado averiguar cuántos bundles producir, y es probable que tenga que configurar manualmente su bundler para resolver esto.</p>
+        
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Por lo general, los empaquetadores pueden generar un archivo de <em>mapa de código</em> fuente que define una correspondencia entre las líneas de código del paquete y las líneas correspondientes de los archivos fuente originales. Esto permite que las herramientas de desarrollo de navegadores muestren automáticamente los errores de JavaScript en sus ubicaciones originales.</li>
+        </p>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          A veces, cuando importas un módulo a tu programa, sólo utilizas algunas de sus funciones. Una buena herramienta de bundler puede analizar el código para determinar qué partes no se utilizan y pueden omitirse de los bundles. Esta función recibe el caprichoso nombre de "tree-shaking".</li>
+        </p>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Los agrupadores suelen tener una arquitectura basada en plug-ins y admiten plug-ins que permiten importar y agrupar "módulos" que en realidad no son archivos de código JavaScript. Supongamos que su programa incluye una gran estructura de datos compatible con JSON. Los agrupadores de código pueden configurarse para permitirle mover esa estructura de datos a un archivo JSON independiente y luego importarlo a su programa con una declaración como <codeinline>import widgets from "./big-widget-list.json"</codeinline>. Del mismo modo, los desarrolladores web que incrustan CSS en sus programas JavaScript pueden utilizar plug-ins de bundler que les permiten <codeinline>import</codeinline> archivos CSS con una directiva de importación. Tenga en cuenta, sin embargo, que si importa cualquier cosa que no sea un archivo JavaScript, está utilizando una extensión JavaScript no estándar y haciendo que su código dependa de la herramienta bundler.</li>
+        </p>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          En un lenguaje como JavaScript, que no requiere compilación, ejecutar una herramienta de bun- dler parece un paso de compilación, y es frustrante tener que ejecutar un bun- dler después de cada edición de código antes de poder ejecutar el código en el navegador. Los bundlers normalmente soportan vigilantes del sistema de archivos que detectan ediciones en cualquier archivo de un directorio de proyecto y regeneran automáticamente los bundles necesarios. C o n esta función, puedes guardar el código y volver a cargar inmediatamente la ventana del navegador para probarlo.</li>
+        </p>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Algunos bundlers también admiten un modo de "sustitución de módulos en caliente" para desarrolladores en el que cada vez que se regenera un bundle, éste se carga automáticamente en el navegador. Cuando esto funciona, es una experiencia mágica para los desarrolladores, pero hay algunos trucos bajo el capó para que funcione, y no es adecuado para todos los proyectos.</li>
+        </p>
     </ul>
   </section>
   <section id="6">
@@ -246,24 +300,24 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>17.7 JSX: Expresiones de marcado en JavaScript</h2>
     <p>JSX es una extensión del núcleo de JavaScript que utiliza sintaxis de estilo HTML para definir un árbol de elementos. JSX se asocia más estrechamente con el marco React para interfaces de usuario en la web. En React, los árboles de elementos definidos con JSX se renderizan en última instancia en un navegador web como HTML. Incluso si no tienes planes de utilizar React, su popularidad significa que es probable que veas código que utiliza JSX. Esta sección explica lo que necesitas saber para darle sentido. (Esta sección es sobre la extensión de lenguaje JSX, no sobre React, y explica sólo lo suficiente de React para proporcionar contexto para la sintaxis JSX).</p>
     <p>Los elementos JSX son un nuevo tipo de sintaxis de expresión de JavaScript. Los literales de cadena de Java Script se delimitan con comillas, y los literales de expresión regular se delimitan con barras oblicuas. Del mismo modo, los literales de expresiones JSX se delimitan con corchetes angulares. He aquí una muy sencilla:</p>
-    <pre>
-    <code class="language-js">let line = &lt;hr/>;</code></pre>
+    <pre class="language-js">
+    <code>let line = &lt;hr/>;</code></pre>
     <p>Si utiliza JSX, tendrá que utilizar Babel (o una herramienta similar) para compilar las expresiones JSX en JavaScript normal. La transformación es tan sencilla que algunos desarrolladores optan por utilizar React sin usar JSX. Babel transforma la expresión JSX de esta sentencia de asignación en una simple llamada a una función:</p>
-    <pre>
-    <code class="language-js">let line = React.createElement("hr", null);</code></pre>
+    <pre class="language-js">
+    <code>let line = React.createElement("hr", null);</code></pre>
     <p>La sintaxis JSX es similar a HTML, y al igual que los elementos HTML, los elementos React pueden tener atributos como estos:</p>
-    <pre>
-    <code class="language-js">let image = &lt;img src="logo.png" alt="The JSX logo" hidden/>;</code></pre>
+    <pre class="language-js">
+    <code>let image = &lt;img src="logo.png" alt="The JSX logo" hidden/>;</code></pre>
     <p>Cuando un elemento tiene uno o más atributos, éstos se convierten en propiedades de un objeto pasado como segundo argumento a <codeinline>createElement()</codeinline>:</p>
-    <pre>
-    <code class="language-js">let image = React.createElement("img", &lbrace;
+    <pre class="language-js">
+    <code>let image = React.createElement("img", &lbrace;
       src: "logo.png",
       alt: "The JSX logo",
       hidden: true
     });</code></pre>
     <p>Al igual que los elementos HTML, los elementos JSX pueden tener cadenas y otros elementos como hijos. Al igual que los operadores aritméticos de JavaScript pueden utilizarse para escribir expresiones aritméticas de complejidad arbitraria, los elementos JSX también pueden anidarse a una profundidad arbitraria para crear árboles de elementos:</p>
-    <pre>
-    <code class="language-js">let sidebar = (
+    <pre class="language-js">
+    <code>let sidebar = (
       &lt;div className="sidebar">
         &lt;h1>Title&lt;/h1>
         &lt;hr/>
@@ -271,8 +325,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       &lt;/div>
     );</code></pre>
     <p>Las expresiones regulares de llamadas a funciones JavaScript también pueden anidarse a una profundidad arbitraria, y estas expresiones JSX anidadas se traducen en un conjunto de llamadas <codeinline>createElement()</codeinline> anidadas. Cuando un elemento JSX tiene hijos, esos hijos (que suelen ser cadenas y otros elementos JSX) se pasan como argumentos tercero y siguientes:</p>
-    <pre>
-    <code class="language-js">let sidebar = React.createElement(
+    <pre class="language-js">
+    <code>let sidebar = React.createElement(
       "div", &lbrace; className: "sidebar"},  // Esta llamada externa crea un &lt;div>
       React.createElement("h1", null,  // Este es el primer elemento secundario del &lt;div/>
                              "Title"), // y su propio primer elemento secundario.
@@ -281,8 +335,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
                         "This is the sidebar content"));</code></pre>
     <p>El valor devuelto por <codeinline>React.createElement()</codeinline> es un objeto JavaScript ordinario que es utilizado por React para renderizar la salida en una ventana del navegador. Dado que esta sección trata sobre la sintaxis JSX y no sobre React, no vamos a entrar en detalles sobre los objetos Element devueltos o el proceso de renderizado. Vale la pena señalar que puedes configurar Babel para compilar elementos JSX a invocaciones de una función diferente, por lo que si crees que la sintaxis JSX sería una forma útil de expresar otros tipos de estructuras de datos anidadas, puedes adoptarla para tus propios usos no relacionados con React.</p>
     <p>Una característica importante de la sintaxis JSX es que puede incrustar expresiones JavaScript regulares dentro de expresiones JSX. Dentro de una expresión JSX, el texto entre llaves se interpreta como JavaScript plano. Estas expresiones anidadas están permitidas como valores de atributo y como elementos hijos. Por ejemplo:</p>
-    <pre>
-    <code class="language-js">function sidebar(className, title, content, drawLine=true) &lbrace;
+    <pre class="language-js">
+    <code>function sidebar(className, title, content, drawLine=true) &lbrace;
       return (
         &lt;div className=&lbrace;className}>
           &lt;h1>&lbrace;title}&lt;/h1>
@@ -292,8 +346,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       );
     }</code></pre>
     <p>La función <codeinline>sidebar()</codeinline> devuelve un elemento JSX. Toma cuatro argumentos que utiliza dentro del elemento JSX. La sintaxis de llaves puede recordarle los literales de plantilla que utilizan <codeinline>$&lbrace;}</codeinline> para incluir expresiones JavaScript dentro de cadenas. Como sabemos que las expresiones JSX se compilan en invocaciones de funciones, no debería sorprendernos que se puedan incluir expresiones JavaScript arbitrarias, ya que las invocaciones de funciones también se pueden escribir con expresiones arbitrarias. Este código de ejemplo es traducido por Babel a lo siguiente:</p>
-    <pre>
-    <code class="language-js">function sidebar(className, title, content, drawLine=true) &lbrace;
+    <pre class="language-js">
+    <code>function sidebar(className, title, content, drawLine=true) &lbrace;
       return React.createElement("div", &lbrace; className: className },
                     React.createElement("h1", null, title),
                     drawLine && React.createElement("hr", null),
@@ -301,8 +355,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     }</code></pre>
     <p>Este código es fácil de leer y entender: las llaves han desaparecido y el código resultante pasa los parámetros de la función entrante a <codeinline>React.createElement()</codeinline> de forma natural. Fíjate en el truco que hemos hecho aquí con el parámetro <codeinline>drawLine</codeinline> y el operador <codeinline>&&</codeinline> de cortocircuito. Si llamas a <codeinline>sidebar()</codeinline> con sólo tres argumentos, entonces <codeinline>drawLine</codeinline> por defecto es <codeinline>true</codeinline>, y el cuarto argumento de la llamada externa a <codeinline>createElement()</codeinline> es el elemento <codeinline>&lt;hr/></codeinline>. Pero si pasa <codeinline>false</codeinline> como cuarto argumento a <codeinline>sidebar()</codeinline>, entonces el cuarto argumento de la llamada externa a <codeinline>createElement()</codeinline> se evalúa como <codeinline>false</codeinline>, y no se crea ningún elemento <codeinline>&lt;hr/></codeinline>. Este uso del operador <codeinline>&&</codeinline> es un lenguaje común en JSX para incluir o excluir condicionalmente un elemento hijo dependiendo del valor de alguna otra expresión. (Este modismo funciona con React porque React simplemente ignora los hijos que son <codeinline>false</codeinline> o <codeinline>null</codeinline> y no produce ninguna salida para ellos).</p>
     <p>Cuando utiliza expresiones JavaScript dentro de expresiones JSX, no está limitado a valores simples como los valores de cadena y booleano del ejemplo anterior. Cualquier valor Java Script está permitido. De hecho, es bastante común en la programación React utilizar objetos, matrices y funciones. Considera la siguiente función, por ejemplo:</p>
-    <pre>
-    <code class="language-js">// Dada un array de string y una función de devolución de llamada, devuelve un 
+    <pre class="language-js">
+    <code>// Dada un array de string y una función de devolución de llamada, devuelve un 
     // elemento JSX que representa una lista HTML &lt;ul> con un array de 
     // elementos &lt;li> como elementos hijos.
     function list(items, callback) &lbrace;
@@ -316,8 +370,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     }</code></pre>
     <p>Esta función utiliza un objeto literal como valor del atributo <codeinline>style</codeinline> del elemento <codeinline>&lt;ul></codeinline>. (El elemento <codeinline>&lt;ul></codeinline> tiene un único hijo, pero el valor de ese hijo es una matriz. La matriz hija es la matriz creada mediante la función <codeinline>map()</codeinline> en la matriz de entrada para crear una matriz de elementos <codeinline>&lt;li></codeinline>.</p>
     <p>(Esto funciona con React porque la librería React aplana los hijos de un elemento cuando los renderiza. Un elemento con un array hijo es lo mismo que ese elemento con cada uno de esos elementos del array como hijos). Por último, ten en cuenta que cada una de las matrices anidadas <codeinline>&lt;li></codeinline> tiene un atributo manejador de eventos <codeinline>onClick</codeinline> cuyo valor es una función de flecha. El código JSX compila al siguiente código JavaScript puro (que he formatulado con Prettier):</p>
-    <pre>
-    <code class="language-js">function list(items, callback) &lbrace;
+    <pre class="language-js">
+    <code>function list(items, callback) &lbrace;
       return React.createElement(
         "ul",
         &lbrace; style: &lbrace; padding: 10, border: "solid red 4px" } },
@@ -331,20 +385,20 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       );
     }</code></pre>
     <p>Otro uso de las expresiones de objeto en JSX es con el operador de extensión de objeto (<a href="capitulo-6#10-4">§6.10.4</a>) para especificar múltiples atributos a la vez. Supón que te encuentras escribiendo muchas expresiones JSX que repiten un conjunto común de atributos. Puedes simplificar tus expresiones definiendo los atributos como propiedades de un objeto y "esparciéndolos" en tus elementos JSX:</p>
-    <pre>
-    <code class="language-js">let hebrew = &lbrace; lang: "he", dir: "rtl" }; // Especifica el idioma y la dirección
+    <pre class="language-js">
+    <code>let hebrew = &lbrace; lang: "he", dir: "rtl" }; // Especifica el idioma y la dirección
     let shalom = &lt;span className="emphasis" &lbrace;...hebrew}>ם҇לқ&lt;/span>;</code></pre> 
     <p>Babel compila esto para utilizar una función <codeinline>_extends()</codeinline> (omitida aquí) que combina que atributo <codeinline>className</codeinline> con los atributos contenidos en el objeto <codeinline>hebrew</codeinline>:</p>
-    <pre>
-    <code class="language-js">let shalom = React.createElement("span",
+    <pre class="language-js">
+    <code>let shalom = React.createElement("span",
                   _extends(&lbrace;className: "emphasis"}, hebrew),
                   "\u05E9\u05DC\u05D5\u05DD");</code></pre>
     <p>Por último, hay otra característica importante de JSX que aún no hemos cubierto. Como has visto, todos los elementos JSX comienzan con un identificador inmediatamente después del paréntesis angular de apertura. Si la primera letra de este identificador es minúscula (como ha sido en todos los ejemplos aquí), entonces el identificador se pasa a <codeinline>createElement()</codeinline> como una cadena. Pero si la primera letra del identificador es mayúscula, entonces se trata como un identificador real, y es el valor JavaScript de ese identificador el que se pasa como primer argumento a <codeinline>createElement()</codeinline>. Esto significa que la expresión JSX <codeinline>&lt;Math/></codeinline> compila código JavaScript que pasa el objeto Math global a <codeinline>React.createElement()</codeinline>.</p>
     <p>Para React, esta capacidad de pasar valores no string como primer argumento a <codeinline>createElement()</codeinline> permite la creación de <em>componentes</em>. Un componente es una forma de escribir un simple</p>
     <p>Expresión JSX (con un nombre de componente en mayúsculas) que representa una expresión más compleja (utilizando nombres de etiqueta HTML en minúsculas).</p>
     <p>La forma más sencilla de definir un nuevo componente en React es escribir una función que tome un "objeto props" como argumento y devuelva una expresión JSX. Un <em>objeto props</em> es simplemente un objeto JavaScript que representa valores de atributos, como los objetos que se pasan como segundo argumento a <codeinline>createElement()</codeinline>. He aquí, por ejemplo, otra versión de nuestra función <codeinline>sidebar()</codeinline>:</p>
-    <pre>
-    <code class="language-js">function Sidebar(props) &lbrace;
+    <pre class="language-js">
+    <code>function Sidebar(props) &lbrace;
       return (
         &lt;div>
           &lt;h1>&lbrace;props.title}&lt;/h1>
@@ -354,11 +408,11 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       );
     }</code></pre>
     <p>Esta nueva función <codeinline>Sidebar()</codeinline> es muy parecida a la función anterior <codeinline>sidebar()</codeinline>. Pero ésta tiene un nombre que empieza por mayúscula y toma un único argumento objeto en lugar de argumentos separados. Esto la convierte en un componente React y significa que puede utilizarse en lugar de un nombre de etiqueta HTML en expresiones JSX:</p>
-    <pre>
-    <code class="language-js">let sidebar = &lt;Sidebar title="Something snappy" content="Something wise"/>;</code></pre>
+    <pre class="language-js">
+    <code>let sidebar = &lt;Sidebar title="Something snappy" content="Something wise"/>;</code></pre>
     <p>Este elemento <codeinline>&lt;Sidebar/></codeinline> se compila así:</p>
-    <pre>
-    <code class="language-js">let sidebar = React.createElement(Sidebar, &lbrace;
+    <pre class="language-js">
+    <code>let sidebar = React.createElement(Sidebar, &lbrace;
       title: "Something snappy",
       content: "Something wise"
     });</code></pre>
@@ -455,8 +509,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
         5│ console.log(size(null));</pre>
     <p>Lo que Flow nos está diciendo aquí es que no es seguro escribir <codeinline>s.length</codeinline> porque, en este lugar de nuestro código, <codeinline>s</codeinline> podría ser <codeinline>null</codeinline> o <codeinline>undefined</codeinline>, y esos valores no tienen propiedades de <codeinline>length</codeinline>. Aquí es donde Flow se asegura de que no tomemos atajos. Si un valor puede ser <codeinline>null</codeinline>, Flow insistirá en que comprobemos ese caso antes de hacer cualquier cosa que dependa de que el valor no sea <codeinline>null</codeinline>.</p>
     <p>En este caso, podemos solucionar el problema cambiando el cuerpo de la función de la siguiente manera:</p>
-    <pre>
-    <code class="language-js">function size(s: ?string): number &lbrace;
+    <pre class="language-js">
+    <code>function size(s: ?string): number &lbrace;
       // En este punto del código, s podría ser una cadena o nulo o indefinido.
       if (s === null || s === undefined) &lbrace;
         // En este bloque, Flow sabe que s es nulo o indefinido.
@@ -473,8 +527,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="8-3" class="py-4 xs:py-5 sm:py-6">
     <h2>17.8.3 Tipos de clases</h2>
     <p>Además de los tipos primitivos que Flow conoce, también conoce todas las clases incorporadas de JavaScript y te permite utilizar nombres de clases como tipos. La siguiente función, por ejemplo, utiliza anotaciones de tipo para indicar que debe ser invocada con un objeto Date y un objeto RegExp:</p>
-    <pre>
-    <code class="language-js">// @flow
+    <pre class="language-js">
+    <code>// @flow
     // Devuelve verdadero si la representación ISO de la fecha especificada coincide
     // con el patrón especificado, o falso en caso contrario. 
     // E.g: const isTodayChristmas = dateMatches(new Date(), /^\d&lbrace;4}-12-25T/);
@@ -482,8 +536,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       return p.test(d.toISOString());
     }</code></pre>
     <p>Si defines tus propias clases con la palabra clave <codeinline>class</codeinline>, esas clases se convierten automáticamente en tipos Flow válidos. Sin embargo, para que esto funcione, Flow requiere que utilices anotaciones de tipo en la clase. En particular, cada propiedad de la clase debe tener su tipo declarado. Aquí hay una simple clase de números complejos que demuestra esto:</p>
-    <pre>
-    <code class="language-js">// @flow
+    <pre class="language-js">
+    <code>// @flow
     export default class Complex &lbrace;
       // Flow requiere una sintaxis de clase extendida que incluya anotaciones
       // de tipo para cada una de las propiedades utilizadas por la clase.
@@ -741,7 +795,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   </section>
   <section id="8-11" class="py-4 xs:py-5 sm:py-6">
     <h2>17.8.11 Tipos enumerados y uniones discriminadas</h2>
-    <p>Flow te permite usar literales primitivos como tipos que consisten en un único valor. Si escribes let <codeinline>x:3;</codeinline>, entonces Flow no te permitirá asignar ningún valor a esa variable que no sea 3. No suele ser útil definir tipos que tengan un único miembro, pero una unión de tipos literales puede ser útil. Probablemente puedes imaginar un uso para tipos como estos, por ejemplo:</p>
+    <p>Flow te permite usar literales primitivos como tipos que consisten en un único valor. Si escribes <codeinline>let x:3;</codeinline>, entonces Flow no te permitirá asignar ningún valor a esa variable que no sea 3. No suele ser útil definir tipos que tengan un único miembro, pero una unión de tipos literales puede ser útil. Probablemente puedes imaginar un uso para tipos como estos, por ejemplo:</p>
     <pre>
     <code class="language-js">type Answer = "yes" | "no";
     type Digit = 0|1|2|3|4|5|6|7|8|9;</code></pre>

@@ -10,15 +10,60 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>El capítulo comienza con el modelo de programación de la plataforma web, explicando cómo se incrustan los scripts en las páginas HTML (<a href="#1">§15.1</a>) y cómo el código JavaScript se activa de forma asíncrona mediante eventos (<a href="#2">§15.2</a>). Las secciones que siguen a este material introductorio documentan las principales API de JavaScript que permiten a las aplicaciones web:</p>
     <p>Los temas de metaprogramación tratados en este capítulo incluyen:</p>
     <ul>
-      <li class="font-normal">Controlar el contenido del documento (<a href="#3">§15.3</a>) y el estilo (<a href="#4">§15.4</a>)</li>
-      <li class="font-normal">Determinar la posición en pantalla de los elementos del documento (<a href="#5">§15.5</a>)</li>
-      <li class="font-normal">Crear componentes de interfaz de usuario reutilizables (<a href="#6">§15.6</a>)</li>
-      <li class="font-normal">Dibujar gráficos (<a href="#7">§15.7</a> y <a href="#8">§15.8</a>)</li>
-      <li class="font-normal">Reproducir y generar sonidos (<a href="#9">§15.9</a>)</li>
-      <li class="font-normal">Gestionar la navegación y el historial del navegador (<a href="#10">§15.10</a>)</li>
-      <li class="font-normal">Intercambiar datos a través de la red (<a href="#11">§15.11</a>)</li>
-      <li class="font-normal">Almacenar datos en el ordenador del usuario (<a href="#12">§15.12</a>)</li>
-      <li class="font-normal">Realizar cálculos concurrentes con hilos (<a href="#13">§15.13</a>)</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Controlar el contenido del documento (<a href="#3">§15.3</a>) y el estilo (<a href="#4">§15.4</a>)
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Determinar la posición en pantalla de los elementos del documento (<a href="#5">§15.5</a>)
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Crear componentes de interfaz de usuario reutilizables (<a href="#6">§15.6</a>)
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Dibujar gráficos (<a href="#7">§15.7</a> y <a href="#8">§15.8</a>)
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Reproducir y generar sonidos (<a href="#9">§15.9</a>)
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Gestionar la navegación y el historial del navegador (<a href="#10">§15.10</a>)
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Intercambiar datos a través de la red (<a href="#11">§15.11</a>)
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Almacenar datos en el ordenador del usuario (<a href="#12">§15.12</a>)
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Realizar cálculos concurrentes con hilos (<a href="#13">§15.13</a>)
+        </p>
+      </li>
     </ul>
     <article>
       <p class="title-article">JavaScript del lado del cliente</p>
@@ -31,10 +76,30 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       <p class="title-article">API heredadas</p>
       <p>En los 25 años transcurridos desde el lanzamiento de JavaScript, los fabricantes de navegadores han ido añadiendo funciones y API para uso de los programadores. Muchas de esas API han quedado obsoletas. Entre ellas están:</p>
       <ul>
-        <li class="font-normal">API propietarias que nunca se estandarizaron y/o nunca fueron implementadas por otros proveedores de navegadores. Internet Explorer de Microsoft definió muchas de estas API. Algunas (como la propiedad <codeinline>innerHTML</codeinline>) resultaron útiles y acabaron estandarizándose. Otros (como el método <codeinline>attachEvent()</codeinline>) llevan años obsoletos.</li>
-        <li class="font-normal">APIs ineficientes (como el método <codeinline>document.write()</codeinline>) que tienen un impacto tan severo en el rendimiento que su uso ya no se considera aceptable.</li>
-        <li class="font-normal">APIs obsoletas que hace tiempo que han sido sustituidas por nuevas APIs para conseguir lo mismo. Un ejemplo es <codeinline>document.bgColor</codeinline>, que se definió para permitir a Java Script establecer el color de fondo de un documento. Con la llegada de CSS, <codeinline>document.bgColor</codeinline> se convirtió en un pintoresco caso especial sin ningún propósito real.</li>
-        <li class="font-normal">API mal diseñadas que han sido sustituidas por otras mejores. En los inicios de la web, los comités de normalización definieron la API clave del Modelo de Objetos de Documento de forma agnóstica al lenguaje, de modo que la misma API pudiera utilizarse en programas Java para trabajar con documentos XML y en programas JavaScript para trabajar con documentos HTML. El resultado fue una API que no se adaptaba bien al lenguaje JavaScript y que tenía características que no interesaban especialmente a los programadores web. Se tardó décadas en recuperarse de aquellos primeros errores de diseño, pero los navegadores web actuales soportan un Modelo de Objetos de Documento muy mejorado.</li>
+        <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+          <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+          <p>
+            API propietarias que nunca se estandarizaron y/o nunca fueron implementadas por otros proveedores de navegadores. Internet Explorer de Microsoft definió muchas de estas API. Algunas (como la propiedad <codeinline>innerHTML</codeinline>) resultaron útiles y acabaron estandarizándose. Otros (como el método <codeinline>attachEvent()</codeinline>) llevan años obsoletos.
+          </p>
+        </li>
+        <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+          <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+          <p>
+            APIs ineficientes (como el método <codeinline>document.write()</codeinline>) que tienen un impacto tan severo en el rendimiento que su uso ya no se considera aceptable.
+          </p>
+        </li>
+        <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+          <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+          <p>
+            APIs obsoletas que hace tiempo que han sido sustituidas por nuevas APIs para conseguir lo mismo. Un ejemplo es <codeinline>document.bgColor</codeinline>, que se definió para permitir a Java Script establecer el color de fondo de un documento. Con la llegada de CSS, <codeinline>document.bgColor</codeinline> se convirtió en un pintoresco caso especial sin ningún propósito real.
+          </p>
+        </li>
+        <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+          <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+          <p>
+            API mal diseñadas que han sido sustituidas por otras mejores. En los inicios de la web, los comités de normalización definieron la API clave del Modelo de Objetos de Documento de forma agnóstica al lenguaje, de modo que la misma API pudiera utilizarse en programas Java para trabajar con documentos XML y en programas JavaScript para trabajar con documentos HTML. El resultado fue una API que no se adaptaba bien al lenguaje JavaScript y que tenía características que no interesaban especialmente a los programadores web. Se tardó décadas en recuperarse de aquellos primeros errores de diseño, pero los navegadores web actuales soportan un Modelo de Objetos de Documento muy mejorado.
+          </p>
+        </li>
       </ul>
       <p>Los vendedores de navegadores pueden necesitar dar soporte a estas APIs heredadas en un futuro previsible para asegurar la compatibilidad con versiones anteriores, pero ya no hay necesidad de que este libro las documente o de que tú aprendas sobre ellas. La plataforma web ha madurado y se ha estabilizado, y si eres un desarrollador web experimentado que recuerda la cuarta o quinta edición de este libro, entonces puede que tengas tanto conocimiento obsoleto que olvidar como nuevo material que aprender.</p>
     </article>
@@ -84,18 +149,48 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Una etiqueta <codeinline>&lt;script></codeinline> con el atributo <codeinline>src</codeinline> se comporta exactamente igual que si el contenido del archivo JavaScript especificado apareciera directamente entre las etiquetas <codeinline>&lt;script></codeinline> y <codeinline>&lt;/script></codeinline>. Tenga en cuenta que la etiqueta <codeinline>&lt;/script></codeinline> de cierre es necesaria en los documentos HTML incluso cuando se especifica el atributo <codeinline>src</codeinline>: HTML no admite la etiqueta <codeinline>&lt;script/></codeinline>.</p>
     <p>Utilizar el atributo <codeinline>src</codeinline> tiene una serie de ventajas:</p>
     <ul>
-      <li class="font-normal">Simplifica sus archivos HTML al permitirle eliminar de ellos grandes bloques de código Java-Script, es decir, ayuda a mantener separados el contenido y el comportamiento.</li>
-      <li class="font-normal">Cuando varias páginas web comparten el mismo código JavaScript, el uso del atributo <codeinline>src</codeinline> permite mantener una sola copia de ese código, en lugar de tener que editar cada archivo HTML cuando cambia el código.</li>
-      <li class="font-normal">Si más de una página comparte un archivo de código JavaScript, sólo tendrá que descargarlo una vez la primera página que lo utilice; las siguientes podrán recuperarlo de la caché del navegador.</li>
-      <li class="font-normal">Dado que el atributo <codeinline>src</codeinline> toma como valor una URL arbitraria, un programa JavaScript o una página web de un servidor web pueden emplear código exportado por otros servidores web. Gran parte de la publicidad en Internet se basa en este hecho.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Simplifica sus archivos HTML al permitirle eliminar de ellos grandes bloques de código Java-Script, es decir, ayuda a mantener separados el contenido y el comportamiento.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Cuando varias páginas web comparten el mismo código JavaScript, el uso del atributo <codeinline>src</codeinline> permite mantener una sola copia de ese código, en lugar de tener que editar cada archivo HTML cuando cambia el código.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Si más de una página comparte un archivo de código JavaScript, sólo tendrá que descargarlo una vez la primera página que lo utilice; las siguientes podrán recuperarlo de la caché del navegador.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Dado que el atributo <codeinline>src</codeinline> toma como valor una URL arbitraria, un programa JavaScript o una página web de un servidor web pueden emplear código exportado por otros servidores web. Gran parte de la publicidad en Internet se basa en este hecho.
+        </p>
+      </li>
     </ul>
     <p class="title-article text-left">Módulos</p>
     <p><a href="capitulo-10#3">§10.3</a> documenta los módulos JavaScript y cubre sus directivas <codeinline>import</codeinline> y <codeinline>export</codeinline>. Si ha escrito su programa JavaScript utilizando módulos (y no ha utilizado una herramienta de agrupación de código para combinar todos sus módulos en un único archivo JavaScript no modular), debe cargar el módulo de nivel superior de su programa con una directiva <codeinline>&lt;script></codeinline> que tenga un atributo <codeinline>type="module"</codeinline>. Si haces esto, el módulo que especifiques se cargará, y todos los módulos que importe se cargarán, y (recursivamente) todos los módulos que importen se cargarán. Para más información, véase <a href="capitulo-10#3-5">§10.3.5</a>.</p>
     <p class="title-article text-left">Especificación del tipo de script</p>
     <p>En los primeros días de la web, se pensaba que los navegadores podrían implementar algún día lenguajes distintos de JavaScript, y los programadores añadían atributos como <codeinline>language="javascript"</codeinline> y <codeinline>type="application/javascript"</codeinline> a sus etiquetas <codeinline>&lt;script></codeinline>. Esto es completamente innecesario. JavaScript es el lenguaje por defecto (y el único) de la web. El atributo language está obsoleto, y sólo hay dos razones para usar un atributo <codeinline>type</codeinline> en una etiqueta <codeinline>&lt;script></codeinline>:</p>
     <ul>
-      <li class="font-normal">Para especificar que el script es un módulo</li>
-      <li class="font-normal">Para incrustar datos en una página web sin mostrarlos (véase <a href="#3-4">§15.3.4</a>)</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Para especificar que el script es un módulo
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Para incrustar datos en una página web sin mostrarlos (véase <a href="#3-4">§15.3.4</a>)
+        </p>
+      </li>
     </ul>
     <p class="title-article text-left">Cuándo se ejecutan los scripts: async y diferido</p>
     <p>Cuando JavaScript se incorporó por primera vez a los navegadores web, no existía una API para recorrer y manipular la estructura y el contenido de un documento ya renderizado. La única forma en que el código JavaScript podía afectar al contenido de un documento era generando ese contenido sobre la marcha mientras el documento estaba en proceso de carga. Para ello utilizando el método <codeinline>document.write()</codeinline> para inyectar texto HTML en el documento en la ubicación del script.</p>
@@ -178,25 +273,90 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p id="javascritp-cliente" class="title-article text-left">Línea de tiempo JavaScript del lado del cliente</p>
     <p>Ya hemos visto que los programas JavaScript comienzan en una fase de ejecución de secuencias de comandos y luego pasan a una fase de gestión de eventos. Estas dos fases pueden dividirse en los siguientes pasos:</p>
     <ul>
-      <li class="font-normal">El navegador web crea un objeto Document y comienza a analizar la página web, añadiendo objetos Element y nodos Text al documento a medida que analiza los elementos HTML y su contenido textual. La propiedad <codeinline>document.readyState</codeinline> tiene el valor "loading" en esta etapa.</li>
-      <li class="font-normal">Cuando el analizador HTML encuentra una etiqueta <codeinline>&lt;script></codeinline> que no tiene ninguno de los atributos <codeinline>async</codeinline>, <codeinline>defer</codeinline> o <codeinline>type="module"</codeinline>, añade esa etiqueta script al documento y, a continuación, ejecuta el script. El script se ejecuta de forma sincrónica, y el analizador HTML hace una pausa mientras el script se descarga (si es necesario) y se ejecuta. Un script como este puede usar <codeinline>document.write()</codeinline> para insertar texto en el flujo de entrada, y ese texto se convertirá en parte del documento cuando el analizador se reanude. Un script a menudo simplemente define funciones y registra manejadores de eventos para su uso posterior, pero puede recorrer y manipular el árbol del documento tal y como existe en ese momento. Es decir, los scripts no modulares que no tienen un atributo <codeinline>async</codeinline> o <codeinline>defer</codeinline> pueden ver su propia etiqueta <codeinline>&lt;script></codeinline> y el contenido del documento que le precede.</li>
-      <li class="font-normal">Cuando el analizador encuentra un elemento <codeinline>&lt;script></codeinline> con el atributo <codeinline>async</codeinline> activado, comienza a descargar el texto del script (y si el script es un módulo, también descarga de forma recurrente todas las dependencias del script) y continúa analizando el documento. El script se ejecutará lo antes posible una vez descargado, pero el analizador no se detiene a esperar a que se descargue. Los scripts asíncronos no deben utilizar el método <codeinline>document.write()</codeinline>. Pueden ver su propio <codeinline>&lt;script></codeinline> y todo el contenido del documento que le precede, y puede o no tener acceso a contenido adicional del documento.</li>
-      <li class="font-normal">Cuando el documento está completamente analizado, la propiedad <codeinline>document.readyState</codeinline> cambia a "interactive".</li>
-      <li class="font-normal">Cualquier script que tenga el atributo <codeinline>defer</codeinline> (junto con cualquier script de módulo que no tenga un atributo async) se ejecuta en el orden en el que aparece en el documento. Los scripts asíncronos también pueden ejecutarse en este momento. Los scripts diferidos tienen acceso al documento completo y no deben utilizar el método <codeinline>document.write()</codeinline>.</li>
-      <li class="font-normal">El navegador lanza un evento "DOMContentLoaded" sobre el objeto Document. Esto marca la transición de la fase síncrona de ejecución de scripts a la fase asíncrona, dirigida por eventos, de ejecución del programa. Tenga en cuenta, sin embargo, que todavía puede haber scripts <codeinline>async</codeinline> que aún no se han ejecutado en este punto.</li>
-      <li class="font-normal">El documento está completamente analizado en este punto, pero el navegador aún puede estar esperando a que se cargue contenido adicional, como imágenes. Cuando todo ese contenido termina de cargarse, y cuando todos los scripts <codeinline>async</codeinline> se han cargado y ejecutado, la propiedad <codeinline>document.readyState</codeinline> cambia a "complete" y el navegador web lanza un evento "load" en el objeto Window.</li>
-      <li class="font-normal">A partir de este punto, los manejadores de eventos se invocan de forma asíncrona en respuesta a eventos de entrada de usuario, eventos de red, vencimiento de temporizadores, etc.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          El navegador web crea un objeto Document y comienza a analizar la página web, añadiendo objetos Element y nodos Text al documento a medida que analiza los elementos HTML y su contenido textual. La propiedad <codeinline>document.readyState</codeinline> tiene el valor "loading" en esta etapa.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Cuando el analizador HTML encuentra una etiqueta <codeinline>&lt;script></codeinline> que no tiene ninguno de los atributos <codeinline>async</codeinline>, <codeinline>defer</codeinline> o <codeinline>type="module"</codeinline>, añade esa etiqueta script al documento y, a continuación, ejecuta el script. El script se ejecuta de forma sincrónica, y el analizador HTML hace una pausa mientras el script se descarga (si es necesario) y se ejecuta. Un script como este puede usar <codeinline>document.write()</codeinline> para insertar texto en el flujo de entrada, y ese texto se convertirá en parte del documento cuando el analizador se reanude. Un script a menudo simplemente define funciones y registra manejadores de eventos para su uso posterior, pero puede recorrer y manipular el árbol del documento tal y como existe en ese momento. Es decir, los scripts no modulares que no tienen un atributo <codeinline>async</codeinline> o <codeinline>defer</codeinline> pueden ver su propia etiqueta <codeinline>&lt;script></codeinline> y el contenido del documento que le precede.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Cuando el analizador encuentra un elemento <codeinline>&lt;script></codeinline> con el atributo <codeinline>async</codeinline> activado, comienza a descargar el texto del script (y si el script es un módulo, también descarga de forma recurrente todas las dependencias del script) y continúa analizando el documento. El script se ejecutará lo antes posible una vez descargado, pero el analizador no se detiene a esperar a que se descargue. Los scripts asíncronos no deben utilizar el método <codeinline>document.write()</codeinline>. Pueden ver su propio <codeinline>&lt;script></codeinline> y todo el contenido del documento que le precede, y puede o no tener acceso a contenido adicional del documento.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Cuando el documento está completamente analizado, la propiedad <codeinline>document.readyState</codeinline> cambia a "interactive".
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Cualquier script que tenga el atributo <codeinline>defer</codeinline> (junto con cualquier script de módulo que no tenga un atributo async) se ejecuta en el orden en el que aparece en el documento. Los scripts asíncronos también pueden ejecutarse en este momento. Los scripts diferidos tienen acceso al documento completo y no deben utilizar el método <codeinline>document.write()</codeinline>.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          El navegador lanza un evento "DOMContentLoaded" sobre el objeto Document. Esto marca la transición de la fase síncrona de ejecución de scripts a la fase asíncrona, dirigida por eventos, de ejecución del programa. Tenga en cuenta, sin embargo, que todavía puede haber scripts <codeinline>async</codeinline> que aún no se han ejecutado en este punto.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          El documento está completamente analizado en este punto, pero el navegador aún puede estar esperando a que se cargue contenido adicional, como imágenes. Cuando todo ese contenido termina de cargarse, y cuando todos los scripts <codeinline>async</codeinline> se han cargado y ejecutado, la propiedad <codeinline>document.readyState</codeinline> cambia a "complete" y el navegador web lanza un evento "load" en el objeto Window.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          A partir de este punto, los manejadores de eventos se invocan de forma asíncrona en respuesta a eventos de entrada de usuario, eventos de red, vencimiento de temporizadores, etc.
+        </p>
+      </li>
     </ul>
   </section>
   <section id="1-6" class="py-4 xs:py-5 sm:py-6">
     <h2>15.1.6 Entrada y salida de programas</h2>
     <p>Como cualquier programa, los programas JavaScript del lado del cliente procesan datos de entrada para producir datos de salida. Hay una gran variedad de entradas disponibles:</p>
     <ul>
-      <li class="font-normal">El contenido del propio documento, al que el código JavaScript puede acceder con la API DOM (<a href="#3">§15.3</a>).</li>
-      <li class="font-normal">Entradas del usuario, en forma de eventos, como clics del ratón (o toques en la pantalla táctil) en elementos HTML <codeinline>&lt;button></codeinline>, o texto introducido en elementos HTML <codeinline>&lt;textarea></codeinline>, por ejemplo. En <a href="#2">§15.2</a> se muestra cómo los programas JavaScript pueden responder a este tipo de eventos de usuario.</li>
-      <li class="font-normal">La URL del documento que se muestra está disponible para JavaScript del lado del cliente como <codeinline>document.URL</codeinline>. Si pasas esta cadena al constructor <codeinline>URL()</codeinline> (<a href="capitulo-11#9">§11.9</a>), puedes acceder fácilmente a las secciones path, query y fragment de la URL.</li>
-      <li class="font-normal">El contenido de la cabecera de petición HTTP "Cookie" está disponible para el código del cliente como <codeinline>document.cookie</codeinline>. Las cookies suelen ser utilizadas por el código del servidor para mantener las sesiones de usuario, pero el código del cliente también puede leerlas (y escribirlas) si es necesario. Véase <a href="#12-2">§15.12.2</a> para más detalles.</li>
-      <li class="font-normal">La propiedad global <codeinline>navigator</codeinline> proporciona acceso a información sobre el navegador web, el sistema operativo sobre el que se ejecuta y las capacidades de cada uno. Por ejemplo, <codeinline>navigator.userAgent</codeinline> es una cadena que identifica al navegador web, <codeinline>navigator.language</codeinline> es el idioma preferido del usuario, y <codeinline>navigator.hardwareConcurrency</codeinline> devuelve el número de CPUs lógicas disponibles para el navegador web. Del mismo modo, la propiedad global <codeinline>screen</codeinline> proporciona acceso al tamaño de la pantalla del usuario a través de las propiedades <codeinline>screen.width</codeinline> y <codeinline>screen.height</codeinline>. En cierto sentido, estos objetos <codeinline>navigator</codeinline> y <codeinline>screen</codeinline> son para los navegadores web lo que las variables de entorno son para los programas Node.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          El contenido del propio documento, al que el código JavaScript puede acceder con la API DOM (<a href="#3">§15.3</a>).
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Entradas del usuario, en forma de eventos, como clics del ratón (o toques en la pantalla táctil) en elementos HTML <codeinline>&lt;button></codeinline>, o texto introducido en elementos HTML <codeinline>&lt;textarea></codeinline>, por ejemplo. En <a href="#2">§15.2</a> se muestra cómo los programas JavaScript pueden responder a este tipo de eventos de usuario.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          La URL del documento que se muestra está disponible para JavaScript del lado del cliente como <codeinline>document.URL</codeinline>. Si pasas esta cadena al constructor <codeinline>URL()</codeinline> (<a href="capitulo-11#9">§11.9</a>), puedes acceder fácilmente a las secciones path, query y fragment de la URL.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          El contenido de la cabecera de petición HTTP "Cookie" está disponible para el código del cliente como <codeinline>document.cookie</codeinline>. Las cookies suelen ser utilizadas por el código del servidor para mantener las sesiones de usuario, pero el código del cliente también puede leerlas (y escribirlas) si es necesario. Véase <a href="#12-2">§15.12.2</a> para más detalles.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          La propiedad global <codeinline>navigator</codeinline> proporciona acceso a información sobre el navegador web, el sistema operativo sobre el que se ejecuta y las capacidades de cada uno. Por ejemplo, <codeinline>navigator.userAgent</codeinline> es una cadena que identifica al navegador web, <codeinline>navigator.language</codeinline> es el idioma preferido del usuario, y <codeinline>navigator.hardwareConcurrency</codeinline> devuelve el número de CPUs lógicas disponibles para el navegador web. Del mismo modo, la propiedad global <codeinline>screen</codeinline> proporciona acceso al tamaño de la pantalla del usuario a través de las propiedades <codeinline>screen.width</codeinline> y <codeinline>screen.height</codeinline>. En cierto sentido, estos objetos <codeinline>navigator</codeinline> y <codeinline>screen</codeinline> son para los navegadores web lo que las variables de entorno son para los programas Node.
+        </p>
+      </li>
     </ul>
     <p>El JavaScript del lado del cliente normalmente produce resultados, cuando es necesario, manipulando el documento HTML con la API DOM (<a href="#3">§15.3</a>) o usando un framework de alto nivel como React o Angular para manipular el documento. El código del lado del cliente también puede usar <codeinline>console.log()</codeinline> y métodos relacionados (<a href="capitulo-11#8">§11.8</a>) para producir salida. Pero esta salida sólo es visible en la consola del desarrollador web, por lo que es útil cuando se depura, pero no para la salida visible por el usuario.</p>
   </section>
@@ -211,8 +371,18 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>15.1.8 El modelo de seguridad web</h2>
     <p>El hecho de que las páginas web puedan ejecutar código JavaScript arbitrario en su dispositivo personal tiene claras implicaciones de seguridad, y los proveedores de navegadores han trabajado duro para equilibrar dos objetivos contrapuestos:</p>
     <ul>
-      <li class="font-normal">Definición de potentes API del lado del cliente para crear aplicaciones web útiles</li>
-      <li class="font-normal">Evitar que códigos maliciosos lean o alteren sus datos, comprometan su privacidad, le estafen o le hagan perder el tiempo.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Definición de potentes API del lado del cliente para crear aplicaciones web útiles
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Evitar que códigos maliciosos lean o alteren sus datos, comprometan su privacidad, le estafen o le hagan perder el tiempo.
+        </p>
+      </li>
     </ul>
     <p>Las subsecciones siguientes ofrecen una rápida visión general de las restricciones y problemas de seguridad que, como programador de JavaScript, debe conocer.</p>
     <p class="title-article text-left">Lo que JavaScript no puede hacer</p>
@@ -427,11 +597,36 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Todo objeto Ventana tiene una propiedad <codeinline>document</codeinline> que hace referencia a un objeto Documento. El objeto Documento representa el contenido de la ventana, y es el tema de esta sección. Sin embargo, el objeto Document no es el único. Es el objeto central del DOM para representar y manipular el contenido de los documentos.</p>
     <p>El DOM se introdujo en <a href="#1-2">§15.1.2</a>. Esta sección explica la API en detalle. Abarca:</p>
     <ul>
-      <li class="font-normal">Cómo consultar o <em>seleccionar</em> elementos individuales de un documento.</li>
-      <li class="font-normal">Cómo <em>recorrer</em> un documento y cómo encontrar los ancestros, hermanos y descendientes de cualquier elemento del documento.</li>
-      <li class="font-normal">Cómo consultar y establecer los atributos de los elementos del documento.</li>
-      <li class="font-normal">Cómo consultar, fijar y modificar el contenido de un documento.</li>
-      <li class="font-normal">Cómo modificar la estructura de un documento creando, insertando y eliminando nodos.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Cómo consultar o <em>seleccionar</em> elementos individuales de un documento.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Cómo <em>recorrer</em> un documento y cómo encontrar los ancestros, hermanos y descendientes de cualquier elemento del documento.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Cómo consultar y establecer los atributos de los elementos del documento.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Cómo consultar, fijar y modificar el contenido de un documento.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Cómo modificar la estructura de un documento creando, insertando y eliminando nodos.
+        </p>
+      </li>
     </ul>
   </section>
   <section id="3-1">
@@ -647,8 +842,18 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>15.3.4 Elemento Contenido</h2>
     <p>Observe de nuevo el árbol de documentos de la <a href="#figure15-1">Figura 15-1</a> y pregúntese cuál es el "contenido" del elemento <codeinline>&lt;p></codeinline>. Hay dos formas de responder a esta pregunta:</p>
     <ul>
-      <li class="font-normal">El contenido es la cadena HTML "Este es un documento &lt;i>simple&lt;/i>".</li>
-      <li class="font-normal">El contenido es la cadena de texto plano "This is a simple document".</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          El contenido es la cadena HTML "Este es un documento &lt;i>simple&lt;/i>".
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          El contenido es la cadena de texto plano "This is a simple document".
+        </p>
+      </li>
     </ul>
     <p>Ambas respuestas son válidas, y cada una de ellas es útil a su manera. Las secciones siguientes explican cómo trabajar con la representación HTML y la representación en texto plano del contenido de un elemento.</p>
     <p class="title-article text-left">Contenido del elemento como HTML</p>
@@ -840,10 +1045,30 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Hemos visto que JavaScript puede controlar la estructura lógica y el contenido de los documentos HTML. También puede controlar la apariencia visual y el diseño de esos documentos mediante scripts CSS. Las siguientes subsecciones explican algunas técnicas diferentes que el código JavaScript puede utilizar para trabajar con CSS.</p>
     <p>Este es un libro sobre JavaScript, no sobre CSS, y esta sección asume que ya tienes un conocimiento práctico de cómo se usa CSS para dar estilo al contenido HTML. Pero vale la pena mencionar algunos de los estilos CSS que comúnmente se escriben desde JavaScript:</p>
     <ul>
-      <li class="font-normal">Al establecer el estilo de <codeinline>display</codeinline> en "none" se oculta un elemento. Más adelante podrá mostrar el elemento asignando a <codeinline>display</codeinline> otro valor.</li>
-      <li class="font-normal">Puede posicionar elementos dinámicamente estableciendo el estilo de <codeinline>position</codeinline> en "absoluto", "relativo" o "fijo" y, a continuación, estableciendo los estilos <codeinline>top</codeinline> e <codeinline>left</codeinline> en las coordenadas deseadas. Esto es importante cuando se utiliza JavaScript para mostrar contenido dinámico, como diálogos modales y descripciones emergentes.</li>
-      <li class="font-normal">Puede desplazar, escalar y rotar elementos con el estilo de <codeinline>transform</codeinline>.</li>
-      <li class="font-normal">Puede animar los cambios de otros estilos CSS con el estilo de transición. Estas animaciones son manejadas automáticamente por el navegador web y no requieren JavaScript, pero puede utilizar JavaScript para iniciar las animaciones.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Al establecer el estilo de <codeinline>display</codeinline> en "none" se oculta un elemento. Más adelante podrá mostrar el elemento asignando a <codeinline>display</codeinline> otro valor.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Puede posicionar elementos dinámicamente estableciendo el estilo de <codeinline>position</codeinline> en "absoluto", "relativo" o "fijo" y, a continuación, estableciendo los estilos <codeinline>top</codeinline> e <codeinline>left</codeinline> en las coordenadas deseadas. Esto es importante cuando se utiliza JavaScript para mostrar contenido dinámico, como diálogos modales y descripciones emergentes.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Puede desplazar, escalar y rotar elementos con el estilo de <codeinline>transform</codeinline>.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Puede animar los cambios de otros estilos CSS con el estilo de transición. Estas animaciones son manejadas automáticamente por el navegador web y no requieren JavaScript, pero puede utilizar JavaScript para iniciar las animaciones.
+        </p>
+      </li>
     </ul>
   </section>
   <section id="4-1" class="py-4 xs:py-5 sm:py-6">
@@ -919,10 +1144,30 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     let beforeStyles = window.getComputedStyle(title, "::before");</code></pre>
     <p>El valor de retorno de <codeinline>getComputedStyle()</codeinline> es un objeto CSSStyleDeclaration que representa todos los estilos que se aplican al elemento (o pseudoelemento) especificado. Hay varias diferencias importantes entre un objeto CSSStyleDeclaration que representa estilos en línea y uno que representa estilos calculados:</p>
     <ul>
-      <li class="font-normal">Las propiedades de estilo calculadas son de sólo lectura.</li>
-      <li class="font-normal">Las propiedades de estilo calculadas son <em>absolutas</em>: las unidades relativas como porcentajes y puntos se convierten en valores absolutos. Cualquier propiedad que especifique un tamaño (como un tamaño de margen o un tamaño de fuente) tendrá un valor medido en píxeles. Este valor será una cadena con un sufijo "px", por lo que tendrá que analizarlo, pero no tendrá que preocuparse de analizar o convertir otras unidades. Las propiedades cuyos valores sean colores se devolverán en formato "rgb()" o "rgba()"</li>
-      <li class="font-normal">Las propiedades de acceso directo no se calculan, sólo las propiedades fundamentales en las que se basan. Por ejemplo, no consulte la propiedad <codeinline>margin</codeinline>, sino <codeinline>marginLeft</codeinline>, <codeinline>marginTop</codeinline>, etc. Del mismo modo, no consulte <codeinline>border</codeinline> ni siquiera <codeinline>borderWidth</codeinline>. En su lugar, utilice <codeinline>borderLeftWidth</codeinline>, <codeinline>borderTopWidth</codeinline>, etc.</li>
-      <li class="font-normal">La propiedad <codeinline>cssText</codeinline> del estilo calculado no está definida.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Las propiedades de estilo calculadas son de sólo lectura.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Las propiedades de estilo calculadas son <em>absolutas</em>: las unidades relativas como porcentajes y puntos se convierten en valores absolutos. Cualquier propiedad que especifique un tamaño (como un tamaño de margen o un tamaño de fuente) tendrá un valor medido en píxeles. Este valor será una cadena con un sufijo "px", por lo que tendrá que analizarlo, pero no tendrá que preocuparse de analizar o convertir otras unidades. Las propiedades cuyos valores sean colores se devolverán en formato "rgb()" o "rgba()"
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Las propiedades de acceso directo no se calculan, sólo las propiedades fundamentales en las que se basan. Por ejemplo, no consulte la propiedad <codeinline>margin</codeinline>, sino <codeinline>marginLeft</codeinline>, <codeinline>marginTop</codeinline>, etc. Del mismo modo, no consulte <codeinline>border</codeinline> ni siquiera <codeinline>borderWidth</codeinline>. En su lugar, utilice <codeinline>borderLeftWidth</codeinline>, <codeinline>borderTopWidth</codeinline>, etc.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          La propiedad <codeinline>cssText</codeinline> del estilo calculado no está definida.
+        </p>
+      </li>
     </ul>
     <p>Un objeto CSSStyleDeclaration devuelto por <codeinline>getComputedStyle()</codeinline> generalmente contiene mucha más información sobre un elemento que la CSSStyleDeclaration obtenida de la propiedad de <codeinline>style</codeinline> en línea de ese elemento. Pero los estilos calculados pueden ser complicados, y su consulta no siempre proporciona la información que cabría esperar. Considere el atributo <codeinline>font-family</codeinline>: acepta una lista separada por comas de las familias de fuentes deseadas para la portabilidad entre plataformas. Cuando se consulta la propiedad <codeinline>fontFamily</codeinline> de un estilo calculado, simplemente se obtiene el valor del estilo <codeinline>font-family</codeinline> más específico que se aplica al elemento. Esto puede devolver un valor como "arial,helvetica,sans-serif", que no le dice qué tipo de letra está realmente en uso. Del mismo modo, si un elemento no tiene una posición absoluta, al intentar consultar su posición y tamaño a través de las propiedades <codeinline>top</codeinline> y <codeinline>left</codeinline> de su estilo calculado, a menudo se obtiene el valor <codeinline>auto</codeinline>. Este es un valor CSS perfectamente legal, pero probablemente no es lo que estabas buscando.</p>
     <p>Aunque CSS puede utilizarse para especificar con precisión la posición y el tamaño de los elementos del documento, consultar el estilo calculado de un elemento no es la forma preferida de determinar el tamaño y la posición del elemento. Véase <a href="#5-2">§15.5.2</a> para una alternativa más sencilla y portable.</p>
@@ -1200,17 +1445,51 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p class="title-article text-left">Encapsulación DOM en la sombra</p>
     <p>La característica clave del shadow DOM es la encapsulación que proporciona. Los descendientes de una raíz sombra están ocultos -e independientes- del árbol DOM normal, casi como si estuvieran en un documento independiente. Hay tres tipos muy importantes de encapsulación que proporciona el shadow DOM:</p>
     <ul>
-      <li class="font-normal">Como ya se ha mencionado, los elementos en el shadow DOM están ocultos a los métodos regulares del DOM como <codeinline>querySelectorAll()</codeinline>. Cuando se crea un shadow root y se adjunta a su shadow host, puede crearse en modo "abierto" o "cerrado". Una raíz sombra cerrada está completamente sellada y es inaccesible. Sin embargo, lo más común es que las raíces sombra se creen en modo "abierto", lo que significa que el shadow host tiene una propiedad <codeinline>shadowRoot</codeinline> que JavaScript puede utilizar para acceder a los elementos de la raíz sombra, si tiene alguna razón para hacerlo.</li>
-      <li class="font-normal">Los estilos definidos bajo una raíz sombra son privados para ese árbol y nunca afectarán a los elementos DOM ligeros del exterior. (Una raíz de sombra puede definir estilos predeterminados para su elemento anfitrión, pero éstos serán anulados por los estilos DOM ligeros). Del mismo modo, los estilos DOM ligeros que se aplican al elemento anfitrión de la sombra no afectan a los descendientes de la raíz de la sombra. Los elementos en el DOM de sombra heredarán cosas como el tamaño de la fuente y el color de fondo del DOM de luz, y los estilos en el DOM de sombra pueden optar por utilizar variables CSS definidas en el DOM de luz. Sin embargo, en su mayor p a r t e , los estilos del DOM claro y los estilos del DOM sombreado DOM son completamente independientes: el autor de un componente web y el usuario de un componente web no tienen que preocuparse por colisiones o conflictos entre sus hojas de estilo. Poder "abarcar" CSS de esta manera es quizá la característica más importante del shadow DOM.</li>
-      <li class="font-normal">Algunos eventos (como "load") que ocurren dentro del shadow DOM se limitan al shadow DOM. Otros, como los eventos de foco, ratón y teclado, se propagan hacia arriba y hacia afuera. Cuando un evento que se origina en el DOM sombra cruza el límite y comienza a propagarse en el DOM luz, su propiedad de <codeinline>target</codeinline> se cambia al elemento anfitrión sombra, por lo que parece haberse originado directamente en ese elemento.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Como ya se ha mencionado, los elementos en el shadow DOM están ocultos a los métodos regulares del DOM como <codeinline>querySelectorAll()</codeinline>. Cuando se crea un shadow root y se adjunta a su shadow host, puede crearse en modo "abierto" o "cerrado". Una raíz sombra cerrada está completamente sellada y es inaccesible. Sin embargo, lo más común es que las raíces sombra se creen en modo "abierto", lo que significa que el shadow host tiene una propiedad <codeinline>shadowRoot</codeinline> que JavaScript puede utilizar para acceder a los elementos de la raíz sombra, si tiene alguna razón para hacerlo.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Los estilos definidos bajo una raíz sombra son privados para ese árbol y nunca afectarán a los elementos DOM ligeros del exterior. (Una raíz de sombra puede definir estilos predeterminados para su elemento anfitrión, pero éstos serán anulados por los estilos DOM ligeros). Del mismo modo, los estilos DOM ligeros que se aplican al elemento anfitrión de la sombra no afectan a los descendientes de la raíz de la sombra. Los elementos en el DOM de sombra heredarán cosas como el tamaño de la fuente y el color de fondo del DOM de luz, y los estilos en el DOM de sombra pueden optar por utilizar variables CSS definidas en el DOM de luz. Sin embargo, en su mayor parte , los estilos del DOM claro y los estilos del DOM sombreado DOM son completamente independientes: el autor de un componente web y el usuario de un componente web no tienen que preocuparse por colisiones o conflictos entre sus hojas de estilo. Poder "abarcar" CSS de esta manera es quizá la característica más importante del shadow DOM.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Algunos eventos (como "load") que ocurren dentro del shadow DOM se limitan al shadow DOM. Otros, como los eventos de foco, ratón y teclado, se propagan hacia arriba y hacia afuera. Cuando un evento que se origina en el DOM sombra cruza el límite y comienza a propagarse en el DOM luz, su propiedad de <codeinline>target</codeinline> se cambia al elemento anfitrión sombra, por lo que parece haberse originado directamente en ese elemento.
+        </p>
+      </li>
     </ul>
     <p class="title-article text-left">Ranuras DOM de sombra e hijos DOM de luz</p>
     <p>Un elemento HTML que es un shadow host tiene dos árboles de descendientes. Uno es la matriz <codeinline>children[]</codeinline> -los descendientes DOM normales y claros del elemento anfitrión- y el otro es la raíz sombra y todos sus descendientes, y puede que te estés preguntando cómo pueden mostrarse dos árboles de contenido distintos dentro del mismo elemento anfitrión. Así es como funciona:</p>
     <ul>
-      <li class="font-normal">Los descendientes de la raíz sombra siempre se muestran dentro del host sombra.</li>
-      <li class="font-normal">Si esos descendientes incluyen un elemento <codeinline>&lt;slot></codeinline>, entonces los hijos regulares light DOM del elemento host se muestran como si fueran hijos de ese <codeinline>&lt;slot></codeinline>, reemplazando cualquier contenido shadow DOM en el slot. Si el shadow DOM no incluye un elemento <codeinline>&lt;slot></codeinline>, no se mostrará ningún contenido light DOM del host. Si el shadow DOM tiene una <codeinline>&lt;slot></codeinline>, pero el shadow host no tiene hijos light DOM, entonces el contenido shadow DOM de la ranura se muestra por defecto.</li>
-      <li class="font-normal">Cuando el contenido light DOM se muestra dentro de un espacio shadow DOM, decimos que esos elementos han sido "distribuidos", pero es importante entender que los elementos no se convierten realmente en parte del shadow DOM. Aún pueden consultarse con <codeinline>querySelector()</codeinline> y siguen apareciendo en el DOM claro como hijos o descendientes del elemento anfitrión.</li>
-      <li class="font-normal">Si el shadow DOM define más de una <codeinline>&lt;slot></codeinline> y <codeinline>name</codeinline> esas ranuras con un atributo name, los hijos del shadow host pueden especificar en qué ranura les gustaría aparecer especificando un atributo <codeinline>slot="slotname"</codeinline>. Vimos un ejemplo de este uso en <a href="#6-1">§15.6.1</a> cuando demostramos cómo personalizar los iconos que muestra el componente <codeinline>&lt;search-box></codeinline>.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Los descendientes de la raíz sombra siempre se muestran dentro del host sombra.
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Si esos descendientes incluyen un elemento <codeinline>&lt;slot></codeinline>, entonces los hijos regulares light DOM del elemento host se muestran como si fueran hijos de ese <codeinline>&lt;slot></codeinline>, reemplazando cualquier contenido shadow DOM en el slot. Si el shadow DOM no incluye un elemento <codeinline>&lt;slot></codeinline>, no se mostrará ningún contenido light DOM del host. Si el shadow DOM tiene una <codeinline>&lt;slot></codeinline>, pero el shadow host no tiene hijos light DOM, entonces el contenido shadow DOM de la ranura se muestra por defecto.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Cuando el contenido light DOM se muestra dentro de un espacio shadow DOM, decimos que esos elementos han sido "distribuidos", pero es importante entender que los elementos no se convierten realmente en parte del shadow DOM. Aún pueden consultarse con <codeinline>querySelector()</codeinline> y siguen apareciendo en el DOM claro como hijos o descendientes del elemento anfitrión.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Si el shadow DOM define más de una <codeinline>&lt;slot></codeinline> y <codeinline>name</codeinline> esas ranuras con un atributo name, los hijos del shadow host pueden especificar en qué ranura les gustaría aparecer especificando un atributo <codeinline>slot="slotname"</codeinline>. Vimos un ejemplo de este uso en <a href="#6-1">§15.6.1</a> cuando demostramos cómo personalizar los iconos que muestra el componente <codeinline>&lt;search-box></codeinline>.
+        </p>
+      </li>
     </ul>
     <p class="title-article text-left">API DOM en la sombra</p>
     <p>A pesar de toda su potencia, Shadow DOM no dispone de una API JavaScript. Para convertir un elemento DOM claro en un host de sombra, basta con llamar a su método <codeinline>attachShadow()</codeinline>, pasando <codeinline>&lbrace;mode: "open"}</codeinline> como único argumento. Este método devuelve un objeto shadow root y también establece ese objeto como valor de la propiedad <codeinline>shadowRoot</codeinline> del anfitrión. El objeto shadow root es un DocumentFragment, y puedes usar métodos DOM para añadirle contenido o simplemente establecer su propiedad <codeinline>innerHTML</codeinline> a una cadena HTML.</p>
@@ -1407,9 +1686,24 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>SVG (scalable vector graphics) es un formato de imagen. La palabra "vector" en su nombre indica que es fundamentalmente diferente de los formatos de imagen de trama, como GIF, JPEG y PNG, que especifican una matriz de valores de píxeles. En su lugar, una "imagen" SVG es una descripción precisa e independiente de la resolución (de ahí lo de "escalable") de los pasos necesarios para dibujar el gráfico deseado. Las imágenes SVG se describen mediante archivos de texto que utilizan el lenguaje de marcado XML, bastante similar al HTML.</p>
     <p>Existen tres formas de utilizar SVG en los navegadores web:</p>
     <ul>
-      <li class="font-normal">Puede utilizar archivos de imagen <em>.svg</em> con etiquetas HTML <codeinline>&lt;img></codeinline> normales, del mismo modo que utilizaría una imagen <em>.png</em> o <em>.jpeg</em>.</li>
-      <li class="font-normal">Dado que el formato SVG basado en XML es tan similar al HTML, puede incrustar etiquetas SVG directamente en sus documentos HTML. Si lo hace, el analizador HTML del navegador le permitirá omitir los espacios de nombres XML y tratar las etiquetas SVG como si fueran etiquetas HTML.</li>
-      <li class="font-normal">Puede utilizar la API DOM para crear dinámicamente elementos SVG que generen imágenes bajo demanda.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Puede utilizar archivos de imagen <em>.svg</em> con etiquetas HTML <codeinline>&lt;img></codeinline> normales, del mismo modo que utilizaría una imagen <em>.png</em> o <em>.jpeg</em>.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Dado que el formato SVG basado en XML es tan similar al HTML, puede incrustar etiquetas SVG directamente en sus documentos HTML. Si lo hace, el analizador HTML del navegador le permitirá omitir los espacios de nombres XML y tratar las etiquetas SVG como si fueran etiquetas HTML.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Puede utilizar la API DOM para crear dinámicamente elementos SVG que generen imágenes bajo demanda.
+        </p>
+      </li>
     </ul>
     <p>Las subsecciones siguientes muestran el segundo y tercer uso de SVG. Tenga en cuenta, sin embargo, que SVG tiene una gramática amplia y moderadamente compleja. Además de las sencillas primitivas de dibujo de formas, incluye soporte para curvas arbitrarias, texto y ani- mación. Los gráficos SVG pueden incluso incorporar scripts JavaScript y hojas de estilo CSS para añadir información de comportamiento y presentación. Una descripción completa de SVG va mucho más allá del alcance de este libro. El objetivo de esta sección es sólo para mostrar cómo se puede utilizar SVG en sus documentos HTML y la secuencia de comandos con JavaScript.</p>
   </section>
@@ -2220,9 +2514,24 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>15.10.3 Gestión del historial con hashchange Events</h2>
     <p>Una técnica de gestión del historial implica <codeinline>location.hash</codeinline> Estos son los datos clave que debes conocer para entender esta técnica</p>
     <ul>
-      <li class="font-normal">La propiedad <codeinline>location.hash</codeinline> establece el identificador de fragmento de la URL y se utiliza tradicionalmente para especificar el ID de una sección del documento a la que desplazarse. Pero <codeinline>location.hash</codeinline> no tiene por qué ser el ID de un elemento: puedes ponerle cualquier cadena. Mientras ningún elemento tenga esa cadena como ID, el navegador no se desplazará cuando establezcas la propiedad <codeinline>hash</codeinline> de esta forma.</li>
-      <li class="font-normal">Al establecer la propiedad <codeinline>location.hash</codeinline> se actualiza la URL que aparece en la barra de direcciones y, lo que es muy importante, se añade una entrada al historial del navegador.</li>
-      <li class="font-normal">Cada vez que cambia el identificador de fragmento del documento, el navegador dispara un evento "hashchange" en el objeto Window. Si estableces <codeinline>location.hash</codeinline> explícitamente, se dispara un evento "hashchange". Y, como hemos mencionado, este cambio en el objeto Location crea una nueva entrada en el historial de navegación del navegador. Así que si el usuario ahora pulsa el botón Atrás, el navegador volverá a su URL anterior antes de que establecieras <codeinline>location.hash</codeinline>. Pero esto significa que el identificador del fragmento ha cambiado de nuevo, por lo que en este caso se dispara otro evento "hashchange". Esto significa que mientras puedas crear un identificador de fragmento único para cada posible estado de tu aplicación, los eventos "hashchange" te notificarán si el usuario retrocede y avanza en su historial de navegación.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          La propiedad <codeinline>location.hash</codeinline> establece el identificador de fragmento de la URL y se utiliza tradicionalmente para especificar el ID de una sección del documento a la que desplazarse. Pero <codeinline>location.hash</codeinline> no tiene por qué ser el ID de un elemento: puedes ponerle cualquier cadena. Mientras ningún elemento tenga esa cadena como ID, el navegador no se desplazará cuando establezcas la propiedad <codeinline>hash</codeinline> de esta forma.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Al establecer la propiedad <codeinline>location.hash</codeinline> se actualiza la URL que aparece en la barra de direcciones y, lo que es muy importante, se añade una entrada al historial del navegador.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Cada vez que cambia el identificador de fragmento del documento, el navegador dispara un evento "hashchange" en el objeto Window. Si estableces <codeinline>location.hash</codeinline> explícitamente, se dispara un evento "hashchange". Y, como hemos mencionado, este cambio en el objeto Location crea una nueva entrada en el historial de navegación del navegador. Así que si el usuario ahora pulsa el botón Atrás, el navegador volverá a su URL anterior antes de que establecieras <codeinline>location.hash</codeinline>. Pero esto significa que el identificador del fragmento ha cambiado de nuevo, por lo que en este caso se dispara otro evento "hashchange". Esto significa que mientras puedas crear un identificador de fragmento único para cada posible estado de tu aplicación, los eventos "hashchange" te notificarán si el usuario retrocede y avanza en su historial de navegación.
+        </p>
+      </li>
     </ul>
     <p>Para utilizar este mecanismo de gestión del historial, tendrás que ser capaz de codificar la información de estado necesaria para representar una "página" de tu aplicación en una cadena de texto relativamente corta que sea adecuada para su uso como identificador de fragmento. Y tendrás que escribir una función para convertir el estado de la página en una cadena y otra función para analizar la cadena y recrear el estado de la página que representa.</p>
     <p>Una vez que hayas escrito esas funciones, el resto es fácil. Define una función window.onhash change (o registra un "hashchange" listener con <codeinline>addEventListener()</codeinline>) que lea <codeinline>location.hash</codeinline>, convierta esa cadena en una representación del estado de tu aplicación, y luego tome las acciones que sean necesarias para mostrar ese nuevo estado de la aplicación.</p>
@@ -2436,18 +2745,48 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Cada vez que se carga una página web, el navegador realiza peticiones de red -utilizando los protocolos HTTP y HTTPS- para un archivo HTML, así como para las imágenes, fuentes, scripts y hojas de estilo de los que depende el archivo. Pero además de ser capaces de hacer peticiones de red en respuesta a las acciones del usuario, los navegadores web también exponen APIs de JavaScript para la creación de redes.</p>
     <p>Esta sección cubre tres APIs de red:</p>
     <ul>
-      <li class="font-normal">El método <codeinline>fetch()</codeinline> define una API basada en promesas para realizar peticiones HTTP y HTTPS. La API <codeinline>fetch()</codeinline> simplifica las solicitudes GET básicas, pero cuenta con un amplio conjunto de funciones que también admite prácticamente cualquier caso de uso HTTP posible.</li>
-      <li class="font-normal">La API Server-Sent Events (o SSE) es una práctica interfaz basada en eventos para las técnicas HTTP de "sondeo prolongado", en las que el servidor web mantiene abierta la conexión de red para poder enviar datos al cliente cuando lo desee.</li>
-      <li class="font-normal">WebSockets es un protocolo de red que no es HTTP, sino que está diseñado para interactuar con HTTP. Define una API asíncrona de transmisión de mensajes en la que clientes y servidores pueden enviar y recibir mensajes entre sí de forma similar a los sockets de red TCP.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          El método <codeinline>fetch()</codeinline> define una API basada en promesas para realizar peticiones HTTP y HTTPS. La API <codeinline>fetch()</codeinline> simplifica las solicitudes GET básicas, pero cuenta con un amplio conjunto de funciones que también admite prácticamente cualquier caso de uso HTTP posible.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          La API Server-Sent Events (o SSE) es una práctica interfaz basada en eventos para las técnicas HTTP de "sondeo prolongado", en las que el servidor web mantiene abierta la conexión de red para poder enviar datos al cliente cuando lo desee.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          WebSockets es un protocolo de red que no es HTTP, sino que está diseñado para interactuar con HTTP. Define una API asíncrona de transmisión de mensajes en la que clientes y servidores pueden enviar y recibir mensajes entre sí de forma similar a los sockets de red TCP.
+        </p>
+      </li>
     </ul>
   </section>
   <section id="11-1">
     <h2>15.11.1 fetch()</h2>
     <p>Para peticiones HTTP básicas, el uso de <codeinline>fetch()</codeinline> es un proceso de tres pasos:</p>
     <ul>
-      <li class="font-normal">Llame a <codeinline>fetch()</codeinline>, pasando la URL cuyo contenido desea recuperar.</li>
-      <li class="font-normal">Obtener el objeto de respuesta que es devuelto asíncronamente por el paso 1 cuando la respuesta HTTP comienza a llegar y llamar a un método de este objeto de respuesta para pedir el cuerpo de la respuesta.</li>
-      <li class="font-normal">Obtén el objeto cuerpo devuelto de forma asíncrona en el paso 2 y procésalo como quieras.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Llame a <codeinline>fetch()</codeinline>, pasando la URL cuyo contenido desea recuperar.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Obtener el objeto de respuesta que es devuelto asíncronamente por el paso 1 cuando la respuesta HTTP comienza a llegar y llamar a un método de este objeto de respuesta para pedir el cuerpo de la respuesta.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Obtén el objeto cuerpo devuelto de forma asíncrona en el paso 2 y procésalo como quieras.
+        </p>
+      </li>
     </ul>
     <p>La API <codeinline>fetch()</codeinline> está completamente basada en promesas, y hay dos pasos asíncronos aquí, por lo que típicamente se esperan dos llamadas <codeinline>then()</codeinline> o dos expresiones <codeinline>await</codeinline> cuando se usa <codeinline>fetch()</codeinline>. (Y si has olvidado lo que son, puede que quieras releer el <a href="capitulo-13">Capítulo 13</a> antes de continuar con esta sección).</p>
     <pre>
@@ -2621,8 +2960,18 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>La propiedad <codeinline>body</codeinline> del objeto <codeinline>fetch()</codeinline> options no tiene por qué ser una cadena. Si tiene datos binarios en un array tipado o un objeto DataView o un ArrayBuffer, puede establecer la propiedad <codeinline>body</codeinline> a ese valor y especificar una cabecera "Content-Type" apropiada. Si tiene datos binarios en forma de Blob, puede simplemente establecer <codeinline>body</codeinline> al Blob. Los Blobs tienen una propiedad <codeinline>type</codeinline> que especifica su tipo de contenido, y el valor de esta propiedad se utiliza como valor por defecto de la cabecera "Content-Type".</p>
     <p>Con las peticiones POST, es algo común pasar un conjunto de parámetros nombre/valor en el cuerpo de la petición (en lugar de codificarlos en la parte de consulta de la URL). Hay dos formas de hacerlo:</p>
     <ul>
-      <li class="font-normal">Con las peticiones POST, es algo común pasar un conjunto de parámetros nombre/valor en el cuerpo de la petición (en lugar de codificarlos en la parte de consulta de la URL). Hay dos formas de hacerlo:</li>
-      <li class="font-normal">Si, por el contrario, especifica los nombres y valores de los parámetros con un objeto FormData, el cuerpo utilizará una codificación multiparte más detallada y "Content-Type" se establecerá como "multipart/form-data; boundary=..." con una cadena límite única que coincida con el cuerpo. El uso de un objeto FormData es particularmente útil cuando los valores que desea cargar son largos, o son objetos File o Blob que pueden tener cada uno su propio "Content-Type". Los objetos FormData se pueden crear e inicializar con valores pasando un elemento <codeinline>&lt;form></codeinline> al constructor <codeinline>FormData()</codeinline>. Pero también se pueden crear cuerpos de petición "multipart/form-data" invocando al constructor <codeinline>FormData()</codeinline> sin argumentos e inicializando los pares nombre/valor que representa con los métodos <codeinline>set()</codeinline> y <codeinline>append()</codeinline>.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Con las peticiones POST, es algo común pasar un conjunto de parámetros nombre/valor en el cuerpo de la petición (en lugar de codificarlos en la parte de consulta de la URL). Hay dos formas de hacerlo:
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Si, por el contrario, especifica los nombres y valores de los parámetros con un objeto FormData, el cuerpo utilizará una codificación multiparte más detallada y "Content-Type" se establecerá como "multipart/form-data; boundary=..." con una cadena límite única que coincida con el cuerpo. El uso de un objeto FormData es particularmente útil cuando los valores que desea cargar son largos, o son objetos File o Blob que pueden tener cada uno su propio "Content-Type". Los objetos FormData se pueden crear e inicializar con valores pasando un elemento <codeinline>&lt;form></codeinline> al constructor <codeinline>FormData()</codeinline>. Pero también se pueden crear cuerpos de petición "multipart/form-data" invocando al constructor <codeinline>FormData()</codeinline> sin argumentos e inicializando los pares nombre/valor que representa con los métodos <codeinline>set()</codeinline> y <codeinline>append()</codeinline>.
+        </p>
+      </li>
     </ul>
     <p class="title-article text-left">Carga de archivos con fetch()</p>
     <p>Cargar archivos desde el ordenador de un usuario a un servidor web es una tarea común y puede llevarse a cabo utilizando un objeto FormData como cuerpo de la petición. Una forma común de obtener un objeto File es mostrar un elemento <codeinline>&lt;input type="file"></codeinline> en su página web y escuchar eventos "change" en ese elemento. Cuando se produce un evento "change", el array <codeinline>files</codeinline> del elemento input debe contener al menos un objeto File. Los objetos File también están disponibles a través de la API HTML drag-and-drop. Esta API no está cubierta en este libro, pero puedes obtener archivos de la matriz <codeinline>dataTransfer.files</codeinline> del objeto de evento pasado a un escuchador de eventos para eventos "drop".</p>
@@ -2898,8 +3247,18 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>15.12.1 localStorage y sessionStorage</h2>
     <p>Las propiedades <codeinline>localStorage</codeinline> y <codeinline>sessionStorage</codeinline> del objeto Window hacen referencia a objetos Storage. Un objeto Storage se comporta de forma muy similar a un objeto JavaScript normal, con la salvedad de que:</p>
     <ul>
-      <li class="font-normal">Los valores de las propiedades de los objetos Storage deben ser cadenas.</li>
-      <li class="font-normal">Las propiedades almacenadas en un objeto Storage persisten. Si establece una propiedad del objeto local- Storage y luego el usuario recarga la página, el valor que guardó en esa propiedad sigue estando disponible para su programa.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Los valores de las propiedades de los objetos Storage deben ser cadenas.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Las propiedades almacenadas en un objeto Storage persisten. Si establece una propiedad del objeto local- Storage y luego el usuario recarga la página, el valor que guardó en esa propiedad sigue estando disponible para su programa.
+        </p>
+      </li>
     </ul>
     <p>Por ejemplo, puedes utilizar el objeto localStorage de la siguiente manera:</p>
     <pre>
@@ -3184,11 +3543,36 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>La función <codeinline>close()</codeinline> permite que un trabajador se termine a sí mismo, y es similar en efecto al método <codeinline>terminate()</codeinline> de un objeto Worker.</p>
     <p>Dado que WorkerGlobalScope es el objeto global para los trabajadores, tiene todas las propiedades del objeto global del núcleo de JavaScript, como el objeto JSON, la función <codeinline>isNaN()</codeinline> y el constructor <codeinline>Date()</codeinline>. Además, sin embargo, WorkerGlobalScope también tiene las siguientes propiedades del objeto Window del lado del cliente:</p>
     <ul>
-      <li class="font-normal"><codeinline>self</codeinline> es una referencia al propio objeto global. WorkerGlobalScope no es un objeto Window y no define una propiedad de <codeinline>window</codeinline>.</li>
-      <li class="font-normal">Los métodos de temporizador <codeinline>setTimeout()</codeinline>, <codeinline>clearTimeout()</codeinline>, <codeinline>setInterval()</codeinline>, y <codeinline>clearInterval()</codeinline>.</li>
-      <li class="font-normal">Una propiedad <codeinline>location</codeinline> que describe la URL que se pasó al constructor <codeinline>Worker()</codeinline>. Esta propiedad se refiere a un objeto Location, al igual que la propiedad <codeinline>location</codeinline> de una ventana. El objeto Location tiene las propiedades <codeinline>href</codeinline>, <codeinline>protocol</codeinline>, <codeinline>host</codeinline>, <codeinline>hostname</codeinline>, <codeinline>port</codeinline>, <codeinline>pathname</codeinline>, <codeinline>search</codeinline> y <codeinline>hash</codeinline>. En un trabajador, estas propiedades son de sólo lectura.</li>
-      <li class="font-normal">Una propiedad del <codeinline>navigator</codeinline> que hace referencia a un objeto con propiedades como las del objeto Navegador de una ventana. El objeto Navigator de un trabajador tiene las propiedades <codeinline>appName</codeinline>, <codeinline>appVersion</codeinline>, <codeinline>platform</codeinline>, <codeinline>userAgent</codeinline> y <codeinline>onLine</codeinline>.</li>
-      <li class="font-normal">Los métodos habituales de destino de eventos <codeinline>addEventListener()</codeinline> y <codeinline>removeEventListener()</codeinline>.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          <codeinline>self</codeinline> es una referencia al propio objeto global. WorkerGlobalScope no es un objeto Window y no define una propiedad de <codeinline>window</codeinline>.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Los métodos de temporizador <codeinline>setTimeout()</codeinline>, <codeinline>clearTimeout()</codeinline>, <codeinline>setInterval()</codeinline>, y <codeinline>clearInterval()</codeinline>.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Una propiedad <codeinline>location</codeinline> que describe la URL que se pasó al constructor <codeinline>Worker()</codeinline>. Esta propiedad se refiere a un objeto Location, al igual que la propiedad <codeinline>location</codeinline> de una ventana. El objeto Location tiene las propiedades <codeinline>href</codeinline>, <codeinline>protocol</codeinline>, <codeinline>host</codeinline>, <codeinline>hostname</codeinline>, <codeinline>port</codeinline>, <codeinline>pathname</codeinline>, <codeinline>search</codeinline> y <codeinline>hash</codeinline>. En un trabajador, estas propiedades son de sólo lectura.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Una propiedad del <codeinline>navigator</codeinline> que hace referencia a un objeto con propiedades como las del objeto Navegador de una ventana. El objeto Navigator de un trabajador tiene las propiedades <codeinline>appName</codeinline>, <codeinline>appVersion</codeinline>, <codeinline>platform</codeinline>, <codeinline>userAgent</codeinline> y <codeinline>onLine</codeinline>.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Los métodos habituales de destino de eventos <codeinline>addEventListener()</codeinline> y <codeinline>removeEventListener()</codeinline>.
+        </p>
+      </li>
     </ul>
     <p>Por último, el objeto WorkerGlobalScope incluye importantes API JavaScript del lado del cliente, como el objeto Console, la función <codeinline>fetch()</codeinline> y la API IndexedDB. WorkerGlobalScope también incluye el constructor <codeinline>Worker()</codeinline>, lo que significa que los hilos worker pueden crear sus propios workers.</p>
   </section>
@@ -3271,8 +3655,18 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     </figure>
     <p>El conjunto de Mandelbrot se define como el conjunto de puntos del plano complejo que, cuando se someten a un proceso repetido de multiplicación y suma compleja, producen un valor cuya magnitud permanece acotada. Los contornos del conjunto son sorprendentemente complejos, y calcular qué puntos son miembros del conjunto y cuáles no lo son exige un gran esfuerzo informático: para producir una imagen de 500×500 del conjunto de Mandelbrot, hay que calcular individualmente la pertenencia de cada uno de los 250.000 píxeles de la imagen. Y para verificar que el valor asociado a cada píxel sigue estando acotado, puede que tenga que repetir el proceso de multiplicación compleja 1.000 veces o más. (Con más iteraciones se obtienen límites más definidos para el conjunto; con menos iteraciones se obtienen límites más difusos). Con hasta 250 millones de pasos de aritmética compleja necesarios para producir una imagen de alta calidad del conjunto de Mandelbrot, se puede entender por qué el uso de trabajadores es una técnica valiosa. El <a href="#ejemplo15-14">Ejemplo 15-14</a> muestra el código worker que utilizaremos. Este archivo es relativamente compacto: es sólo el músculo computacional en bruto para el programa más grande. Sin embargo, vale la pena destacar dos cosas:</p>
     <ul>
-      <li class="font-normal">El trabajador crea un objeto ImageData para representar la cuadrícula rectangular de píxeles para los que está calculando la pertenencia al conjunto de Mandelbrot. Pero en lugar de almacenar los valores reales de los píxeles en ImageData, utiliza una matriz personalizada para tratar cada píxel como un entero de 32 bits. En esta matriz almacena el número de iteraciones necesarias para cada píxel. Si la magnitud del número complejo calculado para cada píxel es mayor que cuatro, entonces está matemáticamente garantizado que crecerá sin límites a partir de ese momento, y decimos que ha "escapado". Así que el valor que este trabajador devuelve para cada píxel es el número de iteraciones antes de que el valor haya escapado. Le decimos al trabajador el número máximo de iteraciones que debe intentar para cada valor, y los píxeles que alcanzan este número máximo se consideran dentro del conjunto.</li>
-      <li class="font-normal">El trabajador transfiere el ArrayBuffer asociado con el ImageData de vuelta al hilo principal para que la memoria asociada a él no tenga que ser copiada.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          El trabajador crea un objeto ImageData para representar la cuadrícula rectangular de píxeles para los que está calculando la pertenencia al conjunto de Mandelbrot. Pero en lugar de almacenar los valores reales de los píxeles en ImageData, utiliza una matriz personalizada para tratar cada píxel como un entero de 32 bits. En esta matriz almacena el número de iteraciones necesarias para cada píxel. Si la magnitud del número complejo calculado para cada píxel es mayor que cuatro, entonces está matemáticamente garantizado que crecerá sin límites a partir de ese momento, y decimos que ha "escapado". Así que el valor que este trabajador devuelve para cada píxel es el número de iteraciones antes de que el valor haya escapado. Le decimos al trabajador el número máximo de iteraciones que debe intentar para cada valor, y los píxeles que alcanzan este número máximo se consideran dentro del conjunto.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          El trabajador transfiere el ArrayBuffer asociado con el ImageData de vuelta al hilo principal para que la memoria asociada a él no tenga que ser copiada.
+        </p>
+      </li>
     </ul>
     <p><em>Ejemplo 15-14. Código de trabajo para calcular las regiones del conjunto de Mandelbrot</em></p>
     <pre>
@@ -3838,18 +4232,78 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>15.15 Resumen y sugerencias de lecturas complementarias</h2>
     <p>Este largo capítulo ha cubierto los fundamentos de la programación JavaScript del lado del cliente:</p>
     <ul>
-      <li class="font-normal">Cómo se incluyen los scripts y módulos JavaScript en las páginas web y cómo y cuándo se ejecutan.</li>
-      <li class="font-normal">El modelo de programación asíncrona y basada en eventos de JavaScript del lado del cliente.</li>
-      <li class="font-normal">El Modelo de Objetos del Documento (DOM) que permite al código JavaScript inspeccionar y modificar el contenido HTML del documento en el que está incrustado. Esta API DOM es el corazón de toda la programación JavaScript del lado del cliente.</li>
-      <li class="font-normal">Cómo el código JavaScript puede manipular los estilos CSS que se aplican al contenido dentro del documento.</li>
-      <li class="font-normal">Cómo el código JavaScript puede obtener las coordenadas de los elementos del documento en la ventana del navegador y dentro del propio documento.</li>
-      <li class="font-normal">Cómo crear "componentes web" de interfaz de usuario reutilizables con JavaScript, HTML y CSS utilizando las API de elementos personalizados y Shadow DOM.</li>
-      <li class="font-normal">Cómo mostrar y generar gráficos dinámicamente con SVG y HTML Elemento <codeinline>&lt;canvas></codeinline>.</li>
-      <li class="font-normal">Cómo añadir efectos de sonido con guión (tanto grabados como sintetizados) a tus páginas web.</li>
-      <li class="font-normal">Cómo JavaScript puede hacer que el navegador cargue nuevas páginas, retroceda y avance en el historial de navegación del usuario e incluso añada nuevas entradas al historial de navegación.</li>
-      <li class="font-normal">Cómo los programas JavaScript pueden intercambiar datos con servidores web utilizando los protocolos HTTP y WebSocket.</li>
-      <li class="font-normal">Cómo los programas JavaScript pueden almacenar datos en el navegador del usuario.</li>
-      <li class="font-normal">Cómo los programas JavaScript pueden utilizar hilos de trabajo para lograr una forma segura de concurrencia.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Cómo se incluyen los scripts y módulos JavaScript en las páginas web y cómo y cuándo se ejecutan.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          El modelo de programación asíncrona y basada en eventos de JavaScript del lado del cliente.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          El Modelo de Objetos del Documento (DOM) que permite al código JavaScript inspeccionar y modificar el contenido HTML del documento en el que está incrustado. Esta API DOM es el corazón de toda la programación JavaScript del lado del cliente.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Cómo el código JavaScript puede manipular los estilos CSS que se aplican al contenido dentro del documento.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Cómo el código JavaScript puede obtener las coordenadas de los elementos del documento en la ventana del navegador y dentro del propio documento.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Cómo crear "componentes web" de interfaz de usuario reutilizables con JavaScript, HTML y CSS utilizando las API de elementos personalizados y Shadow DOM.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Cómo mostrar y generar gráficos dinámicamente con SVG y HTML Elemento <codeinline>&lt;canvas></codeinline>.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Cómo añadir efectos de sonido con guión (tanto grabados como sintetizados) a tus páginas web.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Cómo JavaScript puede hacer que el navegador cargue nuevas páginas, retroceda y avance en el historial de navegación del usuario e incluso añada nuevas entradas al historial de navegación.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Cómo los programas JavaScript pueden intercambiar datos con servidores web utilizando los protocolos HTTP y WebSocket.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Cómo los programas JavaScript pueden almacenar datos en el navegador del usuario.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Cómo los programas JavaScript pueden utilizar hilos de trabajo para lograr una forma segura de concurrencia.
+        </p>
+      </li>
     </ul>
     <p>Éste ha sido, con diferencia, el capítulo más largo del libro. Pero no puede ni acercarse a cubrir todas las APIs disponibles para los navegadores web. La plataforma web es extensa y está en constante evolución, y mi objetivo en este capítulo era presentar las API básicas más importantes. Con los conocimientos adquiridos en este libro, estarás bien equipado para aprender y utilizar nuevas API a medida que las necesites. Pero no puedes aprender sobre una nueva API si no sabes que existe, así que las breves secciones que siguen terminan el capítulo con una lista rápida de características de la plataforma web que quizás quieras investigar en el futuro.</p>
   </section>
@@ -3876,24 +4330,91 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Los objetos Ventana y Documento tienen una serie de características que no se han
       tratado en este capítulo:</p>
     <ul>
-      <li class="font-normal">El objeto Window define los métodos <codeinline>alert()</codeinline>, <codeinline>confirm()</codeinline> y <codeinline>prompt()</codeinline> que muestran diálogos modales simples al usuario. Estos métodos bloquean el hilo principal. El método <codeinline>confirm()</codeinline> devuelve de forma sincrónica un valor booleano, y <codeinline>prompt()</codeinline> devuelve de forma sincrónica una cadena de texto introducida por el usuario. No son adecuados para uso productivo, pero pueden ser útiles para proyectos y prototipos sencillos.</li>
-      <li class="font-normal">Las propiedades <codeinline>navigator</codeinline> y <codeinline>screen</codeinline> del objeto Ventana se mencionaron de pasada al principio de este capítulo, pero los objetos Navegador y Pantalla a los que hacen referencia tienen algunas características que no se describieron aquí y que pueden resultarle útiles.</li>
-      <li class="font-normal">El método <codeinline>requestFullscreen()</codeinline> de cualquier objeto Element solicita que ese elemento (un elemento <codeinline>&lt;video></codeinline> o <codeinline>&lt;canvas></codeinline>, por ejemplo) se muestre en modo de pantalla completa. El método <codeinline>exitFullscreen()</codeinline> del documento vuelve al modo de visualización normal.</li>
-      <li class="font-normal">El método <codeinline>requestAnimationFrame()</codeinline> del objeto Window toma una función como argumento y la ejecuta cuando el navegador se prepara para renderizar el siguiente fotograma. Cuando se realizan cambios visuales (especialmente repetidos o animados), envolver el código con una llamada a <codeinline>requestAnimationFrame()</codeinline> puede ayudar a asegurar que los cambios se renderizan sin problemas y de forma optimizada por el navegador.</li>
-      <li class="font-normal">Si el usuario selecciona texto dentro de su documento, puede obtener detalles de esa selección con el método <codeinline>getSelection()</codeinline> de Window y obtener el texto seleccionado con <codeinline>getSelection().toString()</codeinline>. En algunos navegadores, <codeinline>navigator.clipboard</codeinline> es un objeto con una API asíncrona para leer y establecer el contenido del sistema portapapeles para permitir interacciones de copiar y pegar con aplicaciones fuera del navegador.</li>
-      <li class="font-normal">Una característica poco conocida de los navegadores web es que los elementos HTML con un atributo <codeinline>contenteditable="true"</codeinline> permiten editar su contenido. El método <codeinline>document.execCommand()</codeinline> habilita las funciones de edición de texto enriquecido para contenido editable.</li>
-      <li class="font-normal">Un MutationObserver permite a JavaScript monitorizar los cambios en, o por debajo de, un elemento específico del documento. Cree un MutationObserver con el constructor <codeinline>MutationObserver()</codeinline>, pasando la función callback que debe ser llamada cuando se realicen cambios. A continuación, llame al método <codeinline>observe()</codeinline> del MutationObserver para especificar qué partes de qué elemento deben ser monitorizadas.</li>
-      <li class="font-normal">Un IntersectionObserver permite a JavaScript determinar qué elementos del documento están en la pantalla y cuáles están cerca de estarlo. Resulta especialmente útil para aplicaciones que desean cargar contenido de forma dinámica a medida que el usuario se desplaza.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          El objeto Window define los métodos <codeinline>alert()</codeinline>, <codeinline>confirm()</codeinline> y <codeinline>prompt()</codeinline> que muestran diálogos modales simples al usuario. Estos métodos bloquean el hilo principal. El método <codeinline>confirm()</codeinline> devuelve de forma sincrónica un valor booleano, y <codeinline>prompt()</codeinline> devuelve de forma sincrónica una cadena de texto introducida por el usuario. No son adecuados para uso productivo, pero pueden ser útiles para proyectos y prototipos sencillos.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Las propiedades <codeinline>navigator</codeinline> y <codeinline>screen</codeinline> del objeto Ventana se mencionaron de pasada al principio de este capítulo, pero los objetos Navegador y Pantalla a los que hacen referencia tienen algunas características que no se describieron aquí y que pueden resultarle útiles.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          El método <codeinline>requestFullscreen()</codeinline> de cualquier objeto Element solicita que ese elemento (un elemento <codeinline>&lt;video></codeinline> o <codeinline>&lt;canvas></codeinline>, por ejemplo) se muestre en modo de pantalla completa. El método <codeinline>exitFullscreen()</codeinline> del documento vuelve al modo de visualización normal.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          El método <codeinline>requestAnimationFrame()</codeinline> del objeto Window toma una función como argumento y la ejecuta cuando el navegador se prepara para renderizar el siguiente fotograma. Cuando se realizan cambios visuales (especialmente repetidos o animados), envolver el código con una llamada a <codeinline>requestAnimationFrame()</codeinline> puede ayudar a asegurar que los cambios se renderizan sin problemas y de forma optimizada por el navegador.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Si el usuario selecciona texto dentro de su documento, puede obtener detalles de esa selección con el método <codeinline>getSelection()</codeinline> de Window y obtener el texto seleccionado con <codeinline>getSelection().toString()</codeinline>. En algunos navegadores, <codeinline>navigator.clipboard</codeinline> es un objeto con una API asíncrona para leer y establecer el contenido del sistema portapapeles para permitir interacciones de copiar y pegar con aplicaciones fuera del navegador.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Una característica poco conocida de los navegadores web es que los elementos HTML con un atributo <codeinline>contenteditable="true"</codeinline> permiten editar su contenido. El método <codeinline>document.execCommand()</codeinline> habilita las funciones de edición de texto enriquecido para contenido editable.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Un MutationObserver permite a JavaScript monitorizar los cambios en, o por debajo de, un elemento específico del documento. Cree un MutationObserver con el constructor <codeinline>MutationObserver()</codeinline>, pasando la función callback que debe ser llamada cuando se realicen cambios. A continuación, llame al método <codeinline>observe()</codeinline> del MutationObserver para especificar qué partes de qué elemento deben ser monitorizadas.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Un IntersectionObserver permite a JavaScript determinar qué elementos del documento están en la pantalla y cuáles están cerca de estarlo. Resulta especialmente útil para aplicaciones que desean cargar contenido de forma dinámica a medida que el usuario se desplaza.
+        </p>
+      </li>
     </ul>
   </section>
   <section id="15-6" class="py-4 xs:py-5 sm:py-6">
     <h2>15.15.6 Eventos</h2>
     <p>La gran cantidad y diversidad de eventos que admite la plataforma web puede resultar desalentadora. En este capítulo se han tratado diversos tipos de eventos, pero aquí te ofrecemos algunos más que pueden resultarte útiles:</p>
     <ul>
-      <li class="font-normal">Los navegadores disparan eventos "online" y "offline" en el objeto Window cuando el navegador obtiene o pierde una conexión a Internet.</li>
-      <li class="font-normal">Los navegadores disparan un evento "visiblitychange" en el objeto Document cuando un documento se vuelve visible o invisible (normalmente porque un usuario ha cambiado de pestaña). JavaScript puede comprobar <codeinline>document.visibilityState</codeinline> para determinar si su documento es actualmente "visible" u "oculto".</li>
-      <li class="font-normal">Los navegadores disponen de una complicada API que permite arrastrar y soltar interfaces de usuario y facilita el intercambio de datos con aplicaciones externas al navegador. Esta API incluye una serie de eventos, como "dragstart", "dragover", "dragend" y "drop". Esta API es complicada de utilizar correctamente, pero útil cuando se necesita. Es una API importante que debes conocer si quieres permitir a los usuarios arrastrar archivos desde su escritorio a tu aplicación web.</li>
-      <li class="font-normal">La API de bloqueo del puntero permite a JavaScript ocultar el puntero del ratón y obtener eventos de ratón sin procesar como cantidades de movimiento relativas en lugar de posiciones absolutas en la pantalla. Esto suele ser útil para los juegos. Llame a <codeinline>requestPointerLock()</codeinline> en el elemento al que desea que se dirijan todos los eventos del ratón. Después de hacer esto, los eventos "mousemove" enviados a ese elemento tendrán las propiedades <codeinline>movementX</codeinline> y <codeinline>movementY</codeinline>.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Los navegadores disparan eventos "online" y "offline" en el objeto Window cuando el navegador obtiene o pierde una conexión a Internet.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Los navegadores disparan un evento "visiblitychange" en el objeto Document cuando un documento se vuelve visible o invisible (normalmente porque un usuario ha cambiado de pestaña). JavaScript puede comprobar <codeinline>document.visibilityState</codeinline> para determinar si su documento es actualmente "visible" u "oculto".
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Los navegadores disponen de una complicada API que permite arrastrar y soltar interfaces de usuario y facilita el intercambio de datos con aplicaciones externas al navegador. Esta API incluye una serie de eventos, como "dragstart", "dragover", "dragend" y "drop". Esta API es complicada de utilizar correctamente, pero útil cuando se necesita. Es una API importante que debes conocer si quieres permitir a los usuarios arrastrar archivos desde su escritorio a tu aplicación web.
+        </p>
+      </li>
+  
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          La API de bloqueo del puntero permite a JavaScript ocultar el puntero del ratón y obtener eventos de ratón sin procesar como cantidades de movimiento relativas en lugar de posiciones absolutas en la pantalla. Esto suele ser útil para los juegos. Llame a <codeinline>requestPointerLock()</codeinline> en el elemento al que desea que se dirijan todos los eventos del ratón. Después de hacer esto, los eventos "mousemove" enviados a ese elemento tendrán las propiedades <codeinline>movementX</codeinline> y <codeinline>movementY</codeinline>.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          La API de bloqueo del puntero permite a JavaScript ocultar el puntero del ratón y obtener eventos de ratón sin procesar como cantidades de movimiento relativas en lugar de posiciones absolutas en la pantalla. Esto suele ser útil para los juegos. Llame a <codeinline>requestPointerLock()</codeinline> en el elemento al que desea que se dirijan todos los eventos del ratón. Después de hacer esto, los eventos "mousemove" enviados a ese elemento tendrán las propiedades <codeinline>movementX</codeinline> y <codeinline>movementY</codeinline>.
+        </p>
+      </li>
       <li class="font-normal">La API Gamepad añade soporte para mandos de juegos. Utilice <codeinline>navigator.getGamepads()</codeinline> para obtener objetos Gamepad conectados, y escuche los eventos "gamepadconnected" en el objeto Window para ser notificado cuando se conecte un nuevo mando. El objeto Gamepad define una API para consultar el estado actual de los botones del mando.</li>
     </ul>
   </section>
@@ -3901,22 +4422,72 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>15.15.7 Aplicaciones web progresivas y Service Workers</h2>
     <p>El término <em>Aplicaciones Web Progresivas</em>, o PWA, es una palabra de moda que describe las aplicaciones web que se construyen utilizando algunas tecnologías clave. Una documentación cuidadosa de estas tecnologías clave requeriría un libro propio, y no las he cubierto en este capítulo, pero deberías ser consciente de todas estas APIs. Vale la pena señalar que las API modernas y potentes como éstas están diseñadas normalmente para funcionar sólo en conexiones HTTPS seguras. Los sitios web que aún utilicen URLs <codeinline>http://</codeinline> no podrán aprovecharlas:</p>
     <ul>
-      <li class="font-normal">Un ServiceWorker es un tipo de hilo trabajador con la capacidad de interceptar, inspeccionar y responder a peticiones de red de la aplicación web a la que "sirve". Cuando una aplicación web registra un trabajador de servicio, el código de ese trabajador se vuelve persistente en el almacenamiento local del navegador, y cuando el usuario vuelve a visitar el sitio web asociado, el trabajador de servicio se reactiva. Los service workers pueden almacenar en caché las respuestas de la red (incluidos los archivos de código JavaScript), lo que significa que las aplicaciones web que utilizan service workers pueden instalarse en el ordenador del usuario para un inicio rápido y un uso sin conexión. El <em>Service Worker Cookbook</em> en <a href="https://serviceworke.rs">https://serviceworke.rs</a> es un valioso recurso para aprender sobre service workers y sus tecnologías relacionadas.</li>
-      <li class="font-normal">La API de caché está diseñada para ser utilizada por los trabajadores de servicio (pero también está disponible para código JavaScript regular fuera de los trabajadores). Funciona con los objetos Request y Response definidos por la API <codeinline>fetch()</codeinline> e implementa una caché de pares Request/Response. La API de caché permite a un trabajador de servicios almacenar en caché los scripts y otros activos de la aplicación web que sirve y también puede ayudar a permitir el uso sin conexión de la aplicación web (que es particularmente importante para los dispositivos móviles).</li>
-      <li class="font-normal">Un manifiesto web es un archivo con formato JSON que describe una aplicación web e incluye un nombre, una URL y enlaces a iconos de distintos tamaños. Si tu aplicación web utiliza un service worker e incluye una etiqueta <codeinline>&lt;link rel="manifest"></codeinline> que haga referencia a un archivo <codeinline>.web</codeinline> manifest, los navegadores (especialmente los navegadores de dispositivos móviles) pueden ofrecerte la opción de añadir un icono de la aplicación web a tu escritorio o pantalla de inicio.</li>
-      <li class="font-normal">La API de notificaciones permite a las aplicaciones web mostrar notificaciones utilizando el sistema de notificaciones nativo del sistema operativo, tanto en dispositivos móviles como de sobremesa. Las notificaciones pueden incluir una imagen y texto, y su código puede recibir un evento si el usuario hace clic en en la notificación. El uso de esta API se complica por el hecho de que primero debe solicitar el permiso del usuario para mostrar notificaciones.</li>
-      <li class="font-normal">La API Push permite a las aplicaciones web que disponen de un service worker (y que cuentan con el permiso del usuario) suscribirse a las notificaciones de un servidor y mostrarlas incluso cuando la propia aplicación no se está ejecutando. Las notificaciones Push son habituales en los dispositivos móviles, y la API Push acerca las aplicaciones web a la paridad de prestaciones con las aplicaciones nativas en móviles.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Un ServiceWorker es un tipo de hilo trabajador con la capacidad de interceptar, inspeccionar y responder a peticiones de red de la aplicación web a la que "sirve". Cuando una aplicación web registra un trabajador de servicio, el código de ese trabajador se vuelve persistente en el almacenamiento local del navegador, y cuando el usuario vuelve a visitar el sitio web asociado, el trabajador de servicio se reactiva. Los service workers pueden almacenar en caché las respuestas de la red (incluidos los archivos de código JavaScript), lo que significa que las aplicaciones web que utilizan service workers pueden instalarse en el ordenador del usuario para un inicio rápido y un uso sin conexión. El <em>Service Worker Cookbook</em> en <a href="https://serviceworke.rs">https://serviceworke.rs</a> es un valioso recurso para aprender sobre service workers y sus tecnologías relacionadas.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          La API de caché está diseñada para ser utilizada por los trabajadores de servicio (pero también está disponible para código JavaScript regular fuera de los trabajadores). Funciona con los objetos Request y Response definidos por la API <codeinline>fetch()</codeinline> e implementa una caché de pares Request/Response. La API de caché permite a un trabajador de servicios almacenar en caché los scripts y otros activos de la aplicación web que sirve y también puede ayudar a permitir el uso sin conexión de la aplicación web (que es particularmente importante para los dispositivos móviles).
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Un manifiesto web es un archivo con formato JSON que describe una aplicación web e incluye un nombre, una URL y enlaces a iconos de distintos tamaños. Si tu aplicación web utiliza un service worker e incluye una etiqueta <codeinline>&lt;link rel="manifest"></codeinline> que haga referencia a un archivo <codeinline>.web</codeinline> manifest, los navegadores (especialmente los navegadores de dispositivos móviles) pueden ofrecerte la opción de añadir un icono de la aplicación web a tu escritorio o pantalla de inicio.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          La API de notificaciones permite a las aplicaciones web mostrar notificaciones utilizando el sistema de notificaciones nativo del sistema operativo, tanto en dispositivos móviles como de sobremesa. Las notificaciones pueden incluir una imagen y texto, y su código puede recibir un evento si el usuario hace clic en en la notificación. El uso de esta API se complica por el hecho de que primero debe solicitar el permiso del usuario para mostrar notificaciones.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          La API Push permite a las aplicaciones web que disponen de un service worker (y que cuentan con el permiso del usuario) suscribirse a las notificaciones de un servidor y mostrarlas incluso cuando la propia aplicación no se está ejecutando. Las notificaciones Push son habituales en los dispositivos móviles, y la API Push acerca las aplicaciones web a la paridad de prestaciones con las aplicaciones nativas en móviles.
+        </p>
+      </li>
     </ul>
   </section>
   <section id="15-8" class="py-4 xs:py-5 sm:py-6">
     <h2>15.15.8 API para dispositivos móviles</h2>
     <p>Hay una serie de API web que son útiles principalmente para aplicaciones web que se ejecutan en dispositivos móviles. (Por desgracia, varias de estas API solo funcionan en dispositivos Android y no en iOS).</p>
     <ul>
-      <li class="font-normal">La API de geolocalización permite a JavaScript (con el permiso del usuario) determinar la ubicación física del usuario. Es compatible con dispositivos móviles y de escritorio, incluidos los dispositivos iOS. Utilice <codeinline>navigator.geolocation.getCurrentPosition()</codeinline> para solicitar la posición actual del usuario y utilice <codeinline>navigator.geolocation.watchPosition()</codeinline> para registrar una llamada de retorno a la que llamar cuando cambie la posición del usuario.</li>
-      <li class="font-normal">El método <codeinline>navigator.vibrate()</codeinline> hace que un dispositivo móvil (pero no iOS) vibre. A menudo esto sólo se permite en respuesta a un gesto del usuario, pero llamar a este método permitirá a su aplicación para proporcionar retroalimentación silenciosa que un gesto ha sido reconocido.</li>
-      <li class="font-normal">La API ScreenOrientation permite a una aplicación web consultar la orientación actual de la pantalla de un dispositivo móvil y también bloquearse en la orientación horizontal o vertical.</li>
-      <li class="font-normal">Los eventos "devicemotion" y "deviceorientation" del objeto ventana informan de los datos del acelerómetro y el magnetómetro del dispositivo, lo que permite determinar cómo se acelera el dispositivo y cómo lo orienta el usuario en el espacio. (Estos eventos sí funcionan en iOS).</li>
-      <li class="font-normal">La API de sensores aún no es ampliamente compatible más allá de Chrome en dispositivos Android, pero permite a JavaScript acceder a todo el conjunto de sensores de dispositivos móviles, incluidos el acelerómetro, el giroscopio, el magnetómetro y el sensor de luz ambiental. Estos sensores permiten a JavaScript determinar en qué dirección mira un usuario o detectar, por ejemplo, si el usuario agita el teléfono.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          La API de geolocalización permite a JavaScript (con el permiso del usuario) determinar la ubicación física del usuario. Es compatible con dispositivos móviles y de escritorio, incluidos los dispositivos iOS. Utilice <codeinline>navigator.geolocation.getCurrentPosition()</codeinline> para solicitar la posición actual del usuario y utilice <codeinline>navigator.geolocation.watchPosition()</codeinline> para registrar una llamada de retorno a la que llamar cuando cambie la posición del usuario.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          El método <codeinline>navigator.vibrate()</codeinline> hace que un dispositivo móvil (pero no iOS) vibre. A menudo esto sólo se permite en respuesta a un gesto del usuario, pero llamar a este método permitirá a su aplicación para proporcionar retroalimentación silenciosa que un gesto ha sido reconocido.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          La API ScreenOrientation permite a una aplicación web consultar la orientación actual de la pantalla de un dispositivo móvil y también bloquearse en la orientación horizontal o vertical.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Los eventos "devicemotion" y "deviceorientation" del objeto ventana informan de los datos del acelerómetro y el magnetómetro del dispositivo, lo que permite determinar cómo se acelera el dispositivo y cómo lo orienta el usuario en el espacio. (Estos eventos sí funcionan en iOS).
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          La API de sensores aún no es ampliamente compatible más allá de Chrome en dispositivos Android, pero permite a JavaScript acceder a todo el conjunto de sensores de dispositivos móviles, incluidos el acelerómetro, el giroscopio, el magnetómetro y el sensor de luz ambiental. Estos sensores permiten a JavaScript determinar en qué dirección mira un usuario o detectar, por ejemplo, si el usuario agita el teléfono.
+        </p>
+      </li>
     </ul>
   </section>
   <section id="15-9">

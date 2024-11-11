@@ -8,9 +8,24 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h1>JavaScript del lado del servidor con Node</h1>
     <p>Node es JavaScript con enlaces al sistema operativo subyacente, lo que permite escribir programas JavaScript que leen y escriben archivos, ejecutan procesos hijo y se comunican a través de la red. Esto hace que Node sea útil como:</p>
     <ul>
-      <li class="font-normal">Alternativa moderna a los scripts de shell que no adolece de la sintaxis arcana de bash y otros shells de Unix.</li>
-      <li class="font-normal">Lenguaje de programación de uso general para ejecutar programas fiables, no sujeto a las restricciones de seguridad impuestas por los navegadores web al código no fiable.</li>
-      <li class="font-normal">Entorno popular para escribir servidores web eficientes y altamente concurrentes.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Alternativa moderna a los scripts de shell que no adolece de la sintaxis arcana de bash y otros shells de Unix
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Lenguaje de programación de uso general para ejecutar programas fiables, no sujeto a las restricciones de seguridad impuestas por los navegadores web al código no fiable.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Entorno popular para escribir servidores web eficientes y altamente concurrentes.
+        </p>
+      </li>
     </ul>
     <p>La característica que define a Node es su concurrencia basada en eventos de un solo hilo, habilitada por una API asíncrona por defecto. Si has programado en otros lenguajes pero no has hecho mucho código JavaScript, o si eres un programador JavaScript experimentado acostumbrado a escribir código para navegadores web, usar Node será un poco de adaptación, como lo es cualquier lenguaje o entorno de programación nuevo. Este capítulo comienza explicando el modelo de programación de Node, con énfasis en la concurrencia, la API de Node para trabajar con datos en streaming y el tipo Buffer de Node para trabajar con datos binarios. Estas secciones iniciales son seguidas por secciones que resaltan y demuestran algunas de las APIs más importantes de Node, incluyendo aquellas para trabajar con archivos, redes, procesos e hilos.</p>
     <p>Un capítulo no es suficiente para documentar todas las APIs de Node, pero mi esperanza es que este capítulo explique lo suficiente de los fundamentos para hacerte productivo con Node, y confiado en que puedes dominar cualquier nueva API que necesites.</p>
@@ -52,8 +67,18 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     ]</pre>
     <p>Hay que tener en cuenta un par de cosas:</p>
     <ul>
-      <li class="font-normal">El primer y segundo elemento de <codeinline>process.argv</codeinline> serán rutas de sistema de archivos completamente cualificadas al ejecutable Node y al archivo de JavaScript que se está ejecutando, incluso si no los has escrito de esa forma.</li>
-      <li class="font-normal">Los argumentos de línea de comandos que están destinados e interpretados por el propio ejecutable Node son consumidos por el ejecutable Node y no aparecen en <codeinline>process.argv</codeinline>. (El argumento de línea de comandos <codeinline>--trace-uncaught</codeinline> en realidad no está haciendo nada útil en el ejemplo anterior; sólo está ahí para demostrar que no aparece en la salida). Cualquier argumento (como <codeinline>--arg1</codeinline> y <codeinline>filename</codeinline>) que aparezca después del nombre del archivo JavaScript aparecerá en <codeinline>process.argv</codeinline>.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          El primer y segundo elemento de <codeinline>process.argv</codeinline> serán rutas de sistema de archivos completamente cualificadas al ejecutable Node y al archivo de JavaScript que se está ejecutando, incluso si no los has escrito de esa forma.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Los argumentos de línea de comandos que están destinados e interpretados por el propio ejecutable Node son consumidos por el ejecutable Node y no aparecen en <codeinline>process.argv</codeinline>. (El argumento de línea de comandos <codeinline>--trace-uncaught</codeinline> en realidad no está haciendo nada útil en el ejemplo anterior; sólo está ahí para demostrar que no aparece en la salida). Cualquier argumento (como <codeinline>--arg1</codeinline> y <codeinline>filename</codeinline>) que aparezca después del nombre del archivo JavaScript aparecerá en <codeinline>process.argv</codeinline>.
+        </p>
+      </li>
     </ul>
     <p>Los programas Node también pueden tomar información de variables de entorno al estilo Unix. Node las hace disponibles a través del objeto <codeinline>process.env</codeinline>. Los nombres de las propiedades de este objeto son nombres de variables de entorno, y los valores de las propiedades (siempre cadenas) son los valores de esas variables.</p>
     <p>Aquí está una lista parcial de las variables de entorno en mi sistema:</p>
@@ -1006,9 +1031,18 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     }</code></pre>
     <p>Además de realizar peticiones HTTP y HTTPS, los módulos "http" y "https" también permiten escribir servidores que respondan a esas peticiones. El planteamiento básico es el siguiente:</p>
     <ul>
-      <li class="font-normal">Crea un nuevo objeto Servidor.</li>
-      <li class="font-normal">Llama a su método <codeinline>listen()</codeinline> para comenzar a escuchar peticiones en un puerto especificado.</li>
-      <li class="font-normal">Registra un manejador de eventos para eventos "request", usa ese manejador para leer la petición del cliente (particularmente la propiedad <codeinline>request.url</codeinline>), y escribe tu respuesta.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>Crea un nuevo objeto Servidor.</p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>Llama a su método <codeinline>listen()</codeinline> para comenzar a escuchar peticiones en un puerto especificado.</p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>Registra un manejador de eventos para eventos "request", usa ese manejador para leer la petición del cliente (particularmente la propiedad <codeinline>request.url</codeinline>), y escribe tu respuesta.</p>
+      </li>
     </ul>
     <p>El código que sigue crea un servidor HTTP simple que sirve archivos estáticos desde el sistema de archivos local y también implementa un punto final de depuración que responde a la solicitud de un cliente haciendo eco de esa solicitud.</p>
     <pre>
@@ -1235,13 +1269,48 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       <p class="title-article">Opciones del proceso infantil</p>
       <p><codeinline>execSync()</codeinline> y muchas otras funciones <codeinline>child_process</codeinline> tienen un segundo o tercer argumento opcional que especifica detalles adicionales sobre cómo se ejecutará el proceso hijo. La propiedad <codeinline>encoding</codeinline> de este objeto se utilizó anteriormente para especificar que deseamos que la salida del comando se entregue como una cadena en lugar de como un buffer. Otras propiedades importantes que puede especificar incluyen las siguientes (tenga en cuenta que no todas las opciones están disponibles para todas las funciones de proceso hijo):</p>
       <ul>
-        <li class="font-normal"><codeinline>cwd</codeinline> especifica el directorio de trabajo para el proceso hijo. Si se omite, el proceso hijo hereda el valor de <codeinline>process.cwd()</codeinline>.</li>
-        <li class="font-normal"><codeinline>env</codeinline> especifica las variables de entorno a las que tendrá acceso el proceso hijo. Por defecto, los procesos hijos simplemente heredan <codeinline>process.env</codeinline>, pero puede especificar un objeto diferente si lo desea.</li>
-        <li class="font-normal"><codeinline>input</codeinline> especifica una cadena o búfer de datos de entrada que debe utilizarse como entrada estándar del proceso hijo. Esta opción sólo está disponible para las funciones síncronas que no devuelven un objeto ChildProcess.</li>
-        <li class="font-normal"><codeinline>maxBuffer</codeinline> especifica el número máximo de bytes de salida que serán recogidos por las funciones <codeinline>exec</codeinline>. (No se aplica a <codeinline>spawn()</codeinline> y <codeinline>fork()</codeinline>, que utilizan flujos). Si un proceso hijo produce más salida que esto, será matado y saldrá con un error.</li>
-        <li class="font-normal"><codeinline>shell</codeinline> especifica la ruta a un ejecutable de shell o <codeinline>true</codeinline>. Para funciones de proceso hijo que normalmente ejecutan un comando shell, esta opción permite especificar qué shell utilizar. Para las funciones que normalmente no utilizan un intérprete de órdenes, esta opción permite especificar que se debe utilizar un intérprete de órdenes (estableciendo la propiedad en <codeinline>true</codeinline>) o especificar exactamente qué intérprete de órdenes se debe utilizar.</li>
-        <li class="font-normal"><codeinline>timeout</codeinline> especifica el número máximo de milisegundos que se debe permitir ejecutar al proceso hijo. Si no ha salido antes de que transcurra este tiempo, será matado y saldrá con un error. (Esta opción se aplica a las funciones <codeinline>exec</codeinline> pero no a <codeinline>spawn()</codeinline> o <codeinline>fork()</codeinline>.)</li>
-        <li class="font-normal"><codeinline>uid</codeinline> especifica el ID de usuario (un número) bajo el cual debe ejecutarse el programa. Si el proceso padre se está ejecutando en una cuenta con privilegios, puede utilizar esta opción para ejecutar el proceso hijo con privilegios reducidos.</li>
+        <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+          <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+          <p>
+            <codeinline>cwd</codeinline> especifica el directorio de trabajo para el proceso hijo. Si se omite, el proceso hijo hereda el valor de <codeinline>process.cwd()</codeinline>.
+          </p>
+        </li>
+        <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+          <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+          <p>
+            <codeinline>env</codeinline> especifica las variables de entorno a las que tendrá acceso el proceso hijo. Por defecto, los procesos hijos simplemente heredan <codeinline>process.env</codeinline>, pero puede especificar un objeto diferente si lo desea.
+          </p>
+        </li>
+        <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+          <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+          <p>
+            <codeinline>input</codeinline> especifica una cadena o búfer de datos de entrada que debe utilizarse como entrada estándar del proceso hijo. Esta opción sólo está disponible para las funciones síncronas que no devuelven un objeto ChildProcess.
+          </p>
+        </li>
+        <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+          <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+          <p>
+            <codeinline>maxBuffer</codeinline> especifica el número máximo de bytes de salida que serán recogidos por las funciones <codeinline>exec</codeinline>. (No se aplica a <codeinline>spawn()</codeinline> y <codeinline>fork()</codeinline>, que utilizan flujos). Si un proceso hijo produce más salida que esto, será matado y saldrá con un error.
+          </p>
+        </li>
+        <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+          <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+          <p>
+            <codeinline>shell</codeinline> especifica la ruta a un ejecutable de shell o <codeinline>true</codeinline>. Para funciones de proceso hijo que normalmente ejecutan un comando shell, esta opción permite especificar qué shell utilizar. Para las funciones que normalmente no utilizan un intérprete de órdenes, esta opción permite especificar que se debe utilizar un intérprete de órdenes (estableciendo la propiedad en <codeinline>true</codeinline>) o especificar exactamente qué intérprete de órdenes se debe utilizar.
+          </p>
+        </li>
+        <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+          <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+          <p>
+            <codeinline>timeout</codeinline> especifica el número máximo de milisegundos que se debe permitir ejecutar al proceso hijo. Si no ha salido antes de que transcurra este tiempo, será matado y saldrá con un error. (Esta opción se aplica a las funciones <codeinline>exec</codeinline> pero no a <codeinline>spawn()</codeinline> o <codeinline>fork()</codeinline>.)
+          </p>
+        </li>
+        <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+          <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+          <p>
+            <codeinline>uid</codeinline> especifica el ID de usuario (un número) bajo el cual debe ejecutarse el programa. Si el proceso padre se está ejecutando en una cuenta con privilegios, puede utilizar esta opción para ejecutar el proceso hijo con privilegios reducidos.
+          </p>
+        </li>
       </ul>
     </article>
   </section>
@@ -1316,9 +1385,24 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>En lugar de utilizar memoria compartida, los subprocesos de trabajo de JavaScript se comunican mediante el paso de mensajes. El subproceso principal puede enviar un mensaje a un subproceso trabajador llamando al método <codeinline>postMessage()</codeinline> del objeto Worker que representa a ese subproceso. El subproceso trabajador puede recibir mensajes de su padre escuchando eventos "mensaje". Y los workers pueden enviar mensajes al hilo principal con su propia versión de postMes <codeinline>sage()</codeinline>, que el padre puede recibir con su propio manejador de eventos "message". El código de ejemplo de dejará claro cómo funciona esto.</p>
     <p>Hay tres razones por las que podrías querer utilizar hilos de trabajo en una aplicación Node:</p>
     <ul>
-      <li class="font-normal">Si tu aplicación realmente necesita hacer más cálculos de los que un núcleo de CPU puede manejar, entonces los hilos te permiten distribuir el trabajo a través de los múltiples núcleos, que se han convertido en algo común en los ordenadores de hoy en día. Si estás haciendo computación científica o aprendizaje automático o procesamiento de gráficos en Node, entonces es posible que desees utilizar hilos simplemente para lanzar más potencia de cálculo a tu problema.</li>
-      <li class="font-normal">Incluso si su aplicación no está utilizando toda la potencia de una CPU, es posible que desee utilizar hilos para mantener la capacidad de respuesta del hilo principal. Pensemos en un servidor que gestiona peticiones grandes pero relativamente infrecuentes. Supongamos que sólo recibe una petición por segundo, pero necesita emplear alrededor de medio segundo de cálculo (limitado a la CPU de bloqueo) para procesar cada petición. Por término medio, estará inactivo el 50% del tiempo. Pero cuando llegan dos peticiones con pocos milisegundos de diferencia, el servidor ni siquiera podrá empezar a responder a la segunda petición hasta que termine el cálculo de la primera respuesta. En cambio, si el servidor utiliza un subproceso de trabajo para realizar el cálculo, el servidor puede empezar a responder a ambas peticiones inmediatamente y proporcionar una mejor experiencia a los clientes del servidor. Suponiendo que el servidor tenga más de un núcleo de CPU, también puede calcular el cuerpo de ambas respuestas en paralelo, pero incluso si sólo hay un único núcleo, el uso de trabajadores mejora la capacidad de respuesta.</li>
-      <li class="font-normal">En general, los workers nos permiten convertir operaciones síncronas bloqueantes en operaciones asíncronas no bloqueantes. Si estás escribiendo un programa que depende de código heredado que es inevitablemente síncrono, puedes utilizar workers para evitar el bloqueo cuando necesites llamar a ese código heredado.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Si tu aplicación realmente necesita hacer más cálculos de los que un núcleo de CPU puede manejar, entonces los hilos te permiten distribuir el trabajo a través de los múltiples núcleos, que se han convertido en algo común en los ordenadores de hoy en día. Si estás haciendo computación científica o aprendizaje automático o procesamiento de gráficos en Node, entonces es posible que desees utilizar hilos simplemente para lanzar más potencia de cálculo a tu problema.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Incluso si su aplicación no está utilizando toda la potencia de una CPU, es posible que desee utilizar hilos para mantener la capacidad de respuesta del hilo principal. Pensemos en un servidor que gestiona peticiones grandes pero relativamente infrecuentes. Supongamos que sólo recibe una petición por segundo, pero necesita emplear alrededor de medio segundo de cálculo (limitado a la CPU de bloqueo) para procesar cada petición. Por término medio, estará inactivo el 50% del tiempo. Pero cuando llegan dos peticiones con pocos milisegundos de diferencia, el servidor ni siquiera podrá empezar a responder a la segunda petición hasta que termine el cálculo de la primera respuesta. En cambio, si el servidor utiliza un subproceso de trabajo para realizar el cálculo, el servidor puede empezar a responder a ambas peticiones inmediatamente y proporcionar una mejor experiencia a los clientes del servidor. Suponiendo que el servidor tenga más de un núcleo de CPU, también puede calcular el cuerpo de ambas respuestas en paralelo, pero incluso si sólo hay un único núcleo, el uso de trabajadores mejora la capacidad de respuesta.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          En general, los workers nos permiten convertir operaciones síncronas bloqueantes en operaciones asíncronas no bloqueantes. Si estás escribiendo un programa que depende de código heredado que es inevitablemente síncrono, puedes utilizar workers para evitar el bloqueo cuando necesites llamar a ese código heredado.
+        </p>
+      </li>
     </ul>
     <p>Los hilos de trabajo no son tan pesados como los procesos hijo, pero no son ligeros. Por lo general, no tiene sentido crear un trabajador a menos que tenga que realizar un trabajo significativo. Y, en términos generales, si su programa no está limitado por la CPU y no tiene problemas de respuesta, entonces probablemente no necesite hilos trabajadores.</p>
   </section>
@@ -1388,16 +1472,60 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>16.11.2 Entorno de ejecución del trabajador</h2>
     <p>En su mayor parte, el código JavaScript en un subproceso de Node worker se ejecuta igual que en el subproceso principal de Node. Hay algunas diferencias que debes tener en cuenta, y algunas de estas diferencias implican propiedades del segundo argumento opcional del constructor <codeinline>Worker()</codeinline>:</p>
     <ul>
-      <li class="font-normal">Como hemos visto, <codeinline>threads.isMainThread</codeinline> es <codeinline>true</codeinline> en el hilo principal pero siempre es <codeinline>false</codeinline> en cualquier hilo trabajador.</li>
-      <li class="font-normal">En un subproceso trabajador, puedes utilizar <codeinline>threads.parentPort.postMessage()</codeinline> para enviar un mensaje al subproceso padre e <codeinline>threads.parentPort.on</codeinline> para registrar manejadores de eventos para mensajes del subproceso padre. En el hilo principal, <codeinline>threads.parentPort</codeinline> es siempre <codeinline>null</codeinline>.</li>
-      <li class="font-normal">En un subproceso trabajador, <codeinline>threads.workerData</codeinline> se establece como una copia de la propiedad <codeinline>workerData</codeinline> del segundo argumento del constructor <codeinline>Worker()</codeinline>. En el hilo principal, esta propiedad es siempre <codeinline>null</codeinline>. Puedes utilizar esta propiedad <codeinline>workerData</codeinline> para pasar una propiedad mensaje al trabajador que estará disponible tan pronto como se inicie para que el trabajador no tenga que esperar a un evento "mensaje" antes de que pueda empezar a hacer el trabajo.</li>
-      <li class="font-normal">Por defecto, <codeinline>process.env</codeinline> en un subproceso trabajador es una copia de <codeinline>process.env</codeinline> en el subproceso padre. Pero el subproceso padre puede especificar un conjunto personalizado de variables de entorno estableciendo la propiedad <codeinline>env</codeinline> del segundo argumento del constructor <codeinline>Worker()</codeinline>. Como caso especial (y potencialmente peligroso), el subproceso padre puede establecer la propiedad <codeinline>env</codeinline> a <codeinline>threads.SHARE_ENV</codeinline>, lo que hará que los dos subprocesos compartan un único conjunto de variables de entorno de modo que un cambio en un subproceso sea visible en el otro.</li>
-      <li class="font-normal">Por defecto, <codeinline>process.env</codeinline> en un subproceso trabajador es una copia de <codeinline>process.env</codeinline> en el subproceso padre. Pero el subproceso padre puede especificar un conjunto personalizado de variables de entorno estableciendo la propiedad <codeinline>env</codeinline> del segundo argumento del constructor <codeinline>Worker()</codeinline>. Como caso especial (y potencialmente peligroso), el subproceso padre puede establecer la propiedad <codeinline>env</codeinline> a <codeinline>threads.SHARE_ENV</codeinline>, lo que hará que los dos subprocesos compartan un único conjunto de variables de entorno de modo que un cambio en un subproceso sea visible en el otro.</li>
-      <li class="font-normal">Por defecto, el flujo <codeinline>process.stdin</codeinline> de un trabajador nunca contiene datos legibles. Puedes cambiar este valor por defecto pasando <codeinline>stdin: true</codeinline> en el segundo argumento del constructor <codeinline>Worker()</codeinline>. Si lo haces, la propiedad <codeinline>stdin</codeinline> del objeto Worker será un flujo Writable. Cualquier dato que el padre escriba en <codeinline>worker.stdin</codeinline> se convierte en legible en <codeinline>process.stdin</codeinline> en el trabajador.</li>
-      <li class="font-normal">Por defecto, los flujos <codeinline>process.stdout</codeinline> y <codeinline>process.stderr</codeinline> en el trabajador simplemente se canalizan a los flujos correspondientes en el hilo principal. Esto significa, por ejemplo, que <codeinline>console.log()</codeinline> y <codeinline>console.error()</codeinline> producen la salida exactamente de la misma manera en un hilo worker que en el hilo principal. Puede anular este valor por defecto pasando <codeinline>stdout:true</codeinline> o <codeinline>stderr:true</codeinline> en el segundo argumento del constructor <codeinline>Worker()</codeinline>. Si haces esto, entonces cualquier salida que el trabajador escriba en esos flujos será legible por el hilo padre en los hilos <codeinline>worker.stdout</codeinline> y <codeinline>worker.stderr</codeinline>. (Hay una inversión potencialmente confusa de las direcciones de los flujos aquí, y vimos lo mismo con los procesos hijo anteriormente en el capítulo: los flujos de salida de un hilo worker son flujos de entrada para el hilo particular, y el flujo de entrada de un worker es un flujo de salida para el padre).</li>
-      <li class="font-normal">Si un hilo trabajador llama a <codeinline>process.exit()</codeinline>, sólo sale el hilo, no todo el proceso.</li>
-      <li class="font-normal">Los hilos de trabajo no pueden cambiar el estado compartido del proceso del que forman parte. Funciones como <codeinline>process.chdir()</codeinline> y <codeinline>process.setuid()</codeinline> lanzarán excepciones cuando sean invocadas desde un trabajador.</li>
-      <li class="font-normal">Las señales del sistema operativo (como <codeinline>SIGINT</codeinline> y <codeinline>SIGTERM</codeinline>) sólo se envían al hilo principal; no pueden recibirse ni manejarse en los hilos trabajadores.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Como hemos visto, <codeinline>threads.isMainThread</codeinline> es <codeinline>true</codeinline> en el hilo principal pero siempre es <codeinline>false</codeinline> en cualquier hilo trabajador.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Como hemos visto, <codeinline>threads.isMainThread</codeinline> es <codeinline>true</codeinline> en el hilo principal pero siempre es <codeinline>false</codeinline> en cualquier hilo trabajador.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          En un subproceso trabajador, <codeinline>threads.workerData</codeinline> se establece como una copia de la propiedad <codeinline>workerData</codeinline> del segundo argumento del constructor <codeinline>Worker()</codeinline>. En el hilo principal, esta propiedad es siempre <codeinline>null</codeinline>. Puedes utilizar esta propiedad <codeinline>workerData</codeinline> para pasar una propiedad mensaje al trabajador que estará disponible tan pronto como se inicie para que el trabajador no tenga que esperar a un evento "mensaje" antes de que pueda empezar a hacer el trabajo.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Por defecto, <codeinline>process.env</codeinline> en un subproceso trabajador es una copia de <codeinline>process.env</codeinline> en el subproceso padre. Pero el subproceso padre puede especificar un conjunto personalizado de variables de entorno estableciendo la propiedad <codeinline>env</codeinline> del segundo argumento del constructor <codeinline>Worker()</codeinline>. Como caso especial (y potencialmente peligroso), el subproceso padre puede establecer la propiedad <codeinline>env</codeinline> a <codeinline>threads.SHARE_ENV</codeinline>, lo que hará que los dos subprocesos compartan un único conjunto de variables de entorno de modo que un cambio en un subproceso sea visible en el otro.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Por defecto, el flujo <codeinline>process.stdin</codeinline> de un trabajador nunca contiene datos legibles. Puedes cambiar este valor por defecto pasando <codeinline>stdin: true</codeinline> en el segundo argumento del constructor <codeinline>Worker()</codeinline>. Si lo haces, la propiedad <codeinline>stdin</codeinline> del objeto Worker será un flujo Writable. Cualquier dato que el padre escriba en <codeinline>worker.stdin</codeinline> se convierte en legible en <codeinline>process.stdin</codeinline> en el trabajador.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Por defecto, los flujos <codeinline>process.stdout</codeinline> y <codeinline>process.stderr</codeinline> en el trabajador simplemente se canalizan a los flujos correspondientes en el hilo principal. Esto significa, por ejemplo, que <codeinline>console.log()</codeinline> y <codeinline>console.error()</codeinline> producen la salida exactamente de la misma manera en un hilo worker que en el hilo principal. Puede anular este valor por defecto pasando <codeinline>stdout:true</codeinline> o <codeinline>stderr:true</codeinline> en el segundo argumento del constructor <codeinline>Worker()</codeinline>. Si haces esto, entonces cualquier salida que el trabajador escriba en esos flujos será legible por el hilo padre en los hilos <codeinline>worker.stdout</codeinline> y <codeinline>worker.stderr</codeinline>. (Hay una inversión potencialmente confusa de las direcciones de los flujos aquí, y vimos lo mismo con los procesos hijo anteriormente en el capítulo: los flujos de salida de un hilo worker son flujos de entrada para el hilo particular, y el flujo de entrada de un worker es un flujo de salida para el padre).
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Si un hilo trabajador llama a <codeinline>process.exit()</codeinline>, sólo sale el hilo, no todo el proceso.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Los hilos de trabajo no pueden cambiar el estado compartido del proceso del que forman parte. Funciones como <codeinline>process.chdir()</codeinline> y <codeinline>process.setuid()</codeinline> lanzarán excepciones cuando sean invocadas desde un trabajador.
+        </p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>
+          Las señales del sistema operativo (como <codeinline>SIGINT</codeinline> y <codeinline>SIGTERM</codeinline>) sólo se envían al hilo principal; no pueden recibirse ni manejarse en los hilos trabajadores.
+        </p>
+      </li>
     </ul>
   </section>
   <section id="11-3" class="py-4 xs:py-5 sm:py-6">
@@ -1522,13 +1650,30 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Aunque JavaScript se creó para ejecutarse en navegadores web, Node lo ha convertido en un lenguaje de programación de uso general. Es especialmente popular para implementar servidores web, pero sus profundos vínculos con el sistema operativo lo convierten también en una buena alternativa a los shell scripts.</p>
     <p>Los temas más importantes tratados en este largo capítulo son:</p>
     <ul>
-      <li class="font-normal">Las API asíncronas por defecto de Node y su estilo de concurrencia basado en un único hilo, callback y eventos.</li>
-      <li class="font-normal">Tipos de datos, buffers y streams fundamentales de Node.</li>
-      <li class="font-normal">Módulos "fs" y "path" de Node para trabajar con el sistema de archivos.</li>
-      <li class="font-normal">Módulos "http" y "https" de Node para escribir clientes y servidores HTTP.</li>
-      <li class="font-normal">Módulo "net" de Node para escribir clientes y servidores no HTTP.</li>
-      <li class="font-normal">Módulo "child_process" de Node para crear procesos hijo y comunicarse con ellos.</li>
-      <li class="font-normal">Módulo "worker_threads" de Node para una verdadera programación multihilo utilizando el paso de mensajes en lugar de la memoria compartida.</li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>Tipos de datos, buffers y streams fundamentales de Node.</p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>Módulos "fs" y "path" de Node para trabajar con el sistema de archivos.</p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>Módulos "http" y "https" de Node para escribir clientes y servidores HTTP.</p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>Módulo "net" de Node para escribir clientes y servidores no HTTP.</p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>Módulo "child_process" de Node para crear procesos hijo y comunicarse con ellos.</p>
+      </li>
+      <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
+        <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <p>Módulo "worker_threads" de Node para una verdadera programación multihilo utilizando el paso de mensajes en lugar de la memoria compartida.</p>
+      </li>
     </ul>
   </section>
   </Layoutjavascript>
