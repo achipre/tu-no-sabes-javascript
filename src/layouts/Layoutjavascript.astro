@@ -14,8 +14,10 @@ const { title } = Astro.props;
 		<title>{title}</title>
 	</head>
 	<body class="max-w-5xl mx-auto p-2 xs:px-3 sm:px-6 sm:py-8 md:px-10 font-khand text-amber-900">
-		<!-- <Sidebar /> -->
-    <slot />
+		<Sidebar />
+		<main class="translate-x-14">
+			<slot />
+		</main>
 		<script src="./prism.js"></script>
 	</body>
 </html>

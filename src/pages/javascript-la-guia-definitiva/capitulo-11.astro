@@ -82,35 +82,35 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>11.1.1 La clase Set</h2>
     <p>Un conjunto es una colección de valores, como una matriz. Sin embargo, a diferencia de las matrices, los conjuntos no están ordenados ni indexados, y no admiten duplicados: un valor o es miembro de un conjunto o no lo es; no es posible preguntar cuántas veces aparece un valor en un conjunto.</p>
     <p>Crea un objeto Set con el constructor <codeinline>Set()</codeinline>:</p>
-    <pre>
-    <code class="language-js">let s = new Set();       // Un nuevo, set vacio
+    <pre class="language-js">
+    <code>let s = new Set();       // Un nuevo, set vacio
     let t = new Set([1, s]); // Un nuevo set con 2 miembros</code></pre>
     <p>No es necesario que el argumento del constructor <codeinline>Set()</codeinline> cualquier objeto iterable (incluidos otros objetos Set):</p>
-    <pre>
-    <code class="language-js">let t = new Set(s);         // A new set that copies the elements of s.
-    let unique = new Set("Mississippi"); // 4 elements: "M", "i", "s", and "p"</code></pre>
+    <pre class="language-js">
+    <code>let t = new Set(s);         // Un nuevo conjunto que copia los elementos de s.
+    let unique = new Set("Mississippi"); // 4 elementos: "M", "i", "s", y "p"</code></pre>
     <p>La propiedad <codeinline>size</codeinline> de un conjunto es como la propiedad <codeinline>length</codeinline> de un array indica cuántos valores contiene el  conjunto:</p>
-    <pre>
-    <code class="language-js">unique.size // => 4</code></pre>
+    <pre class="language-js">
+    <code>unique.size // => 4</code></pre>
     <p>Los conjuntos no necesitan inicializarse cuando se crean. Puede añadir y eliminar elementos en cualquier momento con <codeinline>add()</codeinline>, <codeinline>delete()</codeinline> y <codeinline>clear()</codeinline>. Recuerde que los conjuntos no pueden contener duplicados, por lo que añadir un valor a un conjunto cuando ya contiene ese valor no tiene ningún efecto:</p>
-    <pre>
-    <code class="language-js">let s = new Set();  // Start empty
+    <pre class="language-js">
+    <code>let s = new Set();  // Comienza vacía
     s.size              // => 0
-    s.add(1);           // Add a number
-    s.size              // => 1; now the set has one member
-    s.add(1);           // Add the same number again
-    s.size              // => 1; the size does not change
-    s.add(true);        // Add another value; note that it is fine to mix types
+    s.add(1);           // Agregar un número
+    s.size              // => 1; Ahora el set tiene una miembro.
+    s.add(1);           // Añade el mismo número nuevamente
+    s.size              // => 1; El tamaño no cambia
+    s.add(true);        // Agregue otro valor; tenga en cuenta que está bien mezclar tipos
     s.size              // => 2
-    s.add([1,2,3]);     // Add an array value
-    s.size              // => 3; the array was added, not its elements
-    s.delete(1)         // => true: successfully deleted element 1
-    s.size              // => 2: the size is back down to 2
-    s.delete("test")    // => false: "test" was not a member, deletion failed
-    s.delete(true)      // => true: delete succeeded
-    s.delete([1,2,3])   // => false: the array in the set is different
-    s.size              // => 1: there is still that one array in the set
-    s.clear();          // Remove everything from the set
+    s.add([1,2,3]);     // Agregar un valor de matriz
+    s.size              // => 3; Se agregó la matriz, no sus elementos.
+    s.delete(1)         // => true: Elemento 1 eliminado con éxito
+    s.size              // => 2: El tamaño ha vuelto a bajar a 2
+    s.delete("test")    // => false: "test" No era miembro, la eliminación falló
+    s.delete(true)      // => true: La eliminación se realizó correctamente
+    s.delete([1,2,3])   // => false: La matriz en el conjunto es diferente
+    s.size              // => 1: Todavía queda esa matriz en el conjunto
+    s.clear();          // Quitar todo del conjunto
     s.size              // => 0</code></pre>
     <p>Hay algunos puntos importantes a tener en cuenta sobre este código:</p>
     <ul>
@@ -140,28 +140,28 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       </div>
     </nota>
     <p>En la práctica, lo más importante que hacemos con los conjuntos no es añadir y eliminar elementos de ellos, sino comprobar si un valor especificado es miembro del conjunto. Esto se hace con el método <codeinline>has()</codeinline>:</p>
-    <pre>
-    <code class="language-js">let oneDigitPrimes = new Set([2,3,5,7]);
-    oneDigitPrimes.has(2)   // => true: 2 is a one-digit prime number
-    oneDigitPrimes.has(3)   // => true: so is 3
-    oneDigitPrimes.has(4)   // => false: 4 is not a prime
-    oneDigitPrimes.has("5") // => false: "5" is not even a number</code></pre>
+    <pre class="language-js">
+    <code>let oneDigitPrimes = new Set([2,3,5,7]);
+    oneDigitPrimes.has(2)   // => true: 2 es un número primo de un dígito
+    oneDigitPrimes.has(3)   // => true: Así es 3
+    oneDigitPrimes.has(4)   // => false: 4 no es un número primo
+    oneDigitPrimes.has("5") // => false: "5" ni siquiera es un número</code></pre>
     <p>Lo más importante que hay que entender sobre los conjuntos es que están optimizados para la comprobación de miembros, y no importa cuántos miembros tenga el conjunto, el método <codeinline>has()</codeinline> será muy rápido. El método <codeinline>includes()</codeinline> de un array también realiza pruebas de pertenencia, pero el tiempo que tarda es proporcional al tamaño del array, y usar un array como set puede ser mucho, mucho más lento que usar un objeto Set real.</p>
     <p>La clase Set es iterable, lo que significa que puede utilizar un bucle <codeinline>for/of</codeinline> para enumerar todos los elementos de un conjunto:</p>
-    <pre>
-    <code class="language-js">let sum = 0;
-    for(let p of oneDigitPrimes) &lbrace; // Loop through the one-digit primes
-      sum += p;                    // and add them up
+    <pre class="language-js">
+    <code>let sum = 0;
+    for(let p of oneDigitPrimes) &lbrace; // Recorrer los números primos de un dígito
+      sum += p;                    // Y sumarlas
     }
     sum                            // => 17: 2 + 3 + 5 + 7</code></pre>
     <p>Dado que los objetos Set son iterables, puede convertirlos en matrices y listas de argumentos con el operador de extensión <codeinline>...</codeinline>:</p>
-    <pre>
-    <code class="language-js">[...oneDigitPrimes]         // => [2,3,5,7]: the set converted to an Array
-    Math.max(...oneDigitPrimes) // => 7: set elements passed as function arguments</code></pre>
+    <pre class="language-js">
+    <code>[...oneDigitPrimes]         // => [2,3,5,7]: El conjunto convertido en una Array
+    Math.max(...oneDigitPrimes) // => 7: conjunto de elementos pasados ​​como argumentos de función</code></pre>
     <p>Los conjuntos se describen a menudo como "colecciones desordenadas". Sin embargo, esto no es exactamente cierto para la clase Set de Java Script. Un conjunto JavaScript no está indexado: no se puede preguntar por el primer o tercer elemento de un conjunto como se hace con un array. Pero la clase Set de JavaScript siempre recuerda el orden en el que se insertaron los elementos, y siempre utiliza este orden cuando iteras un conjunto: el primer elemento insertado será el primero iterado (suponiendo que no lo hayas borrado antes), y el elemento insertado más recientemente será el último iterado.<sup>2</sup></p>
     <p>Además de ser iterable, la clase Set también implementa un método <codeinline>forEach()</codeinline> que es similar al método array del mismo nombre:</p>
-    <pre>
-    <code class="language-js">let product = 1;
+    <pre class="language-js">
+    <code>let product = 1;
     oneDigitPrimes.forEach(n => &lbrace; product *= n; });
     product // => 210: 2 * 3 * 5 * 7</code></pre>
     <p>El método <codeinline>forEach()</codeinline> de una matriz pasa los índices de la matriz como segundo argumento de la función especificada. Los conjuntos no tienen índices, por lo que la versión de la clase Set de este método simplemente pasa el valor del elemento como primer y segundo argumento.</p>
@@ -170,69 +170,69 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>11.1.2 La clase Map</h2>
     <p>Un objeto Map representa un conjunto de valores conocidos como <em>claves</em>, donde cada clave tiene otro valor asociado (o "mapeado"). En cierto sentido, un mapa es como un array, pero en lugar de utilizar un conjunto de enteros secuenciales como claves, los mapas nos permiten utilizar valores arbitrarios como "índices". Al igual que las matrices, los mapas son rápidos: buscar el valor asociado a una clave será rápido (aunque no tanto como indexar una matriz) independientemente de lo grande que sea el mapa.</p>
     <p>Crea un nuevo mapa con el constructor <codeinline>Map()</codeinline>:</p>
-    <pre>
-    <code class="language-js">let m = new Map(); // Create a new, empty map
-    let n = new Map([  // A new map initialized with string keys mapped to numbers
+    <pre class="language-js">
+    <code>let m = new Map(); // Crear un mapa nuevo y vacío
+    let n = new Map([  // Un nuevo mapa inicializado con claves de cadena asignadas a números
       ["one", 1],
       ["two", 2]
     ]);</code></pre>
     <p>El argumento opcional del constructor <codeinline>Map()</codeinline> debe ser un objeto iterable que produzca matrices de dos elementos <codeinline>[clave, valor]</codeinline>. En la práctica, esto significa que si desea inicializar un mapa al crearlo, normalmente escribirá las claves deseadas y los valores asociados como una matriz de matrices. Pero también puedes utilizar el constructor <codeinline>Map()</codeinline> para copiar otros mapas o para copiar los nombres y valores de las propiedades de un objeto existente:</p>
-    <pre>
-    <code class="language-js">let copy = new Map(n); // A new map with the same keys and values as map n
-    let o = &lbrace; x: 1, y: 2}; // An object with two properties
-    let p = new Map(Object.entries(o)); // Same as new map([["x", 1], ["y", 2]])</code></pre>
+    <pre class="language-js">
+    <code>let copy = new Map(n); // Un nuevo mapa con las mismas claves y valores que el map n
+    let o = &lbrace; x: 1, y: 2}; // Un objeto con dos propiedades
+    let p = new Map(Object.entries(o)); // Lo mismo que el nuevo map([["x", 1], ["y", 2]])</code></pre>
     <p>Una vez creado un objeto Map, puede consultar el valor asociado a una clave dada con <codeinline>get()</codeinline> y puede añadir un nuevo par clave/valor con <codeinline>set()</codeinline>. Recuerda, sin embargo, que un mapa es un conjunto de claves, cada una de las cuales tiene un valor asociado. Esto no es exactamente lo mismo que un conjunto de pares clave/valor. Si llamas a <codeinline>set()</codeinline> con una clave que ya existe en el mapa, cambiarás el valor asociado a esa clave, no añadirás un nuevo mapeo clave/valor. Además de <codeinline>get()</codeinline> y <codeinline>set()</codeinline>, la clase Map también define métodos que son como los métodos Set: utilizar <codeinline>has()</codeinline> para comprobar si un mapa incluye la clave especificada; utilizar <codeinline>delete()</codeinline> para eliminar una clave (y su valor asociado) del mapa; utilizar <codeinline>clear()</codeinline> para eliminar todos los pares clave/valor del mapa; y utilizar la propiedad <codeinline>size</codeinline> para averiguar cuántas claves contiene un mapa.</p>
-    <pre>
-    <code class="language-js">let m = new Map();  // Start with an empty map
+    <pre class="language-js">
+    <code>let m = new Map();  // Comience con un mapa vacío
     m.size              // => 0: empty maps have no keys
-    m.set("one", 1);    // Map the key "one" to the value 1
-    m.set("two", 2);    // And the key "two" to the value 2.
-    m.size              // => 2: the map now has two keys
-    m.get("two")        // => 2: return the value associated with key "two"
-    m.get("three")      // => undefined: this key is not in the set
-    m.set("one", true); // Change the value associated with an existing key
-    m.size              // => 2: the size doesn't change
-    m.has("one")        // => true: the map has a key "one"
-    m.has(true)         // => false: the map does not have a key true
-    m.delete("one")     // => true: the key existed and deletion succeeded
+    m.set("one", 1);    // Asigna la clave "uno" al valor 1
+    m.set("two", 2);    // Y la tecla "dos" al valor 2.
+    m.size              // => 2: El mapa ahora tiene dos llaves.
+    m.get("two")        // => 2: devuelve el valor asociado con la clave "two"
+    m.get("three")      // => undefined: Esta clave no está en el conjunto
+    m.set("one", true); // Cambiar el valor asociado a una clave existente
+    m.size              // => 2: El tamaño no cambia
+    m.has("one")        // => true: El mapa tiene una clave "uno"
+    m.has(true)         // => false: El map no tiene una clave verdadera
+    m.delete("one")     // => true: La clave existía y la eliminación se realizó correctamente
     m.size              // => 1
-    m.delete("three")   // => false: failed to delete a nonexistent key
-    m.clear();          // Remove all keys and values from the map</code></pre>
+    m.delete("three")   // => false: No se pudo eliminar una clave inexistente
+    m.clear();          // Eliminar todas las claves y valores del map</code></pre>
     <p>Al igual que el método <codeinline>add()</codeinline> de Set, el método <codeinline>set()</codeinline> de Map puede encadenarse, lo que permite inicializar mapas sin utilizar matrices de matrices:</p>
-    <pre>
-    <code class="language-js">let m = new Map().set("one", 1).set("two", 2).set("three", 3);
+    <pre class="language-js">
+    <code>let m = new Map().set("one", 1).set("two", 2).set("three", 3);
     m.size        // => 3
     m.get("two")  // => 2</code></pre>
     <p>Al igual que con Set, cualquier valor JavaScript puede utilizarse como clave o valor en Map. Esto incluye <codeinline>null</codeinline>, <codeinline>undefined</codeinline> y <codeinline>NaN</codeinline>, así como tipos de referencia como objetos y matrices. Y al igual que con la clase Set, Map compara las claves por identidad, no por igualdad, por lo que si se utiliza un objeto o matriz como clave, se considerará diferente de cualquier otro objeto y matriz, incluso de aquellos que tengan exactamente las mismas propiedades o elementos:</p>
-    <pre>
-    <code class="language-js">let m = new Map();   // Start with an empty map.
-    m.set(&lbrace;}, 1);        // Map one empty object to the number 1.
-    m.set(&lbrace;}, 2);        // Map a different empty object to the number 2.
-    m.size               // => 2: there are two keys in this map
-    m.get(&lbrace;})            // => undefined: but this empty object is not a key
-    m.set(m, undefined); // Map the map itself to the value undefined.
-    m.has(m)             // => true: m is a key in itself
-    m.get(m)             // => undefined: same value we'd get if m wasn't a key</code></pre>
+    <pre class="language-js">
+    <code>let m = new Map();   // Comience con un mapa vacío.
+    m.set(&lbrace;}, 1);        // Asigne un objeto vacío al número 1.
+    m.set(&lbrace;}, 2);        // Asigne un objeto vacío diferente al número 2.
+    m.size               // => 2: Hay dos claves en este mapa
+    m.get(&lbrace;})            // => undefined: pero este objeto vacío no es una clave
+    m.set(m, undefined); // Asigne el mapa en sí al valor indefinido.
+    m.has(m)             // => true: m es una clave en sí misma
+    m.get(m)             // => undefined: El mismo valor que obtendríamos si m no fuera una clave</code></pre>
     <p>Los objetos Map son iterables, y cada valor iterado es un array de dos elementos donde el primer elemento es una clave y el segundo elemento es el valor asociado a esa clave. Si utilizas el operador spread con un objeto Map, obtendrás un array de arrays como los siguientes que pasamos al constructor <codeinline>Map()</codeinline>. Y al iterar un mapa con un bucle <codeinline>for/of</codeinline>, es idiomático utilizar la asignación de desestructuración para asignar la clave y el valor a variables separadas:</p>
-    <pre>
-    <code class="language-js">let m = new Map([["x", 1], ["y", 2]]);
+    <pre class="language-js">
+    <code>let m = new Map([["x", 1], ["y", 2]]);
     [...m] // => [["x", 1], ["y", 2]]
 
     for(let [key, value] of m) &lbrace;
-      // On the first iteration, key will be "x" and value will be 1
-      // On the second iteration, key will be "y" and value will be 2
+      // En la primera iteración, la clave será "x" y el valor será 1
+      // En la segunda iteración, la clave será "y" y el valor será 2
     }</code></pre>
     <p>Al igual que la clase Set, la clase Map itera en orden de inserción. El primer par clave/valor iterado será el que se haya añadido menos recientemente al mapa, y el último par iterado será el que se haya añadido más recientemente.</p>
     <p>Si desea iterar sólo las claves o sólo los valores asociados de un mapa, utilice los métodos <codeinline>keys()</codeinline> y <codeinline>values()</codeinline>: éstos devuelven objetos iterables que iteran claves y valores, en orden de inserción. (El método <codeinline>entries()</codeinline> devuelve un objeto iterable que itera pares clave/valor, pero esto es exactamente lo mismo que iterar el mapa directamente).</p>
-    <pre>
-    <code class="language-js">[...m.keys()]     // => ["x", "y"]: just the keys
-    [...m.values()]   // => [1, 2]: just the values
-    [...m.entries()]  // => [["x", 1], ["y", 2]]: same as [...m]</code></pre>
+    <pre class="language-js">
+    <code>[...m.keys()]     // => ["x", "y"]: Sólo las llaves
+    [...m.values()]   // => [1, 2]: Solo los valores
+    [...m.entries()]  // => [["x", 1], ["y", 2]]: Lo mismo que [...m]</code></pre>
     <p>Los objetos Map también pueden ser iterados utilizando el método <codeinline>forEach()</codeinline> que fue implementado por primera vez por la clase Array.</p>
-    <pre>
-    <code class="language-js">m.forEach((value, key) => &lbrace; // note value, key NOT key, value
-      // On the first invocation, value will be 1 and key will be "x"
-      // On the second invocation, value will be 2 and key will be "y"
+    <pre class="language-js">
+    <code>m.forEach((value, key) => &lbrace; // nota valor, clave NO clave, valor
+      // En la primera invocación, el valor será 1 y la clave será "x"
+      // En la segunda invocación, el valor será 2 y la clave será "y"
     });</code></pre>
     <p>Puede parecer extraño que el parámetro valor vaya antes que el parámetro clave en el código anterior, ya que con la iteración <codeinline>for/of</codeinline>, la clave va primero. Como se indicó al principio de esta sección, se puede pensar en un mapa como una matriz generalizada en la que los índices enteros de la matriz se sustituyen por valores clave arbitrarios. El método <codeinline>forEach()</codeinline> de los arrays pasa el elemento del array primero y el índice del array después, así que, por analogía, el método <codeinline>forEach()</codeinline> de un mapa pasa el valor del mapa primero y la clave del mapa después.</p>
   </section>
@@ -374,123 +374,124 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="2-2" class="py-4 xs:py-5 sm:py-6">
     <h2>11.2.2 Creación de Arrays tipados</h2>
     <p>La forma más sencilla de crear un array tipado es llamar al constructor apropiado con un argumento numérico que especifique el número de elementos que quieres en el array:</p>
-    <pre>
-    <code class="language-js">let bytes = new Uint8Array(1024);     // 1024 bytes
-    let matrix = new Float64Array(9);     // A 3x3 matrix
-    let point = new Int16Array(3);        // A point in 3D space
-    let rgba = new Uint8ClampedArray(4);  // A 4-byte RGBA pixel value
-    let sudoku = new Int8Array(81);       // A 9x9 sudoku board</code></pre>
+    <pre class="language-js">
+    <code>let bytes = new Uint8Array(1024);     // 1024 bytes
+    let matrix = new Float64Array(9);     // Una matriz de 3x3
+    let point = new Int16Array(3);        // Un punto en el espacio 3D
+    let rgba = new Uint8ClampedArray(4);  // Un valor de píxel RGBA de 4 bytes
+    let sudoku = new Int8Array(81);       // Un tablero de sudoku de 9x9</code></pre>
     <p>Cuando se crean arrays tipados de esta forma, se garantiza que todos los elementos del array se inicializan a <codeinline>0</codeinline>, <codeinline>0n</codeinline>, o <codeinline>0.0</codeinline>. Pero si conoces los valores que quieres en tu array tipado, también puedes especificar esos valores cuando crees el array. Cada uno de los constructores de matrices tipadas tiene métodos de fábrica estáticos <codeinline>from()</codeinline> y <codeinline>of()</codeinline> que funcionan como <codeinline>Array.from()</codeinline> y <codeinline>Array.of()</codeinline>:</p>
-    <pre>
-    <code class="language-js">let white = Uint8ClampedArray.of(255, 255, 255, 0); // RGBA opaque white</code></pre>
+    <pre class="language-js">
+    <code>let white = Uint8ClampedArray.of(255, 255, 255, 0); // RGBA Blanca opaca</code></pre>
     <p>Recordemos que el método de fábrica <codeinline>Array.from()</codeinline> espera un objeto iterable o similar a un array como primer argumento. Lo mismo ocurre con las variantes tipadas de array, excepto que el objeto iterable o tipo array también debe tener elementos numéricos. Las cadenas son iterables, por ejemplo, pero no tendría sentido pasarlas al método de fábrica <codeinline>from()</codeinline> de un array tipado.</p>
     <p>Si sólo está utilizando la versión de un argumento de <codeinline>from()</codeinline>, puede omitir el <codeinline>.from</codeinline> y pasar su objeto iterable o tipo array directamente a la función constructora, que se comporta exactamente igual. Tenga en cuenta que tanto el constructor como el método de fábrica <codeinline>from()</codeinline> le permiten copiar matrices tipadas existentes, aunque posiblemente cambiando el tipo:</p>
-    <pre>
-    <code class="language-js">let ints = Uint32Array.from(white); // The same 4 numbers, but as ints</code></pre>
+    <pre class="language-js">
+    <code>let ints = Uint32Array.from(white); // Los mismos 4 números, pero como enteros</code></pre>
     <p>Cuando se crea un nuevo array tipado a partir de un array, iterable u objeto tipo array existente, los valores pueden truncarse para ajustarse a las restricciones de tipo del array. No hay advertencias ni errores cuando esto ocurre:</p>
-    <pre>
-    <code class="language-js">// Floats truncated to ints, longer ints truncated to 8 bits
+    <pre class="language-js">
+    <code>// Los flotantes se truncan a números enteros, los números enteros más largos se truncan a 8 bits
     Uint8Array.of(1.23, 2.99, 45000) // => new Uint8Array([1, 2, 200])</code></pre>
     <p>Por último, hay otra forma de crear matrices tipadas que implica el tipo ArrayBuffer. Un ArrayBuffer es una referencia opaca a un trozo de memoria. Puedes crear uno con el constructor; sólo tienes que pasar el número de bytes de memoria que deseas asignar:</p>
-    <pre>
-    <code class="language-js">let buffer = new ArrayBuffer(1024*1024);
-    buffer.byteLength // => 1024*1024; one megabyte of memory</code></pre>
+    <pre class="language-js">
+    <code>let buffer = new ArrayBuffer(1024*1024);
+    buffer.byteLength // => 1024*1024; un megabyte de memoria</code></pre>
     <p>La clase ArrayBuffer no permite leer ni escribir ninguno de los bytes que tiene asignados. Pero puedes crear arrays tipados que utilicen la memoria del buffer y que sí te permitan leer y escribir esa memoria. Para hacer esto, llama al constructor de arrays tipados con un ArrayBuffer como primer argumento, un desplazamiento de bytes dentro del buffer del array como segundo argumento, y la longitud del array (en elementos, no en bytes) como tercer argumento. El segundo y el tercer argumento son opcionales. Si omite ambos, la matriz utilizará toda la memoria del búfer de la matriz. Si sólo omite el argumento longitud, la matriz utilizará toda la memoria disponible entre la posición de inicio y el final de la matriz. Una cosa más a tener en cuenta sobre esta forma del constructor de array tipado: los arrays deben estar alineados con la memoria, por lo que si especifica un desplazamiento de byte, el valor debe ser un múltiplo del tamaño de su tipo. El constructor <codeinline>Int32Array()</codeinline> requiere un múltiplo de cuatro, por ejemplo, y <codeinline>Float64Array()</codeinline> requiere un múltiplo de ocho.</p>
     <p>Dado el ArrayBuffer creado anteriormente, podrías crear arrays tipados como estos:</p>
-    <pre>
-    <code class="language-js">let asbytes = new Uint8Array(buffer);           // Viewed as bytes
-    let asints = new Int32Array(buffer);            // Viewed as 32-bit signed ints
-    let lastK = new Uint8Array(buffer, 1023*1024);  // Last kilobyte as bytes
-    let ints2 = new Int32Array(buffer, 1024, 256);  // 2nd kilobyte as 256 integers</code></pre>
+    <pre class="language-js">
+    <code>let asbytes = new Uint8Array(buffer);           // Visto como bytes
+    let asints = new Int32Array(buffer);            // Visto como ints con signo de 32 bits
+    let lastK = new Uint8Array(buffer, 1023*1024);  // Último kilobyte como bytes
+    let ints2 = new Int32Array(buffer, 1024, 256);  // 2do kilobyte como 256 enteros</code></pre>
     <p>Estos cuatro arrays tipados ofrecen cuatro vistas diferentes de la memoria representada por el ArrayBuffer. Es importante entender que todos los arrays tipados tienen un ArrayBuffer subyacente, incluso si no se especifica explícitamente. Si llamas a un constructor de arrays tipados sin pasarle un objeto buffer, se creará automáticamente un <codeinline>buffer</codeinline> del tamaño apropiado. Como se describe más adelante, la propiedad buffer de cualquier array tipado se refiere a su objeto subyacente ArrayBuffer. La razón para trabajar directamente con objetos ArrayBuffer es que a veces puedes querer tener múltiples vistas de matrices tipadas de un único buffer.</p>
   </section>
   <section id="2-3">
     <h2>11.2.3 Uso de matrices tipadas</h2>
     <p>Una vez creado un array tipado, puedes leer y escribir sus elementos con la notación normal de corchetes, como harías con cualquier otro objeto tipo array:</p>
-    <pre>
-    <code class="language-js">// Return the largest prime smaller than n, using the sieve of Eratosthenes
+    <pre class="language-js">
+    <code>// Devuelve el primo más grande menor que n, utilizando la criba de Eratóstenes
     function sieve(n) &lbrace;
-      let a = new Uint8Array(n+1);        // a[x] will be 1 if x is composite
-      let max = Math.floor(Math.sqrt(n)); // Don't do factors higher than this
-      let p = 2;                          // 2 is the first prime
-      while(p &lt;= max) &lbrace;                   // For primes less than max
-        for(let i = 2*p; i &lt;= n; i += p)  // Mark multiples of p as composite
+      let a = new Uint8Array(n+1);        // a[x] será 1 si x es compuesto
+      let max = Math.floor(Math.sqrt(n)); // No hagas cosas superiores a esto
+      let p = 2;                          // 2 es el primer primo
+      while(p &lt;= max) &lbrace;                   // Para números primos menores que max
+        for(let i = 2*p; i &lt;= n; i += p)  // Marcar múltiplos de p como compuestos
           a[i] = 1;
-        while(a[++p])        /* empty */; // The next unmarked index is prime
+        while(a[++p])        /* empty */; // El siguiente índice sin marcar es el primo
       }
-      while(a[n]) n--;       // Loop backward to find the last prime
-      return n;              // And return it
+      while(a[n]) n--;       // Bucle hacia atrás para encontrar la última prima
+      return n;              // Y devuélvelo
     }</code></pre>
     <p>Esta función calcula el mayor número primo menor que el número especificado. El código es exactamente el mismo que con una matriz JavaScript normal, pero el uso de <codeinline>Uint8Array()</codeinline> en lugar de <codeinline>Array()</codeinline> hace que el código se ejecute más de cuatro veces más rápido y utilice ocho veces menos memoria en mis pruebas.</p>
     <p>Las matrices tipadas no son verdaderas matrices, pero reimplementan la mayoría de los métodos de matrices, por lo que se pueden utilizar prácticamente igual que las matrices normales:</p>
-    <pre>
-    <code class="language-js">let ints = new Int16Array(10);    // 10 short integers
+    <pre class="language-js">
+    <code>let ints = new Int16Array(10);    // 10 enteros cortos
     ints.fill(3).map(x=>x*x).join("") // => "9999999999"</code></pre>
     <p>Recuerde que los arrays tipados tienen longitudes fijas, por lo que la propiedad length es de sólo lectura, y los métodos que cambian la longitud del array (como <codeinline>push()</codeinline>, <codeinline>pop()</codeinline>, <codeinline>unshift()</codeinline>, <codeinline>shift()</codeinline>, y <codeinline>splice()</codeinline>) no están implementados para arrays tipados. Los métodos que alteran el contenido de una matriz sin cambiar su longitud (como <codeinline>sort()</codeinline>, <codeinline>reverse()</codeinline> y <codeinline>fill()</codeinline>) están implementados. Los métodos como <codeinline>map()</codeinline> y <codeinline>slice()</codeinline> que devuelven nuevas matrices, devuelven una matriz tipada del mismo tipo que aquella a la que se llama.</p>
   </section>
   <section id="2-4" class="py-4 xs:py-5 sm:py-6">
     <h2>11.2.4 Métodos y propiedades de matrices tipificadas</h2>
     <p>Además de los métodos estándar de las matrices, las matrices tipadas también implementan algunos métodos propios. El método <codeinline>set()</codeinline> establece múltiples elementos de una matriz tipada a la vez copiando los elementos de una matriz normal o tipada en una matriz tipada:</p>
-    <pre>
-    <code class="language-js">let bytes = new Uint8Array(1024);        // A 1K buffer
-    let pattern = new Uint8Array([0,1,2,3]); // An array of 4 bytes
-    bytes.set(pattern);       // Copy them to the start of another byte array
-    bytes.set(pattern, 4);    // Copy them again at a different offset
-    bytes.set([0,1,2,3], 8);  // Or just copy values direct from a regular array
-    bytes.slice(0, 12)        // => new Uint8Array([0,1,2,3,0,1,2,3,0,1,2,3])</code></pre>
+    <pre class="language-js">
+    <code>let bytes = new Uint8Array(1024);        // Un buffer de 1K
+    let pattern = new Uint8Array([0,1,2,3]); // Una matriz de 4 bytes
+    bytes.set(pattern);     // Copiarlos al inicio de otra matriz de bytes
+    bytes.set(pattern, 4);  // Copiarlos de nuevo en un desplazamiento diferente
+    bytes.set([0,1,2,3], 8);// O simplemente copie los valores directamente desde una matriz regular
+    bytes.slice(0, 12)      // => new Uint8Array([0,1,2,3,0,1,2,3,0,1,2,3])</code></pre>
     <p>El método <codeinline>set()</codeinline> toma un array o un array tipado como primer argumento y un desplazamiento de elemento como segundo argumento opcional, que por defecto es 0 si no se especifica. Si está copiando valores de una matriz tipada a otra, es probable que la operación sea extremadamente rápida.</p>
     <p>Los arrays tipados también tienen un método <codeinline>subarray</codeinline> que devuelve una parte del array sobre el que se llama:</p>
-    <pre>
-    <code class="language-js">let ints = new Int16Array([0,1,2,3,4,5,6,7,8,9]);      // 10 short integers
-    let last3 = ints.subarray(ints.length-3, ints.length); // Last 3 of them
-    last3[0]          // => 7: this is the same as ints[7]</code></pre>
+    <pre class="language-js">
+    <code>let ints = new Int16Array([0,1,2,3,4,5,6,7,8,9]);      // 10 enteros cortos
+    let last3 = ints.subarray(ints.length-3, ints.length); // Los últimos 3 de ellos
+    last3[0]          // => 7: Esto es lo mismo que ints[7]</code></pre>
     <p><codeinline>subarray()</codeinline> toma los mismos argumentos que el método <codeinline>slice()</codeinline> y parece funcionar de la misma manera. Pero hay una diferencia importante. <codeinline>slice()</codeinline> devuelve los elementos especificados en una nueva matriz de tipo independiente que no comparte memoria con la matriz original. <codeinline>subarray()</codeinline> no copia ninguna memoria; sólo devuelve una nueva vista de los mismos valores subyacentes:</p>
-    <pre>
-    <code class="language-js">ints[9] = -1; // Change a value in the original array and...
-    last3[2]      // => -1: it also changes in the subarray</code></pre>
+    <pre class="language-js">
+    <code>ints[9] = -1; // Cambiar un valor en la matriz original y...
+    last3[2]      // => -1: También cambia en el subarreglo.</code></pre>
     <p>El hecho de que el método <codeinline>subarray()</codeinline> devuelva una nueva vista de un array existente nos devuelve al tema de los ArrayBuffers. Cada array tipado tiene tres propiedades que se relacionan con el buffer subyacente:</p>
-    <pre>
-    <code class="language-js">last3.buffer                 // The ArrayBuffer object for a typed array
-    last3.buffer === ints.buffer // => true: both are views of the same buffer
-    last3.byteOffset             // => 14: this view starts at byte 14 of the buffer
-    last3.byteLength             // => 6: this view is 6 bytes (3 16-bit ints) long
-    last3.buffer.byteLength      // => 20: but the underlying buffer has 20 bytes</code></pre>
+    <pre class="language-js">
+    <code>last3.buffer                 // El objeto ArrayBuffer para una matriz tipificada
+    last3.buffer === ints.buffer // => true: Ambas son vistas del mismo buffer
+    last3.byteOffset             // => 14: Esta vista comienza en el byte 14 del búfer.
+    last3.byteLength             // => 6: Esta vista tiene una longitud de 6 bytes (3 enteros de 16 bits)
+    last3.buffer.byteLength      // => 20: pero el buffer subyacente tiene 20 bytes</code></pre>
     <p>La propiedad <codeinline>buffer</codeinline> es el ArrayBuffer del array. <codeinline>byteOffset</codeinline> es la posición inicial de los datos del array dentro del buffer subyacente. Y <codeinline>byteLength</codeinline> es la longitud de los datos del array en bytes. Para cualquier tipo de array, a, esta invariante debe ser siempre verdadera:</p>
-    <pre>
-    <code class="language-js">a.length * a.BYTES_PER_ELEMENT === a.byteLength // => true</code></pre>
+    <pre class="language-js">
+    <code>a.length * a.BYTES_PER_ELEMENT === a.byteLength // => true</code></pre>
     <p>Los ArrayBuffers son simplemente trozos opacos de bytes. Puedes acceder a esos bytes con arrays tipados, pero un ArrayBufffer no es en sí mismo un array tipado. Ten cuidado, sin embargo: puedes usar indexación numérica de arrays con ArrayBuffers igual que con cualquier objeto JavaScript. Hacerlo no te da acceso a los bytes del buffer, pero puede causar errores de confusión:</p>
-    <pre>
-    <code class="language-js">let bytes = new Uint8Array(8);
+    <pre class="language-js">
+    <code>let bytes = new Uint8Array(8);
     bytes[0] = 1;          // Set the first byte to 1
     bytes.buffer[0]        // => undefined: buffer doesn't have index 0
     bytes.buffer[1] = 255; // Try incorrectly to set a byte in the buffer
     bytes.buffer[1]        // => 255: this just sets a regular JS property
     bytes[1]               // => 0: the line above did not set the byte</code></pre>
     <p>Anteriormente vimos que se puede crear un ArrayBuffer con el constructor <codeinline>ArrayBuffer()</codeinline> y luego crear arrays tipados que utilicen ese buffer. Otro enfoque es crear un array tipado inicial, y luego usar el buffer de ese array para crear otras vistas:</p>
-    <pre>
-    <code class="language-js">let bytes = new Uint8Array(1024);            // 1024 bytes
+    <pre class="language-js">
+    <code>let bytes = new Uint8Array(1024);            // 1024 bytes
     let ints = new Uint32Array(bytes.buffer);    // or 256 integers
     let floats = new Float64Array(bytes.buffer); // or 128 doubles</code></pre>
   </section>
   <section id="2-5">
     <h2>11.2.5 DataView y Endianness</h2>
     <p>Las matrices tipadas permiten ver la misma secuencia de bytes en trozos de 8, 16, 32 o 64 bits. De este modo, queda al descubierto la "endianidad": el orden en que los bytes se organizan en palabras más largas. En aras de la eficiencia, las matrices tipadas utilizan el "endianness" nativo del hardware subyacente. En los sistemas little-endian, los bytes de un número se ordenan en un Array-Buffer de menor a mayor significación. En las plataformas big-endian, los bytes se ordenan del más significativo al menos significativo. Usted puede determinar el endian- ness de la plataforma subyacente con código como este:</p>
-    <pre>
-    <code class="language-js">// If the integer 0x00000001 is arranged in memory as 01 00 00 00, then
-    // we're on a little-endian platform. On a big-endian platform, we'd get
-    // bytes 00 00 00 01 instead.
+    <pre class="language-js">
+    <code>// Si el entero 0x00000001 se organiza en la memoria como 01 00 00 00, entonces
+    // estamos en una plataforma little-endian. En una plataforma big-endian, 
+    // obtendríamos los bytes 00 00 00 01 en su lugar.
     let littleEndian = new Int8Array(new Int32Array([1]).buffer)[0] === 1;</code></pre>
     <p>Hoy en día, las arquitecturas de CPU más comunes son little-endian. Sin embargo, muchos protocolos de red y algunos formatos de archivos binarios requieren un orden de bytes big-endian. Si estás usando matrices tipadas con datos que provienen de la red o de un archivo, no puedes asumir que el orden de la plataforma coincide con el orden de los bytes de los datos. En general, cuando se trabaja con datos externos, puede utilizar Int8Array y Uint8Array para ver los datos como una matriz de bytes individuales, pero no debe utilizar las otras matrices tipadas con tamaños de palabra multibyte. En su lugar, puedes utilizar la clase DataView, que define métodos para leer y escribir valores desde un ArrayBuffer con un orden de bytes explícitamente especificado:</p>
-    <pre>
-    <code class="language-js">// Assume we have a typed array of bytes of binary data to process. First,
-    // we create a DataView object so we can flexibly read and write
-    // values from those bytes
+    <pre class="language-js">
+    <code>
+    // Supongamos que tenemos un array tipificada de bytes de datos binarios
+    // para procesar. Primero, creamos un objeto DataView para poder leer 
+    // y escribir valores de esos bytes de manera flexible.
     let view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
     
-    let int = view.getInt32(0);    // Read big-endian signed int from byte 0
-    int = view.getInt32(4, false); // Next int is also big-endian
-    int = view.getUint32(8, true); // Next int is little-endian and unsigned
-    view.setUint32(8, int, false); // Write it back in big-endian format</code></pre>
+    let int = view.getInt32(0);    // Leer int con signo big-endian desde el byte 0
+    int = view.getInt32(4, false); // El siguiente int también es big-endian
+    int = view.getUint32(8, true); // El siguiente int es little-endian y sin signo
+    view.setUint32(8, int, false); // Escríbelo de nuevo en formato big-endian</code></pre>
     <p>DataView define 10 métodos <codeinline>get</codeinline> para cada una de las 10 clases de matrices tipadas (excluyendo Uint8ClampedArray). Tienen nombres como <codeinline>getInt16()</codeinline>, <codeinline>getUint32()</codeinline>, <codeinline>getBigInt64()</codeinline>, y <codeinline>getFloat64()</codeinline>. El primer argumento es el desplazamiento de bytes dentro del ArrayBuffer en el que comienza el valor. Todos estos métodos getter, excepto <codeinline>getInt8()</codeinline> y <codeinline>getUint8()</codeinline>, aceptan un valor booleano opcional como segundo argumento. Si el segundo argumento se omite o es <codeinline>false</codeinline>, se utiliza el orden big- endian. Si el segundo argumento es <codeinline>true</codeinline>, se utiliza el orden little-endian.</p>
     <p>DataView también define 10 métodos Set correspondientes que escriben valores en el ArrayBuffer subyacente. El primer argumento es el offset en el que comienza el valor. El segundo argumento es el valor a escribir. Cada uno de los métodos, excepto <codeinline>setInt8()</codeinline> y <codeinline>setUint8()</codeinline>, acepta un tercer argumento opcional. Si el argumento se omite o es <codeinline>false</codeinline>, el valor se escribe en formato big-endian con el byte más significativo primero. Si el argumento es <codeinline>true</codeinline>, el valor se escribe en formato little-endian con el byte menos significativo primero.</p>
     <p>Las matrices tipadas y la clase DataView le proporcionan todas las herramientas necesarias para procesar datos binarios y le permiten escribir programas JavaScript que hagan cosas como descomprimir archivos ZIP o extraer metadatos de archivos JPEG.</p>
@@ -503,15 +504,15 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="3-1">
     <h2>11.3.1 Definición de expresiones regulares</h2>
     <p>En JavaScript, las expresiones regulares se representan mediante objetos RegExp. Los objetos RegExp pueden crearse con el constructor <codeinline>RegExp()</codeinline>, por supuesto, pero suelen crearse utilizando una sintaxis literal especial. Así como los literales de cadena se especifican como caracteres entre comillas, los literales de expresión regular se especifican como caracteres dentro de un par de caracteres de barra (<codeinline>/</codeinline>). Así, su código JavaScript puede contener líneas como ésta:</p>
-    <pre>
-    <code class="language-js">let pattern = /s$/;</code></pre>
+    <pre class="language-js">
+    <code>let pattern = /s$/;</code></pre>
     <p>Esta línea crea un nuevo objeto RegExp y lo asigna a la variable <codeinline>pattern</codeinline>. Este objeto RegExp en particular coincide con cualquier cadena que termine con la letra "s". Este regular podría haberse definido de forma equivalente con el constructor <codeinline>RegExp()</codeinline>, de esta forma:</p>
-    <pre>
-    <code class="language-js">let pattern = new RegExp("s$");</code></pre>
+    <pre class="language-js">
+    <code>let pattern = new RegExp("s$");</code></pre>
     <p>Las especificaciones de patrones de expresiones regulares consisten en una serie de caracteres. La mayoría de los caracteres, incluidos todos los alfanuméricos, describen simplemente los caracteres que deben coincidir literalmente. Así, la expresión regular <codeinline>/java/</codeinline> coincide con cualquier cadena que contenga la subcadena "java". Otros caracteres de las expresiones regulares no se comparan literalmente, pero tienen un significado especial. Por ejemplo, la expresión regular <codeinline>/s$/</codeinline> contiene dos caracteres. El primero, "s", coincide literalmente. El segundo, "$", es un metacarácter especial que coincide con el final de una cadena. Así, esta expresión regular coincide con cualquier cadena que contenga la letra "s" como último carácter.</p>
     <p>Como veremos, las expresiones regulares también pueden tener uno o más caracteres de bandera que afectan a su funcionamiento. Los indicadores se especifican a continuación del segundo carácter de barra en las literales RegExp, o como un segundo argumento de cadena para el constructor <codeinline>RegExp()</codeinline>. Si, por ejemplo, quisiéramos buscar cadenas que terminen en "s" o "S", podríamos utilizar la bandera <codeinline>i</codeinline> con nuestra expresión regular para indicar que queremos que no se distinga entre mayúsculas y minúsculas:</p>
-    <pre>
-    <code class="language-js">let pattern = /s$/i;</code></pre>
+    <pre class="language-js">
+    <code>let pattern = /s$/i;</code></pre>
     <p>Las siguientes secciones describen los distintos caracteres y metacaracteres utilizados en las expresiones regulares de JavaScript.</p>
     <p class="title-article text-left">Caracteres literales</p>
     <p>Todos los caracteres alfabéticos y dígitos coinciden literalmente en las expresiones regulares. La sintaxis de las expresiones regulares de JavaScript también admite determinados caracteres no alfabéticos mediante secuencias de escape que comienzan con una barra invertida (<codeinline>\</codeinline>). Por ejemplo, la secuencia <codeinline>\n</codeinline> coincide con un carácter literal de nueva línea en una cadena. La <a href="#tabla11-1">Tabla 11-1</a> enumera estos caracteres.</p>
@@ -641,12 +642,12 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       <p>La clase de caracteres <codeinline>\d</codeinline> sólo coincide con dígitos ASCII. Si desea que coincida con un dígito decimal de cualquiera de los sistemas de escritura del mundo, puede utilizar <codeinline>/\p&lbrace;Decimal_Number}/u</codeinline>.</p>
       <p>Y si quieres que coincida con cualquier carácter que <em>no</em> sea un dígito decimal en cualquier idioma puede escribir la <codeinline>p</codeinline> en mayúsculas y <codeinline>\P&lbrace;Número_Decimal}</codeinline>. Si desea que coincida con cualquier carácter numérico, incluyendo fracciones y números romanos, puede utilizar <codeinline>\p&lbrace;Número}</codeinline>. Tenga en cuenta que "Decimal_Number" y "Number" no son específicos de Java-Script o de la gramática de expresiones regulares: es el nombre de una categoría de caracteres definida por el estándar Unicode.</p>
       <p>La clase de caracteres <codeinline>\w</codeinline> sólo funciona para texto ASCII, pero con <codeinline>\p</codeinline>, podemos aproximarnos a una versión internacionalizada como ésta:</p>
-    <pre>
-    <code class="language-js">/[\p&lbrace;Alphabetic}\p&lbrace;Decimal_Number}\p&lbrace;Mark}]/u</code></pre>
+    <pre class="language-js">
+    <code>/[\p&lbrace;Alphabetic}\p&lbrace;Decimal_Number}\p&lbrace;Mark}]/u</code></pre>
       <p>(Aunque para ser totalmente compatibles con la complejidad de las lenguas del mundo, realmente necesitamos añadir también las categorías "Conector_Puntuación" y "Join_Control").</p>
       <p>Como último ejemplo, la sintaxis <codeinline>\p</codeinline> también nos permite definir expresiones regulares que coincidan con caracteres de un alfabeto o escritura concretos:</p>
-    <pre>
-    <code class="language-js">let greekLetter = /\p&lbrace;Script=Greek}/u;
+    <pre class="language-js">
+    <code>let greekLetter = /\p&lbrace;Script=Greek}/u;
     let cyrillicLetter = /\p&lbrace;Script=Cyrillic}/u;</code></pre>
     </article>
     <p class="title-article text-left">Repetición</p>
@@ -691,11 +692,11 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       </table>
     </div>
     <p>Las siguientes líneas muestran algunos ejemplos:</p>
-    <pre>
-    <code class="language-js">let r = /\d&lbrace;2,4}/; // Match between two and four digits
-    r = /\w&lbrace;3}\d?/;    // Match exactly three word characters and an optional digit
-    r = /\s+java\s+/;  // Match "java" with one or more spaces before and after
-    r = /[^(]*/;       // Match zero or more characters that are not open parens</code></pre>
+    <pre class="language-js">
+    <code>let r = /\d&lbrace;2,4}/; // Coincidencia entre dos y cuatro dígitos
+    r = /\w&lbrace;3}\d?/;    // Coincida exactamente con tres caracteres de palabras y un dígito opcional
+    r = /\s+java\s+/;  // Coincida "java" con uno o más espacios antes y después
+    r = /[^(]*/;       // Coincide con cero o más caracteres que no sean paréntesis abiertos</code></pre>
     <p>Tenga en cuenta que en todos estos ejemplos, los especificadores de repetición se aplican al único carácter o clase de caracteres que los precede. Si desea hacer coincidir repeticiones de expresiones más complicadas, tendrá que definir un grupo con paréntesis, que se explican en las secciones siguientes.</p>
     <p>Tenga cuidado al utilizar los caracteres de repetición <codeinline>*</codeinline> y <codeinline>?</codeinline> Dado que estos caracteres pueden coincidir con cero apariciones de lo que les precede, se permite que no coincidan con nada. Por ejemplo, la expresión regular <codeinline>/a*/</codeinline> en realidad coincide con la cadena "bbbb", ¡porque la cadena contiene cero apariciones de la letra a!</p>
     <p class="title-article text-left">Repetición no codiciosa</p>
@@ -707,19 +708,19 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Los paréntesis tienen varias finalidades en las expresiones regulares. Uno de ellos es agrupar elementos separados en una única subexpresión para que los elementos puedan tratarse como una sola unidad mediante <codeinline>|, * , +, ?</codeinline>, etc. Por ejemplo, <codeinline>/java(script)?/</codeinline> coincide con "java" seguido de "script" opcional. Y <codeinline>/(ab|cd)+|ef/</codeinline> coincide con la cadena "ef " o con una o más repeticiones de cualquiera de las cadenas "ab" o "cd".</p>
     <p>Otra finalidad de los paréntesis en las expresiones regulares es definir subpatrones dentro del patrón completo. Cuando una expresión regular se compara con éxito con una cadena objetivo, es posible extraer las partes de la cadena objetivo que coinciden con cualquier sub-patrón entre paréntesis. (Verá cómo se obtienen estas subcadenas coincidentes más adelante en esta sección). Por ejemplo, suponga que está buscando una o más letras minúsculas seguidas de uno o más dígitos. Puede utilizar el patrón <codeinline>/[a-z]+\d+/</codeinline>. . Pero supongamos que sólo le interesan los dígitos del final de cada coincidencia. Si pone esa parte del patrón entre paréntesis (<codeinline>/[a-z]+(\d+)/</codeinline>), podrá extraer los dígitos de cualquier coincidencia que encuentre, como se explica más adelante.</p>
     <p>Un uso relacionado de las subexpresiones entre paréntesis es permitirle referirse a una subexpresión más adelante en la misma expresión regular. Esto se hace siguiendo un carácter <codeinline>\</codeinline> por un dígito o dígitos. Los dígitos se refieren a la posición de la subexpresión entre paréntesis dentro de la expresión regular. Por ejemplo, <codeinline>\1</codeinline> se refiere a la primera subexpresión, y <codeinline>\3</codeinline> a la tercera. Tenga en cuenta que, como las subexpresiones pueden estar anidadas dentro de otras, lo que se cuenta es la posición del paréntesis izquierdo. En la siguiente expresión regular, por ejemplo, la subexpresión anidada (<codeinline>[Ss]cript</codeinline>) se denomina <codeinline>\2</codeinline>:</p>
-    <pre>
-    <code class="language-js">/([Jj]ava([Ss]cript)?)\sis\s(fun\w*)/</code></pre>
+    <pre class="language-js">
+    <code>/([Jj]ava([Ss]cript)?)\sis\s(fun\w*)/</code></pre>
     <p>Una referencia a una subexpresión anterior de una expresión regular <em>no</em> se refiere al patrón de esa subexpresión, sino al texto que coincide con el patrón. Por lo tanto, las referencias se pueden utilizar para imponer la restricción de que partes separadas de una cadena contengan exactamente los mismos caracteres. Por ejemplo, la siguiente expresión regular coincide con cero o más caracteres entre comillas simples o dobles. Sin embargo, no requiere que las comillas de apertura y cierre coincidan (es decir, ambas comillas simples o ambas comillas dobles):</p>
-    <pre>
-    <code class="language-js">/['"][^'"]*['"]/</code></pre>
+    <pre class="language-js">
+    <code>/['"][^'"]*['"]/</code></pre>
     <p>Para que las comillas coincidan, utilice una referencia:</p>
-    <pre>
-    <code class="language-js">/(['"])[^'"]*\1/</code></pre>
+    <pre class="language-js">
+    <code>/(['"])[^'"]*\1/</code></pre>
     <p>El <codeinline>\1</codeinline> coincide con lo que coincida con la primera subexpresión entre paréntesis. En este ejemplo, impone la restricción de que la comilla de cierre coincida con la comilla de apertura. Esta expresión regular no permite comillas simples dentro de cadenas con comillas dobles o viceversa. (No es legal utilizar una referencia dentro de una clase de caracteres, por lo que no puede escribir: <codeinline>/(['"])[^\1]*\1/</codeinline>.)</p>
     <p>Cuando cubramos la API RegExp más adelante, verás que este tipo de referencia a una subexpresión de tamaño par es una poderosa característica de las operaciones de búsqueda y reemplazo de expresiones regulares.</p>
     <p>También es posible agrupar elementos en una expresión regular sin crear una referencia numerada a dichos elementos. En lugar de agrupar simplemente los elementos dentro de ( y ), comience el grupo con (<codeinline>?:</codeinline> y termínelo con ). Considere el siguiente patrón:</p>
-    <pre>
-    <code class="language-js">/([Jj]ava(?:[Ss]cript)?)\sis\s(fun\w*)/</code></pre>
+    <pre class="language-js">
+    <code>/([Jj]ava(?:[Ss]cript)?)\sis\s(fun\w*)/</code></pre>
     <p>En este ejemplo, la subexpresión (<codeinline>?:[Ss]cript</codeinline>) se utiliza simplemente para agrupar, por lo que el carácter de repetición <codeinline>?</codeinline> puede aplicarse al grupo. Estos paréntesis modificados no producen una referencia, por lo que en esta expresión regular, <codeinline>\2</codeinline> se refiere al texto coincidente con (<codeinline>fun\w*</codeinline>).</p>
     <p>La <a href="#tabla11-3">Tabla 11-4</a> resume los operadores de alternancia, agrupación y referenciación de expresiones regulares.</p>
     <div id="tabla11-4" class="flex flex-col items-center">
@@ -757,12 +758,12 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       <p class="title-article">Grupos de captura con nombre</p>
       <p>EES2018 estandariza una nueva característica que puede hacer que las expresiones regulares sean más autodocumentables y fáciles de entender. Esta nueva característica se conoce como "grupos de captura con nombre" y nos permite asociar un nombre a cada paréntesis izquierdo de una expresión regular para que podamos referirnos al texto coincidente por su nombre en lugar de por su número. Igualmente importante: el uso de nombres permite que alguien que lea el código comprenda más fácilmente el propósito de esa parte de la expresión regular. A principios de 2020, esta función está implementada en Node, Chrome, Edge y Safari, pero aún no en Firefox.</p>
       <p>Para nombrar un grupo, utilice <codeinline>(?&lt;...></codeinline> en lugar de <codeinline>(</codeinline> y ponga el nombre entre el ángulo corchetes. Por ejemplo, he aquí una expresión regular que podría utilizarse para comprobar el formato de la última línea de una dirección postal de EE.UU:</p>
-    <pre>
-    <code class="language-js">/(?&lt;city>\w+) (?&lt;state>[A-Z]&lbrace;2}) (?&lt;zipcode>\d&lbrace;5})(?<zip9>-\d&lbrace;4})?/</code></pre>
+    <pre class="language-js">
+    <code>/(?&lt;city>\w+) (?&lt;state>[A-Z]&lbrace;2}) (?&lt;zipcode>\d&lbrace;5})(?<zip9>-\d&lbrace;4})?/</code></pre>
       <p>Observe cuánto contexto proporcionan los nombres de grupo para hacer la expresión regular más fácil de entender. En <a href="#3-2">§11.3.2</a>, cuando discutamos los métodos String <codeinline>replace()</codeinline> y <codeinline>match()</codeinline> y el método RegExp <codeinline>exec()</codeinline>, verá cómo la API RegExp le permite referirse al texto que coincide con cada uno de estos grupos por su nombre en lugar de por su posición.</p>
       <p>Si desea hacer referencia a un grupo de captura con nombre dentro de una expresión regular, también puede hacerlo por nombre. En el ejemplo anterior, pudimos usar una expresión regular "backreference" para escribir una RegExp que coincidiera con una cadena entre comillas simples o dobles donde las comillas de apertura y cierre tuvieran que coincidir. Podríamos reescribir esta RegExp usando un grupo de captura con nombre y una backreference con nombre como esta:</p>
-    <pre>
-    <code class="language-js">/(?&lt;quote>['"])[^'"]*\k&lt;quote>/</code></pre>
+    <pre class="language-js">
+    <code>/(?&lt;quote>['"])[^'"]*\k&lt;quote>/</code></pre>
       <p>El <codeinline>\k&lt;quote></codeinline> es una referencia al grupo con nombre que captura la comilla abierta.</p>
     </article>
     <p class="title-article text-left">Especificación de la posición del partido</p>
@@ -811,11 +812,11 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       <p class="title-article">Aserciones Lookbehind</p>
       <p>ES2018 amplía la sintaxis de las expresiones regulares para permitir aserciones "lookbehind". Son como las aserciones lookahead, pero se refieren al texto anterior a la posición de coincidencia actual. A principios de 2020, se implementarán en Node, Chrome y Edge, pero no en Firefox ni Safari.</p>
       <p>Especifique una aserción lookbehind positiva con <codeinline>(?&lt;=...)</codeinline> y una aserción lookbehind negativa con <codeinline>(?&lt;!...)</codeinline>. Por ejemplo, si trabaja con el correo de EE.UU.puede coincidir con un código postal de 5 dígitos, pero sólo si sigue a un código de dos letras. abreviatura del estado, así:</p>
-    <pre>
-    <code class="language-js">/(?&lt;= [A-Z]&lbrace;2} )\d&lbrace;5}/</code></pre>
+    <pre class="language-js">
+    <code>/(?&lt;= [A-Z]&lbrace;2} )\d&lbrace;5}/</code></pre>
       <p>Y podría hacer coincidir una cadena de dígitos que no esté precedida por un símbolo de moneda Unicode con una aserción lookbehind negativa como ésta:</p>
-    <pre>
-    <code class="language-js">/(?&lt;![\p&lbrace;Currency_Symbol}\d.])\d+(\.\d+)?/u</code></pre>
+    <pre class="language-js">
+    <code>/(?&lt;![\p&lbrace;Currency_Symbol}\d.])\d+(\.\d+)?/u</code></pre>
     </article>
     <p class="title-article text-left">Flags</p>
     <p>Cada expresión regular puede tener uno o varios indicadores asociados para modificar su comportamiento. JavaScript define seis indicadores posibles, cada uno de los cuales se representa con una sola letra. Los indicadores se especifican después del segundo carácter <codeinline>/</codeinline> de una expresión regular literal o como una cadena que se pasa como segundo argumento al constructor <codeinline>RegExp()</codeinline>. Los indicadores admitidos y sus significados son:</p>
@@ -838,40 +839,42 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Hasta ahora, hemos estado describiendo la gramática usada para definir expresiones regulares, pero no explicando cómo esas expresiones regulares pueden usarse realmente en código JavaScript. Ahora pasamos a cubrir la API para usar objetos RegExp. Esta sección comienza explicando los métodos de cadena que usan expresiones regulares para realizar operaciones de coincidencia de patrones y de buscar y reemplazar. Las secciones que siguen a esta continúan la discusión de la concordancia de patrones con expresiones regulares de JavaScript discutiendo el objeto RegExp y sus métodos y propiedades.</p>
     <p class="title-article text-left">search()</p>
     <p>Las cadenas admiten cuatro métodos que utilizan expresiones regulares. El más sencillo es <codeinline>search()</codeinline>. Este método toma un argumento de expresión regular y devuelve la posición del carácter del inicio de la primera subcadena coincidente o -1 si no hay coincidencia:</p>
-    <pre>
-    <code class="language-js">"JavaScript".search(/script/ui) // => 4
+    <pre class="language-js">
+    <code>"JavaScript".search(/script/ui) // => 4
     "Python".search(/script/ui)     // => -1</code></pre>
     <p>Si el argumento de <codeinline>search()</codeinline> no es una expresión regular, primero se convierte en una pasándola al constructor <codeinline>RegExp</codeinline>. <codeinline>search()</codeinline> no admite búsquedas globales; ignora la bandera <codeinline>g</codeinline> de su argumento de expresión regular.</p>
     <p class="title-article text-left">replace()</p>
     <p>El método <codeinline>replace()</codeinline> realiza una operación de búsqueda y sustitución. Toma una expresión regular como primer argumento y una cadena de sustitución como segundo. Busca en la cadena a la que se llama coincidencias con el patrón especificado. Si la expresión regular tiene el indicador <codeinline>g</codeinline> activado, el método <codeinline>replace()</codeinline> sustituye todas las coincidencias de la cadena por la cadena de sustitución; en caso contrario, sólo sustituye la primera coincidencia que encuentra. Si el primer argumento de <codeinline>replace()</codeinline> es una cadena en lugar de una expresión regular, el método busca esa cadena literalmente en lugar de convertirla en una expresión regular con el constructor <codeinline>RegExp()</codeinline>, como hace <codeinline>search()</codeinline>. Como ejemplo, puede utilizar <codeinline>replace()</codeinline> de la siguiente manera para proporcionar mayúsculas y minúsculas uniformes de la palabra "JavaScript" a lo largo de una cadena de texto:</p>
-    <pre>
-    <code class="language-js">// No matter how it is capitalized, replace it with the correct capitalization
+    <pre class="language-js">
+    <code>// No importa cómo se escriba con mayúscula, reemplácela con la mayúscula correcta
     text.replace(/javascript/gi, "JavaScript");</code></pre>
     <p>Sin embargo, <codeinline>replace()</codeinline> es más potente que esto. Recuerde que las subexpresiones entre paréntesis de una expresión regular se numeran de izquierda a derecha y que la expresión regular recuerda el texto con el que coincide cada subexpresión. Si en la cadena de sustitución aparece un <codeinline>$</codeinline> seguido de un dígito, <codeinline>replace()</codeinline> sustituye esos dos caracteres por el texto que coincide con la subexpresión especificada. Se trata de una función muy útil. Puede utilizarla, por ejemplo, para sustituir las comillas de una cadena por otros caracteres:</p>
-    <pre>
-    <code class="language-js">// A quote is a quotation mark, followed by any number of
-    // nonquotation mark characters (which we capture), followed
-    // by another quotation mark.
+    <pre class="language-js">
+    <code>// Una cita es una comilla, seguida de cualquier número 
+    // de caracteres que no sean comillas (que capturamos), 
+    // seguido de otra comilla.
     let quote = /"([^"]*)"/g;
     // Replace the straight quotation marks with guillemets
     // leaving the quoted text (stored in $1) unchanged.
-    'He said "stop"'.replace(quote, '«$1»') // => 'He said «stop»'</code></pre>
+    // Reemplace las comillas rectas por comillas simples, 
+    // dejando el texto citado (almacenado en $1) sin cambios.
+    'He said "stop"'.replace(quote, '«$1»') // => 'Él dijo «stop»'</code></pre>
     <p>Si su RegExp utiliza grupos de captura con nombre, entonces puede referirse al texto coincidente por nombre en lugar de por número:</p>
-    <pre>
-    <code class="language-js">let quote = /"(?<quotedText>[^"]*)"/g;
-    'He said "stop"'.replace(quote, '«$<quotedText>»') // => 'He said «stop»'</code></pre>
+    <pre class="language-js">
+    <code>let quote = /"(?<quotedText>[^"]*)"/g;
+    'He said "stop"'.replace(quote, '«$<quotedText>»') // => 'Él dijo «stop»'</code></pre>
     <p>En lugar de pasar una cadena de sustitución como segundo argumento a <codeinline>replace()</codeinline>, también puede pasar una función que se invocará para calcular el valor de sustitución. La función de sustitución se invoca con varios argumentos. El primero es el texto completo. A continuación, si la RegExp tiene grupos de captura, se pasan como argumentos las subcadenas capturadas por esos grupos. El siguiente argumento es la posición dentro de la cadena en la que se encontró la coincidencia. A continuación, se pasa la cadena completa sobre la que se llamó a <codeinline>replace()</codeinline>. Y finalmente, si la RegExp contenía algún nombre grupos de captura, el último argumento de la función de sustitución es un objeto cuyos nombres de propiedad coinciden con los nombres de los grupos de captura y cuyos valores son el texto coincidente. Como ejemplo, he aquí un código que utiliza una función de sustitución para convertir enteros decimales de una cadena a hexadecimal:</p>
-    <pre>
-    <code class="language-js">let s = "15 times 15 is 225";
-    s.replace(/\d+/gu, n => parseInt(n).toString(16)) // => "f times f is e1"</code></pre>
+    <pre class="language-js">
+    <code>let s = "15 times 15 is 225";
+    s.replace(/\d+/gu, n => parseInt(n).toString(16)) // => "f por f es e1"</code></pre>
     <p class="title-article text-left">match()</p>
     <p>El método <codeinline>match()</codeinline> es el más general de los métodos de expresión regular de cadenas. Toma una expresión regular como único argumento (o convierte su argumento en una expresión regular pasándolo al constructor <codeinline>RegExp()</codeinline>) y devuelve una matriz que contiene los resultados de la coincidencia, o <codeinline>null</codeinline> si no se encuentra ninguna coincidencia. Si la expresión regular tiene el indicador g activado, el método devuelve una matriz con todas las coincidencias que aparecen en la cadena. Por ejemplo:</p>
-    <pre>
-    <code class="language-js">"7 plus 8 equals 15".match(/\d+/g) // => ["7", "8", "15"]</code></pre>
+    <pre class="language-js">
+    <code>"7 plus 8 equals 15".match(/\d+/g) // => ["7", "8", "15"]</code></pre>
     <p>Si la expresión regular no tiene activada la bandera <codeinline>g</codeinline>, <codeinline>match()</codeinline> no realiza una búsqueda global; simplemente busca la primera coincidencia. En este caso no global, <codeinline>match()</codeinline> sigue devolviendo una matriz, pero los elementos de la matriz son completamente diferentes. Sin el indicador <codeinline>g</codeinline>, el primer elemento de la matriz devuelta es la cadena coincidente, y los elementos restantes son las subcadenas que coinciden con los grupos de captura entre paréntesis de la expresión regular. Así, si <codeinline>match()</codeinline> devuelve una matriz <codeinline>a</codeinline>, <codeinline>a[0]</codeinline> contiene la coincidencia completa, <codeniline>a[1]</codeniline> contiene la subcadena que coincide con la primera expresión entre paréntesis, y así sucesivamente. Para establecer un paralelismo con el método <codeinline>replace()</codeinline>, <codeinline>a[1]</codeinline> es la misma cadena que <codeinline>$1</codeinline>, <codeinline>a[2]</codeinline> es la misma que <codeinline>$2</codeinline>, y así sucesivamente.</p>
     <p>Por ejemplo, analice una URL<sup>5</sup> con el siguiente código:</p>
-    <pre>
-    <code class="language-js">// A very simple URL parsing RegExp
+    <pre class="language-js">
+    <code>// Una expresión regular de análisis de URL muy simple
     let url = /(\w+):\/\/([\w.]+)\/(\S*)/;
     let text = "Visit my blog at http://www.example.com/~david";
     let match = text.match(url);
@@ -883,8 +886,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       path = match[3];      // path == "~david"
     }</code></pre>
     <p>En este caso no global, la matriz devuelta por <codeinline>match()</codeinline> también tiene algunas propiedades de objeto además de los elementos numerados de la matriz. La propiedad <codeinline>input</codeinline> se refiere a la cadena sobre la que se ha llamado a <codeinline>match()</codeinline>. La propiedad <codeinline>index</codeinline> es la posición dentro de esa cadena en la que comienza la coincidencia. Y si la expresión regular contiene grupos de captura con nombre, entonces el array devuelto también tiene una propiedad <codeinline>groups</codeinline> cuyo valor es un objeto. Las propiedades de este objeto coinciden con los nombres de los grupos nombrados, y los valores son el texto coincidente. Podríamos reescribir el ejemplo anterior de análisis de URL, por ejemplo, así:</p>
-    <pre>
-    <code class="language-js">let url = /(?&lt;protocol>\w+):\/\/(?&lt;host>[\w.]+)\/(?&lt;path>\S*)/;
+    <pre class="language-js">
+    <code>let url = /(?&lt;protocol>\w+):\/\/(?&lt;host>[\w.]+)\/(?&lt;path>\S*)/;
     let text = "Visit my blog at http://www.example.com/~david";
     let match = text.match(url);
     match[0]              // => "http://www.example.com/~david"
@@ -895,21 +898,21 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     match.groups.path     // => "~david"</code></pre>
     <p>Hemos visto que <codeinline>match()</codeinline> se comporta de forma bastante diferente dependiendo de si la RegExp tiene el indicador <codeinline>g</codeinline> activado o no. También hay diferencias importantes pero menos dramáticas en el comportamiento cuando la bandera <codeinline>y</codeinline> está activada. Recuerde que la bandera <codeinline>y</codeinline> hace que una expresión regular sea "pegajosa" al restringir en qué parte de la cadena pueden comenzar las coincidencias. Si una RegExp tiene los indicadores <codeinline>g</codeinline> e <codeinline>y</codeinline> activados, <codeinline>match()</codeinline> devuelve una matriz de cadenas coincidentes, igual que cuando <codeinline>g</codeinline> está activada sin <codeinline>y</codeinline>. Pero la primera coincidencia debe comenzar al principio de la cadena, y cada coincidencia posterior debe comenzar en el carácter inmediatamente posterior a la coincidencia anterior.</p>
     <p>Si el indicador <codeinline>y</codeinline> se establece sin <codeinline>g</codeinline>, entonces <codeinline>match()</codeinline> intenta encontrar una única coincidencia y, por defecto, esta coincidencia se limita al inicio de la cadena. Sin embargo, puede cambiar esta posición de inicio por defecto, estableciendo la propiedad <codeinline>lastIndex</codeinline> del objeto RegExp en el índice en el que desea encontrar la coincidencia. Si se encuentra una coincidencia, entonces este <codeinline>lastIndexy</codeinline> se actualizará automáticamente al primer carácter después de la coincidencia, de modo que si vuelve a llamar a <codeinline>match()</codeinline>, en este caso, buscará una coincidencia posterior. (<codeinline>lastIndex</codeinline> puede parecer un nombre extraño para una propiedad que especifica la posición en la que comenzar la <em>siguiente</em> coincidencia. Lo veremos de nuevo cuando cubramos el método RegExp <codeinline>exec()</codeinline>, y su nombre puede tener más sentido en ese contexto).</p>
-    <pre>
-    <code class="language-js">let vowel = /[aeiou]/y; // Sticky vowel match
-    "test".match(vowel)     // => null: "test" does not begin with a vowel
-    vowel.lastIndex = 1;    // Specify a different match position
-    "test".match(vowel)[0]  // => "e": we found a vowel at position 1
-    vowel.lastIndex         // => 2: lastIndex was automatically updated
-    "test".match(vowel)     // => null: no vowel at position 2
-    vowel.lastIndex         // => 0: lastIndex gets reset after failed match</code></pre>
+    <pre class="language-js">
+    <code>let vowel = /[aeiou]/y; // Coincidencia de vocales adhesivas
+    "test".match(vowel)     // => null: "prueba" no comienza con vocal
+    vowel.lastIndex = 1;    // Especificar una posición de coincidencia diferente
+    "test".match(vowel)[0]  // => "e": Encontramos una vocal en la posición 1.
+    vowel.lastIndex         // => 2: lastIndex se actualizó automáticamente
+    "test".match(vowel)     // => null: Sin vocal en la posición 2
+    vowel.lastIndex         // => 0: lastIndex se reinicia después de una partida fallida</code></pre>
     <p>Cabe señalar que pasar una expresión regular no global al mé todo <codeinline>match()</codeinline> de una cadena es lo mismo que pasar la cadena al método <codeinline>exec()</codeinline> de la expresión regular: la matriz devuelta y sus propiedades son las mismas en ambos casos.</p>
     <p class="title-article text-left">matchAll()</p>
     <p>El método <codeinline>matchAll()</codeinline> está definido en ES2020, y desde principios de 2020 está implementado por los navegadores web modernos y Node. <codeinline>matchAll()</codeinline> espera una RegExp con la bandera g activada. Sin embargo, en lugar de devolver una matriz de subcadenas coincidentes como hace <codeinline>match()</codeinline>, devuelve un iterador que devuelve el tipo de objetos coincidentes que devuelve <codeinline>match()</codeinline> cuando se usa con una RegExp no global. Esto hace que <codeinline>matchAll()</codeinline> sea la forma más sencilla y general de recorrer todas las coincidencias de una cadena.</p>
     <p>Puede utilizar <codeinline>matchAll()</codeinline> para recorrer en bucle las palabras de una cadena de texto como ésta:</p>
-    <pre>
-    <code class="language-js">// One or more Unicode alphabetic characters between word boundaries
-    const words = /\b\p&lbrace;Alphabetic}+\b/gu;  // \p is not supported in Firefox yet
+    <pre class="language-js">
+    <code>// Uno o más caracteres alfabéticos Unicode entre los límites de las palabras
+    const words = /\b\p&lbrace;Alphabetic}+\b/gu;  // \p sún no es compatible con Firefox
     const text = "This is a naïve test of the matchAll() method.";
     for(let word of text.matchAll(words)) &lbrace;
       console.log(`Found '$&lbrace;word[0]}' at index $&lbrace;word.index}.`);
@@ -917,14 +920,14 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Puede establecer la propiedad <codeinline>lastIndex</codeinline> de un objeto RegExp para decirle a <codeinline>matchAll()</codeinline> en qué índice de la cadena debe empezar a coincidir. Sin embargo, a diferencia de los otros métodos de concordancia de patrones, <codeinline>matchAll()</codeinline> nunca modifica la propiedad <codeinline>lastIndex</codeinline> del RegExp al que se llama, y esto hace que sea mucho menos probable que cause errores en el código.</p>
     <p class="title-article text-left">split()</p>
     <p>El último de los métodos de expresión regular del objeto String es <codeinline>split()</codeinline>. Este método divide la cadena sobre la que se llama en una matriz de subcadenas, utilizando el argumento como separador. Puede utilizarse con un argumento de cadena como éste:</p>
-    <pre>
-    <code class="language-js">"123,456,789".split(",") // => ["123", "456", "789"]</code></pre>
+    <pre class="language-js">
+    <code>"123,456,789".split(",") // => ["123", "456", "789"]</code></pre>
     <p>El método <codeinline>split()</codeinline> también puede tomar una expresión regular como argumento, lo que permite especificar separadores más generales. Aquí lo llamamos con un separador que incluye una cantidad arbitraria de espacios en blanco a cada lado:</p>
-    <pre>
-    <code class="language-js">"1, 2, 3,\n4, 5".split(/\s*,\s*/) // => ["1", "2", "3", "4", "5"]</code></pre>
+    <pre class="language-js">
+    <code>"1, 2, 3,\n4, 5".split(/\s*,\s*/) // => ["1", "2", "3", "4", "5"]</code></pre>
     <p>Sorprendentemente, si llama a <codeinline>split()</codeinline> con un delimitador RegExp y la expresión regular incluye grupos de captura, el texto que coincida con los grupos de captura se incluirá en la matriz devuelta. Por ejemplo:</p>
-    <pre>
-    <code class="language-js">const htmlTag = /&lt;([^>]+)>/;   // &lt; followed by one or more non->, followed by >
+    <pre class="language-js">
+    <code>const htmlTag = /&lt;([^>]+)>/;   // &lt; seguido de uno o más non->, seguido de >
     "Testing<br/>1,2,3".split(htmlTag)  // => ["Testing", "br/", "1,2,3"]</code></pre>
   </section>
   <section id="3-3">
@@ -932,13 +935,14 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Esta sección documenta el constructor <codeinline>RegExp()</codeinline>, las propiedades de las instancias RegExp y dos importantes métodos de concordancia de patrones definidos por la clase RegExp</p>
     <p>El constructor <codeinline>RegExp()</codeinline> toma uno o dos argumentos de cadena y crea un nuevo objeto RegExp. El primer argumento de este constructor es una cadena que contiene el cuerpo de la expresión regular-el texto que aparecería entre barras en un literal de expresión regular. Tenga en cuenta que tanto los literales de cadena como las expresiones regulares utilizan el carácter <codeinline>\</codeinline> para las secuencias de escape, por lo que cuando pase una expresión regular a <codeinline>RegExp()</codeinline> como un literal de cadena, debe sustituir cada carácter <codeinline>\</codeinline> por <codeinline>\\</codeinline>. El segundo argumento de <codeinline>RegExp()</codeinline> es opcional. Si se proporciona, indica los indicadores de la expresión regular. Debe ser <codeinline>g</codeinline>, <codeinline>i</codeinline>, <codeinline>m</codeinline>, <codeinline>s</codeinline>, <codeinline>u</codeinline>, <codeinline>y</codeinline>, o cualquier combinación de estas letras.</p>
     <p>Por ejemplo:</p>
-    <pre>
-    <code class="language-js">// Find all five-digit numbers in a string. Note the double \\ in this case.
+    <pre class="language-js">
+    <code>// Encuentra todos los números de cinco dígitos en un string. 
+    // Ten en cuenta el doble \\ en este caso.
     let zipcode = new RegExp("\\d&lbrace;5}", "g");</code></pre>
     <p>El constructor <codeinline>RegExp()</codeinline> es útil cuando una expresión regular se crea dinámicamente y, por tanto, no puede representarse con la sintaxis literal de expresión regular. Por ejemplo, para buscar una cadena introducida por el usuario, debe crearse una expresión regular en tiempo de ejecución con <codeinline>RegExp()</codeinline>.</p>
     <p>En lugar de pasar una cadena como primer argumento a <codeinline>RegExp()</codeinline>, también puede pasar un objeto RegExp. Esto le permite copiar una expresión regular y cambiar sus indicadores:</p>
-    <pre>
-    <code class="language-js">let exactMatch = /JavaScript/;
+    <pre class="language-js">
+    <code>let exactMatch = /JavaScript/;
     let caseInsensitive = new RegExp(exactMatch, "i");</code></pre>
     <p class="title-article text-left">Propiedades RegExp</p>
     <p><codeinline>source</codeinline></p>
@@ -965,8 +969,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p class="title-article text-left">exec()</p>
     <p>El método RegExp <codeinline>exec()</codeinline> es la forma más general y potente de utilizar expresiones regulares. Toma un único argumento de cadena y busca una coincidencia en esa cadena. Si no encuentra ninguna, devuelve <codeinline>null</codeinline>. Sin embargo, si se encuentra una coincidencia, devuelve una matriz igual a la devuelta por el método <codeinline>match()</codeinline> para búsquedas no globales. El elemento 0 de la matriz contiene la cadena que coincide con la expresión regular, y cualquier elemento subsiguiente de la matriz contiene las subcadenas que coinciden con cualquier grupo de captura. La matriz devuelta también tiene propiedades con nombre: la propiedad <codeinline>index</codeinline> contiene la posición del carácter en la que se produjo la coincidencia, y la propiedad <codeinline>input</codeinline> especifica la cadena en la que se buscó, y la propiedad <codeinline>groups</codeinline>, si está definida, se refiere a un objeto que contiene las subcadenas que coinciden con cualquier grupo de captura con nombre.</p>
     <p>A diferencia del método String <codeinline>match()</codeinline>, <codeinline>exec()</codeinline> devuelve el mismo tipo de matriz tanto si la expresión regular tiene el indicador global <codeinline>g</codeinline> como si no. Recuerde que <codeinline>match()</codeinline> devuelve una matriz de coincidencias cuando se le pasa una expresión regular global. <codeinline>exec()</codeinline>, por el contrario, siempre devuelve una única coincidencia y proporciona información completa sobre esa coincidencia. Cuando <codeinline>exec()</codeinline> es llamada sobre una expresión regular que tiene la bandera global <codeinline>g</codeinline> o la bandera pegajosa <codeinline>y</codeinline>, consulta la propiedad <codeinline>lastIndex</codeinline> del objeto RegExp para determinar dónde empezar a buscar una coincidencia. (Y si la bandera <codeinline>y</codeinline> está activada, también restringe la coincidencia a comienza en esa posición). Para un objeto RegExp recién creado, <codeinline>lastIndex</codeinline> es 0, y la búsqueda comienza al principio de la cadena. Pero cada vez que <codeinline>exec()</codeinline> encuentra una coincidencia, actualiza la propiedad lastIndex al índice del carácter inmediatamente posterior al texto coincidente. Si <codeinline>exec()</codeinline> no encuentra ninguna coincidencia, restablece <codeinline>lastIndex</codeinline> a 0. Este comportamiento especial le permite llamar a <codeinline>exec()</codeinline> repetidamente para recorrer todas las coincidencias de expresiones regulares en una cadena. (Aunque, como hemos descrito, en ES2020 y posteriores, el método <codeinline>matchAll()</codeinline> de String es una forma más fácil de recorrer todas las coincidencias). Por ejemplo, el bucle en el siguiente código se ejecutará dos veces:</p>
-    <pre>
-    <code class="language-js">let pattern = /Java/g;
+    <pre class="language-js">
+    <code>let pattern = /Java/g;
     let text = "JavaScript > Java";
     let match;
     while((match = pattern.exec(text)) !== null) &lbrace;
@@ -977,15 +981,15 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       <p class="title-article">La propiedad lastIndex y la reutilización de RegExp</p>
       <p>Como ya has visto, la API de expresiones regulares de JavaScript es complicada. El uso de la propiedad <codeinline>lastIndex</codeinline> con los indicadores <codeinline>g</codeinline> e <codeinline>y</codeinline> es una parte particularmente complicada de esta API. Cuando usas estas banderas, necesitas ser particularmente cuidadoso cuando llames a los métodos <codeinline>match()</codeinline>, <codeinline>exec()</codeinline>, o <codeinline>test()</codeinline> porque el comportamiento de estos métodos depende de <codeinline>lastIndex</codeinline>, y el valor de <codeinline>lastIndex</codeinline> depende de lo que hayas hecho previamente con el objeto RegExp. Esto hace facil escribir codigo con errores.</p>
       <p>Supongamos, por ejemplo, que queremos encontrar el índice de todas las etiquetas <codeinline>&lt;p></codeinline> dentro de una cadena de texto HTML. Podríamos escribir un código como éste:</p>
-    <pre>
-    <code class="language-js">let match, positions = [];
-    while((match = /&lt;p>/g.exec(html)) !== null) &lbrace; // POSSIBLE INFINITE LOOP
+    <pre class="language-js">
+    <code>let match, positions = [];
+    while((match = /&lt;p>/g.exec(html)) !== null) &lbrace; // POSIBLEMENTE UN LOOP INFINITO
       positions.push(match.index);
     }</code></pre>
       <p>Este código no hace lo que queremos. Si la cadena <codeinline>html</codeinline> contiene al menos una etiqueta <codeinline>&lt;p></codeinline>, el bucle será eterno. El problema es que usamos un literal RegExp en la condición del bucle <codeinline>while</codeinline>. Para cada iteración del bucle, estamos creando un nuevo objeto RegExp con <codeinline>lastIndex</codeinline> a 0, por lo que <codeinline>exec()</codeinline> siempre comienza al principio de la cadena, y si hay una coincidencia, seguirá coincidiendo una y otra vez. La solución, por supuesto, es definir el RegExp una vez, y guardarlo en una variable para que estemos usando el mismo objeto RegExp para cada iteración del bucle.</p>
       <p>Por otro lado, a veces reutilizar un objeto RegExp no es lo correcto. Supongamos, por ejemplo, que queremos recorrer todas las palabras de un diccionario para encontrar palabras que contengan pares de letras dobles:</p>
-    <pre>
-    <code class="language-js">let dictionary = [ "apple", "book", "coffee" ];
+    <pre class="language-js">
+    <code>let dictionary = [ "apple", "book", "coffee" ];
     let doubleLetterWords = [];
     let doubleLetter = /(\w)\1/g;
     for(let word of dictionary) &lbrace;
@@ -993,7 +997,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
         doubleLetterWords.push(word);
       }
     }
-    doubleLetterWords // => ["apple", "coffee"]: "book" is missing!</code></pre>
+    doubleLetterWords // => ["apple", "coffee"]: falta "book"!</code></pre>
       <p>Como hemos puesto la bandera <codeinline>g</codeinline> en la RegExp, la propiedad <codeinline>lastIndex</codeinline> cambia después de coincidencias exitosas, y el método <codeinline>test()</codeinline> (que está basado en <codeinline>exec()</codeinline>) empieza a buscar una coincidencia en la posición especificada por <codeinline>lastIndex</codeinline>. Después de encontrar la "pp" en "apple", <codeinline>lastIndex</codeinline> es 3, por lo que empezamos a buscar la palabra "book" en la posición 3 y no vemos la "oo" que contiene.</p>
       <p>Podríamos solucionar este problema eliminando la bandera <codeinline>g</codeinline> (que en realidad no es necesaria en este ejemplo concreto), o moviendo el literal RegExp al cuerpo del bucle para que se vuelva a crear en cada iteración, o poniendo explícitamente a cero <codeinline>lastIndex</codeinline> antes de cada llamada a <codeinline>test()</codeinline>.</p>
       <p>La moraleja aquí es que <codeinline>lastIndex</codeinline> hace que la API RegExp sea propensa a errores. Así que tenga mucho cuidado cuando use las banderas <codeinline>g</codeinline> o <codeinline>y</codeinline> y haga bucles. Y en ES2020 y posteriores, use el método String <codeinline>matchAll()</codeinline> en lugar de <codeinline>exec()</codeinline> para evitar este problema ya que <codeinline>matchAll()</codeinline> no modifica <codeinline>lastIndex</codeinline>.</p>
@@ -1002,30 +1006,30 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="4" class="py-4 xs:py-5 sm:py-6">
     <h2>11.4 Fechas y horarios</h2>
     <p>La clase Date es la API de JavaScript para trabajar con fechas y horas. Crea un objeto Date con el constructor <codeinline>Date()</codeinline>. Sin argumentos, devuelve un objeto Date que representa la fecha y hora actuales:</p>
-    <pre>
-    <code class="language-js">let now = new Date(); // The current time</code></pre>
+    <pre class="language-js">
+    <code>let now = new Date(); // La hora actual</code></pre>
     <p>Si pasa un argumento numérico, el constructor <codeinline>Date()</codeinline> interpreta ese argumento como el número de milisegundos desde la época de 1970:</p>
-    <pre>
-    <code class="language-js">let epoch = new Date(0); // Midnight, January 1st, 1970, GMT</code></pre>
+    <pre class="language-js">
+    <code>let epoch = new Date(0); // Medianoche, January 1st, 1970, GMT</code></pre>
     <p>Si especifica dos o más argumentos enteros, se interpretan como el año, mes, día del mes, hora, minuto, segundo y milisegundo en su zona horaria local, como en lo siguiente:</p>
-    <pre>
-    <code class="language-js">let century = new Date(2100, // Year 2100
+    <pre class="language-js">
+    <code>let century = new Date(2100, // Year 2100
         0,                       // January
         1,                       // 1st
         2, 3, 4, 5);             // 02:03:04.005, local time</code></pre>
     <p>Una peculiaridad de la API de fecha es que el primer mes de un año es el número 0, pero el primer día de un mes es el número 1. Si se omiten los campos de hora, el constructor de <codeinline>Date()</codeinline> los pone todos a 0 por defecto, fijando la hora en medianoche.</p>
     <p>Tenga en cuenta que cuando se invoca con varios números, el constructor <codeinline>Date()</codeinline> los interpreta utilizando la zona horaria a la que esté configurado el ordenador local. Si desea especificar una fecha y hora en UTC (Tiempo Universal Coordinado, también conocido como GMT), puede utilizar <codeinline>Date.UTC()</codeinline>. Este método estático toma los mismos argumentos que el constructor <codeinline>Date()</codeinline>, los interpreta en UTC y devuelve una marca de tiempo en milisegundos que puedes pasar al constructor <codeinline>Date()</codeinline>:</p>
-    <pre>
-    <code class="language-js">// Midnight in England, January 1, 2100
+    <pre class="language-js">
+    <code>// Midnight in England, January 1, 2100
     let century = new Date(Date.UTC(2100, 0, 1));</code></pre>
     <p>Si imprime una fecha (con <codeinline>console.log(century)</codeinline>, por ejemplo), se imprimirá, por defecto, en su zona horaria local. Si desea mostrar una fecha en UTC, debe convertirla explícitamente en una cadena con <codeinline>toUTCString()</codeinline> o <codeinline>toISOString()</codeinline>.</p>
     <p>Por último, si se pasa una cadena al constructor de <codeinline>Date()</codeinline>, éste intentará parsear esa cadena como una especificación de fecha y hora. El constructor puede analizar fechas especificadas en los formatos producidos por los métodos <codeinline>toString()</codeinline>, <codeinline>toUTCString()</codeinline> y <codeinline>toISOString()</codeinline>:</p>
-    <pre>
-    <code class="language-js">let century = new Date("2100-01-01T00:00:00Z"); // An ISO format date</code></pre>
+    <pre class="language-js">
+    <code>let century = new Date("2100-01-01T00:00:00Z"); // An ISO format date</code></pre>
     <p>Una vez que se tiene un objeto Date, varios métodos get y set permiten consultar y modificar los campos año, mes, día-del-mes, hora, minuto, segundo y milisegundo de la Date. Cada uno de estos métodos tiene dos formas: una que obtiene o establece utilizando la hora local y otra que obtiene o establece utilizando la hora UTC. Para obtener o establecer el año de un objeto Date, por ejemplo, se utiliza <codeinline>getFullYear()</codeinline>, <codeinline>getUTCFullYear()</codeinline>, <codeinline>setFullYear()</codeinline> o <codeinline>setUTCFullYear()</codeinline>:</p>
-    <pre>
-    <code class="language-js">let d = new Date(); // Start with the current date
-    d.setFullYear(d.getFullYear() + 1); // Increment the year</code></pre>
+    <pre class="language-js">
+    <code>let d = new Date(); // Empezar con la fecha actual
+    d.setFullYear(d.getFullYear() + 1); // Incrementar el año</code></pre>
     <p>Para obtener o establecer los demás campos de una fecha, sustituya "FullYear" en el nombre del método por "Month", "Date", "Hours", "Minutes", "Seconds" o "Milliseconds". Algunos de los métodos de establecimiento de fecha permiten establecer más de un campo a la vez. <codeinline>setFullYear()</codeinline> y <codeinline>setUTCFullYear()</codeinline> también permiten establecer opcionalmente el mes y el día del mes. Y <codeinline>setHours()</codeinline> y <codeinline>setUTCHours()</codeinline> permiten especificar los campos minutos, segundos y milisegundos además del campo horas.</p>
     <p>Tenga en cuenta que los métodos para consultar el día del mes son <codeinline>getDate()</codeinline> y <codeinline>getUTCDate()</codeinline>. Las funciones <codeinline>getDay()</codeinline> y <codeinline>getUTCDay()</codeinline> devuelven el día de la semana (de 0 para el domingo a 6 para el sábado). El día de la semana es de sólo lectura, por lo que no existe el correspondiente método <codeinline>setDay()</codeinline>.</p>
   </section>
@@ -1033,20 +1037,20 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>11.4.1 Marcas de tiempo</h2>
     <p>JavaScript representa las fechas internamente como enteros que especifican el número de milisegundos transcurridos desde (o antes de) la medianoche del 1 de enero de 1970, hora UTC. Se admiten números enteros de hasta 8.640.000.000.000.000, por lo que JavaScript no se quedará sin milisegundos en más de 270.000 años.</p>
     <p>Para cualquier objeto Date, el método <codeinline>getTime()</codeinline> devuelve este valor interno, y el método <codeinline>setTime()</codeinline> lo establece. Así que puedes añadir 30 segundos a un Date con código como este, por ejemplo:</p>
-    <pre>
-    <code class="language-js">d.setTime(d.getTime() + 30000);</code></pre>
+    <pre class="language-js">
+    <code>d.setTime(d.getTime() + 30000);</code></pre>
     <p>Estos valores en milisegundos se denominan a veces <em>timestamps</em>, y a veces es útil trabajar con ellos directamente en lugar de con objetos Date. El método estático <codeinline>Date.now()</codeinline> devuelve la hora actual como una marca de tiempo y es útil cuando se desea medir cuánto tiempo tarda en ejecutarse el código:</p>
-    <pre>
-    <code class="language-js">let startTime = Date.now();
-    reticulateSplines(); // Do some time-consuming operation
+    <pre class="language-js">
+    <code>let startTime = Date.now();
+    reticulateSplines(); // Realizar alguna operación que consume mucho tiempo
     let endTime = Date.now();
     console.log(`Spline reticulation took $&lbrace;endTime - startTime}ms.`);</code></pre>
     <article>
       <p class="title-article">Marcas de tiempo de alta resolución</p>
       <p>Las marcas de tiempo devueltas por <codeinline>Date.now()</codeinline> se miden en milisegundos. En realidad, un milisegundo es un tiempo relativamente largo para un ordenador, y a veces es posible que d e s e e medir el tiempo transcurrido con mayor precisión. La función <codeinline>performance.now()</codeinline> lo permite: también devuelve una marca de tiempo basada en milisegundos, pero el valor devuelto no es un entero, por lo que incluye fracciones de milisegundo. El valor devuelto por <codeinline>performance.now()</codeinline> no es una marca de tiempo absoluta como lo es el valor <codeinline>Date.now()</codeinline>. En su lugar, simplemente indica cuánto tiempo ha transcurrido desde que se cargó una página web o desde que se inició el proceso Node.</p>
       <p>El objeto <codeinline>performance</codeinline> forma parte de una API de rendimiento más amplia que no está definida por el estándar ECMAScript pero que está implementada por los navegadores web y por Node. Para utilizar el objeto <codeinline>performance</codeinline> en Node, debes importarlo con:</p>
-    <pre>
-    <code class="language-js">const &lbrace; performance } = require("perf_hooks");</code></pre>
+    <pre class="language-js">
+    <code>const &lbrace; performance } = require("perf_hooks");</code></pre>
       <p>Permitir un cronometraje de alta precisión en la web puede permitir a sitios web sin escrúpulos averiguar la identidad de los visitantes, por lo que los navegadores (especialmente Firefox) pueden reducir la precisión de <codeinline>performance.now()</codeinline> por defecto. Como desarrollador web, deberías poder volver a habilitar la temporización de alta precisión de algún modo (como estableciendo <codeinline>privacy.reduceTimerPrecision</codeinline> en false en Firefox).</p>
     </article>
   </section>
@@ -1054,16 +1058,16 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>11.4.2 Aritmética de fechas</h2>
     <p>Los objetos Date pueden compararse con los operadores de comparación estándar <codeinline>&lt;</codeinline>, <codeinline>&lt;=</codeinline>, <codeinline>></codeinline> y <codeinline>>=</codeinline> de JavaScript. Y puedes restar un objeto Date de otro para determinar el número de milisegundos entre las dos fechas. (Esto funciona porque la clase Date define un método valueOf() que devuelve una marca de tiempo).</p>
     <p>Si desea añadir o restar un número determinado de segundos, minutos u horas a una fecha, lo más sencillo es modificar la marca de tiempo, como se muestra en el ejemplo anterior, en el que añadimos 30 segundos a una fecha. Esta técnica se vuelve más engorrosa si desea añadir días, y no funciona en absoluto para meses y años, ya que tienen un número variable de días. Para hacer aritmética de fechas involucrando días, meses y años, puede usar <codeinline>setDate()</codeinline>, <codeinline>setMonth()</codeinline> y <codeinline>setYear()</codeinline>. Aquí, por ejemplo, hay un código que añade tres meses y dos semanas a la fecha actual:</p>
-    <pre>
-    <code class="language-js">let d = new Date();
+    <pre class="language-js">
+    <code>let d = new Date();
     d.setMonth(d.getMonth() + 3, d.getDate() + 14);</code></pre>
     <p>Los métodos de ajuste de fecha funcionan correctamente incluso cuando se desbordan. Cuando añadimos tres meses al mes actual, podemos acabar con un valor superior a 11 (que representa diciembre). La función <codeinline>setMonth()</codeinline> se encarga de esto incrementando el año según sea necesario. Del mismo modo, cuando establecemos el día del mes en un valor mayor que el número de días del mes, el mes se incrementa adecuadamente.</p>
   </section>
   <section id="4-3">
     <h2>11.4.3 Formateo y análisis sintáctico de cadenas de fecha</h2>
     <p>Si utilizas la clase Date para realizar un seguimiento de fechas y horas (en lugar de simplemente medir intervalos de tiempo), es probable que necesites mostrar fechas y horas a los usuarios de tu código. La clase Date define varios métodos para convertir objetos Date en cadenas. He aquí algunos ejemplos:</p>
-    <pre>
-    <code class="language-js">let d = new Date(2020, 0, 1, 17, 10, 30); // 5:10:30pm on New Year's Day 2020
+    <pre class="language-js">
+    <code>let d = new Date(2020, 0, 1, 17, 10, 30); // 5:10:30pm on New Year's Day 2020
     d.toString()           // => "Wed Jan 01 2020 17:10:30 GMT-0800 (Pacific Standard Time)"
     d.toUTCString()        // => "Thu, 02 Jan 2020 01:10:30 GMT"
     d.toLocaleDateString() // => "1/1/2020": 'en-US' locale
@@ -1097,8 +1101,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Además de la clase Error, JavaScript define una serie de subclases que utiliza para señalar determinados tipos de errores definidos por ECMAScript. Estas subclases son EvalError, RangeError, ReferenceError, SyntaxError, TypeError y URIError. Puede utilizar estas clases de error en su propio código si le parecen apropiadas. Al igual que la clase Error base, cada una de estas subclases tiene un constructor que toma un único argumento de mensaje. Y las instancias de cada una de estas subclases tienen una propiedad <codeinline>name</codeinline> cuyo valor es el mismo que el nombre del constructor.</p>
     <p>Puede definir sus propias subclases de Error que mejor encapsulen las condiciones de error de su propio programa. Tenga en cuenta que no está limitado a las propiedades de <codeinline>name</codeinline> y mensaje. Si crea una subclase, puede definir nuevas propiedades para proporcionar detalles del error. Si está escribiendo un analizador sintáctico, por ejemplo, puede resultarle útil definir una clase ParseError con propiedades de <codeinline>line</codeinline> y <codeinline>column</codeinline> que especifiquen la ubicación exacta del fallo de análisis sintáctico. O si estás trabajando con peticiones HTTP, puede que quieras definir una clase HTTPError que tenga una propiedad <codeinline>status</codeinline> que contenga el código de estado HTTP (como 404 o 500) de la petición fallida.</p>
     <p>Por ejemplo:</p>
-    <pre>
-    <code class="language-js">class HTTPError extends Error &lbrace;
+    <pre class="language-js">
+    <code>class HTTPError extends Error &lbrace;
       constructor(status, statusText, url) &lbrace;
         super(`$&lbrace;status} $&lbrace;statusText}: $&lbrace;url}`);
         this.status = status;
@@ -1119,13 +1123,13 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Cuando un programa necesita guardar datos o necesita transmitir datos a través de una conexión de red a otro programa, debe convertir sus estructuras de datos en memoria en una cadena de bytes o caracteres que puedan ser guardados o transmitidos y luego ser analizados para restaurar las estructuras de datos originales en memoria. Este proceso de conversión de estructuras de datos en cadenas de bytes o caracteres se conoce como <em>serialización</em> (o <em>marshaling</em> o incluso <em>pickling</em>).</p>
     <p>La forma más sencilla de serializar datos en JavaScript utiliza un formato de serialización conocido como JSON. Este acrónimo significa "JavaScript Object Notation" y, como su nombre indica, el formato utiliza la sintaxis literal de objetos y matrices de JavaScript para convertir estructuras de datos formadas por objetos y matrices en cadenas. JSON admite números y cadenas primitivas, así como los valores <codeinline>true</codeinline>, <codeinline>false</codeinline> y <codeinline>null</codeinline>, además de matrices y objetos construidos a partir de esos valores primitivos. JSON no admite otros tipos de JavaScript como Map, Set, RegExp, Date o matrices tipadas. No obstante, ha demostrado ser un formato de datos extraordinariamente versátil y es de uso común incluso en programas no basados en JavaScript.</p>
     <p>JavaScript soporta la serialización y deserialización de JSON con las dos funciones <codeinline>JSON.stringify()</codeinline> y <codeinline>JSON.parse()</codeinline>, que se trataron brevemente en <a href="capitulo-6#8">§6.8</a>. Dado un objeto o array (anidado a una profundidad arbitraria) que no contenga ningún valor no serializable como objetos RegExp o arrays tipados, puedes serializar el objeto simplemente pasándolo a <codeinline>JSON.stringify()</codeinline>. Como su nombre indica, el valor de retorno de esta función es una cadena. Y dada una cadena devuelta por <codeinline>JSON.stringify()</codeinline>, puede volver a crear la estructura de datos original pasando la cadena a <codeinline>JSON.parse()</codeinline>:</p>
-    <pre>
-    <code class="language-js">let o = &lbrace;s: "", n: 0, a: [true, false, null]};
+    <pre class="language-js">
+    <code>let o = &lbrace;s: "", n: 0, a: [true, false, null]};
     let s = JSON.stringify(o);  // s == '&lbrace;"s":"","n":0,"a":[true,false,null]}'
     let copy = JSON.parse(s);   // copy == &lbrace;s: "", n: 0, a: [true, false, null]}</code></pre>
     <p>Si omitimos la parte en la que los datos serializados se guardan en un archivo o se envían a través de la red, podemos utilizar este par de funciones como una forma algo ineficiente de crear una copia en profundidad de un objeto:</p>
-    <pre>
-    <code class="language-js">// Make a deep copy of any serializable object or array
+    <pre class="language-js">
+    <code>// Make a deep copy of any serializable object or array
       function deepcopy(o) &lbrace;
         return JSON.parse(JSON.stringify(o));
       }</code></pre>
@@ -1138,8 +1142,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       </div>
     </nota>
     <p>Normalmente, sólo se pasa un único argumento a <codeinline>JSON.stringify()</codeinline> y <codeinline>JSON.parse()</codeinline>. Ambas funciones aceptan un segundo argumento opcional que nos permite extender el formato JSON, y que describiremos a continuación. <codeinline>JSON.stringify()</codeinline> también acepta un tercer argumento opcional que discutiremos primero. Si quieres que tu cadena con formato JSON sea legible por humanos (si se está utilizando como un archivo de configuración, por ejemplo), entonces debes pasar <codeinline>null</codeinline> como segundo argumento y pasar un número o cadena como tercer argumento. Este tercer argumento indica a <codeinline>JSON.stringify()</codeinline> que debe formatear los datos en varias líneas sangradas. Si el tercer argumento es un número, utilizará ese número de espacios para cada nivel de sangría. Si el tercer argumento es una cadena de espacios en blanco (como <codeinline>'\t'</codeinline>), usará esa cadena para cada nivel de sangría.</p>
-    <pre>
-    <code class="language-js">let o = &lbrace;s: "test", n: 0};
+    <pre class="language-js">
+    <code>let o = &lbrace;s: "test", n: 0};
     JSON.stringify(o, null, 2) // => '&lbrace;\n "s": "test",\n "n": 0\n}'</code></pre>
     <p><codeinline>JSON.parse()</codeinline> ignora los espacios en blanco, por lo que pasar un tercer argumento a <codeinline>JSON.stringify()</codeinline> no tiene ningún impacto en nuestra capacidad de volver a convertir la cadena en una estructura de datos.</p>
   </section>
@@ -1149,28 +1153,28 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Si necesita volver a crear objetos Date (o modificar el objeto analizado de cualquier otra forma), puede pasar una función "reviver" como segundo argumento a <codeinline>JSON.parse()</codeinline>. Si se especifica, esta función "reviver" se invoca una vez por cada valor primitivo (pero no los objetos o matrices que contienen esos valores primitivos) analizado a partir de la cadena de entrada. La función se invoca con dos argumentos. El primero es un nombre de propiedad, ya sea un nombre de propiedad de objeto o un índice de matriz convertido a cadena. El segundo argumento es el valor primitivo de esa propiedad de objeto o elemento de matriz. Además, la función se invoca como un método del objeto o matriz que contiene el valor primitivo, por lo que puede hacer referencia a ese objeto contenedor con la palabra clave <codeinline>this</codeinline>.</p>
     <p>El valor de retorno de la función reviver se convierte en el nuevo valor de la propiedad nombrada. Si devuelve su segundo argumento, la propiedad permanecerá sin cambios. Si devuelve <codeinline>undefined</codeinline>, entonces la propiedad nombrada será borrada del objeto o array antes de que <codeinline>JSON.parse()</codeinline> vuelva al usuario</p>
     <p>Como ejemplo, he aquí una llamada a <codeinline>JSON.parse()</codeinline> que utiliza una función reviver para filtrar algunas propiedades y volver a crear objetos Date:</p>
-    <pre>
-    <code class="language-js">let data = JSON.parse(text, function(key, value) &lbrace;
-      // Remove any values whose property name begins with an underscore
+    <pre class="language-js">
+    <code>let data = JSON.parse(text, function(key, value) &lbrace;
+      // Eliminar cualquier valor cuyo nombre de propiedad comience con un guión bajo
       if (key[0] === "_") return undefined;
 
-      // If the value is a string in ISO 8601 date format convert it to a Date.
+      // Si el valor es una string en formato de fecha ISO 8601, conviértalo en una fecha.
       if (typeof value === "string" &&
         /^\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d.\d\d\dZ$/.test(value)) &lbrace;
         return new Date(value);
       }
 
-      // Otherwise, return the value unchanged
+      // De lo contrario, devuelve el valor sin cambios.
       return value;
     });</code></pre>
     <p>Además del uso de <codeinline>toJSON()</codeinline> descrito anteriormente, <codeinline>JSON.stringify()</codeinline> también permite personalizar su salida pasando una matriz o una función como segundo argumento opcional.</p>
     <p>Si en su lugar se pasa una matriz de cadenas (o números, que se convierten en cadenas) como segundo argumento, se utilizarán como nombres de las propiedades del objeto (o elementos de la matriz). Cualquier propiedad cuyo nombre no se encuentre en la matriz se omitirá de la cadena. Además, la cadena devuelta incluirá las propiedades en el mismo orden en que aparecen en la matriz (lo que puede ser muy útil al escribir pruebas).</p>
     <p>Si se pasa una función, se trata de una función de sustitución, es decir, la inversa de la función opcional de sustitución que se puede pasar a <codeinline>JSON.parse()</codeinline>. Si se especifica, la función de sustitución se invoca para cada valor que se va a encadenar. El primer argumento de la función de sustitución es el nombre de la propiedad del objeto o el índice de la matriz del valor dentro de ese objeto, y el segundo argumento es el valor en sí. La función de sustitución se invoca como un método del objeto o matriz que contiene el valor que se va a encadenar . El valor de retorno de la función en lugar del valor original. Si el sustituto devuelve un valor <codeinline>undefined</codeinline> o no devuelve nada, ese valor (y su elemento de matriz o propiedad de objeto) se omite en la encadenación.</p>
-    <pre>
-    <code class="language-js">// Specify what fields to serialize, and what order to serialize them in
+    <pre class="language-js">
+    <code>// Especifique qué campos desea serializar y en qué orden hacerlo.
     let text = JSON.stringify(address, ["city","state","country"]);
 
-    // Specify a replacer function that omits RegExp-value properties
+    // Especifique una función de reemplazo que omita las propiedades del valor RegExp
     let json = JSON.stringify(o, (k, v) => v instanceof RegExp ? undefined : v);</code></pre>
     <p>Las dos llamadas a <codeinline>JSON.stringify()</codeinline> utilizan el segundo argumento de una manera benigna, produciendo una salida serializada que puede ser deserializada sin requerir una función especial. En general, sin embargo, si defines un método <codeinline>toJSON()</codeinline> para un tipo, o si usas una función replacer que realmente reemplaza valores no serializables por valores serializables, entonces típicamente necesitarás usar una función reviver personalizada con <codeinline>JSON.parse()</codeinline> para recuperar tu estructura de datos original. Si haces esto, debes entender que estás definiendo un formato de datos personalizado y sacrificando la portabilidad y compatibilidad con un gran ecosistema de herramientas y lenguajes compatibles con JSON.</p>
   </section>
@@ -1199,29 +1203,29 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p><codeinline>minimumSignificantDigits</codeinline>, <codeinline>maximumSignificantDigits</codeinline></p>
     <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Estas propiedades controlan el número de dígitos significativos utilizados al formatear un número, por lo que son adecuadas para formatear datos científicos, por ejemplo. Si se especifican, estas propiedades anulan las propiedades de dígitos enteros y fraccionarios enumeradas anteriormente. Los valores legales están comprendidos entre 1 y 21.</p>
     <p>Una vez creado un objeto Intl.NumberFormat con la configuración regional y las opciones deseadas, se utiliza pasando un número a su método <codeinline>format()</codeinline>, que devuelve una cadena con el formato adecuado. Por ejemplo</p>
-    <pre>
-    <code class="language-js">let euros = Intl.NumberFormat("es", &lbrace;style: "currency", currency: "EUR"});
-    euros.format(10)    // => "10,00 €": ten euros, Spanish formatting
+    <pre class="language-js">
+    <code>let euros = Intl.NumberFormat("es", &lbrace;style: "currency", currency: "EUR"});
+    euros.format(10)    // => "10,00 €": diez euros, formato español
 
     let pounds = Intl.NumberFormat("en", &lbrace;style: "currency", currency: "GBP"});
-    pounds.format(1000) // => "£1,000.00": One thousand pounds, English formatting</code></pre>
+    pounds.format(1000) // => "£1,000.00": Mil libras, formato inglés</code></pre>
     <p>Una característica útil de <codeinline>Intl.NumberFormat</codeinline> (y también de las otras clases Intl) es que su método <codeinline>format()</codeinline> está ligado al objeto NumberFormat al que pertenece. Así, en lugar de definir una variable que haga referencia al objeto formateador y luego invocar el método <codeinline>format()</codeinline> sobre ella, puede simplemente asignar el mé todo <codeinline>format()</codeinline> a una variable y utilizarlo como si fuera una función independiente, como en este ejemplo:</p>
-    <pre>
-    <code class="language-js">let data = [0.05, .75, 1];
+    <pre class="language-js">
+    <code>let data = [0.05, .75, 1];
     let formatData = Intl.NumberFormat(undefined, &lbrace;
       style: "percent",
       minimumFractionDigits: 1,
       maximumFractionDigits: 1
     }).format;
 
-    data.map(formatData) // => ["5.0%", "75.0%", "100.0%"]: in en-US locale</code></pre>
+    data.map(formatData) // => ["5.0%", "75.0%", "100.0%"]: en la configuración regional en-US</code></pre>
     <p>Algunas lenguas, como el árabe, utilizan su propia escritura para los dígitos decimales:</p>
-    <pre>
-    <code class="language-js">let arabic = Intl.NumberFormat("ar", &lbrace;useGrouping: false}).format;
+    <pre class="language-js">
+    <code>let arabic = Intl.NumberFormat("ar", &lbrace;useGrouping: false}).format;
       arabic(1234567890) // => "١٢٣٤٥٦٧٨٩٠"</code></pre>
     <p>Otros idiomas, como el hindi, utilizan una escritura que tiene su propio conjunto de dígitos, pero tienden a utilizar los dígitos ASCII 0-9 por defecto. Si desea anular el alfabeto utilizado por defecto para los dígitos, añada <codeinline>-u-nu-</codeinline> a la configuración regional y escriba a continuación el nombre abreviado del alfabeto. Por ejemplo, puede dar formato a los números con agrupación al estilo indio y dígitos en devanagari:</p>
-    <pre>
-    <code class="language-js">let hindi = Intl.NumberFormat("hi-IN-u-nu-deva").format;
+    <pre class="language-js">
+    <code>let hindi = Intl.NumberFormat("hi-IN-u-nu-deva").format;
       hindi(1234567890) // => "१,२३,४५,६७,८९०"</code></pre>
     <p><codeinline>nu</codeinline> es el nombre de extensión para el sistema de numeración, y <codeinline>deva</codeinline> es la abreviatura de Devanagari. La API Intl define los nombres de otros sistemas de numeración, principalmente para las lenguas índicas del sur y el sudeste asiático.</p>
   </section>
@@ -1251,24 +1255,24 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p><codeinline>hourCycle</codeinline></p>
     <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Esta propiedad permite especificar si la medianoche se escribe como 0 horas, 12 horas o 24 horas. El valor por defecto depende de la configuración regional, pero puede anularlo con esta propiedad. Tenga en cuenta que <codeinline>hora12</codeinline> tiene prioridad sobre esta propiedad. Utilice el valor <codeinline>"h11"</codeinline> para especificar que la medianoche es 0 y la hora anterior a la medianoche es 11pm. Utilice <codeinline>"h12"</codeinline> para especificar que la medianoche son las 12. Utilice <codeinline>"h23"</codeinline> para especificar que la medianoche es 0 y la hora antes de medianoche es 23. Y utiliza <codeinline>"h24"</codeinline> para especificar que la medianoche es 24.</p>
     <p>He aquí algunos ejemplos:</p>
-    <pre>
-    <code class="language-js">let d = new Date("2020-01-02T13:14:15Z"); // January 2nd, 2020, 13:14:15 UTC
+    <pre class="language-js">
+    <code>let d = new Date("2020-01-02T13:14:15Z"); // January 2nd, 2020, 13:14:15 UTC
 
-    // With no options, we get a basic numeric date format
+    // Sin opciones, obtenemos un formato de fecha numérico básico
     Intl.DateTimeFormat("en-US").format(d)       // => "1/2/2020"
     Intl.DateTimeFormat("fr-FR").format(d)       // => "02/01/2020"
 
-    // Spelled out weekday and month
+    // Se deletreó el día de la semana y el mes.
     let opts = &lbrace; weekday: "long", month: "long", year: "numeric", day: "numeric" };
     Intl.DateTimeFormat("en-US", opts).format(d) // => "Thursday, January 2, 2020"
     Intl.DateTimeFormat("es-ES", opts).format(d) // => "jueves, 2 de enero de 2020"
 
-    // The time in New York, for a French-speaking Canadian
+    // La hora en Nueva York para un canadiense francófono
     opts = &lbrace; hour: "numeric", minute: "2-digit", timeZone: "America/New_York" };
     Intl.DateTimeFormat("fr-CA", opts).format(d) // => "8 h 14"</code></pre>
     <p>Intl.DateTimeFormat puede mostrar fechas utilizando calendarios distintos al calendario juliano por defecto basado en la era cristiana. Aunque algunas localizaciones pueden utilizar un calendario no cristiano por defecto, siempre se puede especificar explícitamente el calendario a utilizar añadiendo <codeinline>-u-ca-</codeinline> a la localidad y a continuación el nombre del calendario. Los posibles nombres de calen- dar son "budista", "chino", "copto", "etiópico", "gregoriano", "hebreo", "indio", "islámico", "iso8601", "japonés" y "persa". Siguiendo con el ejemplo anterior, podemos determinar el año en varios calendarios no cristianos:</p>
-    <pre>
-    <code class="language-js">let opts = &lbarec; year: "numeric", era: "short" };
+    <pre class="language-js">
+    <code>let opts = &lbarec; year: "numeric", era: "short" };
     Intl.DateTimeFormat("en", opts).format(d)               // => "2020 AD"
     Intl.DateTimeFormat("en-u-ca-iso8601", opts).format(d)  // => "2020 AD"
     Intl.DateTimeFormat("en-u-ca-hebrew", opts).format(d)   // => "5780 AM"
@@ -1296,23 +1300,24 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Esta propiedad especifica qué letra debe ir primero. Si especifica <codeinline>"upper"</codeinline>, entonces "A" se ordenará antes que "a". Y si especifica <codeinline>"lower"</codeinline>, entonces "a" se ordenará antes que "A". En cualquier caso, tenga en cuenta que las variantes en mayúsculas y minúsculas de la misma letra estarán una al lado de la otra en el orden de clasificación, que es diferente del orden lexicográfico de código Uni (el comportamiento por defecto del método Array <codeinline>sort()</codeinline>) en el que todas las letras ASCII mayúsculas van antes que todas las letras ASCII minúsculas. El valor predeterminado de esta propiedad depende de la localización, y las implementaciones pueden ignorar esta propiedad y no permitirle modificar el orden de las mayúsculas y minúsculas.</p>
     <p>Una vez creado un objeto Intl.Collator para la configuración regional y las opciones deseadas, puede utilizar su método <codeinline>compare()</codeinline> para comparar dos cadenas. Este método devuelve un número. Si el valor devuelto es menor que cero, entonces la primera cadena va antes que la segunda. Si es mayor que cero, la primera cadena va después de la segunda. Y si <codeinline>compare()</codeinline> devuelve cero, entonces las dos cadenas son iguales en lo que respecta a este intercalador.</p>
     <p>Este método <codeinline>compare()</codeinline> que toma dos cadenas y devuelve un número menor, igual o mayor que cero es exactamente lo que el método Array <codeinline>sort()</codeinline> espera para su argumento opcional. Además, Intl.Collator vincula automáticamente el mé todo <codeinline>compare()</codeinline> a su instancia, por lo que puede pasarlo directamente a <codeinline>sort()</codeinline> sin tener que escribir una función envolvente e invocarla a través del objeto collator. He aquí algunos ejemplos:</p>
-    <pre>
-    <code class="language-js">// A basic comparator for sorting in the user's locale.
-    // Never sort human-readable strings without passing something like this:
+    <pre class="language-js">
+    <code>// Un comparador básico para ordenar en la configuración regional del usuario.
+    // Nunca ordene cadenas legibles para humanos sin pasar algo como esto:
     const collator = new Intl.Collator().compare;
     ["a", "z", "A", "Z"].sort(collator) // => ["a", "A", "z", "Z"]
 
-    // Filenames often include numbers, so we should sort those specially
+    // Los nombres de archivos a menudo incluyen números, 
+    // por lo que debemos ordenarlos especialmente.
     const filenameOrder = new Intl.Collator(undefined, &lbrace; numeric: true }).compare;
     ["page10", "page9"].sort(filenameOrder) // => ["page9", "page10"]
     
-    // Find all strings that loosely match a target string
+    // Encuentra todos los string que coinciden vagamente con una string de destino
     const fuzzyMatcher = new Intl.Collator(undefined, &lbrace; sensitivity: "base", ignorePunctuation: true }).compare;
     let strings = ["food", "fool", "Føø Bar"];
     strings.findIndex(s => fuzzyMatcher(s, "foobar") === 0) // => 2</code></pre>
     <p>Algunas localidades tienen más de un orden de cotejo posible. En Alemania, por ejemplo, las guías telefónicas utilizan un orden ligeramente más fonético que los diccionarios. En España, antes de 1994, la "ch" y la "ll" se trataban como letras separadas, por lo que ese país tiene un orden de cotejo moderno y otro tradicional. Y en China, el orden de cotejo puede basarse en la codificación de los caracteres, en el radical base y los trazos de cada carácter, o en la romanización Pinyin de los caracteres. Estas variantes de intercalación no pueden seleccionarse mediante el argumento de opciones Intl.Collator, pero pueden seleccionarse añadiendo <codeinline>-u-co-</codeinline> a la cadena de configuración regional y añadiendo el nombre de la variante deseada. Utilice <codeinline>"de-DE-u- co-phonebk"</codeinline> para pedir la guía telefónica en Alemania, por ejemplo, y <codeinline>"zh-TW-u-co-pinyin"</codeinline> para pedir Pinyin en Taiwán.</p>
-    <pre>
-    <code class="language-js">// Before 1994, CH and LL were treated as separate letters in Spain
+    <pre class="language-js">
+    <code>// Antes de 1994, CH y LL se trataban como letras separadas en España
     const modernSpanish = Intl.Collator("es-ES").compare;
     const traditionalSpanish = Intl.Collator("es-ES-u-co-trad").compare;
     let palabras = ["luz", "llama", "como", "chico"];
@@ -1374,8 +1379,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Dado que JavaScript se utiliza con tanta frecuencia en navegadores y servidores web, es habitual que el código JavaScript necesite manipular URLs. La clase URL analiza las URL y también permite modificarlas (añadiendo parámetros de búsqueda o alterando las rutas, por ejemplo). También maneja adecuadamente el complicado tema de escapar y desescapar los diversos componentes de una URL.</p>
     <p>La clase URL no forma parte de ningún estándar ECMAScript, pero funciona en Node y en todos los navegadores de Internet que no sean Internet Explorer. Está estandarizada en <a href="https://url.spec.whatwg.org">https://url.spec.whatwg.org</a>.</p>
     <p>Cree un objeto URL con el constructor <codeinline>URL()</codeinline>, pasando una cadena URL absoluta como argumento. También puede pasar una URL relativa como primer argumento y la URL absoluta a la que es relativa como segundo argumento. Una vez creado el objeto URL, sus distintas propiedades le permiten consultar versiones no descifradas de las distintas partes de la URL:</p>
-    <pre>
-    <code class="language-js">let url = new URL("https://example.com:8000/path/name?q=term#fragment");
+    <pre class="language-js">
+    <code>let url = new URL("https://example.com:8000/path/name?q=term#fragment");
     url.href      // => "https://example.com:8000/path/name?q=term#fragment"
     url.origin    // => "https://example.com:8000"
     url.protocol  // => "https:"
@@ -1386,21 +1391,21 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     url.search    // => "?q=term"
     url.hash      // => "#fragment"</code></pre>
     <p>Aunque no se utiliza habitualmente, las URL pueden incluir un nombre de usuario o un nombre de usuario y una contraseña, y la clase URL también puede analizar estos componentes de URL:</p>
-    <pre>
-    <code class="language-js">let url = new URL("ftp://admin:1337!@ftp.example.com/");
+    <pre class="language-js">
+    <code>let url = new URL("ftp://admin:1337!@ftp.example.com/");
     url.href      // => "ftp://admin:1337!@ftp.example.com/"
     url.origin    // => "ftp://ftp.example.com"
     url.username  // => "admin"
     url.password  // => "1337!"</code></pre>
     <p>La propiedad de <codeinline>origin</codeinline> aquí es una simple combinación del protocolo URL y el host (incluyendo el puerto si se especifica uno). Como tal, es una propiedad de sólo lectura. Pero cada una de las otras propiedades demostradas en el ejemplo anterior es de lectura/escritura: puede establecer cualquiera de estas propiedades para establecer la parte correspondiente de la URL:</p>
-    <pre>
-    <code class="language-js">let url = new URL("https://example.com"); // Start with our server
-    url.pathname = "api/search";  // Add a path to an API endpoint
-    url.search = "q=test";        // Add a query parameter
+    <pre class="language-js">
+    <code>let url = new URL("https://example.com"); // Comience con nuestro servidor
+    url.pathname = "api/search";  // Agregar una ruta a un punto final de API
+    url.search = "q=test";        // Agregar un parámetro de consulta
     url.toString()                // => "https://example.com/api/search?q=test"</code></pre>
     <p>Una de las características importantes de la clase URL es que añade correctamente la puntuación y escapa caracteres especiales en las URL cuando es necesario:</p>
-    <pre>
-    <code class="language-js">let url = new URL("https://example.com");
+    <pre class="language-js">
+    <code>let url = new URL("https://example.com");
     url.pathname = "path with spaces";
     url.search = "q=foo#bar";
     url.pathname  // => "/path%20with%20spaces"
@@ -1409,34 +1414,34 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>La propiedad <codeinline>href</codeinline> en estos ejemplos es especial: leer <codeinline>href</codeinline> es equivalente a llamar a <codeinline>toString()</codeinline>: reensambla todas las partes de la URL en la forma de cadena canónica de la URL. Y establecer <codeinline>href</codeinline> a una nueva cadena vuelve a ejecutar el analizador de URL en la nueva cadena como si hubiera llamado de nuevo al constructor <codeinline>URL()</codeinline>.</p>
     <p>En los ejemplos anteriores, hemos estado utilizando la propiedad <codeinline>search</codeinline> para referirnos a toda la parte de consulta de una URL, que consiste en los caracteres desde un signo de interrogación hasta el final de la URL o hasta el primer carácter hash. A veces, es suficiente tratar esto como una única propiedad URL. A menudo, sin embargo, las peticiones HTTP codifican los valores de múltiples campos de formulario o múltiples parámetros API en la parte de consulta de una URL utilizando el formato <codeinline>application/x-www-form-urlencoded</codeinline>. En este formato, la parte de consulta de la URL es un signo de interrogación seguido de uno o más pares nombre/valor, separados entre sí por ampersands. El mismo nombre puede aparecer más de una vez, lo que da lugar a un parámetro de búsqueda con más de un valor.</p>
     <p>Si desea codificar este tipo de pares nombre/valor en la parte de consulta de una URL, entonces la propiedad <codeinline>searchParams</codeinline> será más útil que la propiedad <codeinline>search</codeinline>. La propiedad <codeinline>search</codeinline> es una cadena de lectura/escritura que permite obtener y establecer toda la parte de consulta de la URL . La propiedad <codeinline>searchParams</codeinline> es una referencia de sólo lectura a una propiedad Objeto URLSearchParams, que dispone de una API para obtener, establecer, añadir, eliminar y ordenar los parámetros codificados en la parte de consulta de la URL:</p>
-    <pre>
-    <code class="language-js">let url = new URL("https://example.com/search");
-    url.search                            // => "": no query yet
-    url.searchParams.append("q", "term"); // Add a search parameter
+    <pre class="language-js">
+    <code>let url = new URL("https://example.com/search");
+    url.search                            // => "": No hay ninguna consulta todavía
+    url.searchParams.append("q", "term"); // Agregar un parámetro de búsqueda
     url.search                            // => "?q=term"
-    url.searchParams.set("q", "x");       // Change the value of this parameter
+    url.searchParams.set("q", "x");       // Cambiar el valor de este parámetro
     url.search                            // => "?q=x"
-    url.searchParams.get("q")             // => "x": query the parameter value
-    url.searchParams.has("q")             // => true: there is a q parameter
-    url.searchParams.has("p")             // => false: there is no p parameter
-    url.searchParams.append("opts", "1"); // Add another search parameter
+    url.searchParams.get("q")             // => "x": Consultar el valor del parámetro
+    url.searchParams.has("q")             // => true: Hay un parámetro q
+    url.searchParams.has("p")             // => false: no hay parámetro p
+    url.searchParams.append("opts", "1"); // Añadir otro parámetro de búsqueda
     url.search                            // => "?q=x&opts=1"
-    url.searchParams.append("opts", "&"); // Add another value for same name
-    url.search                            // => "?q=x&opts=1&opts=%26": note escape
-    url.searchParams.get("opts")          // => "1": the first value
-    url.searchParams.getAll("opts")       // => ["1", "&"]: all values
-    url.searchParams.sort();              // Put params in alphabetical order
+    url.searchParams.append("opts", "&"); // Agregar otro valor para el mismo nombre
+    url.search                            // => "?q=x&opts=1&opts=%26": nota de escape
+    url.searchParams.get("opts")          // => "1": El primer valor
+    url.searchParams.getAll("opts")       // => ["1", "&"]: todos los valores
+    url.searchParams.sort();              // Coloque los parámetros en orden alfabético
     url.search                            // => "?opts=1&opts=%26&q=x"
-    url.searchParams.set("opts", "y");    // Change the opts param
+    url.searchParams.set("opts", "y");    // Cambiar el parámetro opts
     url.search                            // => "?opts=y&q=x"
     // searchParams is iterable
     [...url.searchParams]                 // => [["opts", "y"], ["q", "x"]]
-    url.searchParams.delete("opts");      // Delete the opts param
+    url.searchParams.delete("opts");      // Eliminar el parámetro opts
     url.search                            // => "?q=x"
     url.href                              // => "https://example.com/search?q=x"</code></pre>
     <p>El valor de la propiedad <codeinline>searchParams</codeinline> es un objeto URLSearchParams. Si desea codificar parámetros de URL en una cadena de consulta, puede crear un objeto URLSearchParams, añadir parámetros, convertirlo en una cadena y establecerlo en la propiedad <codeinline>search</codeinline> de una URL:</p>
-    <pre>
-    <code class="language-js">let url = new URL("http://example.com");
+    <pre class="language-js">
+    <code>let url = new URL("http://example.com");
     let params = new URLSearchParams();
     params.append("q", "term");
     params.append("opts", "exact");
@@ -1458,8 +1463,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>11.10 Temporizadores</h2>
     <p>Desde los primeros días de JavaScript, los navegadores web han definido dos funciones -<codeinline>setTimeout()</codeinline> y <codeinline>setInterval()</codeinline>- que permiten a los programas pedir al navegador que invoque una función una vez transcurrido un tiempo determinado o que invoque la función repetidamente en un intervalo especificado. Estas funciones nunca se han estandarizado como parte del núcleo del lenguaje, pero funcionan en todos los navegadores y en Node y forman parte de facto de la biblioteca estándar de JavaScript.</p>
     <p>El primer argumento de <codeinline>setTimeout()</codeinline> es una función, y el segundo es un número que especifica cuántos milisegundos deben transcurrir antes de que se invoque la función. Después de la cantidad de tiempo especificada (y quizás un poco más si el sistema está ocupado), la función será invocada sin argumentos. Aquí, por ejemplo, hay tres llamadas a <codeinline>setTimeout()</codeinline> que imprimen mensajes de consola después de un segundo, dos segundos y tres segundos:</p>
-    <pre>
-    <code class="language-js">setTimeout(() => &lbrace; console.log("Ready..."); }, 1000);
+    <pre class="language-js">
+    <code>setTimeout(() => &lbrace; console.log("Ready..."); }, 1000);
     setTimeout(() => &lbrace; console.log("set..."); }, 2000);
     setTimeout(() => &lbrace; console.log("go!"); }, 3000);</code></pre>
     <p>Observe que <codeinline>setTimeout()</codeinline> no espera a que transcurra el tiempo antes de volver. Las tres líneas de código de este ejemplo se ejecutan casi instantáneamente, pero luego no ocurre nada hasta que transcurren 1.000 milisegundos.</p>
@@ -1467,14 +1472,14 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p><codeinline>setTimeout()</codeinline> registra una función para ser invocada una vez. A veces, esa función llamará a su vez a <codeinline>setTimeout()</codeinline> para programar otra invocación en un momento futuro. Si desea invocar una función repetidamente, sin embargo, a menudo es más sencillo utilizar <codeinline>setInterval()</codeinline>. <codeinline>setInterval()</codeinline> toma los mismos dos argumentos que <codeinline>setTimeout()</codeinline> pero invoca la función repetidamente cada vez que el número especificado de milisegundos (aproximadamente) han transcurrido.</p>
     <p>Tanto <codeinline>setTimeout()</codeinline> como <codeinline>setInterval()</codeinline> devuelven un valor. Si guarda este valor en una variable, puede utilizarlo más tarde para cancelar la ejecución de la función pasándoselo a <codeinline>clearTimeout()</codeinline> o <codeinline>clearInterval()</codeinline>. El valor devuelto es típicamente un número en los navegadores web y es un objeto en Node. El tipo real no importa, y debes tratarlo como un valor opaco. Lo único que puede hacer con este valor es pasarlo a <codeinline>clearTimeout()</codeinline> para cancelar la ejecución de una función registrada con <codeinline>setTimeout()</codeinline> (suponiendo que aún no haya sido invocada) o para detener la ejecución repetida de una función registrada con <codeinline>setInterval()</codeinline>.</p>
     <p>A continuación se muestra un ejemplo que demuestra el uso de <codeinline>setTimeout()</codeinline>, <codeinline>setInterval()</codeinline> y <codeinline>clearInterval()</codeinline> para mostrar un simple reloj digital con la API de Consola:</p>
-    <pre>
-    <code class="language-js">// Once a second: clear the console and print the current time
+    <pre class="language-js">
+    <code>// Una vez por segundo: limpia la consola e imprime la hora actual
     let clock = setInterval(() => &lbrace;
       console.clear();
       console.log(new Date().toLocaleTimeString());
     }, 1000);
 
-    // After 10 seconds: stop the repeating code above.
+    // Después de 10 segundos: detenga la repetición del código anterior.
     setTimeout(() => &lbrace; clearInterval(clock); }, 10000);</code></pre>
     <p>Volveremos a ver <codeinline>setTimeout()</codeinline> y <codeinline>setInterval()</codeinline> cuando tratemos la programación asíncrona en el <a href="capitulo-13">Capítulo 13</a>.</p>
   </section>
