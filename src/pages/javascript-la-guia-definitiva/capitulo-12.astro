@@ -5,36 +5,36 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
 <Layoutjavascript title="JavaScript: La guia definitiva">
   <Navegation capAnterior="capitulo-11" capSiguiente="capitulo-13" />
   <section class="fadeIn">
-    <h1>Iteradores y generadores</h1>
+    <h1 class="text-right">Iteradores y generadores</h1>
     <p>Los objetos iterables y sus iteradores asociados son una característica de ES6 que hemos visto varias veces a lo largo de este libro. Las matrices (incluyendo TypedArrays) son iterables, al igual que las cadenas y los objetos Set y Map. Esto significa que el contenido de estas estructuras de datos puede ser iterado -en bucle- con el bucle <codeinline>for/of</codeinline>, como vimos en <a href="capitulo-5#4-4">§5.4.4</a>:</p>
-    <pre>
-    <code class="language-js">let sum = 0;
-    for(let i of [1,2,3]) &lbrace; // Loop once for each of these values
+    <pre class="language-js">
+    <code>let sum = 0;
+    for(let i of [1,2,3]) &lbrace; // Repita un bucle para cada uno de estos valores
     sum += i;
     }
     sum // => 6</code></pre>
     <p>Los iteradores también pueden utilizarse con el operador <codeinline>...</codeinline> para expandir o "extender" un objeto iterable en un inicializador de array o en una invocación de función, como vimos en <a href="capitulo-7#1-2">§7.1.2</a>:</p>
-    <pre>
-    <code class="language-js">let chars = [..."abcd"]; // chars == ["a", "b", "c", "d"]
+    <pre class="language-js">
+    <code>let chars = [..."abcd"]; // caracteres == ["a", "b", "c", "d"]
     let data = [1, 2, 3, 4, 5];
     Math.max(...data)        // => 5</code></pre>
     <p>Los iteradores pueden utilizarse con la asignación de desestructuración:</p>
-    <pre>
-    <code class="language-js">let purpleHaze = Uint8Array.of(255, 0, 255, 128);
+    <pre class="language-js">
+    <code>let purpleHaze = Uint8Array.of(255, 0, 255, 128);
     let [r, g, b, a] = purpleHaze; // a == 128</code></pre>
     <p>Cuando se itera un objeto Map, los valores devueltos son pares <codeinline>[key, value]</codeinline>, que  funcionan bien con la asignación de desestructuración en un bucle <codeinline>for/of</codeinline>:</p>
-    <pre>
-    <code class="language-js">let m = new Map([["one", 1], ["two", 2]]);
+    <pre class="language-js">
+    <code>let m = new Map([["one", 1], ["two", 2]]);
     for(let [k,v] of m) console.log(k, v); // Logs 'one 1' and 'two 2'</code></pre>
     <p>Si desea iterar sólo las claves o sólo los valores en lugar de los pares, puede utilizar los métodos <codeinline>keys()</codeinline> y <codeinline>values()</codeinline>:</p>
-    <pre>
-    <code class="language-js">[...m] // => [["one", 1], ["two", 2]]: default iteration
-    [...m.entries()] // => [["one", 1], ["two", 2]]: entries() method is the same
-    [...m.keys()] // => ["one", "two"]: keys() method iterates just map keys
-    [...m.values()] // => [1, 2]: values() method iterates just map values</code></pre>
+    <pre class="language-js">
+    <code>[...m] // => [["one", 1], ["two", 2]]: iteración predeterminada
+    [...m.entries()] // => [["one", 1], ["two", 2]]: entries() El método es el mismo
+    [...m.keys()] // => ["one", "two"]: keys() El método itera simplemente las claves del mapa
+    [...m.values()] // => [1, 2]: values() El método itera solo los valores del mapa</code></pre>
     <p>Por último, varias funciones integradas y constructores que se utilizan habitualmente con objetos Array están escritos (en ES6 y posteriores) para aceptar iteradores arbitrarios. El constructor <codeinline>Set()</codeinline> es uno de ellos:</p>
-    <pre>
-    <code class="language-js">// Strings are iterable, so the two sets are the same:
+    <pre class="language-js">
+    <code>// Los strings son iterables, por lo que los dos conjuntos son iguales:
     new Set("abc") // => new Set(["a", "b", "c"])</code></pre>
     <p>Este capítulo explica cómo funcionan los iteradores y demuestra cómo crear tus propias estructuras de datos iterables. Después de explicar los iteradores básicos, este capítulo cubre los generadores, una nueva y potente característica de ES6 que se utiliza principalmente como una forma particularmente fácil de crear iteradores.</p>
   </section>
@@ -42,15 +42,15 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>12.1 Cómo funcionan los iteradores</h2>
     <p>El bucle <codeinline>for/of</codeinline> y el operador spread funcionan a la perfección con objetos iterables, pero merece la pena entender qué ocurre realmente para que la iteración funcione. Hay tres tipos distintos que necesitas entender para comprender la iteración en JavaScript. Primero, están los objetos <em>iterables</em>: estos son tipos como Array, Set y Map que pueden ser iterados. En segundo lugar, está el propio objeto <em>iterador</em>, que realiza la iteración. Y tercero, está el objeto <em>resultado de la iteración</em> que contiene el resultado de cada paso de la iteración.</p>
     <p>Un objeto <em>iterable</em> es cualquier objeto con un método iterador especial que devuelve un objeto iterador. Un <em>iterador</em> es cualquier objeto con un mé todo <codeinline>next()</codeinline> que devuelve un objeto resultado de iteración. Y un objeto <em>resultado de iteración</em> es un objeto con propiedades llamadas <codeinline>value</codeinline> y <codeinline>done</codeinline>. Para iterar un objeto iterable, primero se llama a su método iterator para obtener un objeto iterador. Luego, se llama al método <codeinline>next()</codeinline> del objeto iterador repetidamente hasta que el valor devuelto tenga su propiedad <codeinline>done</codeinline> establecida a <codeinline>true</codeinline>. Lo complicado de esto es que el método iterador de un objeto iterable no tiene un nombre convencional, sino que utiliza el símbolo <codeinline>Symbol.iterator</codeinline> como nombre. Así que un simple bucle <codeinline>for/of</codeinline> sobre un objeto iterable <codeinline>iterable</codeinline> también podría escribirse de la manera difícil, así:</p>
-    <pre>
-    <code class="language-js">let iterable = [99];
+    <pre class="language-js">
+    <code>let iterable = [99];
     let iterator = iterable[Symbol.iterator]();
     for(let result = iterator.next(); !result.done; result = iterator.next()) &lbrace;
       console.log(result.value) // result.value == 99
     }</code></pre>
     <p>El objeto iterador de los tipos de datos iterables incorporados es a su vez iterable. (Es decir, tiene un método llamado <codeinline>Symbol.iterator</codeinline> que sólo se devuelve a sí mismo.) Esto es ocasionalmente útil en código como el siguiente cuando se desea iterar a través de un iterador "parcialmente utilizado":</p>
-    <pre>
-    <code class="language-js">let list = [1,2,3,4,5];
+    <pre class="language-js">
+    <code>let list = [1,2,3,4,5];
     let iter = list[Symbol.iterator]();
     let head = iter.next().value; // head == 1
     let tail = [...iter]; // tail == [2,3,4,5]</code></pre>
@@ -60,11 +60,12 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Los objetos iterables son tan útiles en ES6 que deberías considerar hacer iterables tus propios tipos de datos siempre que representen algo que pueda ser iterado. Las clases Range mostradas en los Ejemplos <a href="capitulo-9#ejemplo9-2">9-2</a> y <a href="capitulo-9#ejemplo9-3">9-3</a> del <a href="capitulo-9">Capítulo 9</a> eran iterables. Esas clases usaban funciones generadoras para hacerse iterables. Documentaremos los generadores más adelante en este capítulo, pero primero, implementaremos la clase Range una vez más, haciéndola iterable sin depender de un generador.</p>
     <p>Para que una clase sea iterable, debe implementar un método cuyo nombre sea el Símbolo <codeinline>Symbol.iterator</codeinline>. Ese método debe devolver un objeto iterador que tenga un método <codeinline>next()</codeinline>. Y el mé todo <codeinline>next()</codeinline> debe devolver un objeto resultado de iteración que tenga una propiedad <codeinline>value</codeinline> y/o una propiedad boolean <codeinline>done</codeinline>. El <a href="#ejemplo12-1">Ejemplo 12-1</a> implementa una clase iterable Range y demuestra cómo crear objetos iterable, iterador y resultado de iteración.</p>
     <p id="ejemplo12-1"><em>Ejemplo 12-1. Una clase Range numérica iterable</em></p>
-    <pre>
-    <code class="language-js">/*
-    * A Range object represents a range of numbers &lbrace;x: from &lt;= x &lt;= to}
+    <pre class="language-js">
+    <code>/*
+    * Un rango de objeto representa un rango de números &lbrace;x: from &lt;= x &lt;= to}
     * Range defines a has() method for testing whether a given number is a member
     * of the range. Range is iterable and iterates all integers within the range.
+    * Range define un método has() para probar si un número dado es miembro del rango. Range es iterable e itera todos los números enteros dentro del rango.
     */
     class Range &lbrace;
       constructor (from, to) &lbrace;
@@ -72,44 +73,44 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
         this.to = to;
       }
 
-      // Make a Range act like a Set of numbers
+      // Hacer que un rango actúe como un conjunto de números
       has(x) &lbrace; return typeof x === "number" && this.from &lt;= x && x &lt;= this.to; }
 
-      // Return string representation of the range using set notation
+      // Devuelve la representación de string del rango utilizando la notación de conjunto
       toString() &lbrace; return `&lbrace; x | $&lbrace;this.from} ≤ x ≤ $&lbrace;this.to} }`; }
 
-      // Make a Range iterable by returning an iterator object.
-      // Note that the name of this method is a special symbol, not a string.
+      // Haga que un rango sea iterable devolviendo un objeto iterador.
+      // Tenga en cuenta que el nombre de este método es un símbolo especial, no una cadena.
       [Symbol.iterator]() &lbrace;
-        // Each iterator instance must iterate the range independently of
-        // others. So we need a state variable to track our location in the
-        // iteration. We start at the first integer >= from.
+        // Cada instancia de iterador debe iterar el rango independientemente de 
+        // las demás. Por lo tanto, necesitamos una variable de estado para rastrear 
+        // nuestra ubicación en la iteración. Comenzamos en el primer entero >= from.
         let next = Math.ceil(this.from); // This is the next value we return
         let last = this.to; // We won't return anything > this
         return &lbrace; // This is the iterator object
-          // This next() method is what makes this an iterator object.
-          // It must return an iterator result object.
+          // Este método next() es lo que hace que este sea un objeto iterador.
+          // Debe devolver un objeto de resultado iterador.
           next() &lbrace;
-            return (next &lt;= last) // If we haven't returned last value yet
-              ? &lbrace; value: next++ } // return next value and increment it
-              : &lbrace; done: true }; // otherwise indicate that we're done.
+            return (next &lt;= last) // Si aún no hemos devuelto el último valor
+              ? &lbrace; value: next++ } // Devuelve el valor next y lo incrementa.
+              : &lbrace; done: true }; // De lo contrario indicaremos que hemos terminado.
           },
 
-          // As a convenience, we make the iterator itself iterable.
+          // Para mayor comodidad, hacemos que el iterador en sí sea iterable.
           [Symbol.iterator]() &lbrace; return this; }
         };
       }
     }
 
-    for(let x of new Range(1,10)) console.log(x); // Logs numbers 1 to 10
+    for(let x of new Range(1,10)) console.log(x); // Registro de numeros 1 al 10
     [...new Range(-2,2)] // => [-2, -1, 0, 1, 2]</code></pre>
     <p>Además de hacer tus clases iterables, puede ser muy útil definir funciones que devuelvan valores iterables. Considere estas alternativas basadas en iterables a los métodos <codeinline>map()</codeinline> y <codeinline>filter()</codeinline> de las matrices de JavaScript:</p>
-    <pre>
-    <code class="language-js">// Return an iterable object that iterates the result of applying f()
-    // to each value from the source iterable
+    <pre class="language-js">
+    <code>// Devuelve un objeto iterable que itera el resultado de 
+    // aplicar f() a cada valor del iterable de origen
     function map(iterable, f) &lbrace;
       let iterator = iterable[Symbol.iterator]();
-      return &lbrace; // This object is both iterator and iterable
+      return &lbrace; // Este objeto es a la vez iterador e iterable
         [Symbol.iterator]() &lbrace; return this; },
         next() &lbrace;
           let v = iterator.next();
@@ -122,14 +123,14 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       };
     }
 
-    // Map a range of integers to their squares and convert to an array
+    // Asignar un rango de números enteros a sus cuadrados y convertirlo en una matriz
     [...map(new Range(1,4), x => x*x)] // => [1, 4, 9, 16]
 
-    // Return an iterable object that filters the specified iterable,
-    // iterating only those elements for which the predicate returns true
+    // Devuelve un objeto iterable que filtra el iterable especificado, 
+    // iterando solo aquellos elementos para los cuales el predicado devuelve verdadero
     function filter(iterable, predicate) &lbrace;
       let iterator = iterable[Symbol.iterator]();
-      return &lbrace; // This object is both iterator and iterable
+      return &lbrace; // Este objeto es a la vez iterador e iterable
         [Symbol.iterator]() &lbrace; return this; },
         next() &lbrace;
           for(;;) &lbrace;
@@ -142,26 +143,26 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       };
     }
 
-    // Filter a range so we're left with only even numbers
+    // Filtrar un rango para que nos queden solo números pares
     [...filter(new Range(1,10), x => x % 2 === 0)] // => [2,4,6,8,10]</code></pre>
     <p>Una característica clave de los objetos iterables y los iteradores es que son intrínsecamente perezosos: cuando se requiere cálculo para calcular el siguiente valor, ese cálculo se puede aplazar hasta que el valor sea realmente necesario. Supongamos, por ejemplo, que tenemos una cadena de texto muy larga que queremos dividir en palabras separadas por espacios. Podría simplemente utilizar el método <codeinline>split()</codeinline> de su cadena, pero si hace esto, entonces toda la cadena tiene que ser procesada antes de que pueda utilizar incluso la primera palabra. Y acabas asignando mucha memoria al array devuelto y a todas las cadenas que contiene. Aquí hay una función que le permite iterar perezosamente las palabras de una cadena sin mantenerlas todas en memoria a la vez (en ES2020, esta función sería mucho más fácil de implementar usando el método <codeinline>matchAll()</codeinline> que devuelve el iterador descrito en <a href="capitulo-11#3-2">§11.3.2</a>):</p>
-    <pre>
-    <code class="language-js">function words(s) &lbrace;
-      var r = /\s+|$/g; // Match one or more spaces or end
-      r.lastIndex = s.match(/[^ ]/).index; // Start matching at first nonspace
-      return &lbrace; // Return an iterable iterator object
-        [Symbol.iterator]() &lbrace; // This makes us iterable
+    <pre class="language-js">
+    <code>function words(s) &lbrace;
+      var r = /\s+|$/g; // Coincide con uno o más espacios o finaliza
+      r.lastIndex = s.match(/[^ ]/).index; // Comience a hacer coincidir en el primer espacio no válido
+      return &lbrace;                 // Devuelve un objeto iterador iterable
+        [Symbol.iterator]() &lbrace;  // Esto nos hace iterables
           return this;
         },
-        next() &lbrace; // This makes us an iterator
-          let start = r.lastIndex; // Resume where the last match ended
-          if (start &lt; s.length) &lbrace; // If we're not done
-            let match = r.exec(s); // Match the next word boundary
-            if (match) &lbrace; // If we found one, return the word
+        next() &lbrace; // Esto nos convierte en un iterador.
+          let start = r.lastIndex; // Reanudar donde terminó el último partido
+          if (start &lt; s.length) &lbrace;  // Si no hemos terminado
+            let match = r.exec(s); // Coincide con el siguiente límite de palabra
+            if (match) &lbrace;           // Si encontramos uno, devuelve la palabra.
               return &lbrace; value: s.substring(start, match.index) };
             }
           }
-          return &lbrace; done: true }; // Otherwise, say that we're done
+          return &lbrace; done: true }; // De lo contrario, digamos que hemos terminado.
         }
       };
     }
@@ -179,44 +180,44 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>12.3 Generadores</h2>
     <p>Un <em>generador</em> es un tipo de iterador definido con la nueva y potente sintaxis de ES6; es especialmente útil cuando los valores que se van a iterar no son los elementos de una estructura de datos, sino el resultado de un cálculo.</p>
     <p>Para crear un generador, primero debe definir una <em>función generadora</em>. Una función generadora es sintácticamente como una función JavaScript normal, pero se define con la palabra clave <codeinline>function*</codeinline> en lugar de <codeinline>function</codeinline>. (Técnicamente, no se trata de una palabra clave nueva, sino simplemente de un <codeinline>* after</codeinline> de la palabra clave <codeinline>function</codeinline> y antes del nombre de la función). Cuando se invoca una función generadora, ésta no ejecuta el cuerpo de la función, sino que devuelve un objeto generador. Este objeto generador es un iterador. Llamar a su método <codeinline>next()</codeinline> hace que el cuerpo de la función generadora se ejecute desde el principio (o cualquiera que sea su posición actual) hasta que llega a una sentencia <codeinline>yield</codeinline>. <codeinline>yield</codeinline> es nuevo en ES6 y es algo así como una sentencia <codeinline>return</codeinline>. El valor de la sentencia <codeinline>yield</codeinline> se convierte en el valor devuelto por la llamada <codeinline>next()</codeinline> en el iterador. Un ejemplo lo aclara:</p>
-    <pre>
-    <code class="language-js">// A generator function that yields the set of one digit (base-10) primes.
-    function* oneDigitPrimes() &lbrace; // Invoking this function does not run the code
-      yield 2; // but just returns a generator object. Calling
-      yield 3; // the next() method of that generator runs
-      yield 5; // the code until a yield statement provides
-      yield 7; // the return value for the next() method.
+    <pre class="language-js">
+    <code>// Una función generadora que produce el conjunto de números primos de un dígito (base 10).
+    function* oneDigitPrimes() &lbrace; // Invocar esta función no ejecuta el código
+      yield 2; // pero solo devuelve un objeto generador. Llamando
+      yield 3; // El método next() de ese generador se ejecuta
+      yield 5; // el código hasta que una declaración de rendimiento proporcione
+      yield 7; // el valor de retorno para el método next().
     }
     
-    // When we invoke the generator function, we get a generator
+    // Cuando invocamos la función generadora, obtenemos un generador
     let primes = oneDigitPrimes();
     
-    // A generator is an iterator object that iterates the yielded values
+    // Un generador es un objeto iterador que itera los valores obtenidos.
     primes.next().value // => 2
     primes.next().value // => 3
     primes.next().value // => 5
     primes.next().value // => 7
-    primes.next().done // => true
+    primes.next().done  // => true
     
-    // Generators have a Symbol.iterator method to make them iterable
-    primes[Symbol.iterator]() // => primes
+    // Los generadores tienen un método Symbol.iterator para hacerlos iterables.
+    primes[Symbol.iterator]() // => primos
 
-    // We can use generators like other iterable types
+    // Podemos usar generadores como otros tipos iterables
     [...oneDigitPrimes()] // => [2,3,5,7]
     let sum = 0;
     for(let prime of oneDigitPrimes()) sum += prime;
     sum // => 17</code></pre>
     <p>En este ejemplo, hemos utilizado una <codeinline>function*</codeinline> para definir un generador. Sin embargo, al igual que las funciones regulares, también podemos definir generadores en forma de expresión. Una vez más, basta con poner un asterisco después de la palabra clave <codeinline>function</codeinline>:</p>
-    <pre>
-    <code class="language-js">const seq = function*(from,to) &lbrace;
+    <pre class="language-js">
+    <code>const seq = function*(from,to) &lbrace;
       for(let i = from; i &lt;= to; i++) yield i;
     };
     [...seq(3,5)] // => [3, 4, 5]</code></pre>
     <p>En las clases y los literales de objetos, podemos utilizar la notación abreviada para omitir por completo la palabra clave <codeinline>function</codeinline> cuando definimos métodos. Para definir un generador en este contexto, basta con poner un asterisco delante del nombre del método donde habría estado la palabra clave <codeinline>function</codeinline>, si la hubiéramos utilizado:</p>
-    <pre>
-    <code class="language-js">let o = &lbrace;
+    <pre class="language-js">
+    <code>let o = &lbrace;
       x: 1, y: 2, z: 3,
-      // A generator that yields each of the keys of this object
+      // Un generador que produce cada una de las claves de este objeto.
       *g() &lbrace;
         for(let key of Object.keys(this)) &lbrace;
           yield key;
@@ -226,8 +227,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     [...o.g()] // => ["x", "y", "z", "g"]</code></pre>
     <p>Tenga en cuenta que no hay forma de escribir una función generadora utilizando la sintaxis de función de flecha.</p>
     <p>Los generadores a menudo facilitan la definición de clases iterables. Podemos reemplazar el método <codeinline>[Symbol.iterator]()</codeinline> mostrado en el <a href="#ejemplo12-1">Ejemplo 12-1</a> por una función generadora <codeinline>*[Symbol.iterator&rbrack;()</codeinline> mucho más corta que tiene este aspecto:</p>
-    <pre>
-    <code class="language-js">*[Symbol.iterator]() &lbrace;
+    <pre class="language-js">
+    <code>*[Symbol.iterator]() &lbrace;
       for(let x = Math.ceil(this.from); x &lt;= this.to; x++) yield x;
     }</code></pre>
     <p>Véase el <a href="capitulo-9#ejemplo9-3">Ejemplo 9-3</a> en el <a href="capitulo-9">Capítulo 9</a> para ver esta función iteradora basada en generador en contexto.</p>
@@ -235,17 +236,17 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="3-1" class="py-4 xs:py-5 sm:py-6">
     <h2>12.3.1 Ejemplos de generadores</h2>
     <p>Los generadores son más interesantes si <em>generan</em> los valores que producen mediante algún tipo de cálculo. He aquí, por ejemplo, una función generadora que produce números de Fibonacci:</p>
-    <pre>
-    <code class="language-js">function* fibonacciSequence() &lbrace;
+    <pre class="language-js">
+    <code>function* fibonacciSequence() &lbrace;
       let x = 0, y = 1;
       for(;;) &lbrace;
         yield y;
-        [x, y] = [y, x+y]; // Note: destructuring assignment
+        [x, y] = [y, x+y]; // Note: tarea de desestructuración
       }
     }</code></pre>
     <p>Observe que la función generadora <codeinline>fibonacciSequence()</codeinline> tiene aquí un bucle infinito y cede valores para siempre sin retornar. Si este generador se utiliza con el operador de propagación <codeinline>...</codeinline>, formará un bucle hasta que se agote la memoria y el programa se bloquee. Sin embargo, con cuidado, es posible usarlo en un bucle <codeinline>for/of</codeinline>:</p>
-    <pre>
-    <code class="language-js">// Return the nth Fibonacci number
+    <pre class="language-js">
+    <code>// Devuelve el Fibonacci de n
     function fibonacci(n) &lbrace;
       for(let f of fibonacciSequence()) &lbrace;
         if (n-- &lt;= 0) return f;
@@ -253,49 +254,49 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     }
     fibonacci(20) // => 10946</code></pre>
     <p>Este tipo de generador infinito resulta más útil con un generador <codeinline>take()</codeinline> como éste:</p>
-    <pre>
-    <code class="language-js">// Yield the first n elements of the specified iterable object
+    <pre class="language-js">
+    <code>// Produce los primeros n elementos del objeto iterable especificado
     function* take(n, iterable) &lbrace;
-      let it = iterable[Symbol.iterator](); // Get iterator for iterable object
-      while(n-- > 0) &lbrace; // Loop n times:
-        let next = it.next(); // Get the next item from the iterator.
-        if (next.done) return; // If there are no more values, return early
-        else yield next.value; // otherwise, yield the value
+      let it = iterable[Symbol.iterator](); // Obtener iterador para objeto iterable
+      while(n-- > 0) &lbrace;         // Bucle n veces:
+        let next = it.next();  // Obtener el siguiente elemento del iterador.
+        if (next.done) return; // Si no hay más valores, regrese temprano
+        else yield next.value; // De lo contrario, ceda el valor
       }
     }
 
-    // An array of the first 5 Fibonacci numbers
+    // Una matriz de los primeros 5 números de Fibonacci
     [...take(5, fibonacciSequence())] // => [1, 1, 2, 3, 5]</code></pre>
     <p>He aquí otra útil función generadora que intercala los elementos de múltiples objetos iterables:</p>
-    <pre>
-    <code class="language-js">// Given an array of iterables, yield their elements in interleaved order.
+    <pre class="language-js">
+    <code>// Dada una matriz de iterables, devuelve sus elementos en orden intercalado.
     function* zip(...iterables) &lbrace;
-      // Get an iterator for each iterable
+      // Obtener un iterador para cada iterable
       let iterators = iterables.map(i => i[Symbol.iterator]());
       let index = 0;
-      while(iterators.length > 0) &lbrace; // While there are still some iterators
-        if (index >= iterators.length) &lbrace; // If we reached the last iterator
-          index = 0; // go back to the first one.
+      while(iterators.length > 0) &lbrace; // Si bien todavía hay algunos iteradores
+        if (index >= iterators.length) &lbrace; // Si llegamos al último iterador
+          index = 0; // volver al primero.
         }
-        let item = iterators[index].next(); // Get next item from next iterator.
-        if (item.done) &lbrace; // If that iterator is done
-          iterators.splice(index, 1); // then remove it from the array.
+        let item = iterators[index].next(); // Obtener el siguiente elemento del siguiente iterador.
+        if (item.done) &lbrace; // Si ese iterador está terminado
+          iterators.splice(index, 1); // luego elimínelo de la matriz.
         }
-        else &lbrace; // Otherwise,
-          yield item.value; // yield the iterated value
-          index++; // and move on to the next iterator.
+        else &lbrace; // De lo contrario,
+          yield item.value; // produce el valor iterado
+          index++; // y pasar al siguiente iterador.
         }
       }
     }
 
-    // Interleave three iterable objects
+    // Entrelazar tres objetos iterables
     [...zip(oneDigitPrimes(),"ab",[0])] // => [2,"a",0,3,"b",5,7]</code></pre>
   </section>
   <section id="3-2">
     <h2>12.3.2 generadores yield* y recursivos</h2>
     <p>Además del generador <codeinline>zip()</codeinline> definido en el ejemplo anterior, puede ser útil tener una función generadora similar que proporcione los elementos de múltiples objetos iterables secuencialmente en lugar de intercalarlos. Podríamos escribir ese generador así:</p>
-    <pre>
-    <code class="language-js">function* sequence(...iterables) &lbrace;
+    <pre class="language-js">
+    <code>function* sequence(...iterables) &lbrace;
       for(let iterable of iterables) &lbrace;
         for(let item of iterable) &lbrace;
           yield item;
@@ -305,8 +306,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
 
     [...sequence("abc",oneDigitPrimes())] // => ["a","b","c",2,3,5,7]</code></pre>
     <p>Este proceso de ceder los elementos de algún otro objeto iterable es tan común en las funciones generadoras que ES6 tiene una sintaxis especial para ello. La palabra clave <codeinline>yield*</codeinline> es como <codeinline>yield</codeinline> excepto que, en lugar de devolver un único valor, itera un objeto iterable y devuelve cada uno de los valores resultantes. La función generadora <codeinline>sequence()</codeinline> que hemos utilizado puede simplificarse con <codeinline>yield*</codeinline> de la siguiente manera:</p>
-    <pre>
-    <code class="language-js">function* sequence(...iterables) &lbrace;
+    <pre class="language-js">
+    <code>function* sequence(...iterables) &lbrace;
       for(let iterable of iterables) &lbrace;
         yield* iterable;
       }
@@ -314,8 +315,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
 
     [...sequence("abc",oneDigitPrimes())] // => ["a","b","c",2,3,5,7]</code></pre>
     <p>El método array <codeinline>forEach()</codeinline> es a menudo una forma elegante de hacer un bucle sobre los elementos de un array, por lo que puedes tener la tentación de escribir la función <codeinline>sequence()</codeinline> así:</p>
-    <pre>
-    <code class="language-js">function* sequence(...iterables) &lbrace;
+    <pre class="language-js">
+    <code>function* sequence(...iterables) &lbrace;
       iterables.forEach(iterable => yield* iterable ); // Error
     }</code></pre>
     <p>Sin embargo, esto no funciona. <codeinline>yield</codeinline> y <codeinline>yield*</codeinline> sólo pueden utilizarse dentro de funciones generadoras, pero la función de flecha anidada en este código es una función normal, no una función generadora de <codeinline>function*</codeinline>, por lo que <codeinline>yield</codeinline> no está permitido.</p>
@@ -328,27 +329,27 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="4-1">
     <h2>12.4.1 Valor de retorno de una función generadora</h2>
     <p>Las funciones generadoras que hemos visto hasta ahora no han tenido declaraciones <corinline>return</corinline>, o si las han tenido, se han utilizado para provocar un retorno anticipado, no para devolver un valor. Sin embargo, como cualquier función, una función generadora puede devolver un valor. Para entender lo que ocurre en este caso, recuerda cómo funciona la iteración. El valor de retorno de la función <codeinline>next()</codeinline> es un objeto que tiene una propiedad <codeinline>value</codeinline> y/o una propiedad <codeinline>done</codeinline>. Con los iteradores y generadores típicos, si la propiedad <codeinline>value</codeinline> está definida, entonces la propiedad <codeinline>done</codeinline> está indefinida o es <codeinline>false</codeinline>. Y si <codeinline>done</codeinline> es <codeinline>true</codeinline>, entonces <codeinline>value</codeinline> es undefined. Pero en el caso de un generador que devuelve un valor, la llamada final a <codeinline>next</codeinline> devuelve un objeto que tiene definidas las propiedades <codeinline>value</codeinline> y <codeinline>done</codeinline>. La propiedad <codeinline>value</codeinline> contiene el valor devuelto por la función generadora, y la propiedad <codeinline>done</codeinline> es <codeinline>true</codeinline>, indicando que no hay más valores para iterar. Este valor final es ignorado por el bucle <codeinline>for/of</codeinline> y por el operador spread, pero está disponible para el código que itera manualmente con llamadas explícitas a <codeinline>next()</codeinline>:</p>
-    <pre>
-    <code class="language-js">function *oneAndDone() &lbrace;
+    <pre class="language-js">
+    <code>function *oneAndDone() &lbrace;
       yield 1;
       return "done";
     }
 
-    // The return value does not appear in normal iteration.
+    // El valor de retorno no aparece en la iteración normal.
     [...oneAndDone()] // => [1]
-    // But it is available if you explicitly call next()
+    // Pero está disponible si llamas explícitamente a next()
     let generator = oneAndDone();
     generator.next() // => &lbrace; value: 1, done: false}
     generator.next() // => &lbrace; value: "done", done: true }
-    // If the generator is already done, the return value is not returned again
+    // Si el generador ya está hecho, el valor de retorno no se devuelve nuevamente
     generator.next() // => &lbrace; value: undefined, done: true }</code></pre>
   </section>
   <section id="4-2" class="py-4 xs:py-5 sm:py-6">
     <h2>12.4.2 El valor de una expresión de rendimiento</h2>
     <p>En la discusión anterior, hemos tratado <codeinline>yield</codeinline> como una sentencia que toma un valor pero no tiene valor propio. Sin embargo, <codeinline>yield</codeinline> es una expresión y puede tener un valor.</p>
     <p>Cuando se invoca el método <codeinline>next()</codeinline> de un generador, la función del generador se ejecuta hasta que alcanza una expresión <codeinline>yield</codeinline>. La expresión que sigue a la palabra clave <codeinline>yield</codeinline> se evalúa, y ese valor se convierte en el valor de retorno de la invocación a <codeinline>next()</codeinline>. En este punto, la función generadora deja de ejecutarse justo en medio de la evaluación de la expresión <codeinline>yield</codeinline>. La próxima vez que se llame al método <codeinline>next()</codeinline> del generador, el argumento pasado a <codeinline>next()</codeinline> se convertirá en el valor de la expresión <codeinline>yield</codeinline> que estaba en pausa. Así que el generador devuelve valores a su llamador con <codeinline>yield</codeinline>, y el llamador pasa valores al generador con <codeinline>next()</codeinline>. El generador y el invocador son dos flujos separados de ejecución que pasan valores (y control) de un lado a otro. El siguiente código lo ilustra:</p>
-    <pre>
-    <code class="language-js">function* smallNumbers() &lbrace;
+    <pre class="language-js">
+    <code>function* smallNumbers() &lbrace;
       console.log("next() invoked the first time; argument discarded");
       let y1 = yield 1; // y1 == "b"
       console.log("next() invoked a second time with argument", y1);
@@ -370,8 +371,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     let n4 = g.next("d"); // n4 == &lbrace; value: 4, done: true }
     console.log("generator returned", n4.value);</code></pre>
     <p>Cuando este código se ejecuta, produce la siguiente salida que demuestra el vaivén entre los dos bloques de código:</p>
-    <pre>
-    <code class="language-js">generator created; no code runs yet
+    <pre class="language-js">
+    <code>generator created; no code runs yet
     next() invoked the first time; argument discarded
     generator yielded 1
     next() invoked a second time with argument b

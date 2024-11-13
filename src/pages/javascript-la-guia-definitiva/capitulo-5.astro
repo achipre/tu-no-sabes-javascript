@@ -5,7 +5,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
 <Layoutjavascript title="JavaScript: La guia definitiva">
   <Navegation capAnterior="capitulo-4" capSiguiente="capitulo-6" />
   <section class="fadeIn">
-    <h1>Declaraciones</h1>
+    <h1 class="text-right">Declaraciones</h1>
     <p>El <a href="capitulo-4">capítulo 4</a> describía las expresiones como frases de JavaScript. Por esa analogía, las <em>expresiones</em> son frases o comandos de JavaScript. Del mismo modo que las frases en inglés se terminan y separan entre sí con puntos, las sentencias en JavaScript se terminan con puntos y coma (<a href="capitulo-2#6">§2.6</a>). Las expresiones se <em>evalúan</em> para producir un valor, pero las sentencias se <em>ejecutan</em> para que ocurra algo.</p>
     <p>Una forma de "hacer que ocurra algo" es evaluar una expresión que tenga efectos secundarios. Las expresiones con efectos secundarios, como las asignaciones y las invocaciones de funciones, pueden funcionar por sí solas como sentencias y, cuando se utilizan de este modo, se conocen como <em>sentencias de expresión</em>. Una categoría similar de sentencias son las <em>sentencias de declaración</em> que declaran nuevas variables y definen nuevas funciones.</p>
     <p>Los programas JavaScript no son más que una secuencia de sentencias a ejecutar. Por defecto, el intérprete de JavaScript ejecuta estas sentencias una tras otra en el orden en que están escritas. Otra forma de "hacer que algo suceda" es alterar este orden de ejecución predeterminado, y JavaScript tiene una serie de sentencias o <em>estructuras de control</em> que hacen precisamente esto:

@@ -5,7 +5,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
 <Layoutjavascript title="JavaScript: La guia definitiva">
   <Navegation capAnterior="capitulo-10" capSiguiente="capitulo-12" />
   <section class="fadeIn">
-    <h1>La biblioteca estándar de JavaScript</h1>
+    <h1 class="text-right">La biblioteca estándar de JavaScript</h1>
     <p>Algunos tipos de datos, como los números y las cadenas (<a href="capitulo-3">Capítulo 3</a>), los objetos (<a href="capitulo-6">Capítulo 6</a>) y las matrices (<a href="capitulo-7">Capítulo 7</a>), son tan fundamentales para JavaScript que podemos considerarlos parte del propio lenguaje. Este capítulo cubre otras API importantes pero menos fundamentales que pueden considerarse como la definición de la "biblioteca estándar" de JavaScript: se trata de clases y funciones útiles que están integradas en JavaScript y disponibles para todos los programas Java-Script tanto en navegadores web como en Node.<sup>1</sup></p>
     <p>Las secciones de este capítulo son independientes entre sí y puede leerlas en cualquier orden. Abarcan:</p>
     <ul>
@@ -461,11 +461,11 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Los ArrayBuffers son simplemente trozos opacos de bytes. Puedes acceder a esos bytes con arrays tipados, pero un ArrayBufffer no es en sí mismo un array tipado. Ten cuidado, sin embargo: puedes usar indexación numérica de arrays con ArrayBuffers igual que con cualquier objeto JavaScript. Hacerlo no te da acceso a los bytes del buffer, pero puede causar errores de confusión:</p>
     <pre class="language-js">
     <code>let bytes = new Uint8Array(8);
-    bytes[0] = 1;          // Set the first byte to 1
-    bytes.buffer[0]        // => undefined: buffer doesn't have index 0
-    bytes.buffer[1] = 255; // Try incorrectly to set a byte in the buffer
-    bytes.buffer[1]        // => 255: this just sets a regular JS property
-    bytes[1]               // => 0: the line above did not set the byte</code></pre>
+    bytes[0] = 1;          // Establezca el primer byte en 1
+    bytes.buffer[0]        // => undefined: El buffer no tiene índice 0
+    bytes.buffer[1] = 255; // Intentar incorrectamente establecer un byte en el buffer
+    bytes.buffer[1]        // => 255: Esto simplemente establece una propiedad JS normal
+    bytes[1]               // => 0: La línea anterior no estableció el byte</code></pre>
     <p>Anteriormente vimos que se puede crear un ArrayBuffer con el constructor <codeinline>ArrayBuffer()</codeinline> y luego crear arrays tipados que utilicen ese buffer. Otro enfoque es crear un array tipado inicial, y luego usar el buffer de ese array para crear otras vistas:</p>
     <pre class="language-js">
     <code>let bytes = new Uint8Array(1024);            // 1024 bytes
@@ -854,8 +854,6 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     // de caracteres que no sean comillas (que capturamos), 
     // seguido de otra comilla.
     let quote = /"([^"]*)"/g;
-    // Replace the straight quotation marks with guillemets
-    // leaving the quoted text (stored in $1) unchanged.
     // Reemplace las comillas rectas por comillas simples, 
     // dejando el texto citado (almacenado en $1) sin cambios.
     'He said "stop"'.replace(quote, '«$1»') // => 'Él dijo «stop»'</code></pre>

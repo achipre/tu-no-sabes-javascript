@@ -5,12 +5,12 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
 <Layoutjavascript title="JavaScript: La guia definitiva">
   <Navegation capAnterior="capitulo-12" capSiguiente="capitulo-14" />
   <section class="fadeIn">
-    <h1>JavaScript asíncrono</h1>
+    <h1 class="text-right">JavaScript asíncrono</h1>
     <p>Algunos programas informáticos, como las simulaciones científicas y los modelos de aprendizaje automático, están ligados al cálculo: se ejecutan continuamente, sin pausa, hasta que obtienen su resultado. Sin embargo, la mayoría de los programas informáticos del mundo real son bastante <em>asíncronos</em>. Esto significa que a menudo tienen que dejar de computar mientras esperan a que lleguen los datos de o a que ocurra algún evento. Los programas JavaScript de un navegador web suelen estar <em>orientados a eventos</em>, lo que significa que esperan a que el usuario haga clic o toque antes de hacer nada. Y los servidores basados en JavaScript suelen esperar a que las peticiones de los clientes lleguen a través de la red antes de hacer nada.</p>
     <p>Este tipo de programación asíncrona es habitual en JavaScript, y este capítulo documenta tres importantes características del lenguaje que ayudan a facilitar el trabajo con código asíncrono. Las promesas, nuevas en ES6, son objetos que representan el resultado aún no disponible - de una operación asíncrona. Las palabras clave <codeinline>async</codeinline> y <codeinline>await</codeinline> se introdujeron en ES2017 y proporcionan una nueva sintaxis que simplifica la programación asíncrona al permitir estructurar el código basado en promesas como si fuera síncrono. Por último, los iteradores asíncronos y el bucle for/await se introdujeron en ES2018 y permiten trabajar con flujos de eventos asíncronos utilizando bucles sencillos que parecen síncronos.</p>
     <p>Irónicamente, aunque JavaScript proporciona estas potentes características para trabajar con código asíncrono, no hay características del núcleo del lenguaje que sean en sí mismas asíncronas. Para demostrar Promises, <codeinline>async</codeinline>, <codeinline>await</codeinline>, y <codeinline>for/await</codeinline>, por lo tanto, primero daremos un rodeo en JavaScript del lado del cliente y del lado del servidor para explicar algunas de las características asíncronas de los navegadores web y Node. (Puedes aprender más sobre JavaScript del lado del cliente y del lado del servidor en los Capítulos <a href="capitulo-15">15</a> y <a href="capitulo-16">16</a>.)</p>
   </section>
-  <section id="1" class="py-4 xs:py-5 sm:py-6">
+  <section id="1" class="fadeIn py-4 xs:py-5 sm:py-6">
     <h2>13.1 Programación asíncrona con callbacks</h2>
     <p>En su nivel más fundamental, la programación asíncrona en JavaScript se realiza con <em>retrollamadas</em>. Una llamada de retorno es una función que se escribe y se pasa a otra función. Esa otra función invoca ("devuelve la llamada") a su función cuando se cumple alguna condición o se produce algún evento (asíncrono). La invocación de la función de devolución de llamada que usted proporciona le notifica la condición o el evento y, a veces, la invocación incluirá argumentos de función que proporcionan detalles adicionales. Esto es más fácil de entender con algunos ejemplos concretos, y las subsecciones siguientes demuestran varias formas de programación asíncrona basada en callbacks utilizando tanto JavaScript del lado del cliente como Node.</p>
   </section>
@@ -22,11 +22,11 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>El primer argumento de <codeinline>setTimeout()</codeinline> es una función y el segundo es un intervalo de tiempo medido en milisegundos. En el código anterior, una hipotética función <codeinline>checkForUpdates()</codeinline> será llamada 60.000 milisegundos (1 minuto) después de la llamada a <codeinline>setTimeout()</codeinline>. <codeinline>checkForUpdates()</codeinline> es una función callback que su programa podría definir, y <codeinline>setTi meout()</codeinline> es la función que usted invoca para registrar su función callback y especificar bajo qué condiciones asíncronas debería ser invocada.</p>
     <p><codeinline>setTimeout()</codeinline> llama a la función callback especificada una vez, sin pasar argumentos, y luego se olvida de ella. Si está escribiendo una función que realmente busca actualizaciones, probablemente quiera que se ejecute repetidamente. Puede hacerlo utilizando <codeinline>setInterval()</codeinline> en lugar de <codeinline>setTimeout()</codeinline>:</p>
     <pre>
-    <code class="language-js">// Call checkForUpdates in one minute and then again every minute after that
+    <code class="language-js">// Llama a checkForUpdates en un minuto y luego nuevamente cada minuto después de eso
     let updateIntervalId = setInterval(checkForUpdates, 60000);
-    // setInterval() returns a value that we can use to stop the repeated
-    // invocations by calling clearInterval(). (Similarly, setTimeout()
-    // returns a value that you can pass to clearTimeout())
+    // setInterval() Devuelve un valor que podemos usar para detener la repetición.
+    // invocaciones por llamada clearInterval(). (Similar, setTimeout()
+    // devuelve un valor que puedes pasar a clearTimeout())
     function stopCheckingForUpdates() &lbrace;
       clearInterval(updateIntervalId);
     }</code></pre>
