@@ -1,6 +1,6 @@
 ---
-import Sidebar from "../components/Sidebar.astro";
-
+import { ButtonAside } from "../components/react/ButtonAside";
+import { Sidebar } from "../components/react/Sidebar";
 const { title } = Astro.props;
 ---
 <!DOCTYPE html>
@@ -14,8 +14,9 @@ const { title } = Astro.props;
 		<title>{title}</title>
 	</head>
 	<body class="max-w-5xl mx-auto p-2 xs:px-3 sm:px-6 sm:py-8 md:px-10 font-khand text-amber-900">
+		<!-- <ButtonAside /> -->	
 		<Sidebar />
-		<main class="translate-x-14">
+		<main>
 			<slot />
 		</main>
 		<script src="./prism.js"></script>
