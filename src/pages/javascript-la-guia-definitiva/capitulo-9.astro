@@ -16,7 +16,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>9.1 Clases y prototipos</h2>
     <p>En JavaScript, una clase es un conjunto de objetos que heredan propiedades del mismo objeto prototipo. El objeto prototipo, por lo tanto, es la característica central de una clase. El <a href="capitulo-6">Capítulo 6</a> cubrió la función <codeinline>Object.create()</codeinline> que devuelve un objeto recién creado que hereda de un objeto prototipo especificado. Si definimos un objeto prototipo y luego utilizamos <codeinline>Object.create()</codeinline> para crear objetos que hereden de él, habremos definido una clase JavaScript. Normalmente, las instancias de una clase requieren una inicialización adicional, y es común definir una función que cree e inicialice el nuevo objeto. El <a href="#ejemplo9-1">Ejemplo 9-1</a> demuestra esto: define un objeto prototipo para una clase que representa un rango de valores y también define una <em>función de fábrica</em> que crea e inicializa una nueva instancia de la clase.</p>
     <p id="ejemplo9-1"><em>Ejemplo 9-1. Una clase JavaScript sencilla</em></p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">
     // Esta es una función de fábrica que devuelve un nuevo objeto de rango.
     function range(from, to) &lbrace;
@@ -99,7 +99,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>9.2 Clases y constructores</h2>
     <p>El <a href="#ejemplo9-1">Ejemplo 9-1</a> demuestra una forma simple de definir una clase JavaScript. Sin embargo, no es la forma idiomática de hacerlo, porque no define un <em>constructor</em>. Un constructor es una función diseñada para la inicialización de objetos recién creados. Los constructores se invocan mediante la palabra clave <codeinline>new</codeinline>, tal y como se describe en <a href="capitulo-8#2-3">§8.2.3</a>. Las invocaciones a constructores utilizando <codeinline>new</codeinline> crean automáticamente el nuevo objeto, por lo que el propio constructor sólo necesita inicializar el estado de ese nuevo objeto. La característica crítica de las invocaciones a constructores es que la propiedad <codeinline>prototype</codeinline> del constructor se utiliza como prototipo del nuevo objeto. En <a href="capitulo-6#2-3">§6.2.3</a> se introdujeron los prototipos y se hizo hincapié en que, si bien casi todos los objetos tienen un prototipo, sólo unos pocos objetos tienen una propiedad <codeinline>prototype</codeinline>. Finalmente, podemos aclararlo: son los objetos función los que tienen una propiedad prototipo. Esto significa que todos los objetos creados con la misma función constructora heredan del mismo objeto y, por tanto, son miembros de la misma clase. El <a href="#ejemplo9-2">Ejemplo 9-2</a> muestra cómo podríamos modificar la clase Range del <a href="#ejemplo9-1">Ejemplo 9-1</a> para utilizar una función constructora en lugar de una función de fábrica. El <a href="#ejemplo9-2">Ejemplo 9-2</a> demuestra la forma idiomática de crear una clase en versiones de Java-Script que no soportan la palabra clave <codeinline>class</codeinline> de ES6. Aunque class está bien soportado ahora, todavía hay mucho código JavaScript antiguo que define clases como esta, y deberías estar familiarizado con el modismo para que puedas leer código antiguo y para que entiendas lo que está pasando "bajo el capó" cuando usas la palabra clave <codeinline>class</codeinline>.</p>
     <p><em>Ejemplo 9-2. Una clase Range que utiliza un constructor</em></p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Esta es una función constructora que inicializa nuevos objetos Range.
     // Tenga en cuenta que no crea ni devuelve el objeto. Solo lo inicializa.
     function Range(from, to) &lbrace;
@@ -137,7 +137,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       <p class="title-article">Constructores y new.target</p>
       <p>Dentro del cuerpo de una función, puede saber si la función ha sido invocada como constructor con la expresión especial <codeinline>new.target</codeinline>. Si el valor de esa expresión está definido, entonces sabe que la función fue invocada como un constructor, con la palabra clave <codeinline>new</codeinline>. Cuando hablemos de subclases en <a href="#5">§9.5</a>, veremos que <codeinline>new.target</codeinline> no siempre es una referencia al constructor en el que se usa: también puede referirse a la función constructora de una subclase.</p>
       <p>Si <codeinline>new.target</codeinline> es <codeinline>undefined</codeinline>, entonces la función contenedora fue invocada como una función, sin la palabra clave <codeinline>new</codeinline>. Los diversos constructores de error de JavaScript pueden ser invocados sin <codeinline>new</codeinline>, y si quieres emular esta característica en tus propios constructores, debes puede escribirlas así:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">function C() &lbrace;
       if (!new.target) return new C();
       // El código de inicialización va aquí
@@ -153,29 +153,29 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>9.2.1 Constructores, identidad de clase e instanceof</h2>
     <p>Como hemos visto, el objeto prototipo es fundamental para la identidad de una clase: dos objetos son instancias de la misma clase si y sólo si heredan del mismo objeto prototipo. La función constructora que inicializa el estado de un nuevo objeto no es fundamental: dos funciones constructoras pueden tener propiedades <codeinline>prototype</codeinline> que el mismo objeto prototipo. Entonces, ambos constructores se pueden utilizar para crear instancias de la misma clase.</p>
     <p>Aunque los constructores no son tan fundamentales como los prototipos, el constructor sirve como la cara pública de una clase. Lo más obvio es que el nombre de la función del constructor suele adoptarse como nombre de la clase. Decimos, por ejemplo, que el constructor <codeinline>Range()</codeinline> crea objetos Range. Pero, fundamentalmente, los constructores se utilizan como operando derecho del operador <codeinline>instanceof</codeinline> cuando se comprueba la pertenencia de los objetos a una clase. Si tenemos un objeto <codeinline>r</codeinline> y queremos saber si es un objeto Range, podemos escribir:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">r instanceof Range // => true: r hereda de Range.prototype</code></pre>
     <p>El operador <codeinline>instanceof</codeinline> se describió en <a href="capitulo-4#9-4">§4.9.4</a>. El operando izquierdo debe ser el objeto que se está probando, y el operando derecho debe ser una función constructora que nombre una clase. La expresión <codeinline>o instanceof C</codeinline> es <codeinline>true</codeinline> si <codeinline>o</codeinline> hereda de <codeinline>C.prototype</codeinline>. No es necesario que la herencia sea directa: si <codeinline>o</codeinline> hereda de un objeto que a su vez hereda de un objeto que hereda de <codeinline>C.prototype</codeinline>, la expresión seguirá siendo <codeinline>true</codeinline>.</p>
     <p>Técnicamente hablando, en el ejemplo de código anterior, el operador <codeinline>instanceof</codeinline> no está comprobando si <codeinline>r</codeinline> fue realmente inicializado por el constructor <codeinline>Range</codeinline>. En su lugar, está comprobando si <codeinline>r</codeinline> hereda de <codeinline>Range.prototype</codeinline>. Si definimos una función <codeinline>Strange()</codeinline> y establecemos que su prototipo sea el mismo que <codeinline>Range.prototype</codeinline>, entonces los objetos creados con <codeinline>new Strange()</codeinline> contarán como objetos Range en lo que respecta a <codeinline>instanceof</codeinline> (no funcionarán realmente como objetos Range, sin embargo, porque sus propiedades <codeinline>from</codeinline> y <codeinline>to</codeinline> no han sido inicializadas):</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">function Strange() &lbrace;}
     Strange.prototype = Range.prototype;
     new Strange() instanceof Range // => true</code></pre>
     <p>Aunque <codeinline>instanceof</codeinline> no puede verificar realmente el uso de un constructor, sigue utilizando una función constructora como su lado derecho porque los constructores son la identidad pública de una clase.</p>
     <p>Si desea probar la cadena de prototipos de un objeto para un prototipo específico y no desea utilizar la función constructora como intermediaria, puede utilizar el método <codeinline>isPrototypeOf()</codeinline>. En el <a href="#ejemplo9-1">Ejemplo 9-1</a>, por ejemplo, definimos una clase sin función constructora, por lo que no hay forma de utilizar <codeinline>instanceof</codeinline> con esa clase. En su lugar, sin embargo, podríamos comprobar si un objeto <codeinline>r</codeinline> es miembro de esa clase sin constructor con este código:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">range.methods.isPrototypeOf(r); // range.methods es el objeto prototipo.</code></pre>
   </section>
   <section id="2-2">
     <h2>9.2.2 El constructor Propiedad</h2>
     <p>En el <a href="#ejemplo9-2">Ejemplo 9-2</a>, establecimos <codeinline>Range.prototype</codeinline> en un nuevo objeto que contenía los métodos de nuestra clase. Aunque era conveniente expresar esos métodos como propiedades de un único objeto literal, en realidad no era necesario crear un nuevo objeto. Cualquier función JavaScript normal (excluidas las funciones de flecha, las funciones generadoras y las funciones asíncronas) puede utilizarse como constructor, y las invocaciones de constructores necesitan una propiedad <codeinline>prototype</codeinline>. Por lo tanto, todas las funciones normales de JavaScript<sup>1</sup> tienen automáticamente una propiedad <codeinline>prototype</codeinline>. El valor de esta propiedad es un objeto que tiene una única propiedad <codeinline>constructor</codeinline> no enumerable. El valor de la propiedad <codeinline>constructor</codeinline> es el objeto función:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let F = function() &lbrace;}; // Este es un objeto de función.
     let p = F.prototype;    // Este es el objeto prototipo asociado con F.
     let c = p.constructor;  // Esta es la función asociada al prototipo.
     c === F                 // => true: F.prototype.constructor === F para cualquier F</code></pre>
     <p>La existencia de este objeto prototipo predefinido con su propiedad <codeinline>constructor</codeinline> significa que los objetos suelen heredar una propiedad <codeinline>constructor</codeinline> que hace referencia a su con- structor. Dado que los constructores sirven como identidad pública de una clase, esta propiedad constructor da la clase de un objeto:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let o = new F(); // Crear un objeto o de clase F
     o.constructor === F // => true: La propiedad del constructor especifica la clase.</code></pre>
     <p>La <a href="#figure9-1">Figura 9-1</a> ilustra esta relación entre la función constructora, su objeto prototipo, la referencia del prototipo al constructor y las instancias creadas con el constructor.</p>
@@ -184,14 +184,14 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       <figcaption>Figura 9-1. Una función constructora, su prototipo e instancia</figcaption>
     </figure>
     <p>Observe que la <a href="#figure9-1">Figura 9-1</a> utiliza nuestro constructor <codeinline>Range()</codeinline> como ejemplo. De hecho, sin embargo, la clase Range definida en el <a href="#ejemplo9-2">Ejemplo 9-2</a> sobrescribe el objeto predefinido <codeinline>Range.prototype</codeinline> con un objeto propio. Y el nuevo objeto prototipo que define no tiene una propiedad <codeinline>constructor</codeinline>. Así que las instancias de la clase Range, tal y como están definidas, no tienen una propiedad <codeinline>constructor</codeinline>. Podemos remediar este problema añadiendo explícitamente un constructor al prototipo:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">Range.prototype = &lbrace;
       constructor: Range, // Establezca explícitamente la referencia anterior del constructor
       
       /* Las definiciones de métodos van aquí */
     };</code></pre>
     <p>Otra técnica común que es probable que veas en código JavaScript antiguo es utilizar el objeto prototipo predefinido con su propiedad <codeinline>constructor</codeinline> y añadirle métodos de uno en uno con código como este:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Amplíe el objeto Range.prototype predefinido para que no lo sobrescribamos
     // la propiedad Range.prototype.constructor creada automáticamente.
     Range.prototype.includes = function(x) &lbrace;
@@ -205,7 +205,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>9.3 Clases con la clase Palabra clave</h2>
     <p>Las clases han sido parte de JavaScript desde la primera versión del lenguaje, pero en ES6, finalmente obtuvieron su propia sintaxis con la introducción de la palabra clave <codeinline>class</codeinline>. El <a href="#ejemplo9-3">Ejemplo 9-3</a> muestra el aspecto de nuestra clase Range cuando se escribe con esta nueva sintaxis.</p>
     <p><em>Ejemplo 9-3. La clase Range reescrita utilizando la clase</em></p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">class Range &lbrace;
       constructor(from, to) &lbrace;
         // Almacene los puntos de inicio y final (estado) de este nuevo objeto de rango.
@@ -261,7 +261,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       </li>
     </ul>
     <p>Si desea definir una clase que subclase -o <em>herede</em>- de otra clase, puede utilizar la palabra clave <codeinline>extends</codeinline> junto con la palabra clave <codeinline>class</codeinline>:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Un Span es como un Range, pero en lugar de inicializarlo con un inicio y 
     // un final, lo inicializamos con un inicio y una longitud.
     class Span extends Range &lbrace;
@@ -275,11 +275,11 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     }</code></pre>
     <p>La creación de subclases es un tema aparte. Volveremos a tratarlo y explicaremos las palabras clave <codeinline>extends</codeinline> y <codeinline>super</codeinline> que se muestran aquí en <a href="#5">§9.5</a>.</p>
     <p>Al igual que las declaraciones de funciones, las declaraciones de clases tienen forma de declaración y de expresión. Del mismo modo que podemos escribir</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let square = function(x) &lbrace; return x * x; };
     square(3) // => 9</code></pre>
     <p>también podemos escribir:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let Square = class &lbrace; constructor(x) &lbrace; this.area = x * x; } };
     new Square(3).area // => 9</code></pre>
     <p>Al igual que ocurre con las expresiones de definición de funciones, las expresiones de definición de clases pueden incluir un nombre de clase opcional. Si se proporciona dicho nombre, éste sólo se define dentro del propio cuerpo de la clase.</p>
@@ -304,7 +304,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>9.3.1 Métodos estáticos</h2>
     <p>Puede definir un método estático dentro del cuerpo de una <codeinline>class</codeinline> anteponiendo a la declaración del método la palabra clave static. Los métodos <codeinline>static</codeinline> se definen como propiedades de la función constructora y no como propiedades del objeto prototipo.</p>
     <p>Por ejemplo, supongamos que añadimos el siguiente código al <a href="#ejemplo9-3">Ejemplo 9-3</a>:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js"></code>static parse(s) &lbrace;
       let matches = s.match(/^\((\d+)\.\.\.(\d+)\)$/);
       if (!matches) &lbrace;
@@ -313,7 +313,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       return new Range(parseInt(matches[1]), parseInt(matches[2]));
     }</pre>
     <p>El método definido por este código es <codeinline>Range.parse()</codeinline>, no <codeinline>Range.prototype.parse()</codeinline>, y debes invocarlo a través del constructor, no a través de una instancia:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let r = Range.parse('(1...10)'); // Devuelve un nuevo objeto Range
     r.parse('(1...10)'); // TypeError: r.parse no es una función</code></pre>
     <p>A veces verás métodos estáticos llamados <em>métodos</em> de clase porque son invocados usando el nombre de la clase/constructor. Cuando se utiliza este término, es para contrastar los métodos de clase con los <em>métodos de instancia</em> regulares que se invocan sobre instancias de la clase. Debido a que los métodos estáticos son invocados en el constructor en lugar de en cualquier instancia en particular, casi nunca tiene sentido utilizar la palabra clave this en un método estático.</p>
@@ -323,7 +323,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>9.3.2 Getters, Setters y otras formas de métodos</h2>
     <p>Dentro del cuerpo de una <codeinline>class</codeinline> se pueden definir métodos getter y setter (<a href="capitulo-6#10-6">§6.10.6</a>) igual que en los literales de objeto. La única diferencia es que en los cuerpos de clase, no se pone una coma después del getter o setter. El <a href="ejemplo9-4">Ejemplo 9-4</a> incluye un ejemplo práctico de un método getter en una clase.</p>
     <p>En general, todas las sintaxis abreviadas de definición de métodos permitidas en los literales de objetos también están permitidas en los cuerpos de las clases. Esto incluye métodos generadores (marcados con <codeinline>*</codeinline>) y métodos cuyos nombres son el valor de una expresión entre corchetes. De hecho, ya has visto (en el <a href="#ejemplo9-3">Ejemplo 9-3</a>) un método generador con un nombre calculado que hace iterable la clase Range:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">*[Symbol.iterator]() &lbrace;
       for(let x = Math.ceil(this.from); x &lt;= this.to; x++) yield x;
     }</code></pre>
@@ -333,7 +333,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>En la discusión aquí de clases definidas con la palabra clave <codeinline>class</codeinline>, sólo hemos descrito la definición de métodos dentro del cuerpo de la clase. El estándar ES6 sólo permite la creación de métodos (incluyendo getters, setters y generadores) y métodos estáticos; no incluye sintaxis para definir campos. Si desea definir un campo (que no es más que un sinónimo orientado a objetos de "propiedad") en una instancia de clase, debe hacerlo en la función constructora o en uno de los métodos. Y si desea definir un campo estático para una clase, debe hacerlo fuera del cuerpo de la clase, después de que la clase haya sido definida. El <a href="#ejemplo9-4">Ejemplo 9-4</a> incluye ejemplos de ambos tipos de campos.</p>
     <p>Sin embargo, se está normalizando una sintaxis de clase ampliada que permite definir campos de instancia y estáticos, tanto públicos como privados. El código que se muestra en el resto de esta sección aún no es JavaScript estándar a principios de 2020, pero ya es compatible con Chrome y parcialmente compatible (solo campos de instancia públicos) con Firefox. La sintaxis de los campos de instancia públicos es de uso común entre los programadores de JavaScript que utilizan el framework React y el transpilador Babel.</p>
     <p>Supongamos que estás escribiendo una clase como ésta, con un constructor que inicializa tres campos:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">class Buffer &lbrace;
       constructor() &lbrace;
         this.size = 0;
@@ -342,14 +342,14 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       }
     }</code></pre>
     <p>Con la nueva sintaxis de campo de instancia que probablemente se estandarizará, podría escribir en su lugar:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">class Buffer &lbrace;
       size = 0;
       capacity = 4096;
       buffer = new Uint8Array(this.capacity);
     }</code></pre>
     <p>Con la nueva sintaxis de campo de instancia que probablemente se estandarizará, podría escribir en su lugar:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">class Buffer &lbrace;
     #size = 0;
     get size() &lbrace; return this.#size; }
@@ -357,14 +357,14 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>El código de inicialización del campo se ha movido fuera del constructor y ahora aparece directamente en el cuerpo de la clase. (Por supuesto, ese código se sigue ejecutando como parte del constructor. Si no defines un constructor, los campos se inicializan como parte del constructor implícitamente creado). Los prefijos <codeinline>this.</codeinline> que aparecían en la parte izquierda de las asignaciones han desaparecido, pero tenga en cuenta que todavía debe utilizar <codeinline>this.</codeinline> para referirse a estos campos, incluso en la parte derecha de las asignaciones inicializadoras. La ventaja de inicializar los campos de instancia de esta forma es que esta sintaxis permite (pero no obliga) a poner los inicializadores en la parte superior de la definición de la clase, dejando claro a los lectores exactamente qué campos contendrán el estado de cada instancia. Puede declarar los campos sin un inicializador escribiendo simplemente el nombre del campo seguido de un punto y coma. Si lo haces así, el valor inicial del campo será <codeinline>undefined</codeinline>. Es mejor hacer siempre explícito el valor inicial de todos los campos de la clase.</p>
     <p>Antes de añadir esta sintaxis de campo, los cuerpos de clase se parecían mucho a los literales de objeto que utilizaban la sintaxis abreviada de método, salvo que se habían eliminado las comas. Esta sintaxis de campo -con signos de igual y punto y coma en lugar de dos puntos y comas- deja claro que los cuerpos de clase no son en absoluto lo mismo que los literales de objeto.</p>
     <p>La misma propuesta que pretende estandarizar estos campos de instancia también define los campos de instancia privados. Si utiliza la sintaxis de inicialización de campos de instancia mostrada en el ejemplo anterior para definir un campo cuyo nombre comience por <codeinline>#</codeinline> (que normalmente no es un carácter legal en los identificadores de JavaScript), ese campo se podrá utilizar (con el prefijo <codeinline>#</codeinline>) dentro del cuerpo de la clase, pero será invisible e inaccesible (y, por tanto, inmutable) para cualquier código fuera del cuerpo de la clase. Si, para la clase Buffer hipotética anterior, desea asegurarse de que los usuarios de la clase no puedan modificar inadvertidamente el campo de <codeinline>size</codeinline> de una instancia, podría utilizar un campo <codeinline>#size</codeinline> privado en su lugar y, a continuación, definir una función getter para proporcionar acceso de sólo lectura al valor:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">class Buffer &lbrace;
       #size = 0;
       get size() &lbrace; return this.#size; }
     }</code></pre>
     <p>Tenga en cuenta que los campos privados deben ser declarados utilizando esta nueva sintaxis de campo antes de que puedan ser utilizados. No se puede escribir <codeinline>this.#size = 0;</codeinline> en el constructor de una clase a menos que se incluya una "declaración" del campo directamente en el cuerpo de la clase.</p>
     <p>Por último, una propuesta relacionada pretende normalizar el uso de la palabra clave <codeinline>static</codeinline> para los campos. Si añades <codeinline>static</codeinline> antes de una declaración de campo público o privado, esos campos se crearán como propiedades de la función constructora en lugar de propiedades de instancias. Considere el método estático <codeinline>Range.parse()</codeinline> que hemos definido. Incluye una expresión regular bastante compleja que podría ser bueno factorizar en su propio campo estático. Con la nueva sintaxis de campo estático propuesta, podríamos hacerlo así:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">static integerRangePattern = /^\((\d+)\.\.\.(\d+)\)$/;
     static parse(s) &lbrace;
       let matches = s.match(Range.integerRangePattern);
@@ -379,7 +379,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>9.3.4 Ejemplo: Una clase de números complejos</h2>
     <p>El <a href="#ejemplo9-4">Ejemplo 9-4</a> define una clase para representar números complejos. La clase es relativamente simple, pero incluye métodos de instancia (incluyendo getters), métodos estáticos, campos de instancia y campos estáticos. Incluye algo de código comentado que demuestra cómo podríamos utilizar la sintaxis aún no estándar para definir campos de instancia y campos estáticos dentro del cuerpo de la clase.</p>
     <p><em>Ejemplo 9-4. Complex.js: una clase de números complejos</em></p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">
     /**
     * Instances of this Complex class represent complex numbers.
@@ -441,7 +441,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     Complex.ONE = new Complex(1,0);
     Complex.I = new Complex(0,1);</code></pre>
     <p>Con la clase Complex del <a href="#ejemplo9-4">Ejemplo 9-4</a> definida, podemos utilizar el constructor, los campos de instancia, los métodos de instancia, los campos de clase y los métodos de clase con código como éste:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let c = new Complex(2, 3);     // Crear un nuevo objeto con el constructor
     let d = new Complex(c.i, c.r); // Usar campos de instancia de c
     c.plus(d).toString()           // => "&lbrace;5,5}"; usa métodos de instancia
@@ -453,11 +453,11 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>9.4 Añadir métodos a clases existentes</h2>
     <p>El mecanismo de herencia basado en prototipos de JavaScript es dinámico: un objeto hereda propiedades de su prototipo, incluso si las propiedades del prototipo cambian después de la creación del objeto. Esto significa que podemos aumentar las clases de JavaScript simplemente añadiendo nuevos métodos a sus objetos prototipo.</p>
     <p>Aquí, por ejemplo, hay código que añade un método para calcular el conjugado complejo a la clase Complex del <a href="#ejemplo9-4">Ejemplo 9-4</a>:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Devuelve un número complejo que es el conjugado complejo de éste.
     Complex.prototype.conj = function() &lbrace; return new Complex(this.r, -this.i); };</code></pre>
     <p>El objeto prototipo de las clases incorporadas de JavaScript también está abierto de esta forma, lo que significa que podemos añadir métodos a números, cadenas, matrices, funciones, etc. Esto es útil para implementar nuevas características del lenguaje en versiones antiguas del mismo:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Si el nuevo método String startsWith() no está ya definido...
     if (!String.prototype.startsWith) &lbrace;
       // ...entonces defínelo así usando el antiguo método indexOf().
@@ -466,7 +466,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       };
     }</code></pre>
     <p>He aquí otro ejemplo:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Invoca la función f este número de veces, pasando el número de iteración
     // Por ejemplo, para imprimir "hola" 3 veces:
     // let n = 3;
@@ -486,7 +486,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>9.5.1 Subclases y prototipos</h2>
     <p>Supongamos que queremos definir una subclase Span de la clase Range del <a href="#ejemplo9-2">Ejemplo 9-2</a>. Esta subclase funcionará igual que un Range, pero en lugar de inicializarla con un inicio y un final, especificaremos un inicio y una distancia, o span. Una instancia de esta clase Span es también una instancia de la superclase Range. Una instancia de Span hereda un método personalizado <codeinline>toString()</codeinline> de <codeinline>Span.prototype</codeinline>, pero para ser una subclase de Range, también debe heredar métodos (como <codeinline>includes()</codeinline>) de <codeinline>Range.prototype</codeinline>.</p>
     <p><em>Ejemplo 9-5. Span.js: una subclase simple de Range</em></p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Esta es la función constructora para nuestra subclase
     function Span(start, span) &lbrace;
       if (span >= 0) &lbrace;
@@ -511,7 +511,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       return `($&lbrace;this.from}... +$&lbrace;this.to - this.from})`;
     };</code></pre>
     <p>Para que Span sea una subclase de Range, tenemos que hacer que <codeinline>Span.prototype</codeinline> herede de <codeinline>Range.prototype</codeinline>. La línea de código clave en el ejemplo anterior es ésta, y si tiene sentido para ti, entiendes cómo funcionan las subclases en JavaScript:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">Span.prototype = Object.create(Range.prototype);</code></pre>
     <p>Los objetos creados con el constructor <codeinline>Span()</codeinline> heredarán del objeto <codeinline>Span.prototype</codeinline>. Pero hemos creado ese objeto para que herede de <codeinline>Range.prototype</codeinline>, por lo que los objetos Span heredarán tanto de <codeinline>Span.prototype</codeinline> como de <codeinline>Range.prototype</codeinline>.</p>
     <p>Puede observar que nuestro constructor <codeinline>Span()</codeinline> establece las mismas propiedades <codeinline>from</codeinline> y <codeinline>to</codeinline> que el constructor <codeinline>Range()</codeinline>, por lo que no necesita invocar al constructor <codeinline>Range()</codeinline> para inicializar el nuevo objeto. Del mismo modo, el método <codeinline>toString()</codeinline> de Span reimplementa completamente la conversión de cadenas sin necesidad de llamar a la versión de Range de <codeinline>toString()</codeinline>. Esto convierte a Span en un caso especial, y sólo podemos salirnos con la nuestra con este tipo de subclase porque conocemos los detalles de implementación de la superclase. Un mecanismo de subclasificación robusto necesita permitir a las clases invocar los métodos y el constructor de su superclase, pero antes de ES6, JavaScript no tenía una forma sencilla de hacer estas cosas.</p>
@@ -520,7 +520,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="5-2" class="py-4 xs:py-5 sm:py-6">
     <h2>9.5.2 Subclases con extends y super</h2>
     <p>En ES6 y posteriores, puede crear una superclase simplemente añadiendo una cláusula extends a la declaración de una clase, y puede hacerlo incluso para clases incorporadas:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Una subclase de matriz trivial que agrega captadores para el primer y el último elemento.
     class EZArray extends Array &lbrace;
       get first() &lbrace; return this[0]; }
@@ -537,7 +537,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     Array.isArray(a)      // => true: la instancia de subclase en realidad es un array
     EZArray.isArray(a)    // => true: la subclase también hereda métodos estáticos</code></pre>
     <p>Esta subclase de EZArray define dos métodos getter simples. Las instancias de EZArray se comportan como matrices ordinarias, y podemos utilizar métodos y propiedades heredadas como <codeinline>push()</codeinline>, <codeinline>pop()</codeinline>, y <codeinline>length</codeinline>. Pero también podemos utilizar el <codeinline>first</codeinline> y el <codeinline>last</codeinline> getter definidos en la subclase. No sólo se heredan métodos de instancia como <codeinline>pop()</codeinline>, sino también métodos estáticos como <codeinline>Array.isArray</codeinline>. Esta es una nueva característica habilitada por la sintaxis de clases ES6: <codeinline>EZArray()</codeinline> es una función, pero hereda de <codeinline>Array()</codeinline>:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// EZArray hereda los métodos de instancia porque 
     // EZArray.prototype hereda de Array.prototype
     Array.prototype.isPrototypeOf(EZArray.prototype) // => true
@@ -547,7 +547,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     Array.isPrototypeOf(EZArray)                     // => true</code></pre>
     <p>Nuestra subclase EZArray es demasiado simple para ser muy instructiva. El <a href="#ejemplo9-6">Ejemplo 9-6</a> es un ejemplo más completo. Define una subclase TypedMap de la clase Map incorporada que añade comprobación de tipos para asegurar que las claves y valores del mapa son de los tipos especificados (según <codeinline>typeof</codeinline>). Es importante destacar que este ejemplo demuestra el uso de la palabra clave super para invocar el constructor y los métodos de la superclase.</p>
     <p><em>Ejemplo 9-6. TypedMap.js: una subclase de Map que comprueba los tipos de clave y valor</em></p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">class TypedMap extends Map &lbrace;
       constructor(keyType, valueType, entries) &lbrace;
         // Si se especifican entradas, verifique sus tipos
@@ -622,7 +622,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>La palabra clave <codeinline>extends</codeinline> facilita la creación de subclases. Pero eso no significa que <em>deba</em> crear muchas subclases. Si quiere escribir una clase que comparta el comportamiento de otra clase, puede intentar heredar ese comportamiento creando una subclase. Pero a menudo es más fácil y más flexible obtener ese comportamiento deseado en su clase haciendo que su clase cree una instancia de la otra clase y simplemente delegando en esa instancia según sea necesario. No se crea una nueva clase subclasificando, sino envolviendo o "componiendo" otras clases. Este enfoque de la delegación se denomina a menudo "composición", y es una máxima muy citada de la programación orientada a objetos que uno debe "favorecer la composición sobre la herencia".<sup>2</sup></p>
     <p>Supongamos, por ejemplo, que queremos una clase Histograma que se comporte como la clase Set de JavaScript, excepto que en lugar de llevar la cuenta de si un valor ha sido añadido a set o no, mantiene un recuento del número de veces que el valor ha sido añadido. Dado que la API de esta clase Histograma es similar a Set, podríamos considerar subclasificar Set y añadir un método <codeinline>count()</codeinline>. Por otro lado, una vez que empezamos a pensar en cómo podríamos implementar este método <codeinline>count()</codeinline>, podríamos darnos cuenta de que la clase Histograma es más parecida a Map que a Set porque necesita mantener un mapeo entre valores y el número de veces que han sido añadidos. Así que en lugar de subclasificar Set, podemos crear una clase que defina una API similar a Set pero que implemente esos métodos delegando en un objeto Map interno. El <a href="#ejemplo9-7">Ejemplo 9-7</a> muestra cómo podemos hacer esto.</p>
     <p><em>Ejemplo 9-7. Histogram.js: una clase tipo Set implementada con delegación</em></p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">/**
     * Una clase similar a un conjunto que lleva un registro de cuántas veces
     * se ha agregado un valor. Llame a add() y remove() como lo haría
@@ -676,7 +676,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>El <a href="#ejemplo9-8">Ejemplo 9-8</a> define muchas subclases, pero también demuestra cómo se pueden definir <em>clases abstractas</em> - clases que no incluyen una implementación completa - para servir como superclase común para un grupo de subclases relacionadas. Una superclase abstracta puede definir una implementación parcial que todas las subclases heredan y comparten. Así, las subclases sólo tienen que definir su propio comportamiento implementando los métodos abstractos definidos (pero no implementados) por la superclase. Tenga en cuenta que JavaScript no tiene ninguna definición formal de métodos abstractos o clases abstractas; simplemente estoy usando ese nombre aquí para los métodos no implementados y las clases incompletamente implementadas.</p>
     <p>El <a href="#ejemplo9-8">Ejemplo 9-8</a> está bien comentado y se sostiene por sí mismo. Le animo a que lo lea como ejemplo final de este capítulo sobre clases. La clase final en el <a href="#ejemplo9-8">Ejemplo 9-8</a> hace mucha manipulación de bits con los operadores <codeinline>&</codeinline>, <codeinline>|</codeinline>, y <codeinline>~</codeinline>, que puedes revisar en <a href="capitulo-4#8-3">§4.8.3</a>.</p>
     <p id="ejemplo9-8"><em>Ejemplo 9-8. Sets.js: una jerarquía de clases de conjuntos abstractos y concretos</em></p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">/**
     * La clase AbstractSet define un único método abstracto, has().
     */

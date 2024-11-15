@@ -97,49 +97,49 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Los métodos de JavaScript para consultar y establecer los atributos de una propiedad utilizan un objeto denominado <em>descriptor de propiedad</em> para representar el conjunto de cuatro atributos. Un objeto descriptor de propiedad tiene propiedades con los mismos nombres que los atributos de la propiedad que describe. Así, el objeto descriptor de propiedad de una propiedad de datos tiene propiedades denominadas <codeinline>valor</codeinline>, <codeinline>escribible</codeinline>, <codeinline>enumerable</codeinline> y <codeinline>configurable</codeinline>. Y el descriptor de una propiedad accessor tiene propiedades <codeinline>get</codeinline> y <codeinline>set</codeinline> en lugar de <codeinline>value</codeinline> y <codeinline>writable</codeinline>. Las propiedades <codeinline>writable</codeinline>, <codeinline>enumerable</codeinline> y <codeinline>configurable</codeinline> son valores booleanos, y las propiedades <codeinline>get</codeinline> y <codeinline>set</codeinline> son valores de función.</p>
     <p>Para obtener el descriptor de propiedad de una propiedad con nombre de un objeto especificado, llame a <codeinline>Object.getOwnPropertyDescriptor()</codeinline>:</p>
     <pre class="language-js">
-    <code>// Returns &lbrace;value: 1, writable:true, enumerable:true, configurable:true}
+    <code class="language-js">// Devuelve &lbrace;value: 1, writable:true, enumerable:true, configurable:true}
     Object.getOwnPropertyDescriptor(&lbrace;x: 1}, "x");
 
-    // Here is an object with a read-only accessor property
+    // Aquí hay un objeto con una propiedad de acceso de solo lectura
     const random = &lbrace;
       get octet() &lbrace; return Math.floor(Math.random()*256); },
     };
     
-    // Returns &lbrace; get: /*func*/, set:undefined, enumerable:true, configurable:true}
+    // Devuelve &lbrace; get: /*func*/, set:undefined, enumerable:true, configurable:true}
     Object.getOwnPropertyDescriptor(random, "octet");
     
-    // Returns undefined for inherited properties and properties that don't exist.
-    Object.getOwnPropertyDescriptor(&lbrace;}, "x")        // => undefined; no such prop
-    Object.getOwnPropertyDescriptor(&lbrace;}, "toString") // => undefined; inherited</code></pre>
+    // Devuelve undefined para propiedades heredadas y propiedades que no existen.
+    Object.getOwnPropertyDescriptor(&lbrace;}, "x")        // => undefined; No existe tal apoyo
+    Object.getOwnPropertyDescriptor(&lbrace;}, "toString") // => undefined; heredado</code></pre>
     <p>Como su nombre indica, <codeinline>Object.getOwnPropertyDescriptor()</codeinline> sólo funciona para las propiedades propias. Para consultar los atributos de las propiedades heredadas, debe tra- verse explícitamente la cadena de prototipos. (Véase <codeinline>Object.getPrototypeOf()</codeinline> en <a href="#3">§14.3</a>); véase también la función similar <codeinline>Reflect.getOwnPropertyDescriptor()</codeinline> en <a href="#6">§14.6</a>).</p>
     <p>Para establecer los atributos de una propiedad o crear una nueva propiedad con los atributos especificados, llame a <codeinline>Object.defineProperty()</codeinline>, pasando el objeto a modificar, el nombre de la propiedad a crear o alterar y el objeto descriptor de la propiedad:</p>
     <pre class="language-js">
-    <code>let o = &lbrace;}; // Start with no properties at all
-    // Add a non-enumerable data property x with value 1.
+    <code class="language-js">let o = &lbrace;}; // Comience sin ninguna propiedad
+    // Agregue una propiedad de datos no enumerable x con valor 1.
     Object.defineProperty(o, "x", &lbrace;
       value: 1,
       writable: true,
       enumerable: false,
       configurable: true
     });
-    // Check that the property is there but is non-enumerable
+    // Comprueba que la propiedad esté ahí pero no sea enumerable
     o.x            // => 1
     Object.keys(o) // => []
-    // Now modify the property x so that it is read-only
+    // Ahora modifique la propiedad x para que sea de solo lectura
     Object.defineProperty(o, "x", &lbrace; writable: false });
-    // Try to change the value of the property
+    // Intente cambiar el valor de la propiedad
     o.x = 2; // Fails silently or throws TypeError in strict mode
     o.x      // => 1
-    // The property is still configurable, so we can change its value like this:
+    // La propiedad aún es configurable, por lo que podemos cambiar su valor de esta manera:
     Object.defineProperty(o, "x", &lbrace; value: 2 });
     o.x      // => 2
-    // Now change x from a data property to an accessor property
+    // Ahora cambie x de una propiedad de datos a una propiedad de acceso
     Object.defineProperty(o, "x", &lbrace; get: function() &lbrace; return 0; } });
     o.x      // => 0</code></pre>
     <p>El descriptor de propiedad que pasas a <codeinline>Object.defineProperty()</codeinline> no tiene por qué incluir los cuatro atributos. Si estás creando una nueva propiedad, los atributos omitidos se toman como <codeinline>false</codeinline> o <codeinline>undefined</codeinline>. Si estás modificando una propiedad existente, entonces los atributos que omitas simplemente se dejan sin cambios. Tenga en cuenta que este método modifica una propiedad propia existente o crea una nueva propiedad propia, pero no modificará una propiedad heredada. Véase también la función muy similar <codeinline>Reflect.defineProperty()</codeinline> en <a href="#6">§14.6</a>.</p>
     <p>Si desea crear o modificar más de una propiedad a la vez, utilice <codeinline>Object.define Properties()</codeinline>. El primer argumento es el objeto que se va a modificar. El segundo argumento es un objeto que asigna los nombres de las propiedades que se van a crear o modificar a los descriptores de propiedades de dichas propiedades. Por ejemplo:</p>
     <pre class="language-js">
-    <code>let p = Object.defineProperties(&lbrace;}, &lbrace;
+    <code class="language-js">let p = Object.defineProperties(&lbrace;}, &lbrace;
       x: &lbrace; value: 1, writable: true, enumerable: true, configurable: true },
       y: &lbrace; value: 1, writable: true, enumerable: true, configurable: true },
       r: &lbrace;
@@ -195,32 +195,32 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>En <a href="capitulo-6#7">§6.7</a> se describe la función <codeinline>Object.assign()</codeinline> que copia valores de propiedades de uno o más objetos origen en un objeto destino. <codeinline>Object.assign()</codeinline> sólo copia propiedades enumerables y valores de propiedades, no atributos de propiedades. Esto es normalmente lo que queremos, pero significa, por ejemplo, que si uno de los objetos fuente tiene una propiedad accessor, es el valor devuelto por la función getter el que se copia en el objeto destino, no la propia función getter. El <a href="#ejemplo14-1">Ejemplo 14-1</a> demuestra cómo podemos utilizar <codeinline>Object.getOwnPropertyDescriptor()</codeinline> y <codeinline>Object.defineProperty()</codeinline> para crear una variante de <codeinline>Object.assign()</codeinline> que copia descriptores de propiedades enteros en lugar de sólo copiando valores de propiedades.</p>
     <p id="ejemplo14-1"><em>Ejemplo 14-1. Copiar propiedades y sus atributos de un objeto a otro</em></p>
     <pre class="language-js">
-    <code>
+    <code class="language-js">
     /*
-    * Define a new Object.assignDescriptors() function that works like
-    * Object.assign() except that it copies property descriptors from
-    * source objects into the target object instead of just copying
-    * property values. This function copies all own properties, both
-    * enumerable and non-enumerable. And because it copies descriptors,
-    * it copies getter functions from source objects and overwrites setter
-    * functions in the target object rather than invoking those getters and
-    * setters.
+    * Defina una nueva función Object.assignDescriptors() que funcione como 
+    * Object.assign(), excepto que copia los descriptores de propiedades de 
+    * los objetos de origen en el objeto de destino en lugar de copiar solo
+    * los valores de las propiedades. Esta función copia todas las propiedades
+    * propias, tanto enumerables como no enumerables. Y debido a que copia 
+    * descriptores, copia las funciones de obtención de objetos de origen y 
+    * sobrescribe las funciones de establecimiento en el objeto de destino 
+    * en lugar de invocar esos métodos de obtención y establecimiento.
     *
-    * Object.assignDescriptors() propagates any TypeErrors thrown by
-    * Object.defineProperty(). This can occur if the target object is sealed
-    * or frozen or if any of the source properties try to change an existing
-    * non-configurable property on the target object.
+    * Object.assignDescriptors() propaga cualquier TypeError generado por
+    * Object.defineProperty(). Esto puede ocurrir si el objeto de destino 
+    * está sellado o congelado o si alguna de las propiedades de origen intenta 
+    * cambiar una propiedad no configurable existente en el objeto de destino.
     *
-    * Note that the assignDescriptors property is added to Object with
-    * Object.defineProperty() so that the new function can be created as
-    * a non-enumerable property like Object.assign().
+    * Tenga en cuenta que la propiedad allowDescriptors se agrega a Object con
+    * Object.defineProperty() para que la nueva función se pueda crear como 
+    * una propiedad no enumerable como Object.assign().
     */
     Object.defineProperty(Object, "assignDescriptors", &lbrace;
-      // Match the attributes of Object.assign()
+      // Coincidir con los atributos de Object.assign()
       writable: true,
       enumerable: false,
       configurable: true,
-      // The function that is the value of the assignDescriptors property.
+      // La función que es el valor de la propiedad allowDescriptors.
       value: function(target, ...sources) &lbrace;
         for(let source of sources) &lbrace;
           for(let name of Object.getOwnPropertyNames(source)) &lbrace;
@@ -236,13 +236,13 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       }
     });
 
-    let o = &lbrace;c: 1, get count() &lbrace;return this.c++;}}; // Define object with getter
-    let p = Object.assign(&lbrace;}, o);                   // Copy the property values
-    let q = Object.assignDescriptors(&lbrace;}, o);        // Copy the property descriptors
-    p.count     // => 1: This is now just a data property so
-    p.count     // => 1: ...the counter does not increment.
-    q.count     // => 2: Incremented once when we copied it the first time,
-    q.count     // => 3: ...but we copied the getter method so it increments.</code></pre>
+    let o = &lbrace;c: 1, get count() &lbrace;return this.c++;}}; // Definir objeto con getter
+    let p = Object.assign(&lbrace;}, o);                   // Copiar los valores de la propiedad
+    let q = Object.assignDescriptors(&lbrace;}, o);        // Copiar los descriptores de propiedad
+    p.count     // => 1: Esto ahora es solo una propiedad de datos, así que
+    p.count     // => 1: ...el contador no incrementa.
+    q.count     // => 2: Incrementado una vez cuando lo copiamos la primera vez,
+    q.count     // => 3: ...pero copiamos el método getter para que se incremente.</code></pre>
   </section>
   <section id="2">
     <h2>14.2 Extensibilidad de objetos</h2>
@@ -268,7 +268,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Es importante entender que <codeinline>Object.seal()</codeinline> y <codeinline>Object.freeze()</codeinline> sólo afectan al objeto que se les pasa: no tienen efecto sobre el prototipo de ese objeto. Si quieres bloquear completamente un objeto, probablemente necesites sellar o congelar también los objetos de la cadena de prototipos.</p>
     <p><codeinline>Object.preventExtensions()</codeinline>, <codeinline>Object.seal()</codeinline> y <codeinline>Object.freeze()</codeinline> devuelven el objeto que se les pasa, lo que significa que puede utilizarlos en invocaciones de funciones anidadas:</p>
     <pre class="language-js">
-    <code>// Create a sealed object with a frozen prototype and a non-enumerable property
+    <code class="language-js">// Crea un objeto sellado con un prototipo congelado y una propiedad no enumerable
     let o = Object.seal(Object.create(Object.freeze(&lbrace;x: 1}),&lbrace;y: &lbrace;value: 2, writable: true}}));</code></pre>
     <p>Si estás escribiendo una librería JavaScript que pasa objetos a funciones callback escritas por los usuarios de tu librería, puedes usar <codeinline>Object.freeze()</codeinline> en esos objetos para evitar que el código del usuario los modifique. Esto es fácil y conveniente de hacer, pero hay desventajas: los objetos congelados pueden interferir con las estrategias comunes de pruebas de JavaScript, por ejemplo.</p>
   </section>
@@ -278,38 +278,38 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>El atributo <codeinline>prototype</codeinline> se establece cuando se crea un objeto. Los objetos creados a partir de literales de objeto utilizan <codeinline>Object.prototype</codeinline> como prototipo. Los objetos creados con <codeinline>new</codeinline> utilizan como prototipo el valor de la propiedad <codeinline>prototype</codeinline> de su función constructora. Y los objetos creados con <codeinline>Object.create()</codeinline> utilizan el primer argumento de esa función (que puede ser <codeinline>null</codeinline>) como su prototipo.</p>
     <p>Puede consultar el prototipo de cualquier objeto pasando ese objeto a <codeinline>Object.getPrototypeOf()</codeinline>:</p>
     <pre class="language-js">
-    <code>Object.getPrototypeOf(&lbrace;})     // => Object.prototype
+    <code class="language-js">Object.getPrototypeOf(&lbrace;})     // => Object.prototype
     Object.getPrototypeOf([])     // => Array.prototype
     Object.getPrototypeOf(()=>&lbrace;}) // => Function.prototype</code></pre>
     <p>Una función muy similar, <codeinline>Reflect.getPrototypeOf()</codeinline>, se describe en <a href="#6">§14.6</a>.</p>
     <p>Para determinar si un objeto es el prototipo de (o forma parte de la cadena de prototipos de) otro objeto, utilice el método <codeinline>isPrototypeOf()</codeinline>:</p>
     <pre class="language-js">
-    <code>let p = &lbrace;x: 1};                   // Define a prototype object.
-    let o = Object.create(p);         // Create an object with that prototype.
-    p.isPrototypeOf(o)                // => true: o inherits from p
-    Object.prototype.isPrototypeOf(p) // => true: p inherits from Object.prototype
-    Object.prototype.isPrototypeOf(o) // => true: o does too</code></pre>
+    <code class="language-js">let p = &lbrace;x: 1};                   // Definir un objeto prototipo.
+    let o = Object.create(p);         // Crea un objeto con ese prototipo.
+    p.isPrototypeOf(o)                // => true: o hereda de p
+    Object.prototype.isPrototypeOf(p) // => true: p hereda de Object.prototype
+    Object.prototype.isPrototypeOf(o) // => true: o también lo hace</code></pre>
     <p>Tenga en cuenta que <codeinline>isPrototypeOf()</codeinline> realiza una función similar a la del operador <codeinline>instanceof</codeinline> (véase <a href="capitulo-4#9-4">§4.9.4</a>).</p>
     <p>El atributo <codeinline>prototype</codeinline> de un objeto se establece cuando se crea el objeto y normalmente permanece fijo. Sin embargo, puede cambiar el prototipo de un objeto con <codeinline>Object.setPrototypeOf()</codeinline>:</p>
     <pre class="language-js">
-    <code>let o = &lbrace;x: 1};
+    <code class="language-js">let o = &lbrace;x: 1};
     let p = &lbrace;y: 2};
-    Object.setPrototypeOf(o, p); // Set the prototype of o to p
-    o.y       // => 2: o now inherits the property y
+    Object.setPrototypeOf(o, p); // Establezca el prototipo de o en p
+    o.y       // => 2: o ahora hereda la propiedad y
     let a = [1, 2, 3];
-    Object.setPrototypeOf(a, p); // Set the prototype of array a to p
-    a.join    // => undefined: a no longer has a join() method</code></pre>
+    Object.setPrototypeOf(a, p); // Establezca el prototipo de la matriz a en p
+    a.join    // => undefined: a ya no tiene un método join()</code></pre>
     <p>Por lo general, no es necesario utilizar nunca <codeinline>Object.setPrototypeOf()</codeinline>. Las implementaciones de JavaScript pueden hacer optimizaciones agresivas basadas en la suposición de que el prototipo de un objeto es fijo e inmutable. Esto significa que si alguna vez llama a <codeinline>Object.setPrototypeOf()</codeinline>, cualquier código que utilice los objetos alterados puede ejecutarse mucho más lento de lo que lo haría normalmente.</p>
     <p>Una función similar, <codeinline>Reflect.setPrototypeOf()</codeinline>, se describe en <a href="#6">§14.6</a>.</p>
     <p>Algunas de las primeras implementaciones de JavaScript en navegadores mostraban el atributo <codeinline>prototype</codeinline> de un objeto a través de la propiedad <codeinline>__proto__</codeinline> (escrita con dos guiones bajos al principio y al final). Esto hace tiempo que ha quedado obsoleto, pero hay suficiente código en la web que depende de <codeinline>__proto__</codeinline> como para que el estándar ECMAScript lo exija para todas las implementaciones de JavaScript que se ejecuten en navegadores web. (Node también lo soporta, aunque el estándar no lo requiere para Node.) En JavaScript moderno, <codeinline>__proto__</codeinline> es legible y escribible, y puedes (aunque no deberías) usarlo como una alternativa a <codeinline>Object.getPrototypeOf()</codeinline> y <codeinline>Object.setPrototypeOf()</codeinline>. Un uso interesante de <codeinline>__proto__</codeinline> , sin embargo, es definir el prototipo de un literal de objeto:</p>
     <pre class="language-js">
-    <code>let p = &lbrace;z: 3};
+    <code class="language-js">let p = &lbrace;z: 3};
     let o = &lbrace;
       x: 1,
       y: 2,
       __proto__: p
     };
-    o.z // => 3: o inherits from p</code></pre>
+    o.z // => 3: o hereda de p</code></pre>
   </section>
   <section id="4">
     <h2>14.4 Símbolos conocidos</h2>
@@ -325,25 +325,25 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Cuando se describió el operador <codeinline>instanceof</codeinline> en <a href="capitulo-4#9-4">§4.9.4</a>, dijimos que el lado derecho debe ser una función constructora y que la expresión <codeinline>o instanceof f</codeinline> se evaluaba buscando el valor <codeinline>f.prototype</codeinline> dentro de la cadena de prototipos de <codeinline>o</codeinline>. Esto sigue siendo cierto, pero en ES6 y posteriores, <codeinline>Symbol.hasInstance</codeinline> proporciona una alternativa. En ES6, si el lado derecho de <codeinline>instanceof</codeinline> es cualquier objeto con un método <codeinline>[Symbol.hasInstance]</codeinline>, entonces ese método se invoca con el valor del lado izquierdo como argumento, y el valor de retorno del método, convertido a booleano, se convierte en el valor del operador <codeinline>instanceof</codeinline>. Y, por supuesto, si el valor del lado derecho no tiene un método <codeinline>[Symbol.hasInstance]</codeinline> sino que es una función, entonces el operador <codeinline>instanceof</codeinline> se comporta de la forma habitual.</p>
     <p><codeinline>Symbol.hasInstance</codeinline> significa que podemos utilizar el operador <codeinline>instanceof</codeinline> para realizar una comprobación de tipos genérica con objetos pseudotipo convenientemente definidos. Por ejemplo:</p>
     <pre class="language-js">
-    <code>// Define an object as a "type" we can use with instanceof
+    <code class="language-js">// Definir un objeto como un "tipo" que podemos usar con instanceof
     let uint8 = &lbrace;
       [Symbol.hasInstance](x) &lbrace;
         return Number.isInteger(x) && x >= 0 && x &lt;= 255;
       }
     };
     128 instanceof uint8      // => true
-    256 instanceof uint8      // => false: too big
-    Math.PI instanceof uint8  // => false: not an integer</code></pre>
+    256 instanceof uint8      // => false: demasiado grande
+    Math.PI instanceof uint8  // => false: no es un entero</code></pre>
     <p>Observe que este ejemplo es inteligente pero confuso porque utiliza un objeto no- clase donde normalmente se esperaría una clase. Sería igual de fácil -y más claro para los lectores de su código- escribir una función <codeinline>isUint8()</codeinline> en lugar de depender de este comportamiento <codeinline>Symbol.hasInstance</codeinline>.</p>
   </section>
   <section id="4-3" class="py-4 xs:py-5 sm:py-6">
     <h2>14.4.3 Símbolo.toStringTag</h2>
     <p>Si invocas el método <codeinline>toString()</codeinline> de un objeto JavaScript básico, obtienes la cadena "[objeto Objeto]":</p>
     <pre class="language-js">
-    <code>&lbrace;}.toString() // => "[object Object]"</code></pre>
+    <code class="language-js">&lbrace;}.toString() // => "[object Object]"</code></pre>
     <p>Si se invoca esta misma función <codeinline>Object.prototype.toString()</codeinline> como método de instancias de tipos incorporados, se obtienen algunos resultados interesantes:</p>
     <pre class="language-js">
-    <code>Object.prototype.toString.call([])     // => "[object Array]"
+    <code class="language-js">Object.prototype.toString.call([])     // => "[object Array]"
     Object.prototype.toString.call(/./)    // => "[object RegExp]"
     Object.prototype.toString.call(()=>&lbrace;}) // => "[object Function]"
     Object.prototype.toString.call("")     // => "[object String]"
@@ -351,7 +351,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     Object.prototype.toString.call(false)  // => "[object Boolean]"</code></pre>
     <p>Resulta que se puede utilizar esta técnica <codeinline>Object.prototype.toString().call()</codeinline> con cualquier valor JavaScript para obtener el "atributo de clase" de un objeto que contiene información de tipo que no está disponible de otro modo. La siguiente función <codeinline>classof()</codeinline> es posiblemente más útil que el operador <codeinline>typeof</codeinline>, que no distingue entre tipos de objetos:</p>
     <pre class="language-js">
-    <code>function classof(o) &lbrace;
+    <code class="language-js">function classof(o) &lbrace;
       return Object.prototype.toString.call(o).slice(8,-1);
     }
 
@@ -371,9 +371,9 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     classof(new Date()) // => "Date"</code></pre>
     <p>Antes de ES6, este comportamiento especial del método <codeinline>Object.prototype.toString()</codeinline> sólo estaba disponible para instancias de tipos incorporados, y si llamabas a esta función <codeinline>classof()</codeinline> en una instancia de una clase que habías definido tú mismo, simplemente devolvía "Object". En ES6, sin embargo, <codeinline>Object.prototype.toString()</codeinline> busca una propiedad con el nombre simbólico <codeinline>Symbol.toStringTag</codeinline> en su argumento, y si tal propiedad existe, utiliza el valor de la propiedad en su salida. Esto significa que si defines una clase propia, puedes hacerla funcionar fácilmente con funciones como <codeinline>classof()</codeinline>:</p>
     <pre class="language-js">
-    <code>class Range &lbrace;
+    <code class="language-js">class Range &lbrace;
       get [Symbol.toStringTag]() &lbrace; return "Range"; }
-      // the rest of this class is omitted here
+      // el resto de esta clase se omite aquí.
     }
     let r = new Range(1, 10);
     Object.prototype.toString.call(r) // => "[object Range]"
@@ -383,15 +383,16 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>14.4.4 Símbolo.especie</h2>
     <p>Antes de ES6, JavaScript no proporcionaba ninguna forma real de crear subclases robustas de clases incorporadas como Array. En ES6, sin embargo, puedes extender cualquier clase incorporada simplemente usando las palabras clave <codeinline>class</codeinline> y <codeinline>extends</codeinline>. <a href="capitulo-9#5-2">§9.5.2</a> lo demostró con esta simple subclase de Array:</p>
     <pre class="language-js">
-    <code>// A trivial Array subclass that adds getters for the first and last elements.
+    <code class="language-js">// Una subclase de matriz trivial que agrega captadores 
+    // para el primer y el último elemento.
     class EZArray extends Array &lbrace;
       get first() &lbrace; return this[0]; }
       get last() &lbrace; return this[this.length-1]; }
     }
     let e = new EZArray(1,2,3);
     let f = e.map(x => x * x);
-    e.last // => 3: the last element of EZArray e
-    f.last // => 9: f is also an EZArray with a last property</code></pre>
+    e.last // => 3: el último elemento de EZArray e
+    f.last // => 9: f también es un EZArray con una última propiedad</code></pre>
     <p>Array define los métodos <codeinline>concat()</codeinline>, <codeinline>filter()</codeinline>, <codeinline>map()</codeinline>, <codeinline>slice()</codeinline> y <codeinline>splice()</codeinline>, que devuelven arrays. Cuando creamos una subclase de array como EZArray que hereda estos métodos, ¿debería el método heredado devolver instancias de Array o instancias de EZArray? Se pueden dar buenos argumentos para cualquiera de las dos opciones, pero la especificación ES6 dice que (por defecto) los cinco métodos que devuelven arrays devolverán instancias de la subclase.</p>
     <p>Así es como funciona:</p>
     <ul>
@@ -416,17 +417,17 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     </ul>
     <p>Ahora viene lo interesante. Supongamos que <codeinline>Array[Symbol.species]</codeinline> fuera sólo una propiedad de datos regular, definida así:</p>
     <pre class="language-js">
-    <code>Array[Symbol.species] = Array;</code></pre>
+    <code class="language-js">Array[Symbol.species] = Array;</code></pre>
     <p>En ese caso, los constructores de las subclases heredarían el constructor <codeinline>Array()</codeinline> como su "especie", e invocar <codeinline>map()</codeinline> en una subclase de array devolvería una instancia de la superclase en lugar de una instancia de la subclase. Sin embargo, ES6 no se comporta así. La razón es que <codeinline>Array[Symbol.species]</codeinline> es una propiedad de sólo lectura cuya función getter simplemente devuelve <codeinline>this</codeinline>. Los constructores de subclase heredan esta función getter, lo que significa que por defecto, cada constructor de subclase es su propia "especie".</p>
     <p>Sin embargo, a veces este comportamiento por defecto no es lo que quieres. Si quieres que los métodos de EZArray que devuelven arrays devuelvan objetos Array normales, sólo tienes que establecer <codeinline>EZArray[Symbol.species]</codeinline> a <codeinline>Array</codeinline>. Pero como la propiedad heredada es un accesor de sólo lectura, no puedes establecerla con un operador de asignación. Sin embargo, puedes utilizar <codeinline>defineProperty()</codeinline>:</p>
     <pre class="language-js">
-    <code>EZArray[Symbol.species] = Array; // Attempt to set a read-only property fails
+    <code class="language-js">EZArray[Symbol.species] = Array; // El intento de establecer una propiedad de solo lectura falla
 
-    // Instead we can use defineProperty():
+    // En lugar de eso podemos usar defineProperty():
     Object.defineProperty(EZArray, Symbol.species, &lbrace;value: Array});</code></pre>
     <p>La opción más sencilla es probablemente definir explícitamente su propio getter <codeinline>Symbol.species</codeinline> al crear la subclase en primer lugar:</p>
     <pre class="language-js">
-    <code>class EZArray extends Array &lbrace;
+    <code class="language-js">class EZArray extends Array &lbrace;
       static get [Symbol.species]() &lbrace; return Array; }
       get first() &lbrace; return this[0]; }
       get last() &lbrace; return this[this.length-1]; }
@@ -435,7 +436,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     let e = new EZArray(1,2,3);
     let f = e.map(x => x - 1);
     e.last // => 3
-    f.last // => undefined: f is a regular array with no last getter</code></pre>
+    f.last // => undefined: f es una matriz regular sin último captador</code></pre>
     <p>La creación de subclases útiles de Array fue el principal caso de uso que motivó la introducción de <codeinline>Symbol.species</codeinline>, pero no es el único lugar en el que s e utiliza este conocido Symbol. Las clases de array tipificadas utilizan Symbol de la misma forma que la clase Array. Del mismo modo, el método <codeinline>slice()</codeinline> de ArrayBuffer mira la propiedad <codeinline>Symbol.species</codeinline> de <codeinline>this.constructor</codeinline> en lugar de simplemente crear un nuevo ArrayBuffer. Y los métodos Promise como <codeinline>then()</codeinline> que devuelven nuevos objetos Promise también los crean a través de este protocolo de especies. Finalmente, si te encuentras subclasificando Map (por ejemplo) y definiendo métodos que devuelven nuevos objetos Map, puede que quieras usar <codeinline>Symbol.species</codeinline> tú mismo para el beneficio de las subclases de tu subclase.</p>
   </section>
   <section id="4-5" class="py-4 xs:py-5 sm:py-6">
@@ -451,12 +452,12 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
         </p>
       </li>
     <pre class="language-js">
-    <code>let arraylike = &lbrace;
+    <code class="language-js">let arraylike = &lbrace;
       length: 1,
       0: 1,
       [Symbol.isConcatSpreadable]: true
     };
-    [].concat(arraylike) // => [1]: (would be [[1]] if not spread)</code></pre>
+    [].concat(arraylike) // => [1]: (seria [[1]] si no se difunde)</code></pre>
       <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
         <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
         <p>
@@ -464,11 +465,11 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
         </p>
       </li>
     <pre class="language-js">
-    <code>class NonSpreadableArray extends Array &lbrace;
+    <code class="language-js">class NonSpreadableArray extends Array &lbrace;
       get [Symbol.isConcatSpreadable]() &lbrace; return false; }
     }
     let a = new NonSpreadableArray(1,2,3);
-    [].concat(a).length // => 1; (would be 3 elements long if a was spread)</code></pre>
+    [].concat(a).length // => 1; (tendría 3 elementos de largo si se extendiera a)</code></pre>
     </ul>
   </section>
   <section id="4-6">
@@ -477,25 +478,26 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Los RegExps son una forma general y muy potente de describir patrones textuales, pero pueden ser complicados y no muy adecuados para las coincidencias difusas. Con los métodos de cadena generalizados, puede definir sus propias clases de patrones utilizando los conocidos métodos Symbol para realizar comparaciones personalizadas. Por ejemplo, puede realizar comparaciones de cadenas utilizando Intl.Collator (véase <a href="capitulo-11#7-3">§11.7.3</a>) para ignorar los acentos en la comparación. También puede definir una clase de patrón basada en el algoritmo <em>Soundex</em> para comparar palabras en función de sus sonidos aproximados o para emparejar libremente las cuerdas hasta una distancia Levenshtein determinada.</p>
     <p>En general, cuando se invoca uno de estos cinco métodos String en un objeto patrón como este:</p>
     <pre class="language-js">
-    <code>string.method(pattern, arg)</code></pre>
+    <code class="language-js">string.method(pattern, arg)</code></pre>
     <p>esa invocación se convierte en una invocación de un método con nombre simbólico en su objeto patrón:</p>
     <pre class="language-js">
-    <code>pattern[symbol](string, arg)</code></pre>
+    <code class="language-js">pattern[symbol](string, arg)</code></pre>
     <p>Como ejemplo, considere la clase de concordancia de patrones del siguiente ejemplo, que implementa la concordancia de patrones utilizando los comodines simples <codeinline>*</codeinline> y <codeinline>?</codeinline> que probablemente conozca de los sistemas de ficheros. Este estilo de concordancia de patrones se remonta a los primeros días del sistema operativo Unix, y los patrones a menudo se denominan <em>globos</em>:</p>
     <pre class="language-js">
-    <code>class Glob &lbrace;
+    <code class="language-js">class Glob &lbrace;
       constructor(glob) &lbrace;
         this.glob = glob;
 
-        // We implement glob matching using RegExp internally.
-        // ? matches any one character except /, and * matches zero or more
-        // of those characters. We use capturing groups around each.
+        // Implementamos la coincidencia global utilizando RegExp ? que 
+        // coincide internamente con cualquier carácter excepto /, y * 
+        // coincide con cero o más de esos caracteres. Utilizamos
+        // grupos de captura alrededor de cada uno.
         let regexpText = glob.replace("?", "([^/])").replace("*", "([^/]*)");
 
-        // We use the u flag to get Unicode-aware matching.
-        // Globs are intended to match entire strings, so we use the ^ and $
-        // anchors and do not implement search() or matchAll() since they
-        // are not useful with patterns like this.
+        // Usamos el indicador u para obtener coincidencias que tengan en cuenta Unicode.
+        // Los globs están pensados ​​para hacer coincidir cadenas completas, 
+        // por lo que usamos los anclajes ^ y $ y no implementamos search() 
+        // o matchAll() ya que no son útiles con patrones como este.
         this.regexp = new RegExp(`^$&lbrace;regexpText}$`, "u");
       }
 
@@ -509,8 +511,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     }
 
     let pattern = new Glob("docs/*.txt");
-    "docs/js.txt".search(pattern) // => 0: matches at character 0
-    "docs/js.htm".search(pattern) // => -1: does not match
+    "docs/js.txt".search(pattern) // => 0: Coincide con el personaje 0
+    "docs/js.htm".search(pattern) // => -1: no coincide
     let match = "docs/js.txt".match(pattern);
     match[0]                      // => "docs/js.txt"
     match[1]                      // => "js"
@@ -547,7 +549,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>14.4.8 Símbolo.unscopable</h2>
     <p>El último Símbolo bien conocido que cubriremos aquí es uno oscuro que fue introducido como una solución para los problemas de compatibilidad causados por el estado obsoleto <codeinline>with</codeinline>. Recuerda que la sentencia <codeinline>with</codeinline> toma un objeto y ejecuta el cuerpo de la sentencia como si estuviera en un ámbito donde las propiedades de ese objeto fueran variables. Esto causaba problemas de compatibilidad cuando se añadían nuevos métodos a la clase Array, y rompía parte del código existente. <codeinline>Symbol.unscopables</codeinline> es el resultado. En ES6 y posteriores, la sentencia <codeinline>with</codeinline> se ha modificado ligeramente. Cuando se utiliza con un objeto o, una sentencia <codeinline>with</codeinline> computa <codeinline>Object.keys(o[Symbol.unscopables]||&lbrace;})</codeinline> e ignora las propiedades cuyos nombres están en la matriz resultante al crear el ámbito simulado en el que ejecutar su cuerpo. ES6 utiliza esto para añadir nuevos métodos a <codeinline>Array.prototype</codeinline> sin romper el código existente en la web. Esto significa que usted puede encontrar una lista de los nuevos métodos de Array mediante la evaluación:</p>
     <pre class="language-js">
-    <code>let newArrayMethods = Object.keys(Array.prototype[Symbol.unscopables]);</code></pre>
+    <code class="language-js">let newArrayMethods = Object.keys(Array.prototype[Symbol.unscopables]);</code></pre>
   </section>
   <section id="5" class="py-4 xs:py-5 sm:py-6">
     <h2>14.5 Etiquetas de plantilla</h2>
@@ -557,8 +559,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>El valor de un literal de plantilla es siempre una cadena. Pero el valor de un literal de plantilla etiquetado es cualquier valor que devuelva la función de etiquetado. Esto puede ser una cadena, pero cuando la función de etiqueta se utiliza para implementar un DSL, el valor de retorno es típicamente una estructura de datos no cadena que es una representación analizada de la cadena.</p>
     <p>Como ejemplo de una función de etiqueta de plantilla que devuelve una cadena, considere la siguiente plantilla <codeinline>html``</codeinline>, que resulta útil cuando desea interpolar valores de forma segura en una cadena de HTML. La etiqueta realiza un escape HTML en cada uno de los valores antes de utilizarlo para construir la cadena final:</p>
     <pre class="language-js">
-    <code>function html(strings, ...values) &lbrace;
-      // Convert each value to a string and escape special HTML characters
+    <code class="language-js">function html(strings, ...values) &lbrace;
+      // Convierte cada valor en una cadena y escapa de los caracteres HTML especiales
       let escaped = values.map(v => String(v)
         .replace("&", "&amp;amp;")
         .replace("&lt;", "&amp;lt;")
@@ -566,7 +568,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
         .replace('"', "&amp;quot;")
         .replace("'", "&amp;#39;"));
 
-      // Return the concatenated strings and escaped values
+      // Devuelve las cadenas concatenadas y los valores escapados
       let result = strings[0];
       for(let i = 0; i &lt; escaped.length; i++) &lbrace;
         result += escaped[i] + strings[i+1];
@@ -581,13 +583,13 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     html`&lt;div class="$&lbrace;kind}">$&lbrace;name}</div>` // =>'<div class="game">D&amp;D</div>'</code></pre>
     <p>Si desea ver un ejemplo de una función de etiqueta que no devuelve una cadena, sino una representación analizada de una cadena, recuerde la clase de patrones Glob definida en <a href="#4-6">§14.4.6</a>. Como el constructor <codeinline>Glob()</codeinline> toma un único argumento de cadena, podemos definir una función de etiqueta para crear nuevos objetos Glob.</p>
     <pre class="language-js">
-    <code>function glob(strings, ...values) &lbrace;
-      // Assemble the strings and values into a single string
+    <code class="language-js">function glob(strings, ...values) &lbrace;
+      // Ensamble las cadenas y los valores en una sola cadena
       let s = strings[0];
       for(let i = 0; i &lt; values.length; i++) &lbrace;
         s += values[i] + strings[i+1];
       }
-      // Return a parsed representation of that string
+      // Devuelve una representación analizada de esa cadena
       return new Glob(s);
     }
 
@@ -633,32 +635,32 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>La clase Proxy, disponible en ES6 y posteriores, es la característica metaprog ramadora más potente de JavaScript. Nos permite escribir código que altera el comportamiento fundamental de los objetos JavaScript. La API Reflect descrita en <a href="#6">§14.6</a> es un conjunto de funciones que nos da acceso directo a un conjunto de operaciones fundamentales sobre objetos JavaScript. Lo que hace la clase Proxy es permitirnos implementar esas operaciones fundamentales nosotros mismos y crear objetos que se comportan de formas que no son posibles para los objetos normales.</p>
     <p>Cuando creamos un objeto Proxy, especificamos otros dos objetos, el objeto destino y el objeto manejadores:</p>
     <pre class="language-js">
-    <code>let proxy = new Proxy(target, handlers);</code></pre>
+    <code class="language-js">let proxy = new Proxy(target, handlers);</code></pre>
     <p>El objeto Proxy resultante no tiene estado ni comportamiento propios. Cada vez que se realiza una operación en él (leer una propiedad, escribir una propiedad, definir una nueva propiedad, buscar el prototipo, invocarlo como una función), envía esas operaciones al objeto controlador o al objeto de destino.</p>
     <p>Las operaciones admitidas por los objetos Proxy son las mismas que las definidas por la API de Reflect. Supongamos que <codeinline>p</codeinline> es un objeto Proxy y se escribe <codeinline>delete p.x</codeinline>. La función <codeinline>Reflect.deleteProperty()</codeinline> tiene el mismo comportamiento que el operador <codeinline>delete</codeinline>. Y cuando se utiliza el operador delete para eliminar una propiedad de un objeto Proxy, busca un mé todo <codeinline>deleteProperty()</codeinline> en el objeto handlers. Si tal método existe, lo invoca. Y si no existe tal método, entonces el objeto Proxy realiza el borrado de la propiedad en el objeto destino.</p>
     <p>Los proxies funcionan de esta manera para todas las operaciones fundamentales: si existe un método apropiado en el objeto manejador, invoca ese método para realizar la operación. (Los nombres y firmas de los métodos son los mismos que los de las funciones Reflect que se tratan en <a href="#6">§14.6</a>.) Y si ese método no existe en el objeto manejador, entonces el Proxy realiza la operación fundamental en el objeto de destino. Esto significa que un Proxy puede obtener su comportamiento del objeto destino o del objeto manejador. Si el objeto handlers está vacío, entonces el proxy es esencialmente una envoltura transparente alrededor del objeto objetivo:</p>
     <pre class="language-js">
-    <code>let t = &lbrace; x: 1, y: 2 };
+    <code class="language-js">let t = &lbrace; x: 1, y: 2 };
     let p = new Proxy(t, &lbrace;});
     p.x         // => 1
-    delete p.y  // => true: delete property y of the proxy
-    t.y         // => undefined: this deletes it in the target, too
-    p.z = 3;    // Defining a new property on the proxy
-    t.z         // => 3: defines the property on the target</code></pre>
+    delete p.y  // => true: eliminar propiedad y del proxy
+    t.y         // => undefined: esto también lo elimina en el objetivo.
+    p.z = 3;    // Definir una nueva propiedad en el proxy
+    t.z         // => 3: define la propiedad en el objetivo</code></pre>
     <p>Este tipo de proxy envoltorio transparente es esencialmente equivalente al objeto tar- get subyacente, lo que significa que realmente no hay ninguna razón para utilizarlo en lugar del objeto envuelto. Las envolturas transparentes pueden ser útiles, sin embargo, cuando se crean como "proxies revocables". En lugar de crear un Proxy con el constructor <codeinline>Proxy()</codeinline>, puede utilizar la función de fábrica <codeinline>Proxy.revocable()</codeinline>. Esta función devuelve un objeto que incluye un objeto Proxy y también una función <codeinline>revoke()</codeinline>. Una vez que se llama a la función <codeinline>revoke()</codeinline>, el proxy deja de funcionar inmediatamente:</p>
     <pre class="language-js">
-    <code>function accessTheDatabase() &lbrace; /* implementation omitted */ return 42; }
+    <code class="language-js">function accessTheDatabase() &lbrace; /* implementation omitted */ return 42; }
     let &lbrace;proxy, revoke} = Proxy.revocable(accessTheDatabase, &lbrace;});
 
-    proxy()   // => 42: The proxy gives access to the underlying target function
-    revoke(); // But that access can be turned off whenever we want
-    proxy();  // !TypeError: we can no longer call this function</code></pre>
+    proxy()   // => 42: El proxy da acceso a la función de destino subyacente
+    revoke(); // Pero ese acceso se puede desactivar cuando queramos.
+    proxy();  // !TypeError: ya no podemos llamar a esta función</code></pre>
     <p>Tenga en cuenta que además de demostrar los proxies revocables, el código anterior también demuestra que los proxies pueden trabajar con funciones de destino, así como con objetos de destino. Pero el punto principal aquí es que los proxies revocables son un bloque de construcción para un tipo de aislamiento de código, y podrías usarlos cuando trates con librerías de terceros no confiables, por ejemplo. Si tienes que pasar una función a una biblioteca que no controlas, puedes pasar un proxy revocable en su lugar y luego revocar el proxy cuando hayas terminado con la biblioteca. Esto evita que la biblioteca guarde una referencia a tu función y la llame en momentos inesperados. Este tipo de programación defensiva no es típica en los programas JavaScript, pero la clase Proxy al menos lo hace posible.</p>
     <p>Si pasamos un objeto handlers no vacío al constructor <codeinline>Proxy()</codeinline>, entonces ya no estamos definiendo un objeto envoltorio transparente y en su lugar estamos implementando un comportamiento personalizado para nuestro proxy. Con el conjunto adecuado de manejadores, el objeto de destino subyacente se vuelve esencialmente irrelevante.</p>
     <p>En el siguiente código, por ejemplo, se muestra cómo podríamos implementar un objeto que parezca tener un número infinito de propiedades de sólo lectura, donde el valor de cada propiedad es el mismo que el nombre de la propiedad:</p>
     <pre class="language-js">
-    <code>// We use a Proxy to create an object that appears to have every
-    // possible property, with the value of each property equal to its name
+    <code class="language-js">// Usamos un Proxy para crear un objeto que parece tener todas las
+    // propiedades posibles, con el valor de cada propiedad igual a su nombre.
     let identity = new Proxy(&lbrace;}, &lbrace;
       // Every property has its own name as its value
       get(o, name, target) &lbrace; return name; },
@@ -702,7 +704,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Los objetos proxy pueden derivar su comportamiento del objeto destino y del objeto manejador, y los ejemplos que hemos visto hasta ahora han utilizado un objeto u otro. Pero normalmente es más útil definir proxies que utilicen ambos objetos.</p>
     <p>El siguiente código, por ejemplo, utiliza Proxy para crear una envoltura de sólo lectura para un objeto de destino. Cuando el código intenta leer valores del objeto, esas lecturas se reenvían al objeto de destino normalmente. Pero si algún código intenta modificar el objeto o sus propiedades, los métodos del objeto manejador lanzan un TypeError. Un proxy como este podría ser útil para escribir pruebas: supongamos que has escrito una función que toma un argumento de objeto y quieres asegurarte de que tu función no hace ningún intento de modificar el argumento de entrada. Si su prueba pasa un objeto envoltorio de sólo lectura, entonces cualquier escritura lanzará excepciones que harán que la prueba falle:</p>
     <pre class="language-js">
-    <code>function readOnlyProxy(o) &lbrace;
+    <code class="language-js">function readOnlyProxy(o) &lbrace;
       function readonly() &lbrace; throw new TypeError("Readonly"); }
       return new Proxy(o, &lbrace;
         set: readonly,
@@ -721,7 +723,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Otra técnica para escribir proxies consiste en definir métodos manejadores que intercepten operaciones en un objeto pero que deleguen las operaciones en el objeto de destino. Las funciones de la API Reflect (<a href="#6">§14.6</a>) tienen exactamente las mismas firmas que los métodos manejadores, por lo que facilitan este tipo de delegación.</p>
     <p>Aquí, por ejemplo, hay un proxy que delega todas las operaciones en el objeto de destino, pero utiliza métodos manejadores para registrar las operaciones:</p>
     <pre class="language-js">
-    <code>/*
+    <code class="language-js">/*
     * Return a Proxy object that wraps o, delegating all operations to
     * that object after logging each operation. objname is a string that
     * will appear in the log messages to identify the object. If o has own
@@ -791,7 +793,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>La función <codeinline>loggingProxy()</codeinline> definida anteriormente crea proxies que registran todas las formas en que se utilizan. Si estás tratando de entender cómo una función no documentada utiliza los objetos que le pasas, usar un proxy de registro puede ayudar.</p>
     <p>Considere los siguientes ejemplos, que dan lugar a algunas ideas genuinas sobre la iteración de matrices:</p>
     <pre class="language-js">
-    <code>// Define an array of data and an object with a function property
+    <code class="language-js">// Define an array of data and an object with a function property
     let data = [10,20];
     let methods = &lbrace; square: x => x*x };
 
@@ -840,12 +842,12 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Sin embargo, la API del manejador Proxy nos permite definir objetos con inconsistencias mayores, y en este caso, la propia clase Proxy nos prevendrá de crear objetos Proxy que sean inconsistentes de mala manera. Al principio de esta sección, describimos los proxies como objetos sin comportamiento propio porque simplemente reenvían todas las operaciones a el objeto manejador y el objeto destino. Pero esto no es del todo cierto: después de reenviar una operación, la clase Proxy realiza algunas comprobaciones de sanidad en el resultado para asegurarse de que no se violan invariantes importantes de JavaScript. Si detecta una violación, el proxy lanzará un TypeError en lugar de permitir que la operación continúe.</p>
     <p>Por ejemplo, si creas un proxy para un objeto no extensible, el proxy lanzará un TypeError si el manejador <codeinline>isExtensible()</codeinline> devuelve alguna vez <codeinline>true</codeinline>:</p>
     <pre class="language-js">
-    <code>let target = Object.preventExtensions(&lbrace;});
+    <code class="language-js">let target = Object.preventExtensions(&lbrace;});
     let proxy = new Proxy(target, &lbrace; isExtensible() &lbrace; return true; }});
     Reflect.isExtensible(proxy); // !TypeError: invariant violation</code></pre>
     <p>En relación con esto, los objetos proxy para objetivos no extensibles no pueden tener un manejador <codeinline>getPrototypeOf()</codeinline> que devuelva otra cosa que no sea el objeto prototipo real del objetivo. Además, si el objeto de destino tiene propiedades no configurables y no escribibles, la clase Proxy lanzará un TypeError si el manejador <codeinline>get()</codeinline> devuelve cualquier cosa que no sea el valor real:</p>
     <pre class="language-js">
-    <code>let target = Object.freeze(&lbrace;x: 1});
+    <code class="language-js">let target = Object.freeze(&lbrace;x: 1});
     let proxy = new Proxy(target, &lbrace; get() &lbrace; return 99; }});
     proxy.x; // !TypeError: value returned by get() doesn't match target</code></pre>
     <p>Proxy impone una serie de invariantes adicionales, casi todas e l l a s relacionadas con objetos de destino no extensibles y propiedades no configurables del objeto de destino .</p>

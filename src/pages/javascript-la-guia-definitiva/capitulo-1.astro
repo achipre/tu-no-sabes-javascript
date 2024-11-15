@@ -77,8 +77,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro"
     <h2>1.3 Un recorrido por JavaScript</h2>
     <p>Esta sección presenta una introducción rápida, mediante ejemplos de código, al lenguaje JavaScript. Después de este capítulo introductorio, nos sumergimos en JavaScript en el nivel más bajo: El <a href="capitulo-2" target="_blank" rel="noopener noreferrer">Capítulo 2</a> explica cosas como los comentarios de JavaScript, el punto y coma y el conjunto de caracteres Unicode. El <a href="capitulo-3" target="_blank" rel="noopener noreferrer">Capítulo 3</a> empieza a ponerse más interesante: explica las variables de JavaScript y los valores que se pueden asignar a esas variables.</p>
     <p>He aquí algunos ejemplos de código para ilustrar los aspectos más destacados de esos dos capítulos:</p>
-    <pre>
-    <code class="language-js">// Todo lo que siga a dobles barras "//" es un comentario.
+    <pre class="language-js">
+    <code  class="language-js">// Todo lo que siga a dobles barras "//" es un comentario.
     // Lee atentamente los comentarios: explican el código JavaScript.
     // Una variable es un nombre simbólico para un valor.
     // Las variables se declaran con la palabra clave let:
@@ -96,8 +96,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro"
     x = null;         // Null es un valor especial que significa "sin valor".
     x = undefined;;   // Undefined es otro valor especial como null.</code></pre>
     <p>Otros dos tipos muy importantes que los programas JavaScript pueden manipular son los objetos y los arrays. Estos son los temas de los capítulos <a href="javascript-la-guia-definitiva/capitulo-6" target="_blank" rel="noopener noreferrer">6</a> y <a href="javascript-la-guia-definitiva/capitulo-7" target="_blank" rel="noopener noreferrer">7</a>, pero son tan importantes que los verás muchas veces antes de llegar a esos capítulos:</p>
-    <pre>
-    <code class="language-js">// El tipo de datos más importante de JavaScript es el objeto.
+    <pre class="language-js">
+    <code  class="language-js">// El tipo de datos más importante de JavaScript es el objeto.
     // Un objeto es una colección de pares nombre/valor, o un mapa de cadena a valor.
     let book = &#123            // Los objetos se encierran entre llaves.
       topic: "JavaScript",  // La propiedad "topic" tiene valor "JavaScript".
@@ -141,8 +141,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro"
     </article>
     <p>La sintaxis ilustrada aquí para listar elementos de array dentro de llaves cuadradas o mapear nombres de propiedades de objetos a valores de propiedades dentro de llaves rizadas se conoce como una <em>expresión inicializadora</em>, y es sólo uno de los temas del <a href="capitulo-4" target="_blank" rel="noopener noreferrer">Capítulo 4</a>. Una <em>expresión</em> es una frase de JavaScript que puede <em>evaluarse</em> para producir un valor. Por ejemplo, el uso de . y <codeinline>[]</codeinline> para referirse al valor de una propiedad de objeto o elemento de matriz es una expresión.</p>
     <p>Una de las formas más comunes de formar expresiones en JavaScript es utilizar operadores:</p>
-    <pre>
-    <code class="language-js">// Los operadores actúan sobre valores (los operandos) para producir un nuevo valor. 
+    <pre class="language-js">
+    <code  class="language-js">// Los operadores actúan sobre valores (los operandos) para producir un nuevo valor. 
     // Los operadores aritméticos son de los más sencillos:
     3 + 2                     // => 5: suma
     3 - 2                     // => 1: resta
@@ -179,8 +179,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro"
     
     <p>Si las expresiones de JavaScript son como frases, las <em>sentencias</em> de JavaScript son como sentencias completas. Las sentencias son el tema del <a href="capitulo-5" target="_blank" rel="noopener noreferrer">Capítulo 5</a>. A grandes rasgos, una expresión es algo que calcula un valor pero no hace nada: no altera el estado del programa de ninguna manera. Las sentencias, por otro lado, no tienen un valor, pero alteran el estado. Ya has visto declaraciones de variables y sentencias de asignación. La otra gran categoría de sentencias son las <em>estructuras de control</em>, como las condicionales y los bucles. Verás ejemplos más adelante, después de que cubramos las funciones.</p>
     <p>Una <em>función</em> es un bloque de código JavaScript con nombre y parámetros que se define una vez y se puede invocar una y otra vez. Las funciones no se tratan formalmente hasta el <a href="capitulo-8" target="_blank" rel="noopener noreferrer">Capítulo 8</a>, pero al igual que los objetos y las matrices, las verás muchas veces antes de llegar a ese capítulo. He aquí algunos ejemplos sencillos:</p>
-    <pre>
-    <code class="language-js">// Las funciones son bloques parametrizados de código JavaScript que podemos invocar
+    <pre class="language-js">
+    <code  class="language-js">// Las funciones son bloques parametrizados de código JavaScript que podemos invocar
     function plus1(x) &#123          // Define una función llamada "plus1" con el parámetro "x"
     return x + 1;                // Devuelve un valor uno mayor que el valor pasado
     }                            // Las funciones se encierran entre llaves
@@ -193,14 +193,14 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro"
 
     square(plus1(y))             // => 16: invocar dos funciones en una expresión</code></pre>
     <p>En ES6 y posteriores, existe una sintaxis abreviada para definir funciones. Esta sintaxis concisa utiliza <codeinline>=></codeinline>  para separar la lista de argumentos del cuerpo de la función, por lo que las funciones definidas de este modo se conocen como <em>funciones flecha</em>. Las funciones en flecha se utilizan normalmente cuando se desea pasar una función sin nombre como argumento a otra función. El código anterior tiene este aspecto cuando se reescribe para utilizar funciones de flecha:</p>
-    <pre>
-    <code class="language-js">const plus1 = x => x + 1;   // La entrada x se asigna a la salida x + 1
+    <pre class="language-js">
+    <code  class="language-js">const plus1 = x => x + 1;   // La entrada x se asigna a la salida x + 1
     const square = x => x * x;  // // La entrada x corresponde a la salida x * x
     plus1(y)                    // => 4: la invocación de la función es la misma
     square(plus1(y))            // => 16</code></pre>
     <p>Cuando utilizamos funciones con objetos, obtenemos <em>métodos</em>:</p>
-    <pre>
-    <code class="language-js">// Cuando se asignan funciones a las propiedades de un objeto, llamamos a
+    <pre class="language-js">
+    <code  class="language-js">// Cuando se asignan funciones a las propiedades de un objeto, llamamos a
     // los "métodos". Todos los objetos JavaScript (incluidos los arrays) tienen métodos:
     let a = [];                 // Crear un array vacío
     a.push(1,2,3);              // El método push() añade elementos a un array
@@ -218,8 +218,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro"
     };
     points.dist()               // => Math.sqrt(2): distancia entre nuestros 2 puntos</code></pre>
     <p>Ahora, como prometí, aquí hay algunas funciones cuyos cuerpos demuestran declaraciones comunes de la estructura de control de Java-Script:</p>
-    <pre>
-    <code class="language-js">// JavaScript incluyen condicionales y bucles utilizando la sintaxis 
+    <pre class="language-js">
+    <code  class="language-js">// JavaScript incluyen condicionales y bucles utilizando la sintaxis 
     // de C, C++, Java y otros lenguajes.
     function abs(x) &#123       // Una función para calcular el valor absoluto.
       if (x >= 0) &#123         // La sentencia if...
@@ -258,8 +258,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro"
     }
     factorial2(5)           // => 120: 1*2*3*4*5</code></pre>
     <p>JavaScript soporta un estilo de programación orientado a objetos, pero es significativamente diferente de los lenguajes de programación orientados a objetos "clásicos". El <a href="capitulo-9" target="_blank" rel="noopener noreferrer">Capítulo 9</a> cubre en detalle la programación orientada a objetos en JavaScript, con muchos ejemplos. Aquí hay un ejemplo muy simple que demuestra cómo definir una clase JavaScript para representar puntos geométricos 2D. Los objetos que son instancias de esta clase tienen un único método, llamado <codeinline>distance()</codeinline>, que calcula la distancia del punto desde el origen:</p>
-    <pre>
-    <code class="language-js">class Point &#123             // Por convención, los nombres de las clases se escriben en mayúsculas.
+    <pre class="language-js">
+    <code  class="language-js">class Point &#123             // Por convención, los nombres de las clases se escriben en mayúsculas.
       constructor(x, y) &#123     // Función constructora para inicializar nuevas instancias.
         this.x = x;           // Esta palabra clave es el nuevo objeto que se inicializa.
         this.y = y;           // Almacena los argumentos de la función como propiedades del objeto.
@@ -314,8 +314,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro"
   <section>
     <h2>1.4 Ejemplo: Histogramas de frecuencia de caracteres</h2>
     <p>Este capítulo concluye con un programa JavaScript corto pero no trivial. El <a href="#ejemplo1-1">Ejemplo 1-1</a> es un programa Node que lee texto de la entrada estándar, calcula un histograma de frecuencia de caracteres a partir de ese texto, y luego imprime el histograma. Usted podría invocar el programa así para analizar la frecuencia de caracteres de su propio código fuente:</p>
-    <pre>
-    <code class="language-js">$ node charfreq.js &lt; charfreq.js
+    <pre class="language-js">
+    <code  class="language-js">$ node charfreq.js &lt; charfreq.js
     T: ########### 11.22%
     E: ########## 10.15%
     R: ####### 6.68%
@@ -331,8 +331,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro"
     /: ### 2.88%</code></pre>
     <p>Este ejemplo utiliza una serie de funciones avanzadas de JavaScript y pretende demostrar cómo pueden ser los programas JavaScript del mundo real. No debe esperar entender todo el código todavía, pero tenga la seguridad de que todo se explicará en los capítulos siguientes.</p>
     <p id="ejemplo1-1" class="italic">Ejemplo 1-1. Cálculo de histogramas de frecuencia de caracteres con JavaScript</p>
-    <pre>
-    <code class="language-js">/**
+    <pre class="language-js">
+    <code  class="language-js">/**
       * Este programa Node lee texto de la entrada estándar, calcula la frecuencia
       * de cada letra de ese texto, y muestra un histograma de las letras más
       * frecuente. Requiere Nodo 12 o superior para funcionar.

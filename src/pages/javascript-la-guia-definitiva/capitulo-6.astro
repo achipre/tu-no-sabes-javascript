@@ -63,7 +63,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       permite la cadena vacía). Un valor de propiedad es cualquier expresión de JavaScript;
       el valor de la expresión (puede ser un valor primitivo o un valor de objeto) se
       convierte en el valor de la propiedad. He aquí algunos ejemplos:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let empty = &lbrace;}; // Un objeto sin propiedades
     let point = &lbrace; x: 0, y: 0 }; // Dos propiedades numéricas
     let p2 = &lbrace; x: point.x, y: point.y+1 }; // Valores mas complejos
@@ -97,7 +97,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       seguida de una invocación a una función. Una función utilizada de este modo se
       denomina <em>constructor</em> y sirve para inicializar un objeto recién creado. JavaScript
       incluye constructores para sus tipos incorporados. Por ejemplo:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let o = new Object(); // Crea un objeto vacio: igual a &lbrace;}.
     let a = new Array(); // Crea un array vacío: igual a [].
     let d = new Date(); // Crea un objeto Date representando la fecha actual.
@@ -136,15 +136,15 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="2-4">
     <h2>6.2.4 Object.create()</h2>
     <p><codeinline>Object.create()</codeinline> crea un nuevo objeto, utilizando su primer argumento como el prototipo de dicho objeto:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let o1 = Object.create(&lbrace;x: 1, y: 2}); // o1 hereda las propiedades x e y.
     o1.x + o1.y                           // => 3</code></pre>
     <p>Puedes pasar <codeinline>null</codeinline> para crear un nuevo objeto que no tenga prototipo, pero si haces
       esto, el objeto recién creado no heredará nada, ni siquiera métodos básicos como <codeinline>toString()</codeinline> (lo que significa que tampoco funcionará con el operador <codeinline>+</codeinline>):</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let o2 = Object.create(null); // o2 no hereda props ni metodos.</code></pre>
     <p>Si desea crear un objeto vacío ordinario (como el objeto devuelto por <codeinline>&lbrace;}</codeinline> o <codeinline>new Object()</codeinline>), pase <codeinline>Object.prototype</codeinline>:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let o3 = Object.create(Object.prototype); // o3 es como &lbrace;} o new Object().</code></pre>
     <p>La capacidad de crear un nuevo objeto con un prototipo arbitrario es muy poderosa,
       y utilizaremos <codeinline>Object.create()</codeinline> en varios lugares a lo largo de este capítulo.
@@ -157,7 +157,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       puede pasar un objeto que herede de él. Si la función lee propiedades de ese objeto,
       verá los valores heredados. Sin embargo, si establece propiedades, esas escrituras no
       afectarán al objeto original.</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let o = &lbrace; x: "no cambies este valor" };
     library.function(Object.create(o)); // Protéjase contra modificaciones accidentales</code></pre>
     <p>Para entender por qué funciona esto, necesitas saber cómo se consultan y establecen
@@ -170,14 +170,14 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       simple que nombre la propiedad. Si se utilizan corchetes, el valor dentro de los
       corchetes debe ser una expresión que se evalúe como una cadena que contenga el
       nombre de la propiedad deseada:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let author = book.author; // Obtener la propiedad "author" del libro.
     let name = author.surname; // Obtener la propiedad "surname" del autor.
     let title = book["main title"]; // Obtener la propiedad "main title" del libro.</code></pre>
     <p>Para crear o establecer una propiedad, utilice un punto o corchetes como lo haría
       para consultar la propiedad, pero póngalos en el lado izquierdo de una expresión de
       asignación:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">book.edition = 7; // Crea una propiedad llamada "edition" en el libro.
     book["main title"] = "ECMAScript"; // Cambia el valor de la propiedad "main title".</code></pre>
     <p>Al utilizar la notación de corchetes, hemos dicho que la expresión dentro de los
@@ -188,7 +188,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="3-1">
     <h2>6.3.1 Objetos como matrices asociativas</h2>
     <p>Como se ha explicado en la sección anterior, las dos expresiones JavaScript siguientes tienen el mismo valor:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">object.property
     object["property"]</code></pre>
     <p>La primera sintaxis, que utiliza el punto y un identificador, es similar a la utilizada
@@ -210,7 +210,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       tipos de datos de JavaScript, por lo que pueden manipularse y crearse mientras se
       ejecuta un programa. Así, por ejemplo, puede escribir el siguiente código en
       JavaScript:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let addr = "";
     for(let i = 0; i &lt; 4; i++) &lbrace;
       addr += customer[`address$&lbrace;i}`] + "\n";
@@ -226,7 +226,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       acción que posee, así como el número de acciones de cada acción. Puede utilizar un objeto llamado <codeinline>portfolio</codeinline> para almacenar esta información. El objeto tiene una propiedad por cada acción. El nombre de la propiedad es el nombre de la acción, y el valor de la propiedad es el número de acciones de esa acción. Así, por ejemplo, si
       un usuario tiene 50 acciones de IBM, la propiedad <codeinline>portfolio.ibm</codeinline> tiene el valor <codeinline>50</codeinline>.</p>
     <p>Parte de este programa podría ser una función para añadir una nueva acción a la cartera:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">function addstock(portfolio, stockname, shares) &lbrace;
       portfolio[stockname] = shares;
     }</code></pre>
@@ -238,7 +238,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       identificador (que es estático y debe ser codificado en el programa) para nombrar la
       propiedad.</p>
     <p>En el <a href="capitulo-5">Capítulo 5</a>, introdujimos el bucle <codeinline>for/in</codeinline> (y volveremos a verlo en breve, en <a href="#6-6">§6.6</a>). El poder de esta sentencia JavaScript se hace evidente cuando se considera su uso con matrices asociativas. Así es como se utilizaría para calcular el valor total de portfolio:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">function computeValue(portfolio) &lbrace;
       let total = 0.0;
       for(let stock in portfolio) &lbrace;     // Por cada stock en el portfolio
@@ -263,7 +263,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       instancia de una clase con new, se está creando un objeto que hereda propiedades de
       un objeto prototipo.</p>
     <p>Supongamos que se consulta la propiedad <codeinline>x</codeinline> en el objeto <codeinline>o</codeinline>. Si <codeinline>o</codeinline> no tiene una propiedad propia con ese nombre, Se consulta el objeto prototipo de <codeinline>o</codeinline><sup>1</sup> para la propiedad <codeinline>x</codeinline>. Si el objeto prototipo no tiene una propiedad propia con ese nombre, pero tiene un prototipo, l a consulta se realiza en el prototipo del prototipo. Esto continúa hasta que se encuentra la propiedad <codeinline>x</codeinline> o hasta que se busca un objeto con un prototipo <codeinline>null</codeinline>. Como puede ver, el atributo <codeinline>prototype</codeinline> de un objeto crea una cadena o lista enlazada de la que se heredan propiedades:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let o = &lbrace;};               // o hereda los metodos de Object.prototype
     o.x = 1;                  // y ahora tiene una propiedad propia x.
     let p = Object.create(o); // p hereda las propiedades de o, y Object.prototype
@@ -275,7 +275,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Supongamos ahora que asigna a la propiedad <codeinline>x</codeinline> del objeto <codeinline>o</codeinline>. Si <codeinline>o</codeinline> ya tiene una propiedad propia (no heredada) llamada <codeinline>x</codeinline>, entonces la asignación simplemente cambia el valor de esta propiedad existente. De lo contrario, la asignación crea una
       nueva propiedad llamada <codeinline>x</codeinline> en el objeto <codeinline>o</codeinline>. Si o heredó previamente la propiedad <codeinline>x</codeinline>, esa propiedad heredada está ahora oculta por la propiedad propia recién creada con el mismo nombre.</p>
     <p>La asignación de propiedades examina la cadena de prototipos sólo para determinar si la asignación está permitida. Si o hereda una propiedad de sólo lectura llamada <codeinline>x</codeinline>, por ejemplo, entonces la asignación no está permitida . (Los detalles sobre cuándo se puede asignar una propiedad se encuentran en <a href="#3-3">§6.3.3</a>.) Sin embargo, si la asignación está permitida, siempre crea o establece una propiedad en el objeto original y nunca modifica objetos en la cadena de prototipos. El hecho de que la herencia se produzca cuando se consultan propiedades pero no cuando se establecen es una característica clave de JavaScript porque nos permite anular selectivamente las propiedades heredadas:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let unitcircle = &lbrace; r: 1 };          // Un objeto para heredar de
     let c = Object.create(unitcircle);  // c hereda la propiedad r
     c.x = 1; c.y = 1;                   // c define dos propiedades propias
@@ -290,13 +290,13 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       una propiedad.</p>
     <p>No es un error consultar una propiedad que no existe. Si la propiedad <codeinline>x</codeinline> no se
       encuentra como propiedad propia o heredada de <codeinline>o</codeinline>, la expresión de acceso a la propiedad <codeinline>o.x</codeinline> se evalúa como <codeinline>undefined</codeinline>. Recordemos que nuestro objeto libro tiene una propiedad "subtítulo", pero no una propiedad "subtítulo":</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">book.subtitle // => undefined: propiedad no existe</code></pre>
     <p>Sin embargo, es un error intentar consultar una propiedad de un objeto que no existe. Los valores <codeinline>null</codeinline> y <codeinline>undefined</codeinline> no tienen propiedades, y es un error consultar propiedades de estos valores. Continuando con el ejemplo anterior:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let len = book.subtitle.length; // !TypeError: indefinido no tiene propiedades</code></pre>
     <p>Las expresiones de acceso a propiedades fallarán si el lado izquierdo de <codeinline>.</codeinline> es <codeinline>null</codeinline> o <codeinline>undefined</codeinline>. Por lo tanto, al escribir una expresión como <codeinline>book.author.surname</codeinline>, debe tener cuidado si no está seguro de que <codeinline>book</codeinline> y <codeinline>book.author</codeinline> están realmente definidos. He aquí dos formas de evitar este tipo de problemas:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Una técnica verbosa y explicito
     let surname = undefined;
     if (book) &lbrace;
@@ -307,7 +307,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     // Una alternativa concisa e idiomatica para obtener surname o null o undefined
     surname = book && book.author && book.author.surname;</code></pre>
     <p>Para entender por qué esta expresión idiomática funciona para prevenir excepciones TypeError, puede que quiera revisar el comportamiento de cortocircuito del operador <codeinline>&amp;&amp;</codeinline> en <a href="capitulo-4#4-1">§4.10.1</a>.</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let surname = book?.author?.surname;</code></pre>
     <p>Como se describe en <a href="capitulo-4#4-1">§4.4.1</a>, ES2020 admite el acceso condicional a propiedades con <codeinline>?.</codeinline>, lo que nos permite reescribir la expresión de asignación anterior como:</p>
     <p>Intentar establecer una propiedad en <codeinline>null</codeinline> o <codeinline>undefined</codeinline> también causa un TypeError. Los intentos de establecer propiedades sobre otros valores no siempre tienen éxito: algunas propiedades son de sólo lectura y no pueden establecerse, y algunos objetos no permiten la adición de nuevas propiedades. En modo estricto (<a href="capitulo-5#6-3">§5.6.3</a>), se lanza un TypeError cada vez que falla un intento de establecer una propiedad. Fuera del modo estricto, estos fallos suelen ser silenciosos.</p>
@@ -336,19 +336,19 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="4" class="py-4 xs:py-5 sm:py-6">
     <h2>6.4 Borrar propiedades</h2>
     <p>El operador <codeinline>delete</codeinline> (<a href="capitulo-4#13-4">§4.13.4</a>) elimina una propiedad de un objeto. Su único operando debe ser una expresión de acceso a una propiedad. Sorprendentemente, <codeinline>delete</codeinline> no opera sobre el valor de la propiedad, sino sobre la propiedad misma:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">delete book.author;         // El objeto book ahora no tiene una propiedad "author".
     delete book["main title"];  // Ahora tampoco tiene una propiedad "main title".</code></pre>
     <p>El operador <codeinline>delete</codeinline> sólo borra las propiedades propias, no las heredadas. (Para borrar una propiedad heredada, debe borrarla del objeto prototipo en el que está definida. Hacer esto afecta a todos los objetos que hereden de ese prototipo).</p>
     <p>Una expresión <codeinline>delete</codeinline> se evalúa como <codeinline>true</codeinline> si el borrado se ha realizado correctamente o si no ha tenido ningún efecto (como borrar una propiedad inexistente). <codeinline>delete</codeinline> también se evalúa como <codeinline>true</codeinline> cuando se utiliza (sin sentido) con una expresión que no es una expresión de acceso a una propiedad:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let o = &lbrace;x: 1};   // o tiene propiedad propia x y hereda propiedad toString
     delete o.x        // => true: borra la propiedad x
     delete o.x        // => true: no hace nada (x no existe) pero true de todas formas
     delete o.toString // => true: no hace nada (toString no es una propiedad propia)
     delete 1          // => true: no hace nada pero true de todas formas.</code></pre>
     <p><codeinline>delete</codeinline> no elimina las propiedades cuyo atributo <em>configurable</em> sea <codeinline>false</codeinline>. Ciertas propiedades de los objetos incorporados no son configurables, al igual que las propiedades del objeto global creado por la declaración de variables y la declaración de funciones. En modo estricto, el intento de eliminar una propiedad no configurable provoca un TypeError. En modo no estricto, <codeinline>delete</codeinline> simplemente se evalúa como <codeinline>false</codeinline> en este caso:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// En modo estricto, todas estas eliminaciones lanzan TypeError en lugar de devolver false
     delete Object.prototype // => false: la propiedad no es configurable
     var x = 1;              // Declara una variable global
@@ -356,11 +356,11 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     function f() &lbrace;}         // Declara una función global
     delete globalThis.f     // => false: tampoco se puede borrar esta propiedad</code></pre>
     <p>Al eliminar propiedades configurables del objeto global en modo no estricto, puede omitir la referencia al objeto global y simplemente seguir el operador <codeinline>delete</codeinline> con el nombre de la propiedad:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">globalThis.x = 1; // Crea una propiedad global configurable (no let o var)
     delete x          // => true: esta propiedad puede ser borrada</code></pre>
     <p>En modo estricto, sin embargo, <codeinline>delete</codeinline> genera un SyntaxError si su operando es un identificador no cualificado como <codeinline>x</codeinline>, y tienes que ser explícito sobre el acceso a la propiedad:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">delete x; // SyntaxError en modo estricto
     delete globalThis.x; // Esto funciona</code></pre>
   </section>
@@ -368,31 +368,31 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>6.5 Pruebas de propiedades</h2>
     <p>Los objetos JavaScript pueden considerarse como conjuntos de propiedades, y a menudo es útil poder comprobar la pertenencia al conjunto, es decir, comprobar si un objeto tiene una propiedad con un nombre determinado. Esto se puede hacer con el operador in, con los métodos <codeinline>hasOwnProperty()</codeinline> y <codeinline>propertyIsEnumerable()</codeinline>, o simplemente consultando la propiedad. Todos los ejemplos que se muestran aquí utilizan cadenas como nombres de propiedades, pero también funcionan con Symbols ( <a href="#10.3">§6.10.3</a>).</p>
     <p>El operador <codeinline>in</codeinline> espera un nombre de propiedad a la izquierda y un objeto a la derecha. Devuelve <codeinline>true</codeinline> si el objeto tiene una propiedad propia o heredada con ese nombre:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let o = &lbrace; x: 1 };
     "x" in o        // => true: o tiene una propiedad propia "x"
     "y" in o        // => false: o no tiene una propiedad "y"
     "toString" in o // => true: o hereda una propiedad toString</code></pre>
     <p>El método <codeinline>hasOwnProperty()</codeinline> de un objeto comprueba si ese objeto tiene una propiedad propia con el nombre dado. Devuelve <codeinline>false</codeinline> para las propiedades heredadas:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let o = &lbrace; x: 1 };
     o.hasOwnProperty("x")         // => true: o tiene una propiedad propia "x"
     o.hasOwnProperty("y")         // => false: o no tiene una propiedad "y"
     o.hasOwnProperty("toString")  // => false: toString es una propiedad heredada</code></pre>
     <p><codeinline>propertyIsEnumerable()</codeinline> refina la prueba <codeinline>hasOwnProperty()</codeinline>. Devuelve <codeinline>true</codeinline> sólo si la propiedad nombrada es una propiedad propia y su atributo <em>enumerable</em> es <codeinline>true</codeinline>. Algunas propiedades incorporadas no son enumerables. Las propiedades creadas por código Java Script normal son enumerables a menos que haya utilizado una de las técnicas mostradas en <a href="capitulo-14#1">§14.1</a> para hacerlas no enumerables.</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let o = &lbrace; x: 1 };
     o.propertyIsEnumerable("x")                       // => true: o tiene una propiedad propia enumerable "x"
     o.propertyIsEnumerable("toString")                // => false: no es una propiedad propia
     Object.prototype.propertyIsEnumerable("toString") // => false: no enumerable</code></pre>
     <p>En lugar de utilizar el operador <codeinline>in</codeinline>, a menudo basta con consultar la propiedad y utilizar <codeinline>!==</codeinline> para asegurarse de que no está indefinida:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let o = &lbrace; x: 1 };
     o.x !== undefined // => true: o tiene una propiedad propia "x"
     o.y !== undefined // => false: o no tiene una propiedad "y"
     o.toString !== undefined // => true: o hereda una propiedad "toString"</code></pre>
     <p>Hay una cosa que el operador <codeinline>in</codeinline> puede hacer que la simple técnica de acceso a propiedades mostrada aquí no puede hacer. <codeinline>in</codeinline> puede distinguir entre propiedades que no existen y propiedades que existen pero han sido establecidas a <codeinline>undefined</codeinline>. Considere este código:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let o = &lbrace; x: undefined }; // La propiedad se establece explicitamente a undefined
     o.x !== undefined         // => false: la propiedad existe pero no esta definida
     o.y !== undefined         // => false: la propiedad ni siquiera existe
@@ -405,14 +405,14 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>6.6 Enumeración de propiedades</h2>
     <p>En lugar de comprobar la existencia de propiedades individuales, a veces queremos iterar u obtener una lista de todas las propiedades de un objeto. Hay varias formas de hacerlo.</p>
     <p>El bucle <codeinline>for/in</codeinline> se trató en <a href="capitulo-5#4-5">§5.4.5</a>. Ejecuta el cuerpo del bucle una vez por cada propiedad enumerable (propia o heredada) del objeto especificado, asignando el nombre de la propiedad a la variable del bucle. Los métodos incorporados que heredan los objetos no son enumerables, pero las propiedades que tu código añade a los objetos son enumerables por defecto. Por ejemplo:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let o = &lbrace;x: 1, y: 2, z: 3}; // Tres propiedades propias enumerables
     o.propertyIsEnumerable("toString") // => false: no enumerable
     for(let p in o) &lbrace; // Recorre las propiedades
     console.log(p); // Imprime x, y, y z, pero no toString
     }</code></pre>
     <p>Para evitar enumerar propiedades heredadas con <codeinline>for/in</codeinline>, puede añadir una comprobación explícita dentro del cuerpo del bucle:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">for(let p in o) &lbrace;
       if (!o.hasOwnProperty(p)) continue; // Saltar propiedades heredadas
     }
@@ -476,7 +476,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="7" class="py-4 xs:py-5 sm:py-6">
     <h2>6.7 Ampliación de objetos</h2>
     <p>Una operación común en los programas JavaScript es necesitar copiar las propiedades de un objeto a otro objeto. Es fácil hacerlo con código como este:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let target = &lbrace;x: 1}, source = &lbrace;y: 2, z: 3};
     for(let key of Object.keys(source)) &lbrace;
       target[key] = source[key];
@@ -486,16 +486,16 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p><codeinline>Object.assign()</codeinline> espera dos o más objetos como argumentos. Modifica y devuelve el primer argumento, que es el objeto de destino, pero no altera el segundo ni ningún argumento posterior, que son los objetos de origen. Para cada objeto de origen, copia las propiedades propias enumerables de ese objeto (incluidas aquellas cuyos nombres son Símbolos) en el objeto de destino. Procesa los objetos fuente en orden de lista de argumentos, de forma que las propiedades del primer objeto fuente anulen las propiedades con el mismo nombre del objeto destino y las propiedades del segundo objeto fuente (si existe) anulen las propiedades con el mismo nombre del primer objeto fuente.</p>
     <p><codeinline>Object.assign()</codeinline> copia propiedades con operaciones get y set de propiedades ordinarias, por lo que si un objeto origen tiene un método getter o el objeto destino tiene un método setter, serán invocados durante la copia, pero no serán copiados ellos mismos.</p>
     <p>Una razón para asignar propiedades de un objeto a otro es cuando tienes un objeto que define valores por defecto para muchas propiedades y quieres copiar esas propiedades por defecto en otro objeto si una propiedad con ese nombre no existe ya en ese objeto. Utilizar <codeinline>Object.assign()</codeinline> ingenuamente no hará lo que quieres:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">Object.assign(o, defaults); // sobreescribe todos los objetos en o con los default</code></pre>
     <p>En su lugar, lo que puedes hacer es crear un nuevo objeto, copiar los valores predeterminados en él, y luego anular los valores predeterminados con las propiedades en <codeinline>o</codeinline>:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">o = Object.assign(&lbrace;}, defaults, o);</code></pre>
     <p>Veremos en <a href="capitulo-6#10-4">§6.10.4</a> que también se puede expresar esta operación de copia y anulación de objetos utilizando el operador de propagación <codeinline>...</codeinline> de la siguiente manera:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">o = &lbrace;...defaults, ...o};</code></pre>
     <p>También podríamos evitar la sobrecarga de la creación y copia extra de objetos escribiendo una versión de <codeinline>Object.assign()</codeinline> que copie las propiedades sólo si faltan:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Como Object.assign() pero no sobreescribe propiedades existentes
     // (y también no maneja propiedades de Símbolos)
     function merge(target, ...sources) &lbrace;
@@ -515,7 +515,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="8">
     <h2>6.8 Serialización de objetos</h2>
     <p>La <em>serialización de objetos</em> es el proceso de convertir el estado de un objeto en una cadena a partir de la cual puede restaurarse posteriormente. Las funciones <codeinline>JSON.stringify()</codeinline> y <codeinline>JSON.parse()</codeinline> serializan y restauran objetos JavaScript. Estas funciones utilizan el formato de intercambio de datos JSON. JSON significa "JavaScript Object Notation", y su sintaxis es muy similar a la de los literales de objetos y matrices de JavaScript:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let o = &lbrace;x: 1, y: &lbrace;z: [false, null, ""]}}; // Define una prueba de objeto
     let s = JSON.stringify(o); // s == '&lbrace;"x":1,"y":&lbrace;"z":[false,null,""]}}'
     let p = JSON.parse(s); // p == &lbrace;x: 1, y: &lbrace;z: [false, null, ""]}}</code></pre>
@@ -529,10 +529,10 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>6.9.1 El método toString()</h2>
     <p>El método <codeinline>toString()</codeinline> no toma argumentos; devuelve una cadena que representa de algún modo el valor del objeto sobre el que se invoca. JavaScript invoca este método de un objeto siempre que necesita convertir el objeto en una cadena. Esto ocurre, por ejemplo, cuando se utiliza el operador <codeinline>+</codeinline> para concatenar una cadena con un objeto o cuando se pasa un objeto a un método que espera una cadena.</p>
     <p>El método por defecto <codeinline>toString()</codeinline> no es muy informativo (aunque es útil para determinar la clase de un objeto, como veremos en <a href="capitulo-14#4-3">§14.4.3</a> ). Por ejemplo, la siguiente línea de código simplemente evalúa a la cadena "[objeto Objeto]":</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let s = &lbrace; x: 1, y: 1 }.toString(); // s == "[object Object]"</code></pre>
     <p>Dado que este método por defecto no muestra mucha información útil, muchas clases definen sus propias versiones de <codeinline>toString()</codeinline>. Por ejemplo, cuando una matriz se convierte en una cadena, se obtiene una lista de los elementos de la matriz, cada uno convertido en una cadena, y cuando una función se convierte en una cadena, se obtiene el código fuente de la función. Puede definir su propio método <codeinline>toString()</codeinline> de la siguiente manera:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let point = &lbrace;
       x: 1,
       y: 2,
@@ -543,7 +543,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="9-2" class="py-4 xs:py-5 sm:py-6">
     <h2>6.9.2 El método toLocaleString()</h2>
     <p>Además del método básico <codeinline>toString()</codeinline>, todos los objetos tienen un método <codeinline>toLocaleString()</codeinline>. El propósito de este método es devolver una representación de cadena localizada del objeto. El método por defecto <codeinline>toLocaleString()</codeinline> definido por Object no realiza ninguna localización por sí mismo: simplemente llama a <codeinline>toString()</codeinline> y devuelve ese valor. Las clases Date y Number definen versiones personalizadas de <codeinline>toLocaleString()</codeinline> que intentan formatear números, fechas y horas de acuerdo con las convenciones locales. Array define un método <codeinline>toLocaleString()</codeinline> que funciona como <codeinline>toString()</codeinline>, salvo que formatea los elementos del array llamando a sus métodos <codeinline>toLocaleString()</codeinline> en lugar de a sus métodos <codeinline>toString()</codeinline>. Se podría hacer lo mismo con un objeto punto de esta forma:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let point = &lbrace;
       x: 1000,
       y: 2000,
@@ -559,7 +559,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="9-3">
     <h2>6.9.3 El método valueOf()</h2>
     <p>El método <codeinline>valueOf()</codeinline> es muy parecido al método <codeinline>toString()</codeinline>, pero se ejecuta cuando JavaScript necesita convertir un objeto en un tipo primitivo distinto de una cadena, normalmente un número. JavaScript llama a este método automáticamente si se utiliza un objeto en un contexto en el que se requiere un valor primitivo. El método <codeinline>valueOf()</codeinline> por defecto no hace nada interesante, pero algunas de las clases incorporadas definen su propio método <codeinline>valueOf()</codeinline>. La clase Date define <codeinline>valueOf()</codeinline> para convertir fechas en números, y esto permite comparar cronológicamente los objetos Date con <codeinline>&lt;</codeinline> y <codeinline>&gt;</codeinline>. Se puede hacer algo parecido con un objeto punto, definiendo un método <codeinline>valueOf()</codeinline> que devuelva la distancia desde el origen al punto:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let point = &lbrace;
       x: 3,
       y: 4,
@@ -573,7 +573,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="9-4" class="py-4 xs:py-5 sm:py-6">
     <h2>6.9.4 El método toJSON()</h2>
     <p>En realidad, <codeinline>Object.prototype</codeinline> no define un método <codeinline>toJSON()</codeinline>, pero el método <codeinline>JSON.stringify()</codeinline> (véase <a href="#8">§6.8</a>) busca un método <codeinline>toJSON()</codeinline> en cualquier objeto que se le pida serializar. Si este método existe en el objeto a serializar, se invoca, y se serializa el valor de retorno, en lugar del objeto original. La clase Date (<a href="capitulo-11#4">§11.4</a>) define un método <codeinline>toJSON()</codeinline> que devuelve una representación de cadena serializable de la fecha. Podríamos hacer lo mismo para nuestro objeto Point de esta forma:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let point = &lbrace;
       x: 1,
       y: 2,
@@ -589,14 +589,14 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="10-1" class="py-4 xs:py-5 sm:py-6">
     <h2>6.10.1 Propiedades abreviadas</h2>
     <p>Supongamos que tienes valores almacenados en las variables <codeinline>x</codeinline> e <codeinline>y</codeinline> y quieres crear un objeto con propiedades llamadas <codeinline>x</codeinline> e <codeinline>y</codeinline> que contengan esos valores. Con la sintaxis literal de objeto básica, acabaría repitiendo cada identificador dos veces:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let x = 1, y = 2;
     let o = &lbrace;
       x: x,
       y: y
     };</code></pre>
     <p>En ES6 y posteriores, puedes eliminar los dos puntos y una copia del identificador y acabar con un código mucho más simple:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let x = 1, y = 2;
     let o = &lbrace; x, y };
     o.x + o.y // => 3</code></pre>
@@ -604,7 +604,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="10-2">
     <h2>6.10.2 Nombres de propiedades computados</h2>
     <p>A veces necesitas crear un objeto con una propiedad específica, pero el nombre de esa propiedad no es una constante en tiempo de compilación que puedas escribir literalmente en tu código fuente. En su lugar, el nombre de la propiedad que necesitas se almacena en una variable o es el valor de retorno de una función que invocas. No se puede utilizar un literal de objeto básico para este tipo de propiedad. En su lugar, tienes que crear un objeto y luego añadir las propiedades deseadas como un paso adicional:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">const PROPERTY_NAME = "p1";
     function computePropertyName() &lbrace; return "p" + 2; }
 
@@ -612,7 +612,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     o[PROPERTY_NAME] = 1;
     o[computePropertyName()] = 2;</code></pre>
     <p>Es mucho más sencillo configurar un objeto como este con una característica de ES6 conocida como <em>propiedades computadas</em> que te permite tomar los corchetes del código anterior y moverlos directamente al literal del objeto:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">const PROPERTY_NAME = "p1";
     function computePropertyName() &lbrace; return "p" + 2; }
 
@@ -628,7 +628,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="10-3" class="py-4 xs:py-5 sm:py-6">
     <h2>6.10.3 Símbolos como nombres de propiedades</h2>
     <p>La sintaxis de propiedad computada permite otra característica literal de objeto muy importante. En ES6 y posteriores, los nombres de propiedad pueden ser cadenas o símbolos. Si asignas un símbolo a una variable o constante, puedes usar ese símbolo como nombre de propiedad usando la sintaxis de propiedad calculada:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">const extension = Symbol("my extension symbol");
     let o = &lbrace;
       [extension]: &lbrace; /* datos de extensión almacenados en este objeto */ }
@@ -640,21 +640,21 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="10-4">
     <h2>6.10.4 Operador Spread</h2>
     <p>En ES2018 y versiones posteriores, puede copiar las propiedades de un objeto existente en un objeto nuevo utilizando el "operador de propagación" <codeinline>...</codeinline> dentro de un literal de objeto:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let position = &lbrace; x: 0, y: 0 };
     let dimensions = &lbrace; width: 100, height: 75 };
     let rect = &lbrace; ...position, ...dimensions };
     rect.x + rect.y + rect.width + rect.height // => 175</code> </pre>
     <p>En este código, las <codeinline>propiedades</codeinline> de los objetos posición y <codeinline>dimensiones</codeinline> se "extienden" en el literal del objeto <codeinline>rect</codeinline> como si se hubieran escrito literalmente dentro de esas llaves. Tenga en cuenta que esta sintaxis <codeinline>...</codeinline> a menudo se denomina operador de extensión, pero no es un verdadero operador de JavaScript en ningún sentido. En su lugar, es una sintaxis de caso especial disponible sólo para dentro de literales de objeto. (Los tres puntos se utilizan con otros fines en otros contextos de JavaScript, pero los literales de objeto son el único contexto en el que los tres puntos provocan este tipo de interpolación de un objeto en otro).</p>
     <p>Si el objeto que se propaga y el objeto en el que se propaga tienen una propiedad con el mismo nombre, el valor de esa propiedad será el último:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let o = &lbrace; x: 1 };
     let p = &lbrace; x: 0, ...o };
     p.x // => 1: el valor viene del objeto o sobreescribiendo el valor inicial
     let q = &lbrace; ...o, x: 2 };
     q.x // => 2: el valor 2 sobreescribe el valor inicial de o</code> </pre>
     <p>Tenga en cuenta también que el operador de propagación sólo propaga las propiedades propias de un objeto, no las heredadas:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let o = Object.create(&lbrace;x: 1}); // o hereda la propiedad x
     let p = &lbrace; ...o };
     p.x // => undefined</code> </pre>
@@ -663,14 +663,14 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="10-5" class="py-4 xs:py-5 sm:py-6">
     <h2>6.10.5 Métodos abreviados</h2>
     <p>Cuando una función se define como una propiedad de un objeto, llamamos a esa función un <em>método</em> (tendremos mucho más que decir sobre los métodos en los Capítulos <a href="capitulo-8">8</a> y <a href="capitulo-9">9</a>). Antes de ES6, se definía un método en un literal de objeto usando una expresión de definición de función igual que se definía cualquier otra propiedad de un objeto:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let square = &lbrace;
       area: function() &lbrace; return this.side * this.side; },
       side: 10
     };
     square.area() // => 100</code></pre>
     <p>En ES6, sin embargo, la sintaxis literal de objeto (y también la sintaxis de definición de clase que veremos en el <a href="capitulo-9">Capítulo 9</a>) se ha ampliado para permitir un atajo en el que la palabra clave <codeinline>function</codeinline> y los dos puntos se omiten, dando como resultado un código como este:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let square = &lbrace;
     area() &lbrace; return this.side * this.side; },
     side: 10
@@ -678,7 +678,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     square.area() // => 100</code></pre>
     <p>Ambas formas del código son equivalentes: ambas añaden una propiedad llamada <codeinline>area</codeinline> al objeto literal, y ambas establecen el valor de esa propiedad en la función especificada. La sintaxis corta deja más claro que <codeinline>area()</codeinline> es un método y no una propiedad de datos como <codeinline>side</codeinline>.</p>
     <p>Cuando se escribe un método utilizando esta sintaxis abreviada, el nombre de la propiedad puede adoptar cualquiera de las formas que son legales en un literal de objeto: además de un identificador JavaScript normal como el <codeinline>area</codeinline> de nombre anterior, también se pueden utilizar literales de cadena y nombres de propiedad computados, que pueden incluir nombres de propiedad Symbol:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">const METHOD_NAME = "m";
     const symbol = Symbol();
     let weirdMethods = &lbrace;
@@ -708,7 +708,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Las propiedades accesorias pueden definirse con una extensión de la sintaxis literal
       del objeto (a diferencia de las otras extensiones de ES6 que hemos visto aquí, los
       getters y setters se introdujeron en ES5):</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let o = &lbrace;
     // Una propiedad de datos normal.
     dataProp: value,
@@ -723,7 +723,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       el siguiente objeto que representa un punto Carte- siano 2D. Tiene propiedades de
       datos ordinarias para representar las coordenadas <em>x</em> e <em>y</em> del punto, y tiene propiedades
       accesorias que dan las coordenadas polares equivalentes del punto:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let p = &lbrace;
       // x e y son propiedades de datos normales de lectura/escritura.
       x: 1.0,
@@ -747,13 +747,13 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     
     <p>Observe el uso de la palabra clave <codeinline>this</codeinline> en los getters y setters de este ejemplo. JavaScript invoca estas funciones como métodos del objeto sobre el que están definidas, lo que significa que dentro del cuerpo de la función, <codeinline>this</codeinline> se refiere al objeto punto <codeinline>p</codeinline>. Así, la función para la propiedad <codeinline>r</codeinline> puede referirse a las propiedades <codeinline>x</codeinline> e <codeinline>y</codeinline> como <codeinline>this.x</codeinline> y <codeinline>this.y</codeinline>. Los métodos y la palabra clave <codeinline>this</codeinline> se tratan con más detalle en <a href="capitulo-8#2-2">§8.2.2</a>.</p>
     <p>Las propiedades accesorias se heredan, al igual que las propiedades de datos, por lo que puedes utilizar el objeto <codeinline>p</codeinline> definido anteriormente como prototipo para otros puntos. Puedes dar a los nuevos objetos sus propias propiedades <codeinline>x</codeinline> e <codeinline>y</codeinline>, y heredarán las propiedades <codeinline>r</codeinline> y <codeinline>theta</codeinline>:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let q = Object.create(p); // Un nuevo objeto que hereda getters y setters
     q.x = 3; q.y = 4;         // Crear propiedades de datos propias de q
     q.r                       // => 5: las propiedades accesorias heredadas funcionan
     q.theta                   // => Math.atan2(4, 3)</code></pre>
     <p>El código anterior utiliza propiedades accesorias para definir una API que proporciona dos representaciones (coordenadas cartesianas y coordenadas polares) de un único conjunto de datos. Otras razones para utilizar propiedades accesorias incluyen la comprobación de la sanidad de las propiedades escritas y la devolución de valores diferentes en cada propiedad leída:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Este objeto genera números de serie estrictamente crecientes
     const serialnum = &lbrace;
       // Esta propiedad de datos contiene el siguiente número de serie
@@ -773,7 +773,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     serialnum.next // => 10
     serialnum.next // => 11: valor diferente cada vez que obtenemos next</code></pre>
     <p>Por último, he aquí otro ejemplo que utiliza un método getter para implementar una propiedad con comportamiento "mágico":</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Este objeto tiene una propiedad que devuelve un numeros aleatorios.
     // La expresión "random.octet" por ejemplo, produce un numero aleatorio
     // entre 0 y 255 cada vez que se evalúa.

@@ -1,5 +1,5 @@
 ---
-import { ButtonAside } from "../components/react/ButtonAside";
+import { ViewTransitions } from "astro:transitions";
 import { Sidebar } from "../components/react/Sidebar";
 const { title } = Astro.props;
 ---
@@ -12,10 +12,10 @@ const { title } = Astro.props;
 		<link rel="icon" type="image/svg+xml" href="/public/javascript/favicon.png" />
 		<link rel="stylesheet" href="/src/layouts/prism.css">
 		<title>{title}</title>
+		<ViewTransitions />
 	</head>
 	<body class="max-w-5xl mx-auto p-2 xs:px-3 sm:px-6 sm:py-8 md:px-10 font-khand text-amber-900">
-		<!-- <ButtonAside /> -->	
-		<Sidebar />
+		<Sidebar client:visible transition:persist />
 		<main>
 			<slot />
 		</main>

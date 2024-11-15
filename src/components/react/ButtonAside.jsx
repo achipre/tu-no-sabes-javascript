@@ -1,8 +1,4 @@
-export const ButtonAside = ({isOpen, setIsOpen}) => {
-
-  const handleAside = () => setIsOpen(!isOpen)
-
-  console.log(isOpen);
+export const ButtonAside = ({handleAside}) => {
 
   return (
     <button onClick={handleAside} className={`items-center dark:hover:fill-amber-900 fill-[#f6e4c5] p-2 text-lg font-bold text-gray-900 rounded-md dark:text-white hover:bg-gray-100 dark:hover:bg-[#FFF8E8] transition-all duration-500`}>

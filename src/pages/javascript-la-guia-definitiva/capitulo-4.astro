@@ -15,20 +15,20 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>4.1 Expresiones primarias</h2>
     <p>Las expresiones más sencillas, conocidas como <em>expresiones primarias</em>, son aquellas que son independientes, es decir, que no incluyen expresiones más sencillas. Las expresiones primarias en JavaScript son valores constantes o <em>literales</em>, ciertas palabras clave del lenguaje y referencias a variables.</p>
     <p>Los literales son valores constantes que se incrustan directamente en el programa. Tienen el siguiente aspecto:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-javascript">1.23      // Un literal numérico
     "hello"   // Un literal de string
     /pattern/ // Una expresión regular literal</code></pre>
     <p>La sintaxis de JavaScript para los literales numéricos se trató en <a href="capitulo-3#2">§3.2</a> Los literales de string se documentaron en <a href="capitulo-3#3">§3.3</a>. La sintaxis de literal es de expresiones regulares se introdujo en <a href="capitulo-3#3-5">§3.3.5</a> y se documentará en detalle en <a href="capitulo-11#3">§11.3</a>.</p>
     <p>Algunas de las palabras reservadas de JavaScript son expresiones primarias:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-javascript">true  // Se evalua un valor booleano verdadero
     false // Se evalua un valor booleano falso
     null  // Se evalua a un valor nulo
     this  // Se evalúa el objeto "actual"</code></pre>
     <p>Aprendimos sobre <codeinline>true</codeinline>, <codeinline>false</codeinline> y <codeinline>null</codeinline> en <a href="capitulo-3#4">§3.4</a> y <a href="capitulo-3#5">§3.5</a>. A diferencia de las otras palabras clave, <codeinline>this</codeinline> no es una constante - se evalúa a diferentes valores en diferentes lugares del programa. La palabra clave <codeinline>this</codeinline> se utiliza en programación orientada a objetos. Dentro del cuerpo de un método, <codeinline>this</codeinline> se evalúa como el objeto sobre el que se invoca el método. Véase <a href="#5">§4.5</a>, <a href="capitulo-8">Capítulo 8</a> (especialmente <a href="capitulo-8#2-2">§8.2.2</a>) y <a href="capitulo-9">Capítulo 9</a> para más información sobre <codeinline>this</codeinline>.</p>
     <p>Por último, el tercer tipo de expresión primaria es una referencia a una variable, constante o propiedad del objeto global:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-javascript">i         // Evalua el valor de la variable i.
     sum       // Evalua el valor de la variable sum.
     undefined // El valor de la propiedad "undefined" del objeto global.</code></pre> 
@@ -38,24 +38,24 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>4.2 Inicializadores de objetos y arrays</h2>
     <p>Los <em>inicializadores de objetos</em> y <em>array</em> son expresiones cuyo valor es un objeto o una matriz recién creados. Estas expresiones inicializadoras se denominan a veces <em>literales de objeto</em> y <em>literales de arrays</em>. Sin embargo, a diferencia de los literales verdaderos, no son expresiones primarias, porque incluyen un número de subexpresiones que especifican valores de propiedades y elementos. Los inicializadores de matrices tienen una sintaxis ligeramente más simple, y comenzaremos con ellos.</p>
     <p>Un inicializador de matriz es una lista de expresiones separadas por comas y contenidas entre corchetes. El valor de un inicializador de matriz es una matriz recién creada. Los elementos de esta nueva matriz se inicializan con los valores de las expresiones separadas por comas:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-javascript">[]        // Un array vacio: Ninguan expresion en los corchetes significa sin elementos.
     [1+2,3+4] // Un array de dos elementos. Primer elemento es 3 y el segundo es 7</code></pre>
     <p>Las expresiones de elemento en un inicializador de matriz pueden ser a su vez inicializadores de matriz, lo que significa que estas expresiones pueden crear matrices anidadas:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-javascript">let matrix = [[1,2,3], [4,5,6], [7,8,9]];</code></pre>
     <p>Las expresiones de elemento en un inicializador de matriz se evalúan cada vez que se evalúa el inicializador de matriz. Esto significa que el valor de la expresión de un inicializador de matriz puede ser diferente cada vez que se evalúa.</p>
     <p>Los elementos no definidos pueden incluirse en un literal de matriz simplemente omitiendo un valor entre comas. Por ejemplo, el siguiente array contiene cinco elementos, entre ellos tres indefinidos:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-javascript">let sparseArray = [1,,,,5];</code></pre>
     <p>Se permite una sola coma después de la última expresión en un inicializador de matriz y no crea un elemento indefinido. Sin embargo, cualquier expresión de acceso al array para un índice posterior al de la última expresión se evaluará necesariamente como indefinido.</p>
     <p>Las expresiones de inicialización de objetos son como las expresiones de inicialización de matrices, pero los corchetes se sustituyen por llaves y cada subexpresión va precedida de un nombre de propiedad y dos puntos:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-javascript">let p = &lbrace; x: 2.3, y: -1.2 }; // Un objeto con dos propiedades
     let q = &lbrace;};                  // Un objeto vacio sin propiedades
     q.x = 2.3; q.y = -1.2;       // Ahora q tiene la misma propiedad que p</code></pre>
     <p>En ES6, los literales de objeto tienen una sintaxis mucho más rica en funciones (encontrará más detalles en (<a href="capitulo-6#10"></a>). Los literales de objeto pueden anidarse. Por ejemplo:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-javascript">let rectangle = &lbrace;
       upperLeft: &lbrace; x: 2, y: 2 },
       lowerRight: &lbrace; x: 4, y: 5 }
@@ -65,7 +65,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="3" class="py-4 xs:py-5 sm:py-6">
     <h2>4.3 Definir expresiones de funciones</h2>
     <p>Una <em>definicion de expresion de funciones</em> define una función JavaScript, y el valor dedicha expresión es la función recién definida. En cierto sentido, una expresión de definición de función es un "literal de función" del mismo modo que un inicializador de objeto es un "literal de objeto". Una expresión de definición de función suele estar formada por la palabra clave function seguida de una lista separada por comas de cero o más identificadores (los nombres de los parámetros) en formato paréntesis y un bloque de código JavaScript (el cuerpo de la función) entre llaves. Por ejemplo:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">// Esta función retorna el cuadrado del valor pasado.
     let square = function(x) &lbrace; return x * x; };</code></pre>
     <p>Una expresión de definición de función también puede incluir un nombre para la función. Las funciones también pueden definirse utilizando una declaración de función en lugar de una expresión de función. Y en ES6 y posteriores, las expresiones de función pueden utilizar una nueva sintaxis compacta "función de flecha". Los detalles completos sobre la definición de funciones se encuentran en el <a href="capitulo-8">Capítulo 8</a>.</p>
@@ -77,7 +77,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     expression . identifier
     expression [ expression ]</pre>
     <p>El primer estilo de acceso a una propiedad es una expresión seguida de un punto y un identificador. La expresión especifica el objeto, y el identificador especifica el nombre de la propiedad deseada. El segundo estilo de acceso a propiedades sigue a la primera expresión (el objeto o matriz) con otra expresión entre corchetes. Esta segunda expresión especifica el nombre de la propiedad deseada o el índice del elemento de la matriz deseado. He aquí algunos ejemplos concretos:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-javascript">let o = &lbrace;x: 1, y: &lbrace;z: 3}}; // Un ejemplo de objeto
     let a = [o, 4, [5, 6]];    // Un ejemplo de array que contiene el objeto o.
     o.x       // => 1: La propiedad x de la expresión o
@@ -99,16 +99,16 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>En JavaScript, los valores <codeinline>null</codeinline> e <codeinline>undefined</codeinline> son los dos únicos valores que no tienen propiedades. En una expresión regular de acceso a propiedades que utilice <codeinline>.</codeinline> o <codeinline>[]</codeinline>, se produce un error de tipo TypeError si la expresión de la izquierda se evalúa como <codeinline>null</codeinline> o <codeinline>undefined</codeinline>. Puede utilizar la sintaxis <codeinline>?.</codeinline> y <codeinline>?.[]</codeinline> para evitar errores de este tipo.</p>
     <p>Considere la expresión <codeinline>a?.b</codeinline>. Si a es <codeinline>null</codeinline> o <codeinline>undefined</codeinline>, entonces la expresión se evalúa como <codeinline>undefined</codeinline> sin ningún intento de acceder a la propiedad <codeinline>b</codeinline>. Si <codeinline>a</codeinline> es algún otro valor, entonces <codeinline>a?.b</codeinline> se evalúa como <codeinline>a.b</codeinline> (y si <codeinline>a</codeinline> no tiene una propiedad llamada <codeinline>b</codeinline>, entonces el valor volverá a ser <codeinline>undefined</codeinline>).</p>
     <p>Esta forma de expresión de acceso a propiedades a veces se denomina “optional chaining” porque también funciona para expresiones de acceso a propiedades “chained” más largas como ésta:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">let a = &lbrace; b: null };
     a.b?.c.d      // => undefined</code></pre>
     <p><codeinline>a</codeinline> es un objeto, por lo que <codeinline>a.b</codeinline> es una expresión de acceso a propiedades válida. Pero el valor de <codeinline>a.b</codeinline> es <codeinline>null</codeinline>, por lo que <codeinline>a.b.c</codeinline> lanzaría un TypeError. Usando <codeinline>?.</codeinline> en lugar de <codeinline>.</codeinline> evitamos el error de tipo, y <codeinline>a.b?.c</codeinline> se evalúa como <codeinline>undefined</codeinline>. Esto significa que </codeinline>(a.b?.c).d</codeinline> lanzará un TypeError, porque esa expresión intenta acceder a una propiedad del valor <codeinline>undefined</codeinline>. Pero -y esta es una parte muy importante del "encadenamiento opcional"-<codeinline>a.b?.c.d</codeinline> (sin los paréntesis) simplemente evalúa a <codeinline>undefined</codeinline> y no lanza un error. Esto se debe a que el acceso a propiedades con <codeinline>?.</codeinline> es un "cortocircuito": si la subexpresión a la izquierda de <codeinline>?.</codeinline> se evalúa como <codeinline>null</codeinline> o <codeinline>undefined</codeinline>, entonces toda la expresión se evalúa inmediatamente como <codeinline>undefined</codeinline> sin ningún otro intento de acceso a propiedades.</p>
     <p>Por supuesto, si <codeinline>a.b</codeinline> es un objeto, y si ese objeto no tiene una propiedad llamada <codeinline>c</codeinline>, entonces <codeinline>a.b?.c.d</codeinline> lanzará de nuevo un TypeError, y querremos usar otro acceso condicional a propiedades</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">let a = &lbrace; b: &lbrace;} };
     a.b?.c?.d     // => undefined</code></pre>
     <p>El acceso condicional a propiedades también es posible utilizando <codeinline>?.[]</codeinline> en lugar de <codeinline>[]</codeinline>. En la expresión <codeinline>a?.[b][c]</codeinline>, si el valor de a es <codeinline>null</codeinline> o <codeinline>undefined</codeinline>, toda la expresión se evalúa inmediatamente como <codeinline>undefined</codeinline>, y las subexpresiones <codeinline>b</codeinline> y <codeinline>c</codeinline> ni siquiera se evalúan. Si alguna de estas expresiones tiene efectos secundarios, éstos no se producirán si <codeinline>a</codeinline> no está definida:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">let a;        // Uy, olvidamos inicializar esta variable
     let index = 0;
     try &lbrace;
@@ -124,7 +124,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="5">
     <h2>4.5 Expresiones de invocación</h2>
     <p>Una <em>expresión de invocación</em> es la sintaxis de JavaScript para llamar (o ejecutar) una función o método. Comienza con una expresión de función que identifica la función a llamar. La expresión de función va seguida de un paréntesis de apertura, una lista separada por comas de cero o más expresiones de argumento y un paréntesis de cierre. Algunos ejemplos:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">f(0)             // f es la función; 0 es el argumento.
     Math.max(x,y,z)  // Math.max es la funcion: x, y y z son los argumentos.
     a.sort()         // a.sort es la función y no toma argumentos.</code></pre>
@@ -135,7 +135,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>4.5.1 Invocación condicional</h2>
     <p>En ES2020, también puede invocar una función utilizando <codeinline>?.()</codeinline> en lugar de <codeinline>()</codeinline>. Normalmente, cuando se invoca una función, si la expresión a la izquierda de los paréntesis es <codeinline>null</codeinline> o no <codeinline>undefined</codeinline> o cualquier otra no-función, se lanza un TypeError. Con la nueva sintaxis de invocación <codeinline>?.()</codeinline>, si la expresión a la izquierda del <codeinline>?.</codeinline> se evalúa como <codeinline>null</codeinline> o <codeinline>undefined</codeinline>, toda la expresión de invocación se evalúa como <codeinline>undefined</codeinline> y no se lanza ninguna excepción.</p>
     <p>Los objetos array tienen un método <codeinline>sort()</codeinline> al que opcionalmente se le puede pasar un argumento de función que defina el orden de clasificación deseado para los elementos del array. Antes de ES2020, si querías escribir un método como <codeinline>sort()</codeinline> que toma un argumento de función opcional, normalmente usabas una sentencia <codeinline>if</codeinline> para comprobar que el argumento de función estaba definido antes de invocarlo en el cuerpo del <codeinline>if</codeinline>:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">function square(x, log) &lbrace; // El segundo argumento es opcional
       if (log) &lbrace;              // Si pasa la función opcional
         log(x);               // Invoca la función
@@ -143,14 +143,14 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       return x * x;           // Devuelve el cuadrado del argumento
     }</code></pre>
     <p>Con esta sintaxis de invocación condicional de ES2020, sin embargo, puedes simplemente escribir la invocación de la función usando <codeinline>?.()</codeinline>, sabiendo que la invocación sólo ocurrirá si realmente hay un valor que invocar:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">function square(x, log) &lbrace; // El segundo argumento es opcional
       log?.(x);               // Llama a la función si log es definido
       return x * x;           // Retorna el cuadrado del argumento
     }</code></pre>
     <p>Tenga en cuenta, sin embargo, que <codeinline>?.()</codeinline> sólo comprueba si el lado izquierdo es <codeinline>null</codeinline> o <codeinline>undefined</codeinline>. No comprueba que el valor sea realmente una función. Por tanto, la función <codeinline>square()</codeinline> de este ejemplo lanzaría una excepción si se le pasaran dos números, por ejemplo.</p>
     <p>Al igual que las expresiones de acceso condicional a propiedades (<a href="#4-1">§4.4.1</a>) la invocación de funciones con <codeinline>?.()</codeinline> es un cortocircuito: si el valor a la izquierda de <codeinline>?.</codeinline> es <codeinline>null</codeinline> o <codeinline>undefined</codeinline>, no se evalúa ninguna de las expresiones de argumento dentro de los paréntesis:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">let f = null, x = 0;
     try &lbrace;
     f(x++);       // Lanza TypeError porque f es null
@@ -160,7 +160,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     f?.(x++)      // => undefined: f es null, pero no se lanza ninguna excepción
     x             // => 1: se salta el incremento porque corto-circuita</code></pre>
     <p>Las expresiones de invocación condicional con <codeinline>?.()</codeinline> funcionan tanto para métodos como para funciones. Pero como la invocación de métodos también implica el acceso a propiedades, merece la pena dedicar un momento a entender las diferencias entre las siguientes expresiones:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">o.m()   // Acceso regular a la propiedad, invocación regular
     o?.m()  // Acceso condicional a la propiedad, invocación regular
     o.m?.() // Acceso regular a la propiedad, invocación condicional</code></pre>
@@ -170,11 +170,11 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="6">
     <h2>4.6 Expresiones de creación de objetos</h2>
     <p>Una <em>expresión de creación de objeto</em> crea un nuevo objeto e invoca una función (denominada constructor) para inicializar las propiedades de dicho objeto. Las expresiones de creación de objetos son como las expresiones de invocación, salvo que van precedidas de la palabra clave <codeinline>new</codeinline>:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">new Object()
     new Point(2,3)</code></pre>
     <p>Si no se pasan argumentos a la función constructora en una expresión de creación de objeto, se puede omitir el par de paréntesis vacío:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">new Object
     new Date</code></pre>
     <p>El valor de una expresión de creación de objeto es el objeto recién creado. Los constructores se explican con más detalle en el <a href="capitulo-9">Capítulo 9</a>.</p>
@@ -474,14 +474,14 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>4.7.4  Precedencia del operador</h2>
     <p>Los operadores listados en la <a href="#tabla4-1">Tabla 4-1</a> están ordenados de mayor a menor precedencia, con líneas horizontales separando grupos de operadores en el mismo nivel de precedencia. La precedencia de los operadores controla el orden en que se realizan las operaciones. Los operadores con mayor precedencia (más cerca de la parte superior de la tabla) se ejecutan antes que los de menor precedencia (más cerca de la parte inferior).</p>
     <p>Considera la siguiente expresión:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">w = x + y*z;</code></pre>
     <p>El operador de multiplicación <codeinline>*</codeinline> tiene mayor precedencia que el operador de suma <codeinline>+</codeinline>, por lo que la multiplicación se realiza antes que la suma. Por otra parte, el operador de asignación <codeinline>=</codeinline> tiene la precedencia más baja, por lo que la asignación se realiza una vez completadas todas las operaciones del lado derecho.</p>
     <p>La precedencia de los operadores puede anularse mediante el uso explícito de paréntesis. Para forzar que la suma del ejemplo anterior se realice primero, escriba:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">w = (x + y)*z;</code></pre>
     <p>Tenga en cuenta que las expresiones de acceso e invocación de propiedades tienen mayor precedencia que cualquiera de los operadores listados en la <a href="#tabla4-1">Tabla 4-1</a>. Considere esta expresión:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">// my es un objeto con una propiedad llamada funciones cuyo valor es 
     // una matriz de funciones. Invocamos la función número x, le pasamos el argumento y 
     // y luego pedimos el tipo del valor devuelto.
@@ -493,19 +493,19 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="7-5">
     <h2>4.7.5 Asociatividad de operadores</h2>
     <p>En la <a href="tabla4-1">Tabla 4-1</a> la columna A especifica la <em>asociatividad</em> del operador. Un valor de L especifica la asociatividad de izquierda a derecha, y un valor de R especifica la asociatividad de derecha a izquierda. La asociatividad de un operador especifica el orden en que se realizan las operaciones de la misma precedencia. La asociatividad de izquierda a derecha significa que las operaciones se realizan de izquierda a derecha. Por ejemplo, el operador de resta tiene asociatividad de izquierda a derecha, así:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">w = x - y - z;</code></pre>
     <p>es lo mismo que:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">w = ((x - y) - z);</code></pre>
     <p>Por otra parte, las siguientes expresiones:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">y = a ** b ** c;
     x = ~-y;
     w = x = y = z;
     q = a?b:c?d:e?f:g;</code></pre>
     <p>son equivalentes:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">y = (a ** (b ** c));
     x = ~(-y);
     w = (x = (y = z));
@@ -530,7 +530,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="8-1" class="py-4 xs:py-5 sm:py-6">
     <h2>4.8.1 Operador de +</h2>
     <p>El operador binario <codeinline>+</codeinline> suma operandos numéricos o concatena operandos de cadena:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">1 + 2                   // => 3
     "hello" + " " + "there" // => "hello there"
     "1" + "2"               // => "12"</code></pre>
@@ -557,7 +557,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       </li>
     </ul>
     <p>He aquí algunos ejemplos:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">1 + 2         // => 3: suma
     "1" + "2"     // => "12": concatenación
     "1" + 2       // => "12": concatenación después numérico-a-string
@@ -567,7 +567,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     2 + undefined // => NaN: suma despues undefined se convierte a NaN</code></pre>
     <p>Por último, es importante tener en cuenta que cuando el operador <codeinline>+</codeinline> se utiliza con cadenas y números, puede no ser asociativo. Es decir, el resultado puede depender del orden en que se realicen las operaciones.</p>
     <p>Por ejemplo:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">1 + 2 + " blind mice"   // => "3 blind mice"
     1 + (2 + " blind mice") // => "12 blind mice"</code></pre>
     <p>La primera línea no tiene paréntesis, y el operador <codeinline>+</codeinline> tiene asociatividad de izquierda a derecha, por lo que los dos números se suman primero, y su suma se concatena con la cadena. En la segunda línea, los paréntesis alteran este orden de operaciones: el número 2 se concatena con la cadena para producir una nueva cadena. A continuación, el número 1 se concatena con la nueva cadena para obtener el resultado final.</p>
@@ -589,9 +589,9 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       <div class="flex flex-col gap-4 xs:gap-5 sm:gap-6">
         <p class="ml-5 xs:ml-6 sm:ml-7 md:ml-8">El operador <codeinline>++</codeinline> incrementa (es decir, suma 1) su único operando, que debe ser un lvalue (una variable, un elemento de una matriz o una propiedad de un objeto). El operador convierte su operando en un número, suma 1 a ese número y asigna el valor incrementado de nuevo a la variable, elemento o propiedad.</p>
         <p class="ml-5 xs:ml-6 sm:ml-7 md:ml-8">El valor de retorno del operador <codeinline>++</codeinline> depende de su posición respecto al operando. Cuando se utiliza antes del operando, se conoce como operador de preincremento, incrementa el operando y se evalúa al valor incrementado de ese operando. Cuando se utiliza después del operando, donde se conoce como operador de post-incremento, incrementa su operando pero se evalúa al valor <em>no incrementado</em> de ese operando. Considere la diferencia entre estas dos líneas de código:</p>
-        <pre>
-        <code class="language-js">let i = 1, j = ++i;   // i and j are both 2
-        let n = 1, m = n++;   // n is 2, m is 1</code></pre>
+    <pre class="language-javascript">
+    <code class="language-js">let i = 1, j = ++i;   // i and j are both 2
+    let n = 1, m = n++;   // n is 2, m is 1</code></pre>
         <p class="ml-5 xs:ml-6 sm:ml-7 md:ml-8">Tenga en cuenta que la expresión <codeinline>x++</codeinline> no siempre es lo mismo que <codeinline>x=x+1</codeinline>. El operador <codeinline>++</codeinline> nunca realiza una concatenación de cadenas: siempre convierte su operando en un número y lo incrementa. Si <codeinline>x</codeinline> es la cadena "1", <codeinline>++x</codeinline> es el número 2, pero <codeinline>x+1</codeinline> es la cadena "11".</p>
         <p class="ml-5 xs:ml-6 sm:ml-7 md:ml-8">Tenga en cuenta también que, debido a la inserción automática de punto y coma de JavaScript, no puede insertar un salto de línea entre el operador de postincremento y el operando que lo precede. Si lo hace, JavaScript tratará el operando como una sentencia completa por sí misma e insertará un punto y coma antes.</p>
         <p class="ml-5 xs:ml-6 sm:ml-7 md:ml-8">Este operador, tanto en su forma de preincremento como de postincremento, se utiliza normalmente para incrementar un contador que controla un bucle for (<a href="capitulo-5#4-3">§5.4.3</a>).</p>
@@ -743,7 +743,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       </li>
     </ul>
     <p>Como ejemplo de comprobación de la igualdad, considere la comparación:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">"1" == true // => true</code></pre>
     <p>Esta expresión se evalúa como <codeinline>true</codeinline>, lo que indica que estos valores de aspecto tan diferente son iguales. El valor booleano <codeinline>true</codeinline> se convierte primero en el número 1, y la comparación se realiza de nuevo. A continuación, la cadena <codeinline>"1"</codeinline> se convierte en el número 1. Como ahora ambos valores son iguales, la comparación devuelve verdadero.</p>
   </section>
@@ -791,7 +791,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Recuerde que las cadenas JavaScript son secuencias de valores enteros de 16 bits, y que la comparación de cadenas es sólo una comparación numérica de los valores de las dos cadenas. El orden de codificación numérica definido por Unicode puede no coincidir con el orden de colla- ción tradicional utilizado en un idioma o configuración regional concretos. Tenga en cuenta, en particular, que la comparación de cadenas distingue entre mayúsculas y minúsculas, y que todas las letras ASCII mayúsculas son "menos que" todas las letras ASCII minúsculas. Esta regla puede dar lugar a resultados confusos si no se tiene en cuenta. Por ejemplo, según el operador <codeinline>&lt;</codeinline>, la cadena "Zoo" está antes que la cadena "aardvark".</p>
     <p>Para un algoritmo de comparación de cadenas más robusto, pruebe el método <codeinline>String.localeCompare()</codeinline>, que también tiene en c u e n t a las definiciones de orden alfabético específicas de cada localización. Para realizar comparaciones sin distinguir mayúsculas de minúsculas, puede convertir las cadenas a minúsculas o mayúsculas utilizando <codeinline>String.toLowerCase()</codeinline> o <codeinline>String.toUpperCase()</codeinline>. Y, para una herramienta de comparación de cadenas más general y mejor localizada, utilice la clase <codeinline>Intl.Collator</codeinline> descrita en <a href="capitulo-11#7-3">§11.7.3</a>.</p>
     <p>Tanto el operador <codeinline>+</codeinline> como los operadores de comparación se comportan de forma diferente para los operandos numéricos y los de cadena. <codeinline>+</codeinline> favorece a las cadenas: realiza la concatenación si cualquiera de los operandos es una cadena. Los operadores de comparación favorecen a los números y sólo comparan cadenas si ambos operandos son cadenas:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-javascript">1 + 2      // => 3: suma.
     "1" + "2"  // => "12": concatenación.
     "1" + 2    // => "12": 2 se convierte en "2".
@@ -804,7 +804,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="9-3" class="py-4 xs:py-5 sm:py-6">
     <h2>4.9.3 El operador in</h2>
     <p>El operador <codeinline>in</codeinline> espera un operando izquierdo que sea una cadena, un símbolo o un valor que pueda convertirse en cadena. Espera un operando del lado derecho que es un objeto. Se evalúa como <codeinline>true</codeinline> si el valor del lado izquierdo es el nombre de una propiedad del objeto del lado derecho. Por ejemplo:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">let point = &lbrace;x: 1, y: 1}; // Definir un objeto
     "x" in point              // => true: el objecto tiene una propiedad llamada "x"
     "z" in point              // => false: el objeto no tiene una propiedad llamada "z".
@@ -818,7 +818,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="9-4">
     <h2>4.9.4 El operador instanceof</h2>
     <p>El operador <codeinline>instanceof</codeinline> espera un operando del lado izquierdo que es un objeto y un operando del lado derecho que identifica una clase de objetos. El operador evalúa a <codeinline>true</codeinline> si el objeto del lado izquierdo es una instancia de la clase del lado derecho y evalúa a <codeinline>false</codeinline> en caso contrario. En el <a href="capitulo-9">capítulo 9</a> se explica que, en JavaScript, las clases de objetos se definen mediante la función constructora que los inicializa. Por lo tanto, el operando derecho de <codeinline>instanceof</codeinline> debe ser una función. He aquí algunos ejemplos:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">let d = new Date(); // Crea un nuevo objeto con el constructor Date()
     d instanceof Date   // => true: d fue creado con Date()
     d instanceof Object // => true: todos los objetos son instancias de Object
@@ -839,20 +839,20 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>El operador <codeinline>&&</codeinline> puede entenderse en tres niveles diferentes. En el nivel más simple, cuando se utiliza con operandos booleanos, <codeinline>&&</codeinline> realiza la operación booleana AND sobre los dos valores: devuelve <codeinline>true</codeinline> si y sólo si tanto su primer operando como su segundo operando son <codeinline>true</codeinline>. Si uno o ambos operandos son <codeinline>false</codeinline>, devuelve <codeinline>false</codeinline>.</p>
     </p>
     <p><codeinline>&&</codeinline> se utiliza a menudo como conjunción para unir dos expresiones relacionales:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">x === 0 && y === 0 // true si solo si x y y son iguales a 0</code></pre>
     <p>Las expresiones relacionales siempre se evalúan como <codeinline>true</codeinline> o <codeinline>false</codeinline>, por lo que cuando se utilizan de este modo, el propio operador <codeinline>&&</codeinline> devuelve verdadero o falso. Los operadores relacionales tienen mayor precedencia que <codeinline>&&</codeinline> (y <codeinline>||</codeinline>), por lo que este tipo de expresiones pueden escribirse sin paréntesis.</p>
     <p>Pero <codeinline>&&</codeinline> no requiere que sus operandos sean valores booleanos. Recuerde que todos los valores de JavaScript son "verdaderos" o "falsos". (Véase <a href="capitulo-3#4">§3.4</a> para más detalles. Los valores falsos son <codeinline>false</codeinline>, <codeinline>null</codeinline>, <codeinline>undefined</codeinline>, <codeinline>0</codeinline>, <codeinline>-0</codeinline>, <codeinline>NaN</codeinline> y <codeinline>""</codeinline>. Todos los demás valores, incluidos todos los objetos, son verdaderos). El segundo nivel en el que <codeinline>&&</codeinline> puede entenderse es como un operador booleano AND para valores verdaderos y falsos. Si ambos operandos son verdaderos, el operador devuelve un valor verdadero. En caso contrario, uno o ambos operandos deben ser falsos, y el operador devuelve un valor falso. En JavaScript, cualquier expresión o sentencia que espere un valor booleano funcionará con un valor verdadero o falso, por lo que el hecho de que <codeinline>&&</codeinline> no siempre devuelva <codeinline>true</codeinline> o <codeinline>false</codeinline> no causa problemas prácticos.</p>
     <p>Observe que esta descripción dice que el operador devuelve "un valor verdadero" o "un valor falso", pero no especifica cuál es ese valor. Para ello, necesitamos describir <codeinline>&&</codeinline> en el tercer y último nivel. Este operador comienza evaluando su primer operando, la expresión de la izquierda. Si el valor de la izquierda es falso, el valor de toda la expresión también debe ser falso, por lo que <codeinline>&&</codeinline> simplemente devuelve el valor de la izquierda y ni siquiera evalúa la expresión de la derecha.</p>
     <p>En cambio, si el valor de la izquierda es verdadero, el valor total de la expresión depende del valor de la derecha. Si el valor de la derecha es es verdadero, entonces el valor total debe ser verdadero, y si el valor de la derecha es falso, entonces el valor total debe ser falso. Por lo tanto, cuando el valor de la izquierda es verdadero, el operador <codeinline>&&</codeinline> evalúa y devuelve el valor de la derecha:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">let o = &lbrace; x: 1 };
     let p = null;
     o && o.x // => 1: o is truthy, a si que devuelve el valor de o.x
     p && p.x // => null: p is falsy, así que devuelve null y no evalúa p.x</code></pre>
     <p>Es importante entender que <codeinline>&&</codeinline> puede o no evaluar su operando derecho. En este ejemplo de código, la variable <codeinline>p</codeinline> se establece en <codeinline>null</codeinline>, y la expresión <codeinline>p.x</codeinline>, si se evaluara, causaría un <codeinline>TypeError</codeinline>. Pero el código usa <codeinline>&&</codeinline> de forma idiomática para que <codeinline>p.x</codeinline> se evalúe sólo si <codeinline>p</codeinline> es verdadera- no <codeinline>nul</codeinline> o <codeinline>undefined</codeinline>.</p>
     <p>El comportamiento de <codeinline>&&</codeinline> se denomina a veces cortocircuito, y a veces se puede ver código que explota a propósito este comportamiento para ejecutar código condicionalmente. Por ejemplo, las siguientes dos líneas de código JavaScript tienen efectos equivalentes:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">if (a === b) stop(); // Invoca stop() solo si a === b
     (a === b) && stop(); // Esto hace lo mismo</code></pre>
     <p>En general, debe tener cuidado siempre que escriba una expresión con efectos secundarios (asignaciones, incrementos, decrementos o invocaciones de funciones) en el lado derecho de <codeinline>&&</codeinline>. Que se produzcan esos efectos secundarios depende del valor del lado izquierdo.</p>
@@ -864,13 +864,13 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Aunque el operador <codeinline>||</codeinline> se utiliza más a menudo simplemente como operador booleano OR, al igual que el operador <codeinline>&&</codeinline>, tiene un comportamiento más complejo. Comienza evaluando su primer operando, la expresión de su izquierda. Si el valor de este primer operando es verdadero, se cortocircuita y devuelve ese valor verdadero sin evaluar nunca la expresión de la derecha. Si, por el contrario, el valor del primer operando es falso, entonces <codeinline>||</codeinline> evalúa su segundo operando y devuelve el valor de esa expresión.</p>
     <p>Al igual que con el operador <codeinline>&&</codeinline>, debe evitar los operandos del lado derecho que incluyan efectos secundarios, a menos que desee utilizar a propósito el hecho de que la expresión del lado derecho no pueda evaluarse.</p>
     <p>Un uso idiomático de este operador es seleccionar el primer valor verdadero de un conjunto de alternativas:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">// Si maxWidth es verdadero, use ese valor. Si no busca en
     // el objeto de preferencias. Si no es verdadero, use la constante codificada.
     let max = maxWidth || preferences.maxWidth || 500;</code></pre>
     <p>Tenga en cuenta que si 0 es un valor legal para <codeinline>maxWidth</codeinline>, este código no funcionará correctamente, ya que 0 es un valor falso. Véase el operador <codeinline>??</codeinline> (<a href="#13-2">§4.13.2</a>) como alternativa.</p>
     <p>Antes de ES6, este modismo se utilizaba a menudo en las funciones para proporcionar valores por defecto a los parámetros:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">// La propiedades de copia: o hasta p, retorna p 
     function copia(o, p) &lbrace;
     p = p || &lbrace;}; // Si no se pasa p, utiliza un objeto vacío
@@ -883,7 +883,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>El operador ! es un operador unario; se coloca delante de un único operando. Su propósito es invertir el valor booleano de su operando. Por ejemplo, si x es verdadero, !x se evalúa como falso. Si x es falso, !x es verdadero.</p>
     <p>A diferencia de los operadores && y ||, el operador ! convierte su operando en un valor booleano (utilizando las reglas descritas en el Capítulo 3) antes de invertir el valor convertido. Esto significa que ! siempre devuelve verdadero o falso y que puede convertir cualquier valor x a su valor booleano equivalente aplicando este operador dos veces: !!x (véase §3.9.2).</p>
     <p>Como operador unario, ! tiene alta precedencia y se vincula estrechamente. Si desea invertir el valor de una expresión como p && q, debe utilizar paréntesis: !(p && q). Vale la pena observar dos leyes del álgebra booleana que podemos expresar utilizando la sintaxis de JavaScript:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">// Leyes de DeMorgan's
     !(p && q) === (!p || !q) // => true: para todos los valores de p y q
     !(p || q) === (!p && !q) // => true: para todos los valores de p y q</code></pre>
@@ -891,25 +891,25 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="11" class="py-4 xs:py-5 sm:py-6">
     <h2>4.11 Expresiones de asignación</h2>
     <p>JavaScript utiliza el operador <codeinline>=</codeinline> para asignar un valor a una variable o propiedad. Por ejemplo:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">i = 0; // Establece la variable i igual a 0
     o.x = 1; // Establece la propiedad x del objeto o igual a 1.</code></pre>
     <p>El operador <codeinline>=</codeinline> espera que su operando izquierdo sea un lvalue: una variable o propiedad de objeto (o elemento de matriz). Espera que su operando derecho sea un valor arbitrario de cualquier tipo. El valor de una expresión de asignación es el valor del operando de la derecha. Como efecto secundario, el operador <codeinline>=</codeinline> asigna el valor de la derecha a la variable o propiedad de la izquierda, de modo que las futuras referencias a la variable o propiedad se evalúen al valor.</p>
     <p>Aunque las expresiones de asignación suelen ser bastante simples, a veces puede ver que el valor de una expresión de asignación se utiliza como parte de una expresión mayor. Por ejemplo, puede asignar y probar un valor en la misma expresión con código como éste:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">(a = b) === 0</code></pre>
     <p>Si lo hace, asegúrese de tener clara la diferencia entre los operadores <codeinline>=</codeinline> y <codeinline>===</codeinline>. Tenga en cuenta que <codeinline>=</codeinline> tiene una precedencia muy baja, y que los paréntesis suelen ser necesarios cuando el valor de una asignación se va a utilizar en una expresión mayor.</p>
     <p>El operador de asignación tiene asociatividad de derecha a izquierda, lo que significa que cuando aparecen varios operadores de asignación en una expresión, se evalúan de derecha a izquierda. Por lo tanto, puedes escribir código como éste para asignar un único valor a múltiples variables:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">i = j = k = 0; // Inicializa 3 variables a 0</code></pre>
   </section>
   <section id="11-1">
     <h2>4.11.1 Asignación con operación</h2>
     <p>Además del operador de asignación normal <codeinline>=</codeinline>, JavaScript admite otros operadores de asignación que proporcionan atajos combinando la asignación con alguna otra operación. Por ejemplo, el operador <codeinline>+=</codeinline> realiza una suma y una asignación. La expresión siguiente:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">total += ventasImpuestos;</code></pre>
     <p>es equivalente a ésta:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">total = total + ventasImpuestos;</code></pre>
     <p>Como era de esperar, el operador <codeinline>+=</codeinline> funciona con números o cadenas. Para los operandos numéricos, realiza la suma y la asignación; para los operandos de cadena, realiza la con- catenación y la asignación.</p>
     <p>Otros operadores similares son <codeinline>-=</codeinline>, <codeinline>*=</codeinline>, <codeinline>&=</codeinline>, etc. En la <a href="#tabla4-2">Tabla 4-2</a> se enumeran todos ellos.</p>
@@ -994,21 +994,21 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <pre class="language-js">
     a = a op b</pre>
     <p>En la primera línea, la expresión <codeinline>a</codeinline> se evalúa una vez. En la segunda, se evalúa dos veces. Los dos casos diferirán sólo si <codeinline>a</codeinline> incluye efectos secundarios como una llamada a función o un operador de incremento. Las dos asignaciones siguientes, por ejemplo, no son iguales:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">data[i++] *= 2;
     data[i++] = data[i++] * 2;</code></pre>
   </section>
   <section id="12" class="py-4 xs:py-5 sm:py-6">
     <h2>4.12 Expresiones de evaluación</h2>
     <p>Como muchos lenguajes interpretados, JavaScript tiene la capacidad de interpretar cadenas de código fuente Java-Script, evaluándolas para producir un valor. JavaScript hace esto con la función global <codeinline><codeinline>eval()</codeinline></codeinline>:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">eval("3+2") // => 5</code></pre>
     <p>La evaluación dinámica de cadenas de código fuente es una potente característica del lenguaje que casi nunca es necesaria en la práctica. Si se encuentra utilizando <codeinline>eval()</codeinline>, debería pensar detenidamente si realmente necesita utilizarla. En particular, <codeinline>eval()</codeinline> puede ser un agujero de seguridad, y nunca debe pasar ninguna cadena derivada de la entrada del usuario a <codeinline>eval()</codeinline>. Con un lenguaje tan complicado como JavaScript, no hay forma de desinfectar la entrada del usuario para que sea seguro utilizarla con <codeinline>eval()</codeinline>. Debido a estos problemas de seguridad, algunos servidores web utilizan la cabecera HTTP "Content-Security-Policy" para desactivar <codeinline>eval()</codeinline> en todo el sitio web.</p>
     <p>Las subsecciones siguientes explican el uso básico de <codeinline>eval()</codeinline> y explican dos versiones restringidas del mismo que tienen menos impacto en el optimizador.</p>
     <article>
       <p class="title-article">¿Es eval() una función o un operador?</p>
       <p><codeinline>eval()</codeinline> es una función, pero se incluye en este capítulo sobre expresiones porque en realidad debería haber sido un operador. Las primeras versiones del lenguaje definían una función <codeinline>eval()</codeinline>, y desde entonces, los diseñadores del lenguaje y los escritores de intérpretes han ido imponiéndole restricciones que la hacen cada vez más parecida a un operador. Los intérpretes modernos de Java Script realizan una gran cantidad de análisis y optimización del código. En general, si una función llama a <codeinline>eval()</codeinline>, el intérprete no puede optimizar esa función. El problema de definir <codeinline>eval()</codeinline> como una función es que se le pueden dar otros nombres:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">let f = eval;
     let g = f;</code></pre>
       <p>Si esto se permite, entonces el intérprete no puede saber con seguridad qué funciones llaman a <codeinline>eval()</codeinline>, por lo que no puede optimizar agresivamente. Este problema podría haberse evitado si <codeinline>eval()</codeinline> fuera un operador (y una palabra reservada). Aprenderemos (en <a href="#12-2">§4.12.2</a> y <a href="#12-3">§4.12.3</a>) sobre las restricciones impuestas a <codeinline>eval()</codeinline> para hacerla más similar a un operador.</p>
@@ -1019,7 +1019,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p><codeinline>eval()</codeinline> espera un argumento. Si se le pasa cualquier valor que no sea una cadena, simplemente devuelve ese valor. Si pasa una cadena, intenta analizarla como código JavaScript, lanzando un SyntaxError si falla. Si analiza correctamente la cadena, evalúa el código y devuelve el valor de la última expresión o sentencia de la cadena o <codeinline>undefined</codeinline> si la última expresión o sentencia no tenía valor. Si la cadena evaluada lanza una excepción, esa excepción se propaga desde la llamada a <codeinline>eval()</codeinline>.</p>
     <p>La clave de <codeinline>eval()</codeinline> (cuando se invoca así) es que utiliza el entorno de variables del código que la invoca. Es decir, busca los valores de las variables y define nuevas variables y funciones de la misma forma que lo hace el código local. Si una función define una variable local <codeinline>x</codeinline> y luego llama a <codeinline>eval("x")</codeinline>, obtendrá el valor de la variable local. Si llama a <codeinline>eval("x=1")</codeinline>, cambiará el valor de la variable local. Y si la función llama a <codeinline>eval("var y = 3;")</codeinline>, declara una nueva variable local y. Por otro lado, si la cadena evaluada utiliza <codeinline>let</codeinline> o <codeinline>const</codeinline>, la variable o constante declarada será local a la evaluación y no estará definida en el entorno de llamada.</p>
     <p>Del mismo modo, una función puede declarar una función local con código como este:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">eval("function f() &lbrace; return x+1; }");</code></pre>
     <p>Si llama a <codeinline>eval()</codeinline> desde código de nivel superior, opera sobre variables globales y funciones globales, por supuesto.</p>
     <p>Tenga en cuenta que la cadena de código que pase a <codeinline>eval()</codeinline> debe tener sentido sintáctico por sí misma: no puede utilizarla para pegar fragmentos de código en una función. No tiene sentido escribir <codeinline>eval("return;")</codeinline>, por ejemplo, porque <codeinline>return</codeinline> sólo es legal dentro de funciones, y el hecho de que la cadena evaluada utilice el mismo entorno de variables que la función que la llama no la convierte en parte de esa función. Si su cadena tiene sentido como un script independiente (incluso uno muy corto como <codeinline>x=0</codeinline>), es legal pasarlo a <codeinline>eval()</codeinline>. De lo contrario, <codeinline>eval()</codeinline> lanzará un SyntaxError.</p>
@@ -1029,7 +1029,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Es la capacidad de <codeinline>eval()</codeinline> para cambiar variables locales lo que resulta tan problemático para los optimizadores de JavaScript. Como solución, sin embargo, los intérpretes simplemente hacen menos optimización en cualquier función que llame a <codeinline>eval()</codeinline>. Pero, ¿qué debe hacer un intérprete de JavaScript si un script define un alias para <codeinline>eval()</codeinline> y luego llama a esa función con otro nombre? La especificación de JavaScript declara que cuando <codeinline>eval()</codeinline> se invoca con un nombre distinto de "eval", debe evaluar la cadena como si fuera código global de nivel superior. El código evaluado puede definir nuevas variables globales o funciones globales, y puede establecer variables globales, pero no utilizará ni modificará ninguna variable local a la función de llamada, y por lo tanto, no interferirá con las optimizaciones locales.</p>
     <p>Una "evaluación directa" es una llamada a la función <codeinline>eval()</codeinline> con una expresión que utiliza el nombre exacto y no cualificado "eval" (que empieza a parecer una palabra reservada). Las llamadas directas a <codeinline>eval()</codeinline> utilizan el entorno de variables del contexto de llamada. Cualquier otra llamada-una llamada indirecta-utiliza el objeto global como su entorno de variables y no puede leer, escribir o definir variables o funciones locales. (Tanto las llamadas directas como las indirectas pueden definir nuevas variables sólo con <codeinline>var</codeinline>. Los usos de <codeinline>let</codeinline> y <codeinline>const</codeinline> dentro de una cadena evaluada crean variables y constantes que son locales a la evaluación y no alteran el entorno de llamada o global).</p>
     <p>El siguiente código lo demuestra:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">const geval = eval;             // Usando otro nombre hace que la eval sea global
     let x = "global", y = "global"; // Dos variables globales
     function f() &lbrace;              // Esta función hace eval local
@@ -1058,14 +1058,14 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="13-1">
     <h2>4.13.1 El operador condicional (?:)</h2>
     <p>El operador condicional es el único operador ternario (tres operandos) en JavaScript y a veces se denomina <em>operador ternario</em>. Este operador a veces se escribe <codeinline>?:</codeinline>, aunque no aparece de esa manera en el código. Como este operador tiene tres operandos, el primero va antes de <codeinline>?:</codeinline>, el segundo va entre <codeinline>?</codeinline> y <codeinline>:</codeinline>, y el tercero va después de <codeinline>:</codeinline>. Se utiliza así:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">x > 0 ? x : -x // El valor absoluto de x</code></pre>
     <p>Los operandos del operador condicional pueden ser de cualquier tipo. El primer operando se evalúa y se interpreta como un booleano. Si el valor del primer operando es verdadero, entonces se evalúa el segundo operando y se devuelve su valor. En caso contrario, si el primer operando es falso, entonces se evalúa el tercer operando y se devuelve su valor. Sólo se evalúa uno de los dos operandos, nunca ambos.</p>
     <p>Aunque puede obtener resultados similares con la sentencia <codeinline>if</codeinline> (<a href="capitulo-5#3-1">§5.3.1</a>), el operador <codeinline>?:</codeinline> suele ser un atajo muy útil. Este es un uso típico, que comprueba que una variable está definida (y tiene un valor significativo y verdadero) y la utiliza si es así o proporciona un valor por defecto si no:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">greeting = "hello " + (username ? username : "there");</code></pre>
     <p>Esto es equivalente, pero más compacto, que la siguiente sentencia <codeinline>if</codeinline>:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">greeting = "hola ";
     if (username) &lbrace;
       greeting += username;
@@ -1076,20 +1076,20 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="13-2" class="py-4 xs:py-5 sm:py-6">
     <h2>4.13.2 El primero definido (??)</h2>
     <p>El operador definido en primer lugar <codeinline>??</codeinline> evalúa a su primer operando definido: si su operando izquierdo no es <codeinline>null</codeinline> ni <codeinline>undefined</codeinline>, devuelve ese valor. En caso contrario, devuelve el valor del operando derecho. Al igual que los operadores <codeinline>&&</codeinline> y <codeinline>||</codeinline>, el operador <codeinline>??</codeinline> es de cortocircuito: sólo evalúa su segundo operando si el primero es <codeinline>null</codeinline> o <codeinline>undefined</codeinline>. Si la expresión a no tiene efectos secundarios, la expresión <codeinline>a ?? b</codeinline> esequivalentea:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">(a !== null && a !== undefined) ? a : b</code></pre>
     <p><codeinline>??</codeinline> es una alternativa útil a <codeinline>||</codeinline> (<a href="#10-2">§4.10.2</a>) cuando se desea seleccionar el primer operando <em>definido</em> en lugar del primer operando verdadero. Aunque <codeinline>||</codeinline> es nominalmente un operador lógico OR, también se usa idiomáticamente para seleccionar el primer operando no verdadero con código como este:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">// Si maxWidth es verdadero, use ese valor. Si no busca en
     // el objeto de preferencias. Si no es verdadero, use la constante codificada.
     let max = maxWidth || preferences.maxWidth || 500;</code></pre>
     <p>El problema con este uso idiomático es que cero, la cadena vacía y <codeinline>false</codeinline> son valores falsos que pueden ser perfectamente válidos en algunas circunstancias. En este ejemplo de código, si <codeinline>maxWidth</codeinline> es cero, ese valor será ignorado. Pero si cambiamos el operador <codeinline>||</codeinline> por <codeinline>??</codeinline>, terminamos con una expresión donde cero es un valor válido:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">// Si maxWidth esta definido, use ese valor. Si no busca en
     // el objeto de preferencias. Si no esta definido, use la constante codificada.
     let max = maxWidth ?? preferences.maxWidth ?? 500;</code></pre>
     <p>Aquí hay más ejemplos que muestran cómo funciona <codeinline>??</codeinline> cuando el primer operando es falso. Si ese operando es falso pero está definido, entonces <codeinline>??</codeinline> lo devuelve. Sólo cuando el primer operando es "nulo" (es decir, <codeinline>null</codeinline> o <codeinline>undefined</codeinline>) este operador evalúa y devuelve el segundo operando:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">let options = &lbrace; timeout: 0, title: "", verbose: false, n: null };
     options.timeout ?? 1000     // => 0: esta definida en el objeto
     options.title ?? "Untitled" // => "": esta definida en el objeto
@@ -1098,7 +1098,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     options.n ?? 10             // => 10: la propiedad es nula</code></pre>
     <p>Tenga en cuenta que las expresiones <codeinline>timeout</codeinline>, <codeinline>title</codeinline> y <codeinline>verbose</codeinline> tendrían valores diferentes si utilizáramos <codeinline>||</codeinline> en lugar de <codeinline>??</codeinline>.</p>
     <p>El operador <codeinline>??</codeinline> es similar a los operadores <codeinline>&&</codeinline> y <codeinline>||</codeinline>, pero no tiene mayor o menor precedencia que éstos. Si lo utiliza en una expresión con cualquiera de esos operadores, debe utilizar paréntesis explícitos para especificar qué operación desea realizar en primer lugar:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">(a ?? b) || c // ?? primero, luego ||
     a ?? (b || c) // || primero, luego ??
     a ?? b || c // SyntaxError: los paréntesis son necesarios</code></pre>
@@ -1157,7 +1157,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       </table>
     </div>
     <p>Puede utilizar el operador <codeinline>typeof</codeinline> en una expresión como ésta:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">// Si el value es un string, envolver entre comillas, si no convertirlo
     (typeof value === "string") ? "'" + value + "'" : value.toString()</code></pre>
     <p>Tenga en cuenta que <codeinline>typeof</codeinline> devuelve "object" si el valor del operando es <codeinline>null</codeinline>. Si desea distinguir <codeinline>null</codeinline> de objetos, tendrá que comprobar explícitamente este valor de caso especial.</p>
@@ -1167,7 +1167,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="13-4" class="py-4 xs:py-5 sm:py-6">
     <h2>4.13.4 El operador delete</h2>
     <p><codeinline>delete</codeinline> es un operador unario que intenta borrar la propiedad del objeto o el elemento de matriz especificado como operando. Al igual que los operadores de asignación, incremento y decremento, <codeinline>delete</codeinline> se utiliza normalmente por el efecto secundario de borrado de la propiedad y no por el valor que devuelve. Algunos ejemplos:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">let o = &lbrace; x: 1, y: 2}; // Comienza con un objeto
     delete o.x;            // Borra una de las propiedades del objeto
     "x" in o               // => false: la propiedad "x" no existe
@@ -1180,7 +1180,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p><codeinline>delete</codeinline> espera que su operando sea un lvalue. Si no es un lvalue, el operador no realiza ninguna acción y devuelve <codeinline>true</codeinline>. En caso contrario, <codeinline>delete</codeinline> intenta borrar el lvalue especificado. <codeinline>delete</codeinline> devuelve <codeinline>true</codeinline> si consigue borrar el lvalue especificado. Sin embargo, no todas las propiedades pueden borrarse: las propiedades no configurables (<a href="capitulo-14#1">§14.1</a>) son inmunes al borrado.</p>
     <p>En modo estricto, <codeinline>delete</codeinline> produce un SyntaxError si su operando es un identificador no cualificado como una variable, función o parámetro de función: sólo funciona cuando el operando es una expresión de acceso a una propiedad (<a href="#4">§4.4</a>). El modo estricto también especifica que <codeinline>delete</codeinline> genera un TypeError si se le pide que borre cualquier propiedad no configurable (es decir, no borrable). Fuera del modo estricto, no se produce ninguna excepción en estos casos, y <codeinline>delete</codeinline> simplemente devuelve <codeinline>false</codeinline> para indicar que el operando no ha podido ser borrado.</p>
     <p>He aquí algunos ejemplos de uso del operador <codeinline>delete</codeinline>:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">let o = &lbrace;x: 1, y: 2};
     delete o.x; // Borra la propiedad "x" del objeto: devuelve true.
     typeof o.x; // La propiedad "x" no existe: devuelve "undefined".
@@ -1200,7 +1200,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>4.13.6 El operador void</h2>
     <p><codeinline>void</codeinline> es un operador unario que aparece antes de su único operando, que puede ser de cualquier tipo. Este operador es inusual y se utiliza con poca frecuencia; evalúa su operando, luego descarta el valor y devuelve <codeinline>undefined</codeinline>. Dado que el valor del operando se descarta, el uso del operador <codeinline>void</codeinline> sólo tiene sentido si el operando tiene efectos secundarios.</p>
     <p>El operador <codeinline>void</codeinline> es tan oscuro que resulta difícil encontrar un ejemplo práctico de su uso. Un caso sería cuando se quiere definir una función que no devuelve nada pero que también utiliza la sintaxis abreviada de la función flecha (véase <a href="capitulo-8#1-3">§8.1.3</a>), en la que el cuerpo de la función es una única expresión que se evalúa y devuelve. Si evalúa la expresión únicamente por sus efectos secundarios y no desea devolver su valor, lo más sencillo es utilizar llaves alrededor del cuerpo de la función. Pero, como alternativa, también podría utilizar el operador void en este caso:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">let counter = 0;
     const increment = () => void counter++;
     increment() // => undefined
@@ -1209,13 +1209,13 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="13-7">
     <h2>4.13.7 El operador coma (,)</h2>
     <p>El operador <codeinline>coma</codeinline> es un operador binario cuyos operandos pueden ser de cualquier tipo. Evalúa su operando izquierdo, evalúa su operando derecho y devuelve el valor del operando derecho. Así, la línea siguiente:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">i=0, j=1, k=2;</code></pre>
     <p>evalúa a 2 y es básicamente equivalente a:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">i = 0; j = 1; k = 2;</code></pre>
     <p>La expresión de la izquierda siempre se evalúa, pero su valor se descarta, lo que significa que sólo tiene sentido utilizar el operador coma cuando la expresión de la izquierda tiene efectos secundarios. La única situación en la que se suele utilizar el operador coma es con un bucle <codeinline>for</codeinline> ( <a href="capitulo-5#4-3">§5.4.3</a> ) que tiene múltiples variables de bucle:</p>
-    <pre>
+    <pre class="language-javascript">
     <code class="language-js">// La primera coma es parte de la sintaxis de la declaración let
     // La segunda coma es el operador coma: nos permite comprimir 2
     // las expresiones (i++ y j--) en el bucle for espera 1 

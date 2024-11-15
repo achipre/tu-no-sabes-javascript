@@ -27,31 +27,31 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="1" class="py-4 xs:py-5 sm:py-6">
     <h2>5.1 Sentencias de expresión</h2>
     <p>Los tipos más simples de sentencias en JavaScript son las expresiones que tienen efectos secundarios. Este tipo de sentencia se mostró en el <a href="capitulo-4">capítulo 4</a>. Las sentencias de asignación son una de las principales categorías de sentencias de expresión. Por ejemplo:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">greeting = "Hello " + name;
     i *= 3;</code></pre>
     <p>Los operadores de incremento y decremento, <codeinline>++</codeinline> y <codeinline>--</codeinline>, están relacionados con los estados de asignación. Tienen el efecto secundario de cambiar el valor de una variable, como si se hubiera realizado una asignación:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">counter++;</code></pre>
     <p>El operador <codeinline>delete</codeinline> tiene el importante efecto secundario de borrar la propiedad de un objeto. Por lo tanto, casi siempre se utiliza como una sentencia, en lugar de como parte de una expresión más amplia:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">delete o.x;</code></pre>
     <p>Las llamadas a funciones son otra categoría importante de expresiones. Por ejemplo:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">console.log(debugMessage);
     displaySpinner(); // Una hipotetica función que muestra un spinne en la aplicación web</code></pre>
     <p>Estas llamadas a funciones son expresiones, pero tienen efectos secundarios que afectan al entorno anfitrión o al estado del programa, y se utilizan aquí como sentencias. Si una función no tiene efectos secundarios, no tiene sentido llamarla, a menos que forme parte de una expresión mayor o de una sentencia de asignación. Por ejemplo, no calcularías un coseno y descartarías el resultado:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">Math.cos(x);</code></pre>
     <p>Pero bien podría calcular el valor y asignarlo a una variable para su uso futuro:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">cx = Math.cos(x);</code></pre>
     <p>Observe que cada línea de código de estos ejemplos termina con un punto y com</p>
   </section>
   <section id="2">
     <h2>5.2 Enunciados compuestos y vacíos</h2>
     <p>Al igual que el operador coma (<a href="#13-7">§4.13.7</a>) combina varias expresiones en una sola, un <em>bloque de sentencias</em> combina varias sentencias en una sola <em>sentencia compuesta</em>. Un bloque de sentencias es simplemente una secuencia de sentencias encerradas entre llaves. Así, las siguientes líneas actúan como una única sentencia y pueden utilizarse en cualquier lugar en el que JavaScript espere una única sentencia:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">&lbrace;
       x = Math.PI;
       cx = Math.cos(x);
@@ -63,16 +63,16 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <pre class="language-js">
     ;</pre>
     <p>El intérprete de JavaScript no realiza ninguna acción cuando ejecuta una sentencia vacía. La sentencia empty es útil ocasionalmente cuando se desea crear un bucle con un cuerpo vacío. Considere el siguiente bucle <codeinline>for</codeinline> (los bucles <codeinline>for</codeinline> se tratarán en <a href="#4.3">§5.4.3</a>):</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Inializa un array a
       for(let i = 0; i &lt; a.length; a[i++] = 0) ;</code></pre>
     <p>En este bucle, todo el trabajo lo realiza la expresión <codeinline>a[i++] = 0</codeinline>, y no es necesario ningún cuerpo de bucle. Sin embargo, la sintaxis de JavaScript requiere una expresión como cuerpo del bucle, por lo que se utiliza una expresión vacía, sólo un punto y coma.</p>
     <p>Tenga en cuenta que la inclusión accidental de un punto y coma después del paréntesis derecho de un bucle <codeinline>for</codeinline>, un bucle <codeinline>while</codeinline> o una sentencia <codeinline>if</codeinline> puede provocar errores frustrantes difíciles de detectar. Por ejemplo, el siguiente código probablemente no hace lo que el autor pretendía:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">if ((a === 0) || (b === 0)); // Ups..! Esta linea no hace nada
       o = null;                  // y esta linea siempre se ejecuta</code></pre>
     <p>Cuando utilice intencionadamente la sentencia empty, es una buena idea comentar su código de forma que quede claro que lo hace a propósito. Por ejemplo:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">for(let i = 0; i &lt; a.length; a[i++] = 0) /* vacio */ ;</code></pre>
   </section>
   <section id="3" class="py-4 xs:py-5 sm:py-6">
@@ -87,16 +87,16 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     if (expression)
       statement</pre>
     <p>En este formulario, se evalúa la expresión. Si el valor resultante es verdadero, se ejecuta la <em>sentencia</em>. Si la <em>expresión</em> es falsa, la <em>sentencia</em> no se ejecuta. (Véase <a href="capitulo-3#4">§3.4</a> para una definición de los valores verdadero y falso): Por ejemplo:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">if (usuario == null)    // Si el usuario es null o undefined
       usuario = "John Doe"; // definelo</code></pre>
     <p>O algo parecido:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Si usuario es null, undefined, false, 0, "" o NaN dale un nuevo valor
     if (!usuario) usuario = "John Doe";</code></pre>
     <p>Tenga en cuenta que los paréntesis alrededor de la <em>expresión</em> son una parte obligatoria de la sintaxis de la sentencia <codeinline>if</codeinline>.</p>
     <p>La sintaxis de JavaScript requiere una única sentencia después de la palabra clave <codeinline>if</codeinline> y la expresión entre paréntesis, pero puede utilizar un bloque de sentencias para combinar varias sentencias en una sola. Así que la sentencia <codeinline>if</codeinline> también podría tener este aspecto:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">if (!address) &lbrace;
       address = "";
       message = "Por favor ingrese su dirección de correo.";
@@ -108,13 +108,13 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       else
       statement2</pre>
     <p>Esta forma de la sentencia ejecuta la <codeinline>sentencia1</codeinline> si la <em>expresión</em> es verdadera y ejecuta <codeinline>statement2</codeinline> si la <em>expresión</em> es falsa. Por ejemplo:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">if (n === 1)
       console.log("Tines un mensaje nuevo.");
     else
       console.log(`Tienes $&lbrace;n} mensajes nuevos.`);</code></pre>
     <p>Cuando se han anidado sentencias <codeinline>if</codeinline> con cláusulas <codeinline>else</codeinline>, se requiere cierta precaución para asegurar que la cláusula <codeinline>else</codeinline> va con la sentencia <codeinline>if</codeinline> apropiada. Considere las siguientes líneas:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">i = j = 1;
     k = 2;
     if (i === j)
@@ -123,7 +123,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     else
       console.log("i no es igual a  j"); // MAL!!</code></pre>
     <p>En este ejemplo, la sentencia <codeinline>if</codeinline> interna forma la única sentencia permitida por la sintaxis de la sentencia <codeinline>if</codeinline> externa. Desafortunadamente, no está claro (excepto por la pista dada por la sangría) con qué <codeinline>if</codeinline> va el <codeinline>else</codeinline>. Y en este ejemplo, la sangría es incorrecta, porque un intérprete de JavaScript interpreta el ejemplo anterior como:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">if (i === j) &lbrace;
       if (j === k)
         console.log("i es igual k");
@@ -131,7 +131,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
         console.log("i no es igual j"); // UPS!
     }</code></pre>
     <p>La regla en JavaScript (como en la mayoría de los lenguajes de programación) es que, por defecto, una cláusula <codeinline>else</codeinline> forma parte de la sentencia <codeinline>if</codeinline> más próxima. Para que este ejemplo sea menos ambiguo y más fácil de leer, entender, mantener y depurar, debe utilizar llaves:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">if (i === j) &lbrace;
       if (j === k) &lbrace;
         console.log("i es igual k");
@@ -144,7 +144,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="3-2" class="py-4 xs:py-5 sm:py-6">
     <h2>5.3.2 else if</h2>
     <p>La sentencia <codeinline>if/else</codeinline> evalúa una expresión y ejecuta uno o dos fragmentos de código, en función del resultado. Pero, ¿qué ocurre cuando es necesario ejecutar uno de varios fragmentos de código? Una forma de hacerlo es con una sentencia <codeinline>else if</codeinline>. <codeinline>else if</codeinline> no es realmente una sentencia JavaScript, sino simplemente un lenguaje de programación de uso frecuente que resulta cuando se utilizan sentencias <codeinline>if/else</codeinline> repetidas:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">if (n === 1) &lbrace;
       // Ejecuta el código del bloque #1
     } else if (n === 2) &lbrace;
@@ -155,7 +155,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       // Si todo falla, ejecuta el código del bloque #4
     }</code></pre>
     <p>Este código no tiene nada de especial. Es simplemente una serie de sentencias <codeinline>if</codeinline>, donde cada <codeinline>if</codeinline> siguiente es parte de la cláusula <codeinline>else</codeinline> de la sentencia anterior. Usar el lenguaje <codeinline>else if</codeinline> es preferible y más legible que escribir estas sentencias en su forma sintácticamente equivalente, completamente anidada:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">if (n === 1) &lbrace;
       // Ejecuta el código del bloque #1
     }
@@ -183,7 +183,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     }</pre>
     <p>Sin embargo, la sintaxis completa de una sentencia <codeinline>switch</codeinline> es más compleja que esto. Varias ubicaciones en el bloque de código se etiquetan con la palabra clave <codeinline>clase</codeinline> seguida de una expresión y dos puntos. Cuando se ejecuta un <codeinline>switch</codeinline>, calcula el valor de la <em>expresión</em> y busca una etiqueta <codeinline>case</codeinline> cuya expresión se evalúe con el mismo valor (donde la igualdad viene determinada por el operador <codeinline>===</codeinline>). Si encuentra uno, comienza a ejecutar el bloque de código en la sentencia etiquetada por <codeinline>case</codeinline>. Si no encuentra un <codeinline>case</codeinline> con un valor coincidente, busca una sentencia etiquetada como <codeinline>defalut:</codeinline>. Si no hay ninguna etiqueta <codeinline>default:</codeinline>, la sentencia <codeinline>switch</codeinline> se salta el bloque de código.</p>
     <p><codeinline>switch</codeinline> es una sentencia confusa de explicar; su funcionamiento queda mucho más claro con un ejemplo. La siguiente sentencia <codeinline>switch</codeinline> es equivalente a las sentencias <codeinline>if/else</codeinline> repetidas mostradas en la sección anterior:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">switch(n) &lbrace;
     case 1: // Empieza aquí si n === 1
       // Execute code block #1.
@@ -200,7 +200,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     }</code></pre>
     <p>Observe la palabra clave <codeinline>break</codeinline> utilizada al final de cada caso en este código. El estado <codeinline>break</codeinline>, descrito más adelante en este capítulo, hace que el intérprete salte al final (o "salga") de la sentencia <codeinline>switch</codeinline> y continúe con la sentencia que le sigue. Las cláusulas <codeinline>case</codeinline> en una sentencia <codeinline>switch</codeinline> especifican sólo el <em>punto de inicio</em> del código deseado; no especifican ningún punto final. En ausencia de sentencias <codeinline>break</codeinline>, una sentencia <codeinline>switch</codeinline> comienza a ejecutar su bloque de código en la etiqueta <codeinline>case</codeinline> que coincide con la sentencia de su <em>expresión</em> y continúa ejecutando sentencias hasta que llega al final del bloque. En raras ocasiones, es útil escribir código como este que "pasa" de una etiqueta <codeinline>case</codeinline> a la siguiente, pero el 99% de las veces debe tener cuidado de terminar cada <codeinline>case</codeinline> con una sentencia <codeinline>break</codeinline>. (Sin embargo, cuando use <codeinline>switch</codeinline> dentro de una función, puede usar una sentencia <codeinline>return</codeinline> en lugar de una sentencia <codeinline>break</codeinline>. Ambas sirven para terminar la sentencia <codeinline>switch</codeinline> y evitar que la ejecución pase al siguiente <codeinline>case</codeinline>).</p>
     <p>He aquí un ejemplo más realista de la sentencia <codeinline>switch</codeinline>; convierte un valor en una cadena de una forma que depende del tipo del valor:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">function convert(x) &lbrace;
       switch(typeof x) &lbrace;
       case "number": // Convierte el número en hexadecimal
@@ -229,7 +229,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       statement</pre>
     <p>Para ejecutar una sentencia <codeinline>while</codeinline>, el intérprete evalúa primero la <em>expresión</em>. Si el valor de la expresión es falso, el intérprete se salta la <em>sentencia</em> que sirve de cuerpo del bucle y pasa a la siguiente sentencia del programa. Si, por el contrario, la <em>expresión</em> es verdadera, el intérprete ejecuta la <em>sentencia</em> y repite, saltando de nuevo al principio del bucle y evaluando de nuevo la <em>expresión</em>. Otra forma de decir esto es que el intérprete ejecuta la <em>sentencia</em> repetidamente <em>mientras</em> la <em>expresión</em> es verdadera. Tenga en cuenta que puede crear un bucle infinito con la sintaxis <codeinline>while(true)</codeinline>.</p>
     <p>Normalmente, no se desea que JavaScript realice exactamente la misma operación una y otra vez. En casi todos los bucles, una o más variables cambian con cada <em>iteración</em> del bucle. Dado que las variables cambian, las acciones realizadas al ejecutar la <em>sentencia</em> pueden diferir cada vez que se repite el bucle. Además, si la variable o variables que cambian están involucradas en una <em>expresión</em>, el valor de la expresión puede ser diferente cada vez que se repite el bucle. Esto es importante; de lo contrario, una expresión que comienza siendo verdadera nunca cambiaría, ¡y el bucle nunca terminaría! He aquí un ejemplo de un bucle <codeinline>while</codeinline> que imprime los números del 0 al 9:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let count = 0;
     while(count &lt; 10) &lbrace;
       console.log(count);
@@ -245,7 +245,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       statement
     while (expression);</pre>
     <p>El bucle <codeinline>do/while</codeinline> es menos comúnmente usado que su primo <codeinline>while</codeinline> en la práctica, es algo poco común estar seguro de que quieres que un bucle se ejecute al menos una vez. Aquí hay un ejemplo de un bucle <codeinline>do/while</codeinline>:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">function printArray(a) &lbrace;
       let len = a.length, i = 0;
       if (len === 0) &lbrace;
@@ -274,18 +274,18 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     }</pre>
     <p>En otras palabras, la expresión <em>inicializar</em> se evalúa una vez, antes de que comience el bucle. Para ser útil, esta expresión debe tener efectos secundarios (normalmente una asignación). JavaScript también permite que <em>initialize</em> sea una sentencia de declaración de variable, de modo que se puede declarar e inicializar un contador de bucle al mismo tiempo. La expresión <em>test</em> se evalúa antes de cada iteración y controla si se ejecuta el cuerpo del bucle. Si el valor de <em>test</em> es verdadero, se ejecuta la <em>sentencia</em> que constituye el cuerpo del bucle. Por último, se evalúa la em de <em>incremento</em>. De nuevo, debe ser una expresión con efectos secundarios para ser útil. Generalmente, es una expresión de asignación, o utiliza los operadores <codeinline>++</codeinline> o <codeinline>--</codeinline>.</p>
     <p>Podemos imprimir los números del 0 al 9 con un bucle <codeinline>for</codeinline> como el siguiente. Contrástalo con el bucle <codeinline>while</codeinline> equivalente mostrado en la sección anterior:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">for(let count = 0; count &lt; 10; count++) &lbrace;
       console.log(count);
     }</code></pre>
     <p>Los bucles pueden llegar a ser mucho más complejos que este sencillo ejemplo, por supuesto, y a veces múltiples variables cambian con cada iteración del bucle. Esta situación es el único lugar donde el operador coma se utiliza comúnmente en JavaScript; proporciona una manera de combinar múltiples expresiones de inicialización e incremento en una sola expresión adecuada para su uso en un bucle <codeinline>for</codeinline>:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let i, j, sum = 0;
       for(i = 0, j = 10 ; i &lt; 10 ; i++, j--) &lbrace;
       sum += i * j;
     }</code></pre>
     <p>En todos nuestros ejemplos de bucles hasta ahora, la variable del bucle ha sido numérica. Esto es bastante común, pero no es necesario. El siguiente código utiliza un bucle <codeinline>for</codeinline> para recorrer una estructura de datos de lista enlazada y devolver el último objeto de la lista (es decir, el primer objeto que no tiene una propiedad <codeinline>next</codeinline>):</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">function tail(o) &lbrace; // Devuelve la ultima de la lista enlazada
       for(; o.next; o = o.next) /* empty */ ; // Recorre mientras o.next sea verdadero
       return o;
@@ -297,7 +297,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>ES6 define una nueva sentencia de bucle: <codeinline>for/of</codeinline>. Este nuevo tipo de bucle utiliza la palabra clave <codeinline>for</codeinline>, pero es un tipo de bucle completamente diferente del bucle <codeinline>for</codeinline> normal. (También es completamente diferente del antiguo bucle <codeinline>for/in</codeinline> que describiremos en <a href="capitulo-5#4-5">§5.4.5</a>.)</p>
     <p>El bucle <codeinline>for/of</codeinline> funciona con objetos <em>iterables</em>. Explicaremos exactamente qué significa que un objeto sea iterable en el <a href="capitulo-12">Capítulo 12</a>, pero para este capítulo, es suficiente saber que los arrays, cadenas, conjuntos y mapas son iterables: representan una secuencia o conjunto de elementos que puedes recorrer usando un bucle <codeinline>for/of</codeinline>.</p>
     <p>Aquí, por ejemplo, podemos utilizar <codeinline>for/of</codeinline> para recorrer los elementos de una matriz de números y calcular su suma:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let data = [1, 2, 3, 4, 5, 6, 7, 8, 9], sum = 0;
     for(let element of data) &lbrace;
       sum += element;
@@ -308,13 +308,13 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Los arrays se iteran "en vivo"-los cambios realizados durante la iteración pueden afectar al resultado de la misma. Si modificamos el código anterior añadiendo la línea <codeinline>data.push(sum);</codeinline> dentro del cuerpo del bucle, entonces creamos un bucle infinito porque la iteración nunca puede alcanzar el último elemento del array.</p>
     <p class="title-article text-left">for/of con objectos</p>
     <p>Los objetos no son iterables (por defecto). El intento de utilizar <codeinline>for/of</codeinline> en un objeto normal produce un TypeError en tiempo de ejecución:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let o = &lbrace; x: 1, y: 2, z: 3 };
     for(let element of o) &lbrace; // Throws TypeError porque o no es iterable
       console.log(element);
     }</code></pre>
     <p>Si quieres iterar a través de las propiedades de un objeto, puedes utilizar el bucle <codeinline>for/in</codeinline> (introducido en <a href="capitulo-5#4-5">§5.4.5</a>), o utilizar <codeinline>for/of</codeinline> con el método <codeinline>Object.keys()</codeinline>:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let o = &lbrace; x: 1, y: 2, z: 3 };
     let keys = "";
     for(let k of Object.keys(o)) &lbrace;
@@ -322,14 +322,14 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     }
     keys // => "xyz"</code></pre>
     <p>Esto funciona porque <codeinline>Object.keys()</codeinline> devuelve un array de nombres de propiedades de un objeto, y los arrays son iterables con <codeinline>for/of</codeinline>. Tenga en cuenta también que esta iteración de las claves de un objeto no es en vivo como en el ejemplo de la matriz anterior - los cambios en el objeto o realizados en el cuerpo del bucle no tendrán ningún efecto sobre la iteración. Si no te importan las claves de un objeto, también puedes iterar a través de sus valores correspondientes así:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let sum = 0;
     for(let v of Object.values(o)) &lbrace;
       sum += v;
     }
     sum // => 6</code></pre>
     <p>Y si está interesado tanto en las claves como en los valores de las propiedades de un objeto, puede utilizar <codeinline>for/of</codeinline> con <codeinline>Object.entries()</codeinline> y la asignación de desestructuración:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let pairs = "";
     for(let [k, v] of Object.entries(o)) &lbrace;
       pairs += k + v;
@@ -338,7 +338,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p><codeinline>Object.entries()</codeinline> devuelve una matriz de matrices, donde cada matriz interna representa un par clave/valor para una propiedad del objeto. En este ejemplo de código utilizamos la asignación de desestructuración para descomponer esas matrices internas en dos variables individuales.</p>
     <p class="title-article text-left">for/of con strings</p>
     <p>Las cadenas son iterables carácter a carácter en ES6:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let frequency = &lbrace;};
     for(let letter of "mississippi") &lbrace;
       if (frequency[letter]) &lbrace;
@@ -351,7 +351,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Tenga en cuenta que las cadenas se iteran por punto de código Unicode, no por carácter UTF-16. La cadena "I ❤ 🐶" tiene una <codeinline>.length</codeinline> de 5 (porque cada uno de los dos caracteres emoji requiere dos caracteres UTF-16 para representarse). Pero si iteras esa cadena con <codeinline>for/of</codeinline>, el cuerpo del bucle se ejecutará tres veces, una por cada uno de los tres puntos de código "I", "❤" y "🐶."</p>
     <p class="title-article text-left">for/of con Set y Map</p>
     <p>Las clases incorporadas Set y Map de ES6 son iterables. Cuando iteras un Set con <codeinline>for/of</codeinline>, el cuerpo del bucle se ejecuta una vez por cada elemento del set. Puede utilizar código como éste para imprimir las palabras únicas en una cadena de texto:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let text = "Na na na na na na na na Batman!";
     let wordSet = new Set(text.split(" "));
     let unique = [];
@@ -360,7 +360,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     }
     unique // => ["Na", "na", "Batman!"]</code></pre>
     <p>Los Mapas son un caso interesante porque el iterador de un objeto Mapa no itera las claves del Mapa, ni los valores del Mapa, sino pares clave/valor. En cada iteración, el iterador devuelve un array cuyo primer elemento es una clave y cuyo segundo elemento es el valor correspondiente. Dado un Map <codeinline>m</codeinline>, podrías iterar y desestructurar sus pares clave/valor así:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let m = new Map([[1, "one"]]);
     for(let [key, value] of m) &lbrace;
       key // => 1
@@ -369,7 +369,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p class="title-article text-left">Iteración asíncrona con for/await</p>
     <p>ES2018 introduce un nuevo tipo de iterador, conocido como <em>iterador asíncrono</em>, y una variante del bucle <codeinline>for/of</codeinline>, conocida como bucle <codeinline>for/await</codeinline>, que funciona con iteradores asíncronos.</p>
     <p>Tendrás que leer los Capítulos <a href="capitulo-12">12</a> y <a href="capitulo-13">13</a> para entender el bucle <codeinline>for/await</codeinline>, pero aquí tienes cómo se ve en código:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Leer trozos de un flujo iterable asincrono e imprimirlos
     async function printStream(stream) &lbrace;
       for await (let chunk of stream) &lbrace;
@@ -386,18 +386,18 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       statement</pre>
     <p><em>variable</em> normalmente nombra una variable, pero puede ser una declaración de variable o cualquier cosa adecuada como el lado izquierdo de una expresión de asignación. <em>object</em> es una expresión que se evalúa a un objeto. Como de costumbre, <em>statement</em> es la sentencia o bloque de sentencias que sirve como cuerpo del bucle.</p>
     <p>Y podrías usar un bucle <codeinline>for/in</codeinline> como este:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">for(let p in o) &lbrace; // Asigna los nombres de las propiedades de o a la variable p
       console.log(o[p]); // Imprime el valor de cada propiedad
     }</code></pre>
     <p>Para ejecutar una sentencia <codeinline>for/in</codeinline>, el intérprete de JavaScript evalúa primero la expresión del <em>objeto</em>. Si es <codeinline>null</codeinline> o <codeinline>undefined</codeinline>, el intérprete omite el bucle y pasa a la siguiente sentencia. El intérprete ejecuta ahora el cuerpo del bucle una vez por cada propiedad enumerable del objeto. Antes de cada iteración, sin embargo, el intérprete evalúa la expresión de la <em>variable</em> y le asigna el nombre de la propiedad (un valor de cadena).</p>
     <p>Tenga en cuenta que la <em>variable</em> en el bucle <codeinline>for/in</codeinline> puede ser una expresión arbitraria, siempre y cuando se evalúe a algo adecuado para el lado izquierdo de una asignación. Esta expresión es se evalúa cada vez que se pasa por el bucle, lo que significa que puede evaluarse de forma diferente cada vez. Por ejemplo, puede utilizar código como el siguiente para copiar los nombres de todas las propiedades del objeto en un array:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let o = &lbrace; x: 1, y: 2, z: 3 };
     let a = [], i = 0;
     for(a[i++] in o) /* empty */;</code></pre>
     <p>Las matrices de JavaScript son simplemente un tipo especializado de objeto, y los índices de las matrices son propiedades de los objetos que pueden enumerarse con un bucle <codeinline>for/in</codeinline>. Por ejemplo, siguiendo el código anterior con esta línea se enumeran los índices 0, 1 y 2 del array:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">for(let i in a) console.log(i);</code></pre>
     <p>Encuentro que una fuente común de errores en mi propio código es el uso accidental de <codeinline>for/in</codeinline> con arrays cuando quería usar <codeinline>for/of</codeinline>. Cuando se trabaja con matrices, casi siempre es mejor usar <codeinline>for/of</codeinline> en lugar de <codeinline>for/in</codeinline>.</p>
     <p>El bucle <codeinline>for/in</codeinline> no enumera todas las propiedades de un objeto. No enumera las propiedades cuyos nombres son símbolos. Y de las propiedades cuyos nombres son cadenas, sólo hace un bucle sobre las propiedades <em>enumerables</em> (véase <a href="capitulo-6#14-1">§14.1</a>). Los diversos métodos incorporados definidos por el núcleo de JavaScript no son enumerables. Todos los objetos tienen un método <codeinline>toString()</codeinline>, por ejemplo, pero el bucle <codeinline>for/in</codeinline> no enumera esta propiedad <codeinline>toString()</codeinline>. Además de los métodos incorporados, muchas otras propiedades de los objetos incorporados no son enumerables. Todas las propiedades y métodos definidos por su código son enumerables, por defecto. (Puede hacerlos no enumerables utilizando técnicas explicadas en <a href="capitulo-6#14-1">§14.1</a>.)</p>
@@ -416,7 +416,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <pre class="language-js">
     identificador: declaración</pre>
     <p>Al etiquetar una sentencia, le da un nombre que puede utilizar para referirse a ella en cualquier parte de su programa. Puede etiquetar cualquier sentencia, aunque sólo es útil para etiquetar sentencias que tienen cuerpo, como bucles y condicionales. Al dar un nombre a un bucle, puede utilizar las sentencias <codeinline>break</codeinline> y <codeinline>continue</codeinline> dentro del cuerpo del bucle para salir del bucle o para saltar directamente a la parte superior del bucle para comenzar la siguiente iteración. <codeinline>break</codeinline> y <codeinline>continue</codeinline> son las únicas sentencias de JavaScript que utilizan etiquetas de sentencia; se tratan en las siguientes subsecciones. A continuación se muestra un ejemplo de un bucle <codeinline>while</codeinline> etiquetado y una sentencia <codeinline>continue</codeinline> que utiliza la etiqueta.</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">mainloop: while(token !== null) &lbrace;
       // Codigo omitido...
       continue mainloop; // Salta a la siguiente iteración del bucle
@@ -432,7 +432,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     break;</pre>
     <p>Dado que provoca la salida de un bucle o <codeinline>switch</codeinline>, esta forma de la sentencia <codeinline>break</codeinline> sólo es legal si aparece dentro de una de estas sentencias.</p>
     <p>Ya ha visto ejemplos de la sentencia <codeinline>break</codeinline> dentro de una sentencia <codeinline>switch</codeinline>. En los bucles, se utiliza normalmente para salir prematuramente cuando, por cualquier razón, ya no hay necesidad de completar el bucle. Cuando un bucle tiene condiciones de terminación complejas, a menudo es más fácil implementar algunas de estas condiciones con sentencias <codeinline>break</codeinline> en lugar de intentar expresarlas todas en una única expresión de bucle. El siguiente código busca un valor determinado en los elementos de una matriz. El bucle termina de forma normal cuando alcanza el final del array; termina con una sentencia <codeinline>break</codeinline> si encuentra lo que está buscando en el array:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">for(let i = 0; i &lt; a.length; i++) &lbrace;
       if (a[i] === target) break;
     }</code></pre>
@@ -442,7 +442,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Cuando se utiliza <codeinline>break</codeinline> con una etiqueta, salta al final o termina la sentencia adjunta que tiene la etiqueta especificada. Es un error de sintaxis utilizar <codeinline>break</codeinline> de esta forma si no hay una sentencia anexa con la etiqueta especificada. Con esta forma de la sentencia <codeinline>break</codeinline>, no es necesario que la sentencia nombrada sea un bucle o un <codeinline>switch:break</codeinline> puede "salir" de cualquier sentencia adjunta. Esta sentencia puede ser incluso un bloque de sentencias agrupado entre llaves con el único propósito de nombrar el bloque con una etiqueta.</p>
     <p>No se permite una nueva línea entre la palabra clave <codeinline>break</codeinline> y el nombre de la <em>etiqueta</em>. Esto se debe a que JavaScript inserta automáticamente el punto y coma omitido: si se coloca un punto y coma entre la palabra clave <codeinline>break</codeinline> y la etiqueta que le sigue, JavaScript asume que se pretende utilizar la forma simple y sin etiqueta de la sentencia y trata el punto y coma como un punto y coma. (Véase <a href="capitulo-2#6">§2.6</a>.)</p>
     <p>Necesitará la forma etiquetada de la sentencia <codeinline>break</codeinline> cuando desee salir de una sentencia que no sea el bucle o <codeinline>switch</codeinline> más cercano. El siguiente código lo demuestra:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let matrix = getData(); // Obtiene una matriz 2D de números de alguna manera
       // Ahora suma todos los números en la matriz.
       let sum = 0, success = false;
@@ -502,7 +502,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     </ul>
     <p>Observe la diferencia en el comportamiento de la sentencia <codeinline>continue</codeinline> en los bucles <codeinline>while</codeinline> y <codeinline>for</codeinline>: un bucle <codeinline>while</codeinline> vuelve directamente a su condición, pero un bucle <codeinline>for</codeinline> evalúa primero su expresión de <em>incremento</em> y luego vuelve a su condición. Anteriormente, consideramos el comportamiento del bucle <codeinline>for</codeinline> en términos de un bucle <codeinline>while</codeinline> "equivalente". Sin embargo, debido a que el estado <codeinline>continue</codeinline> se comporta de forma diferente para estos dos bucles, en realidad no es posible simular perfectamente un bucle <codeinline>for</codeinline> sólo con un bucle <codeinline>while</codeinline>.</p>
     <p>El siguiente ejemplo muestra una sentencia <codeinline>continue</codeinline> sin etiquetar que se utiliza para saltarse el resto de la iteración actual de un bucle cuando se produce un error:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">for(let i = 0; i &lt; data.length; i++) &lbrace;
       if (!data[i]) continue; // No puedo proceder son datos indefinidos
       total += data[i];
@@ -515,12 +515,12 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <pre class="language-js">
     return expression;</pre>
     <p>Una sentencia <codeinline>return</codeinline> sólo puede aparecer dentro del cuerpo de una función. Es un error sintáctico que aparezca en cualquier otro lugar. Cuando se ejecuta la sentencia <codeinline>return</codeinline>, la función que la contiene devuelve el valor de la <em>expresión</em> a su invocador. Por ejemplo:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">function square(x) &lbrace; return x*x; } // Una función que devuelve el cuadrado de su argumento
     square(2) // => 4</code></pre>
     <p>Sin sentencia <codeinline>return</codeinline>, una invocación de función simplemente ejecuta cada uno de los estados del cuerpo de la función por turnos hasta que llega al final de la función y entonces devuelve a su invocador. En este caso, la expresión de invocación se evalúa como <codeinline>undefined</codeinline>. La sentencia <codeinline>return</codeinline> aparece a menudo como la última sentencia de una función, pero no tiene por qué ser la última: una función vuelve a su invocador cuando se ejecuta una sentencia <codeinline>return</codeinline>, aunque queden otras sentencias en el cuerpo de la función.</p>
     <p>La sentencia <codeinline>return</codeinline> también puede utilizarse sin una <em>expresión</em> para hacer que la función devuelva <codeinline>undefined</codeinline> asuinvocador. Por ejemplo:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">function displayObject(o) &lbrace;
       // Regresa inmediatamente si el argumento es null o undefined
       if (!o) return;
@@ -531,7 +531,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="5-5">
     <h2>5.5.5 yield</h2>
     <p>La sentencia <codeinline>yield</codeinline> es muy parecida a la sentencia <codeinline>return</codeinline>, pero sólo se utiliza en funciones generadoras ES6 (véase <a href="capitulo-12#3">§12.3</a>) para producir el siguiente valor en la secuencia generada de valores sin devolverlo:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Una función generadora que produce un rango de números
     function* range(from, to) &lbrace;
       for(let i = from; i &lt;= to; i++) &lbrace;
@@ -547,7 +547,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <pre class="language-js">
     throw expression;</pre>
     <p><em>expression</em> puede evaluarse a un valor de cualquier tipo. Puede lanzar un número que represente un código de error o una cadena que contenga un mensaje de error legible por humanos. La clase Error y sus subclases se utilizan cuando el propio intérprete de JavaScript lanza un error, y usted también puede utilizarlas. Un objeto Error tiene una propiedad <codeinline>name</codeinline> que especifica el tipo de error y una propiedad <codeinline>message</codeinline> que contiene la cadena pasada a la función constructora. A continuación se muestra una función de ejemplo que lanza un objeto Error cuando se invoca con un argumento no válido:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">function factorial(x) &lbrace;
       // Si el argumento de entrada e invalido, lanza una excepción!.
       if (x &lt; 0) throw new Error("x no debe ser negativo");
@@ -565,7 +565,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
 
 
     <p>El siguiente código ilustra la sintaxis y el propósito de <codeinline>try/catch/finally</codeinline> declaración:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">try &lbrace;
       // Normalmente, este codigo se ejecuta desde la parte superior hasta la 
       // parte inferior sin problemas. Pero a veces, puede producirse una 
@@ -591,7 +591,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     </code></pre>
     <p>Tenga en cuenta que la palabra clave <codeinline>catch</codeinline> suele ir seguida de un identificador entre paréntesis. Este identificador es como un parámetro de función. Cuando se captura una excepción, el valor asociado con la excepción (un objeto Error, por ejemplo) se asigna a este parámetro. El identificador asociado a una cláusula <codeinline>catch</codeinline> tiene alcance de bloque: sólo se define dentro del bloque <codeinline>catch</codeinline>.</p>
     <p>He aquí un ejemplo realista de la sentencia <codeinline>try/catch</codeinline>. Utiliza el método <codeinline>factorial()</codeinline> definido en la sección anterior y los métodos JavaScript del lado del cliente <codeinline>prompt()</codeinline> y <codeinline>alert()</codeinline> para la entrada y la salida:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">try &lbrace;
       // Pedir al usuario que introduzca un número
       let n = Number(prompt("Por favor ingrese un número entero", ""));
@@ -619,7 +619,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <article>
       <p class="title-article">Cláusulas de salvaguardia</p>
       <p>Ocasionalmente puedes encontrarte utilizando una cláusula <codeinline>catch</codeinline> únicamente para detectar y detener la propagación de una excepción, aunque no te importe el tipo o el valor de la excepción. En ES2019 y posteriores, puedes omitir los paréntesis y el identificador y utilizar la palabra clave <codeinline>catch</codeinline> desnuda en este caso. He aquí un ejemplo:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Como JSON.parse(), pero devuelve undefined en lugar de lanzar un error
     function parseJSON(s) &lbrace;
       try &lbrace;
@@ -645,10 +645,10 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Esta sentencia crea un ámbito temporal con las propiedades del <em>object</em> como variables y luego ejecuta la <em>sentencia</em> dentro de ese ámbito.</p>
     <p>La sentencia <codeinline>with</codeinline> está prohibida en modo estricto (véase <a href="#6-3">§5.6.3</a>) y debe considerarse obsoleta en modo no estricto: evite su uso siempre que sea posible. El código JavaScript que utiliza <codeinline>with</codeinline> es difícil de optimizar y es probable que se ejecute significativamente más despacio que el código equivalente escrito sin la sentencia <codeinline>with</codeinline>.</p>
     <p>El uso habitual de la sentencia <codeinline>with</codeinline> es facilitar el trabajo con jerarquías de objetos muy definidas. En JavaScript del lado del cliente, por ejemplo, es posible que tenga que escribir expresiones como ésta para acceder a los elementos de un formulario HTML:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">document.forms[0].address.value</code></pre>
     <p>Si necesita escribir expresiones como ésta varias veces, puede utilizar la función <codeinline>with</codeinline> con para tratar las propiedades del objeto formulario como variables:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">with(document.forms[0]) &lbrace;
       // Acceso 
       name.value = "";
@@ -656,7 +656,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       email.value = "";
     }</code></pre>
     <p>Esto reduce la cantidad de escritura que tiene que hacer: ya no necesita anteponer a cada nombre de propiedad de formulario <codeinline>document.forms[0]</codeinline>. Es igual de sencillo, por supuesto, evitar la sentencia <codeinline>with</codeinline> y escribir el código anterior así:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let f = document.forms[0];
     f.name.value = "";
     f.address.value = "";
@@ -667,7 +667,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="6-2" class="py-4 xs:py-5 sm:py-6">
     <h2>5.6.2 debugger</h2>
     <p>La sentencia <codeinline>debugger</codeinline> normalmente no hace nada. Sin embargo, si se dispone de un programa de depuración y se está ejecutando, entonces una implementación puede (aunque no está obligada a) realizar algún tipo de acción de depuración. En la práctica, esta sentencia actúa como un punto de interrupción: la ejecución del código JavaScript se detiene, y puede utilizar el depurador para imprimir los valores de las variables, examinar la pila de llamadas, etc. Supongamos, por ejemplo, que estás recibiendo una excepción en tu función <codeinline>f()</codeinline> porque está siendo llamada con un argumento indefinido, y no puedes averiguar de dónde viene esta llamada. Para ayudarte en la depuración de este problema, podrías alterar <codeinline>f()</codeinline> para que comience así:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">function f(o) &lbrace;
       if (o === undefined) debugger; // Linea temporal para proposito de depuración
       ...                            // El resto de la función va aquí
@@ -785,7 +785,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="7-1">
     <h2>5.7.1 const, let, y var</h2>
     <p>Las declaraciones <codeinline>const</codeinline>, <codeinline>let</codeinline> y <codeinline>var</codeinline> se tratan en <a href="capitulo-3#10">§3.10</a>. En ES6 y posteriores, <codeinline>const</codeinline> declara constantes, y <codeinline>let</codeinline> declara variables. Antes de ES6, la palabra clave <codeinline>var</codeinline> era la única forma de declarar variables y no había forma de declarar constantes. Las variables declaradas con <codeinline>var</codeinline> se asignan a la función que las contiene en lugar de al bloque que las contiene. Esto puede ser una fuente de errores, y en el JavaScript moderno no hay realmente ninguna razón para usar <codeinline>var</codeinline> en lugar de <codeinline>let</codeinline>.</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">const TAU = 2*Math.PI;
     let radius = 3;
     var circumference = TAU * radius;</code></pre>
@@ -793,7 +793,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="7-2" class="py-4 xs:py-5 sm:py-6">
     <h2>5.7.2 function</h2>
     <p>La declaración de <codeinline>function</codeinline> se utiliza para definir funciones, que se tratan en detalle en el <a href="capitulo-8">Capítulo 8</a>. (También vimos la <codeinline>function</codeinline> en <a href="capitulo-4#3">§4.3</a>, donde se utilizó como parte de una expresión de función en lugar de una declaración de función). Una declaración de función tiene este aspecto:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">function area(radius) &lbrace;
       return Math.PI * radius * radius;
     }</code></pre>
@@ -803,7 +803,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="7-3">
     <h2>5.7.3 class</h2>
     <p>En ES6 y posteriores, la declaración de <codeinline>class</codeinline> crea una nueva clase y le da un nombre que podemos utilizar para referirnos a ella. Las clases se describen en detalle en el <a href="capitulo-9">Capítulo 9</a> Una declaración de clase simple puede tener este aspecto:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">class Circle &lbrace;
       constructor(radius) &lbrace; this.r = radius; }
       area() &lbrace; return Math.PI * this.r * this.r; }
@@ -815,18 +815,18 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>5.7.4 import y export</h2>
     <p>Las declaraciones <codeinline>import</codeinline> y <codeinline>export</codeinline> se utilizan conjuntamente para que los valores definidos en un módulo de código JavaScript estén disponibles en otro módulo. Un módulo es un archivo de código JavaScript con su propio espacio de nombres global, completamente independiente de todos los demás módulos. La única manera de que un valor (como una función o una clase) definido en un módulo pueda utilizarse en otro módulo es que el módulo que lo define lo exporte con <codeinline>export</codeinline> y el módulo que lo utiliza lo importe con <codeinline>import</codeinline>. Los módulos son el tema del <a href="capitulo-10">Capítulo 10</a> y la <codeinline>import</codeinline> y la <codeinline>export</codeinline> se tratan en detalle en <a href="capitulo-10#3">§10.3</a>.</p>
     <p>Las directivas <codeinline>import</codeinline> se utilizan para importar uno o más valores de otro archivo de código Java-Script y asignarles nombres dentro del módulo actual. La directiva <codeinline>import</codeinline> viene de diferente forma. He aquí algunos ejemplos:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">import Circle from './geometry/circle.js';
     import &lbrace; PI, TAU } from './geometry/constants.js';
     import &lbrace; magnitude as hypotenuse } from './vectors/utils.js';</code></pre>
     <p>Los valores de un módulo JavaScript son privados y no pueden importarse a otros módulos a menos que se hayan exportado explícitamente. La directiva <codeinline>export</codeinline> hace esto: declara que uno o más valores definidos en el módulo actual son exportados y por lo tanto disponibles para ser importados por otros módulos. La directiva <codeinline>export</codeinline> tiene más variables que la directiva <codeinline>import</codeinline>. He aquí una de ellas:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// geometry/constants.js
     const PI = Math.PI;
     const TAU = 2 * PI;
     export &lbrace; PI, TAU };</code></pre>
     <p>La palabra clave <codeinline>export</codeinline> se utiliza a veces como modificador de otras declaraciones, dando lugar a una especie de declaración compuesta que define una constante, variable, función o clase y la exporta al mismo tiempo. Y cuando un módulo exporta un único valor, suele hacerse con la forma especial <codeinline>export default</codeinline>:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">export const TAU = 2 * Math.PI;
     export function magnitude(x,y) &lbrace; return Math.sqrt(x*x + y*y); }
     export default class Circle &lbrace; /* class definition omitted here */ }</code></pre>

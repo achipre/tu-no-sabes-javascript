@@ -3,9 +3,12 @@ import { ButtonAside } from "./ButtonAside";
 export const Sidebar = () => {
 
 	const [isOpen, setIsOpen] = useState(false);
+	const handleAside = () => setIsOpen(!isOpen)
 	
 	return (
-	<aside className="fixed top-0 left-0 z-40 w-96 h-screen transition-transform -translate-x-full sm:translate-x-0" ariaLabel="Sidenav">
+		
+	<aside className={`fixed top-0 left-0 ${isOpen ? "-translate-x-80" :"translate-x-0"} z-40 w-96  h-screen transition-transform`} ariaLabel="Sidenav">
+		
 		<div className="overflow-y-auto py-5 px-3 h-full bg-[#f6e4c5] dark:bg-amber-900">
 			<ul className="space-y-2">
 				<li className="list-none flex gap-2">
@@ -13,7 +16,7 @@ export const Sidebar = () => {
 						<img src="/javascript/favicon.png" alt="JavaScript" className="w-6 h-6 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
 						<span className="ml-3">JavaScript: La guía definitiva</span>
 					</a>
-					<ButtonAside isOpen={isOpen} setIsOpen={setIsOpen} />
+					<ButtonAside handleAside={handleAside} />
 				</li>
 				<li className="list-none">
 					<a href="/javascript-la-guia-definitiva/capitulo-1" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900">

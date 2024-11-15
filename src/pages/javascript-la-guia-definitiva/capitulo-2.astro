@@ -56,7 +56,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro"
     <h2>2.2 Comentarios</h2>
     <p>JavaScript admite dos estilos de comentarios. Cualquier texto entre <codeinline>//</codeinline> y el final de una línea se trata como un comentario y JavaScript lo ignora. Cualquier texto entre los caracteres <codeinline>/*</codeinline> y <codeinline>*/</codeinline> también se trata como un comentario; estos comentarios pueden abarcar varias líneas pero no pueden anidarse. Las siguientes líneas de código son comentarios JavaScript legales:
     </p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Este es un comentario de una sola línea.
     /* Esto también es un comentario */ // y aquí hay otro comentario.
     /*
@@ -67,7 +67,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro"
   <section class="py-4 xs:py-5 sm:py-6">
     <h2>2.3 Literales</h2>
     <p>Un <em>literal</em> es un valor de datos que aparece directamente en un programa. Los siguientes son todos literales:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">12                // El número doce
     1.2               // El número uno punto dos
     "hola mundo"      // Una cadena de texto
@@ -115,12 +115,12 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro"
   <section class="py-4 xs:py-5 sm:py-6">
     <h3>2.5.1 Secuencias de Escape Unicode</h3>
     <p>Algunos equipos y programas informáticos no pueden mostrar, introducir o procesar correctamente el conjunto completo de caracteres Unicode. Para ayudar a los programadores y sistemas que utilizan tecnología más antigua, JavaScript define secuencias de escape que nos permiten escribir caracteres Unicode utilizando sólo caracteres ASCII. Estos escapes Unicode comienzan con los caracteres <codeinline>\u</codeinline> y van seguidos de exactamente cuatro dígitos hexadecimales (utilizando letras mayúsculas o minúsculas A-F) o de uno a seis dígitos hexadecimales encerrados entre llaves. Estos escapes Unicode pueden aparecer en literales de cadenas JavaScript, literales de expresiones regulares e identificadores (pero no en palabras clave del lenguaje). El escape Unicode para el carácter "é", por ejemplo, es <codeinline>\u00E9;</codeinline> aquí hay tres formas diferentes de escribir un nombre de variable que incluya este carácter:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let café = 1; // Definir una variable utilizando un carácter Unicode 
     caf\u00e9     // => 1; acceder a la variable utilizando una secuencia de escape 
     caf\u&lbrace;E9}     // => 1; otra forma de la misma secuencia de escape</code></pre>
     <p>Las primeras versiones de JavaScript sólo admitían la secuencia de escape de cuatro dígitos. La versión con llaves se introdujo en ES6 para mejorar la compatibilidad con los puntos de código Unicode que requieren más de 16 bits, como los emoji:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">console.log("\u&lbrace;1F600}"); // Imprime un emoji de cara sonriente</code></pre>
     <p>Los escapes Unicode también pueden aparecer en comentarios, pero como los comentarios se ignoran, simplemente se tratan como caracteres ASCII en ese contexto y no se interpretan como Unicode.
     </p>
@@ -128,7 +128,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro"
   <section>
     <h3>2.5.2 Normalización Unicode</h3>
     <p>Si utiliza caracteres no ASCII en sus programas JavaScript, debe tener en cuenta que Unicode permite más de una forma de codificar el mismo carácter. La cadena "é", por ejemplo, puede codificarse como un único carácter Unicode <codeinline>\u00E9</codeinline> o como una "e" ASCII normal seguida del acento agudo <codeinline>\u0301</codeinline>. Estas dos codificaciones suelen tener exactamente el mismo aspecto cuando se muestran en un editor de texto, pero tienen codificaciones binarias diferentes, lo que significa que JavaScript las considera diferentes, lo que puede dar lugar a programas muy confusos:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">const café = 1; // Esta constante se llama "caf\u&lbrace;e9}"
     const café = 2; // Esta constante es diferente: "cafe\u&lbrace;301}" 
     café    // => 1: esta constante tiene un valor
@@ -140,44 +140,44 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro"
     <h2>2.6 Punto y coma opcional</h2>
     <p>Como muchos lenguajes de programación, JavaScript utiliza el punto y coma (<codeinline>;</codeinline>) para separar las sentencias (véase el <a href="capitulo-5">Capítulo 5</a>) entre sí. Esto es importante para dejar claro el significado del código: sin un separador, el final de una sentencia puede parecer el principio de la siguiente, o viceversa. En JavaScript, normalmente se puede omitir el punto y coma entre dos sentencias si éstas están escritas en líneas separadas. (También puede omitir el punto y coma al final de un programa o si el siguiente elemento del programa es una llave de cierre: <codeinline>}</codeinline>.) Muchos programadores de JavaScript (y el código de este libro) utilizan el punto y coma para marcar explícitamente el final de las sentencias, incluso cuando no es necesario. Otro estilo es omitir el punto y coma siempre que sea posible, usándolo sólo en las pocas situaciones que lo requieran. Sea cual sea el estilo que elija, hay algunos detalles que debe entender sobre los puntos y comas opcionales en JavaScript.</p>
     <p>Considere el siguiente código. Dado que las dos sentencias aparecen en líneas separadas, puede omitirse el primer punto y coma:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">a = 3;
     b = 4;</code></pre>
     <p>Sin embargo, si se escribe de la siguiente manera, el primer punto y coma es obligatorio:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">a = 3; b = 4;</code></pre>
     <p>Tenga en cuenta que JavaScript no trata todos los saltos de línea como punto y coma: normalmente trata los saltos de línea como punto y coma sólo si no puede analizar el código sin añadir un punto y coma implícito. Más formalmente (y con tres excepciones descritas un poco más adelante), JavaScript trata un salto de línea como punto y coma si el siguiente carácter no espaciador no puede interpretarse como una continuación de la sentencia actual. Considere el siguiente código:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let a
     a
     =
     3
     console.log(a)</code></pre>
     <p>JavaScript interpreta este código así:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let a; a = 3; console.log(a);</code></pre>
     <p>JavaScript trata el primer salto de línea como un punto y coma porque no puede analizar el código <codeinline>let a a</codeinline> sin punto y coma. La segunda <codeinline>a</codeinline> podría estar sola como la sentencia <codeinline>a;</codeinline>, pero JavaScript no trata el segundo salto de línea como un punto y coma porque puede continuar analizando la sentencia más larga <codeinline>a = 3;</codeinline>.</p>
     <p>Estas reglas de terminación de sentencias conducen a algunos casos sorprendentes. Este código parece dos sentencias separadas por una nueva línea:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let y = x + f
     (a+b).toString()</code></pre>
     <p>Pero los paréntesis de la segunda línea de código pueden interpretarse como una invocación de la función <codeinline>f</codeinline> de la primera línea, y JavaScript interpreta el código así:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let y = x + f(a+b).toString();</code></pre>
     <p>Lo más probable es que ésta no sea la interpretación pretendida por el autor del código. Para que funcione como dos sentencias separadas, en este caso se requiere un punto y coma explícito.</p>
     <p>En general, si una sentencia empieza por <codeinline>(</codeinline>, <codeinline>[</codeinline>, <codeinline>/</codeinline>, <codeinline>+</codeinline> o <codeinline>-</codeinline>, existe la posibilidad de que se interprete como una continuación de la sentencia anterior. Las sentencias que empiezan por <codeinline>/</codeinline>, <codeinline>+</codeinline> y <codeinline>-</codeinline> son bastante raras en la práctica, pero las que empiezan por <codeinline>(</codeinline> y <codeinline>[</codeinline> no son raras en absoluto, al menos en algunos estilos de programación en JavaScript. A algunos programadores les gusta poner un punto y coma defensivo al principio de cualquier sentencia de este tipo para que siga funcionando correctamente aunque se modifique la sentencia que la precede y se elimine el punto y coma anterior:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let x = 0                         // Aquí se omite el punto y coma
     ;[x,x+1,x+2].forEach(console.log) // Defensivo ; mantiene esta declaración separada</code></pre>
     <p>Hay tres excepciones a la regla general de que JavaScript interpreta los saltos de línea como punto y coma cuando no puede interpretar la segunda línea como una continuación de la sentencia de la primera línea. La primera excepción se refiere a las sentencias <codeinline>return</codeinline>, <codeinline>throw</codeinline>, <codeinline>yield</codeinline>, <codeinline>break</codeinline> y <codeinline>continue</codeinline> (véase el <a href="capitulo-5">Capítulo 5</a>). Estas sentencias suelen ir solas, pero a veces van seguidas de un identificador o expresión. Si aparece un salto de línea después de cualquiera de estas palabras (antes de cualquier otro token), JavaScript siempre lo interpretará como un punto y coma. Por ejemplo, si escribe</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">return
     true;</code></pre>
     <p>JavaScript supone que querías decir:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">return; true;</code></pre>
     <p>Sin embargo, probablemente querías decir:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">return true;</code></pre>
     <p>Esto significa que no debe insertar un salto de línea entre <codeinline>return</codeinline>, <codeinline>break</codeinline> o <codeinline>continue</codeinline> y la expresión que sigue a la palabra clave. Si insertas un salto de línea, es probable que tu código falle de una forma no obvia y difícil de depurar.</p>
     <p>La segunda excepción son los operadores <codeinline>++</codeinline> y <codeinline>--</codeinline> (<a href="capitulo-4#8">§4.8</a>). Estos operadores pueden ser prefijos que aparecen antes de una expresión o postfijos que aparecen después de una expresión. Si desea utilizar cualquiera de estos operadores como operadores postfijos, deben aparecer en la misma línea que la expresión a la que se aplican. La tercera excepción se refiere a las funciones definidas mediante la sintaxis concisa "flecha": la propia flecha <codeinline>=></codeinline> debe aparecer en la misma línea que la lista de parámetros.</p>

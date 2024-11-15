@@ -42,7 +42,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       </li>
     </ul>
     <p>He aquí algunos ejemplos de declaración de funciones:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Imprime el nombre y el valor de cada propiedad de o. Retorna undefined.
     function printprops(o) &lbrace;
       for(let p in o) &lbrace;
@@ -71,7 +71,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="1-2" class="py-4 xs:py-5 sm:py-6">
     <h2>8.1.2 Expresiones de función</h2>
     <p>Las expresiones de función se parecen mucho a las declaraciones de función, pero aparecen en el contexto de una expresión o sentencia más amplia, y el nombre es opcional. He aquí algunos ejemplos de expresiones de función:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Esta función eleva al cuadrado su argumento.
     // Ten en cuenta que lo asignamos a una variable.
     const cuadrado = function(x) &lbrace; return x*x; };
@@ -91,27 +91,27 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="1-3">
     <h2>8.1.3 Funciones flecha</h2>
     <p>En ES6, puede definir funciones utilizando una sintaxis particularmente compacta conocida como "funciones de flecha". Esta sintaxis recuerda a la notación matemática y utiliza una "flecha" <codeinline>=></codeinline> para separar los parámetros de la función del cuerpo de la misma. No se utiliza la palabra clave <codeinline>function</codeinline> y, dado que las funciones en flecha son expresiones en lugar de sentencias, tampoco es necesario un nombre de función. La forma general de una función de flecha es una lista de parámetros separados por comas entre paréntesis, seguida de la flecha <codeinline>=></codeinline> y el cuerpo de la función entre llaves:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">const sum = (x, y) => &lbrace; return x + y; };</code></pre>
     <p>Pero las funciones de flecha admiten una sintaxis aún más compacta. Si el cuerpo de la función es una única sentencia <codeinline>return</codeinline>, puede omitir la palabra clave <codeinline>return</codeinline>, el punto y coma que la acompaña y las llaves, y escribir el cuerpo de la función como la expresión cuyo valor se va a devolver:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">const sum = (x, y) => x + y;</code></pre>
     <p>Además, si una función de flecha tiene exactamente un parámetro, puede omitir los paréntesis alrededor de la lista de parámetros:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">const polynomial = x => x*x + 2*x + 3;</code></pre>
     <p>Tenga en cuenta, sin embargo, que una función de flecha sin argumentos debe escribirse con un par de paréntesis vacíos:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">const constantFunc = () => 42;</code></pre>
     <p>Tenga en cuenta que, al escribir una función de flecha, no debe poner una nueva línea entre los parámetros de la función y la flecha <codeinline>=></codeinline>. De lo contrario, podría terminar con una línea como <codeinline>const polinomio = x</codeinline>, que es una sentencia de asignación sintácticamente válida por sí misma.</p>
     <p>Además, si el cuerpo de la función de flecha es una única sentencia <codeinline>return</codeinline>, pero la expresión que se devuelve es un literal de objeto, hay que poner el literal de objeto entre paréntesis para evitar la ambigüedad sintáctica entre las llaves de un cuerpo de función y las llaves de un literal de objeto:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">const f = x => &lbrace; return &lbrace; value: x }; }; // Good: f() retorna un objeto
     const g = x => (&lbrace; value: x });           // Good: g() retorna un objeto
     const h = x => &lbrace; value: x };             // Bad: h() no retorna nada
     const i = x => &lbrace; v: x, w: x };           // Bad: Syntax Error</code></pre>
     <p>En la tercera línea de este código, la función <codeinline>h()</codeinline> es realmente ambigua: el código que pretendía ser un literal de objeto puede ser interpretado como una sentencia etiquetada, por lo que se crea una función que devuelve indefinido. En la cuarta línea, sin embargo, el literal de objeto más complicado no es una sentencia válida, y este código ilegal causa un error de sintaxis.</p>
     <p>La sintaxis concisa de las funciones de flecha las hace ideales cuando se necesita pasar una función a otra función, que es algo común de hacer con métodos de array como <codeinline>map()</codeinline>, <codeinline>filter()</codeinline>, y <codeinline>reduce()</codeinline> (ver <a href="capitulo-7#8-1">§7.8.1</a>), por ejemplo:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Hacer una copia de un array con elementos nulos eliminados.
     let filtered = [1,null,2,3].filter(x => x !== null); // filtered == [1,2,3]
     // Elevar al cuadrado algunos números:
@@ -121,7 +121,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="1-4" class="py-4 xs:py-5 sm:py-6">
     <h2>8.1.4 Funciones anidadas</h2>
     <p>En JavaScript, las funciones pueden estar anidadas dentro de otras funciones. Por ejemplo:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">function hypotenuse(a, b) &lbrace;
       function square(x) &lbrace; return x*x; }
       return Math.sqrt(square(a) + square(b));
@@ -169,7 +169,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="2-1" class="py-4 xs:py-5 sm:py-6">
     <h2>8.2 Invocación de funciones</h2>
     <p>Las funciones se invocan como funciones o como métodos con una expresión deinvocación (<a href="capitulo-4#5">§4.5</a>). Una expresión de invocación consiste en una expresión de funciónque se evalúa a un objeto de función seguida de un paréntesis abierto, una listaseparada por comas de cero o más expresiones de argumento y un paréntesis cerrado.Si la expresión de función es una expresión de acceso a una propiedad (si la funciónes la propiedad de un objeto o un elemento de una matriz), se trata de una expresiónde invocación a un método. Ese caso se explicará en el siguiente ejemplo. El siguientecódigo incluye una serie de expresiones regulares de invocación de funciones:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">printprops(&lbrace;x: 1});
     let total = distance(0,0,2,1) + distance(2,1,3,5);
     let probability = factorial(5)/factorial(13);</code></pre>
@@ -178,13 +178,13 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <article>
       <p class="title-article">Invocación condicional</p>
       <p>En ES2020 puede insertar <codeinline>?.</codeinline> después de la expresión de la función y antes de laparéntesis abierta en una invocación de función para invocar la función sólo si no es <codeinline>null</codeinline> o <codeinline>undefined</codeinline>. Es decir, la expresión <codeinline>f?.(x)</codeinline> es equivalente (suponiendo que nohaya efectos secundarios) a:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">(f !== null && f !== undefined) ? f(x) : undefined</code></pre>
       <p>Encontrará más detalles sobre esta sintaxis de invocación condicional en <a href="capitulo-4#5-1">§4.5.1</a>.</p>
     </article>
     <p>Para la invocación de funciones en modo no estricto, el contexto de invocación (elvalor <codeinline>this</codeinline>) es el objeto global. En modo estricto, sin embargo, el contexto deinvocación es <codeinline>undefined</codeinline>. Tenga en cuenta que las funciones definidas utilizando lasintaxis de flecha se comportan de manera diferente: siempre heredan el valor <codeinline>this</codeinline> que está en vigor donde se definen.</p>
     <p>Las funciones escritas para ser invocadas como funciones (y no como métodos) nosuelen utilizar la palabra clave <codeinline>this</codeinline>. Sin embargo, esta palabra clave puede utilizarse para determinar si el modo estricto está activado:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Define e invoca una función para determinar si el modo estricto está activado
     const strict = (function() &lbrace; return !this; }());</code></pre>
     <article>
@@ -195,17 +195,17 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="2-2">
     <h2>8.2.2 Invocación de métodos</h2>
     <p>Un <em>método</em> no es más que una función JavaScript que se almacena en una propiedad de un objeto. Si tienes una función <codeinline>f</codeinline> y un objeto <codeinline>o</codeinline>, puedes definir un método llamado <codeinline>m</codeinline> de <codeinline>o</codeinline> con la siguiente línea:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">o.m = f;</code></pre>
     <p>Una vez definido el método <codeinline>m()</codeinline> del objeto <codeinline>o</codeinline>, invócalo así:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">o.m();</code></pre>
     <p>O, si <codeinline>m()</codeinline> espera dos argumentos, podrías invocarla así:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">o.m(x, y);</code></pre>
     <p>El código de este ejemplo es una expresión de invocación: incluye una expresión de función <codeinline>o.m</codeinline> y dos expresiones de argumento, <codeinline>x</codeinline> e <codeinline>y</codeinline>. La expresión de función es en sí misma una expresión de acceso a propiedades, lo que significa que la función se invoca como un método y no como una función normal.</p>
     <p>Los argumentos y el valor de retorno de una invocación de método se tratan exactamente igual que en el caso de una invocación de función normal. Sin embargo, las invocaciones a métodos difieren de las invocaciones a funciones en un aspecto importante: el contexto de invocación. Las expresiones de acceso a propiedades constan de dos partes: un objeto (en este caso <codeinline>o</codeinline>) y un nombre de propiedad (<codeinline>m</codeinline>). En una expresión de invocación de método como ésta, el objeto <codeinline>o</codeinline> se convierte en el contexto de invocación, y el cuerpo de la función puede referirse a ese objeto utilizando la palabra clave <codeinline>this</codeinline>. He aquí un ejemplo concreto:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let calculator = &lbrace; // Un objeto literal
       operand1: 1,
       operand2: 1,
@@ -217,31 +217,31 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     calculator.add(); // Una invocación al método para calcular 1+1.
     calculator.result // => 2</code></pre>
     <p>La mayoría de las invocaciones de métodos utilizan la notación de punto para el acceso a propiedades, pero las expresiones de acceso a propiedades que utilizan corchetes también provocan la invocación de métodos. Por ejemplo, las siguientes son invocaciones de métodos:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">o["m"](x,y); // Otra forma de escribir a m[o](x,y).
     a[0](z)      // Tambien una invocación a un método (suponiendo que a[0] es una función).</code></pre>
     <p>Las invocaciones de métodos también pueden implicar expresiones de acceso a propiedades más complejas:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">customer.surname.toUpperCase(); // Invoca el método en customer.surname
     f().m(); // Invoca el método m() en el retorno de f().</code></pre>
     <p>Los métodos y la palabra clave <codeinline>this</codeinline> son fundamentales en el paradigma de la programación orientada a objetos. A cualquier función que se utilice como método se le pasa un argumento implícito: el objeto a través del cual se invoca. Típicamente, un método realiza algún tipo de operación sobre ese objeto, y la sintaxis de invocación de método es una forma elegante de expresar el hecho de que una función está operando sobre un objeto. Compare las dos líneas siguientes:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">rect.setSize(width, height);
     setRectSize(rect, width, height);</code></pre>
     <p>Las hipotéticas funciones invocadas en estas dos líneas de código pueden realizar exactamente la misma operación sobre el (hipotético) objeto <codeinline>rect</codeinline>, pero la sintaxis método-invocación de la primera línea indica más claramente la idea de que es el objeto <codeinline>rect</codeinline> el foco principal de la operación.</p>
     <article>
       <p class="title-article">Encadenamiento de métodos</p>
       <p>Cuando los métodos devuelven objetos, puede utilizar el valor de retorno de una invocación de método como parte de una invocación posterior. Esto da como resultado una serie (o "cadena") de invocaciones a métodos como una única expresión. Cuando se trabaja con operaciones asíncronas basadas en promesas (véase el <a href="capitulo-13">Capítulo 13</a>), por ejemplo, es habitual escribir código estructurado de este modo:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Corre tres operaciones asíncronas. Maneja errores.
     doStepOne().then(doStepTwo).then(doStepThree).catch(handleErrors);</code></pre>
       <p>Cuando escriba un método que no tenga un valor de retorno propio, considere la posibilidad de que el método devuelva <codeinline>this</codeinline>. Si hace esto de forma consistente en toda su API, habilitará un estilo de programación conocido como <em>encadenamiento de métodos</em><sup>1</sup> en el que un objeto puede nombrarse una vez y luego pueden invocarse múltiples métodos sobre él:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">new Square().x(100).y(100).size(50).outline("red").fill("blue").draw();</code></pre>
     </article>
     <p>Tenga en cuenta que <codeinline>this</codeinline> se trata de una palabra clave, no de un nombre de variable o propiedad. La sintaxis de JavaScript no permite asignarle un valor <codeinline>this</codeinline>.</p>
     <p>La palabra clave <codeinline>this</codeinline> no tiene el mismo ámbito que las variables y, excepto en el caso de las funciones flecha, las funciones anidadas no heredan el valor <codeinline>this</codeinline> de la función que las contiene. Si una función anidada es invocada como un método, su valor <codeinline>this</codeinline> es el objeto sobre el que fue invocada. Si una función anidada (que no es una función de flecha) se invoca como una función, su valor <codeinline>this</codeinline> será el objeto global (modo no estricto) o <codeinline>undefined</codeinline> (modo estricto). Es un error común asumir que una función anidada definida dentro de un método e invocada como función puede utilizar <codeinline>this</codeinline> para obtener el contexto de invocación del método. El siguiente código demuestra el problema:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let o = &lbrace;            // Un objeto o.
       m: function() &lbrace;    // El método m del objeto.
         let self = this; // Guarda el valor "this" en una variable.
@@ -257,13 +257,13 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     o.m();               // Invoca el método m en el objeto o.</code></pre>
     <p>Dentro de la función anidada <codeinline>f()</codeinline>, la palabra clave <codeinline>this</codeinline> no es igual al objeto <codeinline>o</codeinline>. Esto es ampliamente considerado como un fallo en el lenguaje JavaScript, y es importante ser consciente de ello. El código anterior muestra una solución común. Dentro del método <codeinline>m</codeinline>, asignamos el valor <codeinline>this</codeinline> a una variable <codeinline>self</codeinline>, y dentro de la función anidada <codeinline>f</codeinline>, podemos usar <codeinline>self</codeinline> en lugar de <codeinline>this</codeinline> para referirnos al objeto contenedor.</p>
     <p>En ES6 y posteriores, otra solución a este problema es convertir la función anidada <codeinline>f</codeinline> en una función de flecha, que heredará correctamente este valor:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">const f = () => &lbrace;
       this === o // true, ya que las funciones flechas heredan this.
     };</code></pre>
     <p>Las funciones definidas como expresiones en lugar de sentencias no son hoisted, por lo que para que este código funcione, la definición de función para <codeinline>f</codeinline> tendrá que ser movida dentro del método <codeinline>m</codeinline> para que aparezca antes de ser invocado.</p>
     <p>Otra solución consiste en invocar el método <codeinline>bind()</codeinline> de la función anidada para definir una nueva función que se invoque implícitamente sobre un objeto especificado:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">const f = (function() &lbrace;
       this === o // true, ya que vinculamos esta función a la externa this.
     }).bind(this);</code></pre>
@@ -273,7 +273,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>8.2.3 Invocación de constructores</h2>
     <p>Si una invocación a una función o método va precedida de la palabra clave <codeinline>new</codeinline>, se trata de una invocación a un constructor. (Las invocaciones a constructores se introdujeron en <a href="capitulo-4#6">§4.6</a> y <a href="capitulo-6#2-2">§6.2.2</a>, y los constructores se tratarán con más detalle en el <a href="capitulo-9">Capítulo 9</a>.) Las invocaciones a constructores difieren de las invocaciones a funciones y métodos en su manejo de argumentos, contexto de invocación y valor de retorno.</p>
     <p>Si una invocación a un constructor incluye una lista de argumentos entre paréntesis, esas expresiones de argumentos son evaluadas y pasadas a la función de la misma forma que lo serían para las invocaciones a funciones y métodos. No es una práctica común, pero puede omitir un par de paréntesis vacíos en una invocación a un constructor. Las dos líneas siguientes, por ejemplo, son equivalentes:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">o = new Object();
     o = new Object;</code></pre>
     <p>Una invocación a un constructor crea un nuevo objeto vacío que hereda del objeto especificado por la propiedad <codeinline>prototype</codeinline> del constructor. Las funciones constructoras están pensadas para inicializar objetos, y este objeto recién creado se utiliza como contexto de invocación, por lo que la función constructora puede referirse a él con la palabra clave <codeinline>this</codeinline>. Tenga en cuenta que el nuevo objeto se utiliza como contexto de invocación incluso si la invocación del constructor parece una invocación a un método. Es decir, en la expresión <codeinline>new o.m()</codeinline>, o no se utiliza como contexto de invocación.</p>
@@ -327,7 +327,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="3-1" class="py-4 xs:py-5 sm:py-6">
     <h2>8.3.1 Parámetros opcionales y valores por defecto</h2>
     <p>Cuando se invoca una función con menos argumentos que parámetros declarados, los parámetros adicionales se fijan a su valor por defecto, que normalmente es <codeinline>undefined</codeinline>. A menudo resulta útil escribir funciones de modo que algunos argumentos sean opcionales. A continuación se ofrece un ejemplo:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Añade los nombres de las enumaerable propiedades de un objeto o de
     // un array, y retorna a. Si se omite, crea y devuelve un nuevo array.
     function getPropertyNames(o, a) &lbrace;
@@ -341,12 +341,12 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     let a = getPropertyNames(o); // a == ["x"]; Obteniendo las propiedades de o en un nuevo array
     getPropertyNames(p, a); // a == ["x","y","z"]; agrega las propiedades de p</code></pre>
     <p>En lugar de utilizar una sentencia <codeinline>if</codeinline> en la primera línea de esta función, puede utilizar el operador <codeinline>||</codeinline>. de esta forma idiomática:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">a = a || [];</code></pre>
     <p>Recuerde de <a href="capatulo-4#10-2">§4.10.2</a> que el operador <codeinline>||</codeinline> devuelve su primer argumento si es verdadero y, en caso contrario, devuelve su segundo argumento. En este caso, si se pasa cualquier objeto como segundo argumento, la función utilizará ese objeto. Pero si el segundo argumento (o se pasa <codeinline>null</codeinline> u otro valor falso), se utilizará en su lugar una matriz vacía recién creada.</p>
     <p>Tenga en cuenta que cuando diseñe funciones con argumentos opcionales, debe asegurarse de poner los opcionales al final de la lista de argumentos para que puedan ser omitidos. El programador que llame a tu función no puede omitir el primer argumento y pasar el segundo: tendría que pasar explícitamente <codeinline>undefined</codeinline> como primer argumento.</p>
     <p>En ES6 y posteriores, puede definir un valor predeterminado para cada uno de los parámetros de la función directamente en la lista de parámetros de la función. Sólo tiene que seguir el nombre del parámetro con un signo igual y el valor por defecto a utilizar cuando no se proporciona ningún argumento para ese parámetro:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Añade los nombres de las propiedades enumerables del objeto o al
     // array a, y retorna a. Si a es omitido, crea y devuelve un nuevo array.
     function getPropertyNames(o, a = []) &lbrace;
@@ -354,7 +354,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       return a;
     }</code></pre>
     <p>Las expresiones de parámetros por defecto se evalúan cuando se llama a la función, no cuando se define, por lo que cada vez que se invoca a esta función <codeinline>getPropertyNames()</codeinline> con un argumento, se crea y se pasa una nueva matriz vacía.<sup>2</sup> Probablemente sea más fácil razonar sobre las funciones si los parámetros por defecto son constantes (o expresiones literales como <codeinline>[]</codeinline> y <codeinline>&lbrace;}</codeinline>). Pero esto no es necesario: puede utilizar variables, o invocaciones de funciones, por ejemplo, para calcular el valor por defecto de un parámetro. Un caso interesante es que, para funciones con múltiples parámetros, puede utilizar el valor de un parámetro anterior para definir el valor por defecto de los parámetros que le siguen:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Esta funcion retorna un objeto que resenta las dimensiones de un rectangulo.
     // Si solo se proporciona un ancho, hazlo el doble de alto que de ancho.
     const rectangle = (width, height=width*2) => (&lbrace;width, height});
@@ -364,7 +364,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="3-2">
     <h2>8.3.2 Parámetros restantes y listas de argumentos de longitud variable</h2>
     <p>Los parámetros por defecto nos permiten escribir funciones que pueden invocarse con menos argumentos que parámetros. Los <em>parámetros Rest</em> permiten el caso contrario: nos permiten escribir funciones que pueden invocarse con un número arbitrario de argumentos superior al de parámetros. He aquí un ejemplo de función que espera uno o más argumentos numéricos y devuelve el mayor de ellos:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">function max(first=-Infinity, ...rest) &lbrace;
       let maxValue = first; // Empieza asumuendo que el primer argumento es el mayor
       // A continuación, realice un bucle con el resto de los argumentos, buscando los mas grandes.
@@ -385,7 +385,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="3-3" class="py-4 xs:py-5 sm:py-6">
     <h2>8.3.3 El objeto Arguments</h2>
     <p>Los parámetros Rest se introdujeron en JavaScript en ES6. Antes de esa versión del lenguaje, las funciones varargs se escribían utilizando el objeto Arguments: dentro del cuerpo de cualquier función, el identificador <codeinline>arguments</codeinline> hace referencia al objeto Arguments para esa invocación. El objeto Arguments es un objeto tipo array (véase <a href="capitulo-7#9">§7.9</a>) que permite recuperar los valores de los argumentos pasados a la función por número, en lugar de por nombre. Aquí está la función <codeinline>max()</codeinline> de antes, reescrita para utilizar el objeto Arguments en lugar de un parámetro rest:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">function max(x) &lbrace;
       let maxValue = -Infinity;
       // Recorre los argumentos, buscando y recuperando el mayor.
@@ -402,12 +402,12 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="3-4">
     <h2>8.3.4 El operador Spread para llamadas a funciones</h2>
     <p>El operador de distribución <codeinline>...</codeinline> se utiliza para descomprimir, o "distribuir", los elementos de una matriz (o cualquier otro objeto iterable, como las cadenas) en un contexto en el que se esperan valores individuales. En <a href="capitulo-7#1-2">§7.1.2</a> hemos visto cómo se utiliza el operador de distribución con los literales de matrices. El operador puede utilizarse, del mismo modo, en invocaciones a funciones:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let numbers = [5, 2, 10, -1, 9, 100, 1];
     Math.min(...numbers) // => -1</code></pre>
     <p>Tenga en cuenta que <codeinline>...</codeinline> no es un operador verdadero en el sentido de que no puede evaluarse para producir un valor. Se trata de una sintaxis especial de JavaScript que puede utilizarse en literales de matrices e invocaciones de funciones.</p>
     <p>Cuando utilizamos la misma sintaxis <codeinline>...</codeinline> en una definición de función en lugar de una invocación de función, tiene el efecto contrario al operador spread. Como vimos en <a href="#3-2">§8.3.2</a>, el uso de <codeinline>...</codeinline> en una definición de función reúne varios argumentos de función en una matriz. Los parámetros Rest y el operador spread son a menudo útiles juntos, como en la siguiente función, que toma un argumento de función y devuelve una versión instrumentada de la función para su comprobación:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Esta función toma una función y devuelve una versión envuelta
     function timed(f) &lbrace;
       return function(...args) &lbrace; // Recoge los argumentos en un array de parametros restantes
@@ -438,26 +438,26 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>8.3.5 Desestructuración de argumentos de función en parámetros</h2>
     <p>Cuando se invoca una función con una lista de valores de argumentos, esos valores acaban asignándose a los parámetros declarados en la definición de la función. Esta fase inicial de la invocación de funciones se parece mucho a la asignación de variables. Por tanto, no debe sorprendernos que podamos utilizar las técnicas de asignación desestructurante (véase <a href="capitulo-3#3-10">§3.10.3</a>) con las funciones.</p>
     <p>Si defines una función que tiene nombres de parámetros entre corchetes, le estás diciendo a la función que espere que se pase un valor de matriz por cada par de corchetes. Como parte del proceso de invocación, los argumentos de la matriz se descompondrán en los parámetros nombrados individualmente. Como ejemplo, supongamos que estamos representando vectores 2D como matrices de dos números, donde el primer elemento es la coordenada X y el segundo elemento es la coordenada Y. Con esta simple estructura de datos, podríamos decir a la función que espere un valor de matriz para cada par de corchetes. Con esta simple estructura de datos, podríamos escribir la siguiente función para sumar dos vectores:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">function vectorAdd(v1, v2) &lbrace;
     return [v1[0] + v2[0], v1[1] + v2[1]];
     }
     vectorAdd([1,2], [3,4]) // => [4,6]</code></pre>
     <p>El código sería más fácil de entender si desestructuráramos los dos argumentos vectoriales en parámetros con nombres más claros:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">function vectorAdd([x1,y1], [x2,y2]) &lbrace; // Descomprimir 2 argumentos en 4 parametros.
       return [x1 + x2, y1 + y2];
     }
     vectorAdd([1,2], [3,4]) // => [4,6]</code></pre>
     <p>Del mismo modo, si está definiendo una función que espera un argumento objeto, puede desestructurar los parámetros de ese objeto. Volvamos a utilizar un ejemplo vectorial, sólo que esta vez supongamos que representamos los vectores como objetos con parámetros <codeinline>x</codeinline> e <codeinline>y</codeinline>:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Multiplica el vector &lbrace;x,y} por el valor scalar
     function vectorMultiply(&lbrace;x, y}, scalar) &lbrace;
       return &lbrace; x: x*scalar, y: y*scalar };
     }
     vectorMultiply(&lbrace;x: 1, y: 2}, 2) // => &lbrace;x: 2, y: 4 }</code></pre>
     <p>Este ejemplo de desestructuración de un único argumento de objeto en dos parámetros es bastante claro porque los nombres de los parámetros que utilizamos coinciden con los nombres de las propiedades del objeto entrante. La sintaxis es más verbosa y confusa cuando se necesita desestructurar propiedades con un nombre en parámetros con nombres diferentes. Aquí está el ejemplo de suma de vectores, implementado para vectores basados en objetos:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">function vectorAdd(
       &lbrace;x: x1, y: y1}, // Desempaqueta el primer objeto en los parametros x1 y y1
       &lbrace;x: x2, y: y2} // Desempaqueta el segundo objeto en los parametros x2 y y2
@@ -468,14 +468,14 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     vectorAdd(&lbrace;x: 1, y: 2}, &lbrace;x: 3, y: 4}) // => &lbrace;x: 4, y: 6}</code></pre>
     <p>Lo complicado de la sintaxis de desestructuración como <codeinline>&lbrace;x:x1, y:y1}</codeinline> es recordar cuáles son los nombres de las propiedades y cuáles los de los parámetros. La regla a tener en cuenta para desestructurar asignaciones y desestructurar llamadas a funciones es que las variables o parámetros que se declaran van en los lugares donde se esperaría que fueran los valores en un literal de objeto. Así que los nombres de las propiedades siempre van a la izquierda de los dos puntos, y los nombres de los parámetros (o variables) a la derecha.</p>
     <p>Puede definir parámetros por defecto con parámetros desestructurados. He aquí una multiplicación vectorial que funciona con vectores 2D o 3D:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Multiplica el vector &lbrace;x,y} o &lbrace;x,y,z} por el valor scalar
     function vectorMultiply(&lbrace;x, y, z=0}, scalar) &lbrace;
       return &lbrace; x: x*scalar, y: y*scalar, z: z*scalar };
     }
     vectorMultiply(&lbrace;x: 1, y: 2}, 2) // => &lbrace;x: 2, y: 4, z: 0}</code></pre>
     <p>Algunos lenguajes (como Python) permiten a quien llama a una función invocarla con argumentos especificados en forma <codeinline>name=value</codeinline>, lo que resulta conveniente cuando hay muchos argumentos opcionales o cuando la lista de parámetros es lo suficientemente larga como para que resulte difícil recordar el orden correcto. JavaScript no permite esto directamente, pero se puede aproximar desestructurando un argumento objeto en los parámetros de la función. Consideremos una función que copia un número especificado de elementos de una matriz en otra matriz con desplazamientos iniciales especificados opcionalmente para cada matriz. Puesto que hay cinco parámetros posibles, algunos de los cuales tienen valores por defecto, y sería difícil para un llamador recordar en qué orden pasar los argumentos, podemos definir e invocar la función <codeinline>arraycopy()</codeinline> así:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">function arraycopy(&lbrace;from, to=from, n=from.length, fromIndex=0, toIndex=0}) &lbrace;
       let valuesToCopy = from.slice(fromIndex, fromIndex + n);
       to.splice(toIndex, 0, ...valuesToCopy);
@@ -484,7 +484,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     let a = [1,2,3,4,5], b = [9,8,7,6,5];
     arraycopy(&lbrace;from: a, n: 3, to: b, toIndex: 4}) // => [9,8,7,6,1,2,3,5]</code></pre>
     <p>Al desestructurar una matriz, puede definir un parámetro de reposo para los valores adicionales dentro de la matriz que se está descomprimiendo. Ese parámetro restante entre corchetes es completamente diferente del verdadero parámetro restante de la función:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Esta función espera un argumento de array. Los dos primeros elementos
     // de ese array se descomprimen en los parámetros x e y. Los elementos
     // restantes se almacenan en el array de coordenadas. Y los argumentos
@@ -494,14 +494,14 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     }
     f([1, 2, 3, 4], 5, 6) // => [3, 5, 6, 3, 4]</code></pre>
     <p>En ES2018, también se puede utilizar un parámetro rest cuando se desestructura un objeto. El valor de ese parámetro rest será un objeto que tenga las propiedades que no se hayan desestructurado. Los parámetros de reposo de objetos suelen ser útiles con el operador de dispersión de objetos, que también es una nueva función de ES2018:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Multiplica el vector &lbrace;x,y} o &lbrace;x,y,z} por un valor scalar, conserva otras props
     function vectorMultiply(&lbrace;x, y, z=0, ...props}, scalar) &lbrace;
     return &lbrace; x: x*scalar, y: y*scalar, z: z*scalar, ...props };
     }
     vectorMultiply(&lbrace;x: 1, y: 2, w: -1}, 2) // => &lbrace;x: 2, y: 4, z: 0, w: -1}</code></pre>
     <p>Por último, tenga en cuenta que, además de desestructurar objetos argumento y matrices, también puede desestructurar matrices de objetos, objetos que tienen propiedades de matriz y objetos que tienen propiedades de objeto, básicamente a cualquier profundidad. Consideremos un código gráfico que representa círculos como objetos con propiedades <codeinline>x</codeinline>, <codeinline>y</codeinline>, <codeinline>radius</codeinline> y <codeinline>color</codeinline>, donde la propiedad <codeinline>color</codeinline> es una matriz de componentes de color rojo, verde y azul. Podría definir una función que espera que se le pase un único objeto círculo, pero que desestructura ese objeto círculo en seis parámetros separados:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">function drawCircle(&lbrace;x, y, radius, color: [r, g, b]}) &lbrace;
       // Aun no implementado
     }</code></pre>
@@ -512,7 +512,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Los parámetros de los métodos JavaScript no tienen tipos declarados, y no se realiza ninguna comprobación de tipos en los valores que se pasan a una función. Puede ayudar a que su código sea autodocumentado eligiendo nombres descriptivos para los argumentos de las funciones y documentándolos cuidadosamente en los comentarios de cada función. (Como alternativa, consulte <a href="capitulo-17#8">§17.8</a> para una extensión del lenguaje que permite superponer la comprobación de tipos al JavaScript normal).</p>
     <p>Como se describe en <a href="capitulo-3#9">§3.9</a>, JavaScript realiza conversiones de tipo liberales según sea necesario. Por lo tanto, si escribes una función que espera un argumento de cadena y luego llamas a esa función con un valor de otro tipo, el valor que pasaste simplemente se convertirá en una cadena cuando la función intente usarlo como una cadena. Todos los tipos primitivos pueden convertirse en cadenas, y todos los objetos tienen métodos <codeinline>toString()</codeinline> (aunque no necesariamente útiles), por lo que nunca se produce un error en este caso.</p>
     <p>Sin embargo, esto no siempre es cierto. Consideremos de nuevo el método <codeinline>arraycopy()</codeinline> mostrado anteriormente. Espera uno o dos argumentos de array y fallará si estos argumentos son del tipo incorrecto. A menos que esté escribiendo una función privada que sólo será llamada desde partes cercanas de su código, puede valer la pena añadir código para comprobar los tipos de argumentos como éste. Es mejor que una función falle inmediatamente y de forma predecible cuando se le pasan valores erróneos que empezar a ejecutarse y fallar más tarde con un mensaje de error que probablemente no sea claro. He aquí una función de ejemplo que realiza la comprobación de tipos:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Devuelve la suma de los elementos del objeto iterable a.
     // El elemento de a deben ser todos números.
     function sum(a) &lbrace;
@@ -533,26 +533,26 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>8.4 Funciones como valores</h2>
     <p>Las características más importantes de las funciones son que pueden definirse e invocarse. La definición y la invocación de funciones son características sintácticas de JavaScript y de la mayoría de los demás lenguajes de programación. En JavaScript, sin embargo, las funciones no son sólo sintaxis, sino también valores, lo que significa que pueden asignarse a variables, almacenarse en los propios objetos o en los elementos de matrices, pasarse como argumentos a funciones, etc.<sup>3</sup></p>
     <p>Para entender cómo las funciones pueden ser datos de JavaScript así como sintaxis de JavaScript, considere esta definición de función:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">function square(x) &lbrace; return x*x; }</code></pre>
     <p>Esta definición crea un nuevo objeto función y lo asigna a la variable <codeinline>square</codeinline>. El nombre de una función es realmente irrelevante; es simplemente el nombre de una variable que hace referencia al objeto función. La función puede asignarse a otra variable y seguir funcionando de la misma manera:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let s = square; // Ahora s se refiere a la misma función que el cuadrado.
     square(4)       // => 16
     s(4)            // => 16</code></pre>
     <p>Las funciones también pueden asignarse a propiedades del objeto en lugar de a variables. Como ya hemos comentado, llamamos a las funciones "métodos" cuando hacemos esto:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let o = &lbrace;square: function(x) &lbrace; return x*x; }}; // Un objeto literal
     let y = o.square(16); // y == 256</code></pre>
     <p>Las funciones ni siquiera requieren nombres, como cuando se asignan a elementos de un array:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let a = [x => x*x, 20]; // Un array literal
     a[0](a[1])              // => 400</code></pre>
     <p>La sintaxis de este último ejemplo parece extraña, pero sigue siendo una expresión de invocación de función legal.</p>
     <p>Como ejemplo de lo útil que es tratar las funciones como valores, considere el método <codeinline>Array.sort()</codeinline>. Este método ordena los elementos de un array. Debido a que hay muchos posibles órdenes para ordenar (orden numérico, orden alfabético, orden de fecha, ascendente, descendente, etc.), el método <codeinline>sort()</codeinline> opcionalmente toma una función como argumento para decirle cómo realizar la ordenación. Esta función tiene una tarea sencilla: para dos valores cualesquiera que se le pasen, devuelve un valor que especifica qué elemento iría primero en una matriz ordenada. Este argumento de función hace que <codeinline>Array.sort()</codeinline> sea perfectamente general e infinitamente flexible; puede ordenar cualquier tipo de datos en cualquier orden concebible. En <a href="capitulo-7#8-6">§7.8.6</a> se muestran ejemplos.</p>
     <p>El <a href="#ejemplo-8-1">Ejemplo 8-1</a> demuestra el tipo de cosas que se pueden hacer cuando se utilizan funciones como valores. Este ejemplo puede ser un poco complicado, pero los comentarios explican lo que está pasando.</p>
     <p id="ejemplo-8-1"><em>Ejemplo 8-1. Uso de funciones como datos</em></p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Definimos algunas funciones aqui
     function add(x,y) &lbrace; return x + y; }
     function subtract(x,y) &lbrace; return x - y; }
@@ -594,7 +594,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="4-1">
     <h2>8.4.1 Definición de propiedades de función propias</h2>
     <p>Las funciones no son valores primitivos en JavaScript, sino un tipo especializado de objeto, lo que significa que las funciones pueden tener propiedades. Cuando una función necesita una variable "estática" cuyo valor persiste a través de las invocaciones, a menudo es conveniente utilizar una propiedad de la propia función. Por ejemplo, suponga que desea escribir una función que devuelva un único número entero cada vez que se invoque. La función nunca debe devolver el mismo valor dos veces. Para conseguirlo, la función necesita llevar un registro de los valores que ya ha devuelto, y esta información debe persistir a través de las invocaciones de la función. Podrías almacenar esta información en una variable global, pero es innecesario, porque la información sólo es utilizada por la propia función. Es mejor almacenar la información en una propiedad del objeto Función. A continuación se muestra un ejemplo que devuelve un número entero único cada vez que se llama:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Inicialice la propiedad del contador del objeto de función. 
     // Las declaraciones de funciones se elevan, por lo que realmente 
     // podemos realizar esta asignación antes de la declaración de la función.
@@ -608,7 +608,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     uniqueInteger()                   // => 0
     uniqueInteger()                   // => 1</code></pre>  
     <p>Como otro ejemplo, considere la siguiente función <codeinline>factorial()</codeinline> que utiliza los valores propios de sí misma (tratándose a sí misma como una matriz) para almacenar en caché los resultados calculados previamente:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Calcular factoriales y almacenar en caché los resultados como propiedades de la función misma.
     function factorial(n) &lbrace;
       if (Number.isInteger(n) && n > 0) &lbrace;    // Sólo números enteros positivos
@@ -628,7 +628,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>8.5 Funciones como espacios de nombres</h2>
     <p>Las variables declaradas dentro de una función no son visibles fuera de ella. Por esta razón, a veces es útil definir una función simplemente para que actúe como un espacio de nombres temporal en el que se pueden definir variables sin saturar el espacio de nombres global.</p>
     <p>Supongamos, por ejemplo, que tiene un fragmento de código JavaScript que desea utilizar en varios programas JavaScript diferentes (o, en el caso de JavaScript del lado del cliente, en varias páginas web diferentes). Supongamos que este código, como la mayoría, define variables para almacenar los resultados intermedios de sus cálculos. El problema es que como este trozo de código se utilizará en muchos programas diferentes, no sabes si las variables que crea entrarán en conflicto con las variables creadas por los programas que lo utilizan. La solución es poner el trozo de código en una función y luego invocar la función. De esta forma, las variables que habrían sido globales pasan a ser locales a la función:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">function chunkNamespace() &lbrace;
       // El fragmento de código va aquí
       // Todas las variables definidas en el fragmento son locales 
@@ -637,7 +637,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     }
     chunkNamespace(); // ¡Pero no olvides invocar la función!</code></pre>
     <p>Este código define una única variable global: el nombre de la función chunkNamespace. Si definir incluso una sola propiedad es demasiado, puedes definir e invocar una función anónima en una sola expresión:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">(function() &lbrace; // chunkNamespace() función reescrita como una expresión sin nombre.
       // Un fragmento de código va aquí
     }()); // Finalice la función literal e invóquela ahora.</code></pre>
@@ -649,7 +649,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Como la mayoría de los lenguajes de programación modernos, JavaScript utiliza el <em>ámbito léxico</em>. Esto significa que las funciones se ejecutan utilizando el ámbito de la variable que estaba en vigor cuando se definieron, no el ámbito de la variable que está en vigor cuando se invocan. Para implementar el ámbito léxico, el estado interno de un objeto de función JavaScript debe incluir no sólo el código de la función, sino también una referencia al ámbito en el que aparece la definición de la función. Esta combinación de un objeto de función y un ámbito (un conjunto de enlaces de variables) en el que se resuelven las variables de la función se denomina <em>closure</em> en la literatura informática.</p>
     <p>Técnicamente, todas las funciones de JavaScript son cierres, pero como la mayoría de las funciones se invocan desde el mismo ámbito en el que se definieron, normalmente no importa que haya un cierre implicado. Los cierres se vuelven interesantes cuando son invocados desde un ámbito diferente al que fueron definidos. Esto sucede más comúnmente cuando un objeto de función anidada es devuelto desde la función dentro de la cual fue definido. Existen varias técnicas de programación potentes que implican este tipo de cierres de funciones anidadas, y su uso se ha vuelto relativamente común en la programación JavaScript. Los cierres pueden parecer confusos la primera vez que te topas con ellos, pero es importante que los entiendas lo suficientemente bien como para utilizarlos cómodamente.</p>
     <p>El primer paso para entender los cierres es revisar las reglas de alcance léxico de las funciones nes- tadas. Consideremos el siguiente código:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let scope = "global scope";       // Una variable global
     function checkscope() &lbrace;
       let scope = "local scope";      // Una variable local
@@ -658,7 +658,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     }
     checkscope() // => "local scope"</code></pre>
     <p>La función <codeinline>checkscope()</codeinline> declara una variable local y luego define e invoca una función que devuelve el valor de esa variable. Debería quedarte claro por qué la llamada a <codeinline>checkscope()</codeinline> devuelve "ámbito local". Ahora, cambiemos ligeramente el código. ¿Puedes decir qué devolverá este código?</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let scope = "global scope";      // Una variable global
     function checkscope() &lbrace;
       let scope = "local scope";     // Una variable local
@@ -669,7 +669,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>En este código, un par de paréntesis se ha movido de dentro de <codeinline>checkscope()</codeinline> a fuera de él. En lugar de invocar la función anidada y devolver su resultado, <codeinline>checkscope()</codeinline> ahora sólo devuelve el propio objeto de la función anidada. ¿Qué sucede cuando invocamos esa función anidada (con el segundo par de paréntesis en la última línea de código) fuera d e la función en la que fue definida?</p>
     <p>Recuerda la regla fundamental del ámbito léxico: Las funciones JavaScript se ejecutan utilizando el ámbito en el que fueron definidas. La función anidada <codeinline>f()</codeinline> se definió en un ámbito en el que la variable <codeinline>scope</codeinline> estaba vinculada al valor "ámbito local". Esa vinculación sigue vigente cuando se ejecuta <codeinline>f</codeinline>, independientemente del lugar desde el que se ejecute. Así que la última línea del ejemplo de código anterior devuelve "ámbito local", no "ámbito global". Esto, en pocas palabras, es la sorprendente y poderosa naturaleza de los cierres: capturan las variables locales (y parámetros) de la función externa dentro de la cual están definidos.</p>
     <p>En <a href="#4-1">§8.4.1</a>, definimos una función <codeinline>uniqueInteger()</codeinline> que utilizaba una propiedad de la propia función para realizar un seguimiento del siguiente valor a devolver. Una desventaja de este enfoque es que un código malicioso podría reiniciar el contador o ponerlo en un valor que no sea entero, haciendo que la función <codeinline>uniqueInteger()</codeinline> viole la parte "unique" o "integer" de su contrato. Los cierres capturan las variables locales de una única invocación a una función y pueden utilizar esas variables como estado privado. He aquí cómo podríamos reescribir la función <codeinline>uniqueInteger()</codeinline> utilizando una expresión de función de invocación inmediata para definir un espacio de nombres y un cierre que utilice ese espacio de nombres para mantener su estado privado:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let uniqueInteger = (function() &lbrace; // Lo definimos y lo invocamos
       let counter = 0;                // Estado privado de la función a continuación
       return function() &lbrace; return counter++; };
@@ -678,7 +678,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     uniqueInteger()    // => 1</code></pre>
     <p>Para entender este código, tienes que leerlo detenidamente. A primera vista, la primera línea de código parece que está asignando una función a la variable <codeinline>uniqueInteger</codeinline>. De hecho, el código está definiendo e invocando (como sugiere el paréntesis abierto en la primera línea) una función, por lo que es el valor de retorno de la función el que se asigna a <codeinline>uniqueInteger</codeinline>. Ahora, si estudiamos el cuerpo de la función, vemos que su valor de retorno es otra función. Es este objeto de función anidada el que se asigna a <codeinline>uniqueInteger</codeinline>. La función anidada tiene acceso a las variables de su ámbito y puede utilizar la variable <codeinline>counter</codeinline> definida en la función externa. Una vez que la función externa retorna, ningún otro código puede ver la variable <codeinline>counter</codeinline>: la función interna tiene acceso exclusivo a ella.</p>
     <p>Las variables privadas como <codeinline>counter</codeinline> no tienen por qué ser exclusivas de un único cierre: es perfectamente posible que dos o más funciones anidadas se definan dentro de la misma función externa y compartan el mismo ámbito. Considere el siguiente código:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">function counter() &lbrace;
       let n = 0;
       return &lbrace;
@@ -695,7 +695,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     d.count()            // => 1: d no se ha reseteado</code></pre>
     <p>La función <codeinline>counter()</codeinline> devuelve un objeto "counter". Este objeto tiene dos métodos: <codeinline>count()</codeinline> devuelve el siguiente entero, y <codeinline>reset()</codeinline> reinicia el estado interno. Lo primero que hay que entender es que los dos métodos comparten el acceso a la variable privada <codeinline>n</codeinline>. Lo segundo que hay que entender es que cada invocación de <codeinline>counter()</codeinline> crea un nuevo ámbito -independientemente de los ámbitos utilizados por las invocaciones anteriores- y una nueva variable privada dentro de ese ámbito. Así que si llamas a <codeinline>counter()</codeinline> dos veces, obtendrás dos objetos contador con diferentes variables privadas. Llamar a <codeinline>count()</codeinline> o <codeinline>reset()</codeinline> en un objeto contador no tiene efecto en el otro.</p>
     <p>Vale la pena señalar aquí que se puede combinar esta técnica de cierre con getters y setters de propiedades. La siguiente versión de la función <codeinline>counter()</codeinline> es una variación del código que apareció en <a href="capitulo-6#10-6">§6.10.6</a>, pero utiliza cierres para el estado privado en lugar de confiar en una propiedad de objeto normal:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">function counter(n) &lbrace; // El argumento de función n es la variable privada
       return &lbrace;
         // El método getter de propiedad retorna e incrementa la variable del contador privado.
@@ -716,7 +716,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Observe que esta versión de la función <codeinlien>counter()</codeinlien> no declara una variable local, sino que sólo utiliza su parámetro n para mantener el estado privado compartido por los métodos de acceso a propiedades. Esto permite a quien llama a <codeinline>counter()</codeinline> especificar el valor inicial de la variable privada.</p>
     <p>El <a href="ejemplo-8-2">Ejemplo 8-2</a> es una generalización del estado privado compartido a través de la técnica de cierres que hemos estado demostrando aquí. Este ejemplo define una función <codeinline>addPrivateProp()</codeinline> que define una variable privada y dos funciones anidadas para obtener y establecer el valor de esa variable. Añade estas funciones anidadas como métodos del objeto que especifiques.</p>
     <p id="ejemplo-8-2"><em>Ejemplo 8-2. Métodos de acceso a propiedades privadas utilizando cierres</em></p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Esta función agrega métodos de acceso a propiedades para una propiedad con
     // el nombre especificado al objeto o. Los métodos se denominan get&lt;name>
     // y set&lt;name>. Si se proporciona una función de predicado, el método de
@@ -754,7 +754,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     o.getName()   // => "Frank"
     o.setName(0); // !TypeError: Intente establecer un valor del tipo incorrecto</code></pre>
     <p>Ya hemos visto varios ejemplos en los que dos cierres se definen en el mismo ámbito y comparten el acceso a la misma variable o variables privadas. Esta es una técnica importante, pero es igualmente importante reconocer cuando los cierres comparten inadvertidamente el acceso a una variable que no deberían compartir. Considere el siguiente código:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Esta función devuelve una función que siempre devuelve v
     function constfunc(v) &lbrace; return () => v; }
 
@@ -765,7 +765,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     // La función en el elemento 5 de la matriz devuelve el valor 5.
     funcs[5]() // => 5</code></pre>
     <p>Cuando se trabaja con código como éste que crea múltiples cierres utilizando un bucle, es un error común intentar mover el bucle dentro de la función que define los cierres. Piense en el siguiente código, por ejemplo:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Devuelve un array de funciones que devuelven los valores 0-9
     function constfuncs() &lbrace;
       let funcs = [];
@@ -778,7 +778,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     funcs[5]() // => 10; ¿Por qué esto no devuelve 5?</code></pre>
     <p>Este código crea 10 cierres y los almacena en un array. Todos los cierres se definen dentro de la misma invocación de la función, por lo que comparten el acceso a la variable <codeinline>i</codeinline>. Cuando <codeinline>constfuncs()</codeinline> devuelve, el valor de la variable <codeinline>i</codeinline> es 10, y los 10 cierres comparten este valor. Por lo tanto, todas las funciones de la matriz de funciones devuelven el mismo valor, que no es lo que queríamos en absoluto. Es importante recordar que el ámbito asociado a un cierre es "vivo". Las funciones anidadas no hacen copias privadas del ámbito ni instantáneas estáticas de los enlaces de las variables. Fundamentalmente, el problema aquí es que las variables declaradas con <codeinline>var</codeinline> se definen a lo largo de la función. Nuestro bucle <codeinline>for</codeinline> declara la variable del bucle con <codeinline>var i</codeinline>, por lo que la variable <codeinline>i</codeinline> está definida en toda la función en lugar de tener un ámbito más limitado al cuerpo del bucle. El código muestra una categoría común de errores en ES5 y anteriores, pero la introducción de variables de ámbito de bloque en ES6 resuelve el problema. Si sustituimos <codeinline>var</codeinline> por <codeinline>let</codeinline> o <codeinline>const</codeinline>, el problema desaparece. Debido a que <codeinline>let</codeinline> y <codeinline>const</codeinline> tienen ámbito de bloque, cada iteración del bucle define un ámbito que es independiente de los ámbitos de todas las demás iteraciones, y cada uno de estos ámbitos tiene su propio ámbito independiente de <codeinline>i</codeinline>.</p>
     <p>Otra cosa que hay que recordar al escribir cierres es que <codeinline>this</codeinline> es una palabra clave de JavaScript, no una variable. Como se ha comentado antes, las funciones de flecha heredan el valor <codeinline>this</codeinline> de la función que las contiene, pero las funciones definidas con la palabra clave <codeinline>function</codeinline> no lo hacen. Así que si estás escribiendo un cierre que necesita usar el valor <codeinline>this</codeinline> de su función contenedora, deberías usar una función de flecha, o llamar a <codeinline>bind()</codeinline>, en el cierre antes de devolverlo, o asignar el valor <codeinline>this</codeinline> externo a una variable que tu cierre heredará:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">const self = this; // Hacer que este valor esté disponible para funciones anidadas</code></pre>
   </section>
   <section id="7" class="py-4 xs:py-5 sm:py-6">
@@ -800,26 +800,26 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="7-4" class="py-4 xs:py-5 sm:py-6">
     <h2>8.7.4 Los métodos call() y apply()</h2>
     <p><codeinline>call()</codeinline> y <codeinline>apply()</codeinline> permiten invocar indirectamente ( <a href="#2-4">§8.2.4</a> ) una función como si fuera un método de otro objeto. El primer argumento de <codeinline>call()</codeinline> y <codeinline>apply()</codeinline> es el objeto sobre el que se va a invocar la función; este argumento es el contexto de invocación y se convierte en el valor de la palabra clave <codeinline>this</codeinline> dentro del cuerpo de la función. Para invocar la función <codeinline>f()</codeinline> como un método del objeto <codeinline>o</codeinline> (sin pasar argumentos), puede utilizar <codeinline>call()</codeinline> o <codeinline>apply()</codeinline>:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">f.call(o);
     f.apply(o);</code></pre>
     <p>Cualquiera de estas líneas de código son similares a las siguientes (que suponen que <codeinline>o</codeinline> no tiene ya una propiedad llamada <codeinline>m</codeinline>):</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">o.m = f;    // Haga de f un método temporal de o.
     o.m();      // Invocarlo sin pasar ningún argumento.
     delete o.m; // Eliminar el método temporal.</code></pre>
     <p>Recuerde que las funciones de flecha heredan el valor <codeinline>this</codeinline> del contexto donde se definen. Esto no puede anularse con los métodos <codeinline>call()</codeinline> y <codeinline>apply()</codeinline>. Si llama a cualquiera de esos métodos en una función de flecha, el primer argumento es efectivamente ignorado.</p>
     <p>Cualquier argumento a <codeinline>call()</codeinline> después del primer argumento del contexto de invocación son los valores que se pasan a la función que se invoca (y estos argumentos no se ignoran para las funciones de flecha). Por ejemplo, para pasar dos números a la función <codeinline>f()</codeinline> e invocarla como si fuera un método del objeto <codeinline>o</codeinline>, se podría utilizar código como este:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">f.call(o, 1, 2);</code></pre>
     <p>El método <codeinline>apply()</codeinline> es como el método <codeinline>call()</codeinline>, salvo que los argumentos que se pasan a la función se especifican como una matriz:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">f.apply(o, [1,2]);</code></pre>
     <p>Si una función está definida para aceptar un número arbitrario de argumentos, el método <codeinline>apply()</codeinline> permite invocar esa función sobre el contenido de un array de longitud arbitraria. En ES6 y posteriores, podemos utilizar simplemente el operador spread, pero es posible que veas código ES5 que utiliza <codeinline>apply()</codeinline> en su lugar. Por ejemplo, para encontrar el mayor número en un array de números sin usar el operador spread, podrías usar el mé todo <codeinline>apply()</codeinline> para pasar los elementos del array a la función <codeinline>Math.max()</codeinline>:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let biggest = Math.max.apply(Math, arrayOfNumbers);</code></pre>
     <p>La función <codeinline>trace()</codeinline> definida a continuación es similar a la función <codeinline>timed()</codeinline> definida en <a href="#3-4">§8.3.4</a>, pero funciona para métodos en lugar de funciones. Utiliza el método <codeinline>apply()</codeinline> en lugar de un operador spread, y al hacerlo, es capaz de invocar al método envuelto con los mismos argumentos y el mismo valor <codeinline>this</codeinline> que el método envuelto:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Reemplace el método llamado m del objeto o con una versión 
     // que registre mensajes antes y después de invocar el método original.
     function trace(o, m) &lbrace;
@@ -835,7 +835,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="7-5">
     <h2>8.7.5 El método bind()</h2>
     <p>El propósito principal de <codeinline>bind()</codeinline> es <em>vincular</em> una función a un objeto. Cuando se invoca el método <codeinline>bind()</codeinline> sobre una función <codeinline>f</codeinline> y se le pasa un objeto <codeinline>o</codeinline>, el método devuelve una nueva función. Al invocar la nueva función (como una función) se invoca la función original <codeinline>f</codeinline> como un método de <codeinline>o</codeinline>. Cualquier argumento que se pase a la nueva función se pasa a la función original. Por ejemplo:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">function f(y) &lbrace; return this.x + y; } // Esta función necesita estar vinculada
     let o = &lbrace; x: 1 };      // Un objeto que enlazaremos
     let g = f.bind(o);     // Al llamar a g(x) se invoca a f() en o
@@ -844,7 +844,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     p.g(2)                 // => 3: g sigue logando a o no a p.</code></pre>
     <p>Las funciones de flecha heredan su valor <codeinline>this</codeinline> del entorno en el que están definidas, y ese valor no se puede sobrescribir con <codeinline>bind()</codeinline>, por lo que si la función <codeinline>f()</codeinline> en el código anterior se definiera como una función de flecha, la vinculación no funcionaría. Sin embargo, el caso de uso más común para llamar a <codeinline>bind()</codeinline> es hacer que las funciones que no son de flecha se comporten como funciones de flecha, por lo que esta limitación en la vinculación de funciones de flecha no es un problema en la práctica.</p>
     <p>Sin embargo, el método <codeinline>bind()</codeinline> no sólo vincula una función a un objeto. También puede realizar una aplicación parcial: cualquier argumento que pase a <codeinline>bind()</codeinline> después del primero se vincula junto con el valor <codeinline>this</codeinline>. Esta característica de aplicación parcial de <codeinline>bind()</codeinline> funciona con funciones de flecha. La aplicación parcial es una técnica común en la programación funcional y a veces se denomina <em>currying</em>. Aquí hay algunos ejemplos del método <codeinline>bind()</codeinline> utilizado para la aplicación parcial:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let sum = (x,y) => x + y;     // Retorna la suma de 2 argumentos
     let succ = sum.bind(null, 1); // Vincula el primer argumentos a 1
     succ(2)             // => 3: x esta ligado a 1, y pasamos 2 para el argumento y
@@ -861,10 +861,10 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="7-7">
     <h2>8.7.7 El constructor Function()</h2>
     <p>Dado que las funciones son objetos, existe un constructor <codeinline>Function()</codeinline> que puede utilizarse para crear nuevas funciones:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">const f = new Function("x", "y", "return x*y;");</code></pre>
     <p>Esta línea de código crea una nueva función que es más o menos equivalente a una función definida con la sintaxis familiar:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">const f = function(x, y) &lbrace; return x*y; };</code></pre>
     <p>El constructor <codeinline>Function()</codeinline> espera cualquier número de argumentos de cadena. El último argumento es el texto del cuerpo de la función; puede contener sentencias JavaScript arbitrarias, separadas entre sí por punto y coma. Todos los demás argumentos del constructor son cadenas que especifican los nombres de los parámetros de la función. Si está definiendo una función que no recibe argumentos, simplemente pasaría una única cadena -el cuerpo de la función- al constructor.</p>
     <p>Observe que al constructor <codeinline>Function()</codeinline> no se le pasa ningún argumento que especifique un nombre para la función que crea. Al igual que los literales de función, el constructor <codeinline>Function()</codeinline> crea funciones anónimas.</p>
@@ -888,7 +888,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
           Un último punto muy importante sobre el constructor <codeinline>Function()</codeinline> es que las funciones que crea no utilizan ámbito léxico; en su lugar, siempre se compilan como si fueran funciones de nivel superior, como demuestra el siguiente código:
         </p>
       </li>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let scope = "global";
     function constructFunction() &lbrace;
     let scope = "local";
@@ -907,7 +907,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="8-1">
     <h2>8.8.1 Procesamiento de matrices con funciones</h2>
     <p>Supongamos que tenemos una matriz de números y queremos calcular la media y la desviación estándar de esos valores. Podríamos hacerlo en un estilo no funcional como este:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let data = [1,1,3,5,5]; // Esto es un array de números
 
     // La media es la suma de los elementos dividida por el número de elementos.
@@ -924,7 +924,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     }
     let stddev = Math.sqrt(total/(data.length-1)); // stddev == 2</code></pre>
     <p>Podemos realizar estos mismos cálculos en un estilo funcional conciso utilizando los métodos de array <codeinline>map()</codeinline> y <codeinline>reduce()</codeinline> de esta manera (véase <a href="capitulo-7#8-1">§7.8.1</a> para revisar estos métodos):</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Primero, defina dos funciones simples
     const sum = (x,y) => x+y;
     const square = x => x*x;
@@ -936,11 +936,11 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     let stddev = Math.sqrt(deviations.map(square).reduce(sum)/(data.length-1));
     stddev // => 2</code></pre>
     <p>Esta nueva versión del código parece bastante diferente de la primera, pero sigue invocando métodos sobre objetos, por lo que conserva algunas convenciones orientadas a objetos. Escribamos versiones funcionales de los métodos <codeinline>map()</codeinline> y <codeinline>reduce()</codeinline>:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">const map = function(a, ...args) &lbrace; return a.map(...args); };
     const reduce = function(a, ...args) &lbrace; return a.reduce(...args); };</code></pre>
     <p>Con estas funciones <codeinline>map()</codeinline> y <codeinline>reduce()</codeinline> definidas, nuestro código para calcular la media y la desviación típica tiene ahora este aspecto:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">const sum = (x,y) => x+y;
     const square = x => x*x;
 
@@ -953,7 +953,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="8-2" class="py-4 xs:py-5 sm:py-6">
     <h2>8.8.2 Funciones de orden superior</h2>
     <p>Una <em>función de orden superior</em> es una función que opera sobre funciones, tomando una o más funciones como argumentos y devolviendo una nueva función. He aquí un ejemplo:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Esta función de orden superior devuelve una nueva función que pasa sus 
     // argumentos a f y devuelve la negación lógica del valor de retorno de f;
     function not(f) &lbrace;
@@ -967,7 +967,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     const odd = not(even);         // Una nueva función que hace lo contrario
     [1,1,3,5,5].every(odd)         // => true: Cada elemento de la matriz es impar</code></pre>
     <p>Esta función <codeinline>not()</codeinline> es una función de orden superior porque toma un argumento de función y devuelve una nueva función. Como otro ejemplo, considere la función <codeinline>mapper()</codeinline> que sigue. Toma un argumento de función y devuelve una nueva función que mapea una matriz a otra utilizando esa función. Esta función utiliza la función <codeinline>map()</codeinline> definida anteriormente, y es importante que entiendas en qué se diferencian ambas funciones:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Devuelve una función que espera un argumento de matriz y aplica f 
     // a cada elemento, devolviendo la matriz de valores de retorno. 
     // Compárese con la función map() de antes.
@@ -979,7 +979,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     const incrementAll = mapper(increment);
     incrementAll([1,2,3]) // => [2,3,4]</code></pre>
     <p>He aquí otro ejemplo más general que toma dos funciones, <codeinline>f</codeinline> y <codeinline>g</codeinline>, y devuelve una nueva función que calcula <codeinline>f(g())</codeinline>:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Devuelve una nueva función que calcula f(g(...)).
     // La ​​función devuelta h pasa todos sus argumentos a g, luego pasa 
     // el valor de retorno de g a f y luego devuelve el valor de retorno de f.
@@ -999,7 +999,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="8-3">
     <h2>8.8.3 Aplicación parcial de funciones</h2>
     <p>El método <codeinline>bind()</codeinline> de una función <codeinline>f</codeinline> (véase <a href="#7-5">§8.7.5</a>) devuelve una nueva función que invoca a <codeinline>f</codeinline> en un contexto especificado y con un conjunto especificado de argumentos. Decimos que vincula la función a un objeto y aplica parcialmente los argumentos. El método <codeinline>bind()</codeinline> aplica parcialmente los argumentos por la izquierda, es decir, los argumentos que se pasan a <codeinline>bind()</codeinline> se colocan al principio de la lista de argumentos que se pasa a la función original. Pero también es posible aplicar parcialmente los argumentos por la derecha:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Los argumentos de esta función se pasan a la izquierda.
     function partialLeft(f, ...outerArgs) &lbrace;
       return function(...innerArgs) &lbrace;            // Devuelve esta función
@@ -1039,19 +1039,19 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     partialRight(f, 2)(3,4)       // => 6: Vincular el último argumento: 3 * (4 - 2)
     partial(f, undefined, 2)(3,4) // => -6: Vincular argumento intermedio: 3 * (2 - 4)</code></pre>
     <p>Estas funciones de aplicación parcial nos permiten definir fácilmente funciones interesantes a partir de funciones que ya tenemos definidas. He aquí algunos ejemplos:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">const increment = partialLeft(sum, 1);
     const cuberoot = partialRight(Math.pow, 1/3);
     cuberoot(increment(26)) // => 3</code></pre>
     <p>La aplicación parcial se vuelve aún más interesante cuando la combinamos con otras funciones de orden superior. He aquí, por ejemplo, una forma de definir la función precedente <codeinline>not()</codeinline> que acabamos de mostrar utilizando la composición y la aplicación parcial:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">const not = partialLeft(compose, x => !x);
     const even = x => x % 2 === 0;
     const odd = not(even);
     const isNumber = not(isNaN);
     odd(3) && isNumber(2) // => true</code></pre>
     <p>También podemos utilizar la composición y la aplicación parcial para rehacer nuestros cálculos de la media y la desviación estándar en un estilo funcional extremo:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Las funciones sum() y square() se definen arriba. A continuación se muestran algunas más:
     const product = (x,y) => x*y;
     const neg = partial(product, -1);
@@ -1069,7 +1069,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="8-4" class="py-4 xs:py-5 sm:py-6">
     <h2>8.8.4 Memoización</h2>
     <p>En <a href="#4-1">§8.4.1</a>, definimos una función factorial que almacenaba en caché sus resultados previamente calculados. En programación funcional, este tipo de almacenamiento en caché se denomina <em>memoización</em>. El código siguiente muestra una función de orden superior, <codeinline>memoize()</codeinline>, que acepta una función como argumento y devuelve una versión memoizada de la función:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Devuelve una versión memorizada de f.
     // Sólo funciona si todos los argumentos de f tienen representaciones de cadenas distintas.
     function memoize(f) &lbrace;
@@ -1088,7 +1088,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       };
     }</code></pre>
     <p>La función <codeinline>memoize()</codeinline> crea un nuevo objeto para utilizarlo como caché y asigna este objeto a una variable local para que sea privado (en el cierre) de la función devuelta. La función devuelta convierte su matriz de argumentos en una cadena y utiliza esa cadena como nombre de propiedad para el objeto de caché. Si existe un valor en la caché, lo devuelve directamente. En caso contrario, llama a la función especificada para calcular el valor de estos argumentos, lo almacena en caché y lo devuelve. Así es como podemos utilizar <codeinline>memoize()</codeinline>:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// Devuelve el máximo común divisor de dos números enteros utilizando el 
     // algoritmo euclidiano: https://es.wikipedia.org/wiki/Algoritmo_de_Euclides
     function gcd(a,b) &lbrace;  // Se ha omitido la comprobación de tipos para a y b

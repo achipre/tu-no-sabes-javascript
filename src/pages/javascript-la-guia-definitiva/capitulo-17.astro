@@ -49,7 +49,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>En programación, el término <em>lint</em> se refiere a código que, aunque técnicamente correcto, es antiestético, o un posible bug, o subóptimo de alguna manera. Un <em>linter</em> es una herramienta para detectar pelusas en tu código, y <em>linting</em> es el proceso de ejecutar un linter en tu código (y luego arreglar tu código para eliminar las pelusas de modo que el linter ya no se queje).</p>
     <p>El linter más utilizado para JavaScript hoy en día es <a href="https://eslint.org/">ESLint</a>. Si lo ejecutas y luego te tomas el tiempo de arreglar los problemas que señala, hará que tu código sea más limpio y menos propenso a tener errores. Considere el siguiente código:</p>
     <pre class="language-js">
-    <code>var x = 'unused';
+    <code class="language-js">var x = 'unused';
 
     export function factorial(x) &lbrace;
       if (x == 1) &lbrace;
@@ -81,14 +81,14 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Una alternativa moderna a la aplicación de reglas de formato de código mediante un linter es adoptar una herramienta como <a href="https://prettier.io/">Prettier</a> para analizar y reformatear automáticamente todo el código.</p>
     <p>Supongamos que ha escrito la siguiente función, que funciona, pero tiene un formato poco convencional:</p>
     <pre class="language-js">
-    <code>function factorial(x)
+    <code class="language-js">function factorial(x)
     &lbrace;
       if(x===1)&lbrace;return 1}
       else&lbrace;return x*factorial(x-1)}
     }</code></pre>
     <p>Al ejecutar Prettier en este código se corrige la sangría, se añaden los puntos y comas que faltan, se añaden espacios alrededor de los operadores binarios y se insertan saltos de línea después de <codeinline>&lbrace;</codeinline> y antes de <codeinline>}</codeinline>, lo que da como resultado un código de aspecto mucho más convencional:</p>
     <pre class="language-js">
-    <code>$ prettier factorial.js
+    <code class="language-js">$ prettier factorial.js
     function factorial(x) &lbrace;
       if (x === 1) &lbrace;
         return 1;
@@ -106,7 +106,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Escribir pruebas es una parte importante de cualquier proyecto de programación no trivial. Los lenguajes dinámicos como JavaScript soportan marcos de pruebas que reducen drásticamente el esfuerzo necesario para escribir pruebas, ¡y casi hacen que escribir pruebas sea divertido! Hay muchas herramientas y librerías de pruebas para JavaScript, y muchas están escritas de forma modular, de modo que es posible elegir una librería como ejecutor de pruebas, otra librería para aserciones y una tercera para mocking. En esta sección, sin embargo, describiremos <a href="https://jestjs.io/">Jest</a>, que es un framework popular que incluye todo lo que necesitas en un solo paquete.</p>
     <p>Suponga que ha escrito la siguiente función:</p>
     <pre class="language-js">
-    <code>const getJSON = require("./getJSON.js");
+    <code class="language-js">const getJSON = require("./getJSON.js");
 
     /**
     * getTemperature() toma el nombre de una ciudad como entrada y devuelve 
@@ -124,7 +124,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     };</code></pre>
     <p>Un buen conjunto de pruebas para esta función podría verificar que <codeinline>getTemperature()</codeinline> está obteniendo la URL correcta, y que está convirtiendo las escalas de temperatura correctamente. Podemos hacer esto con una prueba basada en Jest como la siguiente. Este código define una implementación simulada de <codeinline>getJSON()</codeinline> para que la prueba no haga realmente una petición de red. Y como <codeinline>getTemperature()</codeinline> es una función asíncrona, las pruebas también son asíncronas; puede ser complicado probar funciones asíncronas, pero Jest lo hace relativamente fácil:</p>
     <pre class="language-js">
-    <code>// Importa la función que vamos a probar
+    <code class="language-js">// Importa la función que vamos a probar
     const getTemperature = require("./getTemperature.js");
 
     // Y simula el módulo getJSON() del que depende getTemperature()
@@ -214,11 +214,11 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>npm es el gestor de paquetes que se incluye con Node, y se introdujo en <a href="capitulo-16#1-5">§16.1.5</a>. Sin embargo, es tan útil para la programación JavaScript del lado del cliente como para la programación del lado del servidor con Node.</p>
     <p>Si estás probando el proyecto JavaScript de otra persona, una de las primeras cosas que harás después de descargar su código es escribir <codeinline>npm install</codeinline>. Esto lee las dependencias listadas en el archivo <em>package.json</em> y descarga los paquetes de terceros que el proyecto necesita y los guarda en un directorio <em>node_modules/</em>.</p>
     <p>También puedes escribir <codeinline>npm install &lt;nombre-paquete></codeinline> para instalar un paquete concreto en el directorio <em>node_modules/</em> de tu proyecto:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">$ npm install express</code></pre>
     <p>Además de instalar el paquete nombrado, npm también hace un registro de la dependencia en el archivo <em>package.json</em> para el proyecto. Registrar las dependencias de esta manera es lo que permite a otros instalar esas dependencias simplemente escribiendo <codeinline>npm install</codeinline>.</p>
     <p>El otro tipo de dependencia son las herramientas de desarrollo que necesitan los desarrolladores que quieren trabajar en su proyecto, pero que en realidad no son necesarias para ejecutar el código. Si un proyecto utiliza Prettier, por ejemplo, para asegurar que todo su código tiene un formato consistente, entonces Prettier es una "dependencia dev", y puede instalar y grabar una de ellas con <codeinline>--save-dev</codeinline>:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">$ npm install --save-dev prettier</code></pre>
     <p>A veces es posible que desee instalar herramientas de desarrollo a nivel mundial para que sean accesibles en cualquier lugar, incluso para el código que no forma parte de un proyecto formal con un archivo <em>package.json</em> y un directorio <em>node_modules/</em>. Para ello puedes utilizar la opción <codeinline>-g</codeinline> (for global):</p>
     <pre class="language-js">
@@ -301,23 +301,23 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>JSX es una extensión del núcleo de JavaScript que utiliza sintaxis de estilo HTML para definir un árbol de elementos. JSX se asocia más estrechamente con el marco React para interfaces de usuario en la web. En React, los árboles de elementos definidos con JSX se renderizan en última instancia en un navegador web como HTML. Incluso si no tienes planes de utilizar React, su popularidad significa que es probable que veas código que utiliza JSX. Esta sección explica lo que necesitas saber para darle sentido. (Esta sección es sobre la extensión de lenguaje JSX, no sobre React, y explica sólo lo suficiente de React para proporcionar contexto para la sintaxis JSX).</p>
     <p>Los elementos JSX son un nuevo tipo de sintaxis de expresión de JavaScript. Los literales de cadena de Java Script se delimitan con comillas, y los literales de expresión regular se delimitan con barras oblicuas. Del mismo modo, los literales de expresiones JSX se delimitan con corchetes angulares. He aquí una muy sencilla:</p>
     <pre class="language-js">
-    <code>let line = &lt;hr/>;</code></pre>
+    <code class="language-js">let line = &lt;hr/>;</code></pre>
     <p>Si utiliza JSX, tendrá que utilizar Babel (o una herramienta similar) para compilar las expresiones JSX en JavaScript normal. La transformación es tan sencilla que algunos desarrolladores optan por utilizar React sin usar JSX. Babel transforma la expresión JSX de esta sentencia de asignación en una simple llamada a una función:</p>
     <pre class="language-js">
-    <code>let line = React.createElement("hr", null);</code></pre>
+    <code class="language-js">let line = React.createElement("hr", null);</code></pre>
     <p>La sintaxis JSX es similar a HTML, y al igual que los elementos HTML, los elementos React pueden tener atributos como estos:</p>
     <pre class="language-js">
-    <code>let image = &lt;img src="logo.png" alt="The JSX logo" hidden/>;</code></pre>
+    <code class="language-js">let image = &lt;img src="logo.png" alt="The JSX logo" hidden/>;</code></pre>
     <p>Cuando un elemento tiene uno o más atributos, éstos se convierten en propiedades de un objeto pasado como segundo argumento a <codeinline>createElement()</codeinline>:</p>
     <pre class="language-js">
-    <code>let image = React.createElement("img", &lbrace;
+    <code class="language-js">let image = React.createElement("img", &lbrace;
       src: "logo.png",
       alt: "The JSX logo",
       hidden: true
     });</code></pre>
     <p>Al igual que los elementos HTML, los elementos JSX pueden tener cadenas y otros elementos como hijos. Al igual que los operadores aritméticos de JavaScript pueden utilizarse para escribir expresiones aritméticas de complejidad arbitraria, los elementos JSX también pueden anidarse a una profundidad arbitraria para crear árboles de elementos:</p>
     <pre class="language-js">
-    <code>let sidebar = (
+    <code class="language-js">let sidebar = (
       &lt;div className="sidebar">
         &lt;h1>Title&lt;/h1>
         &lt;hr/>
@@ -326,7 +326,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     );</code></pre>
     <p>Las expresiones regulares de llamadas a funciones JavaScript también pueden anidarse a una profundidad arbitraria, y estas expresiones JSX anidadas se traducen en un conjunto de llamadas <codeinline>createElement()</codeinline> anidadas. Cuando un elemento JSX tiene hijos, esos hijos (que suelen ser cadenas y otros elementos JSX) se pasan como argumentos tercero y siguientes:</p>
     <pre class="language-js">
-    <code>let sidebar = React.createElement(
+    <code class="language-js">let sidebar = React.createElement(
       "div", &lbrace; className: "sidebar"},  // Esta llamada externa crea un &lt;div>
       React.createElement("h1", null,  // Este es el primer elemento secundario del &lt;div/>
                              "Title"), // y su propio primer elemento secundario.
@@ -336,7 +336,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>El valor devuelto por <codeinline>React.createElement()</codeinline> es un objeto JavaScript ordinario que es utilizado por React para renderizar la salida en una ventana del navegador. Dado que esta sección trata sobre la sintaxis JSX y no sobre React, no vamos a entrar en detalles sobre los objetos Element devueltos o el proceso de renderizado. Vale la pena señalar que puedes configurar Babel para compilar elementos JSX a invocaciones de una función diferente, por lo que si crees que la sintaxis JSX sería una forma útil de expresar otros tipos de estructuras de datos anidadas, puedes adoptarla para tus propios usos no relacionados con React.</p>
     <p>Una característica importante de la sintaxis JSX es que puede incrustar expresiones JavaScript regulares dentro de expresiones JSX. Dentro de una expresión JSX, el texto entre llaves se interpreta como JavaScript plano. Estas expresiones anidadas están permitidas como valores de atributo y como elementos hijos. Por ejemplo:</p>
     <pre class="language-js">
-    <code>function sidebar(className, title, content, drawLine=true) &lbrace;
+    <code class="language-js">function sidebar(className, title, content, drawLine=true) &lbrace;
       return (
         &lt;div className=&lbrace;className}>
           &lt;h1>&lbrace;title}&lt;/h1>
@@ -347,7 +347,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     }</code></pre>
     <p>La función <codeinline>sidebar()</codeinline> devuelve un elemento JSX. Toma cuatro argumentos que utiliza dentro del elemento JSX. La sintaxis de llaves puede recordarle los literales de plantilla que utilizan <codeinline>$&lbrace;}</codeinline> para incluir expresiones JavaScript dentro de cadenas. Como sabemos que las expresiones JSX se compilan en invocaciones de funciones, no debería sorprendernos que se puedan incluir expresiones JavaScript arbitrarias, ya que las invocaciones de funciones también se pueden escribir con expresiones arbitrarias. Este código de ejemplo es traducido por Babel a lo siguiente:</p>
     <pre class="language-js">
-    <code>function sidebar(className, title, content, drawLine=true) &lbrace;
+    <code class="language-js">function sidebar(className, title, content, drawLine=true) &lbrace;
       return React.createElement("div", &lbrace; className: className },
                     React.createElement("h1", null, title),
                     drawLine && React.createElement("hr", null),
@@ -356,7 +356,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Este código es fácil de leer y entender: las llaves han desaparecido y el código resultante pasa los parámetros de la función entrante a <codeinline>React.createElement()</codeinline> de forma natural. Fíjate en el truco que hemos hecho aquí con el parámetro <codeinline>drawLine</codeinline> y el operador <codeinline>&&</codeinline> de cortocircuito. Si llamas a <codeinline>sidebar()</codeinline> con sólo tres argumentos, entonces <codeinline>drawLine</codeinline> por defecto es <codeinline>true</codeinline>, y el cuarto argumento de la llamada externa a <codeinline>createElement()</codeinline> es el elemento <codeinline>&lt;hr/></codeinline>. Pero si pasa <codeinline>false</codeinline> como cuarto argumento a <codeinline>sidebar()</codeinline>, entonces el cuarto argumento de la llamada externa a <codeinline>createElement()</codeinline> se evalúa como <codeinline>false</codeinline>, y no se crea ningún elemento <codeinline>&lt;hr/></codeinline>. Este uso del operador <codeinline>&&</codeinline> es un lenguaje común en JSX para incluir o excluir condicionalmente un elemento hijo dependiendo del valor de alguna otra expresión. (Este modismo funciona con React porque React simplemente ignora los hijos que son <codeinline>false</codeinline> o <codeinline>null</codeinline> y no produce ninguna salida para ellos).</p>
     <p>Cuando utiliza expresiones JavaScript dentro de expresiones JSX, no está limitado a valores simples como los valores de cadena y booleano del ejemplo anterior. Cualquier valor Java Script está permitido. De hecho, es bastante común en la programación React utilizar objetos, matrices y funciones. Considera la siguiente función, por ejemplo:</p>
     <pre class="language-js">
-    <code>// Dada un array de string y una función de devolución de llamada, devuelve un 
+    <code class="language-js">// Dada un array de string y una función de devolución de llamada, devuelve un 
     // elemento JSX que representa una lista HTML &lt;ul> con un array de 
     // elementos &lt;li> como elementos hijos.
     function list(items, callback) &lbrace;
@@ -371,7 +371,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Esta función utiliza un objeto literal como valor del atributo <codeinline>style</codeinline> del elemento <codeinline>&lt;ul></codeinline>. (El elemento <codeinline>&lt;ul></codeinline> tiene un único hijo, pero el valor de ese hijo es una matriz. La matriz hija es la matriz creada mediante la función <codeinline>map()</codeinline> en la matriz de entrada para crear una matriz de elementos <codeinline>&lt;li></codeinline>.</p>
     <p>(Esto funciona con React porque la librería React aplana los hijos de un elemento cuando los renderiza. Un elemento con un array hijo es lo mismo que ese elemento con cada uno de esos elementos del array como hijos). Por último, ten en cuenta que cada una de las matrices anidadas <codeinline>&lt;li></codeinline> tiene un atributo manejador de eventos <codeinline>onClick</codeinline> cuyo valor es una función de flecha. El código JSX compila al siguiente código JavaScript puro (que he formatulado con Prettier):</p>
     <pre class="language-js">
-    <code>function list(items, callback) &lbrace;
+    <code class="language-js">function list(items, callback) &lbrace;
       return React.createElement(
         "ul",
         &lbrace; style: &lbrace; padding: 10, border: "solid red 4px" } },
@@ -386,11 +386,11 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     }</code></pre>
     <p>Otro uso de las expresiones de objeto en JSX es con el operador de extensión de objeto (<a href="capitulo-6#10-4">§6.10.4</a>) para especificar múltiples atributos a la vez. Supón que te encuentras escribiendo muchas expresiones JSX que repiten un conjunto común de atributos. Puedes simplificar tus expresiones definiendo los atributos como propiedades de un objeto y "esparciéndolos" en tus elementos JSX:</p>
     <pre class="language-js">
-    <code>let hebrew = &lbrace; lang: "he", dir: "rtl" }; // Especifica el idioma y la dirección
+    <code class="language-js">let hebrew = &lbrace; lang: "he", dir: "rtl" }; // Especifica el idioma y la dirección
     let shalom = &lt;span className="emphasis" &lbrace;...hebrew}>ם҇לқ&lt;/span>;</code></pre> 
     <p>Babel compila esto para utilizar una función <codeinline>_extends()</codeinline> (omitida aquí) que combina que atributo <codeinline>className</codeinline> con los atributos contenidos en el objeto <codeinline>hebrew</codeinline>:</p>
     <pre class="language-js">
-    <code>let shalom = React.createElement("span",
+    <code class="language-js">let shalom = React.createElement("span",
                   _extends(&lbrace;className: "emphasis"}, hebrew),
                   "\u05E9\u05DC\u05D5\u05DD");</code></pre>
     <p>Por último, hay otra característica importante de JSX que aún no hemos cubierto. Como has visto, todos los elementos JSX comienzan con un identificador inmediatamente después del paréntesis angular de apertura. Si la primera letra de este identificador es minúscula (como ha sido en todos los ejemplos aquí), entonces el identificador se pasa a <codeinline>createElement()</codeinline> como una cadena. Pero si la primera letra del identificador es mayúscula, entonces se trata como un identificador real, y es el valor JavaScript de ese identificador el que se pasa como primer argumento a <codeinline>createElement()</codeinline>. Esto significa que la expresión JSX <codeinline>&lt;Math/></codeinline> compila código JavaScript que pasa el objeto Math global a <codeinline>React.createElement()</codeinline>.</p>
@@ -398,7 +398,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Expresión JSX (con un nombre de componente en mayúsculas) que representa una expresión más compleja (utilizando nombres de etiqueta HTML en minúsculas).</p>
     <p>La forma más sencilla de definir un nuevo componente en React es escribir una función que tome un "objeto props" como argumento y devuelva una expresión JSX. Un <em>objeto props</em> es simplemente un objeto JavaScript que representa valores de atributos, como los objetos que se pasan como segundo argumento a <codeinline>createElement()</codeinline>. He aquí, por ejemplo, otra versión de nuestra función <codeinline>sidebar()</codeinline>:</p>
     <pre class="language-js">
-    <code>function Sidebar(props) &lbrace;
+    <code class="language-js">function Sidebar(props) &lbrace;
       return (
         &lt;div>
           &lt;h1>&lbrace;props.title}&lt;/h1>
@@ -409,10 +409,10 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     }</code></pre>
     <p>Esta nueva función <codeinline>Sidebar()</codeinline> es muy parecida a la función anterior <codeinline>sidebar()</codeinline>. Pero ésta tiene un nombre que empieza por mayúscula y toma un único argumento objeto en lugar de argumentos separados. Esto la convierte en un componente React y significa que puede utilizarse en lugar de un nombre de etiqueta HTML en expresiones JSX:</p>
     <pre class="language-js">
-    <code>let sidebar = &lt;Sidebar title="Something snappy" content="Something wise"/>;</code></pre>
+    <code class="language-js">let sidebar = &lt;Sidebar title="Something snappy" content="Something wise"/>;</code></pre>
     <p>Este elemento <codeinline>&lt;Sidebar/></codeinline> se compila así:</p>
     <pre class="language-js">
-    <code>let sidebar = React.createElement(Sidebar, &lbrace;
+    <code class="language-js">let sidebar = React.createElement(Sidebar, &lbrace;
       title: "Something snappy",
       content: "Something wise"
     });</code></pre>
@@ -466,7 +466,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="8-2">
     <h2>17.8.2 Uso de anotaciones de tipo</h2>
     <p>Cuando declaras una variable JavaScript, puedes añadirle una anotación de tipo Flow siguiendo el nombre de la variable con dos puntos y el tipo:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let message: string = "Hello world";
     let flag: boolean = false;
     let n: number = 42;</code></pre>
@@ -485,7 +485,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
         4│ }
     [1] 5│ console.log(size([1,2,3]));</pre>
     <p>También es posible utilizar anotaciones de tipo con funciones de flecha, aunque puede convertir esta sintaxis normalmente sucinta en algo más verboso:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">const size = (s: string): number => s.length;</code></pre>
     <p>Una cosa importante a entender sobre Flow es que el valor JavaScript <codeinline>null</codeinline> tiene el tipo Flow <codeinline>null</codeinline> y el valor JavaScript <codeinline>undefined</codeinline> tiene el tipo Flow <codeinline>void</codeinline>. Pero ninguno de estos valores es miembro de ningún otro tipo (a menos que lo añadas explícitamente). Si declaras que un parámetro de función es una cadena, entonces debe ser una cadena, y es un error pasar <codeinline>null</codeinline> o pasar <codeinline>undefined</codeinline> u omitir el argumento (que es básicamente lo mismo que pasar <codeinline>undefined</codeinline>):</p>
     <pre class="language-js">
@@ -510,7 +510,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Lo que Flow nos está diciendo aquí es que no es seguro escribir <codeinline>s.length</codeinline> porque, en este lugar de nuestro código, <codeinline>s</codeinline> podría ser <codeinline>null</codeinline> o <codeinline>undefined</codeinline>, y esos valores no tienen propiedades de <codeinline>length</codeinline>. Aquí es donde Flow se asegura de que no tomemos atajos. Si un valor puede ser <codeinline>null</codeinline>, Flow insistirá en que comprobemos ese caso antes de hacer cualquier cosa que dependa de que el valor no sea <codeinline>null</codeinline>.</p>
     <p>En este caso, podemos solucionar el problema cambiando el cuerpo de la función de la siguiente manera:</p>
     <pre class="language-js">
-    <code>function size(s: ?string): number &lbrace;
+    <code class="language-js">function size(s: ?string): number &lbrace;
       // En este punto del código, s podría ser una cadena o nulo o indefinido.
       if (s === null || s === undefined) &lbrace;
         // En este bloque, Flow sabe que s es nulo o indefinido.
@@ -528,7 +528,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>17.8.3 Tipos de clases</h2>
     <p>Además de los tipos primitivos que Flow conoce, también conoce todas las clases incorporadas de JavaScript y te permite utilizar nombres de clases como tipos. La siguiente función, por ejemplo, utiliza anotaciones de tipo para indicar que debe ser invocada con un objeto Date y un objeto RegExp:</p>
     <pre class="language-js">
-    <code>// @flow
+    <code class="language-js">// @flow
     // Devuelve verdadero si la representación ISO de la fecha especificada coincide
     // con el patrón especificado, o falso en caso contrario. 
     // E.g: const isTodayChristmas = dateMatches(new Date(), /^\d&lbrace;4}-12-25T/);
@@ -537,7 +537,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     }</code></pre>
     <p>Si defines tus propias clases con la palabra clave <codeinline>class</codeinline>, esas clases se convierten automáticamente en tipos Flow válidos. Sin embargo, para que esto funcione, Flow requiere que utilices anotaciones de tipo en la clase. En particular, cada propiedad de la clase debe tener su tipo declarado. Aquí hay una simple clase de números complejos que demuestra esto:</p>
     <pre class="language-js">
-    <code>// @flow
+    <code class="language-js">// @flow
     export default class Complex &lbrace;
       // Flow requiere una sintaxis de clase extendida que incluya anotaciones
       // de tipo para cada una de las propiedades utilizadas por la clase.
@@ -565,7 +565,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="8-4">
     <h2>17.8.4 Tipos de objetos</h2>
     <p>El tipo Flow para describir un objeto se parece mucho a un literal de objeto, salvo que los valores de propiedad se sustituyen por tipos de propiedad. Aquí, por ejemplo, hay una función que espera un objeto con propiedades numéricas <codeinline>x</codeinline> e <codeinline>y</codeinline>:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// @flow
     // Dado un objeto con propiedades numéricas x e y, devuelve la 
     // distancia desde el origen hasta el punto (x,y) como un número.
@@ -574,14 +574,14 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     }</code></pre>
     <p>En este código, el texto <codeinline>&lbrace;x:number, y:number}</codeinline> es un tipo Flow, como lo son <codeinline>string</codeinline> o <codeinline>Date</codeinline>. Como con cualquier tipo, puedes añadir un signo de interrogación al principio para indicar que <codeinline>null</codeinline> e <codeinline>undefined</codeinline> también deberían estar permitidos.</p>
     <p>Dentro de un tipo de objeto, cualquier nombre de propiedad puede ir seguido de un signo de interrogación para indicar que esa propiedad es opcional y puede omitirse. Por ejemplo, puede escribir así el tipo de un objeto que represente un punto 2D o 3D:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">&lbrace;x: number, y: number, z?: number}</code></pre>
     <p>Si una propiedad no está marcada como opcional en un tipo de objeto, entonces es requerida, y Flow informará de un error si una propiedad apropiada no está presente en el valor real. Sin embargo, Flow no tolera propiedades extra. Si pasaras un objeto que tuviera una propiedad <codeinline>w</codeinline> a la función <codeinline>distance()</codeinline> anterior, Flow no se quejaría.</p>
     <p>Si quieres que Flow imponga estrictamente que un objeto no tiene propiedades distintas de las declaradas explícitamente en su tipo, puedes declarar un <em>tipo de objeto exacto</em> añadiendo barras verticales a las llaves:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">&lbrace;| x: number, y: number |}</code></pre>
     <p>Los objetos de JavaScript se utilizan a veces como diccionarios o mapas de cadena a valor. Cuando se utilizan así, los nombres de las propiedades no se conocen de antemano y no pueden declararse en un tipo Flow. Si utilizas objetos de esta forma, puedes seguir utilizando Flow para describir la estructura de datos. Supongamos que tienes un objeto cuyas propiedades son los nombres de las principales ciudades del mundo y los valores de esas propiedades son objetos que especifican la ubicación geo- gráfica de esas ciudades. Podrías declarar esta estructura de datos así:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// @flow
     const cityLocations : &lbrace;[string]: &lbrace;longitude:number, latitude:number}} = &lbrace;
       "Seattle": &lbrace; longitude: 47.6062, latitude: -122.3321 },
@@ -592,7 +592,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="8-5" class="py-4 xs:py-5 sm:py-6">
     <h2>17.8.5 Alias de tipo</h2>
     <p>Los objetos pueden tener muchas propiedades, y el tipo Flow que describe un objeto de este tipo será largo y difícil de escribir. E incluso los tipos de objeto relativamente cortos pueden ser confusos porque se parecen mucho a los literales de objeto. Una vez que vamos más allá de tipos simples como <codeinline>number</codeinline> y <codeinline>?string</codeinline>, a menudo es útil poder definir nombres para nuestros tipos Flow. Y de hecho, Flow utiliza la palabra clave <codeinline>type</codeinline> para hacer exactamente eso. Sigue el <codeinline>type</codeinline> con un identificador, un signo igual y un tipo de flujo. Una vez hecho esto, el identificador será un alias para el tipo. He aquí, por ejemplo, cómo podríamos reescribir la función <codeinline>distance()</codeinline> de la sección anterior con un tipo <codeinline>Point</codeinline> definido explícitamente:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// @flow
     export type Point = &lbrace;
       x: number,
@@ -623,15 +623,15 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     [1] 8│ average([1, 2, "three"]);</pre>
     <p>El tipo de flujo para un array es <codeinline>Array</codeinline> seguido del tipo de elemento entre paréntesis angulares. También puedes expresar un tipo de matriz siguiendo el tipo de elemento con apertura y cierre corchetes. Así que en este ejemplo podríamos haber escrito <codeinline>number[]</codeinline> en lugar de <codeinline>Array&lt;number></codeinline>. Prefiero la notación de corchetes angulares porque, como veremos, hay otros tipos de Flow que utilizan esta sintaxis de corchetes angulares.</p>
     <p>La sintaxis de tipo Array mostrada funciona para arrays con un número arbitrario de elementos, todos los cuales tienen el mismo tipo. Flow tiene una sintaxis diferente para describir el tipo de una <em>tupla</em>: una matriz con un número fijo de elementos, cada uno de los cuales puede tener un tipo diferente. Para expresar el tipo de una tupla, simplemente escribe el tipo de cada uno de sus elementos, sepáralos con comas y enciérralos entre corchetes.</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">function getStatus():[number, string] &lbrace;
       return [getStatusCode(), getStatusMessage()];
     }</code></pre>
     <p>Una función que devuelva un código de estado HTTP y un mensaje podría tener este aspecto, por ejemplo:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let [code, message] = getStatus();</code></pre>
     <p>Las funciones que devuelven tuplas son difíciles de manejar a menos que se utilice la asignación desestructurante:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// @flow
     export type Color = [number, number, number, number]; // [r, g, b, opacity]
 
@@ -646,7 +646,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     let [r, g, b, a] = fade(gray(75), 3);</code></pre>
     <p>La asignación de desestructuración, además de las capacidades de aliasing de tipos de Flow, hacen que las tuplas sean lo suficientemente fáciles de trabajar como para considerarlas una alternativa a las clases para tipos de datos simples:</p>
     <p>Ahora que tenemos una forma de expresar el tipo de una matriz, volvamos a la función <codeinline>size()</codeinline> de antes y modifiquémosla para que espere un argumento de matriz en lugar de un argumento de cadena. Queremos que la función sea capaz de aceptar un array de cualquier longitud, por lo que un tipo tupla no es apropiado. Pero no queremos restringir nuestra función a trabajar sólo para matrices donde todos los elementos tienen el mismo tipo. La solución es el tipo <codeinline>Array&lt;mixto></codeinline>:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// @flow
     function size(s: Array&lt;mixed>): number &lbrace;
       return s.length;
@@ -658,7 +658,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>17.8.7 Otros tipos parametrizados</h2>
     <p>Hemos visto que cuando anotas un valor como <codeinline>Array</codeinline>, Flow requiere que especifiques también el tipo de los elementos del array dentro de los corchetes angulares. Este tipo adicional se conoce como un <em>parámetro</em> de tipo, y Array no es la única clase JavaScript que es parametrizada.</p>
     <p>La clase Set de JavaScript es una colección de elementos, como lo es un array, y no puedes usar Set como tipo por sí mismo, sino que tienes que incluir un parámetro de tipo entre paréntesis angulares para especificar el tipo de los valores contenidos en el conjunto. (Aunque puedes utilizar <codeinline>mixed</codeinline> o <codeinline>any</codeinline> si el conjunto puede contener valores de varios tipos). He aquí un ejemplo:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// @flow
     // Devuelve un conjunto de números con miembros que sean exactamente 
     // el doble de los del conjunto de números de entrada.
@@ -669,7 +669,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     }
     console.log(double(new Set([1,2,3]))); // Imprime "Set &lbrace;2, 4, 6}"</code></pre>
     <p>Map es otro tipo parametrizado. En este caso, hay dos parámetros de tipo que deben especificarse; el tipo de las claves y los tipos de los valores:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// @flow
     import type &lbrace; Color } from "./Color.js";
 
@@ -679,10 +679,10 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       ["blue", [0, 0, 1, 1]]
     ]);</code></pre>
     <p>Flow también te permite definir parámetros de tipo para tus propias clases. El siguiente código define una clase Resultado pero parametriza esa clase con un tipo Error y un tipo Valor. Utilizamos marcadores de posición <codeinline>E</codeinline> y <codeinline>V</codeinline> en el código para representar estos parámetros de tipo. Cuando el usuario de esta clase declare una variable de tipo Resultado, especificará los tipos reales a sustituir por <codeinline>E</codeinline> y <codeinline>V</codeinline>. La declaración de la variable podría tener este aspecto:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let result: Result&lt;TypeError, Set&lt;string>>;</code></pre>
     <p>Y así es como se define la clase parametrizada:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// @flow
     // Esta clase representa el resultado de una operación que puede generar 
     // un error de tipo E o un valor de tipo V.
@@ -709,7 +709,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       }
     }</code></pre>
     <p>Incluso puede definir parámetros de tipo para las funciones:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// @flow
     // Combina los elementos de dos matrices en una matriz de pares
     function zip&lt;A,B>(a:Array&lt;A>, b:Array&lt;B>): Array&lt;[?A,?B]> &lbrace;
@@ -728,7 +728,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>17.8.8 Tipos de sólo lectura</h2>
     <p>Flow define algunos "tipos de utilidad" parametrizados especiales que tienen nombres que comienzan con <codeinline>$</codeinline>. La mayoría de estos tipos tienen casos de uso avanzados que no vamos a cubrir aquí. Pero dos de ellos son bastante útiles en la práctica. Si tienes un tipo de objeto T y quieres hacer una versión de sólo lectura de ese tipo, simplemente escribe <codeinline>$ReadOnly&lt;T></codeinline>. Del mismo modo, puedes escribir <codeinline>$ReadOnlyArray&lt;T></codeinline> para describir un array de sólo lectura con elementos de tipo T.</p>
     <p>La razón para usar estos tipos no es porque ofrezcan alguna garantía de que un objeto o array no pueda ser modificado (ver <codeinline>Object.freeze()</codeinline> en <a href="capitulo-14#2">§14.2</a> si quieres verdaderos objetos de sólo lectura) sino porque te permite detectar errores causados por modificaciones no intencionadas. Si escribes una función que toma un objeto o array como argumento y no cambia ninguna de las propiedades del objeto o los elementos del array, entonces puedes anotar el parámetro de la función con uno de los tipos de sólo lectura de Flow. Si haces esto, Flow informará de un error si te olvidas y accidentalmente modificas el valor de entrada. Aquí tienes dos ejemplos:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// @flow
     type Point = &lbrace;x:number, y:number};
     
@@ -755,7 +755,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Hemos visto cómo añadir anotaciones de tipo para especificar los tipos de los parámetros de una función y su tipo de retorno. Pero cuando uno de los parámetros de una función es a su vez una función, necesitamos poder especificar el tipo de ese parámetro de función.</p>
     <p>Para expresar el tipo de una función con Flow, escriba los tipos de cada parámetro, sepárelos con comas, enciérrelos entre paréntesis y, a continuación, escriba una flecha y el tipo de retorno de la función.</p>
     <p>He aquí una función de ejemplo que espera que se le pase una función callback. Observe cómo hemos definido un alias de tipo para el tipo de la función de devolución de llamada:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// @flow
     // El tipo de la función de devolución de llamada utilizada en fetchText() a continuación
     export type FetchTextCallback = (?Error, ?number, ?string) => void;
@@ -779,7 +779,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>17.8.10 Tipos de sindicatos</h2>
     <p>Volvamos una vez más a la función <codeinline>size()</codeinline>. Realmente no tiene sentido tener una función que no hace otra cosa que devolver la longitud de un array. Los arrays tienen una propiedad de <codeinline>length</codeinline> perfectamente buena para eso. Pero <codeinline>size()</codeinline> podría ser útil si pudiera tomar cualquier tipo de objeto de colección (una matriz, un conjunto o un mapa) y devolver el número de elementos de la colección. En JavaScript normal sin tipado sería fácil escribir una función <codeinline>size()</codeinline> como esa. Con Flow, necesitamos una forma de expresar un tipo que permita arrays, Sets y Maps, pero que no permita valores de ningún otro tipo.</p>
     <p>Flow denomina a los tipos de este tipo <em>Tipos de unión</em> y permite expresarlos simplemente enumerando los tipos deseados y separándolos con caracteres de barra vertical:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// @flow
     function size(collection: Array&lt;mixed>|Set&lt;mixed>|Map&lt;mixed,mixed>): number &lbrace;
       if (Array.isArray(collection)) &lbrace;
@@ -796,19 +796,19 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
   <section id="8-11" class="py-4 xs:py-5 sm:py-6">
     <h2>17.8.11 Tipos enumerados y uniones discriminadas</h2>
     <p>Flow te permite usar literales primitivos como tipos que consisten en un único valor. Si escribes <codeinline>let x:3;</codeinline>, entonces Flow no te permitirá asignar ningún valor a esa variable que no sea 3. No suele ser útil definir tipos que tengan un único miembro, pero una unión de tipos literales puede ser útil. Probablemente puedes imaginar un uso para tipos como estos, por ejemplo:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">type Answer = "yes" | "no";
     type Digit = 0|1|2|3|4|5|6|7|8|9;</code></pre>
     <p>Si utiliza tipos formados por literales, debe comprender que sólo se permiten valores literales:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">let a: Answer = "Yes".toLowerCase();    // Error: no se puede asignar un string a Answer
     let d: Digit = 3+4;         // Error: no se puede asignar un número a Dígito</code></pre>
     <p>Cuando Flow comprueba tus tipos, en realidad no hace los cálculos: sólo comprueba los tipos de los cálculos. Flow sabe que <codeinline>toLowerCase()</codeinline> devuelve una cadena y que el operador <codeinline>+</codeinline> en números devuelve un número. Aunque sabemos que ambos cálculos devuelven valores que están dentro del tipo, Flow no puede saberlo y marca errores en ambas líneas.</p>
     <p>Un tipo de unión de tipos literales como <codeinline>Answer</codeinline> y <codeinline>Digit</codeinline> es un ejemplo de <em>tipo enumerado</em>, o <em>enum</em>. Un caso de uso canónico para los tipos enum es representar los palos de las cartas:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">type Suit = "Clubs" | "Diamonds" | "Hearts" | "Spades";</code></pre>
     <p>Un ejemplo más relevante podrían ser los códigos de estado HTTP:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">type HTTPStatus =
       | 200     // OK
       | 304     // Not Modified
@@ -817,7 +817,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Uno de los consejos que escuchan a menudo los nuevos programadores es que eviten utilizar literales en su código y que, en su lugar, definan constantes simbólicas para representar esos valores. Una razón práctica para ello es evitar el problema de los errores tipográficos: si escribe mal una cadena literal como "Diamonds", JavaScript nunca se quejará, pero es posible que su código no funcione correctamente. En cambio, si escribes mal un identificador, es probable que JavaScript lance un error que notarás. Con Flow, este consejo no siempre se aplica. Si anotas una variable con el tipo Traje, y luego intentas asignarle un traje mal escrito, Flow te avisará del error.</p>
     <p>Otro uso importante de los tipos literales es la creación de <em>uniones discriminadas</em>. Cuando se trabaja con uniones (formadas por diferentes tipos, no por literales), normalmente hay que escribir código para discriminar entre los posibles tipos. En la sección anterior, escribimos una función que podía tomar un array o un Set o un Map como argumento y tuvimos que escribir código para discriminar la entrada array de la entrada Set o Map. Si quieres crear una unión de tipos Object, puedes hacer que estos tipos sean fáciles de discriminar utilizando un tipo literal dentro de cada uno de los tipos Object individuales.</p>
     <p>Un ejemplo lo aclarará. Supongamos que estás usando un hilo trabajador en Node (<a href="capitulo-16#11">§16.11</a>) y estás usando <codeinline>postMessage()</codeinline> y eventos "mensaje" para enviar mensajes basados en objetos entre el hilo principal y el hilo trabajador. Hay múltiples tipos de mensajes que el trabajador puede querer enviar al hilo principal, pero nos gustaría escribir un tipo de Flow Union que describa todos los mensajes posibles. Considera este código:</p>
-    <pre>
+    <pre class="language-js">
     <code class="language-js">// @flow
     // El trabajador envía un mensaje de este tipo cuando termina 
     // de reticular las splines que le enviamos.

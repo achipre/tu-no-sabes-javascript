@@ -18,11 +18,11 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>13.1.1 Temporizadores</h2>
     <p>Uno de los tipos más simples de asincronía es cuando quieres ejecutar algún código después de que haya transcurrido una cierta cantidad de tiempo . Como vimos en <a href="capitulo-11#10">§11.10</a>, puedes hacer esto con la función <codeinline>setTimeout()</codeinline>:</p>
     <pre class="language-js">
-    <code>setTimeout(checkForUpdates, 60000);</code></pre>
+    <code class="language-js">setTimeout(checkForUpdates, 60000);</code></pre>
     <p>El primer argumento de <codeinline>setTimeout()</codeinline> es una función y el segundo es un intervalo de tiempo medido en milisegundos. En el código anterior, una hipotética función <codeinline>checkForUpdates()</codeinline> será llamada 60.000 milisegundos (1 minuto) después de la llamada a <codeinline>setTimeout()</codeinline>. <codeinline>checkForUpdates()</codeinline> es una función callback que su programa podría definir, y <codeinline>setTi meout()</codeinline> es la función que usted invoca para registrar su función callback y especificar bajo qué condiciones asíncronas debería ser invocada.</p>
     <p><codeinline>setTimeout()</codeinline> llama a la función callback especificada una vez, sin pasar argumentos, y luego se olvida de ella. Si está escribiendo una función que realmente busca actualizaciones, probablemente quiera que se ejecute repetidamente. Puede hacerlo utilizando <codeinline>setInterval()</codeinline> en lugar de <codeinline>setTimeout()</codeinline>:</p>
     <pre class="language-js">
-    <code>// Llama a checkForUpdates en un minuto y luego nuevamente cada minuto después de eso
+    <code class="language-js">// Llama a checkForUpdates en un minuto y luego nuevamente cada minuto después de eso
     let updateIntervalId = setInterval(checkForUpdates, 60000);
     // setInterval() Devuelve un valor que podemos usar para detener la repetición.
     // invocaciones por llamada clearInterval(). (Similar, setTimeout()
@@ -35,7 +35,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>13.1.2 Eventos</h2>
     <p>Los programas JavaScript del lado del cliente están casi siempre orientados a eventos: en lugar de ejecutar algún tipo de cálculo predeterminado, suelen esperar a que el usuario haga algo y luego responden a sus acciones. El navegador web genera un <em>evento</em> cuando el usuario pulsa una tecla del teclado, mueve el ratón, hace clic en un botón del ratón o toca un dispositivo de pantalla táctil. Los programas JavaScript basados en eventos registran funciones de retrollamada para determinados tipos de eventos en contextos específicos, y el navegador web invoca esas funciones cada vez que se producen los eventos especificados. Estas funciones de callback se llaman <em>manejadores de eventos</em> o <em>escuchadores de eventos</em>, y se registran con <codeinline>addEventListener()</codeinline>:</p>
     <pre class="language-js">
-    <code>// Pídale al navegador web que devuelva un objeto que represente el 
+    <code class="language-js">// Pídale al navegador web que devuelva un objeto que represente el 
     // elemento HTML &lt;button> ue coincida con este selector CSS
     let okay = document.querySelector('#confirmUpdateDialog button.okay');
 
@@ -48,7 +48,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>13.1.3 Eventos en red</h2>
     <p>Otra fuente común de asincronía en la programación JavaScript son las peticiones de red. JavaScript que se ejecuta en el navegador puede obtener datos de un servidor web con código como este:</p>
     <pre class="language-js">
-    <code>function getCurrentVersionNumber(versionCallback) &lbrace; // Tenga en cuenta el argumento del callback
+    <code class="language-js">function getCurrentVersionNumber(versionCallback) &lbrace; // Tenga en cuenta el argumento del callback
       // Realizar una solicitud HTTP con script a una API de versión de backend
       let request = new XMLHttpRequest();
       request.open("GET", "http://www.example.com/api/version");
@@ -78,7 +78,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>13.1.4 Callbacks y Eventos en Node</h2>
     <p>El entorno JavaScript del lado del servidor de Node.js es profundamente asíncrono y define muchas APIs que utilizan callbacks y eventos. La API predeterminada para leer el contenido de un archivo, por ejemplo, es asíncrona e invoca una función de devolución de llamada cuando se han leído los contenidos del archivo:</p>
     <pre class="language-js">
-    <code>const fs = require("fs"); // El módulo "fs" tiene API relacionadas con el sistema de archivos
+    <code class="language-js">const fs = require("fs"); // El módulo "fs" tiene API relacionadas con el sistema de archivos
       let options = &lbrace; // Un objeto para almacenar opciones para nuestro programa.
       // Las opciones predeterminadas irían aquí
       };
@@ -99,7 +99,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>La función <codeinline>fs.readFile()</codeinline> de Node toma una llamada de retorno de dos parámetros como último argumento. Lee el archivo especificado de forma asíncrona y luego invoca la llamada de retorno. Si el fichero se ha leído correctamente, pasa el contenido del fichero como segundo argumento de la llamada de retorno. Si hubo un error, pasa el error como primer argumento de la llamada de retorno. En este ejemplo, expresamos la llamada de retorno como una función de flecha, que es una sintaxis sucinta y natural para este tipo de operación simple.</p>
     <p>Node también define una serie de APIs basadas en eventos. La siguiente función muestra cómo hacer una petición HTTP del contenido de una URL en Node. Tiene dos capas de código asíncrono manejadas con escuchadores de eventos. Observa que Node utiliza un método <codeinline>on()</codeinline> para registrar escuchadores de eventos en lugar de <codeinline>addEventListener()</codeinline>:</p>
     <pre class="language-js">
-    <code>const https = require("https");
+    <code class="language-js">const https = require("https");
 
     // Lee el contenido de texto de la URL y pásalo asincrónicamente a la devolución de llamada.
     function getText(url, callback) &lbrace;
@@ -173,7 +173,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>13.2.1 Uso de promesas</h2>
     <p>Con la llegada de Promises al núcleo del lenguaje JavaScript, los navegadores web han comenzado a implementar APIs basadas en Promises. En la sección anterior, implementamos una función <codeinline>getText()</codeinline> que realizaba una petición HTTP asíncrona y pasaba el cuerpo de la respuesta HTTP a una función callback especificada como una cadena. Imagina una variante de esta función, <codeinline>getJSON()</codeinline>, que analiza el cuerpo de la respuesta HTTP como JSON y devuelve una Promise en lugar de aceptar un argumento de devolución de llamada. Implementaremos una función <codeinline>getJSON()</codeinline> más adelante en este capítulo, pero por ahora, veamos cómo utilizar esta función de utilidad que devuelve promesas:</p>
     <pre class="language-js">
-    <code>getJSON(url).then(jsonData => &lbrace;
+    <code class="language-js">getJSON(url).then(jsonData => &lbrace;
       // Esta es una función de devolución de llamada que se invocará de 
       // forma asincrónica con el valor JSON analizado cuando esté disponible.
     });</code></pre>
@@ -183,7 +183,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>A un nivel sintáctico simple, el método <codeinline>then()</codeinline> es la característica distintiva de las Promesas, y es idiomático añadir <codeinline>.then()</codeinline> directamente a la invocación de la función que devuelve la Promesa, sin el paso intermedio de asignar el objeto Promesa a una variable.</p>
     <p>También es idiomático nombrar las funciones que devuelven promesas y las funciones que utilizan los resultados de las promesas con verbos, y estos modismos conducen a un código que es particularmente fácil de leer:</p>
     <pre class="language-js">
-    <code>// Supongamos que tiene una función como ésta para mostrar un perfil de usuario.
+    <code class="language-js">// Supongamos que tiene una función como ésta para mostrar un perfil de usuario.
     function displayUserProfile(profile) &lbrace; /* implementation omitted */ }
 
     // A continuación te mostramos cómo puedes usar esa función con una Promesa.
@@ -193,14 +193,14 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Las operaciones asíncronas, sobre todo las que implican trabajo en red, pueden fallar de varias maneras, por lo que hay que escribir código robusto para gestionar los errores que inevitablemente se producirán.</p>
     <p>Para Promises, podemos hacer esto pasando una segunda función al método <codeinline>then()</codeinline>:</p>
     <pre class="language-js">
-    <code>getJSON("/api/user/profile").then(displayUserProfile, handleProfileError);</code></pre>
+    <code class="language-js">getJSON("/api/user/profile").then(displayUserProfile, handleProfileError);</code></pre>
     <p>Una Promise representa el resultado futuro de una computación asíncrona que ocurre después de la creación del objeto Promise. Dado que el cálculo se realiza después de que se nos devuelva el objeto Promise, no hay forma de que el cálculo devuelva tradicionalmente un valor o lance una excepción que podamos capturar. Las funciones que pasamos a <codeinline>then()</codeinline> proporcionan alternativas. Cuando una computación sincrónica se completa normalmente, simplemente devuelve el resultado a su invocador. Cuando un cálculo asíncrono basado en promesas se completa normalmente, pasa su resultado a la función que es el primer argumento de <codeinline>then()</codeinline>.</p>
     <p>Cuando algo va mal en un cálculo síncrono, se lanza una excepción que se propaga por la pila de llamadas hasta que hay una cláusula <codeinline>catch</codeinline> para manejarla. Cuando se ejecuta una computación asíncrona, su invocador ya no está en la pila, por lo que si algo va mal, simplemente no es posible lanzar una excepción de vuelta al invocador.</p>
     <p>En su lugar, los cálculos asíncronos basados en promesas pasan la excepción (normalmente como un objeto Error de algún tipo, aunque esto no es necesario) a la segunda función pasada a <codeinline>then()</codeinline>. Así, en el código anterior, si <codeinline>getJSON()</codeinline> se ejecuta normalmente, pasa su resultado a <codeinline>displayUserProfile()</codeinline>. Si hay un error (el usuario no ha iniciado sesión, el servidor está caído, la conexión a Internet del usuario se ha caído, la solicitud ha expirado, etc.), entonces <codeinline>getJSON()</codeinline> pasa un objeto Error a <codeinline>handleProfileError()</codeinline>.</p>
     <p>En la práctica, es raro ver dos funciones pasadas a <codeinline>then()</codeinline>. Hay una forma mejor y más idiomática de manejar los errores cuando se trabaja con promesas. Para entenderlo, primero considere lo que ocurre si <codeinline>getJSON()</codeinline> se completa normalmente pero se produce un error en <codeinline>displayUserProfile()</codeinline>. Esa función de llamada de retorno es invocada de forma asíncrona cuando <codeinline>getJSON()</codeinline> retorna, por lo que también es asíncrona y no puede lanzar una excepción de forma significativa (porque no hay código en la pila de llamadas para manejarla).</p>
     <p>La forma más idiomática de manejar los errores en este código es la siguiente:</p>
     <pre class="language-js">
-    <code>getJSON("/api/user/profile").then(displayUserProfile).catch(handleProfileError);</code></pre>
+    <code class="language-js">getJSON("/api/user/profile").then(displayUserProfile).catch(handleProfileError);</code></pre>
     <p>Con este código, un resultado normal de <codeinline>getJSON()</codeinline> todavía se pasa a <codeinline>displayUserProfile()</codeinline>, pero cualquier error en <codeinline>getJSON()</codeinline> o en <codeinline>displayUserProfile()</codeinline> (incluyendo cualquier excepción lanzada por <codeinline>displayUserProfile</codeinline>) se pasa a <codeinline>handleProfileError()</codeinline>. El método catch() es una forma abreviada de llamar a <codeinline>then()</codeinline> con un primer argumento <codeinline>null</codeinline> y la función de gestión de errores especificada como segundo argumento.</p>
     <p>Tendremos más que decir sobre <codeinline>catch()</codeinline> y este lenguaje de gestión de errores cuando hablemos de Promise chains en la siguiente sección.</p>
     <article>
@@ -214,7 +214,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>13.2.2 Encadenar promesas</h2>
     <p>Una de las ventajas más importantes de las promesas es que proporcionan una forma natural de expresar una secuencia de operaciones asíncronas como una cadena lineal de invocaciones al método <codeinline>then()</codeinline>, sin tener que anidar cada operación dentro de la llamada de retorno de la anterior. He aquí, por ejemplo, una hipotética cadena Promise:</p>
     <pre class="language-js">
-    <code>fetch(documentURL) // Realizar una solicitud HTTP
+    <code class="language-js">fetch(documentURL) // Realizar una solicitud HTTP
       .then(response => response.json()) // Solicitar el cuerpo JSON de la respuesta
       .then(document => &lbrace; // Cuando obtenemos el JSON analizado
         return render(document); // mostrar el documento al usuario
@@ -226,7 +226,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Este código ilustra cómo una cadena de Promises puede facilitar la expresión de una secuencia de operaciones asíncronas. Sin embargo, no vamos a discutir esta cadena Promise en particular. Sin embargo, continuaremos explorando la idea de usar cadenas Promise para hacer peticiones HTTP.</p>
     <p>Anteriormente en este capítulo, vimos el objeto XMLHttpRequest utilizado para hacer una petición HTTP en JavaScript. Este objeto de nombre extraño tiene una API antigua y complicada, y ha sido reemplazada en gran parte por la nueva API Fetch basada en promesas (<a href="capitulo-15#11-1">§15.11.1</a>). En su forma más simple, esta nueva API HTTP es sólo la función <codeinline>fetch()</codeinline>. Le pasas una URL y te devuelve una promesa. Esa promesa se cumple cuando la respuesta HTTP comienza a llegar y el estado HTTP y las cabeceras están disponibles:</p>
     <pre class="language-js">
-    <code>fetch("/api/user/profile").then(response => &lbrace;
+    <code class="language-js">fetch("/api/user/profile").then(response => &lbrace;
       // Cuando se resuelve la promesa, tenemos estado y encabezados.
       if (response.ok &&
         response.headers.get("Content-Type") === "application/json") &lbrace;
@@ -236,7 +236,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     });</code></pre>
     <p>Cuando la Promesa devuelta por <codeinline>fetch()</codeinline> se cumple, pasa un objeto Response a la función que pasaste a su método <codeinline>then()</codeinline>. Este objeto response te da acceso al estado de la petición y a las cabeceras, y también define métodos como <codeinline>text()</codeinline> y <codeinline>json()</codeinline>, que te dan acceso al cuerpo de la respuesta en forma de texto y JSON, respectivamente. Pero aunque la Promesa inicial se cumpla, el cuerpo de la respuesta puede no haber llegado todavía. Así que estos métodos <codeinline>text()</codeinline> y <codeinline>json()</codeinline> para acceder al cuerpo de la respuesta devuelven Promesas. He aquí una forma ingenua de utilizar <codeinline>fetch()</codeinline> y el método <codeinline>response.json()</codeinline> para obtener el cuerpo de una respuesta HTTP:</p>
     <pre class="language-js">
-    <code>fetch("/api/user/profile").then(response => &lbrace;
+    <code class="language-js">fetch("/api/user/profile").then(response => &lbrace;
       response.json().then(profile => &lbrace; // Solicitar el cuerpo analizado en JSON
         // Cuando llega el cuerpo de la respuesta, se analizará
         // automáticamente como JSON y se pasará a esta función.
@@ -245,7 +245,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     });</code></pre>
     <p>Esta es una forma ingenua de usar Promises porque las anidamos, como callbacks, lo que contradice el propósito. El lenguaje preferido es utilizar promesas en una cadena secuencial con código como este:</p>
     <pre class="language-js">
-    <code>fetch("/api/user/profile")
+    <code class="language-js">fetch("/api/user/profile")
       .then(response => &lbrace;
         return response.json();
       })
@@ -254,12 +254,12 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       });</code></pre>
     <p>Veamos las invocaciones a métodos en este código, ignorando los argumentos que se pasan a los métodos:</p>
     <pre class="language-js">
-    <code>fetch().then().then()</code></pre>
+    <code class="language-js">fetch().then().then()</code></pre>
     <p>Cuando se invoca más de un método en una sola expresión como ésta, la llamamos <em>cadena de métodos</em>. Sabemos que la función <codeinline>fetch()</codeinline> devuelve un objeto Promise, y podemos ver que el primer <codeinline>.then()</codeinline> de esta cadena invoca un método sobre ese objeto Promise devuelto. Pero hay un segundo <codeinline>.then()</codeinline> en la cadena, lo que significa que la primera invocación del método <codeinline>then()</codeinline> debe devolver a su vez una Promise.</p>
     <p>A veces, cuando una API está diseñada para utilizar este tipo de encadenamiento de métodos, sólo hay un único objeto, y cada método de ese objeto devuelve el propio objeto para facilitar el encadenamiento. Sin embargo, no es así como funcionan las promesas. Cuando escribimos una cadena de invocaciones <codeinline>.then()</codeinline>, no estamos registrando múltiples llamadas de retorno en un único objeto Promise. En su lugar, cada invocación del método <codeinline>then()</codeinline> devuelve un nuevo objeto Promise. Ese nuevo objeto Promise no se cumple hasta que la función pasada a <codeinline>then()</codeinline> se haya completado.</p>
     <p>Volvamos a una forma simplificada de la cadena <codeinline>fetch()</codeinline> original anterior. Si definimos las funciones pasadas a las invocaciones <codeinline>then()</codeinline> en otro lugar, podríamos refactorizar el código para que se vea así:</p>
     <pre class="language-js">
-    <code>fetch(theURL) // task 1; devuelve la promesa 1
+    <code class="language-js">fetch(theURL) // task 1; devuelve la promesa 1
       .then(callback1) // task 2; devuelve la promesa 2
       .then(callback2); // task 3; devuelve la promesa 3</code></pre>
     <p>Veamos este código en detalle:</p>
@@ -280,7 +280,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Recuerda que <codeinline>fetch()</codeinline> devuelve un objeto Promise que, cuando se cumple, pasa un objeto Response a la función callback que registramos. Este objeto Response tiene <codeinline>.text()</codeinline>, <codeinline>.json()</codeinline>, y otros métodos para solicitar el cuerpo de la respuesta HTTP en varias formas. Pero como el cuerpo puede no haber llegado todavía, estos métodos deben devolver objetos Promise. En el ejemplo que hemos estado estudiando, la "tarea 2" llama al método <codeinline>.json()</codeinline> y devuelve su valor. Este es el cuarto objeto Promise, y es el valor de retorno de la función <codeinline>callback1()</codeinline>.</p>
     <p>Volvamos a escribir el código de obtención de URL una vez más de una forma verbosa y no idiomática que haga explícitas las devoluciones de llamada y las promesas:</p>
     <pre class="language-js">
-    <code>function c1(response) &lbrace; // callback 1
+    <code class="language-js">function c1(response) &lbrace; // callback 1
       let p4 = response.json();
       return p4; // devuelve la promesa 4
     }
@@ -306,13 +306,13 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p class="title-article text-left">Los métodos catch y finally</p>
     <p>El método <codeinline>.catch()</codeinline> de una Promise es simplemente una forma abreviada de llamar a <codeinline>.then()</codeinline> con <codeinline>null</codeinline> como primer argumento y una llamada de retorno como segundo argumento. Dada cualquier Promise <codeinline>p</codeinline> y una llamada de retorno <codeinline>c</codeinline>, las dos líneas siguientes son equivalentes:</p>
     <pre class="language-js">
-    <code>p.then(null, c);
+    <code class="language-js">p.then(null, c);
     p.catch(c);</code></pre>
     <p>La abreviatura <codeinline>.catch()</codeinline> es preferible porque es más simple y porque el nombre coincide con la cláusula <codeinline>catch</codeinline> en una sentencia <codeinline>try/catch</codeinline> de manejo de excepciones. Como hemos explicado, las excepciones normales no funcionan con código asíncrono. El método <codeinline>.catch()</codeinline> de Promises es una alternativa que sí funciona para el código asíncrono. Cuando algo va mal en código síncrono, podemos hablar de una excepción "burbujeando por la pila de llamadas" hasta que encuentra un bloque <codeinline>catch</codeinline>. Con una cadena asíncrona de Promesas, la metáfora comparable podría ser la de un error "goteando por la cadena" hasta que encuentra una invocación <codeinline>.catch()</codeinline>.</p>
     <p>En ES2018, los objetos Promise también definen un método <codeinline>.finally()</codeinline> cuyo propósito es similar al de la cláusula <codeinline>finally</codeinline> de una sentencia <codeinline>try/catch/finally</codeinline>. Si añades una invocación <codeinline>.finally()</codeinline> a tu cadena Promise, la llamada de retorno que pases a <codeinline>.finally()</codeinline> se invocará cuando se cumpla la Promise sobre la que la has invocado. Tu callback será invocada si la Promise se cumple o se rechaza, y no se le pasará ningún argumento, por lo que no podrás averiguar si se cumplió o se rechazó. Pero si necesitas ejecutar algún tipo de código de limpieza (como cerrar archivos abiertos o conexiones de red) en cualquier caso, una llamada de retorno <codeinline>.finally()</codeinline> es la forma ideal de hacerlo. Al igual que <codeinline>.then()</codeinline> y <codeinline>.catch()</codeinline>, <codeinline>.finally()</codeinline> devuelve un nuevo objeto Promise. El valor de retorno de una llamada de retorno <codeinline>.finally()</codeinline> generalmente se ignora, y la Promesa devuelta por <codeinline>.finally()</codeinline> típicamente se resolverá o rechazará con el mismo valor con el que se resuelve o rechaza la Promesa sobre la que se invocó <codeinline>.finally()</codeinline>. Sin embargo, si una llamada de retorno <codeinline>.finally()</codeinline> lanza una excepción, la promesa devuelta por <codeinline>.finally()</codeinline> se rechazará con ese valor.</p>
     <p>El código de obtención de URLs que estudiamos en las secciones anteriores no hacía ningún tratamiento de errores. Vamos a corregirlo ahora con una versión más realista del código:</p>
     <pre class="language-js">
-    <code>fetch("/api/user/profile") // Iniciar la solicitud HTTP
+    <code class="language-js">fetch("/api/user/profile") // Iniciar la solicitud HTTP
       .then(response => &lbrace; // Llame a esto cuando el estado y los encabezados estén listos
         if (!response.ok) &lbrace; // Si recibimos un error 404 No encontrado o similar
           return null; // Es posible que el usuario haya cerrado la sesión; devuelve un perfil nulo
@@ -359,7 +359,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Hay un par de cosas dignas de mención en este código. En primer lugar, observe que el objeto de error lanzado con una sentencia <codeinline>throw</codeinline> normal y sincrónica termina siendo manejado asincrónicamente con una invocación al método <codeinline>.catch()</codeinline> en una cadena Promise. Esto debería aclarar por qué este método abreviado es preferible a pasar un segundo argumento a <codeinline>.then()</codeinline>, y también por qué es tan idiomático terminar las cadenas Promise con una llamada a <codeinline>.catch()</codeinline>.</p>
     <p>Antes de dejar el tema del manejo de errores, quiero señalar que, aunque es idiomático terminar cada cadena Promise con un <codeinline>.catch()</codeinline> para limpiar (o al menos registrar) cualquier error que haya ocurrido en la cadena, también es perfectamente válido usar <codeinline>.catch()</codeinline> en cualquier otra parte de una cadena Promise. Si una de las etapas de tu cadena Promise puede fallar con un error, y si el error es algún tipo de error recuperable que no debería detener la ejecución del resto de la cadena, entonces puedes insertar una llamada <codeinline>.catch()</codeinline> en la cadena, resultando en un código que podría parecerse a esto:</p>
     <pre class="language-js">
-    <code>startAsyncOperation()
+    <code class="language-js">startAsyncOperation()
       .then(doStageTwo)
       .catch(recoverFromStageTwoError)
       .then(doStageThree)
@@ -369,12 +369,12 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Seamos concretos: en el ejemplo de código anterior, si <codeinline>startAsyncOperation()</codeinline> o <codeinline>doStageTwo()</codeinline> arrojan un error, se invocará a la función <codeinline>recoverFromStageTwoError()</codeinline>. Si <codeinline>recoverFromStageTwoError()</codeinline> devuelve normalmente, su valor de retorno se pasará a <codeinline>doStageThree()</codeinline> y la operación asíncrona continuará normalmente. Por otro lado, si <codeinline>recoverFromStageTwoError()</codeinline> no pudo recuperarse, lanzará un error (o volverá a lanzar el error que se le pasó). En este caso, ni <codeinline>doStageThree()</codeinline> ni <codeinline>doStageFour()</codeinline> serán invocadas, y el error lanzado por <codeinline>recoverFromStageTwoError()</codeinline> sería pasado a <codeinline>logStageThreeAndFourErrors()</codeinline>.</p>
     <p>A veces, en entornos de red complejos, los errores pueden producirse de forma más o menos instantánea, y puede ser conveniente tratarlos simplemente reintentando la petición asíncrona. Imagina que has escrito una operación basada en Promise para consultar una base de datos:</p>
     <pre class="language-js">
-    <code>queryDatabase()
+    <code class="language-js">queryDatabase()
       .then(displayTable)
       .catch(displayDatabaseError);</code></pre>
     <p>Ahora supongamos que los problemas transitorios de carga de la red están causando que esto falle alrededor del 1% de las veces. Una solución sencilla podría ser reintentar la consulta con una llamada <codeinline>.catch(</codeinline>):</p>
     <pre class="language-js">
-    <code>queryDatabase()
+    <code class="language-js">queryDatabase()
       .catch(e => wait(500).then(queryDatabase)) // On failure, wait and retry
       .then(displayTable)
       .catch(displayDatabaseError);</code></pre>
@@ -384,10 +384,10 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       <p>Volvamos una vez más al ejemplo anterior de obtención de URL, y consideremos la llamada de retorno <codeinline>c1</codeinline> que pasamos a la primera invocación <codeinline>.then()</codeinline>. Observa que hay tres formas en las que <codeinline>c1</codeinline> puede terminar. Puede volver normalmente con la Promise devuelta por la llamada <codeinline>.json()</codeinline>. Esto hace que <codeinline>p2</codeinline> se resuelva, pero si esa Promise se cumple o no, no se cumple. rechazada depende de lo que ocurra con la nueva Promise devuelta. <codeinline>c1</codeinline> también puede devolver normalmente con el valor <codeinline>null</codeinline>, lo que provoca que <codeinline>p2</codeinline> se cumpla inmediatamente. Por último, <codeinline>c1</codeinline> puede terminar lanzando un error, lo que provoca que <codeinline>p2</codeinline> sea rechazada. Estos son los tres posibles resultados de una promesa, y el código en <codeinline>c1</codeinline> demuestra cómo la llamada de retorno puede causar cada resultado.</p>
       <p>En una cadena Promise, el valor devuelto (o lanzado) en una etapa de la cadena se convierte en la entrada de la siguiente etapa de la cadena, por lo que es fundamental hacerlo bien. En la práctica, olvidarse de devolver un valor desde una función de devolución de llamada es una fuente común de errores relacionados con las promesas, y esto se ve exacerbado por la sintaxis de atajo de función de flecha de JavaScript. Considere esta línea de código que vimos antes:</p>
     <pre class="language-js">
-    <code>.catch(e => wait(500).then(queryDatabase))</code></pre>
+    <code class="language-js">.catch(e => wait(500).then(queryDatabase))</code></pre>
       <p>Recordemos del <a href="capitulo-8">capítulo 8</a> que las funciones de flecha permiten muchos atajos. Como hay exactamente un argumento (el valor de error), podemos omitir los paréntesis. Como el cuerpo de la función es una única expresión, podemos omitir las llaves alrededor del cuerpo de la función, y el valor de la expresión se convierte en el valor de retorno de la función. Gracias a estos atajos, el código anterior es correcto. Pero considere este cambio aparentemente inocuo:</p>
     <pre class="language-js">
-    <code>.catch(e => &lbrace; wait(500).then(queryDatabase) })</code></pre>
+    <code class="language-js">.catch(e => &lbrace; wait(500).then(queryDatabase) })</code></pre>
       <p>Al añadir las llaves, ya no obtenemos el retorno automático. Esta función ahora devuelve <codeinline>undefined</codeinline> en lugar de devolver una Promise, lo que significa que la siguiente etapa en esta cadena Promise será invocada con <codeinline>undefined</codeinline> como entrada en lugar del resultado de la consulta reintentada. Se trata de un error sutil que puede no ser fácil de depurar.</p>
     </article>
   </section>
@@ -395,7 +395,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>13.2.5 Promesas en paralelo</h2>
     <p>Hemos pasado mucho tiempo hablando de cadenas Promise para ejecutar secuencialmente los pasos asíncronos de una operación asíncrona mayor. A veces, sin embargo, queremos que ejecute una serie de operaciones asíncronas en paralelo. La función <codeinline>Promise.all()</codeinline> puede hacer esto. <codeinline>Promise.all()</codeinline> toma un array de objetos Promise como entrada y devuelve un Promise. La Promise devuelta será rechazada si alguna de las Promises de entrada es rechazada. De lo contrario, se cumplirá con una matriz de los valores de cumplimiento de cada una de las promesas de entrada. Así, por ejemplo, si quieres obtener el contenido de texto de múltiples URLs, puedes usar código como este:</p>
     <pre class="language-js">
-    <code>// Comenzamos con una matriz de URL
+    <code class="language-js">// Comenzamos con una matriz de URL
       const urls = [ /* zero or more URLs here */ ];
       // Y convertirlo en una matriz de objetos Promise
       promises = urls.map(url => fetch(url).then(r => r.text()));
@@ -406,7 +406,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p><codeinline>Promise.all()</codeinline> es ligeramente más flexible que lo descrito anteriormente. La matriz de entrada puede contener tanto objetos Promise como valores no Promise. Si un elemento del array no es una Promise, se trata como si fuera el valor de una Promise ya cumplida y simplemente se copia sin cambios en el array de salida.</p>
     <p>La Promise devuelta por <codeinline>Promise.all()</codeinline> rechaza cuando cualquiera de las Promises de entrada es rechazada. Esto ocurre inmediatamente después del primer rechazo y puede ocurrir mientras otras Promesas de entrada siguen pendientes. En ES2020, <codeinline>Promise.allSettled()</codeinline> toma un array de promesas de entrada y devuelve una promesa, igual que <codeinline>Promise.all()</codeinline>. Pero <codeinline>Promise.allSettled()</codeinline> nunca rechaza la promesa devuelta, y no cumple esa promesa hasta que todas las promesas de entrada se hayan resuelto. La promesa se resuelve en una matriz de objetos, con un objeto por cada promesa de entrada. Cada uno de estos objetos devueltos tiene una propiedad de <codeinline>status</codeinline> establecida a "cumplido" o "rechazado". Si el estado es "cumplido", entonces el objeto también tendrá una propiedad <codeinline>value</codeinline> que da el valor de cumplimiento. Y si el estado es "rejected", entonces el objeto también tendrá una propiedad <codeinline>reason</codeinline> que da el valor de error o rechazo de la Promesa correspondiente:</p>
     <pre class="language-js">
-    <code>Promise.allSettled([Promise.resolve(1), Promise.reject(2), 3]).then(results => &lbrace;
+    <code class="language-js">Promise.allSettled([Promise.resolve(1), Promise.reject(2), 3]).then(results => &lbrace;
       results[0] // => &lbrace; status: "fulfilled", value: 1 }
       results[1] // => &lbrace; status: "rejected", reason: 2 }
       results[2] // => &lbrace; status: "fulfilled", value: 3 }
@@ -419,13 +419,13 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p class="title-article text-left">Promesas basadas en otras promesas</p>
     <p>Es fácil escribir una función que devuelva una Promise si tienes alguna otra función que devuelva una Promise para empezar. Dada una Promise, siempre puedes crear (y devolver) una nueva llamando a <codeinline>.then()</codeinline>. Así que si usamos la función <codeinline>fetch()</codeinline> existente como punto de partida, podemos escribir <codeinline>getJSON()</codeinline> así:</p>
     <pre class="language-js">
-    <code>function getJSON(url) &lbrace;
+    <code class="language-js">function getJSON(url) &lbrace;
       return fetch(url).then(response => response.json());
     }</code></pre>
     <p>El código es trivial porque el objeto Response de la API <codeinline>fetch()</codeinline> tiene un método <codeinline>json()</codeinline> predefinido. El método <codeinline>json()</codeinline> devuelve una Promise, que devolvemos desde nuestra llamada de retorno (la llamada de retorno es una función de flecha con un cuerpo de una sola expresión, por lo que la devolución está implícita), de modo que la Promise devuelta por <codeinline>getJSON()</codeinline> se resuelve a la Promise devuelta por <codeinline>response.json()</codeinline>. Cuando esa Promise se cumple, la Promise devuelta por <codeinline>getJSON()</codeinline> se cumple con el mismo valor. Nótese que no hay manejo de errores en esta implementación de <codeinline>getJSON()</codeinline>. En lugar de comprobar <codeinline>response.ok</codeinline> y la cabecera Content-Type, simplemente permitimos que el método <codeinline>json()</codeinline> rechace la Promesa devuelta con un SyntaxError si el cuerpo de la respuesta no puede ser analizado como JSON.</p>
     <p>Escribamos otra función que devuelva una Promise, esta vez usando <codeinline>getJSON()</codeinline> como fuente de la Promise inicial:</p>
     <pre class="language-js">
-    <code>function getHighScore() &lbrace;
+    <code class="language-js">function getHighScore() &lbrace;
       return getJSON("/api/user/profile").then(profile => profile.highScore);
     }</code></pre>
     <p>Suponemos que esta función forma parte de algún tipo de juego basado en web y que la URL "/api/user/profile" devuelve una estructura de datos con formato JSON que incluye una propiedad de <codeinline>highScore</codeinline>.</p>
@@ -437,7 +437,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Tanto para <codeinline>getJSON()</codeinline> como para <codeinline>getHighScore()</codeinline>, empezamos llamando a una función existente para obtener una Promise inicial, y creamos y devolvimos una nueva Promise llamando al método <codeinline>.then()</codeinline> de esa Promise inicial. ¿Pero qué pasa cuando escribimos una función que devuelve una Promise y no podemos usar otra función que devuelva una Promise como punto de partida? En ese caso, utiliza el constructor <codeinline>Promise()</codeinline> para crear un nuevo objeto Promise sobre el que tengas un control total. Así es como funciona: invocas al constructor <codeinline>Promise()</codeinline> y le pasas una función como único argumento. La función que pases debe estar escrita para esperar dos parámetros, que, por convención, deben llamarse <codeinline>resolve</codeinline> y <codeinline>reject</codeinline>. El constructor llama de forma sincrónica a tu función con argumentos de función para los parámetros <codeinline>resolve</codeinline> y <codeinline>reject</codeinline>. Después de llamar a tu función, el constructor de <codeinline>Promise()</codeinline> devuelve la Promise recién creada. Esa Promise devuelta está bajo el control de la función que pasaste al constructor. Esa función debería realizar alguna operación asíncrona y luego llamar a la función <codeinline>resolve</codeinline> para resolver o cumplir la Promise devuelta o llamar a la función <codeinline>reject</codeinline> para rechazar la Promise devuelta. Tu función no tiene por qué ser asíncrona: puede llamar a <codeinline>resolve</codeinline> o <codeinline>reject</codeinline> de forma síncrona, pero la Promise se resolverá, cumplirá o rechazará de forma asíncrona si haces esto.</p>
     <p>Puede ser difícil entender las funciones pasadas a una función pasada a un constructor con sólo leer sobre ello, pero esperamos que algunos ejemplos lo aclaren. He aquí cómo escribir la función <codeinline>wait()</codeinline> basada en promesas que hemos utilizado en varios ejemplos anteriores del capítulo:</p>
     <pre class="language-js">
-    <code>function wait(duration) &lbrace;
+    <code class="language-js">function wait(duration) &lbrace;
       // Crear y devolver una nueva Promesa
       return new Promise((resolve, reject) => &lbrace; // Estos controlan la Promesa
         // Si el argumento no es válido, rechace la Promesa
@@ -454,7 +454,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>El <a href="#ejemplo13-1">Ejemplo 13-1</a> es otro ejemplo de uso del constructor <codeinline>Promise()</codeinline>. Este implementa nuestra función <codeinline>getJSON()</codeinline> para su uso en Node, donde la API <codeinline>fetch()</codeinline> no está incorporada. Recuerda que comenzamos este capítulo con una discusión sobre callbacks y eventos asíncronos. Este ejemplo utiliza tanto callbacks como manejadores de eventos y es una buena demostración, por lo tanto, de cómo podemos implementar APIs basadas en Promise sobre otros estilos de programación asíncrona.</p>
     <p id="ejemplo13-1"><em>Ejemplo 13-1. Una función asíncrona getJSON()</em></p>
     <pre class="language-js">
-    <code>const http = require("http");
+    <code class="language-js">const http = require("http");
 
     function getJSON(url) &lbrace;
       // Crear y devolver una nueva Promesa
@@ -501,7 +501,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>13.2.7 Promesas en secuencia</h2>
     <p><codeinline>Promise.all()</codeinline> facilita la ejecución de un número arbitrario de promesas en paralelo. Y las cadenas de promesas facilitan la expresión de una secuencia de un número fijo de promesas. Sin embargo, ejecutar un número arbitrario de promesas en secuencia es más complicado. Supongamos, por ejemplo, que tienes un array de URLs que recuperar, pero que para evitar sobrecargar tu red, quieres recuperarlas de una en una. Si el array es de longitud arbitraria y contenido desconocido, no puedes escribir una cadena Promise por adelantado, así que necesitas construir una dinámicamente, con código como este:</p>
     <pre class="language-js">
-    <code>function fetchSequentially(urls) &lbrace;
+    <code class="language-js">function fetchSequentially(urls) &lbrace;
       // Almacenaremos los cuerpos de las URL aquí a medida que los obtengamos.
       const bodies = [];
 
@@ -533,13 +533,13 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     }</code></pre>
     <p>Con esta función <codeinline>fetchSequentially()</codeinline> definida, podríamos obtener las URLs de una en una con un código muy parecido al código fetch-in-parallel que usamos antes para demostrar <codeinline>Promise.all()</codeinline>:</p>
     <pre class="language-js">
-    <code>fetchSequentially(urls)
+    <code class="language-js">fetchSequentially(urls)
       .then(bodies => &lbrace; /* hacer algo con la array de strings */ })
       .catch(e => console.error(e));</code></pre>
     <p>La función <codeinline>fetchSequentially()</codeinline> comienza creando una Promise que se cumplirá inmediatamente después de que regrese. Luego construye una larga cadena lineal de Promise a partir de esa Promise inicial y devuelve la última Promise de la cadena. Es como colocar una fila de fichas de dominó y derribar la primera.</p>
     <p>Hay otro enfoque (posiblemente más elegante) que podemos adoptar. En lugar de crear las promesas por adelantado, podemos hacer que la llamada de retorno de cada promesa cree y devuelva la siguiente promesa. Es decir, en lugar de crear y encadenar un montón de promesas, creamos promesas que se resuelven en otras promesas. En lugar de crear una cadena de promesas tipo dominó, estamos creando una secuencia de promesas anidadas una dentro de otra como un conjunto de muñecas matrioskas. Con este enfoque, nuestro código puede devolver la primera promesa (la más externa), sabiendo que finalmente se cumplirá (¡o rechazará!) con el mismo valor que la última promesa (la más interna) de la secuencia. La función <codeinline>promiseSequence()</codeinline> que sigue está escrita para ser genérica y no es específica de la obtención de URLs. Está aquí al final de nuestra discusión sobre Promesas porque es complicada. Sin embargo, si has leído este capítulo con atención, espero que seas capaz de entender cómo funciona. En particular, observa que la función anidada dentro de <codeinline>promiseSequence()</codeinline> parece llamarse a sí misma recursivamente, pero debido a que la llamada "recursiva" es a través de un método <codeniline>then()</codeniline>, en realidad no está ocurriendo ninguna recursión tradicional:</p>
     <pre class="language-js">
-    <code>
+    <code class="language-js">
     // Esta función toma un array de valores de entrada y una función "promiseMaker". 
     // Para cualquier valor de entrada x en el array, promiseMaker(x) debe devolver
     // una Promesa que se cumplirá con un valor de salida. Esta función devuelve
@@ -580,7 +580,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     }</code></pre>
     <p>Esta función <codeinline>promiseSequence()</codeinline> es intencionadamente genérica. Podemos usarla para obtener URLs de con código como este:</p>
     <pre class="language-js">
-    <code>// Dada una URL, devuelve una Promesa que cumple con el texto del cuerpo de la URL
+    <code class="language-js">// Dada una URL, devuelve una Promesa que cumple con el texto del cuerpo de la URL
     function fetchBody(url) &lbrace; return fetch(url).then(r => r.text()); }
     // Úselo para obtener secuencialmente un montón de cuerpos de URL
     promiseSequence(urls, fetchBody)
@@ -596,7 +596,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>13.3.1 Expresiones de espera</h2>
     <p>La palabra clave <codeinline>await</codeinline> toma una Promise y la convierte en un valor de retorno o en una excepción lanzada. Dado un objeto Promise <codeinline>p</codeinline>, la expresión <codeinline>await p</codeinline> espera hasta que p se cumpla. Si p se cumple, entonces el valor de <codeinline>await</codeinline> <codeinline>p</codeinline> es el valor de cumplimiento de <codeinline>p</codeinline>. Por otro lado, si <codeinline>p</codeinline> es rechazado, entonces la expresión <codeinline>await p</codeinline> lanza el valor de rechazo de <codeinline>p</codeinline>. No solemos usar <codeinline>await</codeinline> con una variable que contiene una Promise; en su lugar, la usamos antes de la invocación de una función que devuelve una Promise:</p>
     <pre class="language-js">
-    <code>let response = await fetch("/api/user/profile");
+    <code class="language-js">let response = await fetch("/api/user/profile");
     let profile = await response.json();</code></pre>
     <p>Es fundamental entender de inmediato que la palabra clave <codeinline>await</codeinline> no hace que tu programa se bloquee y literalmente no haga nada hasta que la Promise especificada se asiente. El código sigue siendo asíncrono, y <codeinline>await</codeinline> simplemente disfraza este hecho. Esto significa que <em>cualquier código que utilice</em> <codeinline>await</codeinline> <em>es en sí mismo asíncrono</em>.</p>
   </section>
@@ -604,7 +604,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>13.3.2 Funciones asíncronas</h2>
     <p>Dado que cualquier código que utilice <codeinline>await</codeinline> es asíncrono, hay una regla crítica: <em>sólo puedes utilizar la palabra clave <codeinline>await</codeinline> dentro de funciones que hayan sido declaradas con la palabra clave <codeinline>async</codeinline></em>. Aquí tienes una versión de la función <codeinlie>getHighScore()</codeinlie> de antes, reescrita para usar <codeinline>async</codeinline> y <codeinline>await</codeinline>:</p>
     <pre class="language-js">
-    <code>async function getHighScore() &lbrace;
+    <code class="language-js">async function getHighScore() &lbrace;
       let response = await fetch("/api/user/profile");
       let profile = await response.json();
       return profile.highScore;
@@ -612,38 +612,38 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Declarar una función <codeinline>async</codeinline> significa que el valor de retorno de la función será una Promise incluso si no aparece código relacionado con Promise en el cuerpo de la función. Si una función <codeinline>async</codeinline> parece devolver normalmente, entonces el objeto Promise que es el valor de retorno real de la función se resolverá a ese valor de retorno aparente. Y si una función <codeinline>async</codeinline> parece lanzar una excepción, entonces el objeto Promise que devuelve será rechazado con esa excepción.</p>
     <p>La función <codeinline>getHighScore()</codeinline> está declarada <codeinline>async</codeinline>, por lo que devuelve una Promise. Y como devuelve una Promise, podemos usar la palabra clave <codeinline>await</codeinline> con ella:</p>
     <pre class="language-js">
-    <code>displayHighScore(await getHighScore());</code></pre>
+    <code class="language-js">displayHighScore(await getHighScore());</code></pre>
     <p>Pero recuerda, ¡esa línea de código sólo funcionará si está dentro de otra función <codeinline>async</codeinline>! Puedes anidar expresiones <codeinline>await</codeinline> dentro de funciones <codeinline>async</codeinline> tan profundamente como quieras. Pero si estás en el nivel superior<sup>2</sup> o estás dentro de una función que no es <codeinline>async</codeinline> por alguna razón, entonces no puedes usar <codeinline>await</codeinline> y tienes que tratar con una Promise devuelta de la forma habitual:</p>
     <pre class="language-js">
-    <code>getHighScore().then(displayHighScore).catch(console.error);</code></pre>
+    <code class="language-js">getHighScore().then(displayHighScore).catch(console.error);</code></pre>
     <p>Puedes utilizar la palabra clave <codeinline>async</codeinline> con cualquier tipo de <codeinline>function</codeinline>. Funciona con la palabra clave function como sentencia o como expresión. Funciona con funciones de flecha y con la forma abreviada de método en clases y literales de objeto. (Consulta el <a href="capitulo-8">capítulo 8</a> para obtener más información sobre las distintas formas de escribir funciones).</p>
   </section>
   <section id="3-3" class="py-4 xs:py-5 sm:py-6">
     <h2>13.3.3 A la espera de múltiples promesas</h2>
     <p>Supongamos que hemos escrito nuestra función <codeinline>getJSON()</codeinline> usando <codeinline>async</codeinline>:</p>
     <pre class="language-js">
-    <code>async function getJSON(url) &lbrace;
+    <code class="language-js">async function getJSON(url) &lbrace;
       let response = await fetch(url);
       let body = await response.json();
       return body;
     }</code></pre>
     <p>Y ahora supongamos que queremos obtener dos valores JSON con esta función:</p>
     <pre class="language-js">
-    <code>let value1 = await getJSON(url1);
+    <code class="language-js">let value1 = await getJSON(url1);
     let value2 = await getJSON(url2);</code></pre>
     <p>El problema de este código es que es innecesariamente secuencial: la obtención de la segunda URL no comenzará hasta que la primera se haya completado. Si la segunda URL no depende del valor obtenido de la primera URL, entonces probablemente deberíamos intentar obtener los dos valores al mismo tiempo. Este es un caso en el que se muestra la naturaleza basada en promesas de las funciones <codeinline>async</codeinline>. Para esperar un conjunto de funciones <codeinline>async</codeinline> que se ejecutan simultáneamente, usamos <codeinline>Promise.all()</codeinline> tal y como lo haríamos si trabajásemos con Promises directamente:</p>
     <pre class="language-js">
-    <code>let [value1, value2] = await Promise.all([getJSON(url1), getJSON(url2)]);</code></pre>
+    <code class="language-js">let [value1, value2] = await Promise.all([getJSON(url1), getJSON(url2)]);</code></pre>
   </section>
   <section id="3-4">
     <h2>13.3.4 Detalles de la aplicación</h2>
     <p>Por último, para entender cómo funcionan las funciones <codeinline>async</codeinline>, puede ser útil pensar en lo que ocurre bajo el capó.</p>
     <p>Supongamos que escribes una función <codeinline>async</codeinline> como esta:</p>
     <pre class="language-js">
-    <code>async function f(x) &lbrace; /* body */ }</code></pre>
+    <code class="language-js">async function f(x) &lbrace; /* body */ }</code></pre>
     <p>Puedes pensar en esto como una función que devuelve promesas envuelta alrededor del cuerpo de tu función original:</p>
     <pre class="language-js">
-    <code>function f(x) &lbrace;
+    <code class="language-js">function f(x) &lbrace;
       return new Promise(function(resolve, reject) &lbrace;
         try &lbrace;
           resolve((function(x) &lbrace; /* body */ })(x));
@@ -664,7 +664,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>13.4.1 El bucle for/await</h2>
     <p>Nodo 12 hace que sus flujos legibles sean asíncronamente iterables. Esto significa que puedes leer trozos sucesivos de datos de un flujo con un bucle <codeinline>for/await</codeinline> como este:</p>
     <pre class="language-js">
-    <code>const fs = require("fs");
+    <code class="language-js">const fs = require("fs");
 
     async function parseFile(filename) &lbrace;
       let stream = fs.createReadStream(filename, &lbrace; encoding: "utf-8"});
@@ -675,19 +675,19 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Como una expresión <codeinline>await</codeinline> normal, el bucle <codeinline>for/await</codeinline> está basado en promesas. A grandes rasgos, el iterador asíncrono produce una promesa y el bucle <codeinline>for/await</codeinline> espera a que se cumpla la promesa, asigna el valor de cumplimiento a la variable del bucle, y ejecuta el cuerpo del bucle. Y luego vuelve a empezar, obteniendo otra Promise del iterador y esperando a que esa nueva Promise se cumpla.</p>
     <p>Suponga que tiene una matriz de URLs:</p>
     <pre class="language-js">
-    <code>const urls = [url1, url2, url3];</code></pre>
+    <code class="language-js">const urls = [url1, url2, url3];</code></pre>
     <p>Puedes llamar a <codeinline>fetch()</codeinline> en cada URL para obtener un array de Promesas:</p>
     <pre class="language-js">
-    <code>const promises = urls.map(url => fetch(url));</code></pre>
+    <code class="language-js">const promises = urls.map(url => fetch(url));</code></pre>
     <p>Anteriormente vimos que podíamos utilizar <codeinline>Promise.all()</codeinline> para esperar a que se cumplieran todas las promesas del array. Pero supongamos que queremos los resultados de la primera obtención tan pronto como estén disponibles y no queremos esperar a que se obtengan todas las URLs. (Por supuesto, la primera búsqueda puede tardar más que las demás, así que esto no es necesariamente más rápido que utilizar <codeinline>Promise.all()</codeinline>). Las matrices son iterables, por lo que podemos iterar a través de la matriz de promesas con un bucle <codeinline>for/of</codeinline> normal:</p>
     <pre class="language-js">
-    <code>for(const promise of promises) &lbrace;
+    <code class="language-js">for(const promise of promises) &lbrace;
       response = await promise;
       handle(response);
     }</code></pre>
     <p>Este código de ejemplo utiliza un bucle <codeinline>for/of</codeinline> normal con un iterador normal. Pero como este iterador devuelve Promesas, también podemos usar el nuevo <codeinline>for/await</codeinline> para un código ligeramente más simple:</p>
     <pre class="language-js">
-    <code>for await (const response of promises) &lbrace;
+    <code class="language-js">for await (const response of promises) &lbrace;
       handle(response);
     }</code></pre>
     <p>En este caso, el bucle <codeinline>for/await</codeinline> sólo construye la llamada <codeinline>await</codeinline> dentro del bucle y hace nuestro código ligeramente más compacto, pero los dos ejemplos hacen exactamente lo mismo. Importantemente, ambos ejemplos sólo funcionarán si están dentro de funciones declaradas <codeinline>async</codeinline>; un bucle <codeinline>for/await</codeinline> no es diferente de una expresión <codeinline>await</codeinline> normal en ese sentido.</p>
@@ -708,7 +708,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>13.4.3 Generadores asíncronos</h2>
     <p>Como vimos en el <a href="capitulo-12">capítulo 12</a>, la forma más sencilla de implementar un iterador suele ser utilizar un generador. Lo mismo ocurre con los iteradores asíncronos, que podemos implementar con funciones generadoras que declaramos <codeinline>async</codeinline>. Un generador asíncrono tiene las características de las funciones asíncronas y las características de los generadores: puedes usar <codeinline>await</codeinline> como lo harías en una función asíncrona normal, y puedes usar <codeinline>yield</codeinline> como lo harías en un generador normal. Pero los valores <codeinline>yield</codeinline> se envuelven automáticamente en promesas. Incluso la sintaxis de los generadores asíncronos es una combinación: <codeinline>async function</codeinline> y <codeinline>function *</codeinline> se combinan en <codeinline>async function *</codeinline>. He aquí un ejemplo que muestra cómo se puede utilizar un generador asíncrono y un bucle <codeinline>for/await</codeinline> para ejecutar código repetitivamente a intervalos fijos utilizando sintaxis de bucle en lugar de una función de devolución de llamada <codeinline>setInterval()</codeinline>:</p>
     <pre class="language-js">
-    <code>// Un contenedor basado en Promesas alrededor de setTimeout() con el que podemos usar await.
+    <code class="language-js">// Un contenedor basado en Promesas alrededor de setTimeout() con el que podemos usar await.
     // Devuelve una promesa que se cumple en la cantidad especificada de milisegundos.
     function elapsedTime(ms) &lbrace;
       return new Promise(resolve => setTimeout(resolve, ms));
@@ -734,7 +734,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>13.4.4 Implementación de iteradores asíncronos</h2>
     <p>En lugar de utilizar generadores asíncronos para implementar iteradores asíncronos, también es posible implementarlos directamente definiendo un objeto con un método <codeinline>Symbol.asyncIterator()</codeinline> que devuelva un objeto con un método <codeinline>next()</codeinline> que devuelva una Promise que resuelva a un objeto iterador resultado. En el siguiente código, reimplementamos la función <codeinline>clock()</codeinline> del ejemplo anterior para que no sea un generador y en su lugar sólo devuelva un objeto iterable asíncrono. Observa que el método <codeinline>next()</codeinline> en este ejemplo no devuelve explícitamente una Promise; en su lugar, simplemente declaramos que <codeinline>next()</codeinline> es asíncrono:</p>
     <pre class="language-js">
-    <code>function clock(interval, max=Infinity) &lbrace;
+    <code class="language-js">function clock(interval, max=Infinity) &lbrace;
       // Una versión Promise-ificada de setTimeout con la que podemos usar await.
       // Tenga en cuenta que esto toma un tiempo absoluto en lugar de un intervalo.
       function until(time) &lbrace;
@@ -765,7 +765,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>La clase AsyncQueue que sigue tiene los métodos <codeinline>enqueue()</codeinline> y <codeinline>dequeue()</codeinline>, como es de esperar para una clase de cola. Sin embargo, el método <codeinline>dequeue()</codeinline> devuelve una Promise en lugar de un valor real, lo que significa que está bien llamar a <codeinline>dequeue()</codeinline> antes de que se haya llamado a <codeinline>enqueue()</codeinline>. La clase AsyncQueue es también un iterador asíncrono, y está pensada para ser utilizada con un bucle <codeinline>for/await</codeinline> cuyo cuerpo se ejecuta una vez cada vez que un nuevo valor es puesto en cola de forma asíncrona. (AsyncQueue tiene un método <codeinline>close()</codeinline>. Una vez invocado, no se pueden encolar más valores. Cuando una cola cerrada está vacía, el bucle <codeinline>for/await</codeinline> deja de ejecutarse).</p>
     <p>Ten en cuenta que la implementación de AsyncQueue no utiliza <codeinline>async</codeinline> ni <codeinline>await</codeinline> y en su lugar trabaja directamente con Promises. El código es algo complicado, y puedes usarlo para poner a prueba tu comprensión del material que hemos cubierto en este largo capítulo. Aunque no entiendas del todo la implementación de AsyncQueue, echa un vistazo al código. mira el ejemplo más corto que le sigue: implementa un simple pero muy interesante iterador asíncrono sobre AsyncQueue.</p>
     <pre class="language-js">
-    <code>/**
+    <code class="language-js">/**
     * Una clase de cola iterable de forma asincrónica. Agrega valores con 
     * enqueue() y elimínalos con dequeue(). dequeue() devuelve una Promesa,
     * lo que significa que los valores se pueden sacar de la cola antes de
@@ -849,7 +849,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     AsyncQueue.EOS = Symbol("end-of-stream");</code></pre>
     <p>Dado que esta clase AsyncQueue define los fundamentos de la iteración asíncrona, podemos crear nuestros propios iteradores asíncronos más interesantes simplemente poniendo valores en cola de forma asíncrona. He aquí un ejemplo que utiliza AsyncQueue para producir un flujo de eventos del navegador web que pueden ser manejados con un bucle <codeinline>for/await</codeinline>:</p>
     <pre class="language-js">
-    <code>// Inserta eventos del tipo especificado en el elemento de documento especificado 
+    <code class="language-js">// Inserta eventos del tipo especificado en el elemento de documento especificado 
     // en un objeto AsyncQueue y devuelve la cola para usarla como un flujo de eventos
     function eventStream(elt, type) &lbrace;
       const q = new AsyncQueue(); // Crear una queue
