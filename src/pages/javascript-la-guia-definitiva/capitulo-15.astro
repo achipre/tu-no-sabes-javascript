@@ -117,28 +117,28 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     &lt;html>                        &lt;!-- The root element -->
     &lt;head>                        &lt;!-- Title, scripts & styles can go here -->
     &lt;title>Digital Clock</title>
-    &lt;style>                       /* A CSS stylesheet for the clock */
-    #clock &lbrace;                      /* Styles apply to element with id="clock" */
-      font: bold 24px sans-serif; /* Use a big bold font */
-      background: #ddf;           /* on a light bluish-gray background. */
-      padding: 15px;              /* Surround it with some space */
-      border: solid black 2px;    /* and a solid black border */
-      border-radius: 10px;        /* with rounded corners. */
+    &lt;style>                       /* Una hoja de estilos CSS para el reloj */
+    #clock &lbrace;                      /*Los estilos se aplican al elemento con id="clock" */
+      font: bold 24px sans-serif; /* Utilice una fuente grande y en negrita */
+      background: #ddf;           /* sobre un fondo gris azulado claro. */
+      padding: 15px;              /* Rodéalo con algo de espacio. */
+      border: solid black 2px;    /* y un borde negro sólido */
+      border-radius: 10px;        /* con esquinas redondeadas. */
     }
     &lt;/style>
     &lt;/head>
-    &lt;body>             &lt;!-- The body holds the content of the document. -->
-    &lt;h1>Digital Clock</h1>  &lt;!-- Display a title. -->
-    &lt;span id="clock"></span>  &lt;!-- We will insert the time into this element. -->
+    &lt;body>             &lt;!-- El cuerpo contiene el contenido del documento. -->
+    &lt;h1>Digital Clock</h1>  &lt;!-- Mostrar un título. -->
+    &lt;span id="clock"></span>  &lt;!-- Insertaremos la hora en este elemento. -->
     &lt;script>
     // Define a function to display the current time
     function displayTime() &lbrace;
-      let clock = document.querySelector("#clock"); // Get element with id="clock"
-      let now = new Date();                         // Get current time
-      clock.textContent = now.toLocaleTimeString(); // Display time in the clock
+      let clock = document.querySelector("#clock"); // Obtener elemento con id="clock"
+      let now = new Date();                         // Obtener la hora actual
+      clock.textContent = now.toLocaleTimeString(); // Mostrar la hora en el reloj
     }
-    displayTime()                   // Display the time right away
-    setInterval(displayTime, 1000); // And then update it every second.
+    displayTime()                   // Muestra la hora inmediatamente
+    setInterval(displayTime, 1000); // Y luego actualízalo cada segundo.
     &lt;/script>
     &lt;/body>
     &lt;/html></code></pre>
@@ -207,15 +207,15 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>A veces, puede tener código JavaScript que no se utiliza cuando un documento se carga por primera vez y sólo se necesita si el usuario realiza alguna acción como pulsar un botón o abrir un menú. Si está desarrollando su código utilizando módulos, puede cargar un módulo bajo demanda con <codeinline>import()</codeinline>, como se describe en <a href="capitulo-10#3-6">§10.3.6</a>.</p>
     <p>Si no utiliza módulos, puede cargar un archivo de JavaScript bajo demanda simplemente añadiendo una etiqueta <codeinline>&lt;script></codeinline> a su documento cuando desee que se cargue el script:</p>
     <pre class="language-js">
-    <code class="language-js">// Asynchronously load and execute a script from a specified URL
-    // Returns a Promise that resolves when the script has loaded.
+    <code class="language-js">// Cargar y ejecutar de forma asincrónica un script desde una URL específica
+    // Devuelve una promesa que se resuelve cuando se ha cargado el script.
     function importScript(url) &lbrace;
       return new Promise((resolve, reject) => &lbrace;
         let s = document.createElement("script"); // Create a &lt;script> element
-        s.onload = () => &lbrace; resolve(); };          // Resolve promise when loaded
-        s.onerror = (e) => &lbrace; reject(e); };        // Reject on failure
-        s.src = url;                              // Set the script URL
-        document.head.append(s);                  // Add &lt;script> to document
+        s.onload = () => &lbrace; resolve(); };          // Resolver la promesa cuando se carga
+        s.onerror = (e) => &lbrace; reject(e); };        // Rechazar en caso de fallo
+        s.src = url;                              // Establecer la URL del script
+        document.head.append(s);                  // Agregar &lt;script> al documento
       });
     }</code></pre>
     <p>Esta función <codeinline>importScript()</codeinline> utiliza las API del DOM (<a href="#3">§15.3</a>) para crear una nueva etiqueta <codeinline>&lt;script></codeinline> y añadirla al documento <codeinline>&lbrace;head></codeinline>. Y utiliza manejadores de eventos (<a href="#2">§15.2</a>) para determinar cuando el script se ha cargado correctamente o cuando la carga ha fallado.</p>
@@ -462,16 +462,17 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p class="title-article text-left">Configuración de las propiedades de los controladores de eventos</p>
     <p>La forma más sencilla de registrar un manejador de eventos es estableciendo una propiedad del tar- gador de eventos en la función deseada del manejador de eventos. Por convención, las propiedades de los manejadores de eventos tienen nombres que consisten en la palabra "on" seguida del nombre del evento: <codeinline>onclick</codeinline>, <codeinline>onchange</codeinline>, <codeinline>onload</codeinline>, <codeinline>onmouseover</codeinline>, etcétera. Tenga en cuenta que los nombres de estas propiedades distinguen entre mayúsculas y minúsculas,<sup>3</sup> incluso cuando el tipo de evento (como "mouse- down") consta de varias palabras. El siguiente código incluye dos registros de manejadores de eventos de este tipo:</p>
     <pre class="language-js">
-    <code class="language-js">// Set the onload property of the Window object to a function.
-    // The function is the event handler: it is invoked when the document loads.
+    <code class="language-js">// Establezca la propiedad onload del objeto Window en una función.
+    // La función es el controlador de eventos: se invoca cuando se carga el documento.
     window.onload = function() &lbrace;
-      // Look up a &ltri;form> element
+      // Busque un elemento &lt;form>
       let form = document.querySelector("form#shipping");
-      // Register an event handler function on the form that will be invoked
-      // before the form is submitted. Assume isFormValid() is defined elsewhere.
-      form.onsubmit = function(event) &lbrace; // When the user submits the form
-        if (!isFormValid(this)) &lbrace;       // check whether form inputs are valid
-          event.preventDefault();       // and if not, prevent form submission.
+      // Registra una función de controlador de eventos en el formulario 
+      // que se invocará antes de enviar el formulario. Supongamos que 
+      // isFormValid() está definido en otra parte.
+      form.onsubmit = function(event) &lbrace; // Cuando el usuario envía el formulario.
+        if (!isFormValid(this)) &lbrace;       // comprobar si las entradas del formulario son válidas
+          event.preventDefault();       // y en caso contrario, impedir el envío del formulario.
         }
       };
     };</code></pre>
@@ -488,7 +489,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       with(document) &lbrace;
         with(this.form || &lbrace;}) &lbrace;
           with(this) &lbrace;
-            /* your code here */
+            /* tu código aquí */
           }
         }
       }
@@ -541,7 +542,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p class="title-article text-left">Contexto del controlador de eventos</p>
     <p>Cuando se registra un manejador de eventos estableciendo una propiedad, parece como si se estuviera definiendo un nuevo método en el objeto de destino:</p>
     <pre class="language-js">
-    <code class="language-js">target.onclick = function() &lbrace; /* handler code */ };</code></pre>
+    <code class="language-js">target.onclick = function() &lbrace; /* código del controlador */ };</code></pre>
     <p>No es sorprendente, por tanto, que los manejadores de eventos sean invocados como métodos del objeto sobre el que están definidos. Es decir, dentro del cuerpo de un manejador de eventos, la palabra clave <codeinline>this</codeinline> se refiere al objeto sobre el que se registró el manejador de eventos.</p>
     <p>Los manejadores se invocan con el objetivo como su valor <codeinline>this</codeinline>, incluso cuando se registran usando <codeinline>addEventListener()</codeinline>. Sin embargo, esto no funciona para los manejadores definidos como funciones de flecha: las funciones de flecha siempre tienen el mismo valor this que el ámbito en el que se definen.</p>
     <p class="title-article text-left">Valor de retorno del manipulador</p>
@@ -568,21 +569,22 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>La API de eventos de JavaScript del lado del cliente es relativamente potente, y puedes utilizarla para definir y enviar tus propios eventos. Supongamos, por ejemplo, que tu programa necesita peri-ódicamente realizar un cálculo largo o hacer una petición a la red y que, mientras esta operación está pendiente, otras operaciones no son posibles. Usted quiere que el usuario lo sepa mostrando "spinners" para indicar que la aplicación está ocupada. Pero el módulo que está ocupado no necesita saber dónde deben estar los mostrado. En su lugar, ese módulo podría enviar un evento para anunciar que está ocupado y luego enviar otro evento cuando ya no lo esté. Entonces, el módulo de interfaz de usuario puede registrar manejadores de eventos para esos eventos y tomar cualquier acción de interfaz de usuario que sea apropiada para notificar al usuario.</p>
     <p>Si un objeto JavaScript tiene un método <codeinline>addEventListener()</codeinline>, entonces es un "objetivo de evento", y esto significa que también tiene un método <codeinline>dispatchEvent()</codeinline>. Puede crear su propio objeto de evento con el constructor <codeinline>CustomEvent()</codeinline> y pasarlo a <codeinline>dispatchEvent()</codeinline>. El primer argumento de <codeinline>CustomEvent()</codeinline> es una cadena que especifica el tipo de tu evento, y el segundo argumento es un objeto que especifica las propiedades del objeto evento. Establezca la propiedad <codeinline>detail</codeinline> de este objeto a una cadena, objeto u otro valor que represente el contenido de su evento. Si planeas enviar tu evento sobre un elemento del documento y quiere que se burbujee hacia arriba en el árbol del documento, añade <codeinline>bubbles:true</codeinline> al segundo argumento:</p>
     <pre class="language-js">
-    <code class="language-js">// Dispatch a custom event so the UI knows we are busy
+    <code class="language-js">// Envía un evento personalizado para que la interfaz de 
+    // usuario sepa que estamos ocupados
     document.dispatchEvent(new CustomEvent("busy", &lbrace; detail: true }));
 
-    // Perform a network operation
+    // Realizar una operación de red
     fetch(url)
       .then(handleNetworkResponse)
       .catch(handleNetworkError)
       .finally(() => &lbrace;
-        // After the network request has succeeded or failed, dispatch
-        // another event to let the UI know that we are no longer busy.
+        // Después de que la solicitud de red haya tenido éxito o haya fallado,
+        // envíe otro evento para informar a la UI que ya no estamos ocupados.
         document.dispatchEvent(new CustomEvent("busy", &lbrace; detail: false }));
       });
 
-    // Elsewhere, in your program you can register a handler for "busy" events
-    // and use it to show or hide the spinner to let the user know.
+    // En otra parte, en su programa puede registrar un controlador para eventos 
+    // "busy" y usarlo para mostrar u ocultar el indicador para avisarle al usuario.
     document.addEventListener("busy", (e) => &lbrace;
       if (e.detail) &lbrace;
         showSpinner();
@@ -636,34 +638,34 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Las hojas de estilo CSS tienen una sintaxis muy potente, conocida como <em>selectores</em>, para describir elementos o conjuntos de elementos dentro de un documento. Los métodos DOM <codeinline>querySelector()</codeinline> y <codeinline>querySelectorAll()</codeinline> nos permiten encontrar el elemento o elementos dentro de un documento que coinciden con un selector CSS especificado. Antes de cubrir los métodos, comenzaremos con un rápido tutorial sobre la sintaxis de los selectores CSS.</p>
     <p>Los selectores CSS pueden describir elementos por el nombre de la etiqueta, el valor de su atributo <codeinline>id</codeinline> o las palabras de su atributo <codeinline>class</codeinline>:</p>
     <pre class="language-js">
-    <code class="language-js">div       // Any &lt;div> element
-    #nav      // The element with id="nav"
-    .warning  // Any element with "warning" in its class attribute</code></pre>
+    <code class="language-js">div       // Cualquier elemento &lt;div>
+    #nav      // El elemento con id="nav"
+    .warning  // Cualquier elemento con "warning" en su atributo de clase</code></pre>
     <p>El carácter <codeinline>#</codeinline> se utiliza para hacer coincidencias basadas en el atributo <codeinline>id</codeinline>, y el carácter <codeinline>.</codeinline> se utiliza para hacer coincidencias basadas en el atributo <codeinline>class</codeinline>. Los elementos también pueden seleccionarse en función de valores de atributo más generales:</p>
     <pre class="language-js">
-    <code class="language-js">p[lang="fr"] // A paragraph written in French: &lt;p lang="fr">
-    *[name="x"]  // Any element with a name="x" attribute</code></pre>
+    <code class="language-js">p[lang="fr"] // Un párrafo escrito en francés: &lt;p lang="fr">
+    *[name="x"]  // Cualquier elemento con un atributo name="x"</code></pre>
     <p>Observe que estos ejemplos combinan un selector de nombre de etiqueta (o el comodín <codeinline>*</codeinline> de nombre de etiqueta) con un selector de atributo. También son posibles combinaciones más complejas:</p>
     <pre class="language-js">
-    <code class="language-js">span.fatal.error        // Any &lt;span> with "fatal" and "error" in its class
-    span[lang="fr"].warning // Any &lt;span> in French with class "warning"</code></pre>
+    <code class="language-js">span.fatal.error        // Cualquier &lt;span> con "fatal" y "error" en su clase
+    span[lang="fr"].warning // Cualquier &lt;span> en francés con la clase "warning"</code></pre>
     <p>Los selectores también pueden especificar la estructura del documento:</p>
     <pre class="language-js">
-    <code class="language-js">#log span           // Any &lt;span> descendant of the element with id="log"
-    #log>span           // Any &lt;span> child of the element with id="log"
-    body>h1:first-child // The first &lt;h1> child of the &lt;body>
-    img + p.caption     // A &lt;p> with class "caption" immediately after an &lt;img>
-    h2 ~ p              // Any &lt;p> that follows an &lt;h2> and is a sibling of it</code></pre>
+    <code class="language-js">#log span           // Cualquier descendiente &lt;span> del elemento con id="log"
+    #log>span           // Cualquier hijo &lt;span> del elemento con id="log"
+    body>h1:first-child // El primer &lt;h1> hijo del &lt;body>
+    img + p.caption     // Una &lt;p> con la clase "caption" inmediatamente después de una &lt;img>
+    h2 ~ p              // Cualquier &lt;p> que siga a un &lt;h2> y sea hermano de este</code></pre>
     <p>Si dos selectores están separados por una coma, significa que hemos seleccionado elementos que coinciden con cualquiera de los selectores:</p>
     <pre class="language-js">
-    <code class="language-js">button, input[type="button"] // All &lt;button> and &lt;input type="button"> elements</code></pre>
+    <code class="language-js">button, input[type="button"] // Todos los elementos &lt;button> y &lt;input type="button"></code></pre>
     <p>Como puedes ver, los selectores CSS nos permiten referirnos a elementos dentro de un documento por tipo, ID, clase, atributos y posición dentro del documento. El método <codeinline>querySelector()</codeinline> toma una cadena de selector CSS como argumento y devuelve el primer elemento coincidente que encuentra en el documento, o devuelve <codeinline>null</codeinline> si no coincide ninguno:</p>
     <pre class="language-js">
-    <code class="language-js">// Find the document element for the HTML tag with attribute id="spinner"
+    <code class="language-js">// Busque el elemento del documento para la etiqueta HTML con el atributo id="spinner"
     let spinner = document.querySelector("#spinner");</code></pre>
     <p><codeinline>querySelectorAll()</codeinline> es similar, pero devuelve todos los elementos coincidentes del documento en lugar de devolver sólo el primero:</p>
     <pre class="language-js">
-    <code class="language-js">// Find all Element objects for &lt;h1>, &lt;h2>, and &lt;h3> tags
+    <code class="language-js">// Encuentra todos los objetos Element para &lt;h1>, &lt;h2>, y &lt;h3> etiquetas
     let titles = document.querySelectorAll("h1, h2, h3");</code></pre>
     <p>El valor devuelto por <codeinline>querySelectorAll()</codeinline> no es un array de objetos Element. En su lugar, es un objeto tipo array conocido como NodeList. Los objetos NodeList tienen una propiedad de <codeinline>length</codeinline> y pueden ser indexados como arrays, por lo que se puede hacer un bucle sobre ellos con un bucle <codeinline>for</codeinline> tradicional. Los NodeLists también son iterables, por lo que también puedes usarlos con bucles <codeinline>for/of</codeinline>. Si desea convertir un NodeList en un verdadero array, simplemente páselo a <codeinline>Array.from()</codeinline>.</p>
     <p>La NodeList devuelta por <codeinline>querySelectorAll()</codeinline> tendrá una propiedad <codeinline>length</codeinline> establecida a 0 si no hay ningún elemento en el documento que coincida con el selector especificado.</p>
@@ -671,45 +673,46 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Tenga en cuenta que CSS define los pseudoelementos <codeinline>::first-line</codeinline> y <codeinline>::first-letter</codeinline>. En CSS, coinciden con partes de nodos de texto y no con elementos reales. No coincidirán si se utilizan con <codeinline>querySelectorAll()</codeinline> o <codeinline>querySelector()</codeinline>. Además, muchos navegadores se negarán a devolver coincidencias para las pseudoclases <codeinline>:link</codeinline> y <codeinline>:visited</codeinline>, ya que esto podría exponer información sobre el historial de navegación del usuario.</p>
     <p>Otro método de selección de elementos basado en CSS es <codeinline>closest()</codeinline>. Este método está definido por la clase Element y toma un selector como único argumento. Si el selector coincide con el elemento sobre el que se invoca, devuelve ese elemento. En caso contrario, devuelve el elemento antecesor más cercano con el que coincida el selector, o devuelve <codeinline>null</codeinline> si no coincide ninguno. En cierto sentido, <codeinline>closest()</codeinline> es lo contrario de <codeinline>querySelector(): closest()</codeinline> comienza en un elemento y busca una coincidencia por encima de él en el árbol, mientras que <codeinline>querySelector()</codeinline> comienza con un elemento y busca una coincidencia por debajo de él en el árbol. <codeinline>closest()</codeinline> puede ser útil cuando se ha registrado un controlador de eventos en un nivel alto en el árbol del documento. Si está manejando un evento "clic", por ejemplo, es posible que desee saber si se trata de un clic en un hipervínculo. El objeto de evento le dirá cuál era el objetivo, pero ese objetivo podría ser el texto dentro de un enlace en lugar de la propia etiqueta <codeinline>&lt;a></codeinline> del hipervínculo. Tu manejador de eventos podría buscar el hipervínculo contenedor más cercano así:</p>
     <pre class="language-js">
-    <code class="language-js">// Find the closest enclosing &lt;a> tag that has an href attribute.
+    <code class="language-js">// Encuentre la etiqueta &lt;a> más cercana que tenga un atributo href.
     let hyperlink = event.target.closest("a[href]");</code></pre>
     <p>Esta es otra forma de utilizar <codeinline>closest()</codeinline>:</p>
     <pre class="language-js">
-    <code class="language-js">// Return true if the element e is inside of an HTML list element
+    <code class="language-js">// Devuelve verdadero si el elemento e está dentro de un elemento de lista HTML
     function insideList(e) &lbrace;
       return e.closest("ul,ol,dl") !== null;
     }</code></pre>
     <p>El método relacionado <codeinline>matches()</codeinline> no devuelve ancestros ni descendientes: simplemente comprueba si un elemento coincide con un selector CSS y devuelve <codeinline>true</codeinline> en caso afirmativo y <codeinline>false</codeinline> en caso contrario:</p>
     <pre class="language-js">
-    <code class="language-js">// Return true if e is an HTML heading element
+    <code class="language-js">// Devuelve verdadero si e es un elemento de encabezado HTML
     function isHeading(e) &lbrace;
       return e.matches("h1,h2,h3,h4,h5,h6");
     }</code></pre>
     <p class="title-article text-left">Otros métodos de selección de elementos</p>
     <p>Además de <codeinline>querySelector()</codeinline> y <codeinline>querySelectorAll()</codeinline>, el DOM también define una serie de métodos de selección de elementos más antiguos que ahora están más o menos obsoletos. Sin embargo, es posible que aún se utilicen algunos de estos métodos (especialmente <codeinline>getElementById()</codeinline>):</p>
     <pre class="language-js">
-    <code class="language-js">// Look up an element by id. The argument is just the id, without
-    // the CSS selector prefix #. Similar to document.querySelector("#sect1")
+    <code class="language-js">// Busque un elemento por id. El argumento es solo el id, sin el 
+    // prefijo # del selector CSS . Similar a document.querySelector("#sect1")
     let sect1 = document.getElementById("sect1");
 
-    // Look up all elements (such as form checkboxes) that have a name="color"
-    // attribute. Similar to document.querySelectorAll('*[name="color"]');
+    // Busque todos los elementos (como las casillas de verificación 
+    // de formularios) que tengan un atributo name="color". 
+    // Similar a document.querySelectorAll('*[name="color"]');
     let colors = document.getElementsByName("color");
     
-    // Look up all &lt;h1> elements in the document.
-    // Similar to document.querySelectorAll("h1")
+    // Busque todos los elementos &lt;h1> en el documento.
+    // Similar a document.querySelectorAll("h1")
     let headings = document.getElementsByTagName("h1");
     
-    // getElementsByTagName() is also defined on elements.
-    // Get all &lt;h2> elements within the sect1 element.
+    // getElementsByTagName() También se define en elementos.
+    // Obtener todos los elementos &lt;h2> dentro del elemento sect1.
     let subheads = sect1.getElementsByTagName("h2");
     
-    // Look up all elements that have class "tooltip."
-    // Similar to document.querySelectorAll(".tooltip")
+    // Busque todos los elementos que tengan la clase "tooltip".
+    // Similar a document.querySelectorAll(".tooltip")
     let tooltips = document.getElementsByClassName("tooltip");
     
-    // Look up all descendants of sect1 that have class "sidebar"
-    // Similar to sect1.querySelectorAll(".sidebar")
+    // Busque todos los descendientes de sect1 que tengan la clase "sidebar"
+    // Similar a sect1.querySelectorAll(".sidebar")
     let sidebars = sect1.getElementsByClassName("sidebar");</code></pre>
     <p>Al igual que <codeinline>querySelectorAll()</codeinline>, los métodos de este código devuelven un NodeList (excepto <codeinline>getElementById()</codeinline>, que devuelve un único objeto Element). Sin embargo, a diferencia de <codeinline>querySelectorAll()</codeinline>, los NodeLists devueltos por estos métodos de selección más antiguos son "vivos", lo que significa que la longitud y el contenido de la lista pueden cambiar si cambia el contenido o la estructura del documento.</p>
     <p class="title-article text-left">Elementos preseleccionados</p>
@@ -738,19 +741,19 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>(En un documento HTML estándar, ambas expresiones se refieren a la etiqueta <codeinline>&lt;body></codeinline> del documento).</p>
     <p>A continuación se muestran dos funciones que demuestran cómo se pueden utilizar estas propiedades para realizar de forma recurrente un recorrido en profundidad de un documento invocando una función específica para cada elemento del documento:</p>
     <pre class="language-js">
-    <code class="language-js">// Recursively traverse the Document or Element e, invoking the function
-    // f on e and on each of its descendants
+    <code class="language-js">// Recorrer recursivamente el Documento o Elemento e, invocando la 
+    // función f en e y en cada uno de sus descendientes
     function traverse(e, f) &lbrace;
-      f(e);                            // Invoke f() on e
-      for(let child of e.children) &lbrace;   // Iterate over the children
-        traverse(child, f);            // And recurse on each one
+      f(e);                            // Invocar f() en e
+      for(let child of e.children) &lbrace;   // Iterar sobre los children
+        traverse(child, f);            // Y recurre a cada uno
       }
     }
     function traverse2(e, f) &lbrace;
-      f(e);                            // Invoke f() on e
-      let child = e.firstElementChild; // Iterate the children linked-list style
+      f(e);                            // Invocar f() en e
+      let child = e.firstElementChild; // Iterar el estilo de lista enlazada de niños
       while(child !== null) &lbrace;
-        traverse2(child, f);           // And recurse
+        traverse2(child, f);           // Y recursar
         child = child.nextElementSibling;
       }
     }</code></pre>
@@ -782,16 +785,17 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Tenga en cuenta, sin embargo, que esta API es extremadamente sensible a las variaciones en el texto del documento. Si se modifica el documento insertando una sola nueva línea entre el <codeinline>&lt;html></codeinline> y la etiqueta <codeinline>&lt;head></codeinline>, por ejemplo, el nodo Text que representa esa nueva línea se convierte en el primer hijo del primer hijo, y el segundo hijo es el elemento <codeinline>&lt;head></codeinline> en lugar del elemento <codeinline>&lt;body></codeinline>.</p>
     <p>Para demostrar esta API de navegación basada en nodos, he aquí una función que devuelve todo el texto de un elemento o documento:</p>
     <pre class="language-js">
-    <code class="language-js">// Return the plain-text content of element e, recursing into child elements.
-    // This method works like the textContent property
+    <code class="language-js">// Devuelve el contenido de texto simple del elemento e, 
+    // recurriendo a los elementos secundarios.
+    // Este método funciona como la propiedad textContent
     function textContent(e) &lbrace;
-      let s = "";                  // Accumulate the text here
+      let s = "";                  // Acumula el texto aquí
       for(let child = e.firstChild; child !== null; child = child.nextSibling) &lbrace;
         let type = child.nodeType;
-        if (type === 3) &lbrace;          // If it is a Text node
-          s += child.nodeValue;    // add the text content to our string.
-        } else if (type === 1) &lbrace;   // And if it is an Element node
-          s += textContent(child); // then recurse.
+        if (type === 3) &lbrace;          // Si es un nodo de texto
+          s += child.nodeValue;    // Añade el contenido de texto a nuestra cadena.
+        } else if (type === 1) &lbrace;   // Y si es un nodo Elemento
+          s += textContent(child); // luego recurre.
         }
       }
       return s;
@@ -806,13 +810,13 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Los objetos Element que representan los elementos de un documento HTML suelen definir propiedades de lectura/escritura que reflejan los atributos HTML de los elementos. Elemento define propiedades para los atributos HTML universales como <codeinline>id</codeinline>, <codeinline>title</codeinline>, <codeinline>lang</codeinline> y <codeinline>dir</codeinline> y propiedades de manejador de eventos como <codeinline>onclick</codeinline>. Los subtipos específicos de elementos definen atributos específicos de esos elementos. Para consultar la URL de una imagen, por ejemplo, puede utilizar la propiedad <codeinline>src</codeinline> del HTMLElement que representa al elemento <codeinline>&lt;img></codeinline>:</p>
     <pre class="language-js">
     <code class="language-js">let image = document.querySelector("#main_image");
-    let url = image.src;      // The src attribute is the URL of the image
-    image.id === "main_image" // => true; we looked up the image by id</code></pre>
+    let url = image.src;      // El atributo src es la URL de la imagen.
+    image.id === "main_image" // => true; Nosotros buscamos la imagen por id</code></pre>
     <p>De forma similar, podrías establecer los atributos de envío de formulario de un elemento <codeinline>&lt;form></codeinline> con código como este:</p>
     <pre class="language-js">
-    <code class="language-js">let f = document.querySelector("form"); // First &lt;form> in the document
-    f.action = "https://www.example.com/submit"; // Set the URL to submit it to.
-    f.method = "POST";                      // Set the HTTP request type.</code></pre>
+    <code class="language-js">let f = document.querySelector("form"); // Primer &lt;form> en el documento
+    f.action = "https://www.example.com/submit"; // Establezca la URL a la que enviarlo.
+    f.method = "POST";                      // Establezca el tipo de solicitud HTTP.</code></pre>
     <p>Para algunos elementos, como el elemento <codeinline>&lt;input></codeinline>, algunos nombres de atributos HTML corresponden a propiedades con nombres diferentes. El atributo HTML value de un <codeinline>&lt;input></codeinline>, por ejemplo, se refleja en la propiedad JavaScript <codeinline>defaultValue</codeinline>. La propiedad JavaScript <codeinline>value</codeinline> del elemento <codeinline>&lt;input></codeinline> contiene la entrada actual del usuario, pero los cambios en la propiedad <codeinline>value</codeinline> no afectan a la propiedad <codeinline>defaultValue</codeinline> ni al atributo <codeinline>value</codeinline>.</p>
     <p>Los atributos HTML no distinguen entre mayúsculas y minúsculas, pero los nombres de propiedades JavaScript sí. Para convertir un nombre de atributo en una propiedad JavaScript, escríbalo en minúsculas. Sin embargo, si el atributo tiene más de una palabra, ponga la primera letra de cada palabra después de la primera en mayúsculas: <codeinline>defaultChecked</codeinline> y <codeinline>tabIndex</codeinline>, por ejemplo. Sin embargo, las propiedades de controlador de eventos como <codeinline>onclick</codeinline> son una excepción y se escriben en minúsculas.</p>
     <p>Algunos nombres de atributos HTML son palabras reservadas en JavaScript. Para ellos, la regla general es anteponer "html" al nombre de la propiedad. El atributo HTML for (del tipo <codeinline>&lt;label></codeinline>), por ejemplo, se convierte en la propiedad <codeinline>htmlFor</codeinline> de JavaScript. "class" es una palabra reservada en JavaScript, y el importantísimo atributo HTML <codeinline>class</codeinline> es una excepción a la regla: se convierte en <codeinline>className</codeinline> en código JavaScript.</p>
@@ -822,9 +826,10 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>El atributo <codeinline>class</codeinline> de un elemento HTML es especialmente importante. Su valor es una lista separada por espacios de clases CSS que se aplican al elemento y afectan a su estilo con CSS. Como <codeinline>class</codeinline> es una palabra reservada en JavaScript, el valor de este atributo está disponible a través de la propiedad <codeinline>className</codeinline> en los objetos Element. La propiedad <codeinline>className</codeinline> puede establecer y devolver el valor del atributo <codeinline>class</codeinline> como una cadena. Pero la propiedad <codeinline>class</codeinline> está mal nombrado: su valor es una lista de clases CSS, no una sola clase, y es común en la programación JavaScript del lado del cliente querer añadir y eliminar nombres de clases individuales de esta lista en lugar de trabajar con la lista como una sola cadena.</p>
     <p>Por esta razón, los objetos Element definen una propiedad <codeinline>classList</codeinline> que permite tratar el atributo <codeinline>class</codeinline> como una lista. El valor de la propiedad <codeinline>classList</codeinline> es un objeto iterable tipo Array. Aunque el nombre de la propiedad es <codeinline>classList</codeinline>, se comporta más como un conjunto de clases, y define los métodos <codeinline>add()</codeinline>, <codeinline>remove()</codeinline>, <codeinline>contains()</codeinline> y <codeinline>toggle()</codeinline>:</p>
     <pre class="language-js">
-    <code class="language-js">// When we want to let the user know that we are busy, we display
-    // a spinner. To do this we have to remove the "hidden" class and add the
-    // "animated" class (assuming the stylesheets are configured correctly).
+    <code class="language-js">// Cuando queremos avisar al usuario de que estamos ocupados,
+    // mostramos un indicador. Para ello, debemos eliminar la clase 
+    // "hidden" y añadir la clase "animated" (suponiendo que las
+    // hojas de estilo estén configuradas correctamente).
     let spinner = document.querySelector("#spinner");
     spinner.classList.remove("hidden");
     spinner.classList.add("animated");</code></pre>
@@ -876,9 +881,9 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p class="title-article text-left">Contenido del elemento como texto sin formato</p>
     <p>A veces se desea consultar el contenido de un elemento como texto sin formato o insertar texto sin formato en un documento (sin tener que escapar los corchetes angulares y los ampersands utilizados en el marcado HTML). La forma estándar de hacerlo es con la propiedad <codeinline>textContent</codeinline>:</p>
     <pre class="language-js">
-    <code class="language-js">let para = document.querySelector("p"); // First &lt;p> in the document
-    let text = para.textContent;            // Get the text of the paragraph
-    para.textContent = "Hello World!";      // Alter the text of the paragraph</code></pre>
+    <code class="language-js">let para = document.querySelector("p"); // Primero &lt;p> en el documento
+    let text = para.textContent;            // Obtener el texto del párrafo
+    para.textContent = "Hello World!";      // Alterar el texto del párrafo</code></pre>
     <p>La propiedad <codeinline>textContent</codeinline> está definida por la clase Node, por lo que funciona tanto para nodos Text como para nodos Element. Para los nodos Elemento, encuentra y devuelve todo el texto en todos los descendientes del elemento.</p>
     <p>La clase Element define una propiedad <codeinline>innerText</codeinline> que es similar a <codeinline>textContent</codeinline>. <codeinline>innerText</codeinline> tiene algunos comportamientos inusuales y complejos, como intentar preservar el formato de tabla. Sin embargo, no está bien especificada ni implementada de forma compatible entre navegadores, por lo que no debería seguir utilizándose.</p>
     <article>
@@ -891,34 +896,34 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Hemos visto cómo consultar y alterar el contenido de un documento utilizando cadenas de HTML y de texto plano. Y también hemos visto que podemos recorrer un documento para examinar los nodos individuales de Elemento y Texto que lo componen. También es posible alterar un documento a nivel de nodos individuales. La clase Document define métodos para crear objetos Element, y los objetos Element y Text tienen métodos para insertar, borrar y reemplazar nodos en el árbol.</p>
     <p>Crea un nuevo elemento con el método <codeinline>createElement()</codeinline> de la clase Document y añádele cadenas de texto u otros elementos con sus métodos <codeinline>append()</codeinline> y <codeinline>prepend()</codeinline>:</p>
     <pre class="language-js">
-    <code class="language-js">let paragraph = document.createElement("p"); // Create an empty &lt;p> element
-    let emphasis = document.createElement("em"); // Create an empty &lt;em> element
-    emphasis.append("World");                    // Add text to the &lt;em> element
-    paragraph.append("Hello ", emphasis, "!");   // Add text and &lt;em> to &lt;p>
-    paragraph.prepend("¡");                      // Add more text at start of &lt;p>
+    <code class="language-js">let paragraph = document.createElement("p"); // Crear un elemento &lt;p> vacío
+    let emphasis = document.createElement("em"); // Crear un elemento &lt;em> vacío
+    emphasis.append("World");                    // Agregar texto al elemento &lt;em>
+    paragraph.append("Hello ", emphasis, "!");   // Añade texto y &lt;em> a &lt;p>
+    paragraph.prepend("¡");                      // Añadir más texto al inicio de &lt;p>
     paragraph.innerHTML                          // => "¡Hello &lt;em>World&lt;/em>!"</code></pre>
     <p><codeinline>append()</codeinline> y <codeinline>prepend()</codeinline> toman cualquier número de argumentos, que pueden ser objetos Nodo o cadenas. Los argumentos de cadena se convierten automáticamente en nodos de texto. (Se pueden crear nodos de texto explícitamente con <codeinline>document.createTextNode()</codeinline>, pero rara vez hay razón para hacerlo). <codeinline>append()</codeinline> añade los argumentos al elemento al final de la lista hija. <codeinline>prepend()</codeinline> añade los argumentos al principio de la lista hija.</p>
     <p>Si desea insertar un nodo Elemento o Texto en medio de la lista de hijos del elemento contenedor, ni <codeinline>append()</codeinline> ni <codeinline>prepend()</codeinline> funcionarán. En este caso, debe obtener una referencia a un nodo hermano y llamar a <codeinline>before()</codeinline> para insertar el nuevo contenido antes de ese hermano o <codeinline>after()</codeinline> para insertarlo después de ese hermano. Por ejemplo:</p>
     <pre class="language-js">
-    <code class="language-js">// Find the heading element with class="greetings"
+    <code class="language-js">// Encuentra el elemento de encabezado con clase="greetings"
     let greetings = document.querySelector("h2.greetings");
-    // Now insert the new paragraph and a horizontal rule after that heading
+    // Ahora inserte el nuevo párrafo y una regla horizontal después de ese encabezado.
     greetings.after(paragraph, document.createElement("hr"));</code></pre>
     <p>Al igual que <codeinline>append()</codeinline> y <codeinline>prepend()</codeinline>, <codeinline>after()</codeinline> y <codeinline>before()</codeinline> toman cualquier número de argumentos de cadena y elemento y los insertan todos en el documento después de convertir las cadenas en nodos de Texto. <codeinline>append()</codeinline> y <codeinline>prepend()</codeinline> sólo se definen en objetos Elemento, pero <codeinline>after()</codeinline> y <codeinline>before()</codeinline> funcionan tanto en nodos Elemento como Texto: puede utilizarlas para insertar contenido relativo a un nodo Texto.</p>
     <p>Tenga en cuenta que los elementos sólo pueden insertarse en un punto del documento. Si un elemento ya está en el documento y lo insertas en otro lugar, se moverá a la nueva ubicación, no se copiará:</p>
     <pre class="language-js">
-    <code class="language-js">// We inserted the paragraph after this element, but now we
-    // move it so it appears before the element instead
+    <code class="language-js">// Insertamos el párrafo después de este elemento, pero ahora 
+    // lo movemos para que aparezca antes del elemento.
     greetings.before(paragraph);</code></pre>
     <p>Si desea hacer una copia de un elemento, utilice el método <codeinline>cloneNode()</codeinline>, pasando <codeinline>true</codeinline> para copiar todo su contenido:</p>
     <pre class="language-js">
-    <code class="language-js">// Make a copy of the paragraph and insert it after the greetings element
+    <code class="language-js">// Haz una copia del párrafo e insértalo después del elemento de saludos.
     greetings.after(paragraph.cloneNode(true));</code></pre>
     <p>Puede eliminar un nodo Elemento o Texto del documento llamando a su método <codeinline>remove()</codeinline>, o puede reemplazarlo llamando a <codeinline>replaceWith()</codeinline> en su lugar. <codeinline>remove()</codeinline> no toma argumentos, y <codeinline>replaceWith()</codeinline> toma cualquier número de cadenas y elementos al igual que <codeinline>before()</codeinline> y <codeinline>after()</codeinline>:</p>
     <pre class="language-js">
-    <code class="language-js">// Remove the greetings element from the document and replace it with
-    // the paragraph element (moving the paragraph from its current location
-    // if it is already inserted into the document).
+    <code class="language-js">// Elimina el elemento de saludos del documento y reemplázalo con el 
+    // elemento de párrafo (moviendo el párrafo de su ubicación 
+    // actual si ya está insertado en el documento).
     greetings.replaceWith(paragraph);
     // And now remove the paragraph.
     paragraph.remove();</code></pre>
@@ -930,31 +935,32 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p id="ejemplo15-1"><em>Ejemplo 15-1. Generación de una tabla de contenidos con la API DOM</em></p>
     <pre class="language-js">
     <code class="language-js">/**
-    * TOC.js: create a table of contents for a document.
+    * TOC.js: crear una tabla de contenido para un documento.
     *
-    * This script runs when the DOMContentLoaded event is fired and
-    * automatically generates a table of contents for the document.
-    * It does not define any global symbols so it should not conflict
-    * with other scripts.
+    * Este script se ejecuta cuando se activa el evento DOMContentLoaded 
+    * y genera automáticamente una tabla de contenidos para el documento.
+    * No define ningún símbolo global, por lo que no debería entrar en
+    * conflicto con otros scripts.
     *
-    * When this script runs, it first looks for a document element with
-    * an id of "TOC". If there is no such element it creates one at the
-    * start of the document. Next, the function finds all &lt;h2> through
-    * &lt;h6> tags, treats them as section titles, and creates a table of
-    * contents within the TOC element. The function adds section numbers
-    * to each section heading and wraps the headings in named anchors so
-    * that the TOC can link to them. The generated anchors have names
-    * that begin with "TOC", so you should avoid this prefix in your own
+    * Cuando se ejecuta este script, primero busca un elemento de documento
+    * con un id de "TOC". Si no existe dicho elemento, crea uno al comienzo
+    * del documento. A continuación, la función encuentra todas las
+    * etiquetas de &lt;h2> a &lt;h6>, las trata como títulos de sección y
+    * crea una tabla de contenidos dentro del elemento TOC. La función
+    * agrega números de sección a cada encabezado de sección y envuelve los
+    * encabezados en anclas con nombre para que la tabla de contenidos
+    * pueda vincularse a ellos. Las anclas generadas tienen nombres que
+    * comienzan con "TOC", por lo que debe evitar este prefijo en su propio
     * HTML.
     *
-    * The entries in the generated TOC can be styled with CSS. All
-    * entries have a class "TOCEntry". Entries also have a class that
-    * corresponds to the level of the section heading. &lt;h1> tags generate
-    * entries of class "TOCLevel1", &lt;h2> tags generate entries of class
-    * "TOCLevel2", and so on. Section numbers inserted into headings have
-    * class "TOCSectNum".
+    * Las entradas de la TOC se pueden estilizar con CSS. Todas las entradas
+    * tienen una clase "TOCEntry". Las entradas también tienen una clase que
+    * corresponde al nivel del encabezado de la sección. Las etiquetas &lt;h1>
+    * generan entradas de la clase "TOCLevel1", las etiquetas &lt;h2> generan
+    * entradas de la clase "TOCLevel2", y así sucesivamente. Los números de
+    * sección insertados en los encabezados tienen la clase "TOCSectNum".
     *
-    * You might use this script with a stylesheet like this:
+    * Puedes usar este script con una hoja de estilo como esta:
     *
     * #TOC &lbrace; border: solid black 1px; margin: 10px; padding: 10px; }
     * .TOCEntry &lbrace; margin: 5px 0px; }
@@ -964,13 +970,13 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     * .TOCLevel3 &lbrace; font-size: 12pt; margin-left: .5in; }
     * .TOCSectNum:after &lbrace; content: ": "; }
     *
-    * To hide the section numbers, use this:
+    * Para ocultar los números de sección, use esto:
     *
     * .TOCSectNum &lbrace; display: none }
     **/
     document.addEventListener("DOMContentLoaded", () => &lbrace;
-      // Find the TOC container element.
-      // If there isn't one, create one at the start of the document.
+      // Encuentre el elemento contenedor de TOC.
+      // Si no hay uno, cree uno al comienzo del documento.
       let toc = document.querySelector("#TOC");
       if (!toc) &lbrace;
         toc = document.createElement("div");
@@ -978,64 +984,67 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
         document.body.prepend(toc);
       }
 
-      // Find all section heading elements. We're assuming here that the
-      // document title uses &lt;h1> and that sections within the document are
-      // marked with &lt;h2> through &lt;h6>.
+      // Encuentra todos los elementos de encabezado de sección. Suponemos 
+      // que el título del documento utiliza &lt;h1> y que las secciones
+      // dentro del documento están marcadas con &lt;h2> a &lt;h6>.
       let headings = document.querySelectorAll("h2,h3,h4,h5,h6");
 
-      // Initialize an array that keeps track of section numbers.
+      // Inicializar una matriz que realiza un seguimiento de los números de sección.
       let sectionNumbers = [0,0,0,0,0];
 
-      // Now loop through the section header elements we found.
+      // Ahora recorra los elementos del encabezado de sección que encontramos.
       for(let heading of headings) &lbrace;
-        // Skip the heading if it is inside the TOC container.
+        // Omita el encabezado si está dentro del contenedor TOC.
         if (heading.parentNode === toc) &lbrace;
           continue;
         }
 
-        // Figure out what level heading it is.
-        // Subtract 1 because &lt;h2> is a level-1 heading.
+        // Averigua en qué nivel se encuentra el título.
+        // Restar 1 porque &lt;h2> es un encabezado de nivel 1.
         let level = parseInt(heading.tagName.charAt(1)) - 1;
 
-        // Increment the section number for this heading level
-        // and reset all lower heading level numbers to zero.
+        // Incrementa el número de sección para este nivel de encabezado
+        // y restablece todos los números de niveles de encabezado inferiores a cero.
         sectionNumbers[level-1]++;
         for(let i = level; i &lt; sectionNumbers.length; i++) &lbrace;
           sectionNumbers[i] = 0;
         }
 
-        // Now combine section numbers for all heading levels
-        // to produce a section number like 2.3.1.
+        // Ahora combine los números de sección para todos los niveles
+        // de encabezado para producir un número de sección como 2.3.1.
         let sectionNumber = sectionNumbers.slice(0, level).join(".");
 
-        // Add the section number to the section header title.
-        // We place the number in a &lt;span> to make it styleable.
+        // Agregamos el número de sección al título del encabezado
+        // de sección. Colocamos el número entre paréntesis para
+        // que se pueda modificar su estilo.
         let span = document.createElement("span");
         span.className = "TOCSectNum";
         span.textContent = sectionNumber;
         heading.prepend(span);
 
-        // Wrap the heading in a named anchor so we can link to it.
+        // Envuelva el encabezado en un ancla con nombre para que
+        // podamos vincularlo.
         let anchor = document.createElement("a");
         let fragmentName = `TOC$&lbrace;sectionNumber}`;
         anchor.name = fragmentName;
-        heading.before(anchor);         // Insert anchor before heading
-        anchor.append(heading);         // and move heading inside anchor
+        heading.before(anchor);         // Insertar ancla antes de dirigirse
+        anchor.append(heading);         // y mover el rumbo dentro del ancla
 
-        // Now create a link to this section.
+        // Ahora crea un enlace a esta sección.
         let link = document.createElement("a");
-        link.href = `#$&lbrace;fragmentName}`; // Link destination
+        link.href = `#$&lbrace;fragmentName}`; // Destino del enlace
 
-        // Copy the heading text into the link. This is a safe use of
-        // innerHTML because we are not inserting any untrusted strings.
+        // Copia el texto del encabezado en el enlace. Este es
+        // un uso seguro de innerHTML porque no estamos
+        // insertando cadenas que no sean de confianza.
         link.innerHTML = heading.innerHTML;
 
-        // Place the link in a div that is styleable based on the level.
+        // Coloque el enlace en un div que se pueda diseñar según el nivel.
         let entry = document.createElement("div");
         entry.classList.add("TOCEntry", `TOCLevel$&lbrace;level}`);
         entry.append(link);
 
-        // And add the div to the TOC container.
+        // Y agrega el div al contenedor TOC.
         toc.append(entry);
       }
     });</code></pre>
@@ -1081,11 +1090,11 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     }</code></pre>
     <p>Con este estilo definido, puede ocultar (y luego mostrar) un elemento con código como este:</p>
     <pre class="language-js">
-    <code class="language-js">// Assume that this "tooltip" element has class="hidden" in the HTML file.
-    // We can make it visible like this:
+    <code class="language-js">// Supongamos que este elemento "tooltip" tiene clase="hidden" en el archivo HTML.
+    // Podemos hacerlo visible así:
     document.querySelector("#tooltip").classList.remove("hidden");
 
-    // And we can hide it again like this:
+    // Y podemos volver a ocultarlo así:
     document.querySelector("#tooltip").classList.add("hidden");</code></pre>
   </section>
   <section id="4-2">
@@ -1114,8 +1123,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Tenga en cuenta que los puntos y coma van fuera de las cadenas. Se trata de puntos y comas normales de JavaScript; los puntos y comas que se utilizan en las hojas de estilo CSS no son necesarios como parte de los valores de cadena que se establecen con JavaScript.</p>
     <p>Además, recuerde que muchas propiedades CSS requieren unidades como "px" para píxeles o "pt" para puntos. Por lo tanto, no es correcto establecer la propiedad <codeinline>marginLeft</codeinline> así:</p>
     <pre class="language-js">
-    <code class="language-js">e.style.marginLeft = 300;   // Incorrect: this is a number, not a string
-    e.style.marginLeft = "300"; // Incorrect: the units are missing</code></pre>
+    <code class="language-js">e.style.marginLeft = 300;   // Incorrect: Esto es un número, no un string.
+    e.style.marginLeft = "300"; // Incorrect: Faltan las unidades</code></pre>
     <p>Las unidades son necesarias cuando se establecen propiedades de estilo en JavaScript, al igual que cuando se establecen propiedades de estilo en hojas de estilo. La forma correcta de establecer el valor de la propiedad <codeinline>marginLeft</codeinline> de un elemento e a 300 píxeles es:</p>
     <pre class="language-js">
     <code class="language-js">e.style.marginLeft = "300px";</code></pre>
@@ -1127,10 +1136,10 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <code class="language-js">e.style.margin = `$&lbrace;top}px $&lbrace;right}px $&lbrace;bottom}px $&lbrace;left}px`;</code></pre>
     <p>A veces, puede resultar más fácil establecer o consultar el estilo en línea de un elemento como un único valor de cadena en lugar de como un objeto CSSStyleDeclaration. Para ello, puede utilizar los métodos <codeinline>getAttribute()</codeinline> y <codeinline>setAttribute()</codeinline> de Element, o puede utilizar la propiedad <codeinline>cssText</codeinline> del objeto CSSStyleDeclaration:</p>
     <pre class="language-js">
-    <code class="language-js">// Copy the inline styles of element e to element f:
+    <code class="language-js">// Copiar los estilos en línea del elemento e al elemento f:
     f.setAttribute("style", e.getAttribute("style"));
 
-    // Or do it like this:
+    // O hazlo así:
     f.style.cssText = e.style.cssText;</code></pre>
     <p>Cuando consultes la propiedad <codeinline>style</codeinline> de un elemento, ten en cuenta que sólo representa los estilos en línea de un elemento y que la mayoría de los estilos de la mayoría de los elementos se especifican en hojas de estilo en lugar de en línea. Además, los valores que obtenga al consultar la propiedad <codeinline>style</codeinline> utilizarán las unidades y el formato de propiedad abreviada que se utilicen en el atributo HTML, y es posible que el código tenga que realizar un análisis sintáctico sofisticado para interpretarlos. En general, si quieres consultar los estilos de un elemento, probablemente quieras el <em>estilo computado</em>, que se discute a continuación.</p>
   </section>
@@ -1177,14 +1186,14 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Además de programar atributos de clase y estilos en línea, JavaScript también puede manipular las propias hojas de estilo. Las hojas de estilo se asocian a un documento HTML con un atributo <codeinline>&lt;style></codeinline> o con una etiqueta <codeinline>&lt;link rel="stylesheet"></codeinline>. Ambas son etiquetas HTML normales, por lo que puedes darles ambos atributos <codeinline>id</codeinline> y luego buscarlas con <codeinline>document.querySelector()</codeinline>.</p>
     <p>Los objetos Element para las etiquetas <codeinline>&lt;style></codeinline> y <codeinline>&lt;link></codeinline> tienen una propiedad <codeinline>disabled</codeinline> que puedes usar para desactivar toda la hoja de estilos. Podrías usarla con código como este:</p>
     <pre class="language-js">
-    <code class="language-js">// This function switches between the "light" and "dark" themes
+    <code class="language-js">// Esta función cambia entre los temas "claro" y "oscuro".
     function toggleTheme() &lbrace;
       let lightTheme = document.querySelector("#light-theme");
       let darkTheme = document.querySelector("#dark-theme");
-      if (darkTheme.disabled) &lbrace; // Currently light, switch to dark
+      if (darkTheme.disabled) &lbrace; // Actualmente claro, cambiar a oscuro
         lightTheme.disabled = true;
         darkTheme.disabled = false;
-      } else &lbrace;                  // Currently dark, switch to light
+      } else &lbrace;                  // Actualmente oscuro, cambiar a claro
         lightTheme.disabled = false;
         darkTheme.disabled = true;
       }
@@ -1192,19 +1201,19 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Otra forma sencilla de programar hojas de <codeinline>style</codeinline> es insertar otras nuevas en el documento utilizando las técnicas de manipulación del DOM que ya hemos visto. Por ejemplo:</p>
     <pre class="language-js">
     <code class="language-js">function setTheme(name) &lbrace;
-      // Create a new &lt;link rel="stylesheet"> element to load the named stylesheet
+      // Cree un nuevo elemento &lt;link rel="stylesheet"> para cargar la hoja de estilo nombrada
       let link = document.createElement("link");
       link.id = "theme";
       link.rel = "stylesheet";
       link.href = `themes/$&lbrace;name}.css`;
       
-      // Look for an existing link with id "theme"
+      // Busque un enlace existente con id "theme"
       let currentTheme = document.querySelector("#theme");
       if (currentTheme) &lbrace;
-        // If there is an existing theme, replace it with the new one.
+        // Si hay un tema existente, reemplácelo por el nuevo.
         currentTheme.replaceWith(link);
       } else &lbrace;
-        // Otherwise, just insert the link to the theme stylesheet.
+        // De lo contrario, simplemente inserte el enlace a la hoja de estilos del tema.
         document.head.append(link);
       }
     }</code></pre>
@@ -1267,14 +1276,15 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>15.5.4 Desplazamiento</h2>
     <p>El método <codeinline>scrollTo()</codeinline> del objeto Window toma las coordenadas <em>x</em> e <em>y</em> de un punto (en coordenadas del documento) y las establece como desplazamientos de la barra de desplazamiento. Es decir, desplaza la ventana de modo que el punto especificado se encuentre en la esquina superior izquierda de la ventana. Si especifica un punto que está demasiado cerca de la parte inferior o demasiado cerca del borde derecho del documento, el navegador lo moverá tan cerca como sea posible de la esquina superior izquierda, pero no será capaz de llegar hasta allí. El siguiente código desplaza el navegador para que sea visible la página más inferior del documento:</p>
     <pre class="language-js">
-    <code class="language-js">// Get the heights of the document and viewport.
+    <code class="language-js">// Establezca las alturas del documento y la ventana gráfica.
     let documentHeight = document.documentElement.offsetHeight;
     let viewportHeight = window.innerHeight;
-    // And scroll so the last "page" shows in the viewport
+    // Y desplácese para que la última "página" se muestre en la ventana gráfica.
     window.scrollTo(0, documentHeight - viewportHeight);</code></pre>
     <p>El método <codeinline>scrollBy()</codeinline> de Window es similar a <codeinline>scrollTo()</codeinline>, pero sus argumentos son relativos y se añaden a la posición de desplazamiento actual:</p>
     <pre class="language-js">
-    <code class="language-js">// Scroll 50 pixels down every 500 ms. Note there is no way to turn this off!
+    <code class="language-js">// Desplácese 50 píxeles hacia abajo cada 500 ms. ¡Tenga en cuenta que
+    // no hay forma de desactivar esta función!
     setInterval(() => &lbrace; scrollBy(0,50)}, 500);</code></pre>
     <p>Si desea desplazarse suavemente con <codeinline>scrollTo()</codeinline> o <codeinline>scrollBy()</codeinline>, pase un único argumento objeto en lugar de dos números, de esta forma:</p>
     <pre class="language-js">
@@ -1332,9 +1342,9 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Si un componente web tiene hijos, es probable que éstos se muestren incorrectamente antes de que se defina el componente. Puede utilizar este CSS para mantener ocultos los componentes web hasta que estén definidos:</p>
     <pre class="language-js">
     <code class="language-js">/*
-      * Make the &lt;search-box> component invisible before it is defined.
-      * And try to duplicate its eventual layout and size so that nearby
-      * content does not move when it becomes defined.
+      * Haga que el componente &lt;search-box> sea invisible antes de
+      * definirlo. Y trate de duplicar su diseño y tamaño final para que
+      * el contenido cercano no se mueva cuando se defina.
       */
       search-box:not(:defined) &lbrace;
         opacity:0;
@@ -1357,9 +1367,9 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <pre class="language-js">
     <code class="language-js">let tableBody = document.querySelector("tbody");
     let template = document.querySelector("#row");
-    let clone = template.content.cloneNode(true); // deep clone
-    // ...Use the DOM to insert content into the &lt;td> elements of the clone...
-    // Now add the cloned and initialized row into the table
+    let clone = template.content.cloneNode(true); // clon profundo
+    // ... Utilice el DOM para insertar contenido en los elementos &lt;td> del clon...
+    // Ahora agregue la fila clonada e inicializada a la tabla
     tableBody.append(clone);</code></pre>
     <p>Los elementos de plantilla no tienen por qué aparecer literalmente en un documento HTML para ser útiles. Puedes crear una plantilla en tu código JavaScript, crear sus hijos con <codeinline>innerHTML</codeinline>, y luego hacer tantos clones como necesites sin la sobrecarga de análisis de <codeinline>innerHTML</codeinline>. Así es como las plantillas HTML se usan típicamente en componentes web, y el <a href="#ejemplo15-3">Ejemplo 15-3</a> demuestra esta técnica.</p>
   </section>
@@ -1387,49 +1397,50 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p><em>Ejemplo 15-2. El elemento personalizado &lt;inline-circle>.</em></p>
     <pre class="language-js">
     <code class="language-js">customElements.define("inline-circle", class InlineCircle extends HTMLElement &lbrace;
-      // The browser calls this method when an &lt;inline-circle> element
-      // is inserted into the document. There is also a disconnectedCallback()
-      // that we don't need in this example.
+      // El navegador llama a este método cuando se inserta un elemento
+      // &lt;inline-circle> en el documento. También hay una función
+      // disconnectedCallback() que no necesitamos en este ejemplo.
       connectedCallback() &lbrace;
-        // Set the styles needed to create circles
+        // Establezca los estilos necesarios para crear círculos.
         this.style.display = "inline-block";
         this.style.borderRadius = "50%";
         this.style.border = "solid black 1px";
         this.style.transform = "translateY(10%)";
-        // If there is not already a size defined, set a default size
-        // that is based on the current font size.
+        // Si aún no hay un tamaño definido, establezca un tamaño
+        // predeterminado que se base en el tamaño de fuente actual.
         if (!this.style.width) &lbrace;
           this.style.width = "0.8em";
           this.style.height = "0.8em";
         }
       }
 
-      // The static observedAttributes property specifies which attributes
-      // we want to be notified about changes to. (We use a getter here since
-      // we can only use "static" with methods.)
+      // La propiedad estática observadaAttributes especifica qué atributos
+      // queremos que se nos notifiquen sobre los cambios. (Aquí usamos un
+      // captador, ya que solo podemos usar "static" con métodos).
       static get observedAttributes() &lbrace; return ["diameter", "color"]; }
 
-      // This callback is invoked when one of the attributes listed above
-      // changes, either when the custom element is first parsed, or later.
+      // Esta devolución de llamada se invoca cuando uno de los atributos
+      // enumerados anteriormente cambia, ya sea cuando se analiza por
+      // primera vez el elemento personalizado o más tarde.
       attributeChangedCallback(name, oldValue, newValue) &lbrace;
         switch(name) &lbrace;
         case "diameter":
-          // If the diameter attribute changes, update the size styles
+          // Si cambia el atributo de diámetro, actualice los estilos de tamaño
           this.style.width = newValue;
           this.style.height = newValue;
           break;
         case "color":
-          // If the color attribute changes, update the color styles
+          // Si el atributo de color cambia, actualice los estilos de color
           this.style.backgroundColor = newValue;
           break;
         }
       }
 
-      // Define JavaScript properties that correspond to the element's
-      // attributes. These getters and setters just get and set the underlying
-      // attributes. If a JavaScript property is set, that sets the attribute
-      // which triggers a call to attributeChangedCallback() which updates
-      // the element styles.
+      // Define las propiedades de JavaScript que corresponden a los atributos
+      // del elemento. Estos métodos de obtención y definición solo obtienen y
+      // definen los atributos subyacentes. Si se define una propiedad de
+      // JavaScript, se establece el atributo que activa una llamada a
+      // attributeChangedCallback() que actualiza los estilos del elemento.
       get diameter() &lbrace; return this.getAttribute("diameter"); }
       set diameter(diameter) &lbrace; this.setAttribute("diameter", diameter); }
       get color() &lbrace; return this.getAttribute("color"); }
@@ -1502,91 +1513,92 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p id="ejemplo15-3"><em>Ejemplo 15-3. Implementación de un componente web</em></p>
     <pre class="language-js">
     <code class="language-js">/**
-    * This class defines a custom HTML &lt;search-box> element that displays an
-    * &lt;input> text input field plus two icons or emoji. By default, it displays a
-    * magnifying glass emoji (indicating search) to the left of the text field
-    * and an X emoji (indicating cancel) to the right of the text field. It
-    * hides the border on the input field and displays a border around itself,
-    * creating the appearance that the two emoji are inside the input
-    * field. Similarly, when the internal input field is focused, the focus ring
-    * is displayed around the &lt;search-box>.
+    * Esta clase define un elemento HTML personalizado &lt;search-box> que muestra
+    * un campo de entrada de texto &lt;input> más dos iconos o emojis. De forma
+    * predeterminada, muestra un emoji de lupa (que indica búsqueda) a la izquierda
+    * del campo de texto y un emoji de X (que indica cancelación) a la derecha del
+    * campo de texto. Oculta el borde del campo de entrada y muestra un borde a su
+    * alrededor, lo que crea la apariencia de que los dos emojis están dentro del
+    * campo de entrada. De manera similar, cuando el campo de entrada interno está
+    * enfocado, el anillo de enfoque se muestra alrededor de &lt;search-box>.
     *
-    * You can override the default icons by including &lt;span> or &lt;img> children
-    * of &lt;search-box> with slot="left" and slot="right" attributes.
+    * Puede anular los íconos predeterminados incluyendo &lt;span> o &lt;img> como
+    * hijos de &lt;search-box> con los atributos slot="left" y slot="right".
     *
-    * &lt;search-box> supports the normal HTML disabled and hidden attributes and
-    * also size and placeholder attributes, which have the same meaning for this
-    * element as they do for the &lt;input> element.
+    * &lt;search-box> admite los atributos HTML normales deshabilitados y ocultos
+    * y también los atributos de tamaño y marcador de posición, que tienen el
+    * mismo significado para este elemento que para el elemento &lt;input>.
     *
-    * Input events from the internal &lt;input> element bubble up and appear with
-    * their target field set to the &lt;search-box> element.
+    * Los eventos de entrada del elemento interno &lt;input> aparecen con su
+    * campo de destino establecido en el elemento &lt;search-box>.
     *
-    * The element fires a "search" event with the detail property set to the
-    * current input string when the user clicks on the left emoji (the magnifying
-    * glass). The "search" event is also dispatched when the internal text field
-    * generates a "change" event (when the text has changed and the user types
-    * Return or Tab).
+    * El elemento activa un evento de "search" con la propiedad detail
+    * establecida en la cadena de entrada actual cuando el usuario hace clic
+    * en el emoji izquierdo (la lupa). El evento de "search" también se envía
+    * cuando el campo de texto interno genera un evento de "change"
+    * (cuando el texto ha cambiado y el usuario presiona la tecla Intro o Tab).
     *
-    * The element fires a "clear" event when the user clicks on the right emoji
-    * (the X). If no handler calls preventDefault() on the event then the element
-    * clears the user's input once event dispatch is complete.
+    * El elemento activa un evento "clear" cuando el usuario hace clic en el
+    * emoji correcto (la X). Si ningún controlador llama a preventDefault()
+    * en el evento, el elemento borra la entrada del usuario una vez que se
+    * completa el envío del evento.
     *
-    * Note that there are no onsearch and onclear properties or attributes:
-    * handlers for the "search" and "clear" events can only be registered with
-    * addEventListener().
+    * Tenga en cuenta que no hay propiedades o atributos onsearch y onclear:
+    * los controladores para los eventos "search" y "clear" solo se pueden
+    * registrar con addEventListener().
     */
     class SearchBox extends HTMLElement &lbrace;
       constructor() &lbrace;
-        super(); // Invoke the superclass constructor; must be first.
+        super(); // Invocar el constructor de la superclase; debe ser el primero.
 
-        // Create a shadow DOM tree and attach it to this element, setting
-        // the value of this.shadowRoot.
+        // Crea un árbol DOM de sombra y adjúntalo a este elemento,
+        // estableciendo el valor de this.shadowRoot.
         this.attachShadow(&lbrace;mode: "open"});
 
-        // Clone the template that defines the descendants and stylesheet for
-        // this custom component, and append that content to the shadow root.
+        // Clone la plantilla que define los descendientes y la hoja de estilos
+        // para este componente personalizado y agregue ese contenido a la raíz de sombra.
         this.shadowRoot.append(SearchBox.template.content.cloneNode(true));
 
-        // Get references to the important elements in the shadow DOM
+        // Obtener referencias a los elementos importantes en el shadow DOM
         this.input = this.shadowRoot.querySelector("#input");
         let leftSlot = this.shadowRoot.querySelector('slot[name="left"]');
         let rightSlot = this.shadowRoot.querySelector('slot[name="right"]');
 
-        // When the internal input field gets or loses focus, set or remove
-        // the "focused" attribute which will cause our internal stylesheet
-        // to display or hide a fake focus ring on the entire component. Note
-        // that the "blur" and "focus" events bubble and appear to originate
-        // from the &lt;search-box>.
+        // Cuando el campo de entrada interno obtiene o pierde el foco,
+        // configure o elimine el atributo "focused", lo que hará que nuestra
+        // hoja de estilo interna muestre u oculte un anillo de enfoque
+        // falso en todo el componente. No es que los eventos "blur" y "focus"
+        // aparezcan y parezcan originarse en el &lt;search-box>.
         this.input.onfocus = () => &lbrace; this.setAttribute("focused", ""); };
         this.input.onblur = () => &lbrace; this.removeAttribute("focused");};
 
-        // If the user clicks on the magnifying glass, trigger a "search"
-        // event. Also trigger it if the input field fires a "change"
-        // event. (The "change" event does not bubble out of the Shadow DOM.)
+        // Si el usuario hace clic en la lupa, se activa un evento de "search".
+        // También se activa si el campo de entrada activa un evento de "change".
+        // (El evento de "change" no aparece en el Shadow DOM).
         leftSlot.onclick = this.input.onchange = (event) => &lbrace;
-          event.stopPropagation(); // Prevent click events from bubbling
-          if (this.disabled) return; // Do nothing when disabled
+          event.stopPropagation(); // Evitar que los eventos de clic se reproduzcan
+          if (this.disabled) return; // No hacer nada cuando está deshabilitado
           this.dispatchEvent(new CustomEvent("search", &lbrace;
             detail: this.input.value
           }));&lt;
         };
 
-        // If the user clicks on the X, trigger a "clear" event.
-        // If preventDefault() is not called on the event, clear the input.
+        // Si el usuario hace clic en la X, se activa un evento "borrar".
+        // Si no se llama a preventDefault() en el evento, borra la entrada.
         rightSlot.onclick = (event) => &lbrace;
-          event.stopPropagation(); // Don't let the click bubble up
-          if (this.disabled) return; // Don't do anything if disabled
+          event.stopPropagation(); // No dejes que el clic se haga más fuerte
+          if (this.disabled) return; // No hagas nada si está deshabilitado
           let e = new CustomEvent("clear", &lbrace; cancelable: true });
           this.dispatchEvent(e);
-          if (!e.defaultPrevented) &lbrace; // If the event was not "cancelled"
-            this.input.value = ""; // then clear the input field
+          if (!e.defaultPrevented) &lbrace; // Si el evento no fue "cancelled"
+            this.input.value = ""; // Luego borre el campo de entrada
         }
       };
     }
-    // When some of our attributes are set or changed, we need to set the
-    // corresponding value on the internal &lt;input> element. This life cycle
-    // method, together with the static observedAttributes property below,
-    // takes care of that.
+    // Cuando se configuran o modifican algunos de nuestros atributos,
+    // debemos configurar el valor correspondiente en el elemento interno
+    // &lt;input>. Este método de ciclo de vida, junto con la propiedad estática
+    // observationAttributes que aparece a continuación, se encarga de eso.
     attributeChangedCallback(name, oldValue, newValue) &lbrace;
       if (name === "disabled") &lbrace;
         this.input.disabled = newValue !== null;
@@ -1599,13 +1611,13 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       }
     }
 
-    // Finally, we define property getters and setters for properties that
-    // correspond to the HTML attributes we support. The getters simply return
-    // the value (or the presence) of the attribute. And the setters just set
-    // the value (or the presence) of the attribute. When a setter method
-    // changes an attribute, the browser will automatically invoke the
-    // attributeChangedCallback above.
-
+    // Por último, definimos los métodos de obtención y establecimiento de
+    // propiedades que corresponden a los atributos HTML que admitimos. Los
+    // métodos de obtención simplemente devuelven el valor (o la presencia)
+    // del atributo, y los métodos de establecimiento simplemente establecen
+    // el valor (o la presencia) del atributo. Cuando un método de
+    // establecimiento cambia un atributo, el navegador invocará
+    // automáticamente el attributeChangedCallback mencionado anteriormente.
     get placeholder() &lbrace; return this.getAttribute("placeholder"); }
     get size() &lbrace; return this.getAttribute("size"); }
     get value() &lbrace; return this.getAttribute("value"); }
@@ -1624,61 +1636,61 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       else this.removeAttribute("hidden");
     }
   }
-  // This static field is required for the attributeChangedCallback method.
-  // Only attributes named in this array will trigger calls to that method.
+  // Este campo estático es obligatorio para el método attributeChangedCallback.
+  // Sólo los atributos nombrados en esta matriz activarán llamadas a ese método.
   SearchBox.observedAttributes = ["disabled", "placeholder", "size", "value"];
 
-  // Create a &lt;template> element to hold the stylesheet and the tree of
-  // elements that we'll use for each instance of the SearchBox element.
+  // Cree un elemento &lt;template> para almacenar la hoja de estilos y el
+  // árbol de elementos que usaremos para cada instancia del elemento SearchBox.
   SearchBox.template = document.createElement("template");
 
-  // We initialize the template by parsing this string of HTML. Note, however,
-  // that when we instantiate a SearchBox, we are able to just clone the nodes
-  // in the template and do have to parse the HTML again.
+  // Inicializamos la plantilla analizando esta cadena de HTML. Sin embargo,
+  // tenga en cuenta que cuando creamos una instancia de SearchBox, podemos
+  // clonar los nodos en la plantilla y no tenemos que analizar el HTML nuevamente.
   SearchBox.template.innerHTML = `
   &lt;style>
   /*
-  * The :host selector refers to the &lt;search-box> element in the light
-  * DOM. These styles are defaults and can be overridden by the user of the
-  * &lt;search-box> with styles in the light DOM.
+  * El selector :host hace referencia al elemento &lt;search-box> en el DOM
+  * ligero. Estos estilos son predeterminados y el usuario del &lt;search-box>
+  * puede anularlos con estilos en el DOM ligero.
   */
   :host &lbrace;
-    display: inline-block; /* The default is inline display */
-    border: solid black 1px; /* A rounded border around the &lt;input> and &lt;slots> */
+    display: inline-block; /* El valor predeterminado es la visualización en línea. */
+    border: solid black 1px; /* Un borde redondeado alrededor de la &lt;input> y &lt;slots> */
     border-radius: 5px;
-    padding: 4px 6px; /* And some space inside the border */
+    padding: 4px 6px; /* Y algo de espacio dentro de la frontera. */
   }
-  :host([hidden]) &lbrace; /* Note the parentheses: when host has hidden... */
-    display:none; /* ...attribute set don't display it */
+  :host([hidden]) &lbrace; /* Tenga en cuenta los paréntesis: cuando el host ha ocultado... */
+    display:none; /* ...el conjunto de atributos no lo muestra */
   }
-  :host([disabled]) &lbrace; /* When host has the disabled attribute... */
-    opacity: 0.5; /* ...gray it out */
+  :host([disabled]) &lbrace; /* Cuando el host tiene el atributo deshabilitado... */
+    opacity: 0.5; /* ...ponlo en gris */
   }
-  :host([focused]) &lbrace; /* When host has the focused attribute... */
-    box-shadow: 0 0 2px 2px #6AE; /* display this fake focus ring. */
+  :host([focused]) &lbrace; /* Cuando el host tiene el atributo enfocado... */
+    box-shadow: 0 0 2px 2px #6AE; /* Muestra este anillo de enfoque falso. */
   }
 
-  /* The rest of the stylesheet only applies to elements in the Shadow DOM. */
+  /* El resto de la hoja de estilos solo se aplica a los elementos en el Shadow DOM. */
   input &lbrace;
-    border-width: 0; /* Hide the border of the internal input field. */
-    outline: none; /* Hide the focus ring, too. */
-    font: inherit; /* &lt;input> elements don't inherit font by default */
-    background: inherit; /* Same for background color. */
+    border-width: 0; /* Ocultar el borde del campo de entrada interno. */
+    outline: none; /* Oculta también el anillo de enfoque. */
+    font: inherit; /* &lt;input> Los elementos no heredan la fuente por defecto */
+    background: inherit; /* Lo mismo para el color de fondo. */
   }
   slot &lbrace;
-    cursor: default; /* An arrow pointer cursor over the buttons */
-    user-select: none; /* Don't let the user select the emoji text */
+    cursor: default; /* Un cursor con forma de flecha sobre los botones */
+    user-select: none; /* No dejes que el usuario seleccione el texto emoji. */
   }
   &lt;/style>
-    &lt;div>&lt;slot name="left">\u&lbrace;1f50d}&lt;/slot> &lt;!-- U+1F50D is a magnifying glass -->
-    &lt;input type="text" id="input" /> &lt;!-- The actual input element -->
-    &lt;slot name="right">\u&lbrace;2573}&lt;/slot> &lt;!-- U+2573 is an X -->
+    &lt;div>&lt;slot name="left">\u&lbrace;1f50d}&lt;/slot> &lt;!-- U+1F50D es una lupa -->
+    &lt;input type="text" id="input" /> &lt;!-- El elemento de entrada real -->
+    &lt;slot name="right">\u&lbrace;2573}&lt;/slot> &lt;!-- U+2573 es una X -->
   &lt;/div>
   `;
 
-  // Finally, we call customElement.define() to register the SearchBox element
-  // as the implementation of the &lt;search-box> tag. Custom elements are required
-  // to have a tag name that contains a hyphen.
+  // Por último, llamamos a customElement.define() para registrar el elemento
+  // SearchBox como la implementación de la etiqueta &lt;search-box>. Los
+  // elementos personalizados deben tener un nombre de etiqueta que contenga un guion.
   customElements.define("search-box", SearchBox);</code></pre>
   </section>
   <section id="7">
@@ -1715,16 +1727,16 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     &lt;head>
     &lt;title>Analog Clock&lt;/title>
     &lt;style>
-    /* These CSS styles all apply to the SVG elements defined below */
-    #clock &lbrace; /* Styles for everything in the clock:*/
-      stroke: black; /* black lines */
-      stroke-linecap: round; /* with rounded ends */
-      fill: #ffe; /* on an off-white background */
+    /* Todos estos estilos CSS se aplican a los elementos SVG definidos a continuación */
+    #clock &lbrace; /* Estilos para todo en el reloj:*/
+      stroke: black; /* líneas negras */
+      stroke-linecap: round; /* con extremos redondeados */
+      fill: #ffe; /* sobre un fondo blanquecino */
     }
-    #clock .face &lbrace; stroke-width: 3; } /* Clock face outline */
-    #clock .ticks &lbrace; stroke-width: 2; } /* Lines that mark each hour */
-    #clock .hands &lbrace; stroke-width: 3; } /* How to draw the clock hands */
-    #clock .numbers &lbrace; /* How to draw the numbers */
+    #clock .face &lbrace; stroke-width: 3; } /* Contorno de la esfera del reloj */
+    #clock .ticks &lbrace; stroke-width: 2; } /* Líneas que marcan cada hora */
+    #clock .hands &lbrace; stroke-width: 3; } /* Cómo dibujar las manecillas del reloj */
+    #clock .numbers &lbrace; /* Cómo dibujar los números */
       font-family: sans-serif; font-size: 10; font-weight: bold;
       text-anchor: middle; stroke: none; fill: black;
     }
@@ -1732,10 +1744,10 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     &lt;/head>
     &lt;body>
       &lt;svg id="clock" viewBox="0 0 100 100" width="250" height="250">
-        &lt;!-- The width and height attributes are the screen size of the graphic -->
-        &lt;!-- The viewBox attribute gives the internal coordinate system -->
-        &lt;circle class="face" cx="50" cy="50" r="45"/> &lt;!-- the clock face -->
-        &lt;g class="ticks"> &lt;!-- tick marks for each of the 12 hours -->
+        &lt;!-- Los atributos de ancho y alto son el tamaño de pantalla del gráfico. -->
+        &lt;!-- El atributo viewBox proporciona el sistema de coordenadas interno -->
+        &lt;circle class="face" cx="50" cy="50" r="45"/> &lt;!-- La cara del reloj -->
+        &lt;g class="ticks"> &lt;!-- Marcas de verificación para cada una de las 12 horas -->
           &lt;line x1='50' y1='5.000' x2='50.00' y2='10.00'/>
           &lt;line x1='72.50' y1='11.03' x2='70.00' y2='15.36'/>
           &lt;line x1='88.97' y1='27.50' x2='84.64' y2='30.00'/>
@@ -1749,11 +1761,11 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
           &lt;line x1='11.03' y1='27.50' x2='15.36' y2='30.00'/>
           &lt;line x1='27.50' y1='11.03' x2='30.00' y2='15.36'/>
         &lt;/g>
-        &lt;g class="numbers"> &lt;!-- Number the cardinal directions-->
+        &lt;g class="numbers"> &lt;!-- Numera los puntos cardinales -->
           &lt;text x="50" y="18">12&lt;/text>&lt;text x="85" y="53">3&lt;/text>
           &lt;text x="50" y="88">6&lt;/text>&lt;text x="15" y="53">9&lt;/text>
         &lt;/g>
-        &lt;g class="hands"> &lt;!-- Draw hands pointing straight up. -->
+        &lt;g class="hands"> &lt;!-- Dibuja manos apuntando hacia arriba. -->
           &lt;line class="hourhand" x1="50" y1="50" x2="50" y2="25"/>
           &lt;line class="minutehand" x1="50" y1="50" x2="50" y2="20"/>
         &lt;/g>
@@ -1773,25 +1785,27 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     </figure>
     <p>El código para manipular el reloj es sencillo. Determina el ángulo adecuado de las manecillas de las horas y los minutos en función de la hora actual, luego utiliza <codeinline>querySelector()</codeinline> para buscar los elementos SVG que muestran esas manecillas, y luego les asigna un atributo transform para girarlas alrededor del centro de la esfera del reloj. La función utiliza <codeinline>setTimeout()</codeinline> para asegurarse de que se ejecuta una vez por minuto:</p>
     <pre class="language-js">
-    <code class="language-js">(function updateClock() &lbrace;     // Update the SVG clock graphic to show current time
-      let now = new Date();       // Current time
-      let sec = now.getSeconds(); // Seconds
-      let min = now.getMinutes() + sec/60;       // Fractional minutes
-      let hour = (now.getHours() % 12) + min/60; // Fractional hours
-      let minangle = min * 6;     // 6 degrees per minute
-      let hourangle = hour * 30;  // 30 degrees per hour
+    <code class="language-js">(function updateClock() &lbrace;     // Actualiza el gráfico del reloj SVG 
+                                  // para mostrar la hora actual
 
-      // Get SVG elements for the hands of the clock
+      let now = new Date();       // Hora actual
+      let sec = now.getSeconds(); // Segundos
+      let min = now.getMinutes() + sec/60;       // Minutos fraccionarios
+      let hour = (now.getHours() % 12) + min/60; // Horas fraccionarias
+      let minangle = min * 6;     // 6 grados por minuto
+      let hourangle = hour * 30;  // 30 grados por hora
+
+      // Obtiene los elementos SVG para las manecillas del reloj
       let minhand = document.querySelector("#clock .minutehand");
       let hourhand = document.querySelector("#clock .hourhand");
 
-      // Set an SVG attribute on them to move them around the clock face
+      // Establece un atributo SVG para rotar las manecillas alrededor de la cara del reloj
       minhand.setAttribute("transform", `rotate($&lbrace;minangle},50,50)`);
       hourhand.setAttribute("transform", `rotate($&lbrace;hourangle},50,50)`);
       
-      // Run this function again in 10 seconds
+      // Ejecuta esta función de nuevo en 10 segundos
       setTimeout(updateClock, 10000);
-    }()); // Note immediate invocation of the function here.</code></pre>
+    }()); // Nota: la función se invoca inmediatamente aquí.</code></pre>
   </section>
   <section id="7-3" class="py-4 xs:py-5 sm:py-6">
     <h2>15.7.3 Creación de imágenes SVG con JavaScript</h2>
@@ -1806,98 +1820,98 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p><em>Ejemplo 15-4. Dibujo de un gráfico circular con JavaScript y SVG</em></p>
     <pre class="language-js">
     <code class="language-js">/**
-    * Create an &lt;svg> element and draw a pie chart into it.
+    * Crea un elemento &lt;svg> y dibuja un gráfico de pastel dentro de él.
     *
-    * This function expects an object argument with the following properties:
+    * Esta función espera un argumento objeto con las siguientes propiedades:
     *
-    * width, height: the size of the SVG graphic, in pixels
-    * cx, cy, r: the center and radius of the pie
-    * lx, ly: the upper-left corner of the chart legend
-    * data: an object whose property names are data labels and whose
-    * property values are the values associated with each label
+    * width, height: el tamaño del gráfico SVG, en píxeles
+    * cx, cy, r: el centro y el radio del pastel
+    * lx, ly: la esquina superior izquierda de la leyenda del gráfico
+    * data: un objeto cuyos nombres de propiedad son las etiquetas de datos y
+    * cuyos valores son los valores asociados a cada etiqueta
     *
-    * The function returns an &lt;svg> element. The caller must insert it into
-    * the document in order to make it visible.
+    * La función devuelve un elemento &lt;svg>. El llamador debe insertarlo en
+    * el documento para que sea visible.
     */
     function pieChart(options) &lbrace;
       let &lbrace;width, height, cx, cy, r, lx, ly, data} = options;
 
-      // This is the XML namespace for svg elements
+      // Este es el espacio de nombres XML para los elementos SVG
       let svg = "http://www.w3.org/2000/svg";
 
-      // Create the &lt;svg> element, and specify pixel size and user coordinates
+      // Crea el elemento &lt;svg> y especifica el tamaño en píxeles y las 
+      // coordenadas del usuario.
       let chart = document.createElementNS(svg, "svg");
       chart.setAttribute("width", width);
       chart.setAttribute("height", height);
       chart.setAttribute("viewBox", `0 0 $&lbrace;width} $&lbrace;height}`);
 
-      // Define the text styles we'll use for the chart. If we leave these
-      // values unset here, they can be set with CSS instead.
+      // Define los estilos de texto que se usarán para el gráfico.
       chart.setAttribute("font-family", "sans-serif");
       chart.setAttribute("font-size", "18");
 
-      // Get labels and values as arrays and add up the values so we know how
-      // big the pie is.
+      // Obtén etiquetas y valores como arreglos y suma los valores para conocer
+      // el tamaño total del pastel.
       let labels = Object.keys(data);
       let values = Object.values(data);
       let total = values.reduce((x,y) => x+y);
 
-      // Figure out the angles for all the slices. Slice i starts at angles[i]
-      // and ends at angles[i+1]. The angles are measured in radians.
+      // Calcula los ángulos para todas las porciones. La porción i empieza en angles[i]
+      // y termina en angles[i+1]. Los ángulos se miden en radianes.
       let angles = [0];
       values.forEach((x, i) => angles.push(angles[i] + x/total * 2 * Math.PI));
 
-      // Now loop through the slices of the pie
+      // Recorre las porciones del gráfico de pastel
       values.forEach((value, i) => &lbrace;
-        // Compute the two points where our slice intersects the circle
-        // These formulas are chosen so that an angle of 0 is at 12 o'clock
-        // and positive angles increase clockwise.
+        // Calcula los dos puntos donde la porción intersecta el círculo
+        // Estas fórmulas están elegidas para que un ángulo de 0 esté a las 12 en punto
+        // y los ángulos positivos aumenten en sentido horario.
         let x1 = cx + r * Math.sin(angles[i]);
         let y1 = cy - r * Math.cos(angles[i]);
         let x2 = cx + r * Math.sin(angles[i+1]);
         let y2 = cy - r * Math.cos(angles[i+1]);
-        // This is a flag for angles larger than a half circle
-        // It is required by the SVG arc drawing component
+        // Esta es una bandera para ángulos mayores a medio círculo
+        // Se requiere para el componente de dibujo de arco SVG
         let big = (angles[i+1] - angles[i] > Math.PI) ? 1 : 0;
 
-        // This string describes how to draw a slice of the pie chart:
-        let path = `M$&lbrace;cx},$&lbrace;cy}` +   // Move to circle center.
-            `L$&lbrace;x1},$&lbrace;y1}` +          // Draw line to (x1,y1).
-            `A$&lbrace;r},$&lbrace;r} 0 $&lbrace;big} 1` + // Draw an arc of radius r...
-            `$&lbrace;x2},$&lbrace;y2}` +           // ...ending at to (x2,y2).
-            "Z";                      // Close path back to (cx,cy).
+        // Esta cadena describe cómo dibujar una porción del gráfico de pastel:
+        let path = `M$&lbrace;cx},$&lbrace;cy}` +   // Moverse al centro del círculo
+            `L$&lbrace;x1},$&lbrace;y1}` +          // Dibujar línea hasta (x1, y1)
+            `A$&lbrace;r},$&lbrace;r} 0 $&lbrace;big} 1` + // Dibujar un arco de radio r...
+            `$&lbrace;x2},$&lbrace;y2}` +           // ...terminando en (x2, y2)
+            "Z";                      // Cerrar el camino de regreso a (cx, cy)
 
-        // Compute the CSS color for this slice. This formula works for only
-        // about 15 colors. So don't include more than 15 slices in a chart.
+        // Calcula el color CSS para esta porción. Esta fórmula funciona para
+        // aproximadamente 15 colores. No incluir más de 15 porciones en el gráfico.
         let color = `hsl($&lbrace;(i*40)%360},$&lbrace;90-3*i}%,$&lbrace;50+2*i}%)`;
 
-        // We describe a slice with a &lt;path> element. Note createElementNS().
+        // Describimos una porción con un elemento &lt;path>. Nota el uso de createElementNS().
         let slice = document.createElementNS(svg, "path");
 
-        // Now set attributes on the &lt;path> element
-        slice.setAttribute("d", path);           // Set the path for this slice
-        slice.setAttribute("fill", color);       // Set slice color
-        slice.setAttribute("stroke", "black");   // Outline slice in black
-        slice.setAttribute("stroke-width", "1"); // 1 CSS pixel thick
-        chart.append(slice);                     // Add slice to chart
+        // Ahora establece atributos en el elemento &lt;path>
+        slice.setAttribute("d", path);           // Establecer el camino para esta porción
+        slice.setAttribute("fill", color);       // Establecer el color de la porción
+        slice.setAttribute("stroke", "black");   // Contorno de la porción en negro
+        slice.setAttribute("stroke-width", "1"); // Contorno de 1 píxel CSS
+        chart.append(slice);                     // Añadir la porción al gráfico
 
-        // Now draw a little matching square for the key
+        // Dibuja un pequeño cuadrado coincidente para la leyenda
         let icon = document.createElementNS(svg, "rect");
-        icon.setAttribute("x", lx);           // Position the square
+        icon.setAttribute("x", lx);           // Posicionar el cuadrado
         icon.setAttribute("y", ly + 30*i);
-        icon.setAttribute("width", 20);       // Size the square
+        icon.setAttribute("width", 20);       // Tamaño del cuadrado
         icon.setAttribute("height", 20);
-        icon.setAttribute("fill", color);     // Same fill color as slice
-        icon.setAttribute("stroke", "black"); // Same outline, too.
+        icon.setAttribute("fill", color);     // Mismo color que la porción
+        icon.setAttribute("stroke", "black"); // Mismo contorno también
         icon.setAttribute("stroke-width", "1");
-        chart.append(icon);                   // Add to the chart
+        chart.append(icon);                   // Añadir al gráfico
 
-        // And add a label to the right of the rectangle
+        // Añadir una etiqueta a la derecha del rectángulo
         let label = document.createElementNS(svg, "text");
-        label.setAttribute("x", lx + 30);      // Position the text
+        label.setAttribute("x", lx + 30);      // Posicionar el texto
         label.setAttribute("y", ly + 30*i + 16);
-        label.append(`$&lbrace;labels[i]} $&lbrace;value}`); // Add text to label
-        chart.append(label);                   // Add label to the chart
+        label.append(`$&lbrace;labels[i]} $&lbrace;value}`); // Añadir texto a la etiqueta
+        chart.append(label);                   // Añadir la etiqueta al gráfico
       });
 
       return chart;
@@ -1905,10 +1919,10 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>El gráfico circular de la <a href="figure15-6">Figura 15-6</a> se creó utilizando la función <codeinline>pieChart()</codeinline> <a href="ejemplo15-6">Ejemplo 15-4</a>, de esta manera:</p>
     <pre class="language-js">
     <code class="language-js">document.querySelector("#chart").append(pieChart(&lbrace;
-      width: 640, height:400,   // Total size of the chart
-      cx: 200, cy: 200, r: 180, // Center and radius of the pie
-      lx: 400, ly: 10,          // Position of the legend
-      data: &lbrace;                   // The data to chart
+      width: 640, height:400,   // Tamaño total del gráfico
+      cx: 200, cy: 200, r: 180, // Centro y radio del gráfico circular
+      lx: 400, ly: 10,          // Posición de la leyenda
+      data: &lbrace;                   // Posición de la leyenda
         "JavaScript": 71.5,
         "Java": 45.4,
         "Bash/Shell": 40.4,

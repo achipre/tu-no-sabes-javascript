@@ -662,13 +662,13 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <code class="language-js">// Usamos un Proxy para crear un objeto que parece tener todas las
     // propiedades posibles, con el valor de cada propiedad igual a su nombre.
     let identity = new Proxy(&lbrace;}, &lbrace;
-      // Every property has its own name as its value
+      // Cada propiedad tiene su propio nombre como su valor.
       get(o, name, target) &lbrace; return name; },
-      // Every property name is defined
+      // Cada nombre de propiedad está definido
       has(o, name) &lbrace; return true; },
-      // There are too many properties to enumerate, so we just throw
+      // Hay demasiadas propiedades para enumerar, por lo que simplemente las lanzamos.
       ownKeys(o) &lbrace; throw new RangeError("Infinite number of properties"); },
-      // All properties exist and are not writable, configurable or enumerable.
+      // Todas las propiedades existen y no son escribibles, configurables ni enumerables.
       getOwnPropertyDescriptor(o, name) &lbrace;
         return &lbrace;
           value: name,
@@ -677,29 +677,29 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
           configurable: false
         };
       },
-      // All properties are read-only so they can't be set
+      // Todas las propiedades son de solo lectura, por lo que no se pueden configurar.
       set(o, name, value, target) &lbrace; return false; },
-      // All properties are non-configurable, so they can't be deleted
+      // Todas las propiedades no son configurables, por lo que no se pueden eliminar.
       deleteProperty(o, name) &lbrace; return false; },
-      // All properties exist and are non-configurable so we can't define more
+      // Todas las propiedades existen y no son configurables, por lo que no podemos definir más.
       defineProperty(o, name, desc) &lbrace; return false; },
-      // In effect, this means that the object is not extensible
+      // En efecto, esto significa que el objeto no es extensible.
       isExtensible(o) &lbrace; return false; },
-      // All properties are already defined on this object, so it couldn't
-      // inherit anything even if it did have a prototype object.
+      // Todas las propiedades ya están definidas en este objeto, por lo que 
+      // no podría heredar nada incluso si tuviera un objeto prototipo.
       getPrototypeOf(o) &lbrace; return null; },
-      // The object is not extensible, so we can't change the prototype
+      // El objeto no es extensible, por lo que no podemos cambiar el prototipo.
       setPrototypeOf(o, proto) &lbrace; return false; },
     });
 
     identity.x                // => "x"
     identity.toString         // => "toString"
     identity[0]               // => "0"
-    identity.x = 1;           // Setting properties has no effect
+    identity.x = 1;           // La configuración de propiedades no tiene ningún efecto
     identity.x                // => "x"
-    delete identity.x         // => false: can't delete properties either
+    delete identity.x         // => false: tampoco se pueden eliminar propiedades
     identity.x                // => "x"
-    Object.keys(identity);    // !RangeError: can't list all the keys
+    Object.keys(identity);    // !RangeError: no se pueden enumerar todas las keys
     for(let p of identity) ;  // !RangeError</code></pre>
     <p>Los objetos proxy pueden derivar su comportamiento del objeto destino y del objeto manejador, y los ejemplos que hemos visto hasta ahora han utilizado un objeto u otro. Pero normalmente es más útil definir proxies que utilicen ambos objetos.</p>
     <p>El siguiente código, por ejemplo, utiliza Proxy para crear una envoltura de sólo lectura para un objeto de destino. Cuando el código intenta leer valores del objeto, esas lecturas se reenvían al objeto de destino normalmente. Pero si algún código intenta modificar el objeto o sus propiedades, los métodos del objeto manejador lanzan un TypeError. Un proxy como este podría ser útil para escribir pruebas: supongamos que has escrito una función que toma un argumento de objeto y quieres asegurarte de que tu función no hace ningún intento de modificar el argumento de entrada. Si su prueba pasa un objeto envoltorio de sólo lectura, entonces cualquier escritura lanzará excepciones que harán que la prueba falle:</p>
@@ -713,53 +713,54 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
         setPrototypeOf: readonly,
       });
     }
-    let o = &lbrace; x: 1, y: 2 };   // Normal writable object
-    let p = readOnlyProxy(o); // Readonly version of it
-    p.x                       // => 1: reading properties works
-    p.x = 2;                  // !TypeError: can't change properties
-    delete p.y;               // !TypeError: can't delete properties
-    p.z = 3;                  // !TypeError: can't add properties
-    p.__proto__ = &lbrace;};         // !TypeError: can't change the prototype</code></pre>
+    let o = &lbrace; x: 1, y: 2 };   // Objeto escribible normal
+    let p = readOnlyProxy(o); // Versión de solo lectura
+    p.x                       // => 1: leer propiedades funciona
+    p.x = 2;                  // !TypeError: No se pueden cambiar las propiedades
+    delete p.y;               // !TypeError: No se pueden eliminar propiedades
+    p.z = 3;                  // !TypeError: No se pueden agregar propiedades
+    p.__proto__ = &lbrace;};         // !TypeError: No se puede cambiar el prototipo</code></pre>
     <p>Otra técnica para escribir proxies consiste en definir métodos manejadores que intercepten operaciones en un objeto pero que deleguen las operaciones en el objeto de destino. Las funciones de la API Reflect (<a href="#6">§14.6</a>) tienen exactamente las mismas firmas que los métodos manejadores, por lo que facilitan este tipo de delegación.</p>
     <p>Aquí, por ejemplo, hay un proxy que delega todas las operaciones en el objeto de destino, pero utiliza métodos manejadores para registrar las operaciones:</p>
     <pre class="language-js">
     <code class="language-js">/*
-    * Return a Proxy object that wraps o, delegating all operations to
-    * that object after logging each operation. objname is a string that
-    * will appear in the log messages to identify the object. If o has own
-    * properties whose values are objects or functions, then if you query
-    * the value of those properties, you'll get a loggingProxy back, so that
-    * logging behavior of this proxy is "contagious".
+    * Devuelve un objeto Proxy que envuelve a o, delegando todas las 
+    * operaciones a ese objeto después de registrar cada operación. 
+    * objname es una cadena que aparecerá en los mensajes de registro 
+    * para identificar el objeto. Si o tiene propiedades propias cuyos 
+    * valores son objetos o funciones, entonces si consulta el valor de 
+    * esas propiedades, obtendrá un loggingProxy de vuelta, por lo que 
+    * el comportamiento de registro de este proxy es "contagioso".
     */
     function loggingProxy(o, objname) &lbrace;
-    // Define handlers for our logging Proxy object.
-    // Each handler logs a message and then delegates to the target object.
+    // Defina controladores para nuestro objeto Proxy de registro.
+    // Cada controlador registra un mensaje y luego lo delega al objeto de destino.
     const handlers = &lbrace;
-      // This handler is a special case because for own properties
-      // whose value is an object or function, it returns a proxy rather
-      // than returning the value itself.
+      // Este controlador es un caso especial porque, para las 
+      // propiedades propias cuyo valor es un objeto o función, 
+      // devuelve un proxy en lugar de devolver el valor en sí.
       get(target, property, receiver) &lbrace;
-        // Log the get operation
+        // Registrar la operación de obtención
         console.log(`Handler get($&lbrace;objname},$&lbrace;property.toString()})`);
         
-        // Use the Reflect API to get the property value
+        // Utilice la API de Reflect para obtener el valor de la propiedad
         let value = Reflect.get(target, property, receiver);
 
-        // If the property is an own property of the target and
-        // the value is an object or function then return a Proxy for it.
+        // Si la propiedad es una propiedad propia del objetivo y el 
+        // valor es un objeto o función, entonces devuelve un Proxy para él.
         if (Reflect.ownKeys(target).includes(property) &&
           (typeof value === "object" || typeof value === "function")) &lbrace;
           return loggingProxy(value, `$&lbrace;objname}.$&lbrace;property.toString()}`);
         }
 
-        // Otherwise return the value unmodified.
+        // De lo contrario, devuelva el valor sin modificar.
         return value;
       },
 
-      // There is nothing special about the following three methods:
-      // they log the operation and delegate to the target object.
-      // They are a special case simply so we can avoid logging the
-      // receiver object which can cause infinite recursion.
+      // Los tres métodos siguientes no tienen nada de especial: 
+      // registran la operación y la delegan al objeto de destino. 
+      // Son un caso especial simplemente para evitar registrar el 
+      // objeto receptor, lo que puede provocar una recursión infinita.
       set(target, prop, value, receiver) &lbrace;
         console.log(`Handler set($&lbrace;objname},$&lbrace;prop.toString()},$&lbrace;value})`);
         return Reflect.set(target, prop, value, receiver);
@@ -774,39 +775,39 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       }
     };
 
-    // We can automatically generate the rest of the handlers.
-    // Metaprogramming FTW!
+    // Podemos generar automáticamente el resto de los controladores.
+    // ¡Metaprogramación FTW!
     Reflect.ownKeys(Reflect).forEach(handlerName => &lbrace;
       if (!(handlerName in handlers)) &lbrace;
         handlers[handlerName] = function(target, ...args) &lbrace;
-          // Log the operation
+          // Registrar la operación
           console.log(`Handler $&lbrace;handlerName}($&lbrace;objname},$&lbrace;args})`);
-          // Delegate the operation
+          // Delegar la operación
           return Reflect[handlerName](target, ...args);
         };
       }
       });
       
-      // Return a proxy for the object using these logging handlers
+      // Devuelve un proxy para el objeto utilizando estos controladores de registro
       return new Proxy(o, handlers);
     }</code></pre>
     <p>La función <codeinline>loggingProxy()</codeinline> definida anteriormente crea proxies que registran todas las formas en que se utilizan. Si estás tratando de entender cómo una función no documentada utiliza los objetos que le pasas, usar un proxy de registro puede ayudar.</p>
     <p>Considere los siguientes ejemplos, que dan lugar a algunas ideas genuinas sobre la iteración de matrices:</p>
     <pre class="language-js">
-    <code class="language-js">// Define an array of data and an object with a function property
+    <code class="language-js">// Definir una matriz de datos y un objeto con una propiedad de función
     let data = [10,20];
     let methods = &lbrace; square: x => x*x };
 
-    // Create logging proxies for the array and the object
+    // Crear servidores proxy de registro para la matriz y el objeto
     let proxyData = loggingProxy(data, "data");
     let proxyMethods = loggingProxy(methods, "methods");
     
-    // Suppose we want to understand how the Array.map() method works
+    // Supongamos que queremos entender cómo funciona el método Array.map()
     data.map(methods.square)        // => [100, 400]
 
-    // First, let's try it with a logging Proxy array
+    // Primero, probémoslo con una matriz Proxy de registro
     proxyData.map(methods.square)   // => [100, 400]
-    // It produces this output:
+    // Produce este resultado:
     // Handler get(data,map)
     // Handler get(data,length)
     // Handler get(data,constructor)
@@ -817,13 +818,13 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
 
     // Now lets try with a proxy methods object
     data.map(proxyMethods.square)   // => [100, 400]
-    // Log output:
+    // Salida del registro:
     // Handler get(methods,square)
     // Handler methods.square(10,0,10,20)
     // Handler methods.square(20,1,10,20)
-    // Finally, let's use a logging proxy to learn about the iteration protocol
+    // Por último, usemos un proxy de registro para aprender sobre el protocolo de iteración.
     for(let x of proxyData) console.log("Datum", x);
-    // Log output:
+    // Salida del registro:
     // Handler get(data,Symbol(Symbol.iterator))
     // Handler get(data,length)
     // Handler get(data,0)
@@ -844,12 +845,12 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <pre class="language-js">
     <code class="language-js">let target = Object.preventExtensions(&lbrace;});
     let proxy = new Proxy(target, &lbrace; isExtensible() &lbrace; return true; }});
-    Reflect.isExtensible(proxy); // !TypeError: invariant violation</code></pre>
+    Reflect.isExtensible(proxy); // !TypeError: violación invariante</code></pre>
     <p>En relación con esto, los objetos proxy para objetivos no extensibles no pueden tener un manejador <codeinline>getPrototypeOf()</codeinline> que devuelva otra cosa que no sea el objeto prototipo real del objetivo. Además, si el objeto de destino tiene propiedades no configurables y no escribibles, la clase Proxy lanzará un TypeError si el manejador <codeinline>get()</codeinline> devuelve cualquier cosa que no sea el valor real:</p>
     <pre class="language-js">
     <code class="language-js">let target = Object.freeze(&lbrace;x: 1});
     let proxy = new Proxy(target, &lbrace; get() &lbrace; return 99; }});
-    proxy.x; // !TypeError: value returned by get() doesn't match target</code></pre>
+    proxy.x; // !TypeError: El valor devuelto por get() no coincide con el objetivo</code></pre>
     <p>Proxy impone una serie de invariantes adicionales, casi todas e l l a s relacionadas con objetos de destino no extensibles y propiedades no configurables del objeto de destino .</p>
   </section>
   <section id="8" class="py-4 xs:py-5 sm:py-6">
