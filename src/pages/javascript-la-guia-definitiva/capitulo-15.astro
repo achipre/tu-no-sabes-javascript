@@ -118,7 +118,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     &lt;head>                        &lt;!-- Title, scripts & styles can go here -->
     &lt;title>Digital Clock</title>
     &lt;style>                       /* Una hoja de estilos CSS para el reloj */
-    #clock &lbrace;                      /*Los estilos se aplican al elemento con id="clock" */
+    #clock &lbrace;                      /* Los estilos se aplican al elemento con id="clock" */
       font: bold 24px sans-serif; /* Utilice una fuente grande y en negrita */
       background: #ddf;           /* sobre un fondo gris azulado claro. */
       padding: 15px;              /* Rodéalo con algo de espacio. */
@@ -1383,11 +1383,11 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Como ejemplo de elemento personalizado, supongamos que queremos mostrar círculos dentro de párrafos de texto normal. Nos gustaría poder escribir HTML como éste para representar problemas de historias matemáticas como el que se muestra en la <a href="#figure15-4">Figura 15-4</a>:</p>
     <pre class="language-js">
     <code class="language-js">&lt;p>
-      The document has one marble: &lt;inline-circle>&lt;/inline-circle>.
-      The HTML parser instantiates two more marbles:
+      El documento tiene un circulo: &lt;inline-circle>&lt;/inline-circle>.
+      El analizador HTML instancia dos circulos mas:
       &lt;inline-circle diameter="1.2em" color="blue">&lt;/inline-circle>
       &lt;inline-circle diameter=".6em" color="gold">&lt;/inline-circle>.
-      How many marbles does the document contain now?
+      ¿Cuantos circulos tiene ahora el documento?
     &lt;/p></code></pre>
     <figure id="figure15-4">
       <img src="/public/javascript/capitulo-15/figure15-4.avif" alt="imagen de consola">
@@ -1952,17 +1952,17 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <code class="language-js">&lt;p>This is a red square: &lt;canvas id="square" width=10 height=10>&lt;/canvas>.
     &lt;p>This is a blue circle: &lt;canvas id="circle" width=10 height=10>&lt;/canvas>.
     &lt;script>
-    let canvas = document.querySelector("#square"); // Get first canvas element
-    let context = canvas.getContext("2d");          // Get 2D drawing context
-    context.fillStyle = "#f00";                     // Set fill color to red
-    context.fillRect(0,0,10,10);                    // Fill a square
+    let canvas = document.querySelector("#square"); // Obtener el primer elemento del lienzo
+    let context = canvas.getContext("2d");          // Obtener contexto de dibujo 2D
+    context.fillStyle = "#f00";                     // Establecer el color de relleno en rojo
+    context.fillRect(0,0,10,10);                    // Rellena un cuadrado
 
-    canvas = document.querySelector("#circle");     // Second canvas element
-    context = canvas.getContext("2d");              // Get its context
-    context.beginPath();                            // Begin a new "path"
-    context.arc(5, 5, 5, 0, 2*Math.PI, true);       // Add a circle to the path
-    context.fillStyle = "#00f";                     // Set blue fill color
-    context.fill();                                 // Fill the path
+    canvas = document.querySelector("#circle");     // Segundo elemento del lienzo
+    context = canvas.getContext("2d");              // Obtenga su contexto
+    context.beginPath();                            // Comenzar un nuevo “path”
+    context.arc(5, 5, 5, 0, 2*Math.PI, true);       // Añade un círculo a la ruta
+    context.fillStyle = "#00f";                     // Establecer color de relleno azul
+    context.fill();                                 // Rellena el camino
     &lt;/script></code></pre>
     <p>Hemos visto que SVG describe formas complejas como un "camino" de líneas y curvas que se pueden dibujar o rellenar. La API Canvas también utiliza la noción de trazado. En lugar de describir un trazado como una cadena de letras y números, un trazado se define mediante una serie de llamadas a métodos, como las invocaciones a <codeinline>beginPath()</codeinline> y <codeinline>arc()</codeinline> del código anterior. Una vez definido el recorrido, otros métodos, como <codeinline>fill()</codeinline>, actúan sobre él. Varias propiedades del objeto de contexto, como <codeinline>fillStyle</codeinline>, especifican cómo se realizan estas operaciones.</p>
     <p>Las subsecciones que siguen demuestran los métodos y propiedades de la API Canvas 2D. Gran parte del código de ejemplo que sigue opera sobre una variable <codeinline>c</codeinline>. Esta variable contiene el objeto CanvasRenderingContext2D del lienzo, pero el código para inicializar esa variable a veces no se muestra. Para que estos ejemplos funcionen, tendrías que añadir marcado HTML para definir un lienzo con los atributos de <codeinline>width</codeinline> y <codeinline>height</codeinline> apropiados, y luego añadir código como éste para inicializar la variable <codeinline>c</codeinline>:</p>
@@ -1974,14 +1974,14 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>15.8.1 Trayectorias y polígonos</h2>
     <p>Para dibujar líneas en un lienzo y rellenar las áreas delimitadas por esas líneas, se empieza por definir un <em>path</em>. Un trayecto es una secuencia de uno o más subtrayectos. Un subtrayecto es una secuencia de dos o más puntos conectados por segmentos de línea (o, como veremos más adelante, por segmentos de curva). Inicie un nuevo trayecto con el método <codeinline>beginPath()</codeinline>. Comenzar un nuevo con el método <codeinline>moveTo()</codeinline>. Una vez que haya establecido el punto de partida de un subtrayecto con <codeinline>moveTo()</codeinline>, puede conectar ese punto a un nuevo punto con una línea recta llamando a <codeinline>lineTo()</codeinline>. El siguiente código define un camino que incluye dos segmentos de línea:</p>
     <pre class="language-js">
-    <code class="language-js">c.beginPath();      // Start a new path
-    c.moveTo(100, 100); // Begin a subpath at (100,100)
-    c.lineTo(200, 200); // Add a line from (100,100) to (200,200)
-    c.lineTo(100, 200); // Add a line from (200,200) to (100,200)</code></pre>
+    <code class="language-js">c.beginPath();      // Iniciar un nuevo camino
+    c.moveTo(100, 100); // Comience un subcamino en (100,100)
+    c.lineTo(200, 200); // Añadir una línea desde (100,100) al (200,200)
+    c.lineTo(100, 200); // Añadir una línea desde (200,200) al (100,200)</code></pre>
     <p>Este código simplemente define un trazado; no dibuja nada en el lienzo. Para dibujar (o "trazar") los dos segmentos de línea del trazado, llame al método <codeinline>stroke()</codeinline>, y para rellenar el área definida por esos segmentos de línea, llame a <codeinline>fill()</codeinline>:</p>
     <pre class="language-js">
-    <code class="language-js">c.fill();   // Fill a triangular area
-    c.stroke(); // Stroke two sides of the triangle</code></pre>
+    <code class="language-js">c.fill();   // Rellena un área triangular
+    c.stroke(); // Traza dos lados del triángulo.</code></pre>
     <p>Este código (junto con algún código adicional para establecer los anchos de línea y los colores de relleno) produjo el dibujo que se muestra en la <a href="#figure15-7">Figura 15-7</a>.</p>
     <figure id="figure15-7">
       <img src="/public/javascript/capitulo-15/figure15-7.avif" alt="imagen de consola">
@@ -1991,8 +1991,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Si quisieras trazar los tres lados del triángulo que acabamos de mostrar, llamarías al método <codeinline>closePath()</codeinline> para conectar el punto final del subtrayecto con el punto inicial. (También podría llamar a <codeinline>lineTo(100,100)</codeinline>, pero entonces acabaría con tres segmentos de línea que comparten un punto inicial y final pero que no están realmente cerrados. Cuando se dibuja con líneas anchas, los resultados visuales son mejores si se utiliza <codeinline>closePath()</codeinline>).</p>
     <p>Hay otros dos puntos importantes a tener en cuenta sobre <codeinline>stroke()</codeinline> y <codeinline>fill()</codeinline>. Primero, ambos métodos operan en todos los subcaminos del camino actual. Supongamos que hemos añadido otro subtrayecto en el código anterior:</p>
     <pre class="language-js">
-    <code class="language-js">c.moveTo(300,100); // Begin a new subpath at (300,100);
-    c.lineTo(300,200); // Draw a vertical line down to (300,200);</code></pre>
+    <code class="language-js">c.moveTo(300,100); // Comience una nueva subruta en (300,100);
+    c.lineTo(300,200); // Dibuje una línea vertical hacia abajo (300,200);</code></pre>
     <p>Si entonces llamáramos a <codeinline>stroke()</codeinline>, dibujaríamos dos aristas conectadas de un triángulo y una línea vertical desconectada.</p>
     <p>El segundo punto a tener en cuenta sobre <codeinline>stroke()</codeinline> y <codeinline>fill()</codeinline> es que ninguno altera el trazado actual: puede llamar a <codeinline>fill()</codeinline> y el trazado seguirá ahí cuando llame a <codeinline>stroke()</codeinline>. Cuando haya terminado con un trazado y quiera comenzar otro, debe recordar llamar a <codeinline>beginPath()</codeinline>. Si no lo hace, acabará añadiendo nuevos subtrayectos al trazado existente, y puede acabar dibujando esos viejos subtrayectos una y otra vez.</p>
     <p>El <a href="#ejemplo15-5">Ejemplo 15-5</a> define una función para dibujar polígonos regulares y demuestra el uso de <codeinline>moveTo()</codeinline>, <codeinline>lineTo()</codeinline>, y <codeinline>closePath()</codeinline> para definir subtrayectorias y de <codeinline>fill()</codeinline> y <codeinline>stroke()</codeinline> para dibujar esas trayectorias. Produce el dibujo mostrado en la <a href="figure15-8">Figura 15-8</a>.</p>
@@ -2002,41 +2002,41 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     </figure>
     <p><em>Ejemplo 15-5. Polígonos regulares con moveTo(), lineTo() y closePath()</em></p>
     <pre class="language-js">
-    <code class="language-js">// Define a regular polygon with n sides, centered at (x,y) with radius r.
-    // The vertices are equally spaced along the circumference of a circle.
-    // Put the first vertex straight up or at the specified angle.
-    // Rotate clockwise, unless the last argument is true.
+    <code class="language-js">// Define un polígono regular con n lados, centrado en (x,y) con radio r.
+    // Los vértices están igualmente espaciados a lo largo de la circunferencia de un círculo.
+    // Coloque el primer vértice hacia arriba o en el ángulo especificado.
+    // Girar en el sentido de las agujas del reloj, a menos que el último argumento sea verdadero.
     function polygon(c, n, x, y, r, angle=0, counterclockwise=false) &lbrace;
-      c.moveTo(x + r*Math.sin(angle),   // Begin a new subpath at the first vertex
-          y - r*Math.cos(angle));       // Use trigonometry to compute position
-      let delta = 2*Math.PI/n;          // Angular distance between vertices
-      for(let i = 1; i &lt; n; i++) &lbrace;      // For each of the remaining vertices
-          angle += counterclockwise?-delta:delta; // Adjust angle
-          c.lineTo(x + r*Math.sin(angle),         // Add line to next vertex
+      c.moveTo(x + r*Math.sin(angle),   // Iniciar un nuevo subcamino en el primer vértice
+          y - r*Math.cos(angle));       // Utilice la trigonometría para calcular la posición
+      let delta = 2*Math.PI/n;          // Distancia angular entre vértices
+      for(let i = 1; i &lt; n; i++) &lbrace;      // Para cada uno de los vértices restantes
+          angle += counterclockwise?-delta:delta; // Ajustar el ángulo
+          c.lineTo(x + r*Math.sin(angle),         // Agregar línea al siguiente vértice
               y - r*Math.cos(angle));
       }
-      c.closePath(); // Connect last vertex back to the first
+      c.closePath(); // Conecta el último vértice al primero.
     }
 
-    // Assume there is just one canvas, and get its context object to draw with.
+    // Supongamos que solo hay un lienzo y obtenemos su objeto de contexto para dibujar.
     let c = document.querySelector("canvas").getContext("2d");
 
-    // Start a new path and add polygon subpaths
+    // Iniciar una nueva ruta y agregar subrutas de polígono
     c.beginPath();
-    polygon(c, 3, 50, 70, 50);                   // Triangle
-    polygon(c, 4, 150, 60, 50, Math.PI/4);       // Square
-    polygon(c, 5, 255, 55, 50);                  // Pentagon
-    polygon(c, 6, 365, 53, 50, Math.PI/6);       // Hexagon
-    polygon(c, 4, 365, 53, 20, Math.PI/4, true); // Small square inside the hexagon
+    polygon(c, 3, 50, 70, 50);                   // Triángulo
+    polygon(c, 4, 150, 60, 50, Math.PI/4);       // Cuadrado
+    polygon(c, 5, 255, 55, 50);                  // Pentágono
+    polygon(c, 6, 365, 53, 50, Math.PI/6);       // Hexágono
+    polygon(c, 4, 365, 53, 20, Math.PI/4, true); // Cuadrado pequeño dentro del hexágono
 
-    // Set some properties that control how the graphics will look
-    c.fillStyle = "#ccc";                  // Light gray interiors
-    c.strokeStyle = "#008";                // outlined with dark blue lines
-    c.lineWidth = 5;                       // five pixels wide.
+    // Establezca algunas propiedades que controlan cómo se verán los gráficos
+    c.fillStyle = "#ccc";                  // Interiores en gris claro
+    c.strokeStyle = "#008";                // delineado con líneas de color azul oscuro
+    c.lineWidth = 5;                       // cinco píxeles de ancho.
 
-    // Now draw all the polygons (each in its own subpath) with these calls
-    c.fill();                              // Fill the shapes
-    c.stroke();                            // And stroke their outlines</code></pre>
+    // Ahora dibuja todos los polígonos (cada uno en su propio subtrayecto) con estas llamadas
+    c.fill();                              // Rellena las formas
+    c.stroke();                            // Y acariciar sus contornos</code></pre>
     <p>Observa que este ejemplo dibuja un hexágono con un cuadrado en su interior. El cuadrado y el hexágono son subtrayectorias separadas, pero se solapan. Cuando esto ocurre (o cuando un subtrayecto se cruza a sí mismo), el lienzo necesita ser capaz de determinar qué regiones están dentro del trazado y cuáles están fuera. Para ello, el lienzo utiliza una prueba denominada "regla de enrollamiento no nulo". En este caso, el interior del cuadrado no está relleno porque el cuadrado y el hexágono se dibujaron en direcciones opuestas: los vértices del hexágono se conectaron con segmentos de línea que se movían en el sentido de las agujas del reloj alrededor del círculo. Los vértices del cuadrado se conectaron en sentido contrario a las agujas del reloj. Si el cuadrado también se hubiera dibujado en el sentido de las agujas del reloj, la llamada a <codeinline>fill()</codeinline> también habría rellenado el interior del cuadrado .</p>
   </section>
   <section id="8-2">
@@ -2069,17 +2069,19 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Para rellenar (o trazar) con un gradiente de color, establezca <codeinline>fillStyle</codeinline> (o <codeinline>strokeStyle</codeinline>) en un objeto CanvasGradient devuelto por los métodos <codeinline>createLinearGradient()</codeinline> o <codeinline>createRadialGradient()</codeinline> del contexto. Los argumentos de <codeinline>createLinearGradient()</codeinline> son las coordenadas de dos puntos que definen una línea (no es necesario que sea horizontal o vertical) a lo largo de la cual variarán los colores. Los argumentos de <codeinline>createRadialGradient()</codeinline> especifican los centros y radios de dos círculos. (No es necesario que sean concéntricos, pero el primer círculo suele estar completamente dentro del segundo). Las áreas dentro del círculo más pequeño o fuera del más grande se rellenarán con colores sólidos; las áreas entre los dos se rellenarán con un gradiente de color.</p>
     <p>Después de crear el objeto CanvasGradient que define las regiones del lienzo que serán rellenadas, debe definir los colores del gradiente llamando al método <codeinline>addColorStop()</codeinline> del CanvasGradient. El primer argumento de este método es un número entre 0.0 y 1.0. El segundo argumento es una especificación de color CSS. Debe llamar a este método al menos dos veces para definir un gradiente de color simple, pero puede llamarlo más veces. El color en 0.0 aparecerá al principio del gradiente, y el color en 1.0 aparecerá al final. Si especifica colores adicionales, aparecerán en la posición fraccional especificada dentro del degradado. Entre los puntos que especifique, los colores se interpolarán suavemente. He aquí algunos ejemplos:</p>
     <pre class="language-js">
-    <code class="language-js">// A linear gradient, diagonally across the canvas (assuming no transforms)
+    <code class="language-js">// Un degradado lineal, en diagonal a lo largo del
+    // lienzo (suponiendo que no haya transformaciones)
     let bgfade = c.createLinearGradient(0,0,canvas.width,canvas.height);
-    bgfade.addColorStop(0.0, "#88f");                // Start with light blue in upper left
-    bgfade.addColorStop(1.0, "#fff");                // Fade to white in lower right
+    bgfade.addColorStop(0.0, "#88f");                // Comience con azul claro en la parte superior izquierda.
+    bgfade.addColorStop(1.0, "#fff");                // Fundido a blanco en la parte inferior derecha
 
-    // A gradient between two concentric circles. Transparent in the middle
-    // fading to translucent gray and then back to transparent.
+    // Un degradado entre dos círculos concéntricos. Transparente en el medio
+    // que se va desvaneciendo hasta convertirse en gris translúcido y luego
+    // vuelve a ser transparente.
     let donut = c.createRadialGradient(300,300,100, 300,300,300);
-    donut.addColorStop(0.0, "transparent");          // Transparent
-    donut.addColorStop(0.7, "rgba(100,100,100,.9)"); // Translucent gray
-    donut.addColorStop(1.0, "rgba(0,0,0,0)");        // Transparent again</code></pre>
+    donut.addColorStop(0.0, "transparent");          // Transparente
+    donut.addColorStop(0.7, "rgba(100,100,100,.9)"); // Gris translúcido
+    donut.addColorStop(1.0, "rgba(0,0,0,0)");        // Transparente de nuevo</code></pre>
     <p>Un punto importante que hay que entender sobre los degradados es que no son independientes de la posición. Cuando se crea un degradado, se especifican los límites del mismo. Si luego intenta rellenar un área fuera de esos límites, obtendrá el color sólido definido en uno u otro extremo del degradado.</p>
     <p>Además de colores y degradados de color, también puede rellenar y trazar utilizando imágenes. Para ello, establezca <codeinline>fillStyle</codeinline> o <codeinline>strokeStyle</codeinline> a un CanvasPattern devuelto por el método <codeinline>createPattern()</codeinline> del objeto context. El primer argumento de este método debe ser un <codeinline>&lt;img></codeinline> o <codeinline>&lt;canvas></codeinline> que contiene la imagen que desea rellenar o trazar. (Tenga en cuenta que no es necesario insertar la imagen o el lienzo de origen en el documento para poder utilizarlos de este modo). El segundo argumento de <codeinline>createPattern()</codeinline> es la cadena "repeat", "repeat-x", "repeat-y" o "no-repeat", que especifica si las imágenes de fondo se repiten (y en qué dimensiones).</p>
     <p class="title-article text-left">Estilos de texto</p>
@@ -2126,64 +2128,65 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>El <a href="ejemplo15-6">Ejemplo 15-6</a> muestra el código utilizado para crear la <a href="figure15-10">Figura 15-10</a>. Los métodos demostrados en este código son algunos de los más complicados de la API Canvas. Los métodos demostrados en este código son algunos de los más complicados de la API Canvas; consulte una referencia en línea para obtener detalles completos sobre los métodos y sus argumentos.</p>
     <p><em>Ejemplo 15-6. Añadir curvas a un trazado</em></p>
     <pre class="language-js">
-    <code class="language-js">// A utility function to convert angles from degrees to radians
+    <code class="language-js">// Una función de utilidad para convertir ángulos de grados a radianes
     function rads(x) &lbrace; return Math.PI*x/180; }
 
-    // Get the context object of the document's canvas element
+    // Obtén el objeto de contexto del elemento canvas del documento
     let c = document.querySelector("canvas").getContext("2d");
 
-    // Define some graphics attributes and draw the curves
+    // Define algunos atributos gráficos y dibuja las curvas
     c.fillStyle = "#aaa"; // Gray fills
     c.lineWidth = 2;      // 2-pixel black (by default) lines
 
-    // Draw a circle.
-    // There is no current point, so draw just the circle with no straight
-    // line from the current point to the start of the circle.
+    // Dibuja un círculo.
+    // No hay punto actual, así que solo dibuja el círculo sin una línea recta
+    // desde el punto actual hasta el inicio del círculo.
     c.beginPath();
-    c.arc(75,100,50,      // Center at (75,100), radius 50
-    0,rads(360),false);   // Go clockwise from 0 to 360 degrees
-    c.fill();             // Fill the circle
-    c.stroke();           // Stroke its outline.
+    c.arc(75,100,50,      // Centro en (75, 100), radio 50
+    0,rads(360),false);   // Va en sentido horario de 0 a 360 grados
+    c.fill();             // Rellena el círculo
+    c.stroke();           // Traza su contorno
 
-    // Now draw an ellipse in the same way
-    c.beginPath();        // Start new path not connected to the circle
-    c.ellipse(200, 100, 50, 35, rads(15), // Center, radii, and rotation
-    0, rads(360), false); // Start angle, end angle, direction
+    // Ahora dibuja una elipse de la misma manera
+    c.beginPath();        // Inicia un nuevo camino no conectado al círculo
+    c.ellipse(200, 100, 50, 35, rads(15), // Centro, radios y rotación
+    0, rads(360), false); // Ángulo de inicio, ángulo final, dirección
 
-    // Draw a wedge. Angles are measured clockwise from the positive x axis.
-    // Note that arc() adds a line from the current point to the arc start.
-    c.moveTo(325, 100);   // Start at the center of the circle.
-    c.arc(325, 100, 50,   // Circle center and radius
-    rads(-60), rads(0),   // Start at angle -60 and go to angle 0
-    true);                // counterclockwise
-    c.closePath();        // Add radius back to the center of the circle
+    // Dibuja una porción de círculo (cuña). Los ángulos se miden en sentido horario
+    // desde el eje x positivo.
+    // Nota que arc() añade una línea desde el punto actual hasta el inicio del arco.
+    c.moveTo(325, 100);   // Empieza en el centro del círculo.
+    c.arc(325, 100, 50,   // Centro y radio del círculo
+    rads(-60), rads(0),   // Empieza en el ángulo -60 y va hasta el ángulo 0
+    true);                // Sentido antihorario
+    c.closePath();        // Añade una línea desde el radio de vuelta al centro del círculo
 
-    // Similar wedge, offset a bit, and in the opposite direction
+    // Porción similar, desplazada un poco, y en la dirección opuesta
     c.moveTo(340, 92);
     c.arc(340, 92, 42, rads(-60), rads(0), false);
     c.closePath();
 
-    // Use arcTo() for rounded corners. Here we draw a square with
-    // upper left corner at (400,50) and corners of varying radii.
-    c.moveTo(450, 50);            // Begin in the middle of the top edge.
-    c.arcTo(500,50,500,150,30);   // Add part of top edge and upper right corner.
-    c.arcTo(500,150,400,150,20);  // Add right edge and lower right corner.
-    c.arcTo(400,150,400,50,10);   // Add bottom edge and lower left corner.
-    c.arcTo(400,50,500,50,0);     // Add left edge and upper left corner.
-    c.closePath();                // Close path to add the rest of the top edge.
+    // Usa arcTo() para esquinas redondeadas. Aquí dibujamos un cuadrado con
+    // esquina superior izquierda en (400, 50) y radios de esquina variables.
+    c.moveTo(450, 50);            // Comienza en el medio del borde superior.
+    c.arcTo(500,50,500,150,30);   // Añade parte del borde superior y esquina superior derecha.
+    c.arcTo(500,150,400,150,20);  // Añade el borde derecho y esquina inferior derecha.
+    c.arcTo(400,150,400,50,10);   // Añade el borde inferior y esquina inferior izquierda.
+    c.arcTo(400,50,500,50,0);     // Añade el borde izquierdo y esquina superior izquierda.
+    c.closePath();                // Cierra el camino para completar el borde superior.
 
-    // Quadratic Bezier curve: one control point
-    c.moveTo(525, 125);                     // Begin here
-    c.quadraticCurveTo(550, 75, 625, 125);  // Draw a curve to (625, 125)
-    c.fillRect(550-3, 75-3, 6, 6);          // Mark the control point (550,75)
+    // Curva Bezier cuadrática: un punto de control
+    c.moveTo(525, 125);                     // Empieza aquí
+    c.quadraticCurveTo(550, 75, 625, 125);  // Dibuja una curva hasta (625, 125)
+    c.fillRect(550-3, 75-3, 6, 6);          // Marca el punto de control (550,75)
 
-    // Cubic Bezier curve
-    c.moveTo(625, 100);                     // Start at (625, 100)
-    c.bezierCurveTo(645,70,705,130,725,100);// Curve to (725, 100)
-    c.fillRect(645-3, 70-3, 6, 6);          // Mark control points
+    // Curva Bezier cúbica
+    c.moveTo(625, 100);                     // Empieza en (625, 100)
+    c.bezierCurveTo(645,70,705,130,725,100);// Curva hasta (725, 100)
+    c.fillRect(645-3, 70-3, 6, 6);          // Marca los puntos de control
     c.fillRect(705-3, 130-3, 6, 6);
 
-    // Finally, fill the curves and stroke their outlines.
+    // Finalmente, rellena las curvas y traza sus contornos.
     c.fill();
     c.stroke();</code></pre>
     <p id="15-text" class="title-article text-left">Texto</p>
@@ -2201,9 +2204,9 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>La versión de nueve argumentos de <codeinline>drawImage()</codeinline> especifica un rectángulo de origen y un rectángulo de destino y copia sólo los píxeles dentro del rectángulo de origen. Los argumentos dos a cinco especifican el rectángulo de origen. Se miden en píxeles CSS. Si la imagen de origen es otro lienzo, el rectángulo de origen utiliza el sistema de coordenadas predeterminado para ese lienzo e ignora cualquier transformación que se haya especificado. Los argumentos del seis al nueve especifican el rectángulo de destino en el que se dibuja la imagen y están en el sistema de coordenadas actual del lienzo, no en el sistema de coordenadas por defecto.</p>
     <p>Además de dibujar imágenes en un lienzo, también podemos extraer el contenido de un canvas como una imagen utilizando el método <codeinline>toDataURL()</codeinline>. A diferencia de todos los demás métodos descritos aquí, <codeinline>toDataURL()</codeinline> es un método del propio elemento Canvas, no del objeto contexto. Normalmente se invoca a <codeinline>toDataURL()</codeinline> sin argumentos, y devuelve el contenido del lienzo como una imagen PNG, codificada como una cadena utilizando una dirección <codeinline>data:</codeinline> URL. La URL devuelta es adecuada para su uso con un elemento <codeinline>&lt;img></codeinline>, y puede hacer una instantánea estática de un lienzo con código como este:</p>
     <pre class="language-js">
-    <code class="language-js">let img = document.createElement("img"); // Create an &lt;img> element
-    img.src = canvas.toDataURL();            // Set its src attribute
-    document.body.appendChild(img);          // Append it to the document</code></pre>
+    <code class="language-js">let img = document.createElement("img"); // Crear un elemento &lt;img>
+    img.src = canvas.toDataURL();            // Establezca su atributo src
+    document.body.appendChild(img);          // Añádelo al documento</code></pre>
   </section>
   <section id="8-5" class="py-4 xs:py-5 sm:py-6">
     <h2>15.8.5 Transformaciones de sistemas de coordenadas</h2>
@@ -2219,7 +2222,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Me resulta más fácil entender las transformaciones geométricamente, pensando en <codeinline>translate()</codeinline>, <codeinline>rotate()</codeinline> y <codeinline>scale()</codeinline> como transformaciones de los ejes del sistema de coordenadas, tal como se ilustra en la <a href="#figure15-11">Figura 15-11</a>. También es posible entender las transformaciones algebraicamente como ecuaciones que asignan las coordenadas de un punto <codeinline>(x,y)</codeinline> en el sistema de coordenadas transformado a las coordenadas <codeinline>(x',y')</codeinline> del mismo punto en el sistema de coordenadas anterior.</p>
     <p>La llamada al método <codeinline>c.translate(dx,dy)</codeinline> puede describirse con estas ecuaciones:</p>
     <pre class="language-js">
-    <code class="language-js">x' = x + dx; // An X coordinate of 0 in the new system is dx in the old
+    <code class="language-js">x' = x + dx; // Una coordenada X de 0 en el nuevo sistema es dx en el antiguo
     y' = y + dy;</code></pre>
     <p>Las operaciones de escala tienen ecuaciones igualmente sencillas. Una llamada <codeinline>c.scale(sx,sy)</codeinline> puede describirse así:</p>
     <pre class="language-js">
@@ -2244,13 +2247,13 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     y' = bx + dy + f</code></pre>
     <p>Puede aplicar una transformación arbitraria al sistema de coordenadas actual pasando esos seis parámetros al método <codeinline>transform()</codeinline>. La <a href="figure15-11">Figura 15-11</a> ilustra dos tipos de transformaciones-cizallas y rotaciones alrededor de un punto especificado- que puedes implementar con el método <codeinline>transform()</codeinline> de esta manera:</p>
     <pre class="language-js">
-    <code class="language-js">// Shear transform:
+    <code class="language-js">// Transformada de corte:
     // x' = x + kx*y;
     // y' = ky*x + y;
     function shear(c, kx, ky) &lbrace; c.transform(1, ky, kx, 1, 0, 0); }
 
-    // Rotate theta radians counterclockwise around the point (x,y)
-    // This can also be accomplished with a translate, rotate, translate sequence
+    // Girar theta radianes en sentido antihorario alrededor del punto (x,y)
+    // Esto también se puede lograr con una secuencia de traducir, rotar y traducir.
     function rotateAbout(c, theta, x, y) &lbrace;
       let ct = Math.cos(theta);
       let st = Math.sin(theta);
@@ -2258,9 +2261,9 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     }</code></pre>
     <p>El método <codeinline>setTransform()</codeinline> toma los mismos argumentos que <codeinline>transform()</codeinline>, pero en lugar de transformar el sistema de coordenadas actual, ignora el sistema actual, trans- forma el sistema de coordenadas por defecto, y hace que el resultado sea el nuevo sistema de coordenadas actual. <codeinline>setTransform()</codeinline> es útil para restablecer temporalmente el lienzo a su sistema de coordenadas por defecto:</p>
     <pre class="language-js">
-    <code class="language-js">c.save();                    // Save current coordinate system
-    c.setTransform(1,0,0,1,0,0); // Revert to the default coordinate system
-    // Perform operations using default CSS pixel coordinates
+    <code class="language-js">c.save();                    // Guardar el sistema de coordenadas actual
+    c.setTransform(1,0,0,1,0,0); // Volver al sistema de coordenadas predeterminado
+    // Realizar operaciones utilizando las coordenadas de píxeles CSS predeterminadas
     c.restore();</code></pre>
     <p class="title-article text-left">Ejemplo de transformación</p>
     <p>El <a href="#ejemplo15-7">Ejemplo 15-7</a> demuestra el poder de las transformaciones del sistema de coordenadas utilizando los métodos <codeinline>translate()</codeinline>, <codeinline>rotate()</codeinline>, y <codeinline>scale()</codeinline> recursivamente para dibujar un fractal de copos de nieve Koch- . La salida de este ejemplo aparece en la <a href="#figure15-12">Figura 15-12</a>, que muestra copos de nieve Koch con 0, 1, 2, 3 y 4 niveles de recursión.</p>
@@ -2274,53 +2277,56 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>El valor de la variable <codeinline>len</codeinline> no cambia durante la ejecución del programa, por lo que la posición, orientación y longitud de cada uno de los segmentos de línea viene determinada por traslaciones, rotaciones y operaciones de escalado.</p>
     <p><em>Ejemplo 15-7. Un copo de nieve Koch con transformaciones</em></p>
     <pre class="language-js">
-    <code class="language-js">let deg = Math.PI/180; // For converting degrees to radians
+    <code class="language-js">let deg = Math.PI/180; // Para convertir grados a radianes
 
-    // Draw a level-n Koch snowflake fractal on the canvas context c,
-    // with lower-left corner at (x,y) and side length len.
+    // Dibuja un fractal de copo de nieve de Koch de nivel n en el contexto del canvas c,
+    // con la esquina inferior izquierda en (x, y) y una longitud de lado len.
     function snowflake(c, n, x, y, len) &lbrace;
-      c.save();           // Save current transformation
-      c.translate(x,y);   // Translate origin to starting point
-      c.moveTo(0,0);      // Begin a new subpath at the new origin
-      leg(n);             // Draw the first leg of the snowflake
-      c.rotate(-120*deg); // Now rotate 120 degrees counterclockwise
-      leg(n);             // Draw the second leg
-      c.rotate(-120*deg); // Rotate again
-      leg(n);             // Draw the final leg
-      c.closePath();      // Close the subpath
-      c.restore();        // And restore original transformation
+      c.save();           // Guarda la transformación actual
+      c.translate(x,y);   // Traslada el origen al punto de inicio
+      c.moveTo(0,0);      // Inicia un nuevo subcamino en el nuevo origen
+      leg(n);             // Dibuja la primera pierna del copo de nieve
+      c.rotate(-120*deg); // Rota 120 grados en sentido antihorario
+      leg(n);             // Dibuja la segunda pierna
+      c.rotate(-120*deg); // Rota nuevamente
+      leg(n);             // Dibuja la última pierna
+      c.closePath();      // Cierra el subcamino
+      c.restore();        // Restaura la transformación original
 
-      // Draw a single leg of a level-n Koch snowflake.
-      // This function leaves the current point at the end of the leg it has
-      // drawn and translates the coordinate system so the current point is (0,0).
-      // This means you can easily call rotate() after drawing a leg.
+      // Dibuja una sola pierna de un copo de nieve de Koch de nivel n.
+      // Esta función deja el punto actual al final de la pierna que ha
+      // dibujado y traslada el sistema de coordenadas para que el punto actual sea (0,0).
+      // Esto significa que puedes llamar a `rotate()` fácilmente después de dibujar una pierna.
       function leg(n) &lbrace;
-        c.save();             // Save the current transformation
-        if (n === 0) &lbrace;        // Nonrecursive case:
-          c.lineTo(len, 0);   // Just draw a horizontal line
+        c.save();             // Guarda la transformación actual
+        if (n === 0) &lbrace;        // Caso no recursivo:
+          c.lineTo(len, 0);   // Dibuja una línea horizontal
         } // _ _
-        else &lbrace;      // Recursive case: draw 4 sub-legs like: \/
-          c.scale(1/3,1/3);   // Sub-legs are 1/3 the size of this leg
-          leg(n-1); // Recurse for the first sub-leg
-          c.rotate(60*deg);   // Turn 60 degrees clockwise
-          leg(n-1); // Second sub-leg
-          c.rotate(-120*deg); // Rotate 120 degrees back
-          leg(n-1); // Third sub-leg
-          c.rotate(60*deg);   // Rotate back to our original heading
-          leg(n-1); // Final sub-leg
+        else &lbrace;      // Caso recursivo: dibuja 4 sub-piernas como: \/
+          c.scale(1/3,1/3);   // Las sub-piernas son 1/3 del tamaño de esta pierna
+          leg(n-1); // Llama recursivamente para la primera sub-pierna
+          c.rotate(60*deg);   // Gira 60 grados en sentido horario
+          leg(n-1); // Segunda sub-pierna
+          c.rotate(-120*deg); // Gira 120 grados hacia atrás
+          leg(n-1); // Tercera sub-pierna
+          c.rotate(60*deg);   // Gira de nuevo para nuestra orientación original
+          leg(n-1); // Última sub-pierna
         }
-        c.restore();          // Restore the transformation
-        c.translate(len, 0);  // But translate to make end of leg (0,0)
+        c.restore();          // Restaura la transformación
+        c.translate(len, 0);  // Traslada para hacer que el final de la pierna sea (0,0)
       }
     }
 
+    // Obtén el contexto del canvas
     let c = document.querySelector("canvas").getContext("2d");
-    snowflake(c, 0, 25, 125, 125);  // A level-0 snowflake is a triangle
-    snowflake(c, 1, 175, 125, 125); // A level-1 snowflake is a 6-sided star
+
+    // Dibuja copos de nieve de diferentes niveles
+    snowflake(c, 0, 25, 125, 125);  // Un copo de nivel 0 es un triángulo
+    snowflake(c, 1, 175, 125, 125); // Un copo de nivel 1 es una estrella de 6 puntas
     snowflake(c, 2, 325, 125, 125); // etc.
     snowflake(c, 3, 475, 125, 125);
-    snowflake(c, 4, 625, 125, 125); // A level-4 snowflake looks like a snowflake!
-    c.stroke();</code></pre>
+    snowflake(c, 4, 625, 125, 125); // Un copo de nivel 4 parece un verdadero copo de nieve
+    c.stroke();                     // Traza los contornos</code></pre>
   </section>
   <section id="8-6">
     <h2>15.8.6 Recorte</h2>
@@ -2331,31 +2337,32 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     </figure>
     <p>La <a href="#figure15-13">Figura 15-13</a> fue generada utilizando el método <codeinline>polygon()</codeinline> del <a href="#ejemplo15-5">Ejemplo 15-5</a> y el siguiente código:</p>
     <pre class="language-js">
-    <code class="language-js">// Define some drawing attributes
-    c.font = "bold 60pt sans-serif"; // Big font
-    c.lineWidth = 2;                 // Narrow lines
-    c.strokeStyle = "#000";          // Black lines
+    <code class="language-js">// Definir algunos atributos de dibujo
+    c.font = "bold 60pt sans-serif"; // Fuente grande
+    c.lineWidth = 2;                 // Líneas finas
+    c.strokeStyle = "#000";          // Líneas negras
 
-    // Outline a rectangle and some text
-    c.strokeRect(175, 25, 50, 325);    // A vertical stripe down the middle
-    c.strokeText("&lt;canvas>", 15, 330); // Note strokeText() instead of fillText()
+    // Dibujar el contorno de un rectángulo y algo de texto
+    c.strokeRect(175, 25, 50, 325);    // Una franja vertical en el medio
+    c.strokeText("&lt;canvas>", 15, 330); // Usamos strokeText() en lugar de fillText()
     
-    // Define a complex path with an interior that is outside.
-    polygon(c,3,200,225,200);        // Large triangle
-    polygon(c,3,200,225,100,0,true); // Smaller reverse triangle inside
+    // Definir una ruta compleja con un interior que está hacia afuera.
+    polygon(c,3,200,225,200);        // Triángulo grande
+    polygon(c,3,200,225,100,0,true); // Triángulo más pequeño invertido dentro
     
-    // Make that path the clipping region.
+    // Establecer esa ruta como la región de recorte.
     c.clip();
     
-    // Stroke the path with a 5 pixel line, entirely inside the clipping region.
-    c.lineWidth = 10; // Half of this 10 pixel line will be clipped away
+    // Trazar el contorno de la ruta con una línea de 10 píxeles,
+    // donde la mitad de esta línea será recortada.
+    c.lineWidth = 10; // La mitad de esta línea de 10 píxeles será recortada
     c.stroke();
     
-    // Fill the parts of the rectangle and text that are inside the clipping region
-    c.fillStyle = "#aaa";            // Light gray
-    c.fillRect(175, 25, 50, 325);    // Fill the vertical stripe
-    c.fillStyle = "#888";            // Darker gray
-    c.fillText("&lt;canvas>", 15, 330); // Fill the text</code></pre> 
+    // Rellenar las partes del rectángulo y texto que están dentro de la región de recorte
+    c.fillStyle = "#aaa";            // Gris claro
+    c.fillRect(175, 25, 50, 325);    // Rellenar la franja vertical
+    c.fillStyle = "#888";            // Gris oscuro
+    c.fillText("&lt;canvas>", 15, 330); // Rellenar el texto</code></pre> 
     <p>Es importante tener en cuenta que cuando se llama a <codeinline>clip()</codeinline>, el trazado actual se recorta a sí mismo en la región de recorte actual, y luego ese trazado recortado se convierte en la nueva región de recorte. Esto significa que el método <codeinline>clip()</codeinline> puede reducir la región de recorte pero nunca puede ampliarla. No existe ningún método para restablecer la región de recorte, por lo que antes de llamar a <codeinline>clip()</codeinline>, debería llamar a <codeinline>save()</codeinline> para poder <codeinline>restaurar()</codeinline> más tarde la región sin recortar.</p>
   </section>
   <section id="8-7" class="py-4 xs:py-5 sm:py-6">
@@ -2370,42 +2377,42 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>El siguiente código demuestra <codeinline>getImageData()</codeinline> y <codeinline>putImageData()</codeinline> iterar y modificar los valores de píxel en un objeto ImageData.</p>
     <p><em>Ejemplo 15-8. Desenfoque de movimiento con ImageData</em></p>
     <pre class="language-js">
-    <code class="language-js">// Smear the pixels of the rectangle to the right, producing a
-    // sort of motion blur as if objects are moving from right to left.
-    // n must be 2 or larger. Larger values produce bigger smears.
-    // The rectangle is specified in the default coordinate system.
+    <code class="language-js">// Desenfocar los píxeles del rectángulo hacia la derecha, produciendo
+    // un efecto de desenfoque de movimiento como si los objetos se movieran de derecha a izquierda.
+    // n debe ser 2 o mayor. Valores más grandes producen desenfoques más grandes.
+    // El rectángulo se especifica en el sistema de coordenadas por defecto.
     function smear(c, n, x, y, w, h) &lbrace;
-      // Get the ImageData object that represents the rectangle of pixels to smear
+      // Obtener el objeto ImageData que representa el rectángulo de píxeles a desenfocar
       let pixels = c.getImageData(x, y, w, h);
 
-      // This smear is done in-place and requires only the source ImageData.
-      // Some image processing algorithms require an additional ImageData to
-      // store transformed pixel values. If we needed an output buffer, we could
-      // create a new ImageData with the same dimensions like this:
+      // Este desenfoque se realiza en el lugar y solo requiere los datos de origen (ImageData).
+      // Algunos algoritmos de procesamiento de imágenes requieren un ImageData adicional para
+      // almacenar los valores transformados de los píxeles. Si necesitáramos un búfer de salida,
+      // podríamos crear un nuevo ImageData con las mismas dimensiones así:
       // let output_pixels = c.createImageData(pixels);
 
-      // Get the dimensions of the grid of pixels in the ImageData object
+      // Obtener las dimensiones de la cuadrícula de píxeles en el objeto ImageData
       let width = pixels.width, height = pixels.height;
 
-      // This is the byte array that holds the raw pixel data, left-to-right and
-      // top-to-bottom. Each pixel occupies 4 consecutive bytes in R,G,B,A order.
+      // Este es el array de bytes que contiene los datos crudos de los píxeles, de izquierda a derecha
+      // y de arriba hacia abajo. Cada píxel ocupa 4 bytes consecutivos en el orden R, G, B, A.
       let data = pixels.data;
 
-      // Each pixel after the first in each row is smeared by replacing it with
-      // 1/nth of its own value plus m/nths of the previous pixel's value
+      // Cada píxel después del primero en cada fila se desenfoca reemplazándolo con
+      // 1/n parte de su propio valor más m/n partes del valor del píxel anterior.
       let m = n-1;
 
-      for(let row = 0; row &lt; height; row++) &lbrace;      // For each row
-        let i = row*width*4 + 4;          // The offset of the second pixel of the row
-        for(let col = 1; col &lt; width; col++, i += 4) &lbrace; // For each column
-          data[i] = (data[i] + data[i-4]*m)/n;     // Red pixel component
-          data[i+1] = (data[i+1] + data[i-3]*m)/n; // Green
-          data[i+2] = (data[i+2] + data[i-2]*m)/n; // Blue
-          data[i+3] = (data[i+3] + data[i-1]*m)/n; // Alpha component
+      for(let row = 0; row &lt; height; row++) &lbrace;      // Para cada fila
+        let i = row*width*4 + 4;          // El offset del segundo píxel de la fila
+        for(let col = 1; col &lt; width; col++, i += 4) &lbrace; // Para cada columna
+          data[i] = (data[i] + data[i-4]*m)/n;     // Componente rojo del píxel
+          data[i+1] = (data[i+1] + data[i-3]*m)/n; // Verde
+          data[i+2] = (data[i+2] + data[i-2]*m)/n; // Azul
+          data[i+3] = (data[i+3] + data[i-1]*m)/n; // Componente alfa
         }
       }
 
-      // Now copy the smeared image data back to the same position on the canvas
+      // Ahora copiar los datos de la imagen desenfocada de vuelta a la misma posición en el canvas
       c.putImageData(pixels, x, y);
     }</code></pre>
   </section>
@@ -2418,10 +2425,10 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>15.9.1 El constructor Audio()</h2>
     <p>No es necesario incluir una etiqueta <codeinline>&lt;audio></codeinline> en el documento HTML para incluir efectos de sonido en las páginas web. Puede crear dinámicamente elementos <codeinline>&lt;audio></codeinline> con el método normal DOM <codeinline>document.createElement()</codeinline> o, como método abreviado, puede utilizar simplemente el constructor <codeinline>Audio()</codeinline>. No es necesario añadir el elemento creado al documento para reproducirlo. Basta con llamar a su método <codeinline>play()</codeinline>:</p>
     <pre class="language-js">
-    <code class="language-js">// Load the sound effect in advance so it is ready for use
+    <code class="language-js">// Cargue el efecto de sonido con antelación para que esté listo para usar
     let soundeffect = new Audio("soundeffect.mp3");
 
-    // Play the sound effect whenever the user clicks the mouse button
+    // Reproducir el efecto de sonido cada vez que el usuario haga clic en el botón del mouse.
     document.addEventListener("click", () => &lbrace;
       soundeffect.cloneNode().play();   // Load and play the sound
     });</code></pre>
@@ -2432,38 +2439,38 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Además de la reproducción de sonidos grabados con elementos Audio, los navegadores web también permiten generar y reproducir sonidos sintetizados con la API WebAudio. Utilizar la API WebAudio es como conectar un sintetizador electrónico antiguo con cables de conexión. Con WebAudio, se crea un conjunto de objetos AudioNode, que representan fuentes, transformaciones o destinos de formas de onda, y luego se conectan estos nodos en una red para producir sonidos. La API no es particularmente compleja, pero una explicación completa requiere una comprensión de la música electrónica y los conceptos de procesamiento de señales que están más allá del alcance de este libro.</p>
     <p>El siguiente código utiliza la API WebAudio para sintetizar un acorde corto que se desvanece en aproximadamente un segundo. Este ejemplo muestra los fundamentos de la API WebAu- dio. Si le interesa, puede encontrar más información sobre esta API en Internet:</p>
     <pre class="language-js">
-    <code class="language-js">// Begin by creating an audioContext object. Safari still requires
-    // us to use webkitAudioContext instead of AudioContext.
+    <code class="language-js">// Comenzamos creando un objeto audioContext. Safari todavía requiere
+    // usar webkitAudioContext en lugar de AudioContext.
     let audioContext = new (this.AudioContext||this.webkitAudioContext)();
 
-    // Define the base sound as a combination of three pure sine waves
+    // Definimos el sonido base como una combinación de tres ondas sinusoidales puras
     let notes = [ 293.7, 370.0, 440.0 ]; // D major chord: D, F# and A
     
-    // Create oscillator nodes for each of the notes we want to play
+    // Creamos nodos de oscilador para cada una de las notas que queremos reproducir
     let oscillators = notes.map(note => &lbrace;
       let o = audioContext.createOscillator();
       o.frequency.value = note;
       return o;
     });
     
-    // Shape the sound by controlling its volume over time.
-    // Starting at time 0 quickly ramp up to full volume.
-    // Then starting at time 0.1 slowly ramp down to 0.
+    // Damos forma al sonido controlando su volumen a lo largo del tiempo.
+    // Comenzamos en el tiempo 0 aumentando rápidamente al volumen máximo.
+    // Luego, a partir del tiempo 0.1, disminuimos lentamente el volumen a 0.
     let volumeControl = audioContext.createGain();
     volumeControl.gain.setTargetAtTime(1, 0.0, 0.02);
     volumeControl.gain.setTargetAtTime(0, 0.1, 0.2);
     
-    // We're going to send the sound to the default destination:
-    // the user's speakers
+    // Vamos a enviar el sonido a la salida por defecto:
+    // los altavoces del usuario
     let speakers = audioContext.destination;
     
-    // Connect each of the source notes to the volume control
+    // Conectamos cada una de las notas de origen al control de volumen
     oscillators.forEach(o => o.connect(volumeControl));
     
-    // And connect the output of the volume control to the speakers.
+    // Y conectamos la salida del control de volumen a los altavoces.
     volumeControl.connect(speakers);
     
-    // Now start playing the sounds and let them run for 1.25 seconds.
+    // Ahora empezamos a reproducir los sonidos y dejamos que suenen durante 1.25 segundos.
     let startTime = audioContext.currentTime;
     let stopTime = startTime + 1.25;
     oscillators.forEach(o => &lbrace;
@@ -2471,9 +2478,9 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       o.stop(stopTime);
     });
     
-    // If we want to create a sequence of sounds we can use event handlers
+    // Si queremos crear una secuencia de sonidos, podemos usar manejadores de eventos
     oscillators[0].addEventListener("ended", () => &lbrace;
-      // This event handler is invoked when the note stops playing
+      // Este manejador de eventos se invoca cuando la nota deja de sonar
     });</code></pre>
   </section>
   <section id="10" class="py-4 xs:py-5 sm:py-6">
@@ -2492,24 +2499,24 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>15.10.1 Carga de nuevos documentos</h2>
     <p>Si asignas una cadena a <codeinline>window.location</codeinline> o a <codeinline>document.location</codeinline>, esa cadena se interpreta como una URL y el navegador la carga, sustituyendo el documento actual por uno nuevo:</p>
     <pre class="language-js">
-    <code class="language-js">window.location = "http://www.oreilly.com"; // Go buy some books!</code></pre>
+    <code class="language-js">window.location = "http://www.oreilly.com"; // ¡Ve a comprar algunos libros!</code></pre>
     <p>También puede asignar URL relativas a la <codeinline>location</codeinline>. Se resuelven en relación con la URL actual:</p>
     <pre class="language-js">
-    <code class="language-js">document.location = "page2.html"; // Load the next page</code></pre>
+    <code class="language-js">document.location = "page2.html"; // Cargar la siguiente página</code></pre>
     <p>Un identificador de fragmento desnudo es un tipo especial de URL relativa que no hace que el navegador cargue un nuevo documento, sino que simplemente se desplaza para que el elemento del documento con <codeinline>id</codeinline> o <codeinline>nombre</codeinline> que coincide con el fragmento sea visible en la parte superior de la ventana del navegador. Como caso especial, el identificador de fragmento <codeinline>#top</codeinline> hace que el navegador salte al principio del documento (suponiendo que ningún elemento tenga un atributo <codeinline>id="top"</codeinline>):</p>
     <pre class="language-js">
-    <code class="language-js">location = "#top"; // Jump to the top of the document</code></pre>
+    <code class="language-js">location = "#top"; // Saltar al inicio del documento</code></pre>
     <p>Las propiedades individuales del objeto Location son escribibles, y establecerlas cambia la URL de localización y también hace que el navegador cargue un nuevo documento (o, en el caso de la propiedad <codeinline>hash</codeinline>, que navegue dentro del documento actual):</p>
     <pre class="language-js">
-    <code class="language-js">document.location.path = "pages/3.html"; // Load a new page
-    document.location.hash = "TOC";          // Scroll to the table of contents
-    location.search = "?page=" + (page+1);   // Reload with new query string</code></pre>
+    <code class="language-js">document.location.path = "pages/3.html"; // Cargar una nueva página
+    document.location.hash = "TOC";          // Desplácese hasta la tabla de contenidos
+    location.search = "?page=" + (page+1);   // Recargar con nueva cadena de consulta</code></pre>
     <p>También puede cargar una nueva página pasando una nueva cadena al método <codeinline>assign()</codeinline> del objeto Location. Esto es lo mismo que asignar la cadena a la propiedad <codeinline>location</codeinline>, sin embargo, por lo que no es particularmente interesante.</p>
     <p>Por otro lado, el método <codeinline>replace()</codeinline> del objeto Location es bastante útil. Cuando se pasa una cadena a <codeinline>replace()</codeinline>, se interpreta como una URL y hace que el navegador cargue una nueva página, igual que hace <codeinline>assign()</codeinline>.La diferencia es que <codeinline>replace()</codeinline> reemplaza el documento actual en el historial del navegador. Si un script en el documento A establece la propiedad <codeinline>location</codeinline> o llama a <codeinline>assign()</codeinline> para cargar el documento B y luego el usuario pulsa el botón Atrás, el navegador volverá al documento A. Si en cambio utiliza <codeinline>replace()</codeinline>, el documento A se borra del historial del navegador, y cuando el usuario pulsa el botón Atrás, el navegador vuelve al documento que se mostraba antes del documento A.</p>
     <p>Cuando un script carga incondicionalmente un nuevo documento, el método <codeinline>replace()</codeinline> es una mejor opción que <codeinline>assign()</codeinline>. De lo contrario, el botón Atrás llevaría al navegador de vuelta al documento original, y el mismo script volvería a cargar el nuevo documento. Supongamos que tiene una versión mejorada con JavaScript de su página y una versión estática que no utiliza JavaScript. Si determina que el navegador del usuario no admiten las API de la plataforma web que desea utilizar, podría utilizar <codeinline>location.replace()</codeinline> para cargar la versión estática:</p>
     <pre class="language-js">
-    <code class="language-js">// If the browser does not support the JavaScript APIs we need,
-    // redirect to a static page that does not use JavaScript.
+    <code class="language-js">// Si el navegador no admite las API de JavaScript que necesitamos,
+    // redirija a una página estática que no utilice JavaScript.
     if (!isBrowserSupported()) location.replace("staticpage.html");</code></pre>
     <p>Observe que la URL pasada a <codeinline>replace()</codeinline> es relativa. Las URL relativas se interpretan en relación con la página en la que aparecen, igual que si se utilizaran en un hipervínculo.</p>
     <p>Además de los métodos <codeinline>assign()</codeinline> y <codeinline>replace()</codeinline>, el objeto Location también define <codeinline>reload()</codeinline>, que simplemente hace que el navegador recargue el documento.</p>
@@ -2519,8 +2526,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>La propiedad <codeinline>history</codeinline> del objeto Window hace referencia al objeto History de la ventana. El objeto History modela el historial de navegación de una ventana como una lista de documentos y estados de documentos. La propiedad <codeinline>length</codeinline> del objeto History especifica el número de elementos de la lista del historial de navegación, pero por razones de seguridad, los scripts no pueden acceder a las URL almacenadas. (Si pudieran, cualquier script podría husmear en tu historial de navegación).</p>
     <p>El objeto History tiene métodos <codeinline>back()</codeinline> y <codeinline>forward()</codeinline> que se comportan como los botones Back y Forward del navegador: hacen que el navegador retroceda o avance un paso en su historial de navegación. Un tercer método, <codeinline>go()</codeinline>, toma un argumento entero y puede saltar cualquier número de páginas hacia adelante (para argumentos positivos) o hacia atrás (para argumentos negativos) en la lista del historial:</p>
     <pre class="language-js">
-    <code class="language-js">history.go(-2); // Go back 2, like clicking the Back button twice
-    history.go(0);  // Another way to reload the current page</code></pre>
+    <code class="language-js">history.go(-2); // Retroceder 2 veces, como hacer clic en el botón Atrás dos veces
+    history.go(0);  // Otra forma de recargar la página actual</code></pre>
     <p>Si una ventana contiene ventanas hijas (como elementos <codeinline>&lt;iframe></codeinline>), los historiales de navegación de las ventanas hijas se intercalan cronológicamente con el historial de la ventana principal. Esto significa que una llamada a <codeinline>history.back()</codeinline> (por ejemplo) en la ventana principal puede hacer que una de las ventanas secundarias vuelva a un documento previamente reproducido, pero deja la ventana principal en su estado actual.</p>
     <p>El objeto History descrito aquí se remonta a los primeros días de la web, cuando los documentos eran pasivos y todo el cálculo se realizaba en el servidor. Hoy en día, las aplicaciones web a menudo generan o cargan contenido dinámicamente y muestran nuevos estados de la aplicación sin cargar realmente nuevos documentos. Este tipo de aplicaciones deben realizar su propia gestión del historial si quieren que el usuario pueda utilizar los botones Atrás y Adelante (o los gestos equivalentes) para navegar de un estado de la aplicación a otro de forma intuitiva. Hay dos formas de conseguirlo, que se describen en las dos secciones siguientes.</p>
   </section>
@@ -2571,7 +2578,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     </figure>
     <p><em>Ejemplo 15-9. Gestión del historial con pushState()</em></p>
     <pre class="language-js">
-    <code class="language-js">&lt;html>&lt;head>&lt;title>I'm thinking of a number...&lt;/title>
+    <code class="language-js">&lt;html>&lt;head>&lt;title>Estoy pensando en un número...&lt;/title>
     &lt;style>
     body &lbrace; height: 250px; display: flex; flex-direction: column;
         align-items: center; justify-content: space-evenly; }
@@ -2583,37 +2590,37 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     &lt;/style>
     &lt;/head>
     &lt;body>
-    &lt;h1 id="heading">I'm thinking of a number...&lt;/h1>
-    &lt;!-- A visual representation of the numbers that have not been ruled out -->
+    &lt;h1 id="heading">Estoy pensando en un número...&lt;/h1>
+    &lt;!-- Representación visual de los números que no han sido descartados -->
     &lt;div id="container">&lt;div id="range">&lt;/div>&lt;/div>
-    &lt;!-- Where the user enters their guess -->
+    &lt;!-- Donde el usuario ingresa su conjetura -->
     &lt;input id="input" type="text">
-    &lt;!-- A button that reloads with no search string. Hidden until game ends. -->
-    &lt;button id="playagain" hidden onclick="location.search='';">Play Again&lt;/button>
+    &lt;!-- Botón para jugar de nuevo, oculto hasta que termine el juego -->
+    &lt;button id="playagain" hidden onclick="location.search='';">Jugar de nuevo&lt;/button>
     &lt;script>
     /**
-    * An instance of this GameState class represents the internal state of
-    * our number guessing game. The class defines static factory methods for
-    * initializing the game state from different sources, a method for
-    * updating the state based on a new guess, and a method for modifying the
-    * document based on the current state.
+    * Una instancia de esta clase GameState representa el estado interno de
+    * nuestro juego de adivinanza de números. La clase define métodos de fábrica
+    * para inicializar el estado del juego desde diferentes fuentes, un método
+    * para actualizar el estado basado en una nueva conjetura, y un método para
+    * modificar el documento según el estado actual.
     */
     class GameState &lbrace;
-      // This is a factory function to create a new game
+      // Función para crear un nuevo juego
       static newGame() &lbrace;
         let s = new GameState();
-        s.secret = s.randomInt(0, 100); // An integer: 0 &lt; n &lt; 100
-        s.low = 0;        // Guesses must be greater than this
-        s.high = 100;     // Guesses must be less than this
-        s.numGuesses = 0; // How many guesses have been made
-        s.guess = null;   // What the last guess was
+        s.secret = s.randomInt(0, 100); // Un entero: 0 &lt; n &lt; 100
+        s.low = 0;        // Las conjeturas deben ser mayores que esto
+        s.high = 100;     // Las conjeturas deben ser menores que esto
+        s.numGuesses = 0; // Número de conjeturas realizadas
+        s.guess = null;   // Última conjetura realizada
         return s;
       }
 
-      // When we save the state of the game with history.pushState(), it is just
-      // a plain JavaScript object that gets saved, not an instance of GameState.
-      // So this factory function re-creates a GameState object based on the
-      // plain object that we get from a popstate event.
+      // Cuando guardamos el estado del juego con history.pushState(), se guarda
+      // simplemente un objeto JavaScript simple, no una instancia de GameState.
+      // Por lo tanto, esta función de fábrica vuelve a crear un objeto GameState
+      // basado en el objeto simple que obtenemos de un evento popstate.
       static fromStateObject(stateObject) &lbrace;
         let s = new GameState();
         for(let key of Object.keys(stateObject)) &lbrace;
@@ -2622,24 +2629,25 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
         return s;
       }
 
-      // In order to enable bookmarking, we need to be able to encode the
-      // state of any game as a URL. This is easy to do with URLSearchParams.
+      // Para habilitar la función de marcadores, necesitamos poder codificar
+      // el estado de cualquier juego como URL. Esto es fácil de hacer con URLSearchParams.
       toURL() &lbrace;
         let url = new URL(window.location);
         url.searchParams.set("l", this.low);
         url.searchParams.set("h", this.high);
         url.searchParams.set("n", this.numGuesses);
         url.searchParams.set("g", this.guess);
-        // Note that we can't encode the secret number in the url or it
-        // will give away the secret. If the user bookmarks the page with
-        // these parameters and then returns to it, we will simply pick a
-        // new random number between low and high.
+        // Tenga en cuenta que no podemos codificar el número secreto en la
+        // URL, ya que revelaría el secreto. Si el usuario marca la página
+        // con estos parámetros como favorita y luego vuelve a ella,
+        // simplemente elegiremos un nuevo número aleatorio entre bajo y alto.
         return url.href;
       }
 
-      // This is a factory function that creates a new GameState object and
-      // initializes it from the specified URL. If the URL does not contain the
-      // expected parameters or if they are malformed it just returns null.
+      // Esta es una función de fábrica que crea un nuevo objeto GameState y
+      // lo inicializa a partir de la URL especificada. Si la URL no contiene
+      // los parámetros esperados o si están mal formados, simplemente devuelve
+      // un valor nulo.
       static fromURL(url) &lbrace;
         let s = new GameState();
         let params = new URL(url).searchParams;
@@ -2648,95 +2656,98 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
         s.numGuesses = parseInt(params.get("n"));
         s.guess = parseInt(params.get("g"));
 
-        // If the URL is missing any of the parameters we need or if
-        // they did not parse as integers, then return null;
+        // Si a la URL le falta alguno de los parámetros que necesitamos
+        // o si no se analizaron como números enteros, entonces devuelve nulo;
         if (isNaN(s.low) || isNaN(s.high) || isNaN(s.numGuesses) || isNaN(s.guess)) &lbrace;
           return null;
         }
 
-        // Pick a new secret number in the right range each time we
-        // restore a game from a URL.
+        // Elija un nuevo número secreto en el rango correcto cada vez
+        // que restauremos un juego desde una URL.
         s.secret = s.randomInt(s.low, s.high);
         return s;
       }
 
-      // Return an integer n, min &lt; n &lt; max
+      // Devuelve un entero n, min &lt; n &lt; max
       randomInt(min, max) &lbrace;
         return min + Math.ceil(Math.random() * (max - min - 1));
       }
 
-      // Modify the document to display the current state of the game.
+      // Modificar el documento para mostrar el estado actual del juego.
       render() &lbrace;
-        let heading = document.querySelector("#heading"); // The &lt;h1> at the top
-        let range = document.querySelector("#range");     // Display guess range
-        let input = document.querySelector("#input");     // Guess input field
+        let heading = document.querySelector("#heading"); // El &lt;h1> en la parte superior
+        let range = document.querySelector("#range");     // Mostrar rango de conjetura
+        let input = document.querySelector("#input");     // Adivina el campo de entrada
         let playagain = document.querySelector("#playagain");
 
-        // Update the document heading and title
+        // Actualizar el encabezado y el título del documento
         heading.textContent = document.title =
-          `I'm thinking of a number between $&lbrace;this.low} and $&lbrace;this.high}.`;
+          `Estoy pensando en un número entre $&lbrace;this.low} and $&lbrace;this.high}.`;
 
-        // Update the visual range of numbers
+        // Actualizar el rango visual de números
         range.style.marginLeft = `$&lbrace;this.low}%`;
         range.style.width = `$&lbrace;(this.high-this.low)}%`;
 
-        // Make sure the input field is empty and focused.
+        // Asegúrese de que el campo de entrada esté vacío y enfocado.
         input.value = "";
         input.focus();
 
-        // Display feedback based on the user's last guess. The input
-        // placeholder will show because we made the input field empty.
+        // Muestra la respuesta en función de la última suposición del usuario. 
+        // El marcador de entrada se mostrará porque hemos dejado el campo
+        // de entrada vacío.
         if (this.guess === null) &lbrace;
-          input.placeholder = "Type your guess and hit Enter";
+          input.placeholder = "Escribe tu conjetura y presiona Enter";
         } else if (this.guess &lt; this.secret) &lbrace;
-          input.placeholder = `$&lbrace;this.guess} is too low. Guess again`;
+          input.placeholder = `$&lbrace;this.guess} es demasiado bajo. Intenta de nuevo`;
         } else if (this.guess > this.secret) &lbrace;
-          input.placeholder = `$&lbrace;this.guess} is too high. Guess again`;
+          input.placeholder = `$&lbrace;this.guess} es demasiado alto. Intenta de nuevo`;
         } else &lbrace;
-          input.placeholder = document.title = `$&lbrace;this.guess} is correct!`;
-          heading.textContent = `You win in $&lbrace;this.numGuesses} guesses!`;
+          input.placeholder = document.title = `$&lbrace;this.guess} es correcto!`;
+          heading.textContent = `¡Ganaste en $&lbrace;this.numGuesses} intentos!`;
           playagain.hidden = false;
         }
       }
 
-      // Update the state of the game based on what the user guessed.
-      // Returns true if the state was updated, and false otherwise.
+      // Actualiza el estado del juego en función de lo que el usuario adivinó.
+      // Devuelve verdadero si se actualizó el estado y falso en caso contrario.
       updateForGuess(guess) &lbrace;
-        // If it is a number and is in the right range
+        // Si es un número y está en el rango correcto
         if ((guess > this.low) && (guess &lt; this.high)) &lbrace;
-          // Update state object based on this guess
+          // Actualizar el objeto de estado en función de esta suposición
           if (guess &lt; this.secret) this.low = guess;
           else if (guess > this.secret) this.high = guess;
           this.guess = guess;
           this.numGuesses++;
           return true;
         }
-        else &lbrace; // An invalid guess: notify user but don't update state
-          alert(`Please enter a number greater than $&lbrace;
-            this.low} and less than $&lbrace;this.high}`);
+        else &lbrace; // Una suposición no válida: notificar al usuario pero no actualizar el estado
+          alert(`Por favor, introduzca un número mayor que $&lbrace;
+            this.low} y menos que $&lbrace;this.high}`);
           return false;
         }
       }
     }
-    // With the GameState class defined, making the game work is just a matter
-    // of initializing, updating, saving and rendering the state object at
-    // the appropriate times.
+    // Una vez definida la clase GameState, hacer que el juego funcione es solo
+    // cuestión de inicializar, actualizar, guardar y renderizar el objeto de
+    // estado en los momentos adecuados.
 
-    // When we are first loaded, we try get the state of the game from the URL
-    // and if that fails we instead begin a new game. So if the user bookmarks a
-    // game that game can be restored from the URL. But if we load a page with
-    // no query parameters we'll just get a new game.
+    // Cuando se carga por primera vez, intentamos obtener el estado del juego
+    // desde la URL y, si eso falla, comenzamos un nuevo juego. Por lo tanto,
+    // si el usuario marca un juego como favorito, ese juego se puede restaurar
+    // desde la URL. Pero si cargamos una página sin parámetros de consulta,
+    // solo obtendremos un nuevo juego.
     let gamestate = GameState.fromURL(window.location) || GameState.newGame();
 
-    // Save this initial state of the game into the browser history, but use
-    // replaceState instead of pushState() for this initial page
+    // Guarde este estado inicial del juego en el historial del navegador,
+    // pero use replaceState en lugar de pushState() para esta página inicial
     history.replaceState(gamestate, "", gamestate.toURL());
 
-    // Display this initial state
+    // Mostrar este estado inicial
     gamestate.render();
 
-    // When the user guesses, update the state of the game based on their guess
-    // then save the new state to browser history and render the new state
+    // Cuando el usuario adivina, actualiza el estado del juego en función de
+    // su suposición, luego guarda el nuevo estado en el historial del navegador
+    // y muestra el nuevo estado.
     document.querySelector("#input").onchange = (event) => &lbrace;
       if (gamestate.updateForGuess(parseInt(event.target.value))) &lbrace;
         history.pushState(gamestate, "", gamestate.toURL());
@@ -2744,12 +2755,12 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       gamestate.render();
     };
 
-    // If the user goes back or forward in history, we'll get a popstate event
-    // on the window object with a copy of the state object we saved with
-    // pushState. When that happens, render the new state.
+    // Si el usuario retrocede o avanza en el historial, obtendremos un evento
+    // popstate en el objeto de ventana con una copia del objeto de estado que
+    // guardamos con pushState. Cuando eso suceda, renderizaremos el nuevo estado.
     window.onpopstate = (event) => &lbrace;
-      gamestate = GameState.fromStateObject(event.state); // Restore the state
-      gamestate.render();                                 // and display it
+      gamestate = GameState.fromStateObject(event.state); // Restaurar el estado
+      gamestate.render();                                 // y mostrarlo
     };
     &lt;/script>
     &lt;/body>&lt;/html></code></pre>
@@ -2804,9 +2815,9 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     </ul>
     <p>La API <codeinline>fetch()</codeinline> está completamente basada en promesas, y hay dos pasos asíncronos aquí, por lo que típicamente se esperan dos llamadas <codeinline>then()</codeinline> o dos expresiones <codeinline>await</codeinline> cuando se usa <codeinline>fetch()</codeinline>. (Y si has olvidado lo que son, puede que quieras releer el <a href="capitulo-13">Capítulo 13</a> antes de continuar con esta sección).</p>
     <pre class="language-js">
-    <code class="language-js">fetch("/api/users/current")          // Make an HTTP (or HTTPS) GET request
-      .then(response => response.json()) // Parse its body as a JSON object
-      .then(currentUser => &lbrace;             // Then process that parsed object
+    <code class="language-js">fetch("/api/users/current")          // Realizar una solicitud GET HTTP (o HTTPS)
+      .then(response => response.json()) // Analizar su cuerpo como un objeto JSON
+      .then(currentUser => &lbrace;             // Luego procesa ese objeto analizado
         displayUserInfo(currentUser);
       });</code></pre>
     <p>Este es el aspecto de una solicitud <codeinline>fetch()</codeinline> si utiliza <codeinline>then()</codeinline> y espera que la respuesta del servidor a su solicitud tenga formato JSON:</p>
@@ -2825,22 +2836,22 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p class="title-article text-left">Códigos de estado HTTP, cabeceras de respuesta y errores de red</p>
     <p>El proceso <codeinline>fetch()</codeinline> de tres pasos mostrado en <a href="#11-1">§15.11.1</a> elude todo el código de gestión de errores. He aquí una versión más realista:</p>
     <pre class="language-js">
-    <code class="language-js">fetch("/api/users/current")   // Make an HTTP (or HTTPS) GET request.
-      .then(response => &lbrace;         // When we get a response, first check it
-        if (response.ok &&        // for a success code and the expected type.
+    <code class="language-js">fetch("/api/users/current")   // Realizar una solicitud HTTP (o HTTPS) de tipo GET.
+      .then(response => &lbrace;         // Cuando obtenemos una respuesta, primero comprobamos
+        if (response.ok &&        // si tiene un código de éxito y el tipo esperado.
           response.headers.get("Content-Type") === "application/json") &lbrace;
-          return response.json(); // Return a Promise for the body.
+          return response.json(); // Devolver una Promesa con el cuerpo de la respuesta.
         } else &lbrace;
-          throw new Error(        // Or throw an error.
-          `Unexpected response status $&lbrace;response.status} or content type`);
+          throw new Error(        // O lanzar un error.
+          `Estado de respuesta inesperado $&lbrace;response.status} o tipo de contenido`);
         }
       })
-      .then(currentUser => &lbrace;      // When the response.json() Promise resolves
-        displayUserInfo(currentUser); // do something with the parsed body.
+      .then(currentUser => &lbrace;      // Cuando la Promesa de response.json() se resuelve
+        displayUserInfo(currentUser); // hacer algo con el cuerpo parseado.
       })
-      .catch(error => &lbrace;      // Or if anything went wrong, just log the error.
-        // If the user's browser is offline, fetch() itself will reject.
-        // If the server returns a bad response then we throw an error above.
+      .catch(error => &lbrace;      // O si algo salió mal, registrar el error.
+        // Si el navegador del usuario está sin conexión, fetch() rechazará la solicitud.
+        // Si el servidor devuelve una respuesta incorrecta, lanzamos un error arriba.
         console.log("Error while fetching current user:", error);
       });</code></pre>
     <p>La promesa devuelta por <codeinline>fetch()</codeinline> resuelve a un objeto Response. La propiedad <codeinline>status</codeinline> de este objeto es el código de estado HTTP, como 200 para peticiones exitosas o 404 para respuestas "No Encontrado". (<codeinline>statusText</codeinline> proporciona el texto estándar en inglés que acompaña al código de estado numérico). Convenientemente, la propiedad <codeinline>ok</codeinline> de una Respuesta es <codeinline>statusText</codeinline> si el <codeinline>status</codeinline> es 200 o cualquier código entre 200 y 299 y es <codeinline>false</codeinline> para cualquier otro código.</p>
@@ -2868,11 +2879,11 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>A veces es necesario establecer cabeceras en las peticiones <codeinline>fetch()</codeinline>. Por ejemplo, si realiza solicitudes de API web que requieren credenciales, puede que necesite incluir una cabecera Authorization que contenga dichas credenciales. Para ello, puede utilizar la versión de dos argumentos de <codeinline>fetch()</codeinline>. Como antes, el primer argumento es una cadena o un objeto URL que especifica la URL a obtener. El segundo argumento es un objeto que puede proporcionar opciones adicionales, incluyendo cabeceras de petición:</p>
     <pre class="language-js">
     <code class="language-js">let authHeaders = new Headers();
-    // Don't use Basic auth unless it is over an HTTPS connection.
+    // No utilice la autenticación básica a menos que sea a través de una conexión HTTPS.
     authHeaders.set("Authorization",
             `Basic $&lbrace;btoa(`$&lbrace;username}:$&lbrace;password}`)}`);
     fetch("/api/users/", &lbrace; headers: authHeaders })
-      .then(response => response.json()) // Error handling omitted...
+      .then(response => response.json()) // Se omitió el manejo de errores...
       .then(usersList => displayAllUsers(usersList));</code></pre>
     <p>Hay otras opciones que se pueden especificar en el segundo argumento de <codeinline>fetch()</codeinline>, y lo volveremos a ver más adelante. Una alternativa a pasar dos argumentos a <codeinline>fetch()</codeinline> es pasar los mismos dos argumentos al constructor de <codeinline>Request()</codeinline> y luego pasar el objeto Request resultante a <codeinline>fetch()</codeinline>:</p>
     <pre class="language-js">
@@ -2900,58 +2911,57 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p><em>Ejemplo 15-10. Transmisión del cuerpo de la respuesta de una petición fetch()</em></p>
     <pre class="language-js">
     <code class="language-js">/**
-    * An asynchronous function for streaming the body of a Response object
-    * obtained from a fetch() request. Pass the Response object as the first
-    * argument followed by two optional callbacks.
+    * Una función asincrónica para transmitir el cuerpo de un objeto Response
+    * obtenido de una solicitud fetch(). Pasa el objeto Response como primer
+    * argumento, seguido de dos callbacks opcionales.
     *
-    * If you specify a function as the second argument, that reportProgress
-    * callback will be called once for each chunk that is received. The first
-    * argument passed is the total number of bytes received so far. The second
-    * argument is a number between 0 and 1 specifying how complete the download
-    * is. If the Response object has no "Content-Length" header, however, then
-    * this second argument will always be NaN.
+    * Si especificas una función como segundo argumento, ese callback `reportProgress`
+    * se llamará una vez por cada fragmento recibido. El primer argumento pasado es
+    * el número total de bytes recibidos hasta ahora. El segundo argumento es un número
+    * entre 0 y 1 que indica el progreso de la descarga. Sin embargo, si el objeto Response
+    * no tiene el encabezado "Content-Length", entonces este segundo argumento siempre será NaN.
     *
-    * If you want to process the data in chunks as they arrive, specify a
-    * function as the third argument. The chunks will be passed, as Uint8Array
-    * objects, to this processChunk callback.
+    * Si deseas procesar los datos en fragmentos a medida que llegan, especifica una
+    * función como tercer argumento. Los fragmentos se pasarán como objetos Uint8Array
+    * a este callback `processChunk`.
     *
-    * streamBody() returns a Promise that resolves to a string. If a processChunk
-    * callback was supplied then this string is the concatenation of the values
-    * returned by that callback. Otherwise the string is the concatenation of
-    * the chunk values converted to UTF-8 strings.
+    * `streamBody()` devuelve una Promesa que se resuelve a una cadena de texto (string).
+    * Si se proporcionó un callback `processChunk`, esta cadena es la concatenación de los
+    * valores devueltos por ese callback. De lo contrario, la cadena es la concatenación
+    * de los valores de los fragmentos convertidos a cadenas UTF-8.
     */
     async function streamBody(response, reportProgress, processChunk) &lbrace;
-      // How many bytes are we expecting, or NaN if no header
+      // Número de bytes que esperamos recibir, o NaN si no hay encabezado
       let expectedBytes = parseInt(response.headers.get("Content-Length"));
-      let bytesRead = 0;                      // How many bytes received so far
-      let reader = response.body.getReader(); // Read bytes with this function
-      let decoder = new TextDecoder("utf-8"); // For converting bytes to text
-      let body = "";                          // Text read so far
+      let bytesRead = 0;                      // Número de bytes recibidos hasta ahora
+      let reader = response.body.getReader(); // Función para leer los bytes
+      let decoder = new TextDecoder("utf-8"); // Para convertir bytes a texto
+      let body = "";                          // Texto leído hasta ahora
 
-      while(true) &lbrace;                              // Loop until we exit below
-        let &lbrace;done, value} = await reader.read(); // Read a chunk
+      while(true) &lbrace;                              // Bucle hasta que salgamos
+        let &lbrace;done, value} = await reader.read(); // Leer un fragmento
 
-        if (value) &lbrace;                             // If we got a byte array:
-          if (processChunk) &lbrace;                    // Process the bytes if
-            let processed = processChunk(value); // a callback was passed.
+        if (value) &lbrace;                             // Si recibimos un array de bytes:
+          if (processChunk) &lbrace;                    // Procesar los bytes si
+            let processed = processChunk(value); // se pasó un callback.
             if (processed) &lbrace;
               body += processed;
             }
-          } else &lbrace; // Otherwise, convert bytes
-            body += decoder.decode(value, &lbrace;stream: true}); // to text.
+          } else &lbrace; // De lo contrario, convertir los bytes
+            body += decoder.decode(value, &lbrace;stream: true}); // a texto.
           }
 
-          if (reportProgress) &lbrace;        // If a progress callback was
-            bytesRead += value.length; // passed, then call it
+          if (reportProgress) &lbrace;        // Si se pasó un callback de progreso,
+            bytesRead += value.length; // actualizar el conteo de bytes
             reportProgress(bytesRead, bytesRead / expectedBytes);
           }
         }
-        if (done) &lbrace; // If this is the last chunk,
-          break;    // exit the loop
+        if (done) &lbrace; // Si este es el último fragmento,
+          break;    // salir del bucle
         }
       }
 
-      return body; // Return the body text we accumulated
+      return body; // Devolver el texto acumulado
     }</code></pre>
     <p>Esta API de streaming es nueva en el momento de escribir este artículo y se espera que evolucione. En particular, está previsto que los objetos ReadableStream sean iterables de forma asíncrona para que puedan utilizarse con bucles <codeinline>for/await</codeinline> (<a href="capitulo-13#4-1">§13.4.1</a>).</p>
     <p class="title-article text-left">Especificar el método y el cuerpo de la solicitud</p>
@@ -2991,15 +3001,15 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Cargar archivos desde el ordenador de un usuario a un servidor web es una tarea común y puede llevarse a cabo utilizando un objeto FormData como cuerpo de la petición. Una forma común de obtener un objeto File es mostrar un elemento <codeinline>&lt;input type="file"></codeinline> en su página web y escuchar eventos "change" en ese elemento. Cuando se produce un evento "change", el array <codeinline>files</codeinline> del elemento input debe contener al menos un objeto File. Los objetos File también están disponibles a través de la API HTML drag-and-drop. Esta API no está cubierta en este libro, pero puedes obtener archivos de la matriz <codeinline>dataTransfer.files</codeinline> del objeto de evento pasado a un escuchador de eventos para eventos "drop".</p>
     <p>Recuerda también que los objetos File son un tipo de Blob, y a veces puede ser útil cargar Blobs. Supongamos que has escrito una aplicación web que permite al usuario crear dibujos en un elemento <codeinline>&lt;canvas></codeinline>. Puede cargar los dibujos del usuario como archivos PNG con código como el siguiente:</p>
     <pre class="language-js">
-    <code class="language-js">// The canvas.toBlob() function is callback-based.
-    // This is a Promise-based wrapper for it.
+    <code class="language-js">// La función canvas.toBlob() se basa en devoluciones de llamadas.
+    // Este es un contenedor basado en promesas para ella.
     async function getCanvasBlob(canvas) &lbrace;
       return new Promise((resolve, reject) => &lbrace;
         canvas.toBlob(resolve);
       });
     }
 
-    // Here is how we upload a PNG file from a canvas
+    // Así es como cargamos un archivo PNG desde un lienzo
     async function uploadCanvasImage(canvas) &lbrace;
       let pngblob = await getCanvasBlob(canvas);
       let formdata = new FormData();
@@ -3015,20 +3025,20 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Si desea tener la opción de abortar una petición <codeinline>fetch()</codeinline>, cree un objeto Abort- Controller antes de iniciar la petición. La propiedad <codeinline>signal</codeinline> del objeto controlador es un objeto AbortSignal. Pase este objeto señal como valor de la propiedad <codeinline>signal</codeinline> del objeto options que pase a <codeinline>fetch()</codeinline>. Una vez hecho esto, puede llamar al método <codeinline>abort()</codeinline> del objeto controlador para abortar la petición, lo que hará que cualquier objeto Promise relacionado con la petición fetch sea rechazado con una excepción.</p>
     <p>A continuación se muestra un ejemplo de uso del mecanismo AbortController para imponer un tiempo de espera para las solicitudes de obtención:</p>
     <pre class="language-js">
-    <code class="language-js">// This function is like fetch(), but it adds support for a timeout
-    // property in the options object and aborts the fetch if it is not complete
-    // within the number of milliseconds specified by that property.
+    <code class="language-js">// Esta función es similar a fetch(), pero agrega soporte para una propiedad
+    // de tiempo límite (timeout) en el objeto de opciones y aborta la solicitud fetch
+    // si no se completa dentro del número de milisegundos especificado por dicha propiedad.
     function fetchWithTimeout(url, options=&lbrace;}) &lbrace;
-      if (options.timeout) &lbrace; // If the timeout property exists and is nonzero
-        let controller = new AbortController(); // Create a controller
-        options.signal = controller.signal;     // Set the signal property
-        // Start a timer that will send the abort signal after the specified
-        // number of milliseconds have passed. Note that we never cancel
-        // this timer. Calling abort() after the fetch is complete has
-        // no effect.
+      if (options.timeout) &lbrace; // Si la propiedad timeout existe y es mayor a cero
+        let controller = new AbortController(); // Crear un controlador
+        options.signal = controller.signal;     // Establecer la propiedad signal
+        // Iniciar un temporizador que enviará la señal de abortar después de que
+        // haya pasado el número especificado de milisegundos. Cabe destacar que
+        // nunca cancelamos este temporizador. Llamar a abort() después de que fetch
+        // se haya completado no tiene efecto.
         setTimeout(() => &lbrace; controller.abort(); }, options.timeout);
       }
-      // Now just perform a normal fetch
+      //Ahora simplemente realizamos una solicitud fetch normal
       return fetch(url, options);
     }</code></pre>
     <p class="title-article text-left">Opciones varias de solicitud</p>
@@ -3077,34 +3087,34 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p><em>Ejemplo 15-11. Un cliente de chat simple usando EventSource</em></p>
     <pre class="language-js">
     <code class="language-js">&lt;html>
-    &lt;head>&lt;title>SSE Chat&lt;/title>&lt;/head>
+    &lt;head>&lt;title>Chat SSE&lt;/title>&lt;/head>
     &lt;body>
-    &lt;!-- The chat UI is just a single text input field -->
-    &lt;!-- New chat messages will be inserted before this input field -->
+    &lt;!-- La interfaz del chat es solo un campo de texto -->
+    &lt;!-- Los nuevos mensajes de chat se insertarán antes de este campo de texto -->
     &lt;input id="input" style="width:100%; padding:10px; border:solid black 2px"/>
     &lt;script>
-    // Take care of some UI details
-    let nick = prompt("Enter your nickname");     // Get user's nickname
-    let input = document.getElementById("input"); // Find the input field
-    input.focus();                                // Set keyboard focus
+    // Manejar algunos detalles de la interfaz
+    let nick = prompt("Enter your nickname");     // Obtener el apodo del usuario
+    let input = document.getElementById("input"); // Buscar el campo de texto
+    input.focus();                                // Establecer el enfoque del teclado
 
-    // Register for notification of new messages using EventSource
+    // Registrarse para recibir notificaciones de nuevos mensajes usando EventSource
     let chat = new EventSource("/chat");
-    chat.addEventListener("chat", event => &lbrace;   // When a chat message arrives
-      let div = document.createElement("div"); // Create a &lt;div>
-      div.append(event.data);       // Add text from the message
-      input.before(div);            // And add div before input
-      input.scrollIntoView();       // Ensure input elt is visible
+    chat.addEventListener("chat", event => &lbrace;   // Cuando llega un mensaje de chat
+      let div = document.createElement("div"); // Crear un elemento &lt;div>
+      div.append(event.data);       // Agregar el texto del mensaje
+      input.before(div);            // Insertar el div antes del campo de texto
+      input.scrollIntoView();       // Asegurar que el campo de texto sea visible
     });
 
-    // Post the user's messages to the server using fetch
-    input.addEventListener("change", ()=>&lbrace; // When the user strikes return
-      fetch("/chat", &lbrace;                     // Start an HTTP request to this url.
-        method: "POST",                    // Make it a POST request with body
-        body: nick + ": " + input.value    // set to the user's nick and input.
+    // Enviar los mensajes del usuario al servidor usando fetch
+    input.addEventListener("change", ()=>&lbrace; // Cuando el usuario presiona Enter
+      fetch("/chat", &lbrace;                     // Iniciar una solicitud HTTP a esta URL
+        method: "POST",                    // Hacer una solicitud POST con el cuerpo
+        body: nick + ": " + input.value    // establecido al apodo del usuario y el texto ingresado
       })
-      .catch(e => console.error); // Ignore response, but log any errors.
-      input.value = "";           // Clear the input
+      .catch(e => console.error); // Ignorar la respuesta, pero registrar cualquier error
+      input.value = "";           // Limpiar el campo de texto
     });
     &lt;/script>
     &lt;/body>
@@ -3112,66 +3122,67 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>El código del lado del servidor para este programa de chat no es mucho más complicado que el código del lado del cliente. El <a href="#ejemplo15-12">Ejemplo 15-12</a> es un simple servidor HTTP Node. Cuando un cliente solicita la URL raíz "/", envía el código de cliente de chat mostrado en el <a href="#ejemplo15-11">Ejemplo 15-11</a>. Cuando un cliente hace una petición GET para la URL "/chat", guarda el objeto respuesta y mantiene esa conexión abierta. Y cuando un cliente hace una petición POST a "/chat", usa el cuerpo de la petición como un mensaje de chat y lo escribe, usando el formato "text/event-stream" a cada uno de los objetos de respuesta guardados. El código del servidor escucha en el puerto 8080, así que después de ejecutarlo con Node, apunta tu navegador a <codeinline>http://localhost:8080</codeinline> para conectarte y empezar a chatear contigo mismo.</p>
     <p><em>Ejemplo 15-12. Un servidor de chat de Eventos Enviados por el Servidor</em></p>
     <pre class="language-js">
-    <code class="language-js">// This is server-side JavaScript, intended to be run with NodeJS.
-    // It implements a very simple, completely anonymous chat room.
-    // POST new messages to /chat, or GET a text/event-stream of messages
-    // from the same URL. Making a GET request to / returns a simple HTML file
-    // that contains the client-side chat UI.
+    <code class="language-js">// Este es un JavaScript del lado del servidor, diseñado para ejecutarse con NodeJS.
+    // Implementa una sala de chat muy simple y completamente anónima.
+    // Envia nuevos mensajes a /chat, o obtiene un flujo de eventos de texto
+    // desde la misma URL. Realizar una solicitud GET a / devuelve un archivo HTML simple
+    // que contiene la interfaz de usuario del chat del lado del cliente.
     const http = require("http");
     const fs = require("fs");
     const url = require("url");
 
-    // The HTML file for the chat client. Used below.
+    // El archivo HTML para el cliente de chat. Usado más abajo.
     const clientHTML = fs.readFileSync("chatClient.html");
 
-    // An array of ServerResponse objects that we're going to send events to
+    // Un arreglo de objetos ServerResponse a los que vamos a enviar eventos
     let clients = [];
     
-    // Create a new server, and listen on port 8080.
-    // Connect to http://localhost:8080/ to use it.
+    // Crear un nuevo servidor, y escuchar en el puerto 8080.
+    // Conéctate a http://localhost:8080/ para usarlo.
     let server = new http.Server();
     server.listen(8080);
     
-    // When the server gets a new request, run this function
+    // Cuando el servidor recibe una nueva solicitud, ejecuta esta función
     server.on("request", (request, response) => &lbrace;
-      // Parse the requested URL
+      // Analizar la URL solicitada
       let pathname = url.parse(request.url).pathname;
       
-      // If the request was for "/", send the client-side chat UI.
-      if (pathname === "/") &lbrace; // A request for the chat UI
+      // Si la solicitud es para "/", enviar la interfaz de usuario
+      // del chat del lado del cliente.
+      if (pathname === "/") &lbrace; // Una solicitud para la interfaz de usuario del chat
         response.writeHead(200, &lbrace;"Content-Type": "text/html"}).end(clientHTML);
       }
-      // Otherwise send a 404 error for any path other than "/chat" or for
-      // any method other than "GET" and "POST"
+      // De lo contrario, enviar un error 404 para cualquier ruta que no sea "/chat" o para
+      // cualquier método que no sea "GET" o "POST"
       else if (pathname !== "/chat" ||
             (request.method !== "GET" && request.method !== "POST")) &lbrace;
         response.writeHead(404).end();
       }
-      // If the /chat request was a GET, then a client is connecting.
+      // Si la solicitud /chat es un GET, entonces un cliente se está conectando.
       else if (request.method === "GET") &lbrace;
         acceptNewClient(request, response);
       }
-      // Otherwise the /chat request is a POST of a new message
+      // De lo contrario, la solicitud /chat es un POST de un nuevo mensaje
       else &lbrace;
         broadcastNewMessage(request, response);
       }
     });
 
-    // This handles GET requests for the /chat endpoint which are generated when
-    // the client creates a new EventSource object (or when the EventSource
-    // reconnects automatically).
+    // Esta función maneja las solicitudes GET para el endpoint /chat,
+    // que se generan cuando el cliente crea un nuevo objeto EventSource
+    // (o cuando el EventSource se reconecta automáticamente).
     function acceptNewClient(request, response) &lbrace;
-      // Remember the response object so we can send future messages to it
+      // Recordar el objeto de respuesta para que podamos enviarle mensajes futuros
       clients.push(response);
 
-      // If the client closes the connection, remove the corresponding
-      // response object from the array of active clients
+      // Si el cliente cierra la conexión, eliminar el objeto
+      // de respuesta correspondiente del arreglo de clientes activos
       request.connection.on("end", () => &lbrace;
         clients.splice(clients.indexOf(response), 1);
         response.end();
       });
 
-      // Set headers and send an initial chat event to just this one client
+      // Establecer los encabezados y enviar un evento inicial de chat solo a este cliente
       response.writeHead(200, &lbrace;
         "Content-Type": "text/event-stream",
         "Connection": "keep-alive",
@@ -3179,32 +3190,33 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       });
       response.write("event: chat\ndata: Connected\n\n");
 
-      // Note that we intentionally do not call response.end() here.
-      // Keeping the connection open is what makes Server-Sent Events work.
+      // Nota que intencionalmente no llamamos a response.end() aquí.
+      // Mantener la conexión abierta es lo que hace que los Eventos Enviados por el
+      // Servidor (SSE) funcionen.
     }
 
-    // This function is called in response to POST requests to the /chat endpoint
-    // which clients send when users type a new message.
+    // Esta función se llama en respuesta a las solicitudes POST al endpoint /chat
+    // que los clientes envían cuando los usuarios escriben un nuevo mensaje.
     async function broadcastNewMessage(request, response) &lbrace;
-      // First, read the body of the request to get the user's message
+      // Primero, leer el cuerpo de la solicitud para obtener el mensaje del usuario
       request.setEncoding("utf8");
       let body = "";
       for await (let chunk of request) &lbrace;
         body += chunk;
       }
 
-      // Once we've read the body send an empty response and close the connection
+      // Una vez que hemos leído el cuerpo, enviamos una respuesta vacía y cerramos la conexión
       response.writeHead(200).end();
 
-      // Format the message in text/event-stream format, prefixing each
-      // line with "data: "
+      // Formatear el mensaje en el formato text/event-stream, anteponiendo a cada
+      // línea "data: "
       let message = "data: " + body.replace("\n", "\ndata: ");
 
-      // Give the message data a prefix that defines it as a "chat" event
-      // and give it a double newline suffix that marks the end of the event.
+      // Darle al mensaje un prefijo que lo defina como un evento "chat"
+      // y darle un sufijo con doble salto de línea que marque el final del evento.
       let event = `event: chat\n$&lbrace;message}\n\n`;
 
-      // Now send this event to all listening clients
+      // Ahora enviar este evento a todos los clientes que están escuchando
       clients.forEach(client => client.write(event));
     }</code></pre>
   </section>
@@ -3276,10 +3288,10 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     </ul>
     <p>Por ejemplo, puedes utilizar el objeto localStorage de la siguiente manera:</p>
     <pre class="language-js">
-    <code class="language-js">let name = localStorage.username;      // Query a stored value.
+    <code class="language-js">let name = localStorage.username;      // Consultar un valor almacenado.
     if (!name) &lbrace;
-      name = prompt("What is your name?"); // Ask the user a question.
-      localStorage.username = name;        // Store the user's response.
+      name = prompt("What is your name?"); // Haz una pregunta al usuario.
+      localStorage.username = name;        // Almacenar la respuesta del usuario.
     }</code></pre>
     <p>Puede utilizar el operador <codeinline>delete</codeinline> para eliminar propiedades de <codeinline>localStorage</codeinline> y <codeinline>sessionStorage</codeinline>, y puede utilizar un bucle <codeinline>for/in</codeinline> o <codeinline>Object.keys()</codeinline> para enumerar las propiedades de un objeto Storage. Si desea eliminar todas las propiedades de un objeto Storage, llame al método <codeinline>clear()</codeinline>:</p>
     <pre class="language-js">
@@ -3288,18 +3300,18 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Tenga en cuenta que las propiedades de los objetos Storage sólo pueden almacenar cadenas. Si quieres almacenar y recuperar otro tipo de datos, tendrás que codificarlos y descodificarlos tú mismo.</p>
     <p>Por ejemplo:</p>
     <pre class="language-js">
-    <code class="language-js">// If you store a number, it is automatically converted to a string.
-    // Don't forget to parse it when retrieving it from storage.
+    <code class="language-js">// Si almacenas un número, se convierte automáticamente a una cadena.
+    // No olvides analizarlo (parsearlo) cuando lo recuperes del almacenamiento.
     localStorage.x = 10;
     let x = parseInt(localStorage.x);
 
-    // Convert a Date to a string when setting, and parse it when getting
+    // onvierte una fecha a una cadena al establecerla, y parsearla al obtenerla
     localStorage.lastRead = (new Date()).toUTCString();
     let lastRead = new Date(Date.parse(localStorage.lastRead));
 
-    // JSON makes a convenient encoding for any primitive or data structure
-    localStorage.data = JSON.stringify(data); // Encode and store
-    let data = JSON.parse(localStorage.data); // Retrieve and decode.</code></pre>
+    // JSON es una codificación conveniente para cualquier tipo primitivo o estructura de datos
+    localStorage.data = JSON.stringify(data); // Codificar y almacenar
+    let data = JSON.parse(localStorage.data); // Recuperar y decodificar.</code></pre>
     <p class="title-article text-left">Duración y alcance del almacenamiento</p>
     <p>La diferencia entre <codeinline>localStorage</codeinline> y <codeinline>sessionStorage</codeinline> tiene que ver con la duración y el alcance del almacenamiento. Los datos almacenados a través de <codeinline>localStorage</codeinline> son permanentes: no caducan y permanecen almacenados en el dispositivo del usuario hasta que una aplicación web los elimina o el usuario pide al navegador (a través de alguna interfaz de usuario específica del navegador) que los elimine.</p>
     <p><codeinline>localStorage</codeinline> se refiere al origen del documento. Como se explica en <a href="politica-del-mismo-origen">"La política del mismo origen"</a>, el origen de un documento se define por su protocolo, nombre de host y puerto. Todos los documentos con el mismo origen comparten los mismos datos de <codeinline>localStorage</codeinline> (independientemente del origen de los scripts que realmente acceden a <codeinline>localStorage</codeinline>). Pueden leer los datos de los demás, y pueden sobrescribir los datos de los demás. Pero los documentos con orígenes diferentes nunca pueden leer o sobrescribir los datos de los demás (incluso si ambos están ejecutando un script desde el mismo servidor de terceros).</p>
@@ -3337,19 +3349,19 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Una vez que haya extraído el valor de una cookie de la propiedad <codeinline>cookie</codeinline>, debe interpretar ese valor basándose en cualquier formato o codificación que haya utilizado el creador de la cookie. Por ejemplo, puede pasar el valor de la cookie a <codeinline>decodeURIComponent()</codeinline> y luego a <codeinline>JSON.parse()</codeinline>.</p>
     <p>El código que sigue define una función <codeinline>getCookie()</codeinline> que analiza la propiedad <codeinline>document.cookie</codeinline> y devuelve un objeto cuyas propiedades especifican los nombres y valores de las cookies del documento:</p>
     <pre class="language-js">
-    <code class="language-js">// Return the document's cookies as a Map object.
-    // Assume that cookie values are encoded with encodeURIComponent().
+    <code class="language-js">// Devuelve las cookies del documento como un objeto Map.
+    // Supone que los valores de las cookies están codificados con encodeURIComponent().
     function getCookies() &lbrace;
-      let cookies = new Map();      // The object we will return
-      let all = document.cookie;    // Get all cookies in one big string
-      let list = all.split("; ");   // Split into individual name/value pairs
-      for(let cookie of list) &lbrace;              // For each cookie in that list
-        if (!cookie.includes("=")) continue; // Skip if there is no = sign
-        let p = cookie.indexOf("=");         // Find the first = sign
-        let name = cookie.substring(0, p);   // Get cookie name
-        let value = cookie.substring(p+1);   // Get cookie value
-        value = decodeURIComponent(value);   // Decode the value
-        cookies.set(name, value);            // Remember cookie name and value
+      let cookies = new Map();      // El objeto que vamos a devolver
+      let all = document.cookie;    // Obtener todas las cookies en una cadena grande
+      let list = all.split("; ");   // Dividir en pares nombre/valor individuales
+      for(let cookie of list) &lbrace;              // Para cada cookie en esa lista
+        if (!cookie.includes("=")) continue; // Saltar si no hay signo de =
+        let p = cookie.indexOf("=");         // Encontrar el primer signo de =
+        let name = cookie.substring(0, p);   // Obtener el nombre de la cookie
+        let value = cookie.substring(p+1);   // Obtener el valor de la cookie
+        value = decodeURIComponent(value);   // Decodificar el valor
+        cookies.set(name, value);            // Recordar el nombre y valor de la cookie
       }
       return cookies;
     }</code></pre>
@@ -3372,10 +3384,10 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>La próxima vez que lea la propiedad <codeinline>cookie</codeinline>, el par nombre/valor almacenado se incluirá en la lista de cookies del documento. Los valores de las cookies no pueden incluir puntos y comas ni espacios en blanco. Por esta razón, es posible que desee utilizar la función global del núcleo Java Script <codeinline>encodeURIComponent()</codeinline> para codificar el valor antes de almacenarlo en la cookie. Si hace esto, tendrá que usar la función correspondiente <codeinline>decodeURIComponent()</codeinline> cuando lea el valor de la cookie.</p>
     <p>Una cookie escrita con un simple par nombre/valor dura toda la sesión de navegación actual, pero se pierde cuando el usuario sale del navegador. Para crear una cookie que pueda durar a través de las sesiones del navegador, especifique su tiempo de vida (en segundos) con un atributo <codeinline>max-age</codeinline>. Puede hacer esto estableciendo la propiedad <codeinline>cookie</codeinline> a una cadena de la forma: <codeinline>name=value; max-age=seconds</codeinline>. La siguiente función establece una cookie con un atributo opcional <codeinline>max-age</codeinline>:</p>
     <pre class="language-js">
-    <code class="language-js">// Store the name/value pair as a cookie, encoding the value with
-    // encodeURIComponent() in order to escape semicolons, commas, and spaces.
-    // If daysToLive is a number, set the max-age attribute so that the cookie
-    // expires after the specified number of days. Pass 0 to delete a cookie.
+    <code class="language-js">// Almacenar el par nombre/valor como una cookie, codificando el valor con
+    // encodeURIComponent() para escapar de los puntos y comas, comas y espacios.
+    // Si daysToLive es un número, establece el atributo max-age para que la cookie
+    // caduque después del número de días especificado. Pasa 0 para eliminar una cookie.
     function setCookie(name, value, daysToLive=null) &lbrace;
       let cookie = `$&lbrace;name}=$&lbrace;encodeURIComponent(value)}`;
       if (daysToLive !== null) &lbrace;
@@ -3404,27 +3416,28 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Con esta visión general de IndexedDB en mente, debería ser capaz de entender el <a href="#ejemplo15-13">Ejemplo 15-13</a>. Este ejemplo utiliza IndexedDB para crear y consultar una base de datos que mapea los códigos postales de EE.UU. con las ciudades de EE.UU. Este ejemplo utiliza IndexedDB para crear y consultar una base de datos que mapea códigos postales de EE.UU. con ciudades de EE.UU. Demuestra muchas, aunque no todas, de las características básicas de IndexedDB. Demuestra muchas, pero no todas, las características básicas de IndexedDB. El <a href="#ejemplo15-13">Ejemplo 15-13</a> es largo, pero está bien comentado.</p>
     <p><em>Ejemplo 15-13. Una base de datos IndexedDB de códigos postales de EE.UU.</em></p>
     <pre class="language-js">
-    <code class="language-js">// This utility function asynchronously obtains the database object (creating
-    // and initializing the DB if necessary) and passes it to the callback.
+    <code class="language-js">// Esta función utilitaria obtiene de manera asíncrona el objeto de la base de datos
+    // (creando e inicializando la base de datos si es necesario) y lo pasa al callback.
     function withDB(callback) &lbrace;
-      let request = indexedDB.open("zipcodes", 1); // Request v1 of the database
-      request.onerror = console.error;             // Log any errors
-      request.onsuccess = () => &lbrace; // Or call this when done
-        let db = request.result;  // The result of the request is the database
-        callback(db);             // Invoke the callback with the database
+      let request = indexedDB.open("zipcodes", 1); // Solicitar la versión 1 de la base de datos
+      request.onerror = console.error;             // Registrar cualquier error
+      request.onsuccess = () => &lbrace; // O llamar a esta función cuando termine
+        let db = request.result;  // El resultado de la solicitud es la base de datos
+        callback(db);             // Invocar el callback con la base de datos
       };
 
-      // If version 1 of the database does not yet exist, then this event
-      // handler will be triggered. This is used to create and initialize
-      // object stores and indexes when the DB is first created or to modify
-      // them when we switch from one version of the DB schema to another.
+      // Si la versión 1 de la base de datos aún no existe, se activará este evento
+      // Este se usa para crear e inicializar almacenes de objetos e índices cuando
+      // la base de datos se crea por primera vez o para modificarlos cuando cambiamos
+      // de una versión del esquema de la base de datos a otra.
       request.onupgradeneeded = () => &lbrace; initdb(request.result, callback); };
     }
-    // withDB() calls this function if the database has not been initialized yet.
-    // We set up the database and populate it with data, then pass the database to
-    // the callback function.
+    // withDB() llama a esta función si la base de datos aún no ha sido inicializada.
+    // Configuramos la base de datos y la poblamos con datos, luego pasamos la base de datos
+    // al callback.
     //
-    // Our zip code database includes one object store that holds objects like this:
+    // Nuestra base de datos de códigos postales incluye un almacén de objetos
+    // que contiene objetos como este:
     //
     // &lbrace;
     // zipcode: "02134",
@@ -3432,90 +3445,89 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     // state: "MA",
     // }
     //
-    // We use the "zipcode" property as the database key and create an index for
-    // the city name.
+    // Usamos la propiedad "zipcode" como clave de la base de datos y creamos un índice para
+    // el nombre de la ciudad.
     function initdb(db, callback) &lbrace;
-      // Create the object store, specifying a name for the store and
-      // an options object that includes the "key path" specifying the
-      // property name of the key field for this store.
+      // Crear el almacén de objetos, especificando un nombre para el almacén y
+      // un objeto de opciones que incluye la "ruta de la clave", especificando el
+      // nombre de la propiedad del campo clave para este almacén.
       let store = db.createObjectStore("zipcodes", // store name
               &lbrace; keyPath: "zipcode" });
 
-      // Now index the object store by city name as well as by zip code.
-      // With this method the key path string is passed directly as a
-      // required argument rather than as part of an options object.
+      // Ahora indexamos el almacén de objetos por nombre de ciudad, así como por código postal.
+      // Con este método, la cadena de la ruta de la clave se pasa directamente como un
+      // argumento requerido, en lugar de como parte de un objeto de opciones.
       store.createIndex("cities", "city");
 
-      // Now get the data we are going to initialize the database with.
-      // The zipcodes.json data file was generated from CC-licensed data from
+      // Ahora obtenemos los datos con los que vamos a inicializar la base de datos.
+      // El archivo de datos zipcodes.json se generó a partir de datos con licencia CC de
       // www.geonames.org: https://download.geonames.org/export/zip/US.zip
-      fetch("zipcodes.json")               // Make an HTTP GET request
-        .then(response => response.json()) // Parse the body as JSON
-        .then(zipcodes => &lbrace;                // Get 40K zip code records
-          // In order to insert zip code data into the database we need a
-          // transaction object. To create our transaction object, we need
-          // to specify which object stores we'll be using (we only have
-          // one) and we need to tell it that we'll be doing writes to the
-          // database, not just reads:
+      fetch("zipcodes.json")               // Realizar una solicitud HTTP GET
+        .then(response => response.json()) // Analizar el cuerpo como JSON
+        .then(zipcodes => &lbrace;                // Obtener 40K registros de códigos postales
+          // Para insertar los datos del código postal en la base de datos, necesitamos un
+          // objeto de transacción. Para crear nuestro objeto de transacción, necesitamos
+          // especificar qué almacenes de objetos usaremos (solo tenemos uno) y debemos
+          // decirle que realizaremos escrituras en la base de datos, no solo lecturas:
           let transaction = db.transaction(["zipcodes"], "readwrite");
           transaction.onerror = console.error;
 
-          // Get our object store from the transaction
+          // Obtener nuestro almacén de objetos desde la transacción
           let store = transaction.objectStore("zipcodes");
 
-          // The best part about the IndexedDB API is that object stores
-          // are *really* simple. Here's how we add (or update) our records:
+          // La mejor parte de la API de IndexedDB es que los almacenes de objetos
+          // son *realmente* simples. Así es como agregamos (o actualizamos) nuestros registros:
           for(let record of zipcodes) &lbrace; store.put(record); }
 
-          // When the transaction completes successfully, the database
-          // is initialized and ready for use, so we can call the
-          // callback function that was originally passed to withDB()
+          // Cuando la transacción se complete con éxito, la base de datos
+          // estará inicializada y lista para usarse, así que podemos llamar a la
+          // función de callback que se pasó originalmente a withDB()
           transaction.oncomplete = () => &lbrace; callback(db); };
         });
       }
 
-      // Given a zip code, use the IndexedDB API to asynchronously look up the city
-      // with that zip code, and pass it to the specified callback, or pass null if
-      // no city is found.
+      // Dado un código postal, usa la API de IndexedDB para buscar de manera asíncrona la ciudad
+      // con ese código postal y la pasa al callback especificado, o pasa null si
+      // no se encuentra la ciudad.
       function lookupCity(zip, callback) &lbrace;
         withDB(db => &lbrace;
-        // Create a read-only transaction object for this query. The
-        // argument is an array of object stores we will need to use.
+        // Crear un objeto de transacción de solo lectura para esta consulta. El
+        // argumento es un array de almacenes de objetos que necesitamos usar.
         let transaction = db.transaction(["zipcodes"]);
 
-        // Get the object store from the transaction
+        // Obtener el almacén de objetos desde la transacción
         let zipcodes = transaction.objectStore("zipcodes");
 
-        // Now request the object that matches the specified zipcode key.
-        // The lines above were synchronous, but this one is async.
+        // Ahora solicitamos el objeto que coincide con la clave del código postal especificado.
+        // Las líneas anteriores eran sincrónicas, pero esta es asíncrona.
         let request = zipcodes.get(zip);
-        request.onerror = console.error; // Log errors
-        request.onsuccess = () => &lbrace; // Or call this function on success
-          let record = request.result; // This is the query result
-          if (record) &lbrace; // If we found a match, pass it to the callback
+        request.onerror = console.error; // Registrar errores
+        request.onsuccess = () => &lbrace; // O llamar a esta función en caso de éxito
+          let record = request.result; // Este es el resultado de la consulta
+          if (record) &lbrace; // Si encontramos una coincidencia, pasarla al callback
             callback(`$&lbrace;record.city}, $&lbrace;record.state}`);
-          } else &lbrace; // Otherwise, tell the callback that we failed
+          } else &lbrace; // De lo contrario, informar al callback que fallamos
             callback(null);
           }
         };
       });
     }
 
-    // Given the name of a city, use the IndexedDB API to asynchronously
-    // look up all zip code records for all cities (in any state) that have
-    // that (case-sensitive) name.
+    // Dado el nombre de una ciudad, usa la API de IndexedDB para buscar de manera asíncrona
+    // todos los registros de códigos postales para todas las ciudades (en cualquier estado) que tengan
+    // ese nombre (sensible a mayúsculas y minúsculas).
     function lookupZipcodes(city, callback) &lbrace;
       withDB(db => &lbrace;
-        // As above, we create a transaction and get the object store
+        // Como antes, creamos una transacción y obtenemos el almacén de objetos
         let transaction = db.transaction(["zipcodes"]);
         let store = transaction.objectStore("zipcodes");
 
-        // This time we also get the city index of the object store
+        // Esta vez también obtenemos el índice de ciudad del almacén de objetos
         let index = store.index("cities");
 
-        // Ask for all matching records in the index with the specified
-        // city name, and when we get them we pass them to the callback.
-        // If we expected more results, we might use openCursor() instead.
+        // Pedir todos los registros coincidentes en el índice con el nombre de ciudad especificado,
+        // y cuando los tengamos, los pasamos al callback.
+        // Si esperábamos más resultados, podríamos usar openCursor() en su lugar.
         let request = index.getAll(city);
         request.onerror = console.error;
         request.onsuccess = () => &lbrace; callback(request.result); };
@@ -3542,7 +3554,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Aquí sólo estamos pasando un único mensaje de cadena, pero también puede utilizar objetos, matrices, matrices tipadas, mapas, conjuntos, etc. Puedes recibir mensajes de un trabajador buscando eventos "mensaje" en el objeto Trabajador:</p>
     <pre class="language-js">
     <code class="language-js">dataCruncher.onmessage = function(e) &lbrace;
-      let stats = e.data; // The message is the data property of the event
+      let stats = e.data; // El mensaje es la propiedad de datos del evento.
       console.log(`Average: $&lbrace;stats.mean}`);
     }</code></pre>
     <p>Como todos los destinos de eventos, los objetos Worker definen las funciones <codeinline>addEventListener()</codeinline> y <codeinline>removeEventListener()</codeinline>, y puede utilizarlos en lugar de <codeinline>onmessage</codeinline>.</p>
@@ -3594,7 +3606,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>15.13.3 Importar código a un trabajador</h2>
     <p>Los workers se definieron en los navegadores web antes de que JavaScript tuviera un sistema de módulos, por lo que los workers tienen un sistema único para incluir código adicional. WorkerGlobalScope define <codeinline>importScripts()</codeinline> como una función global a la que todos los workers tienen acceso:</p>
     <pre class="language-js">
-    <code class="language-js">// Before we start working, load the classes and utilities we'll need
+    <code class="language-js">// Antes de comenzar a trabajar, carguemos las clases y utilidades que necesitaremos
     importScripts("utils/Histogram.js", "utils/BitSet.js");</code></pre>
     <p><codeinline>importScripts()</codeinline> toma uno o más argumentos de URL, cada uno de los cuales debe referirse a un archivo de código JavaScript. Las URL relativas se resuelven en relación con la URL que se pasó al constructor <codeinline>Worker()</codeinline> (no en relación con el documento contenedor). <codeinline>importScripts()</codeinline> carga y ejecuta de forma sincrónica estos archivos uno tras otro, en el orden en que se especificaron. Si la carga de un script causa un error de red, o si la ejecución arroja un error de cualquier tipo, ninguno de los scripts subsiguientes es cargado o ejecutado. Un script cargado con <codeinline>importScripts()</codeinline> puede llamar a su vez a <codeinline>importScripts()</codeinline> para cargar los archivos de los que depende. Tenga en cuenta, sin embargo, que <codeinline>importScripts()</codeinline> no intenta realizar un seguimiento de los scripts que ya se han cargado y no hace nada para evitar los ciclos de dependencia.</p>
     <p><codeinline>importScripts()</codeinline> es una función síncrona: no retorna hasta que todos los scripts se han cargado y ejecutado. Puede empezar a usar los scripts que ha cargado tan pronto como <codeinline>importScripts()</codeinline> devuelva: no hay necesidad de una llamada de retorno, manejador de eventos, método <codeinline>then()</codeinline> o <codeinline>await</codeinline>. Una vez que se ha interiorizado la naturaleza asíncrona de JavaScript del lado del cliente, resulta extraño volver a la programación simple y síncrona. Pero esa es la belleza de los hilos: se puede utilizar una llamada a una función de bloqueo en un trabajador sin bloquear el bucle de eventos en el hilo principal, y sin bloquear los cálculos que se realizan simultáneamente en otros trabajadores.</p>
@@ -3611,13 +3623,15 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p class="title-article text-left">Errores en los trabajadores</p>
     <p>Si se produce una excepción en un trabajador y no es capturada por ninguna cláusula <codeinline>catch</codeinline>, se lanza un evento "error" en el objeto global del trabajador. Si este evento es manejado y el manejador llama al método <codeinline>preventDefault()</codeinline> del objeto evento, la propagación del error termina. En caso contrario, el evento "error" se dispara sobre el objeto Worker. Si se llama allí a <codeinline>preventDefault()</codeinline>, la propagación termina. En caso contrario, se imprime un mensaje de error en la consola del desarrollador y se invoca al manejador onerror (§15.1.7) del objeto Window.</p>
     <pre class="language-js">
-    <code class="language-js">// Handle uncaught worker errors with a handler inside the worker.
+    <code class="language-js">// Maneje los errores de trabajador no detectados con
+    // un controlador dentro del trabajador.
     self.onerror = function(e) &lbrace;
       console.log(`Error in worker at $&lbrace;e.filename}:$&lbrace;e.lineno}: $&lbrace;e.message}`);
       e.preventDefault();
     };
 
-    // Or, handle uncaught worker errors with a handler outside the worker.
+    // O bien, maneje los errores de trabajador no detectados con un
+    // controlador externo al trabajador.
     worker.onerror = function(e) &lbrace;
       console.log(`Error in worker at $&lbrace;e.filename}:$&lbrace;e.lineno}: $&lbrace;e.message}`);
       e.preventDefault();
@@ -3628,12 +3642,12 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>15.13.5 postMessage(), MessagePorts y MessageChannels</h2>
     <p>El método <codeinline>postMessage()</codeinline> del objeto Worker y la función global <codeinline>postMesage()</codeinline> definida dentro de un worker funcionan invocando los métodos <codeinline>postMessage()</codeinline> de un par de objetos MessagePort que se crean automáticamente junto con el worker. JavaScript del lado del cliente no puede acceder directamente a estos objetos MessagePort creados automáticamente, pero puede crear nuevos pares de puertos conectados con el constructor <codeinline>MessageChannel()</codeinline>:</p>
     <pre class="language-js">
-    <code class="language-js">let channel = new MessageChannel; // Create a new channel.
-    let myPort = channel.port1;       // It has two ports
-    let yourPort = channel.port2;     // connected to each other.
+    <code class="language-js">let channel = new MessageChannel; // Crear un nuevo canal.
+    let myPort = channel.port1;       // Tiene dos puertos
+    let yourPort = channel.port2;     // Conectados entre sí.
 
-    myPort.postMessage("Can you hear me?"); // A message posted to one will
-    yourPort.onmessage = (e) => console.log(e.data); // be received on the other.</code></pre>
+    myPort.postMessage("Can you hear me?"); // Un mensaje publicado en uno
+    yourPort.onmessage = (e) => console.log(e.data); // ser recibido por el otro.</code></pre>
     <p>Un MessageChannel es un objeto con propiedades <codeinline>port1</codeinline> y <codeinline>port2</codeinline> que hacen referencia a un par de objetos MessagePort conectados. Un MessagePort es un objeto con un método <codeinline>postMessage()</codeinline> y una propiedad manejadora de eventos <codeinline>onmessage</codeinline>. Cuando se llama a <codeinline>postMessage()</codeinline> en un puerto de un par conectado, se dispara un evento "mensaje" en el otro puerto del par. Puedes recibir estos eventos "mensaje" estableciendo la propiedad <codeinline>onmessage</codeinline> o utilizando <codeinline>addEventListener()</codeinline> para registrar un receptor de eventos "mensaje".</p>
     <p>Los mensajes enviados a un puerto se ponen en cola hasta que se define la propiedad <codeinline>onmessage</codeinline> o hasta que se llama al método <codeinline>start()</codeinline> en el puerto. Esto evita que los mensajes enviados por un extremo del canal sean perdidos por el otro extremo. Si utiliza <codeinline>addEventListener()</codeinline> con un MessagePort, no olvide llamar a <codeinline>start()</codeinline> o puede que nunca vea un mensaje entregado.</p>
     <p>Todas las llamadas a <codeinline>postMessage()</codeinline> que hemos visto hasta ahora han tomado un único argumento de mensaje. Pero el método también acepta un segundo argumento opcional. Este segundo argumento es un array de elementos que van a ser transferidos al otro extremo del canal en lugar de tener una copia enviada a través del canal. Los valores que pueden ser transferidos en lugar de copiados son MessagePorts y ArrayBuffers. (Algunos navegadores también implementan otros tipos transferibles, como ImageBitmap y OffscreenCanvas. Sin embargo, éstos no están soportados universalmente y no se tratan en este libro). Si el primer argumento de <codeinline>postMessage()</codeinline> incluye un MessagePort (anidado en cualquier lugar dentro del objeto mensaje), entonces ese MessagePort debe aparecer también en el segundo argumento. Si hace esto, entonces el MessagePort estará disponible para el otro extremo del canal e inmediatamente dejará de ser funcional en su extremo. Supongamos que ha creado un trabajador y desea tener dos canales para comunicarse con él: un canal para el intercambio de datos ordinarios y un canal para mensajes de alta prioridad. En el hilo principal, puede crear un MessageChannel, luego llamar a <codeinline>postMessage()</codeinline> en el trabajador para pasarle uno de los MessagePorts:</p>
@@ -3643,10 +3657,10 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     let urgentPort = urgentChannel.port1;
     worker.postMessage(&lbrace; command: "setUrgentPort", value: urgentChannel.port2 },
               [ urgentChannel.port2 ]);
-    // Now we can receive urgent messages from the worker like this
+    // Ahora podemos recibir mensajes urgentes del trabajador como este
     urgentPort.addEventListener("message", handleUrgentMessage);
-    urgentPort.start();       // Start receiving messages
-    // And send urgent messages like this
+    urgentPort.start();       // Empieza a recibir mensajes
+    // Y enviar mensajes urgentes como este
     urgentPort.postMessage("test");</code></pre>
     <p>Los MessageChannels también son útiles si creas dos workers y quieres permitirles comunicarse directamente entre ellos en lugar de requerir código en el hilo principal para retransmitir mensajes entre ellos.</p>
     <p>El otro uso del segundo argumento de <codeinline>postMessage()</codeinline> es transferir ArrayBuffers entre workers sin tener que copiarlos. Esta es una importante mejora de rendimiento para grandes ArrayBuffers como los utilizados para contener datos de imagen. Cuando un ArrayBuffer se transfiere a través de un MessagePort, el ArrayBuffer se vuelve inutilizable en el hilo original, por lo que no hay posibilidad de acceso concurrente a su contenido. Si el primer argumento de <codeinline>postMessage()</codeinline> incluye un ArrayBuffer, o cualquier valor (como un array tipado) que tenga un ArrayBuffer, entonces ese buffer puede aparecer como un elemento de array en el segundo argumento de <codeinline>postMessage()</codeinline>. Si aparece, se transferirá sin copiar. Si no, entonces el ArrayBuffer será copiado en lugar de transferido. El <a href="#ejemplo15-14">Ejemplo 15-14</a> demostrará el uso de esta técnica de transferencia con ArrayBuffers.</p>
@@ -3684,102 +3698,102 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     </ul>
     <p><em>Ejemplo 15-14. Código de trabajo para calcular las regiones del conjunto de Mandelbrot</em></p>
     <pre class="language-js">
-    <code class="language-js">// This is a simple worker that receives a message from its parent thread,
-    // performs the computation described by that message and then posts the
-    // result of that computation back to the parent thread.
+    <code class="language-js">// Este es un trabajador simple que recibe un mensaje de su hilo principal,
+      // realiza el cálculo descrito por ese mensaje y luego envía el resultado
+      // de ese cálculo de vuelta al hilo principal.
     onmessage = function(message) &lbrace;
-      // First, we unpack the message we received:
-      // - tile is an object with width and height properties. It specifies the
-      // size of the rectangle of pixels for which we will be computing
-      // Mandelbrot set membership.
-      // - (x0, y0) is the point in the complex plane that corresponds to the
-      // upper-left pixel in the tile.
-      // - perPixel is the pixel size in both the real and imaginary dimensions.
-      // - maxIterations specifies the maximum number of iterations we will
-      // perform before deciding that a pixel is in the set.
+      // Primero, desempaquetamos el mensaje que recibimos:
+      // - tile es un objeto con las propiedades de ancho y alto. Especifica el
+      // tamaño del rectángulo de píxeles para el cual vamos a calcular
+      // la pertenencia al conjunto de Mandelbrot.
+      // - (x0, y0) es el punto en el plano complejo que corresponde al
+      // píxel superior izquierdo en el tile.
+      // - perPixel es el tamaño del píxel en ambas dimensiones, real e imaginaria.
+      // - maxIterations especifica el número máximo de iteraciones que vamos a
+      // realizar antes de decidir que un píxel está en el conjunto.
       const &lbrace;tile, x0, y0, perPixel, maxIterations} = message.data;
       const &lbrace;width, height} = tile;
 
-      // Next, we create an ImageData object to represent the rectangular array
-      // of pixels, get its internal ArrayBuffer, and create a typed array view
-      // of that buffer so we can treat each pixel as a single integer instead of
-      // four individual bytes. We'll store the number of iterations for each
-      // pixel in this iterations array. (The iterations will be transformed into
-      // actual pixel colors in the parent thread.)
+      // A continuación, creamos un objeto ImageData para representar la matriz rectangular
+      // de píxeles, obtenemos su ArrayBuffer interno y creamos una vista de arreglo tipada
+      // de ese búfer para que podamos tratar cada píxel como un solo entero en lugar de
+      // cuatro bytes individuales. Almacenaremos el número de iteraciones para cada
+      // píxel en este arreglo de iteraciones. (Las iteraciones se transformarán en
+      // colores de píxeles reales en el hilo principal.)
       const imageData = new ImageData(width, height);
       const iterations = new Uint32Array(imageData.data.buffer);
 
-      // Now we begin the computation. There are three nested for loops here.
-      // The outer two loop over the rows and columns of pixels, and the inner
-      // loop iterates each pixel to see if it "escapes" or not. The various
-      // loop variables are the following:
-      // - row and column are integers representing the pixel coordinate.
-      // - x and y represent the complex point for each pixel: x + yi.
-      // - index is the index in the iterations array for the current pixel.
-      // - n tracks the number of iterations for each pixel.
-      // - max and min track the largest and smallest number of iterations
-      // we've seen so far for any pixel in the rectangle.
+      // Ahora comenzamos el cálculo. Hay tres bucles anidados aquí.
+      // Los dos bucles exteriores recorren las filas y columnas de píxeles, y el bucle interno
+      // itera sobre cada píxel para ver si "escapa" o no. Las distintas
+      // variables de los bucles son las siguientes:
+      // - row y column son enteros que representan las coordenadas del píxel.
+      // - x e y representan el punto complejo para cada píxel: x + yi.
+      // - index es el índice en el arreglo de iteraciones para el píxel actual.
+      // - n sigue el número de iteraciones para cada píxel.
+      // - max y min siguen el número más grande y más pequeño de iteraciones
+      // que hemos visto hasta ahora para cualquier píxel en el rectángulo.
       let index = 0, max = 0, min=maxIterations;
       for(let row = 0, y = y0; row &lt; height; row++, y += perPixel) &lbrace;
         for(let column = 0, x = x0; column &lt; width; column++, x += perPixel) &lbrace;
-          // For each pixel we start with the complex number c = x+yi.
-          // Then we repeatedly compute the complex number z(n+1) based on
-          // this recursive formula:
+          // Para cada píxel comenzamos con el número complejo c = x+yi.
+          // Luego, repetidamente calculamos el número complejo z(n+1) basado en
+          // esta fórmula recursiva:
           // z(0) = c
           // z(n+1) = z(n)^2 + c
-          // If |z(n)| (the magnitude of z(n)) is > 2, then the
-          // pixel is not part of the set and we stop after n iterations.
-          let n;                // The number of iterations so far
-          let r = x, i = y;     // Start with z(0) set to c
+          // Si |z(n)| (la magnitud de z(n)) es > 2, entonces el
+          // píxel no es parte del conjunto y dejamos de iterar después de n iteraciones.
+          let n;                // El número de iteraciones hasta el momento
+          let r = x, i = y;     // Comenzamos con z(0) igual a c
           for(n = 0; n &lt; maxIterations; n++) &lbrace;
-            let rr = r*r, ii = i*i;   // Square the two parts of z(n).
-            if (rr + ii > 4) &lbrace;        // If |z(n)|^2 is > 4 then
-              break;        // we've escaped and can stop iterating.
+            let rr = r*r, ii = i*i;   // Cuadramos las dos partes de z(n).
+            if (rr + ii > 4) &lbrace;        // If |z(n)|^2 is > 4 entonces
+              break;        // hemos escapado y podemos dejar de iterar.
             }
-            i = 2*r*i + y;            // Compute imaginary part of z(n+1).
-            r = rr - ii + x;          // And the real part of z(n+1).
+            i = 2*r*i + y;            // Calculamos la parte imaginaria de z(n+1).
+            r = rr - ii + x;          // Y la parte real de z(n+1).
           }
-          iterations[index++] = n;    // Remember # iterations for each pixel.
-          if (n > max) max = n;       // Track the maximum number we've seen.
-          if (n &lt; min) min = n;       // And the minimum as well.
+          iterations[index++] = n;    // Recordamos el # de iteraciones para cada píxel.
+          if (n > max) max = n;       // Seguimos el número máximo que hemos visto.
+          if (n &lt; min) min = n;       // Y el mínimo también.
         }
       }
 
-      // When the computation is complete, send the results back to the parent
-      // thread. The imageData object will be copied, but the giant ArrayBuffer
-      // it contains will be transferred for a nice performance boost.
+      // Cuando el cálculo esté completo, enviamos los resultados de vuelta al hilo principal.
+      // El objeto imageData será copiado, pero el enorme ArrayBuffer
+      // que contiene será transferido para un buen aumento de rendimiento.
       postMessage(&lbrace;tile, imageData, min, max}, [imageData.data.buffer]);
     };</code></pre>
     <p>La aplicación de visualización del conjunto de Mandelbrot que utiliza ese código de trabajador se muestra en el <a href="#ejemplo15-15">Ejemplo 15-15</a>. Ahora que casi has llegado al final de este capítulo, este largo ejemplo es algo así como una experiencia de culminación que reúne una serie de importantes características y APIs del núcleo y del lado del cliente de JavaScript. El código está minuciosamente comentado, y te animo a que lo leas con atención.</p>
     <p><em>Ejemplo 15-15. Una aplicación web para visualizar y explorar el conjunto de Mandelbrot</em></p>
     <pre class="language-js">
     <code class="language-js">/*
-    * This class represents a subrectangle of a canvas or image. We use Tiles to
-    * divide a canvas into regions that can be processed independently by Workers.
+    * Esta clase representa un subrectángulo de un lienzo o imagen. Usamos los Tiles para
+    * dividir un lienzo en regiones que pueden ser procesadas independientemente por los Workers.
     */
     class Tile &lbrace;
       constructor(x, y, width, height) &lbrace;
-        this.x = x;           // The properties of a Tile object
-        this.y = y;           // represent the position and size
-        this.width = width;   // of the tile within a larger
-        this.height = height; // rectangle.
+        this.x = x;           // Las propiedades de un objeto Tile
+        this.y = y;           // representan la posición y el tamaño
+        this.width = width;   // del tile dentro de un rectángulo más grande
+        this.height = height; // .
       }
       
-      // This static method is a generator that divides a rectangle of the
-      // specified width and height into the specified number of rows and
-      // columns and yields numRows*numCols Tile objects to cover the rectangle.
+      // Este método estático es un generador que divide un rectángulo de las
+      // dimensiones especificadas en el número especificado de filas y
+      // columnas, y devuelve objetos Tile numRows*numCols para cubrir el rectángulo.
       static *tiles(width, height, numRows, numCols) &lbrace;
         let columnWidth = Math.ceil(width / numCols);
         let rowHeight = Math.ceil(height / numRows);
 
         for(let row = 0; row &lt; numRows; row++) &lbrace;
           let tileHeight = (row &lt; numRows-1)
-            ? rowHeight                            // height of most rows
-            : height - rowHeight * (numRows-1);    // height of last row
+            ? rowHeight                            // altura de la mayoría de las filas
+            : height - rowHeight * (numRows-1);    // altura de la última fila
           for(let col = 0; col &lt; numCols; col++) &lbrace;
             let tileWidth = (col &lt; numCols-1)
-              ? columnWidth                        // width of most columns
-              : width - columnWidth * (numCols-1); // and last column
+              ? columnWidth                        // anchura de la mayoría de las columnas
+              : width - columnWidth * (numCols-1); // y la última columna
 
             yield new Tile(col * columnWidth, row * rowHeight, tileWidth, tileHeight);
           }
@@ -3788,28 +3802,27 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     }
 
     /*
-    * This class represents a pool of workers, all running the same code. The
-    * worker code you specify must respond to each message it receives by
-    * performing some kind of computation and then posting a single message with
-    * the result of that computation.
+    * Esta clase representa un grupo de trabajadores, todos ejecutando el mismo código. El
+    * código del trabajador que se especifique debe responder a cada mensaje que reciba realizando
+    * algún tipo de cálculo y luego enviando un único mensaje con el resultado de ese cálculo.
     *
-    * Given a WorkerPool and message that represents work to be performed, simply
-    * call addWork(), with the message as an argument. If there is a Worker
-    * object that is currently idle, the message will be posted to that worker
-    * immediately. If there are no idle Worker objects, the message will be
-    * queued and will be posted to a Worker when one becomes available.
+    * Dado un WorkerPool y un mensaje que representa el trabajo a realizar, simplemente
+    * se llama a addWork(), con el mensaje como argumento. Si hay un objeto Worker
+    * que está actualmente inactivo, el mensaje será enviado a ese trabajador
+    * inmediatamente. Si no hay objetos Worker inactivos, el mensaje se pondrá en cola
+    * y se enviará a un Worker cuando uno esté disponible.
     *
-    * addWork() returns a Promise, which will resolve with the message recieved
-    * from the work, or will reject if the worker throws an unhandled error.
+    * addWork() devuelve una Promesa, que se resolverá con el mensaje recibido
+    * del trabajo, o se rechazará si el trabajador lanza un error no manejado.
     */
     class WorkerPool &lbrace;
       constructor(numWorkers, workerSource) &lbrace;
-        this.idleWorkers = [];      // Workers that are not currently working
-        this.workQueue = [];        // Work not currently being processed
-        this.workerMap = new Map(); // Map workers to resolve and reject funcs
+        this.idleWorkers = [];      // Trabajadores que no están trabajando actualmente
+        this.workQueue = [];        // Trabajo que no está siendo procesado actualmente
+        this.workerMap = new Map(); // Mapa de trabajadores a funciones de resolver y rechazar
 
-        // Create the specified number of workers, add message and error
-        // handlers and save them in the idleWorkers array.
+        // Crear el número especificado de trabajadores, agregar los controladores
+        // de mensajes y errores y guardarlos en el array idleWorkers.
         for(let i = 0; i &lt; numWorkers; i++) &lbrace;
           let worker = new Worker(workerSource);
           worker.onmessage = message => &lbrace;
@@ -3822,16 +3835,16 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
         }
       }
 
-      // This internal method is called when a worker finishes working, either
-      // by sending a message or by throwing an error.
+      // Este método interno se llama cuando un trabajador termina su trabajo, ya sea
+      // enviando un mensaje o lanzando un error.
       _workerDone(worker, error, response) &lbrace;
-        // Look up the resolve() and reject() functions for this worker
-        // and then remove the worker's entry from the map.
+        // Buscar las funciones resolve() y reject() para este trabajador
+        // y luego eliminar la entrada del trabajador en el mapa.
         let [resolver, rejector] = this.workerMap.get(worker);
         this.workerMap.delete(worker);
-        // If there is no queued work, put this worker back in
-        // the list of idle workers. Otherwise, take work from the queue
-        // and send it to this worker.
+        // Si no hay trabajo en cola, poner este trabajador de nuevo en
+        // la lista de trabajadores inactivos. De lo contrario, tomar trabajo
+        // de la cola y enviarlo a este trabajador.
         if (this.workQueue.length === 0) &lbrace;
           this.idleWorkers.push(worker);
         } else &lbrace;
@@ -3840,15 +3853,15 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
           worker.postMessage(work);
         }
 
-        // Finally, resolve or reject the promise associated with the worker.
+        // Finalmente, resolver o rechazar la promesa asociada con el trabajador.
         error === null ? resolver(response) : rejector(error);
       }
 
-      // This method adds work to the worker pool and returns a Promise that
-      // will resolve with a worker's response when the work is done. The work
-      // is a value to be passed to a worker with postMessage(). If there is an
-      // idle worker, the work message will be sent immediately. Otherwise it
-      // will be queued until a worker is available.
+      // Este método agrega trabajo al grupo de trabajadores y devuelve una Promesa que
+      // se resolverá con la respuesta de un trabajador cuando el trabajo esté listo. El trabajo
+      // es un valor que se pasa a un trabajador con postMessage(). Si hay un
+      // trabajador inactivo, el mensaje de trabajo se enviará inmediatamente. De lo contrario, se
+      // pondrá en cola hasta que un trabajador esté disponible.
       addWork(work) &lbrace;
         return new Promise((resolve, reject) => &lbrace;
           if (this.idleWorkers.length > 0) &lbrace;
@@ -3863,21 +3876,21 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     }
 
     /*
-    * This class holds the state information necessary to render a Mandelbrot set.
-    * The cx and cy properties give the point in the complex plane that is the
-    * center of the image. The perPixel property specifies how much the real and
-    * imaginary parts of that complex number changes for each pixel of the image.
-    * The maxIterations property specifies how hard we work to compute the set.
-    * Larger numbers require more computation but produce crisper images.
-    * Note that the size of the canvas is not part of the state. Given cx, cy, and
-    * perPixel we simply render whatever portion of the Mandelbrot set fits in
-    * the canvas at its current size.
+    * Esta clase contiene la información de estado necesaria para renderizar un conjunto de Mandelbrot.
+    * Las propiedades cx y cy dan el punto en el plano complejo que es el
+    * centro de la imagen. La propiedad perPixel especifica cuánto cambian las partes reales e
+    * imaginarias de ese número complejo para cada píxel de la imagen.
+    * La propiedad maxIterations especifica cuán intensamente se trabaja para calcular el conjunto.
+    * Números más grandes requieren más cálculos pero producen imágenes más nítidas.
+    * Tenga en cuenta que el tamaño del lienzo no es parte del estado. Dado cx, cy y
+    * perPixel simplemente renderizamos cualquier porción del conjunto Mandelbrot que quepa en
+    * el lienzo en su tamaño actual.
     *
-    * Objects of this type are used with history.pushState() and are used to read
-    * the desired state from a bookmarked or shared URL.
+    * Los objetos de este tipo se utilizan con history.pushState() y se utilizan para leer
+    * el estado deseado desde una URL marcada o compartida.
     */
     class PageState &lbrace;
-      // This factory method returns an initial state to display the entire set.
+      // Este método de fábrica devuelve un estado inicial para mostrar todo el conjunto.
       static initialState() &lbrace;
         let s = new PageState();
         s.cx = -0.5;
@@ -3887,22 +3900,22 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
         return s;
       }
 
-      // This factory method obtains state from a URL, or returns null if
-      // a valid state could not be read from the URL.
+      // Este método de fábrica obtiene el estado de una URL, o devuelve null si
+      // no se pudo leer un estado válido de la URL.
       static fromURL(url) &lbrace;
         let s = new PageState();
-        let u = new URL(url); // Initialize state from the url's search params.
+        let u = new URL(url); // Inicializa el estado desde los parámetros de búsqueda de la URL.
         s.cx = parseFloat(u.searchParams.get("cx"));
         s.cy = parseFloat(u.searchParams.get("cy"));
         s.perPixel = parseFloat(u.searchParams.get("pp"));
         s.maxIterations = parseInt(u.searchParams.get("it"));
-        // If we got valid values, return the PageState object, otherwise null.
+        // Si obtuvimos valores válidos, devolvemos el objeto PageState, de lo contrario null.
         return (isNaN(s.cx) || isNaN(s.cy) || isNaN(s.perPixel) || isNaN(s.maxIterations))
           ? null
           : s;
       }
-      // This instance method encodes the current state into the search
-      // parameters of the browser's current location.
+      // Este método de instancia codifica el estado actual en los parámetros de búsqueda
+      // de la ubicación actual del navegador.
       toURL() &lbrace;
         let u = new URL(window.location);
         u.searchParams.set("cx", this.cx);
@@ -3913,68 +3926,70 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       }
     }
 
-    // These constants control the parallelism of the Mandelbrot set computation.
-    // You may need to adjust them to get optimum performance on your computer.
+    // Estas constantes controlan el paralelismo del cálculo del conjunto Mandelbrot.
+    // Es posible que debas ajustarlas para obtener el mejor rendimiento en tu computadora.
     const ROWS = 3, COLS = 4, NUMWORKERS = navigator.hardwareConcurrency || 2;
 
-    // This is the main class of our Mandelbrot set program. Simply invoke the
-    // constructor function with the &lt;canvas> element to render into. The program
-    // assumes that this &lt;canvas> element is styled so that it is always as big
-    // as the browser window.
+    // Esta es la clase principal de nuestro programa para el conjunto de Mandelbrot.
+    // Simplemente invoca la función constructora con el elemento &lt;canvas> donde se dibujará.
+    // El programa asume que este elemento &lt;canvas> está estilizado para ser tan
+    // grande como la ventana del navegador.
     class MandelbrotCanvas &lbrace;
       constructor(canvas) &lbrace;
-        // Store the canvas, get its context object, and initialize a WorkerPool
+        // Guardamos el lienzo, obtenemos su contexto de dibujo y inicializamos un WorkerPool
         this.canvas = canvas;
         this.context = canvas.getContext("2d");
         this.workerPool = new WorkerPool(NUMWORKERS, "mandelbrotWorker.js");
 
-        // Define some properties that we'll use later
-        this.tiles = null;          // Subregions of the canvas
-        this.pendingRender = null;  // We're not currently rendering
-        this.wantsRerender = false; // No render is currently requested
-        this.resizeTimer = null;    // Prevents us from resizing too frequently
-        this.colorTable = null;     // For converting raw data to pixel values.
+        // Definimos algunas propiedades que usaremos más tarde
+        this.tiles = null;          // Subregiones del lienzo
+        this.pendingRender = null;  // No estamos renderizando actualmente
+        this.wantsRerender = false; // No se ha solicitado un nuevo renderizado
+        this.resizeTimer = null;    // Evita que redimensionemos demasiado rápido
+        this.colorTable = null;     // Para convertir los datos sin procesar en valores de píxeles
 
-        // Set up our event handlers
+        // Configuramos los controladores de eventos
         this.canvas.addEventListener("pointerdown", e => this.handlePointer(e));
         window.addEventListener("keydown", e => this.handleKey(e));
         window.addEventListener("resize", e => this.handleResize(e));
         window.addEventListener("popstate", e => this.setState(e.state, false));
 
-        // Initialize our state from the URL or start with the initial state.
+        // Inicializamos nuestro estado desde la URL o comenzamos con el estado inicial
         this.state =
             PageState.fromURL(window.location) || PageState.initialState();
 
-        // Save this state with the history mechanism.
+        // Guardamos este estado en el historial
         history.replaceState(this.state, "", this.state.toURL());
 
-        // Set the canvas size and get an array of tiles that cover it.
+        // Establecemos el tamaño del lienzo y obtenemos un arreglo de mosaicos que lo cubren
         this.setSize();
 
-        // And render the Mandelbrot set into the canvas.
+        // Y renderizamos el conjunto de Mandelbrot en el lienzo
         this.render();
       }
 
-      // Set the canvas size and initialize an array of Tile objects. This
-      // method is called from the constructor and also by the handleResize()
-      // method when the browser window is resized.
+      // Establece el tamaño del lienzo e inicializa un arreglo de objetos Tile. Este
+      // método se llama desde el constructor y también por el manejador handleResize()
+      // cuando la ventana del navegador cambia de tamaño.
       setSize() &lbrace;
         this.width = this.canvas.width = window.innerWidth;
         this.height = this.canvas.height = window.innerHeight;
         this.tiles = [...Tile.tiles(this.width, this.height, ROWS, COLS)];
       }
 
-      // This function makes a change to the PageState, then re-renders the
-      // Mandelbrot set using that new state, and also saves the new state with
-      // history.pushState(). If the first argument is a function that function
-      // will be called with the state object as its argument and should make
-      // changes to the state. If the first argument is an object, then we simply
-      // copy the properties of that object into the state object. If the optional
-      // second argument is false, then the new state will not be saved. (We
-      // do this when calling setState in response to a popstate event.)
+      // Esta función realiza un cambio en el PageState, luego vuelve a renderizar
+      // el conjunto de Mandelbrot con el nuevo estado, y también guarda el nuevo
+      // estado en el history.pushState(). Si el primer argumento es una función,
+      // esa función se llama con el objeto de estado y debe hacer cambios en él. 
+      // Si el primer argumento es un objeto, simplemente copiamos sus propiedades
+      // en el objeto de estado actual. Si el segundo argumento es false, el estado
+      // no se guarda. (Hacemos esto cuando llamamos a setState en respuesta a
+      // un evento popstate.)
+
+
       setState(f, save=true) &lbrace;
-        // If the argument is a function, call it to update the state.
-        // Otherwise, copy its properties into the current state.
+        // Si el argumento es una función, la llamamos para actualizar el estado.
+        // De lo contrario, copiamos sus propiedades en el estado actual.
         if (typeof f === "function") &lbrace;
           f(this.state);
         } else &lbrace;
@@ -3982,40 +3997,40 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
             this.state[property] = f[property];
           }
         }
-        // In either case, start rendering the new state ASAP.
+        // En cualquier caso, comenzamos a renderizar el nuevo estado ASAP.
         this.render();
 
-        // Normally we save the new state. Except when we're called with
-        // a second argument of false which we do when we get a popstate event.
+        // Normalmente guardamos el nuevo estado. Excepto cuando se llama con
+        // un segundo argumento de false, como cuando recibimos un evento popstate.
         if (save) &lbrace; 
           history.pushState(this.state, "", this.state.toURL());
         }
       }
-      // This method asynchronously draws the portion of the Mandelbrot set
-      // specified by the PageState object into the canvas. It is called by
-      // the constructor, by setState() when the state changes, and by the
-      // resize event handler when the size of the canvas changes.
+      // Este método dibuja de manera asíncrona la porción del conjunto de Mandelbrot
+      // especificada por el objeto PageState en el lienzo. Se llama desde el
+      // constructor, desde setState() cuando cambia el estado, y desde el manejador
+      // de eventos de redimensionado cuando cambia el tamaño del lienzo.
       render() &lbrace;
-        // Sometimes the user may use the keyboard or mouse to request renders
-        // more quickly than we can perform them. We don't want to submit all
-        // the renders to the worker pool. Instead if we're rendering, we'll
-        // just make a note that a new render is needed, and when the current
-        // render completes, we'll render the current state, possibly skipping
-        // multiple intermediate states.
-        if (this.pendingRender) &lbrace;    // If we're already rendering,
-          this.wantsRerender = true; // make a note to rerender later
-          return;                    // and don't do anything more now.
+        // A veces el usuario puede usar el teclado o el ratón para solicitar
+        // renderizados más rápidos de lo que podemos hacer. No queremos enviar
+        // todos los renderizados al grupo de trabajadores. En cambio, si ya estamos
+        // renderizando, solo anotamos que se necesita un nuevo renderizado, y cuando
+        // termine el renderizado actual, renderizamos el estado actual, posiblemente
+        // saltándonos varios estados intermedios.
+        if (this.pendingRender) &lbrace;    // Si ya estamos renderizando,
+          this.wantsRerender = true; // anotamos que queremos volver a renderizar
+          return;                    // y no hacemos nada más ahora.
         }
 
-        // Get our state variables and compute the complex number for the
-        // upper left corner of the canvas.
+        // Obtenemos las variables de estado y calculamos el número complejo para la
+        // esquina superior izquierda del lienzo.
         let &lbrace;cx, cy, perPixel, maxIterations} = this.state;
         let x0 = cx - perPixel * this.width/2;
         let y0 = cy - perPixel * this.height/2;
 
-        // For each of our ROWS*COLS tiles, call addWork() with a message
-        // for the code in mandelbrotWorker.js. Collect the resulting Promise
-        // objects into an array.
+        // Para cada uno de nuestros mosaicos (ROWS*COLS), llamamos a addWork()
+        // con un mensaje para el código en mandelbrotWorker.js. Recopilamos los objetos
+        // Promise resultantes en un arreglo.
         let promises = this.tiles.map(tile => this.workerPool.addWork(&lbrace;
           tile: tile,
           x0: x0 + tile.x * perPixel,
@@ -4024,51 +4039,50 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
           maxIterations: maxIterations
         }));
 
-        // Use Promise.all() to get an array of responses from the array of
-        // promises. Each response is the computation for one of our tiles.
-        // Recall from mandelbrotWorker.js that each response includes the
-        // Tile object, an ImageData object that includes iteration counts
-        // instead of pixel values, and the minimum and maximum iterations
-        // for that tile.
+        // Usamos Promise.all() para obtener un arreglo de respuestas de los promesas.
+        // Cada respuesta es el cálculo para uno de nuestros mosaicos.
+        // Recordemos que en mandelbrotWorker.js cada respuesta incluye el objeto Tile,
+        // un objeto ImageData con los conteos de iteraciones en lugar de los valores de píxeles,
+        // y las iteraciones mínimas y máximas para ese tile.
         this.pendingRender = Promise.all(promises).then(responses => &lbrace;
         
-          // First, find the overall max and min iterations over all tiles.
-          // We need these numbers so we can assign colors to the pixels.
+          // Primero, encontramos las iteraciones máximas y mínimas en todos los mosaicos.
+          // Necesitamos estos números para asignar colores a los píxeles.
           let min = maxIterations, max = 0;
           for(let r of responses) &lbrace;
             if (r.min &lt; min) min = r.min;
             if (r.max > max) max = r.max;
           }
 
-          // Now we need a way to convert the raw iteration counts from the
-          // workers into pixel colors that will be displayed in the canvas.
-          // We know that all the pixels have between min and max iterations
-          // so we precompute the colors for each iteration count and store
-          // them in the colorTable array.
-
-          // If we haven't allocated a color table yet, or if it is no longer
-          // the right size, then allocate a new one.
+          // Ahora necesitamos una forma de convertir los conteos de iteración sin procesar de
+          // los trabajadores en colores de píxeles que se mostrarán en el lienzo.
+          // Sabemos que todos los píxeles tienen entre min y max iteraciones,
+          // por lo que precomputamos los colores para cada conteo de iteración y los almacenamos
+          // en el arreglo colorTable.
+    
+          // Si no hemos asignado una tabla de colores aún, o si ya no tiene el tamaño adecuado,
+          // entonces asignamos una nueva.
           if (!this.colorTable || this.colorTable.length !== maxIterations+1)&lbrace;
             this.colorTable = new Uint32Array(maxIterations+1);
           }
 
-          // Given the max and the min, compute appropriate values in the
-          // color table. Pixels in the set will be colored fully opaque
-          // black. Pixels outside the set will be translucent black with higher
-          // iteration counts resulting in higher opacity. Pixels with
-          // minimum iteration counts will be transparent and the white
-          // background will show through, resulting in a grayscale image.
-          if (min === max) &lbrace;             // If all the pixels are the same,
-            if (min === maxIterations) &lbrace; // Then make them all black
+          // Dado el valor máximo y mínimo, calculamos valores apropiados en la
+          // tabla de colores. Los píxeles dentro del conjunto se colorearán completamente opacos
+          // en negro. Los píxeles fuera del conjunto serán negros translúcidos, y los conteos
+          // de iteración más altos resultarán en mayor opacidad. Los píxeles con
+          // el conteo mínimo de iteraciones serán transparentes, dejando que el fondo blanco
+          // se vea a través, resultando en una imagen en escala de grises.
+          if (min === max) &lbrace;             // Si todos los píxeles son iguales,
+            if (min === maxIterations) &lbrace; // Los hacemos todos negros
               this.colorTable[min] = 0xFF000000;
-            } else &lbrace;                     // Or all transparent.
+            } else &lbrace;                     // O todos transparentes.
               this.colorTable[min] = 0;
             }
           } else &lbrace;
-            // In the normal case where min and max are different, use a
-            // logarithic scale to assign each possible iteration count an
-            // opacity between 0 and 255, and then use the shift left
-            // operator to turn that into a pixel value.
+            // En el caso normal donde min y max son diferentes, usamos una
+            // escala logarítmica para asignar a cada posible conteo de iteración una
+            // opacidad entre 0 y 255, y luego usamos el operador de desplazamiento
+            // para convertir eso en un valor de píxel.
             let maxlog = Math.log(1+max-min);
             for(let i = min; i &lt;= max; i++) &lbrace;
               this.colorTable[i] =
@@ -4076,8 +4090,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
             }
           }
 
-          // Now translate the iteration numbers in each response's
-          // ImageData to colors from the colorTable.
+          // Ahora traducimos los números de iteración en cada ImageData
+          // de las respuestas a colores de la colorTable.
           for(let r of responses) &lbrace;
             let iterations = new Uint32Array(r.imageData.data.buffer);
             for(let i = 0; i &lt; iterations.length; i++) &lbrace;
@@ -4085,25 +4099,27 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
             }
           }
 
-          // Finally, render all the imageData objects into their
-          // corresponding tiles of the canvas using putImageData().
-          // (First, though, remove any CSS transforms on the canvas that may
-          // have been set by the pointerdown event handler.)
+          // Finalmente, renderizamos todos los objetos imageData en sus
+          // respectivos mosaicos en el lienzo usando putImageData().
+          // (Primero, eliminamos cualquier transformación CSS en el lienzo que haya
+          // sido configurada por el manejador de pointerdown.)
           this.canvas.style.transform = "";
           for(let r of responses) &lbrace;
             this.context.putImageData(r.imageData, r.tile.x, r.tile.y);
           }
         })
         .catch((reason) => &lbrace;
-          // If anything went wrong in any of our Promises, we'll log
-          // an error here. This shouldn't happen, but this will help with
-          // debugging if it does.
+          // Si algo salió mal en alguna de nuestras Promesas, registraremos
+          // un error aquí. Esto no debería suceder, pero esto ayudará con
+          // la depuración si sucede.
           console.error("Promise rejected in render():", reason);
         })
         .finally(() => &lbrace;
-          // When we are done rendering, clear the pendingRender flags
+          // Cuando terminemos de renderizar, borramos los indicadores de
+          // procesamiento pendiente
           this.pendingRender = null;
-          // And if render requests came in while we were busy, rerender now.
+          // Y si las solicitudes de renderizado llegaron mientras estábamos
+          // ocupados, vuelva a renderizar ahora.
           if (this.wantsRerender) &lbrace;
             this.wantsRerender = false;
             this.render();
@@ -4111,113 +4127,115 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
         });
       }
 
-      // If the user resizes the window, this function will be called repeatedly.
-      // Resizing a canvas and rerendering the Mandlebrot set is an expensive
-      // operation that we can't do multiple times a second, so we use a timer
-      // to defer handling the resize until 200ms have elapsed since the last
-      // resize event was received.
+      // Si el usuario cambia el tamaño de la ventana, se llamará a esta función
+      // repetidamente. Cambiar el tamaño de un lienzo y volver a renderizar el
+      // conjunto de Mandlebrot es una operación costosa que no podemos realizar
+      // varias veces por segundo, por lo que usamos un temporizador para posponer
+      // la gestión del cambio de tamaño hasta que hayan transcurrido 200 ms desde
+      // que se recibió el último evento de cambio de tamaño.
       handleResize(event) &lbrace;
-        // If we were already deferring a resize, clear it.
+        // Si ya estábamos posponiendo un cambio de tamaño, bórralo.
         if (this.resizeTimer) clearTimeout(this.resizeTimer);
-        // And defer this resize instead.
+        // Y en su lugar, aplazar este cambio de tamaño.
         this.resizeTimer = setTimeout(() => &lbrace;
-          this.resizeTimer = null; // Note that resize has been handled
-          this.setSize();          // Resize canvas and tiles
-          this.render();           // Rerender at the new size
+          this.resizeTimer = null; // Tenga en cuenta que el cambio de tamaño se ha gestionado.
+          this.setSize();          // Cambiar el tamaño del lienzo y los mosaicos
+          this.render();           // Volver a renderizar en el nuevo tamaño
         }, 200);
       }
-      // If the user presses a key, this event handler will be called.
-      // We call setState() in response to various keys, and setState() renders
-      // the new state, updates the URL, and saves the state in browser history.
+      // Si el usuario presiona una tecla, se llamará a este controlador de eventos.
+      // Llamamos setState() en respuesta a varias teclas y setState() muestra el
+      // nuevo estado, actualiza la URL y guarda el estado en el historial del navegador.
       handleKey(event) &lbrace;
         switch(event.key) &lbrace;
-        case "Escape": // Type Escape to go back to the initial state
+        case "Escape": // Escriba Escape para volver al estado inicial
           this.setState(PageState.initialState());
           break;
-        case "+":      // Type + to increase the number of iterations
+        case "+":      // Escriba + para aumentar el número de iteraciones
           this.setState(s => &lbrace;
             s.maxIterations = Math.round(s.maxIterations*1.5);
           });
           break;
-        case "-":     // Type - to decrease the number of iterations
+        case "-":     // Tipo: para disminuir el número de iteraciones
           this.setState(s => &lbrace;
             s.maxIterations = Math.round(s.maxIterations/1.5);
             if (s.maxIterations &lt; 1) s.maxIterations = 1;
           });
           break;
-        case "o":         // Type o to zoom out
+        case "o":         // Escribe o para alejar la imagen
           this.setState(s => s.perPixel *= 2);
           break;
-        case "ArrowUp":   // Up arrow to scroll up
+        case "ArrowUp":   // Flecha hacia arriba para desplazarse hacia arriba
           this.setState(s => s.cy -= this.height/10 * s.perPixel);
           break;
-        case "ArrowDown": // Down arrow to scroll down
+        case "ArrowDown": // Flecha hacia abajo para desplazarse hacia abajo
           this.setState(s => s.cy += this.height/10 * s.perPixel);
           break;
-        case "ArrowLeft": // Left arrow to scroll left
+        case "ArrowLeft": // Flecha izquierda para desplazarse hacia la izquierda
           this.setState(s => s.cx -= this.width/10 * s.perPixel);
           break;
-        case "ArrowRight":// Right arrow to scroll right
+        case "ArrowRight":// Flecha derecha para desplazarse hacia la derecha
           this.setState(s => s.cx += this.width/10 * s.perPixel);
           break;
         }
       }
 
-      // This method is called when we get a pointerdown event on the canvas.
-      // The pointerdown event might be the start of a zoom gesture (a click or
-      // tap) or a pan gesture (a drag). This handler registers handlers for
-      // the pointermove and pointerup events in order to respond to the rest
-      // of the gesture. (These two extra handlers are removed when the gesture
-      // ends with a pointerup.)
+      // Este método se llama cuando recibimos un evento de pointerdown en el lienzo.
+      // El evento de pointerdown puede ser el inicio de un gesto de zoom (un clic o toque)
+      // o de un gesto de desplazamiento (un arrastre). Este manejador registra manejadores
+      // para los eventos de pointermove y pointerup para responder al resto del gesto.
+      // (Estos dos manejadores adicionales se eliminan cuando el gesto termina con
+      // un evento pointerup).
       handlePointer(event) &lbrace;
-        // The pixel coordinates and time of the initial pointer down.
-        // Because the canvas is as big as the window, these event coordinates
-        // are also canvas coordinates.
+        // Coordenadas en píxeles y tiempo del evento inicial de pointerdown.
+        // Como el lienzo es tan grande como la ventana, estas coordenadas del evento
+        // también son coordenadas del lienzo.
         const x0 = event.clientX, y0 = event.clientY, t0 = Date.now();
 
-        // This is the handler for move events.
+        // Este es el manejador para los eventos de movimiento (pointermove).
         const pointerMoveHandler = event => &lbrace;
-          // How much have we moved, and how much time has passed?
+          // ¿Cuánto nos hemos movido y cuánto tiempo ha pasado?
           let dx=event.clientX-x0, dy=event.clientY-y0, dt=Date.now()-t0;
 
-          // If the pointer has moved enough or enough time has passed that
-          // this is not a regular click, then use CSS to pan the display.
-          // (We will rerender it for real when we get the pointerup event.)
+          // Si el puntero se ha movido lo suficiente o ha pasado suficiente tiempo
+          // como para que no sea un clic normal, entonces usamos CSS para desplazar la vista.
+          // (Haremos un renderizado real cuando recibamos el evento pointerup).
           if (dx > 10 || dy > 10 || dt > 500) &lbrace;
             this.canvas.style.transform = `translate($&lbrace;dx}px, $&lbrace;dy}px)`;
           }
         };
-        // This is the handler for pointerup events
+        // Este es el manejador para los eventos de pointerup.
         const pointerUpHandler = event => &lbrace;
-          // When the pointer goes up, the gesture is over, so remove
-          // the move and up handlers until the next gesture.
+          // Cuando el puntero se levanta, el gesto termina, así que eliminamos
+          // los manejadores de movimiento (pointermove) y de levantamiento
+          // (pointerup) hasta el próximo gesto.
           this.canvas.removeEventListener("pointermove", pointerMoveHandler);
           this.canvas.removeEventListener("pointerup", pointerUpHandler);
 
-          // How much did the pointer move, and how much time passed?
+          // ¿Cuánto se movió el puntero y cuánto tiempo pasó?
           const dx = event.clientX-x0, dy=event.clientY-y0, dt=Date.now()-t0;
-          // Unpack the state object into individual constants.
+          // Extraemos el estado actual en constantes individuales.
           const &lbrace;cx, cy, perPixel} = this.state;
 
-          // If the pointer moved far enough or if enough time passed, then
-          // this was a pan gesture, and we need to change state to change
-          // the center point. Otherwise, the user clicked or tapped on a
-          // point and we need to center and zoom in on that point.
+          // Si el puntero se movió lo suficiente o si pasó suficiente tiempo,
+          // entonces fue un gesto de desplazamiento, y necesitamos cambiar el estado para actualizar
+          // el punto central. De lo contrario, el usuario hizo clic o tocó un punto y necesitamos
+          // centrar y hacer zoom en ese punto.
           if (dx > 10 || dy > 10 || dt > 500) &lbrace;
-            // The user panned the image by (dx, dy) pixels.
-            // Convert those values to offsets in the complex plane.
+            // El usuario desplazó la imagen por (dx, dy) píxeles.
+            // Convertimos esos valores a desplazamientos en el plano complejo.
             this.setState(&lbrace;cx: cx - dx*perPixel, cy: cy - dy*perPixel});
           } else &lbrace;
-            // The user clicked. Compute how many pixels the center moves.
+            // El usuario hizo clic. Calculamos cuántos píxeles se mueve el centro.
             let cdx = x0 - this.width/2;
             let cdy = y0 - this.height/2;
             
-            // Use CSS to quickly and temporarily zoom in
+            // Usamos CSS para hacer zoom rápidamente y de manera temporal.
             this.canvas.style.transform =
                 `translate($&lbrace;-cdx*2}px, $&lbrace;-cdy*2}px) scale(2)`;
                 
-            // Set the complex coordinates of the new center point and
-            // zoom in by a factor of 2.
+            // Establecemos las coordenadas complejas del nuevo punto central y
+            // hacemos zoom con un factor de 2.
             this.setState(s => &lbrace;
               s.cx += cdx * s.perPixel;
               s.cy += cdy * s.perPixel;
@@ -4226,21 +4244,22 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
           }
         };
 
-        // When the user begins a gesture we register handlers for the
-        // pointermove and pointerup events that follow.
+        // Cuando el usuario inicia un gesto, registramos manejadores para
+        // los eventos de pointermove y pointerup que siguen.
         this.canvas.addEventListener("pointermove", pointerMoveHandler);
         this.canvas.addEventListener("pointerup", pointerUpHandler);
       }
     }
 
-    // Finally, here's how we set up the canvas. Note that this JavaScript file
-    // is self-sufficient. The HTML file only needs to include this one &lt;script>.
-    let canvas = document.createElement("canvas"); // Create a canvas element
-    document.body.append(canvas);     // Insert it into the body
-    document.body.style = "margin:0"; // No margin for the &lt;body>
-    canvas.style.width = "100%";      // Make canvas as wide as body
-    canvas.style.height = "100%";     // and as high as the body.
-    new MandelbrotCanvas(canvas);     // And start rendering into it!</code></pre>
+    // Por último, aquí se explica cómo configuramos el lienzo. Tenga en cuenta
+    // que este archivo JavaScript es autosuficiente. El archivo HTML solo
+    // necesita incluir este &lt;script>.
+    let canvas = document.createElement("canvas"); // Crear un elemento de lienzo
+    document.body.append(canvas);     // Introdúzcalo en el cuerpo
+    document.body.style = "margin:0"; // No hay margen para la &lt;body>
+    canvas.style.width = "100%";      // Haz que el lienzo sea tan ancho como el cuerpo.
+    canvas.style.height = "100%";     // y tan alto como el cuerpo.
+    new MandelbrotCanvas(canvas);     // Y empezar a renderizarlo!</code></pre>
   </section>
   <section id="15" class="py-4 xs:py-5 sm:py-6">
     <h2>15.15 Resumen y sugerencias de lecturas complementarias</h2>
