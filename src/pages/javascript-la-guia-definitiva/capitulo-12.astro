@@ -5,7 +5,10 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
 <Layoutjavascript title="JavaScript: La guia definitiva">
   <Navegation capAnterior="capitulo-11" capSiguiente="capitulo-13" />
   <section class="fadeIn">
-    <h1 class="text-right">Iteradores y generadores</h1>
+    <header class="flex justify-between">
+      <img class="h-10" src="/public/javascript/doce.svg" alt="Capitulo Doce">
+      <h1 class="text-right">Iteradores y generadores</h1>
+    </header>
     <p>Los objetos iterables y sus iteradores asociados son una característica de ES6 que hemos visto varias veces a lo largo de este libro. Las matrices (incluyendo TypedArrays) son iterables, al igual que las cadenas y los objetos Set y Map. Esto significa que el contenido de estas estructuras de datos puede ser iterado -en bucle- con el bucle <codeinline>for/of</codeinline>, como vimos en <a href="capitulo-5#4-4">§5.4.4</a>:</p>
     <pre class="language-js">
     <code class="language-js">let sum = 0;

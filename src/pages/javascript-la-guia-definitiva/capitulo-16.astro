@@ -5,7 +5,10 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
 <Layoutjavascript title="JavaScript: La guia definitiva">
   <Navegation capAnterior="capitulo-15" capSiguiente="capitulo-17" />
   <section class="fadeIn">
-    <h1 class="text-right">JavaScript del lado del servidor con Node</h1>
+    <header class="flex justify-between">
+      <img class="h-10" src="/public/javascript/dieciceis.svg" alt="Capitulo Diecices">
+      <h1 class="text-right">JavaScript del lado del servidor con Node</h1>
+    </header>
     <p>Node es JavaScript con enlaces al sistema operativo subyacente, lo que permite escribir programas JavaScript que leen y escriben archivos, ejecutan procesos hijo y se comunican a través de la red. Esto hace que Node sea útil como:</p>
     <ul>
       <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
@@ -44,7 +47,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>16.1.1 Salida de la consola</h2>
     <p>Si está acostumbrado a programar en JavaScript para navegadores web, una de las pequeñas sorpresas de Node es que <codeinline>console.log()</codeinline> no sólo sirve para depurar, sino que es la forma más sencilla de Node de mostrar un mensaje al usuario o, más en general, de enviar la salida al flujo stdout de . Aquí está el clásico programa "Hola Mundo" en Node:</p>
     <pre class="language-js">
-    <code class="language-js">console.log("Hello World!");</code></pre>
+    <code class="language-js">console.log("Hola Mundo!");</code></pre>
     <p>Hay formas más sencillas de escribir en stdout, pero ninguna más elegante u oficial que simplemente llamar a <codeinline>console.log()</codeinline>.</p>
     <p>En los navegadores web, <codeinline>console.log()</codeinline>, <codeinline>console.warn()</codeinline> y <codeinline>console.error()</codeinline> suelen mostrar pequeños iconos junto a su salida en la consola del desarrollador para indicar la variedad del mensaje de registro. Node no hace esto, pero la salida mostrada <codeinline>console.error()</codeinline> se distingue de la salida mostrada con <codeinline>console.log()</codeinline> porque <codeinline>console.error()</codeinline> escribe en el flujo stderr. Si está utilizando Node para escribir un programa que está diseñado para tener stdout redirigido a un archivo o una tubería, puede utilizar <codeinline>console.error()</codeinline> para mostrar el texto a la consola donde el usuario lo verá, a pesar de que el texto impreso con <codeinline>console.log()</codeinline> está oculto.</p>
   </section>
@@ -106,8 +109,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Una situación similar se presenta si una Promise creada por su programa es rechazada y no hay una invocación <codeinline>.catch()</codeinline> para manejarla. A partir de Node 13, esto no es un error fatal que cause la salida del programa, pero imprime un mensaje de error verboso en la consola. En alguna versión futura de Node, se espera que los rechazos de Promise no manejados se conviertan en errores fatales. Si no desea que los rechazos no manejados, impriman mensajes de error o terminen su programa, registre una función manejadora global:</p>
     <pre class="language-js">
     <code class="language-js">process.on("unhandledRejection", (reason, promise) => &lbrace;
-      // reason is whatever value would have been passed to a .catch() function
-      // promise is the Promise object that rejected
+      // La razón es que cualquier valor que se hubiera pasado a una
+      // función .catch() promise es el objeto Promise que rechazó
     });</code></pre>
   </section>
   <section id="1-4" class="py-4 xs:py-5 sm:py-6">
@@ -147,14 +150,14 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Algunas funciones de la API de Node son síncronas pero no bloqueantes: se ejecutan hasta el final y vuelven sin necesidad de bloquearse. Pero la mayoría de las funciones interesantes realizan algún tipo de entrada o salida, y éstas son funciones asíncronas para evitar el más mínimo bloqueo. Node fue creado antes de que JavaScript tuviera una clase Promise, por lo que las APIs asíncronas de Node están basadas en callbacks. (Si aún no has leído o ya has olvidado el <a href="capitulo-13">Capítulo 13</a>, éste sería un buen momento para volver a ese capítulo). Generalmente, el último argumento que se pasa a una función asíncrona de Node es un callback. Node utiliza devoluciones de <em>llamada de error primero</em>, que normalmente se invocan con dos argumentos. El primer argumento es normalmente <codeinline>null</codeinline> en el caso de que no se haya producido ningún error, y el segundo argumento es cualquier dato o respuesta producida por la función asíncrona original a la que se ha llamado. La razón de poner el argumento de error en primer lugar es para que sea imposible omitirlo, y siempre se debe comprobar si hay un valor no nulo en este argumento. Si es un objeto Error, o incluso un código de error entero o un mensaje de error de cadena, entonces algo ha ido mal. En este caso, es probable que el segundo argumento de su función callback sea <codeinline>null</codeinline>.</p>
     <p>El siguiente código muestra cómo utilizar la función no bloqueante <codeinline>readFile()</codeinline> para leer un archivo de configuración, analizarlo como JSON y, a continuación, pasar el objeto de configuración analizado a otra llamada de retorno:</p>
     <pre class="language-js">
-    <code class="language-js">const fs = require("fs"); // Require the filesystem module
+    <code class="language-js">const fs = require("fs"); // Requerir el módulo del sistema de archivos
 
     // Read a config file, parse its contents as JSON, and pass the
-    // resulting value to the callback. If anything goes wrong,
-    // print an error message to stderr and invoke the callback with null
+    // resulting value to the callback. If anything goes wrong, print
+    // an error message to stderr and invoke the callback with null
     function readConfigFile(path, callback) &lbrace;
       fs.readFile(path, "utf8", (err, text) => &lbrace;
-        if (err) &lbrace; // Something went wrong reading the file
+        if (err) &lbrace; // Algo salió mal al leer el archivo
           console.error(err);
           callback(null);
           return;
@@ -162,7 +165,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
         let data = null;
         try &lbrace;
           data = JSON.parse(text);
-        } catch(e) &lbrace; // Something went wrong parsing the file contents
+        } catch(e) &lbrace; // Algo salió mal al analizar el contenido del archivo
           console.error(e);
         }
         callback(data);
@@ -171,8 +174,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Node es anterior a las promesas estandarizadas, pero dado que es bastante consistente con sus devoluciones de llamada basadas en errores, es fácil crear variantes basadas en promesas de sus APIs basadas en devoluciones de llamada utilizando la envoltura <codeinline>util.promisify()</codeinline>. Así es como podemos reescribir la función <codeinline>readConfigFile()</codeinline> para que devuelva una Promise:</p>
     <pre class="language-js">
     <code class="language-js">const util = require("util");
-    const fs = require("fs"); // Require the filesystem module
-    const pfs = &lbrace; // Promise-based variants of some fs functions
+    const fs = require("fs"); // Requerir el módulo del sistema de archivos
+    const pfs = &lbrace; // Variantes basadas en promesas de algunas funciones fs
       readFile: util.promisify(fs.readFile)
     };
     function readConfigFile(path) &lbrace;
@@ -224,20 +227,20 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     b.toString()      // => "ABC"; default "utf8"
     b.toString("hex") // => "414243"
 
-    let computer = Buffer.from("IBM3111", "ascii"); // Convert string to Buffer
-    for(let i = 0; i &lt; computer.length; i++) &lbrace;      // Use Buffer as byte array
-      computer[i]--;                                // Buffers are mutable
+    let computer = Buffer.from("IBM3111", "ascii"); // Convertir cadena a búfer
+    for(let i = 0; i &lt; computer.length; i++) &lbrace;      // Utilice Buffer como matriz de bytes
+      computer[i]--;                                // Los buffers son mutables
     }
     computer.toString("ascii")                    // => "HAL2000"
     computer.subarray(0,3).map(x=>x+1).toString() // => "IBM"
 
-    // Create new "empty" buffers with Buffer.alloc()
+    // Crea nuevos buffers "empty" con Buffer.alloc()
     let zeros = Buffer.alloc(1024);     // 1024 zeros
     let ones = Buffer.alloc(128, 1);    // 128 ones
-    let dead = Buffer.alloc(1024, "DEADBEEF", "hex"); // Repeating pattern of bytes
+    let dead = Buffer.alloc(1024, "DEADBEEF", "hex"); // Patrón repetitivo de bytes
 
-    // Buffers have methods for reading and writing multi-byte values
-    // from and to a buffer at any specified offset.
+    // Los buffers tienen métodos para leer y escribir valores multibyte
+    // desde y hacia un buffer en cualquier desplazamiento especificado.
     dead.readUInt32BE(0)    // => 0xDEADBEEF
     dead.readUInt32BE(1)    // => 0xADBEEFDE
     dead.readBigUInt64BE(6) // => 0xBEEFDEADBEEFDEADn
@@ -249,19 +252,19 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Como se ha descrito, todas las APIs de Node son asíncronas por defecto. Para muchas de ellas, esta asincronía toma la forma de devoluciones de llamada de dos argumentos que se invocan cuando la operación solicitada se ha completado. Pero algunas de las API más complicadas se basan en eventos. Este suele ser el caso cuando la API está diseñada en torno a un objeto en lugar de una función, o cuando una función de devolución de llamada debe ser invocada varias veces, o cuando hay varios tipos de funciones de devolución de llamada que pueden ser necesarias. Consideremos la clase <codeinline>net.Server</codeinline>, por ejemplo: un objeto de este tipo es un socket de servidor que se utiliza para aceptar conexiones entrantes de clientes. Emite un evento "listening" cuando empieza a escuchar conexiones, un evento "connection" cada vez que un cliente se conecta, y un evento "close" cuando se ha cerrado y ya no está escuchando.</p>
     <p>En Node, los objetos que emiten eventos son instancias de EventEmitter o una subclase de EventEmitter:</p>
     <pre class="language-js">
-    <code class="language-js">const EventEmitter = require("events"); // Module name does not match class name
+    <code class="language-js">const EventEmitter = require("events"); // El nombre del módulo no coincide con el nombre de la clase
     const net = require("net");
-    let server = new net.Server();          // create a Server object
+    let server = new net.Server();          // crear un objeto de servidor
     server instanceof EventEmitter          // => true: Servers are EventEmitters</code></pre>
     <p>La principal característica de los EventEmitters es que permiten registrar funciones manejadoras de eventos con el método <codeinline>on()</codeinline>. Los EventEmitters pueden emitir múltiples tipos de eventos, y los tipos de eventos se identifican por su nombre. Para registrar un manejador de eventos, llame al método <codeinline>on()</codeinline>, pasando el nombre del tipo de evento y la función que debe invocarse cuando se produce un evento de ese tipo. Los EventEmitters pueden invocar funciones manejadoras con cualquier número de argumentos, y necesitas leer la documentación para un tipo específico de evento de un EventEmitter específico para saber qué argumentos deberías esperar que se pasen:</p>
     <pre class="language-js">
     <code class="language-js">const net = require("net");
-    let server = new net.Server();      // create a Server object
-    server.on("connection", socket => &lbrace; // Listen for "connection" events
-      // Server "connection" events are passed a socket object
-      // for the client that just connected. Here we send some data
-      // to the client and disconnect.
-      socket.end("Hello World", "utf8");
+    let server = new net.Server();      // crear un objeto de servidor
+    server.on("connection", socket => &lbrace; // Escuchar eventos de "connection"
+      // Los eventos de "connection" del servidor reciben un objeto de
+      // socket para el cliente que acaba de conectarse. Aquí enviamos
+      // algunos datos al cliente y nos desconectamos.
+      socket.end("Hola Mundo", "utf8");
     });</code></pre>
     <p>Si prefieres nombres de métodos más explícitos para registrar escuchadores de eventos, también puedes utilizar <codeinline>addListener()</codeinline>. Y puedes eliminar un receptor de eventos previamente registrado con <codeinline>off()</codeinline> o <codeinline>removeListener()</codeinline>. Como caso especial, puedes registrar un escuchador de eventos que se eliminará automáticamente después de que se active por primera vez llamando a <codeinline>once()</codeinline> en lugar de <codeinline>on()</codeinline>.</p>
     <p>Cuando ocurre un evento de un tipo particular para un objeto EventEmitter en particular, Node invoca todas las funciones manejadoras que están actualmente registradas en ese EventEmitter para eventos de ese tipo. Se invocan en orden desde el primero registrado hasta el último. Si hay más de una función manejadora, se invocan secuencialmente en un único hilo: recuerda que no hay paralelismo en Node. Y, lo que es más importante, las funciones manejadoras de eventos se invocan de forma sincrónica, no asincrónica. Lo que esto significa es que el método <codeinline>emit()</codeinline> no pone en cola los manejadores de eventos para ser invocados en algún momento posterior. <codeinline>emit()</codeinline> invoca todos los manejadores registrados, uno tras otro, y no retorna hasta que el último manejador de eventos haya retornado.</p>
@@ -276,7 +279,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <pre class="language-js">
     <code class="language-js">const fs = require("fs");
 
-    // An asynchronous but nonstreaming (and therefore inefficient) function.
+    // Una función asincrónica pero sin transmisión (y, por lo tanto, ineficiente).
     function copyFile(sourceFilename, destinationFilename, callback) &lbrace;
       fs.readFile(sourceFilename, (err, buffer) => &lbrace;
         if (err) &lbrace;
@@ -315,14 +318,14 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>La siguiente función de utilidad canaliza un flujo a otro e invoca una llamada de retorno cuando termina o cuando se produce un error:</p>
     <pre class="language-js">
     <code class="language-js">function pipe(readable, writable, callback) &lbrace;
-      // First, set up error handling
+      // Primero, configure el manejo de errores
       function handleError(err) &lbrace;
         readable.close();
         writable.close();
         callback(err);
       }
 
-      // Next define the pipe and handle the normal termination case
+      // A continuación, defina la tubería y maneje el caso de terminación normal.
       readable
         .on("error", handleError)
         .pipe(writable)
@@ -335,18 +338,18 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     const zlib = require("zlib");
 
     function gzip(filename, callback) &lbrace;
-      // Create the streams
+      // Crear los streams
       let source = fs.createReadStream(filename);
       let destination = fs.createWriteStream(filename + ".gz");
       let gzipper = zlib.createGzip();
 
-      // Set up the pipeline
+      // Configurar la tubería
       source
-        .on("error", callback)    // call callback on read error
+        .on("error", callback)    // Llamar a devolución de llamada en caso de error de lectura
         .pipe(gzipper)
         .pipe(destination)
-        .on("error", callback)    // call callback on write error
-        .on("finish", callback);  // call callback when writing is complete
+        .on("error", callback)    // Llamar a devolución de llamada en caso de error de escritura
+        .on("finish", callback);  // Llamar a la devolución de llamada cuando se complete la escritura
     }</code></pre>
     <p>Usar el método <codeinline>pipe()</codeinline> para copiar datos de un flujo Legible a un flujo Legible es fácil, pero en la práctica, a menudo necesitas procesar los datos de alguna manera mientras fluyen a través de tu programa. Una forma de hacer esto es implementar su propio flujo Transform para hacer ese procesamiento, y este enfoque le permite evitar la lectura y escritura manual de los flujos. Aquí, por ejemplo, hay una función que funciona como la utilidad <codeinline>grep</codeinline> de Unix: lee líneas de texto de un flujo de entrada, pero escribe sólo las líneas que coinciden con una expresión regular especificada:</p>
     <pre class="language-js">
@@ -354,100 +357,100 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
 
     class GrepStream extends stream.Transform &lbrace;
       constructor(pattern) &lbrace;
-        super(&lbrace;decodeStrings: false}); // Don't convert strings back to buffers
-        this.pattern = pattern;        // The regular expression we want to match
-        this.incompleteLine = "";      // Any remnant of the last chunk of data
+        super(&lbrace;decodeStrings: false}); // No convertir las cadenas de texto de vuelta a buffers
+        this.pattern = pattern;        // La expresión regular que queremos buscar
+        this.incompleteLine = "";      // Cualquier remanente del último fragmento de datos
       }
 
-      // This method is invoked when there is a string ready to be
-      // transformed. It should pass transformed data to the specified
-      // callback function. We expect string input so this stream should
-      // only be connected to readable streams that have had
-      // setEncoding() called on them.
+      // Este método se invoca cuando hay una cadena de texto lista para
+      // ser transformada. Debe pasar los datos transformados a la función
+      // de callback especificada. Esperamos una entrada de tipo cadena,
+      // por lo que este flujo solo debe estar conectado a flujos legibles
+      // que hayan llamado a setEncoding().
       _transform(chunk, encoding, callback) &lbrace;
         if (typeof chunk !== "string") &lbrace;
-          callback(new Error("Expected a string but got a buffer"));
+          callback(new Error("Se esperaba una cadena de texto, pero se recibió un buffer"));
           return;
         }
-        // Add the chunk to any previously incomplete line and break
-        // everything into lines
+        // Agregar el fragmento a cualquier línea incompleta anterior y dividir
+        // todo en líneas
         let lines = (this.incompleteLine + chunk).split("\n");
 
-        // The last element of the array is the new incomplete line
+        // El último elemento del array es la nueva línea incompleta
         this.incompleteLine = lines.pop();
 
-        // Find all matching lines
-        let output = lines          // Start with all complete lines,
-          .filter(l => this.pattern.test(l)) // filter them for matches,
-          .join("\n");              // and join them back up.
+        // Buscar todas las líneas coincidentes
+        let output = lines          // Empezar con todas las líneas completas,
+          .filter(l => this.pattern.test(l)) // filtrarlas para coincidencias,
+          .join("\n");              // y unirlas de nuevo.
 
-        // If anything matched, add a final newline
+        // Si hay alguna coincidencia, añadir un salto de línea final
         if (output) &lbrace;
           output += "\n";
         }
-        // Always call the callback even if there is no output
+        // Siempre llamar al callback incluso si no hay salida
         callback(null, output);
       }
-      // This is called right before the stream is closed.
-      // It is our chance to write out any last data.
+      // Esto se llama justo antes de cerrar el flujo.
+      // Es nuestra oportunidad para escribir cualquier dato restante.
       _flush(callback) &lbrace;
-        // If we still have an incomplete line, and it matches
-        // pass it to the callback
+        // Si aún tenemos una línea incompleta y coincide,
+        // pasarla al callback
         if (this.pattern.test(this.incompleteLine)) &lbrace;
           callback(null, this.incompleteLine + "\n");
         }
       }
     }
 
-    // Now we can write a program like 'grep' with this class.
-    let pattern = new RegExp(process.argv[2]); // Get a RegExp from command line.
-    process.stdin                         // Start with standard input,
-      .setEncoding("utf8")                // read it as Unicode strings,
-      .pipe(new GrepStream(pattern))      // pipe it to our GrepStream,
-      .pipe(process.stdout)               // and pipe that to standard out.
-      .on("error", () => process.exit()); // Exit gracefully if stdout closes.</code></pre>
+    // Ahora podemos escribir un programa similar a 'grep' con esta clase.
+    let pattern = new RegExp(process.argv[2]); // Obtener una expresión regular desde la línea de comandos.
+    process.stdin                         // Comenzar con la entrada estándar,
+      .setEncoding("utf8")                // leerla como cadenas de texto Unicode,
+      .pipe(new GrepStream(pattern))      // enviarla a nuestro GrepStream,
+      .pipe(process.stdout)               // y enviarla a la salida estándar.
+      .on("error", () => process.exit()); // Salir de forma segura si la salida estándar se cierra.</code></pre>
   </section>
   <section id="5-2">
     <h2>16.5.2 Iteración asíncrona</h2>
     <p>En Nodo 12 y posteriores, los flujos legibles son iteradores asíncronos, lo que significa que dentro de una función <codeinline>async</codeinline> puedes usar un bucle <codeinline>for/await</codeinline> para leer trozos de cadena o Buffer de un flujo usando código que está estructurado como lo estaría el código síncrono. (Ver <a href="capitulo-13#4">§13.4</a> para más información sobre iteradores asíncronos y bucles <codeinline>for/await</codeinline>).</p>
     <p>Usar un iterador asíncrono es casi tan fácil como usar el método <codeinline>pipe()</codeinline>, y es probablemente más fácil cuando necesitas procesar cada trozo que lees de alguna manera. Así es como podríamos reescribir el programa <codienline>grep</codienline> de la sección anterior usando una función <codeinline>async</codeinline> y un bucle <codeinline>for/await</codeinline>:</p>
     <pre class="language-js">
-    <code class="language-js">// Read lines of text from the source stream, and write any lines
-    // that match the specified pattern to the destination stream.
+    <code class="language-js">// Leer líneas de texto del flujo de entrada (source) y escribir cualquier línea
+      // que coincida con el patrón especificado en el flujo de salida (destination).
     async function grep(source, destination, pattern, encoding="utf8") &lbrace;
-      // Set up the source stream for reading strings, not Buffers
+      // Configurar el flujo de entrada para leer cadenas de texto, no Buffers
       source.setEncoding(encoding);
 
-      // Set an error handler on the destination stream in case standard
-      // output closes unexpectedly (when piping output to `head`, e.g.)
+      // Establecer un manejador de errores en el flujo de salida en caso de que la
+      // salida estándar se cierre inesperadamente (por ejemplo, al redirigir la salida a `head`)
       destination.on("error", err => process.exit());
 
-      // The chunks we read are unlikely to end with a newline, so each will
-      // probably have a partial line at the end. Track that here
+      // Los fragmentos que leemos probablemente no terminarán con un salto de línea,
+      // por lo que cada uno probablemente tendrá una línea parcial al final. La rastreamos aquí
       let incompleteLine = "";
 
-      // Use a for/await loop to asynchronously read chunks from the input stream
+      // Usar un bucle for/await para leer fragmentos del flujo de entrada de forma asíncrona
       for await (let chunk of source) &lbrace;
-        // Split the end of the last chunk plus this one into lines
+        // Dividir el final del último fragmento junto con el actual en líneas
         let lines = (incompleteLine + chunk).split("\n");
-        // The last line is incomplete
+        // La última línea está incompleta
         incompleteLine = lines.pop();
-        // Now loop through the lines and write any matches to the destination
+        // Ahora recorrer las líneas y escribir cualquier coincidencia en el flujo de salida
         for(let line of lines) &lbrace;
           if (pattern.test(line)) &lbrace;
             destination.write(line + "\n", encoding);
           }
         }
       }
-      // Finally, check for a match on any trailing text.
+      // Finalmente, verificar si hay coincidencia con cualquier texto restante.
       if (pattern.test(incompleteLine)) &lbrace;
         destination.write(incompleteLine + "\n", encoding);
       }
     }
 
-    let pattern = new RegExp(process.argv[2]);    // Get a RegExp from command line.
-    grep(process.stdin, process.stdout, pattern)  // Call the async grep() function.
-      .catch(err => &lbrace; // Handle asynchronous exceptions.
+    let pattern = new RegExp(process.argv[2]);    // Obtener una expresión regular desde la línea de comandos.
+    grep(process.stdin, process.stdout, pattern)  // Llamar a la función asíncrona grep().
+      .catch(err => &lbrace; // Manejar excepciones asíncronas.
         console.error(err);
         process.exit();
       });</code></pre>
@@ -461,14 +464,14 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>La respuesta adecuada a este tipo de contrapresión es dejar de llamar a <codeinline>write()</codeinline> hasta que el flujo emita un evento "drain", indicando que de nuevo hay espacio en el buffer. Aquí, por ejemplo, hay una función que escribe en un flujo, y luego invoca una llamada de retorno cuando está bien escribir más datos en el flujo:</p>
     <pre class="language-js">
     <code class="language-js">function write(stream, chunk, callback) &lbrace;
-      // Write the specified chunk to the specified stream
+      // Escribe el fragmento especificado en la secuencia especificada
       let hasMoreRoom = stream.write(chunk);
 
-      // Check the return value of the write() method:
-      if (hasMoreRoom) &lbrace;        // If it returned true, then
-        setImmediate(callback); // invoke callback asynchronously.
-      } else &lbrace;                  // If it returned false, then
-        stream.once("drain", callback); // invoke callback on drain event.
+      // Compruebe el valor de retorno del método write():
+      if (hasMoreRoom) &lbrace;        // Si devolvió true, entonces
+        setImmediate(callback); // invocar devolución de llamada de forma asincrónica.
+      } else &lbrace;                  // Si devolvió false, entonces
+        stream.once("drain", callback); // invocar devolución de llamada en evento de drenaje.
       }
     }</code></pre>
     <p>El hecho de que a veces esté bien llamar a <codeinline>write()</codeinline> varias veces seguidas y algunas veces tengas que esperar un evento entre escrituras hace que los algoritmos sean incómodos. Esta es una de las razones por las que usar el método <codeinline>pipe()</codeinline> es tan atractivo: cuando usas <codeinline>pipe()</codeinline>, Node maneja la contrapresión por ti automáticamente.</p>
@@ -476,38 +479,39 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Si utiliza <codeinline>await</codeinline> y <codeinline>async</codeinline> en su programa y trata los flujos de lectura como iteradores asincrónicos, es sencillo implementar una versión basada en Promise de la función de utilidad <codeinline>write()</codeinline> anterior para manejar la contrapresión de forma adecuada. En la función asíncrona <codeinline>grep()</codeinline> que acabamos de ver, no manejamos la contrapresión. La función async <codeinline>copy()</codeinline> del siguiente ejemplo demuestra cómo hacerlo correctamente. Ten en cuenta que esta función sólo copia trozos de un flujo de origen a un flujo de destino y llamar a <codeinline>copy(source, destination)</codeinline> es como llamar a <codeinline>source.pipe(destination)</codeinline>:</p>
     <pre class="language-js">
     <code class="language-js">
-    // This function writes the specified chunk to the specified stream and
-    // returns a Promise that will be fulfilled when it is OK to write again.
-    // Because it returns a Promise, it can be used with await.
+    // Esta función escribe el fragmento especificado en el flujo indicado y
+    // devuelve una Promesa que se cumplirá cuando sea seguro volver a escribir.
+    // Debido a que devuelve una Promesa, puede ser utilizada con await.
     function write(stream, chunk) &lbrace;
-      // Write the specified chunk to the specified stream
+      // Escribir el fragmento especificado en el flujo indicado
       let hasMoreRoom = stream.write(chunk);
 
-      if (hasMoreRoom) &lbrace;                 // If buffer is not full, return
-        return Promise.resolve(null);    // an already resolved Promise object
+      if (hasMoreRoom) &lbrace;                 // Si el buffer no está lleno, devolver
+        return Promise.resolve(null);    // una Promesa ya resuelta
       } else &lbrace;
-        return new Promise(resolve => &lbrace;  // Otherwise, return a Promise that
-          stream.once("drain", resolve); // resolves on the drain event.
+        return new Promise(resolve => &lbrace;  // De lo contrario, devolver una Promesa que
+          stream.once("drain", resolve); // se resuelve en el evento drain (cuando el buffer se vacía).
+        });
         });
       }
     }
     
-    // Copy data from the source stream to the destination stream
-    // respecting backpressure from the destination stream.
-    // This is much like calling source.pipe(destination).
+    // Copiar datos del flujo de entrada (source) al flujo de salida (destination),
+    // respetando la contrapresión del flujo de salida.
+    // Esto es similar a llamar a source.pipe(destination).
     async function copy(source, destination) &lbrace;
-      // Set an error handler on the destination stream in case standard
-      // output closes unexpectedly (when piping output to `head`, e.g.)
+      // Establecer un manejador de errores en el flujo de salida en caso de que la
+      // salida estándar se cierre inesperadamente (por ejemplo, al redirigir la salida a `head`)
       destination.on("error", err => process.exit());
 
-      // Use a for/await loop to asynchronously read chunks from the input stream
+      // Usar un bucle for/await para leer fragmentos del flujo de entrada de forma asíncrona
       for await (let chunk of source) &lbrace;
-        // Write the chunk and wait until there is more room in the buffer.
+        // Escribir el fragmento y esperar hasta que haya más espacio en el buffer.
         await write(destination, chunk);
       }
     }
 
-    // Copy standard input to standard output
+    // Copiar la entrada estándar a la salida estándar
     copy(process.stdin, process.stdout);</code></pre>
     <p>Antes de concluir esta discusión sobre la escritura en flujos, ten en cuenta de nuevo que no responder a la contrapresión puede hacer que tu programa use más memoria de la que debería cuando el buffer interno de un flujo escribible se desborde y crezca más y más. Si estás escribiendo un servidor de red, esto puede ser un problema de seguridad explotable remotamente. Supongamos que escribes un servidor HTTP que entrega archivos a través de la red, pero no usas <codeinline>pipe()</codeinline> y no te has tomado el tiempo de manejar la contrapresión del método <codeinline>write()</codeinline>. Un atacante podría escribir un cliente HTTP que inicie peticiones de archivos grandes (como imágenes) pero que nunca lea el cuerpo de la petición. Dado que el cliente no está leyendo los datos a través de la red, y el servidor no está respondiendo a la contrapresión, los buffers en el servidor se desbordarán. Con suficientes conexiones concurrentes del atacante, esto puede convertirse en un ataque de denegación de servicio que ralentice tu servidor o incluso lo bloquee.</p>
   </section>
@@ -522,39 +526,39 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <pre class="language-js">
     <code class="language-js">const fs = require("fs");
 
-    // A streaming file copy function, using "flowing mode".
-    // Copies the contents of the named source file to the named destination file.
-    // On success, invokes the callback with a null argument. On error,
-    // invokes the callback with an Error object.
+    // Una función de copia de archivos en modo de flujo ("flowing mode").
+    // Copia el contenido del archivo fuente especificado al archivo de destino especificado.
+    // Si tiene éxito, invoca el callback con un argumento null. Si ocurre un error,
+    // invoca el callback con un objeto Error.
     function copyFile(sourceFilename, destinationFilename, callback) &lbrace;
       let input = fs.createReadStream(sourceFilename);
       let output = fs.createWriteStream(destinationFilename);
 
-      input.on("data", (chunk) => &lbrace;        // When we get new data,
-        let hasRoom = output.write(chunk); // write it to the output stream.
-        if (!hasRoom) &lbrace;  // If the output stream is full
-          input.pause(); // then pause the input stream.
+      input.on("data", (chunk) => &lbrace;        // Cuando recibimos nuevos datos,
+        let hasRoom = output.write(chunk); // los escribimos en el flujo de salida.
+        if (!hasRoom) &lbrace;  // Si el flujo de salida está lleno
+          input.pause(); // entonces pausamos el flujo de entrada.
         }
       });
-      input.on("end", () => &lbrace;     // When we reach the end of input,
-        output.end();   // tell the output stream to end.
+      input.on("end", () => &lbrace;     // Cuando llegamos al final del flujo de entrada,
+        output.end();   // indicamos al flujo de salida que termine.
       });
-      input.on("error", err => &lbrace;  // If we get an error on the input,
-        callback(err);  // call the callback with the error
-        process.exit(); // and quit.
+      input.on("error", err => &lbrace;  // Si ocurre un error en el flujo de entrada,
+        callback(err);  // llamamos al callback con el error
+        process.exit(); // y terminamos la ejecución.
       });
-      output.on("drain", () => &lbrace;  // When the output is no longer full,
-        input.resume(); // resume data events on the input
+      output.on("drain", () => &lbrace;  // Cuando el flujo de salida ya no está lleno,
+        input.resume(); // reanudamos los eventos de datos en el flujo de entrada.
       });
-      output.on("error", err => &lbrace; // If we get an error on the output,
-        callback(err);  // call the callback with the error
-        process.exit(); // and quit.
+      output.on("error", err => &lbrace; // Si ocurre un error en el flujo de salida,
+        callback(err);  // llamamos al callback con el error
+        process.exit(); // y terminamos la ejecución.
       });
-      output.on("finish", () => &lbrace; // When output is fully written
-        callback(null); // call the callback with no error.
+      output.on("finish", () => &lbrace; // Cuando el flujo de salida termina de escribirse
+        callback(null); // llamamos al callback sin errores.
       });
     }
-    // Here's a simple command-line utility to copy files
+    // Aquí hay una utilidad simple de línea de comandos para copiar archivos
     let from = process.argv[2], to = process.argv[3];
     console.log(`Copying file $&lbrace;from} to $&lbrace;to}...`);
     copyFile(from, to, err => &lbrace;
@@ -572,31 +576,31 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <code class="language-js">const fs = require("fs");
     const crypto = require("crypto");
 
-    // Compute a sha256 hash of the contents of the named file and pass the
-    // hash (as a string) to the specified error-first callback function.
+    // Calcula un hash sha256 del contenido del archivo especificado y pasa el
+    // hash (como cadena de texto) a la función de callback en formato de error primero.
     function sha256(filename, callback) &lbrace;
-      let input = fs.createReadStream(filename); // The data stream.
-      let hasher = crypto.createHash("sha256");  // For computing the hash.
+      let input = fs.createReadStream(filename); // El flujo de datos.
+      let hasher = crypto.createHash("sha256");  // Para calcular el hash.
 
-      input.on("readable", () => &lbrace;    // When there is data ready to read
+      input.on("readable", () => &lbrace;    // Cuando hay datos listos para ser leídos
         let chunk;
-        while(chunk = input.read()) &lbrace; // Read a chunk, and if non-null,
-          hasher.update(chunk);       // pass it to the hasher,
-        } // and keep looping until not readable
+        while(chunk = input.read()) &lbrace; // Leer un fragmento, y si no es nulo,
+          hasher.update(chunk);       // pasarlo al hasher (calculador de hash),
+        } // y seguir iterando hasta que no haya más datos para leer
       });
-      input.on("end", () => &lbrace;         // At the end of the stream,
-        let hash = hasher.digest("hex"); // compute the hash,
-        callback(null, hash);         // and pass it to the callback.
+      input.on("end", () => &lbrace;         // Al final del flujo de datos,
+        let hash = hasher.digest("hex"); // calcular el hash,
+        callback(null, hash);         // y pasarlo al callback.
       });
-      input.on("error", callback);    // On error, call callback
+      input.on("error", callback);    // En caso de error, llamar al callback
     }
 
-    // Here's a simple command-line utility to compute the hash of a file
-    sha256(process.argv[2], (err, hash) => &lbrace; // Pass filename from command line.
-      if (err) &lbrace;                      // If we get an error
-        console.error(err.toString());// print it as an error.
-      } else &lbrace;                        // Otherwise,
-        console.log(hash);            // print the hash string.
+    // Aquí hay una utilidad simple de línea de comandos para calcular el hash de un archivo
+    sha256(process.argv[2], (err, hash) => &lbrace; // Pasar el nombre del archivo desde la línea de comandos.
+      if (err) &lbrace;                      // Si hay un error
+        console.error(err.toString());// imprimirlo como error.
+      } else &lbrace;                        // De lo contrario,
+        console.log(hash);            // imprimir la cadena de texto del hash.
       }
     });</code></pre>
   </section>
@@ -604,52 +608,54 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>16.6 Detalles del proceso, la CPU y el sistema operativo</h2>
     <p>El objeto global Process tiene una serie de propiedades y funciones útiles que generalmente se relacionan con el estado del proceso Node que se está ejecutando en ese momento. Consulte la documentación de Node para más detalles, pero aquí hay algunas propiedades y funciones que debe conocer:</p>
     <pre class="language-js">
-    <code class="language-js">process.argv            // An array of command-line arguments.
-    process.arch            // The CPU architecture: "x64", for example.
-    process.cwd()           // Returns the current working directory.
-    process.chdir()         // Sets the current working directory.
-    process.cpuUsage()      // Reports CPU usage.
-    process.env             // An object of environment variables.
-    process.execPath        // The absolute filesystem path to the node executable.
-    process.exit()          // Terminates the program.
-    process.exitCode        // An integer code to be reported when the program exits.
-    process.getuid()        // Return the Unix user id of the current user.
-    process.hrtime.bigint() // Return a "high-resolution" nanosecond timestamp.
-    process.kill()          // Send a signal to another process.
-    process.memoryUsage()   // Return an object with memory usage details.
-    process.nextTick()      // Like setImmediate(), invoke a function soon.
-    process.pid             // The process id of the current process.
-    process.ppid            // The parent process id.
-    process.platform        // The OS: "linux", "darwin", or "win32", for example.
-    process.resourceUsage() // Return an object with resource usage details.
-    process.setuid()        // Sets the current user, by id or name.
-    process.title           // The process name that appears in `ps` listings.
-    process.umask()         // Set or return the default permissions for new files.
-    process.uptime()        // Return Node's uptime in seconds.
-    process.version         // Node's version string.
-    process.versions        // Version strings for the libraries Node depends on.</code></pre>
+    <code class="language-js">process.argv            // Un array con los argumentos de la línea de comandos.
+    process.arch            // La arquitectura de la CPU: por ejemplo, "x64".
+    process.cwd()           // Devuelve el directorio de trabajo actual.
+    process.chdir()         // Establece el directorio de trabajo actual.
+    process.cpuUsage()      // Informa sobre el uso de la CPU.
+    process.env             // Un objeto con las variables de entorno.
+    process.execPath        // La ruta absoluta al ejecutable de Node.js.
+    process.exit()          // Termina el programa.
+    process.exitCode        // Un código entero que se informa al salir del programa.
+    process.getuid()        // Devuelve el id de usuario de Unix del usuario actual.
+    process.hrtime.bigint() // Devuelve un timestamp de alta resolución en nanosegundos.
+    process.kill()          // Envía una señal a otro proceso.
+    process.memoryUsage()   // Devuelve un objeto con detalles del uso de memoria.
+    process.nextTick()      // Similar a setImmediate(), invoca una función pronto.
+    process.pid             // El id del proceso actual.
+    process.ppid            // El id del proceso padre.
+    process.platform        // El sistema operativo: "linux", "darwin" o "win32", por ejemplo.
+    process.resourceUsage() // Devuelve un objeto con detalles del uso de recursos.
+    process.setuid()        // Establece el usuario actual, por id o nombre.
+    process.title           // El nombre del proceso que aparece en listados de `ps`.
+    process.umask()         // Establece o devuelve los permisos predeterminados para archivos nuevos.
+    process.uptime()        // Devuelve el tiempo de ejecución de Node.js en segundos.
+    process.version         // La cadena de versión de Node.js.
+    process.versions        // Cadenas de versión de las bibliotecas de las que depende Node.js.</code></pre>
     <p>El módulo "os" (que, a diferencia de <codeinline>process</codeinline>, necesita ser cargado explícitamente con <codeinline>require()</codeinline>) proporciona acceso a detalles de bajo nivel similares sobre el ordenador y el sistema operativo en el que se está ejecutando Node. Puede que nunca necesites usar ninguna de estas características, pero vale la pena saber que Node las pone a tu disposición:</p>
     <pre class="language-js">
     <code class="language-js">const os = require("os");
-    os.arch()         // Returns CPU architecture. "x64" or "arm", for example.
-    os.constants      // Useful constants such as os.constants.signals.SIGINT.
-    os.cpus()         // Data about system CPU cores, including usage times.
-    os.endianness()   // The CPU's native endianness "BE" or "LE".
-    os.EOL            // The OS native line terminator: "\n" or "\r\n".
-    os.freemem()      // Returns the amount of free RAM in bytes.
-    os.getPriority()  // Returns the OS scheduling priority of a process.
-    os.homedir()      // Returns the current user's home directory.
-    os.hostname()     // Returns the hostname of the computer.
-    os.loadavg()      // Returns the 1, 5, and 15-minute load averages.
-    os.networkInterfaces() // Returns details about available network. connections.
-    os.platform()     // Returns OS: "linux", "darwin", or "win32", for example.
-    os.release()      // Returns the version number of the OS.
-    os.setPriority()  // Attempts to set the scheduling priority for a process.
-    os.tmpdir()       // Returns the default temporary directory.
-    os.totalmem()     // Returns the total amount of RAM in bytes.
-    os.type()         // Returns OS: "Linux", "Darwin", or "Windows_NT", e.g.
-    os.uptime()       // Returns the system uptime in seconds.
-    os.userInfo()     // Returns uid, username, home, and shell of current user.</code></pre>
+
+    os.arch()         // Devuelve la arquitectura de la CPU. Por ejemplo: "x64" o "arm".
+    os.constants      // Constantes útiles como os.constants.signals.SIGINT.
+    os.cpus()         // Información sobre los núcleos de la CPU del sistema, incluyendo tiempos de uso.
+    os.endianness()   // La endianidad nativa de la CPU: "BE" (big-endian) o "LE" (little-endian).
+    os.EOL            // El terminador de línea nativo del sistema operativo: "\n" o "\r\n".
+    os.freemem()      // Devuelve la cantidad de memoria RAM libre en bytes.
+    os.getPriority()  // Devuelve la prioridad de planificación del sistema operativo para un proceso.
+    os.homedir()      // Devuelve el directorio de inicio del usuario actual.
+    os.hostname()     // Devuelve el nombre del host del equipo.
+    os.loadavg()      // Devuelve el promedio de carga del sistema en los últimos 1, 5 y 15 minutos.
+    os.networkInterfaces() // Devuelve detalles sobre las conexiones de red disponibles.
+    os.platform()     // Devuelve el sistema operativo: por ejemplo, "linux", "darwin" o "win32".
+    os.release()      // Devuelve el número de versión del sistema operativo.
+    os.setPriority()  // Intenta establecer la prioridad de planificación para un proceso.
+    os.tmpdir()       // Devuelve el directorio temporal predeterminado.
+    os.totalmem()     // Devuelve la cantidad total de memoria RAM en bytes.
+    os.type()         // Devuelve el sistema operativo: por ejemplo, "Linux", "Darwin" o "Windows_NT".
+    os.uptime()       // Devuelve el tiempo de actividad del sistema en segundos.
+    os.userInfo()     // Devuelve uid, nombre de usuario, directorio de inicio y shell del usuario actual.
+    </code></pre>
   </section>
   <section id="7">
     <h2>16.7 Trabajar con archivos</h2>
@@ -660,36 +666,36 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>16.7.1 Rutas, descriptores de archivos y FileHandles</h2>
     <p>Para poder utilizar el módulo "fs" para trabajar con ficheros, primero tienes que poder nombrar el fichero con el que quieres trabajar. La mayoría de las veces, los ficheros se especifican por <em>path</em>, lo que significa el nombre del propio fichero, más la jerarquía de directorios en la que aparece el fichero. Si una ruta es <em>absoluta</em>, significa que se especifican todos los directorios hasta la raíz del sistema de archivos. En caso contrario, la ruta es <em>relativa</em> y sólo tiene sentido en relación con otra ruta, normalmente el <em>directorio de trabajo actual</em>. Trabajar con rutas puede ser un poco complicado porque los diferentes sistemas operativos utilizan diferentes caracteres para separar los nombres de los directorios, es fácil duplicar accidentalmente esos caracteres separadores al concatenar rutas, y porque los segmentos de ruta del directorio padre <codeinline>../</codeinline> necesitan un tratamiento especial. El módulo "path" de Node y un par de otras características importantes de Node ayudan:</p>
     <pre class="language-js">
-    <code class="language-js">// Some important paths
-    process.cwd() // Absolute path of the current working directory.
-    __filename    // Absolute path of the file that holds the current code.
-    __dirname     // Absolute path of the directory that holds __filename.
-    os.homedir()  // The user's home directory.
+    <code class="language-js">// Algunas rutas importantes
+    process.cwd() // Ruta absoluta del directorio de trabajo actual.
+    __filename    // Ruta absoluta del archivo que contiene este código.
+    __dirname     // Ruta absoluta del directorio que contiene __filename.
+    os.homedir()  // Directorio principal (home) del usuario.
 
     const path = require("path");
     
-    path.sep      // Either "/" or "\" depending on your OS
+    path.sep      //  "/" o "\" dependiendo del sistema operativo.
     
-    // The path module has simple parsing functions
-    let p = "src/pkg/test.js";       // An example path
-    path.basename(p)                 // => "test.js"
-    path.extname(p)                  // => ".js"
-    path.dirname(p)                  // => "src/pkg"
-    path.basename(path.dirname(p))   // => "pkg"
-    path.dirname(path.dirname(p))    // => "src"
+    // El módulo 'path' tiene funciones sencillas para analizar rutas
+    let p = "src/pkg/test.js";       // Una ruta de ejemplo
+    path.basename(p)                 // => "test.js": obtiene el nombre del archivo.
+    path.extname(p)                  // => ".js": obtiene la extensión del archivo.
+    path.dirname(p)                  // => "src/pkg": obtiene el directorio.
+    path.basename(path.dirname(p))   // => "pkg": obtiene el nombre del último directorio.
+    path.dirname(path.dirname(p))    // => "src": obtiene el directorio padre.
     
-    // normalize() cleans up paths:
-    path.normalize("a/b/c/../d/")    // => "a/b/d/": handles ../ segments
-    path.normalize("a/./b")          // => "a/b": strips "./" segments
-    path.normalize("//a//b//")       // => "/a/b/": removes duplicate /
+    // normalize() limpia las rutas:
+    path.normalize("a/b/c/../d/")    // => "a/b/d/": maneja los segmentos "../".
+    path.normalize("a/./b")          // => "a/b": elimina los segmentos "./".
+    path.normalize("//a//b//")       // => "/a/b/": elimina duplicados de "/".
     
-    // join() combines path segments, adding separators, then normalizes
+    // join() combina segmentos de ruta, agrega separadores y luego normaliza
     path.join("src", "pkg", "t.js")  // => "src/pkg/t.js"
     
-    // resolve() takes one or more path segments and returns an absolute
-    // path. It starts with the last argument and works backward, stopping
-    // when it has built an absolute path or resolving against process.cwd().
-    path.resolve()                   // => process.cwd()
+    // resolve() toma uno o más segmentos de ruta y devuelve una ruta absoluta.
+    // Comienza con el último argumento y retrocede hasta construir una ruta absoluta
+    // o resolver contra process.cwd().
+    path.resolve()                   // => process.cwd(): devuelve el directorio actual.
     path.resolve("t.js")             // => path.join(process.cwd(), "t.js")
     path.resolve("/tmp", "t.js")     // => "/tmp/t.js"
     path.resolve("/a", "/b", "t.js") // => "/b/t.js"</code></pre>
@@ -704,28 +710,28 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Si sus archivos son pequeños, o si el uso de memoria y el rendimiento no son la prioridad más alta, entonces a menudo es más fácil de leer todo el contenido de un archivo con una sola llamada. Usted puede hacer esto de forma sincrónica, con una devolución de llamada, o con una promesa. Por defecto, obtendrá los bytes del archivo como un buffer, pero si especifica una codificación, obtendrá una cadena decodificada en su lugar.</p>
     <pre class="language-js">
     <code class="language-js">const fs = require("fs");
-    let buffer = fs.readFileSync("test.data");      // Synchronous, returns buffer
-    let text = fs.readFileSync("data.csv", "utf8"); // Synchronous, returns string
+    let buffer = fs.readFileSync("test.data");      // Sincrónico, devuelve un búfer.
+    let text = fs.readFileSync("data.csv", "utf8"); // Sincrónico, devuelve un string.
 
-    // Read the bytes of the file asynchronously
+    // Leer los bytes del archivo de manera asincrónica
     fs.readFile("test.data", (err, buffer) => &lbrace;
       if (err) &lbrace;
-        // Handle the error here
+        // Manejar el error aquí
       } else &lbrace;
-        // The bytes of the file are in buffer
+        // Los bytes del archivo están en el búfer
       }
     });
 
-    // Promise-based asynchronous read
+    // Lectura asincrónica basada en Promesas
     fs.promises
       .readFile("data.csv", "utf8")
-      .then(processFileText)
-      .catch(handleReadError);
+      .then(processFileText)  // Procesar el texto del archivo
+      .catch(handleReadError);// Manejar errores de lectura
 
-    // Or use the Promise API with await inside an async function
+    // O usar la API de Promesas con 'await' dentro de una función asíncrona
     async function processText(filename, encoding="utf8") &lbrace;
       let text = await fs.promises.readFile(filename, encoding);
-      // ... process the text here...
+      // ... procesar el texto aquí ...
     }</code></pre>
     <p>Si puedes procesar el contenido de un fichero secuencialmente y no necesitas tener todo el contenido del fichero en memoria al mismo tiempo, entonces leer un fichero a través de un stream puede ser el enfoque más eficiente. Hemos cubierto los flujos extensamente: aquí está cómo usted podría utilizar un flujo y el método <codeinline>pipe()</codeinline> para escribir el contenido de un archivo a la salida estándar:</p>
     <pre class="language-js">
@@ -736,22 +742,22 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <pre class="language-js">
     <code class="language-js">const fs = require("fs");
 
-    // Reading a specific portion of a data file
+    // Leer una porción específica de un archivo de datos
     fs.open("data", (err, fd) => &lbrace;
       if (err) &lbrace;
-        // Report error somehow
+        // Reportar el error de alguna manera
         return;
       }
       try &lbrace;
-        // Read bytes 20 through 420 into a newly allocated buffer.
+        // Leer los bytes del 20 al 420 en un búfer recién asignado.
         fs.read(fd, Buffer.alloc(400), 0, 400, 20, (err, n, b) => &lbrace;
-          // err is the error, if any.
-          // n is the number of bytes actually read
-          // b is the buffer that they bytes were read into.
+        // err es el error, si ocurre alguno.
+        // n es el número de bytes realmente leídos.
+        // b es el búfer en el que se leyeron los bytes.
         });
       }
-      finally &lbrace;       // Use a finally clause so we always
-        fs.close(fd); // close the open file descriptor
+      finally &lbrace;       // Usar una cláusula finally para asegurarnos de
+        fs.close(fd); // cerrar siempre el descriptor de archivo abierto.
       }
     });</code></pre>
     <p>La API <codeinline>read()</codeinline> basada en callback es incómoda de usar si necesitas leer más de un trozo de datos de un archivo. Si puede utilizar la API sincrónica (o la API basada en promesas con <codeinline>await</codeinline>), resulta fácil leer varios fragmentos de un archivo:</p>
@@ -759,28 +765,28 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <code class="language-js">const fs = require("fs");
 
     function readData(filename) &lbrace;
-      let fd = fs.openSync(filename);
+      let fd = fs.openSync(filename); // Abre el archivo de manera sincrónica.
       try &lbrace;
-        // Read the file header
-        let header = Buffer.alloc(12); // A 12 byte buffer
+        // Leer el encabezado del archivo
+        let header = Buffer.alloc(12); // Un búfer de 12 bytes.
         fs.readSync(fd, header, 0, 12, 0);
         
-        // Verify the file's magic number
-        let magic = header.readInt32LE(0);
+        // Verificar el número mágico del archivo
+        let magic = header.readInt32LE(0); // Lee un entero de 32 bits en formato little-endian.
         if (magic !== 0xDADAFEED) &lbrace;
-          throw new Error("File is of wrong type");
+          throw new Error("El archivo es del tipo incorrecto");
         }
 
-        // Now get the offset and length of the data from the header
-        let offset = header.readInt32LE(4);
-        let length = header.readInt32LE(8);
+        // Obtener el desplazamiento y la longitud de los datos desde el encabezado
+        let offset = header.readInt32LE(4); // Desplazamiento de los datos.
+        let length = header.readInt32LE(8); // Longitud de los datos.
 
-        // And read those bytes from the file
-        let data = Buffer.alloc(length);
-        fs.readSync(fd, data, 0, length, offset);
+        // Leer esos bytes del archivo
+        let data = Buffer.alloc(length);    // Asigna un búfer para los datos.
+        fs.readSync(fd, data, 0, length, offset); // Lee los datos desde el desplazamiento.
         return data;
       } finally &lbrace;
-        // Always close the file, even if an exception is thrown above
+        // Siempre cierra el archivo, incluso si se lanza una excepción arriba
         fs.closeSync(fd);
       }
     }</code></pre>
@@ -819,15 +825,15 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       <p><codeinline>"a+"</codeinline></p>
       <p class="pl-6 xs:pl-7 sm:pl-8 md:pl-9">Abierto para añadir, pero también permite leer</p>
       <p>Si no pasa uno de estos indicadores a <codeinline>fs.open()</codeinline> o <codeinline>fs.openSync()</codeinline>, éstos utilizarán el indicador "r" por defecto, haciendo que el descriptor de fichero sea de sólo lectura. Tenga en cuenta que también puede ser útil pasar estos indicadores a otros métodos de escritura de archivos:</p>
-      <pre class="language-js">
-      <code class="language-js">// Write to a file in one call, but append to anything that is already there.
-      // This works like fs.appendFileSync()
-      fs.writeFileSync("messages.log", "hello", &lbrace; flag: "a" });
+    <pre class="language-js">
+    <code class="language-js">// Escribir en un archivo en una sola llamada, pero agregar al contenido ya existente.
+    // Esto funciona como fs.appendFileSync()
+    fs.writeFileSync("messages.log", "hello", &lbrace; flag: "a" });
 
-      // Open a write stream, but throw an error if the file already exists.
-      // We don't want to accidentally overwrite something!
-      // Note that the option above is "flag" and is "flags" here
-      fs.createWriteStream("messages.log", &lbrace; flags: "wx" });</code></pre>
+    // Abrir un flujo de escritura, pero lanzar un error si el archivo ya existe.
+    // No queremos sobrescribir algo accidentalmente.
+    // Nota que la opción anterior es "flag" y aquí es "flags".
+    fs.createWriteStream("messages.log", &lbrace; flags: "wx" });</code></pre>
     </article>
     <p>Puede cortar el final de un archivo con <codeinline>fs.truncate()</codeinline>, <codeinline>fs.truncateSync()</codeinline> o <codeinline>fs.promises.truncate()</codeinline>. Estas funciones toman una ruta como primer argumento y una longitud como segundo, y modifican el archivo para que tenga la longitud especificada. Si se omite la longitud, se utiliza cero y el fichero queda vacío. A pesar del nombre de estas funciones también pueden utilizarse para ampliar un archivo: si se especifica una longitud mayor que el tamaño actual del archivo, éste se amplía con cero bytes hasta el nuevo tamaño. Si ya ha abierto el fichero que desea modificar, puede utilizar <codeinline>ftruncate()</codeinline> o <codeinline>ftruncateSync()</codeinline> con el descriptor de fichero o FileHandle</p>
     <p>Las diversas funciones de escritura de archivos descritas aquí devuelven o invocan su callback o resuelven su Promise cuando los datos han sido "escritos" en el sentido de que Node los ha entregado al sistema operativo. Pero esto no significa necesariamente que los datos se hayan escrito realmente en el almacenamiento persistente: al menos algunos de sus datos pueden estar todavía almacenados en algún lugar del sistema operativo o en un controlador de dispositivo a la espera de ser escritos en el disco. Si llama a <codeinline>fs.writeSync()</codeinline> para escribir de forma sincrónica algunos datos en un archivo, y si se produce un corte de energía inmediatamente después de que la función retorne, aún puede perder datos. Si desea forzar la salida de sus datos al disco para saber con certeza que se han guardado de forma segura, utilice <codeinline>fs.fsync()</codeinline> o <codeinline>fs.fsyncSync()</codeinline>. Estas funciones sólo funcionan con descriptores de fichero: no existe una versión basada en rutas.</p>
@@ -837,29 +843,29 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>La discusión anterior sobre las clases stream de Node incluyó dos ejemplos de funciones <codeinline>copyFile()</codeinline>. Estas no son utilidades prácticas que usted usaría realmente porque el módulo "fs" define su propio método <codeinline>fs.copyFile()</codeinline> (y también <codeinline>fs.copyFileSync()</codeinline> y <codeinline>fs.promises.copyFile()</codeinline>, por supuesto).</p>
     <p>Estas funciones toman el nombre del archivo original y el nombre de la copia como sus dos primeros argumentos. Éstos pueden especificarse como cadenas o como objetos URL o Buffer. Un tercer argumento opcional es un número entero cuyos bits especifican indicadores que controlan los detalles de la operación de <codeinline>copy</codeinline>. Y para la función <codeinline>fs.copyFile()</codeinline> basada en callback, el argumento final es una función callback que será llamada sin argumentos cuando la copia se haya completado, o que será llamada con un argumento de error si algo falla. A continuación se muestran algunos ejemplos:</p>
     <pre class="language-js">
-    <code class="language-js">// Basic synchronous file copy.
+    <code class="language-js">// Copia básica de archivos de manera sincrónica.
     fs.copyFileSync("ch15.txt", "ch15.bak");
 
-    // The COPYFILE_EXCL argument copies only if the new file does not already
-    // exist. It prevents copies from overwriting existing files.
+    // El argumento COPYFILE_EXCL copia solo si el nuevo archivo no existe ya.
+    // Esto evita que las copias sobrescriban archivos existentes.
     fs.copyFile("ch15.txt", "ch16.txt", fs.constants.COPYFILE_EXCL, err => &lbrace;
-      // This callback will be called when done. On error, err will be non-null.
+      // Este callback se ejecutará cuando termine. Si hay un error, err no será nulo.
     });
 
-    // This code demonstrates the Promise-based version of the copyFile function.
-    // Two flags are combined with the bitwise OR opeartor |. The flags mean that
-    // existing files won't be overwritten, and that if the filesystem supports
-    // it, the copy will be a copy-on-write clone of the original file, meaning
-    // that no additional storage space will be required until either the original
-    // or the copy is modified.
+    // Este código demuestra la versión basada en Promesas de la función copyFile.
+    // Dos banderas se combinan con el operador OR a nivel de bits (|). Las banderas
+    // significan que los archivos existentes no se sobrescribirán y que, si el sistema
+    // de archivos lo soporta, la copia será un clon basado en copy-on-write del archivo 
+    // original. Esto significa que no se requerirá espacio adicional de almacenamiento
+    // hasta que se modifique el original o la copia.
     fs.promises.copyFile("Important data",
         `Important data $&lbrace;new Date().toISOString()}"
         fs.constants.COPYFILE_EXCL | fs.constants.COPYFILE_FICLONE)
       .then(() => &lbrace;
-        console.log("Backup complete");
+        console.log("Copia de seguridad completada"");
       });
       .catch(err => &lbrace;
-        console.error("Backup failed", err);
+        console.error("Error en la copia de seguridad", err);
       });</code></pre>
     <p>La función <codeinline>fs.rename()</codeinline> (junto con las variantes síncronas y basadas en promesas) mueve y/o renombra un archivo. Llámela con la ruta actual al archivo y la nueva ruta deseada al archivo. No hay argumento flags, pero la versión basada en callback toma un callback como tercer argumento:</p>
     <pre class="language-js">
@@ -876,21 +882,21 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <pre class="language-js">
     <code class="language-js">const fs = require("fs");
     let stats = fs.statSync("book/ch15.md");
-    stats.isFile()          // => true: this is an ordinary file
-    stats.isDirectory()     // => false: it is not a directory
-    stats.size              // file size in bytes
-    stats.atime             // access time: Date when it was last read
-    stats.mtime             // modification time: Date when it was last written
-    stats.uid               // the user id of the file's owner
-    stats.gid               // the group id of the file's owner
-    stats.mode.toString(8)  // the file's permissions, as an octal string</code></pre>
+    stats.isFile()          // => true: este es un archivo ordinario.
+    stats.isDirectory()     // => false: no es un directorio.
+    stats.size              // Tamaño del archivo en bytes.
+    stats.atime             // Fecha de acceso: última vez que fue leído.
+    stats.mtime             // Fecha de modificación: última vez que fue escrito.
+    stats.uid               // ID de usuario del propietario del archivo.
+    stats.gid               // ID de grupo del propietario del archivo.
+    stats.mode.toString(8)  // Permisos del archivo como una cadena octal.</code></pre>
     <p>El objeto Stats devuelto contiene otras propiedades y métodos más oscuros, pero este código muestra los que es más probable que utilice.</p>
     <p><codeinline>fs.lstat()</codeinline> y sus variantes funcionan igual que <codeinline>fs.stat()</codeinline>, excepto que si el archivo especificado es un enlace simbólico, Node devolverá metadatos para el propio enlace en lugar de seguir el enlace.</p>
     <p>Si ha abierto un archivo para producir un descriptor de archivo o un objeto FileHandle, puede utilizar <codeinline>fs.fstat()</codeinline> o sus variantes para obtener información de metadatos del archivo abierto sin tener que especificar de nuevo el nombre del archivo.</p>
     <p>Además de consultar metadatos con <codeinline>fs.stat()</codeinline> y todas sus variantes, también existen funciones para modificar metadatos.</p>
     <p><codeinline>fs.chmod()</codeinline>, <codeinline>fs.lchmod()</codeinline> y <codeinline>fs.fchmod()</codeinline> (junto con las versiones sincrónicas y basadas en promesas) establecen el "modo" o los permisos de un archivo o directorio. Los valores de modo son enteros en los que cada bit tiene un significado específico y es más fácil pensar en ellos en notación octal. Por ejemplo, para hacer que un archivo sea de sólo lectura para su propietario e inaccesible para todos los demás, utilice <codeinline>0o400</codeinline>:</p>
     <pre class="language-js">
-    <code class="language-js">fs.chmodSync("ch15.md", 0o400); // Don't delete it accidentally!</code></pre>
+    <code class="language-js">fs.chmodSync("ch15.md", 0o400); // ¡No lo borres accidentalmente!</code></pre>
     <p><codeinline>fs.chown()</codeinline>, <codeinline>fs.lchown()</codeinline>, y <codeinline>fs.fchown()</codeinline> (junto con las versiones sincrónicas y basadas en promesas) establecen el propietario y el grupo (como IDs) para un archivo o directorio. (Estos importan porque interactúan con los permisos de archivo establecidos por <codeinline>fs.chmod()</codeinline>.)</p>
     <p>Por último, puede establecer el tiempo de acceso y modificación de un archivo o directorio con <codeinline>fs.utimes()</codeinline> y <codeinline>fs.futimes()</codeinline> y sus variantes.</p>
   </section>
@@ -898,34 +904,34 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <h2>16.7.6 Trabajar con directorios</h2>
     <p>Para crear un nuevo directorio en Node, utilice <codeinline>fs.mkdir()</codeinline>, <codeinline>fs.mkdirSync()</codeinline>, o <codeinline>fs.promises.mkdir()</codeinline>. El primer argumento es la ruta del directorio que se va a crear. El segundo argumento opcional puede ser un entero que especifica el modo (bits de permisos) para el nuevo directorio. O puede pasar un objeto con las propiedades opcionales <codeinline>mode</codeinline> y <codeinline>recursive</codeinline>. Si <codeinline>recursive</codeinline> es <codeinline>true</codeinline>, entonces esta función creará cualquier directorio en la ruta que no exista ya:</p>
     <pre class="language-js">
-    <code class="language-js">// Ensure that dist/ and dist/lib/ both exist.
+    <code class="language-js">// Asegúrese de que dist/ y dist/lib/ existan.
     fs.mkdirSync("dist/lib", &lbrace; recursive: true });</code></pre>
     <p><codeinline>fs.mkdtemp()</codeinline> y sus variantes toman un prefijo de ruta que usted proporciona, le añaden algunos caracteres aleatorios (esto es importante por seguridad), crean un directorio con ese nombre y le devuelven (o pasan a una llamada de retorno) la ruta del directorio.</p>
     <p>Para borrar un directorio, utilice <codeinline>fs.rmdir()</codeinline> o una de sus variantes. Tenga en cuenta que los directorios deben estar vacíos antes de poder ser borrados:</p>
     <pre class="language-js">
-    <code class="language-js">// Create a random temporary directory and get its path, then
-    // delete it when we are done
+    <code class="language-js">// Crear un directorio temporal aleatorio y obtener su ruta,
+    // luego eliminarlo cuando terminemos.
     let tempDirPath;
     try &lbrace;
       tempDirPath = fs.mkdtempSync(path.join(os.tmpdir(), "d"));
-      // Do something with the directory here
+      // Realizar alguna acción con el directorio aquí
     } finally &lbrace;
-      // Delete the temporary directory when we're done with it
+      // Eliminar el directorio temporal cuando hayamos terminado con él
       fs.rmdirSync(tempDirPath);
     }</code></pre>
     <p>El módulo "fs" proporciona dos API distintas para listar el contenido de un directorio. En primer lugar, <codeinline>fs.readdir()</codeinline>, <codeinline>fs.readdirSync()</codeinline> y <codeinline>fs.promises.readdir()</codeinline> leen todo el directorio a la vez y proporcionan una matriz de cadenas o una matriz de objetos Dirent que especifican los nombres y tipos (archivo o directorio) de cada elemento. Los nombres de archivo devueltos por estas funciones son sólo el nombre local del archivo, no la ruta completa. He aquí algunos ejemplos:</p>
     <pre class="language-js">
-    <code class="language-js">let tempFiles = fs.readdirSync("/tmp"); // returns an array of strings
+    <code class="language-js">let tempFiles = fs.readdirSync("/tmp"); // Devuelve un arreglo de cadenas.
 
-    // Use the Promise-based API to get a Dirent array, and then
-    // print the paths of subdirectories
+    // Usar la API basada en Promesas para obtener un arreglo de objetos Dirent
+    // y luego imprimir las rutas de los subdirectorios.
     fs.promises.readdir("/tmp", &lbrace;withFileTypes: true})
       .then(entries => &lbrace;
-        entries.filter(entry => entry.isDirectory())
-          .map(entry => entry.name)
-          .forEach(name => console.log(path.join("/tmp/", name)));
+        entries.filter(entry => entry.isDirectory()) // Filtrar solo los directorios.
+          .map(entry => entry.name)                 // Obtener los nombres de los directorios.
+          .forEach(name => console.log(path.join("/tmp/", name))); // Imprimir las rutas completas.
       })
-      .catch(console.error);</code></pre>
+      .catch(console.error); // Manejar errores.</code></pre>
     <p>Si anticipa que necesitará listar directorios que pueden tener miles de entradas, puede que prefiera el enfoque de <codeinline>fs.opendir()</codeinline> y sus variantes. Estas funciones devuelven un objeto Dir que representa el directorio especificado. Puede utilizar los métodos <codeinline>read()</codeinline> o <codeinline>readSync()</codeinline> del objeto Dir para leer un Dirent cada vez. Si pasa una función de llamada de retorno a <codeinline>read()</codeinline>, ésta llamará a la llamada de retorno. Y si omite el argumento callback, devolverá una Promise. Cuando no haya más entradas de directorio, obtendrá <codeinline>null</codeinline> en lugar de un objeto Dirent.</p>
     <p>La forma más sencilla de utilizar objetos Dir es como iteradores asíncronos con un bucle <codeinline>for/await</codeinline>. Aquí, por ejemplo, hay una función que utiliza la API de streaming para listar entradas de directorio, llama a <codeinline>stat()</codeinline> en cada entrada, e imprime nombres y tamaños de archivos y directorios:</p>
     <pre class="language-js">
@@ -937,7 +943,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       for await (let entry of dir) &lbrace;
         let name = entry.name;
         if (entry.isDirectory()) &lbrace;
-          name += "/"; // Add a trailing slash to subdirectories
+          name += "/"; // Agregar una barra diagonal final a los subdirectorios.
         }
         let stats = await fs.promises.stat(path.join(dirpath, name));
         let size = stats.size;
@@ -955,75 +961,74 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <code class="language-js">const https = require("https");
 
     /*
-    * Convert the body object to a JSON string then HTTPS POST it to the
-    * specified API endpoint on the specified host. When the response arrives,
-    * parse the response body as JSON and resolve the returned Promise with
-    * that parsed value.
+    * Convertir el objeto body a una cadena JSON, luego hacer un POST HTTPS
+    * al punto de API especificado en el host indicado. Cuando llegue la respuesta,
+    * analizar el cuerpo de la respuesta como JSON y resolver la Promesa devuelta
+    * con ese valor analizado.
     */
     function postJSON(host, endpoint, body, port, username, password) &lbrace;
-      // Return a Promise object immediately, then call resolve or reject
-      // when the HTTPS request succeeds or fails.
+      // Devuelve un objeto Promise inmediatamente, luego llama a resolve o reject
+      // cuando la solicitud HTTPS tenga éxito o falle.
       return new Promise((resolve, reject) => &lbrace;
-        // Convert the body object to a string
+        // Convertir el objeto body a una cadena
         let bodyText = JSON.stringify(body);
 
-        // Configure the HTTPS request
+        // Configurar la solicitud HTTPS
         let requestOptions = &lbrace;
-          method: "POST",     // Or "GET", "PUT", "DELETE", etc.
-          host: host,         // The host to connect to
-          path: endpoint,     // The URL path
-          headers: &lbrace;          // HTTP headers for the request
+          method: "POST",     // O "GET", "PUT", "DELETE", etc.
+          host: host,         // El host al que conectarse
+          path: endpoint,     // La ruta de la URL
+          headers: &lbrace;          // Encabezados HTTP para la solicitud
             "Content-Type": "application/json",
             "Content-Length": Buffer.byteLength(bodyText)
           }
         };
 
-        if (port) &lbrace;                   // If a port is specified,
-          requestOptions.port = port; // use it for the request.
+        if (port) &lbrace;                   // Si se especifica un puerto,
+          requestOptions.port = port; // usarlo para la solicitud.
         }
-        // If credentials are specified, add an Authorization header.
+        // Si se especifican credenciales, agregar un encabezado de autorización.
         if (username && password) &lbrace;
           requestOptions.auth = `$&lbrace;username}:$&lbrace;password}`;
         }
 
-        // Now create the request based on the configuration object
+        // Ahora crear la solicitud basada en el objeto de configuración
         let request = https.request(requestOptions);
 
-        // Write the body of the POST request and end the request.
+        // Escribir el cuerpo de la solicitud POST y finalizar la solicitud.
         request.write(bodyText);
         request.end();
 
-        // Fail on request errors (such as no network connection)
+        // Fallar en caso de errores en la solicitud (como falta de conexión de red)
         request.on("error", e => reject(e));
 
-        // Handle the response when it starts to arrive.
+        // Manejar la respuesta cuando comience a llegar.
         request.on("response", response => &lbrace;
           if (response.statusCode !== 200) &lbrace;
             reject(new Error(`HTTP status $&lbrace;response.statusCode}`));
-            // We don't care about the response body in this case, but
-            // we don't want it to stick around in a buffer somewhere, so
-            // we put the stream into flowing mode without registering
-            // a "data" handler so that the body is discarded.
+            // No nos interesa el cuerpo de la respuesta en este caso, pero
+            // no queremos que se quede en un búfer, así que ponemos el stream
+            // en modo de flujo sin registrar un manejador "data" para que el cuerpo
+            // se descarte.
             response.resume();
             return;
           }
 
-          // We want text, not bytes. We're assuming the text will be
-          // JSON-formatted but aren't bothering to check the
-          // Content-Type header.
+          // Queremos texto, no bytes. Suponemos que el texto estará en formato
+          // JSON, pero no estamos verificando el encabezado Content-Type.
           response.setEncoding("utf8");
 
-          // Node doesn't have a streaming JSON parser, so we read the
-          // entire response body into a string.
+          // Node no tiene un analizador de JSON en streaming, así que leemos
+          // todo el cuerpo de la respuesta en una cadena.
           let body = "";
           response.on("data", chunk => &lbrace; body += chunk; });
 
-          // And now handle the response when it is complete.
-          response.on("end", () => &lbrace;     // When the response is done,
-            try &lbrace;                        // try to parse it as JSON
-              resolve(JSON.parse(body)); // and resolve the result.
-            } catch(e) &lbrace;                 // Or, if anything goes wrong,
-              reject(e);                 // reject with the error
+          // Y ahora manejamos la respuesta cuando esté completa.
+          response.on("end", () => &lbrace;     // Cuando la respuesta termine,
+            try &lbrace;                        // intentamos analizarla como JSON
+              resolve(JSON.parse(body)); // y resolvemos el resultado.
+            } catch(e) &lbrace;                 // O, si algo sale mal,
+              reject(e);                 // rechazamos con el error
             }
           });
         });
@@ -1046,66 +1051,67 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     </ul>
     <p>El código que sigue crea un servidor HTTP simple que sirve archivos estáticos desde el sistema de archivos local y también implementa un punto final de depuración que responde a la solicitud de un cliente haciendo eco de esa solicitud.</p>
     <pre class="language-js">
-    <code class="language-js">// This is a simple static HTTP server that serves files from a specified
-    // directory. It also implements a special /test/mirror endpoint that
-    // echoes the incoming request, which can be useful when debugging clients.
-    const http = require("http"); // Use "https" if you have a certificate
-    const url = require("url");   // For parsing URLs
-    const path = require("path"); // For manipulating filesystem paths
-    const fs = require("fs");     // For reading files
+    <code class="language-js">// Este es un servidor HTTP estático simple que sirve archivos
+    // desde un directorio especificado.
+    // También implementa un endpoint especial /test/mirror que
+    // refleja la solicitud entrante, lo que puede ser útil al depurar clientes.
+    const http = require("http"); // Usa "https" si tienes un certificado
+    const url = require("url");   // Para analizar URLs
+    const path = require("path"); // Para manipular rutas del sistema de archivos
+    const fs = require("fs");     // Para leer archivos
 
-    // Serve files from the specified root directory via an HTTP server that
-    // listens on the specified port.
+    // Servir archivos desde el directorio raíz especificado a través de un
+    // servidor HTTP que escucha en el puerto especificado.
     function serve(rootDirectory, port) &lbrace;
-      let server = new http.Server(); // Create a new HTTP server
-      server.listen(port);       // Listen on the specified port
-      console.log("Listening on port", port);
+      let server = new http.Server(); // Crear un nuevo servidor HTTP
+      server.listen(port);       // Escuchar en el puerto especificado
+      console.log("Escuchando en el puerto", port);
 
-      // When requests come in, handle them with this function
+      // Cuando lleguen solicitudes, manejarlas con esta función
       server.on("request", (request, response) => &lbrace;
-        // Get the path portion of the request URL, ignoring
-        // any query parameters that are appended to it.
+        // Obtener la porción de la ruta de la URL de la solicitud,
+        // ignorando los parámetros de consulta que se agregan a ella.
         let endpoint = url.parse(request.url).pathname;
 
-        // If the request was for "/test/mirror", send back the request
-        // verbatim. Useful when you need to see the request headers and body.
+        // Si la solicitud fue para "/test/mirror", devolver la solicitud tal cual.
+        // Útil cuando necesitas ver los encabezados y el cuerpo de la solicitud.
         if (endpoint === "/test/mirror") &lbrace;
 
-          // Set response header
+          // Establecer el encabezado de la respuesta
           response.setHeader("Content-Type", "text/plain; charset=UTF-8");
 
-          // Specify response status code
+          // Especificar el código de estado de la respuesta
           response.writeHead(200); // 200 OK
           
-          // Begin the response body with the request
+          // Comenzar el cuerpo de la respuesta con la solicitud
           response.write(`$&lbrace;request.method} $&lbrace;request.url} HTTP/$&lbrace;
           request.httpVersion
           }\r\n`);
 
-          // Output the request headers
+          // Mostrar los encabezados de la solicitud
           let headers = request.rawHeaders;
           for(let i = 0; i &lt; headers.length; i += 2) &lbrace;
           response.write(`$&lbrace;headers[i]}: $&lbrace;headers[i+1]}\r\n`);
           }
 
-          // End headers with an extra blank line
+          // Finalizar los encabezados con una línea en blanco extra
           response.write("\r\n");
 
-          // Now we need to copy any request body to the response body
-          // Since they are both streams, we can use a pipe
+          // Ahora necesitamos copiar cualquier cuerpo de la solicitud al cuerpo
+          // de la respuesta dado que ambos son streams, podemos usar un pipe
           request.pipe(response);
         }
-        // Otherwise, serve a file from the local directory.
+        // De lo contrario, servir un archivo desde el directorio local.
         else &lbrace;
-          // Map the endpoint to a file in the local filesystem
+          // Mapear el endpoint a un archivo en el sistema de archivos local
           let filename = endpoint.substring(1); // strip leading /
-          // Don't allow "../" in the path because it would be a security
-          // hole to serve anything outside the root directory.
+          // No permitir "../" en la ruta porque sería un agujero de seguridad
+          // servir cualquier cosa fuera del directorio raíz.
           filename = filename.replace(/\.\.\//g, "");
-          // Now convert from relative to absolute filename
+          // Ahora convertir de nombre de archivo relativo a absoluto
           filename = path.resolve(rootDirectory, filename);
 
-          // Now guess the type file's content type based on extension
+          // Ahora adivinar el tipo de contenido del archivo basado en la extensión
           let type;
           switch(path.extname(filename)) &lbrace;
           case ".html":
@@ -1119,20 +1125,20 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
 
           let stream = fs.createReadStream(filename);
           stream.once("readable", () => &lbrace;
-            // If the stream becomes readable, then set the
-            // Content-Type header and a 200 OK status. Then pipe the
-            // file reader stream to the response. The pipe will
-            // automatically call response.end() when the stream ends.
+            // Si el stream se vuelve legible, entonces establecer el
+            // encabezado Content-Type y un estado 200 OK. Luego canalizar el
+            // stream del lector de archivos a la respuesta. El pipe
+            // automáticamente llamará a response.end() cuando el stream termine.
             response.setHeader("Content-Type", type);
             response.writeHead(200);
             stream.pipe(response);
           });
             
           stream.on("error", (err) => &lbrace;
-            // Instead, if we get an error trying to open the stream
-            // then the file probably does not exist or is not readable.
-            // Send a 404 Not Found plain-text response with the
-            // error message.
+            // En lugar de eso, si obtenemos un error al intentar abrir el stream,
+            // probablemente el archivo no exista o no sea legible.
+            // Enviar una respuesta 404 Not Found con un mensaje de texto plano
+            // con el mensaje de error.
             response.setHeader("Content-Type", "text/plain; charset=UTF-8");
             response.writeHead(404);
             response.end(err.message);
@@ -1152,82 +1158,84 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Escribir un cliente es aún más fácil: pasa un número de puerto y nombre de host a <codeinline>net.createConnection()</codeinline> para crear un socket para comunicarse con cualquier servidor que se esté ejecutando en ese host y escuchando en ese puerto. A continuación, utilice ese socket para leer y escribir datos desde y hacia el servidor.</p>
     <p>El siguiente código demuestra cómo escribir un servidor con el módulo "net". Cuando el cliente se conecta, el servidor cuenta un chiste de toc-toc:</p>
     <pre class="language-js">
-    <code class="language-js">// A TCP server that delivers interactive knock-knock jokes on port 6789.
-    // (Why is six afraid of seven? Because seven ate nine!)
+    <code class="language-js">// Un servidor TCP que entrega chistes interactivos de "toc-toc" en el puerto 6789.
+    // (¿Por qué el seis tiene miedo del siete? ¡Porque el siete se comió al nueve!)
     const net = require("net");
     const readline = require("readline");
 
-    // Create a Server object and start listening for connections
+    // Crear un objeto Server y empezar a escuchar por conexiones
     let server = net.createServer();
-    server.listen(6789, () => console.log("Delivering laughs on port 6789"));
+    server.listen(6789, () => console.log("Entregando risas en el puerto 6789"));
 
-    // When a client connects, tell them a knock-knock joke.
+    // Cuando un cliente se conecta, contarle un chiste de "toc-toc".
     server.on("connection", socket => &lbrace;
       tellJoke(socket)
-        .then(() => socket.end()) // When the joke is done, close the socket.
+        .then(() => socket.end()) // Cuando el chiste termine, cerrar el socket.
         .catch((err) => &lbrace;
-          console.error(err);     // Log any errors that occur,
-          socket.end();           // but still close the socket!
+          console.error(err);     // Registrar cualquier error que ocurra,
+          socket.end();           // ¡pero aún así cerrar el socket!
         });
     });
 
-    // These are all the jokes we know.
+    // Estos son todos los chistes que conocemos.
     const jokes = &lbrace;
-      "Boo": "Don't cry...it's only a joke!",
-      "Lettuce": "Let us in! It's freezing out here!",
-      "A little old lady": "Wow, I didn't know you could yodel!"
+    "Boo": "¡No llores... es solo un chiste!",
+    "Lettuce": "¡Déjanos entrar! ¡Hace frío aquí afuera!",
+    "A little old lady": "¡Vaya, no sabía que podías hacer yodel!"
     };
 
-    // Interactively perform a knock-knock joke over this socket, without blocking.
+    // Realizar un chiste de "toc-toc" de manera interactiva a través
+    // de este socket, sin bloquear.
     async function tellJoke(socket) &lbrace;
-      // Pick one of the jokes at random
+      // Elegir uno de los chistes al azar
       let randomElement = a => a[Math.floor(Math.random() * a.length)];
       let who = randomElement(Object.keys(jokes));
       let punchline = jokes[who];
 
-      // Use the readline module to read the user's input one line at a time.
+      // Usar el módulo readline para leer la entrada del usuario línea por línea.
       let lineReader = readline.createInterface(&lbrace;
         input: socket,
         output: socket,
         prompt: ">> "
       });
 
-      // A utility function to output a line of text to the client
-      // and then (by default) display a prompt.
+      // Una función utilitaria para enviar una línea de texto al cliente
+      // y luego (por defecto) mostrar un prompt.
       function output(text, prompt=true) &lbrace;
         socket.write(`$&lbrace;text}\r\n`);
         if (prompt) lineReader.prompt();
       }
 
-      // Knock-knock jokes have a call-and-response structure.
-      // We expect different input from the user at different stages and
-      // take different action when we get that input at different stages.
+      // Los chistes de "toc-toc" tienen una estructura de llamada y respuesta.
+      // Esperamos diferentes entradas del usuario en diferentes etapas y
+      // tomamos diferentes acciones cuando obtenemos esa entrada en esas etapas.
       let stage = 0;
 
-      // Start the knock-knock joke off in the traditional way.
+      // Comenzar el chiste de "toc-toc" de la manera tradicional.
       output("Knock knock!");
 
-      // Now read lines asynchronously from the client until the joke is done.
+      // Ahora leer las líneas asincrónicamente del cliente hasta
+      // que el chiste termine.
       for await (let inputLine of lineReader) &lbrace;
         if (stage === 0) &lbrace;
-          if (inputLine.toLowerCase() === "who's there?") &lbrace;
-            // If the user gives the right response at stage 0
-            // then tell the first part of the joke and go to stage 1.
+          if (inputLine.toLowerCase() === "¿quién está ahí?") &lbrace;
+            // Si el usuario da la respuesta correcta en la etapa 0,
+            // contar la primera parte del chiste y pasar a la etapa 1.
             output(who);
             stage = 1;
           } else &lbrace;
-            // Otherwise teach the user how to do knock-knock jokes.
-            output('Please type "Who\'s there?".');
+            // De lo contrario, enseñar al usuario cómo hacer chistes de "toc-toc".
+            output('Por favor, escribe "¿Quién está ahí?".');
           }
         } else if (stage === 1) &lbrace;
-          if (inputLine.toLowerCase() === `$&lbrace;who.toLowerCase()} who?`) &lbrace;
-            // If the user's response is correct at stage 1, then
-            // deliver the punchline and return since the joke is done.
+          if (inputLine.toLowerCase() === `$&lbrace;who.toLowerCase()} ¿quién?`) &lbrace;
+            // Si la respuesta del usuario es correcta en la etapa 1, entonces
+            // entregar el remate y salir, ya que el chiste ha terminado.
             output(`$&lbrace;punchline}`, false);
             return;
           } else &lbrace;
-            // Make the user play along.
-            output(`Please type "$&lbrace;who} who?".`);
+            // Hacer que el usuario juegue.
+            output(`Por favor, escribe " $&lbrace;who} ¿quién?".`);
           }
         }
       }
@@ -1242,11 +1250,12 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     Wow, I didn't know you could yodel!</pre>
     <p>Por otro lado, escribir un cliente personalizado para el servidor de bromas es fácil en Node. Simplemente nos conectamos al servidor, luego canalizamos la salida del servidor a stdout y canalizamos stdin a la entrada del servidor:</p>
     <pre class="language-js">
-    <code class="language-js">// Connect to the joke port (6789) on the server named on the command line
+    <code class="language-js">// Conectar al puerto del chiste (6789) en el servidor nombrado en
+    // la línea de comandos
     let socket = require("net").createConnection(6789, process.argv[2]);
-    socket.pipe(process.stdout);    // Pipe data from the socket to stdout
-    process.stdin.pipe(socket);     // Pipe data from stdin to the socket
-    socket.on("close", () => process.exit()); // Quit when the socket closes.</code></pre>
+    socket.pipe(process.stdout);    // Canalizar datos desde el socket hacia stdout
+    process.stdin.pipe(socket);     // Canalizar datos desde stdin hacia el socket
+    socket.on("close", () => process.exit()); // Salir cuando el socket se cierre.</code></pre>
     <p>Además de soportar servidores basados en TCP, el módulo "net" de Node también soporta la comunicación entre procesos a través de "sockets de dominio Unix" que se identifican por una ruta del sistema de ficheros en lugar de por un número de puerto. No vamos a cubrir ese tipo de socket en este capítulo, pero la documentación de Node tiene más detalles. Otras características de Node que no tenemos espacio para cubrir aquí incluyen el módulo "dgram" para clientes y servidores basados en UDP y el módulo "tls" que es a "net" como "https" es a "http". Las clases <codeinline>tls.Server</codeinline> y <codeinline>tls.TLSSocket</codeinline> permiten la creación de servidores TCP (como el servidor de chistes "knock-knock") que utilizan conexiones cifradas SSL como lo hacen los servidores HTTPS.</p>
   </section>
   <section id="10" class="py-4 xs:py-5 sm:py-6">
@@ -1326,11 +1335,11 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     const execP = util.promisify(child_process.exec);
 
     function parallelExec(commands) &lbrace;
-      // Use the array of commands to create an array of Promises
+      // Utiliza el array de comandos para crear un array de Promesas
       let promises = commands.map(command => execP(command, &lbrace;encoding: "utf8"}));
-      // Return a Promise that will fulfill to an array of the fulfillment
-      // values of each of the individual promises. (Instead of returning objects
-      // with stdout and stderr properties we just return the stdout value.)
+      // Devuelve una Promesa que se resolverá a un array de los valores de cumplimiento
+      // de cada una de las promesas individuales. (En lugar de devolver objetos
+      // con propiedades stdout y stderr, simplemente devolvemos el valor de stdout.)
       return Promise.all(promises)
         .then(outputs => outputs.map(out => out.stdout));
     }
@@ -1354,26 +1363,27 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <pre class="language-js">
     <code class="language-js">const child_process = require("child_process");
 
-    // Start a new node process running the code in child.js in our directory
+    // Inicia un nuevo proceso de Node ejecutando el código en child.js en nuestro directorio
     let child = child_process.fork(`$&lbrace;__dirname}/child.js`);
 
-    // Send a message to the child
+    // Envía un mensaje al proceso hijo
     child.send(&lbrace;x: 4, y: 3});
 
-    // Print the child's response when it arrives.
+    // Imprime la respuesta del hijo cuando llegue.
     child.on("message", message => &lbrace;
-      console.log(message.hypotenuse); // This should print "5"
-      // Since we only send one message we only expect one response.
-      // After we receive it we call disconnect() to terminate the connection
-      // between parent and child. This allows both processes to exit cleanly.
+      console.log(message.hypotenuse); // Esto debería imprimir "5"
+      // Como solo enviamos un mensaje, solo esperamos una respuesta.
+      // Después de recibirla, llamamos a disconnect() para terminar
+      // la conexión entre el proceso padre e hijo. Esto permite que
+      // ambos procesos finalicen de manera limpia.
       child.disconnect();
     });</code></pre>
     <p>Y aquí está el código que se ejecuta en el proceso hijo:</p>
     <pre class="language-js">
-    <code class="language-js">// Wait for messages from our parent process
+    <code class="language-js">// Espera mensajes de nuestro proceso padre
     process.on("message", message => &lbrace;
-      // When we receive one, do a calculation and send the result
-      // back to the parent.
+      // Cuando recibimos uno, realizamos un cálculo y enviamos el resultado
+      // de vuelta al proceso padre.
       process.send(&lbrace;hypotenuse: Math.hypot(message.x, message.y)});
     });</code></pre>
     <p>Iniciar procesos hijo es una operación costosa, y el proceso hijo tendría que estar haciendo órdenes de magnitud más computacionales antes de que tuviera sentido usar <codeinline>fork()</codeinline> y la comunicación entre procesos de esta manera. Si está escribiendo un programa que necesita ser muy sensible a los eventos entrantes y también necesita realizar cálculos que consumen mucho tiempo, entonces podría considerar el uso de un proceso hijo separado para realizar los cálculos de manera que no bloqueen el bucle de eventos y reduzcan la capacidad de respuesta del proceso padre. (Aunque un hilo -ver <a href="#11">§16.11</a>- puede ser una mejor opción que un proceso hijo en este escenario).</p>
@@ -1414,47 +1424,47 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Este módulo define una clase Worker para representar un hilo trabajador, y puedes crear un nuevo hilo con el constructor <codeinline>threads.Worker()</codeinline>. El siguiente código demuestra el uso de este constructor para crear un trabajador, y muestra cómo pasar mensajes del hilo principal al trabajador y del trabajador al hilo principal. También demuestra un truco que le permite poner el código del hilo principal y el código del hilo trabajador en el mismo archivo.<sup>2</sup></p>
     <pre class="language-js">
     <code class="language-js">const threads = require("worker_threads");
-    // The worker_threads module exports the boolean isMainThread property.
-    // This property is true when Node is running the main thread and it is
-    // false when Node is running a worker. We can use this fact to implement
-    // the main and worker threads in the same file.
+    // El módulo worker_threads exporta la propiedad booleana isMainThread.
+    // Esta propiedad es verdadera cuando Node está ejecutando el hilo principal
+    // y es falsa cuando Node está ejecutando un worker. Podemos usar este hecho
+    // para implementar los hilos principal y trabajador en el mismo archivo.
     if (threads.isMainThread) &lbrace;
-      // If we're running in the main thread, then all we do is export
-      // a function. Instead of performing a computationally intensive
-      // task on the main thread, this function passes the task to a worker
-      // and returns a Promise that will resolve when the worker is done.
+      // Si estamos ejecutando el hilo principal, lo único que hacemos es exportar
+      // una función. En lugar de realizar una tarea computacionalmente intensiva
+      // en el hilo principal, esta función pasa la tarea a un worker
+      // y devuelve una Promesa que se resolverá cuando el worker termine.
       module.exports = function reticulateSplines(splines) &lbrace;
         return new Promise((resolve,reject) => &lbrace;
-          // Create a worker that loads and runs this same file of code.
-          // Note the use of the special __filename variable.
+          // Crea un worker que carga y ejecuta este mismo archivo de código.
+          // Observa el uso de la variable especial __filename.
           let reticulator = new threads.Worker(__filename);
 
-          // Pass a copy of the splines array to the worker
+          // Pasa una copia del array de splines al worker
           reticulator.postMessage(splines);
           
-          // And then resolve or reject the Promise when we get
-          // a message or error from the worker.
+          // Y luego resuelve o rechaza la Promesa cuando recibimos
+          // un mensaje o error del worker.
           reticulator.on("message", resolve);
           reticulator.on("error", reject);
         });
       };
     } else &lbrace;
-      // If we get here, it means we're in the worker, so we register a
-      // handler to get messages from the main thread. This worker is designed
-      // to only receive a single message, so we register the event handler
-      // with once() instead of on(). This allows the worker to exit naturally
-      // when its work is complete.
+      // Si llegamos aquí, significa que estamos en el worker, así que registramos
+      // un manejador para recibir mensajes del hilo principal. Este worker está diseñado
+      // para recibir solo un mensaje, por lo que registramos el manejador de eventos
+      // con once() en lugar de on(). Esto permite que el worker termine naturalmente
+      // cuando su trabajo esté completo.
       threads.parentPort.once("message", splines => &lbrace;
-        // When we get the splines from the parent thread, loop
-        // through them and reticulate all of them.
+        // Cuando recibimos los splines del hilo principal, recorremos
+        // todos ellos y reticulamos cada uno.
         for(let spline of splines) &lbrace;
-          // For the sake of example, assume that spline objects usually
-          // have a reticulate() method that does a lot of computation.
+          // A modo de ejemplo, asumimos que los objetos spline usualmente
+          // tienen un método reticulate() que realiza muchos cálculos.
           spline.reticulate ? spline.reticulate() : spline.reticulated = true;
         }
 
-        // When all the splines have (finally!) been reticulated
-        // pass a copy back to the main thread.
+        // Cuando todos los splines hayan sido (¡finalmente!) reticulados,
+        // pasamos una copia de vuelta al hilo principal.
         threads.parentPort.postMessage(splines);
       });
     }</code></pre>
@@ -1464,7 +1474,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <code class="language-js">new threads.Worker(`
       const threads = require("worker_threads");
       threads.parentPort.postMessage(threads.isMainThread);
-      `, &lbrace;eval: true}).on("message", console.log); // This will print "false"</code></pre>
+      `, &lbrace;eval: true}).on("message", console.log); // Esto imprimirá "false"</code></pre>
     <p>Node hace una copia del objeto pasado a <codeinline>postMessage()</codeinline> en lugar de compartirlo directamente con el hilo trabajador. Esto evita que la hebra del trabajador y la hebra principal compartan memoria. Se podría esperar que esta copia se hiciera con <codeinline>JSON.stringify()</codeinline> y <codeinline>JSON.parse()</codeinline> (<a href="capitulo-11#6">§11.6</a>). Pero de hecho, Node toma prestada una técnica más robusta conocida como el algoritmo de clonado estructurado de los navegadores web.</p>
     <p>El algoritmo de clonado estructurado permite la serialización de la mayoría de los tipos de JavaScript, incluyendo objetos Map, Set, Date y RegExp y arrays tipados, pero no puede, en general, copiar tipos definidos por el entorno anfitrión Node, como sockets y streams. Nótese, sin embargo, que los objetos Buffer están parcialmente soportados: si pasas un Buffer a <codeinline>postMessage()</codeinline> será recibido como un Uint8Array, y puede ser convertido de nuevo en un Buffer con <codeinline>Buffer.from()</codeinline>. Más información sobre el algoritmo de clonación estructurada en <a href="capitulo-15#algoritmo-clon-estructurado">"El algoritmo de clonación estructurada"</a>.</p>
   </section>
@@ -1537,8 +1547,8 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <pre class="language-js">
     <code class="language-js">const threads = require("worker_threads");
     let channel = new threads.MessageChannel();
-    channel.port2.on("message", console.log); // Log any messages we receive
-    channel.port1.postMessage("hello"); // Will cause "hello" to be printed</code></pre>
+    channel.port2.on("message", console.log); // Registrar cualquier mensaje que recibamos
+    channel.port1.postMessage("hello"); // Hará que se imprima "hola"</code></pre>
     <p>También puede llamar a <codeinline>close()</codeinline> en cualquiera de los puertos para romper la conexión entre los dos puertos y señalar que no se intercambiarán más mensajes. Cuando se llama a <codeinline>close()</codeinline> en cualquiera de los puertos, se envía un evento "close" a ambos puertos.</p>
     <p>Observe que el ejemplo de código anterior crea un par de objetos MessagePort y luego utiliza esos objetos para transmitir un mensaje dentro del hilo principal. Para utilizar canales de comunicación personalizados con trabajadores, debemos transferir uno de los dos puertos desde el subproceso en el que se crea al subproceso en el que se utilizará. En la siguiente sección se explica cómo hacerlo.</p>
   </section>
@@ -1548,28 +1558,28 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Un objeto MessagePort no puede ser copiado por el algoritmo de clonado estructurado, pero puede ser transferido. Si el primer argumento de <codeinline>postMessage()</codeinline> ha incluido uno o más objetos MessagePorts (anidados a una profundidad arbitraria dentro del objeto Message), entonces esos objetos MessagePort también deben aparecer como miembros del array pasado como segundo argumento. Hacer esto le dice a Node que no necesita hacer una copia del MessagePort, y en su lugar puede dar el objeto existente al otro hilo. La clave para entender, sin embargo, sobre la transferencia de valores entre hilos es que una vez que un valor es transferido, ya no puede ser utilizado en el hilo que llamó a <codeinline>postMessage()</codeinline>.</p>
     <p>Así es como se puede crear un nuevo MessageChannel y transferir uno de sus Message- Ports a un worker:</p>
     <pre class="language-js">
-    <code class="language-js">// Create a custom communication channel
+    <code class="language-js">// Crea un canal de comunicación personalizado
     const threads = require("worker_threads");
     let channel = new threads.MessageChannel();
 
-    // Use the worker's default channel to transfer one end of the new
-    // channel to the worker. Assume that when the worker receives this
-    // message it immediately begins to listen for messages on the new channel.
+    // Usa el canal predeterminado del worker para transferir un extremo del nuevo
+    // canal al worker. Supongamos que cuando el worker recibe este
+    // mensaje, inmediatamente comienza a escuchar mensajes en el nuevo canal.
     worker.postMessage(&lbrace; command: "changeChannel", data: channel.port1 },
           [ channel.port1 ]);
-    // Now send a message to the worker using our end of the custom channel
+    // Ahora enviamos un mensaje al worker usando nuestro extremo del canal personalizado
     channel.port2.postMessage("Can you hear me now?");
 
-    // And listen for responses from the worker as well
+    // Y escuchamos las respuestas del worker también
     channel.port2.on("message", handleMessagesFromWorker);</code></pre>
     <p>Los objetos MessagePort no son los únicos que se pueden transferir. Si llamas a <codeinline>postMessage()</codeinline> con un array tipado como mensaje (o con un mensaje que contiene uno o más arrays tipados anidados arbitrariamente dentro del mensaje), ese array tipado (o esos arrays tipados) simplemente serán copiados por el algoritmo de clonado estructurado. Pero las matrices tipadas pueden ser grandes; por ejemplo, si se está utilizando un hilo de trabajo para realizar el procesamiento de imágenes en millones de píxeles. Así que por eficiencia, <codeinline>postMessage()</codeinline> también nos da la opción de transferir matrices tipadas en lugar de copiarlas. (Los hilos comparten memoria por defecto. Los hilos de trabajo en JavaScript generalmente evitan la memoria compartida, pero cuando permitimos este tipo de transferencia controlada, se puede hacer de manera muy eficiente). Lo que hace que esto sea seguro es que cuando un array tipado se transfiere a otro hilo, se vuelve inutilizable en el hilo que lo transfirió. En el caso del procesamiento de imágenes, el subproceso principal podría transferir los píxeles de una imagen al subproceso trabajador, y luego el subproceso trabajador podría transferir los píxeles procesados de nuevo al subproceso principal cuando haya terminado. La memoria no necesitaría ser copiada, pero nunca sería accesible por dos hilos a la vez.</p>
     <p>Para transferir un array tipado en lugar de copiarlo, incluya el ArrayBuffer que respalda el array en el segundo argumento de <codeinline>postMessage()</codeinline>:</p>
     <pre class="language-js">
-    <code class="language-js">let pixels = new Uint32Array(1024*1024); // 4 megabytes of memory
+    <code class="language-js">let pixels = new Uint32Array(1024*1024); // 4 megabytes de memoria
 
-    // Assume we read some data into this typed array, and then transfer the
-    // pixels to a worker without copying. Note that we don't put the array
-    // itself in the transfer list, but the array's Buffer object instead.
+    // Supongamos que leemos algunos datos en este array tipado, y luego transferimos
+    // los píxeles a un worker sin copiar. Ten en cuenta que no ponemos el array
+    // en la lista de transferencia, sino el objeto Buffer del array.
     worker.postMessage(pixels, [ pixels.buffer ]);</code></pre>
     <p>Al igual que con los MessagePorts transferidos, un array tipado transferido se vuelve inutilizable una vez transferido. No se lanzan excepciones si se intenta utilizar un MessagePort o un array tipado que ha sido transferido; estos objetos simplemente dejan de hacer algo cuando se interactúa con ellos.</p>
   </section>
@@ -1581,37 +1591,37 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <code class="language-js">const threads = require("worker_threads");
 
     if (threads.isMainThread) &lbrace;
-      // In the main thread, we create a shared typed array with
-      // one element. Both threads will be able to read and write
-      // sharedArray[0] at the same time.
+      // En el hilo principal, creamos un array tipado compartido con
+      // un solo elemento. Ambos hilos podrán leer y escribir
+      // en sharedArray[0] al mismo tiempo.
       let sharedBuffer = new SharedArrayBuffer(4);
       let sharedArray = new Int32Array(sharedBuffer);
 
-      // Now create a worker thread, passing the shared array to it with
-      // as its initial workerData value so we don't have to bother with
-      // sending and receiving a message
+      // Ahora creamos un worker, pasando el array compartido como
+      // su valor inicial workerData, para no tener que preocuparnos de
+      // enviar y recibir un mensaje.
       let worker = new threads.Worker(__filename, &lbrace; workerData: sharedArray });\
 
-      // Wait for the worker to start running and then increment the
-      // shared integer 10 million times.
+      // Esperamos a que el worker empiece a ejecutarse y luego
+      // incrementamos el entero compartido 10 millones de veces.
       worker.on("online", () => &lbrace;
         for(let i = 0; i &lt; 10_000_000; i++) sharedArray[0]++;
 
-        // Once we're done with our increments, we start listening for
-        // message events so we know when the worker is done.
+        // Una vez que terminemos con los incrementos, comenzamos a escuchar los
+        // eventos de mensaje para saber cuándo el worker ha terminado.
         worker.on("message", () => &lbrace;
-          // Although the shared integer has been incremented
-          // 20 million times, its value will generally be much less.
-          // On my computer the final value is typically under 12 million.
+          // Aunque el entero compartido ha sido incrementado20 millones
+          // de veces, su valor generalmente será mucho menor. En mi
+          // computadora, el valor final suele estar por debajo de los 12 millones.
           console.log(sharedArray[0]);
         });
       });
     } else &lbrace;
-      // In the worker thread, we get the shared array from workerData
-      // and then increment it 10 million times.
+      // En el hilo worker, obtenemos el array compartido de workerData
+      // y luego lo incrementamos 10 millones de veces.
       let sharedArray = threads.workerData;
       for(let i = 0; i &lt; 10_000_000; i++) sharedArray[0]++;
-      // When we're done incrementing, let the main thread know
+      // Cuando terminemos de incrementar, informamos al hilo principal
       threads.parentPort.postMessage("done");
     }</code></pre>
     <p>Un escenario en el que podría ser razonable utilizar un SharedArrayBuffer es cuando los dos hilos operan en secciones completamente separadas de la memoria compartida. Se puede hacer esto creando dos matrices tipadas que sirvan como vistas de regiones no superpuestas del buffer compartido, y luego hacer que los dos subprocesos utilicen esas dos matrices tipadas separadas. Una ordenación merge paralela podría hacerse así: un subproceso ordena la mitad inferior de un array y el otro subproceso ordena la mitad superior, por ejemplo. O algunos tipos de algoritmos de procesamiento de imágenes también son adecuados para este enfoque: múltiples hilos trabajando en regiones separadas de la imagen.</p>
@@ -1626,20 +1636,20 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
 
       worker.on("online", () => &lbrace;
         for(let i = 0; i &lt; 10_000_000; i++) &lbrace;
-          Atomics.add(sharedArray, 0, 1); // Threadsafe atomic increment
+          Atomics.add(sharedArray, 0, 1); // Incremento atómico seguro para hilos
         }
 
         worker.on("message", (message) => &lbrace;
-          // When both threads are done, use a threadsafe function
-          // to read the shared array and confirm that it has the
-          // expected value of 20,000,000.
+          // Cuando ambos hilos hayan terminado, usamos una función segura
+          // para hilos para leer el array compartido y confirmar que
+          // tiene el valor esperado de 20,000,000.
           console.log(Atomics.load(sharedArray, 0));
         });
       });
     } else &lbrace;
       let sharedArray = threads.workerData;
       for(let i = 0; i &lt; 10_000_000; i++) &lbrace;
-        Atomics.add(sharedArray, 0, 1); // Threadsafe atomic increment
+        Atomics.add(sharedArray, 0, 1); // Incremento atómico seguro para hilos
       }
       threads.parentPort.postMessage("done");
     }</code></pre>

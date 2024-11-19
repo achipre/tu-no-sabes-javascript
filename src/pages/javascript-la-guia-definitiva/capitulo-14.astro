@@ -5,7 +5,10 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
 <Layoutjavascript title="JavaScript: La guia definitiva">
   <Navegation capAnterior="capitulo-13" capSiguiente="capitulo-15" />
   <section class="fadeIn">
-    <h1 class="text-right">Metaprogramación</h1>
+    <header class="flex justify-between">
+      <img class="h-10" src="/public/javascript/catorce.svg" alt="Capitulo Catorce">
+      <h1 class="text-right">Metaprogramación</h1>
+    </header>
     <p>Este capítulo cubre una serie de características avanzadas de JavaScript que no se utilizan habitualmente en la programación diaria, pero que pueden ser valiosas para los programadores que escriben bibliotecas reutilizables y de interés para cualquiera que quiera juguetear con los detalles sobre cómo se comportan los objetos de JavaScript.</p>
     <p>Muchas de las características descritas aquí pueden describirse vagamente como "metaprogramación": si la programación normal consiste en escribir código para manipular datos, la metaprogramación consiste en escribir código para manipular otro código. En un lenguaje dinámico como JavaScript, los límites entre programación y metaprogramación son difusos: incluso la simple capacidad de iterar sobre las propiedades de un objeto con un bucle <codeinline>for/in</codeinline> podría ser considerada "meta" por programadores acostumbrados a lenguajes más estáticos.</p>
     <p>Los temas de metaprogramación tratados en este capítulo incluyen:</p>

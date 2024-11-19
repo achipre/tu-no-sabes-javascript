@@ -5,7 +5,10 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
 <Layoutjavascript title="JavaScript: La guia definitiva">
   <Navegation capAnterior="capitulo-7" capSiguiente="capitulo-9" />
   <section class="fadeIn">
-    <h1 class="text-right">Funciones</h1>
+    <header class="flex justify-between">
+      <img class="h-10" src="/public/javascript/ocho.svg" alt="Capitulo Ocho">
+      <h1 class="text-right">Funciones</h1>
+    </header>
     <p>Este capítulo trata sobre las funciones de JavaScript. Las funciones son un bloque de construcción fundamental para los programas JavaScript y una característica común en casi todos los lenguajes de programación. Puede que ya estés familiarizado con el concepto de función bajo un nombre como <em>subrutina</em> o <em>procedimiento</em>.</p>
     <p>Una <em>función</em> es un bloque de código JavaScript que se define una vez, pero que puede ejecutarse o <em>invocarse</em> tantas veces como se desee. Las funciones JavaScript están <em>parametrizadas</em>: la definición de una función puede incluir una lista de identificadores, conocidos como <em>parámetros</em>, que funcionan como variables locales para el cuerpo de la función. Las invocaciones de funciones proporcionan valores, o <em>argumentos</em>, para los parámetros de la función. Las funciones suelen utilizar los valores de sus argumentos para calcular un <em>valor de retorno</em> que se convierte en el valor de la expresión de invocación de la función. Además de los argumentos, cada invocación tiene otro valor, el <em>contexto de invocación</em>, que es el valor de la palabra clave <codeinline>this</codeinline>.</p>
     <p>Si una función se asigna a una propiedad de un objeto, se denomina <em>método</em> de ese objeto. Cuando una función es invocada <em>sobre</em> o <em>a través</em> de un objeto, ese objeto es el contexto de invocación o el valor <codeinline>this</codeinline> para la función. Las funciones diseñadas para inicializar un objeto recién creado se llaman <em>constructores</em>. Los constructores se describieron en <a href="capitulo-6#2">§6.2</a> y se tratarán de nuevo en el <a href="capitulo-9">Capítulo 9</a>.</p>
