@@ -27,7 +27,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro"
     <p>La mayor parte de este libro se centra en el propio lenguaje JavaScript. El <a href="capitulo-11" target="_blank" rel="noopener noreferrer">Capítulo 11</a> documenta la biblioteca estándar de JavaScript, el <a href="capitulo-15" target="_blank" rel="noopener noreferrer">Capítulo 15</a> presenta el entorno host del navegador web y el <a href="capitulo-16" target="_blank" rel="noopener noreferrer">Capítulo 16</a> presenta el entorno host de Node.</p>
     <p>Este libro trata primero los fundamentos de bajo nivel y, a partir de ahí, desarrolla abstracciones más avanzadas y de más alto nivel. Los capítulos están pensados para leerse más o menos en orden. Pero aprender un nuevo lenguaje de programación nunca es un proceso lineal, y describir un lenguaje tampoco lo es: cada característica del lenguaje está relacionada con otras, y este libro está lleno de referencias cruzadas - a veces hacia atrás y a veces hacia delante- a material relacionado. Este capítulo introductorio hace una rápida primera pasada por el lenguaje, introduciendo características clave que facilitarán la comprensión del tratamiento en profundidad de los capítulos siguientes. Si ya eres un programador Java-Script en activo, probablemente puedas saltarte este capítulo. (Aunque puede que disfrutes leyendo el <a href="#ejemplo1-1">Ejemplo 1-1</a> al final del capítulo antes de seguir adelante).</p>
   </section>
-  <section class="py-4 xs:py-5 sm:py-6">
+  <section id="1" class="py-4 xs:py-5 sm:py-6">
     <h2>1.1 Explorar JavaScript</h2>
     <p>Cuando aprendes un nuevo lenguaje de programación, es importante que pruebes los ejemplos del libro, los modifiques y los vuelvas a probar para comprobar tu comprensión del lenguaje. Para ello, necesitas un intérprete de JavaScript.</p>
     <p>La forma más sencilla de probar algunas líneas de JavaScript es abrir las herramientas de desarrollo web en tu navegador (con <tecla>F12</tecla>, <tecla>Ctrl</tecla>+<tecla>Shift</tecla>+<tecla>I</tecla> o <tecla>Command</tecla>+<tecla>Option</tecla>+<tecla>I</tecla>) y seleccionar la pestaña Consola. A continuación, puedes escribir código y ver los resultados a medida que escribes. Las herramientas de desarrollo del navegador suelen aparecer como paneles en la parte inferior o derecha de la ventana del navegador, pero normalmente puedes separarlas como ventanas independientes (como se muestra en la <a href="#figure1-1">Figura 1-1</a>), lo que suele ser bastante cómodo.</p>
@@ -59,7 +59,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro"
     > (x > 3) || (y &lt; 3)
     false</pre>
   </section>
-  <section>
+  <section id="2">
     <h2>1.2 Hola Mundo</h2>
     <p>Cuando estés listo para empezar a experimentar con trozos más largos de código, estos entornos interactivos línea por línea pueden dejar de ser adecuados, y probablemente prefieras escribir tu código en un editor de texto. Desde ahí, puedes copiar y pegar en la consola Java Script o en una sesión Node. O puede guardar su código en un archivo (la extensión de nombre de archivo tradicional para el código JavaScript es <em class="italic">.js</em>) y luego ejecutar ese archivo de código JavaScript con Node:</p>
     <pre class="language-js">
@@ -76,7 +76,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro"
     file:///Usuarios/nombredeusuario/javascript/hello.html</pre>
     <p>Abra la ventana de herramientas de desarrollador para ver el saludo en la consola.</p>
   </section>
-  <section class="py-4 xs:py-5 sm:py-6">
+  <section id="3" class="py-4 xs:py-5 sm:py-6">
     <h2>1.3 Un recorrido por JavaScript</h2>
     <p>Esta sección presenta una introducción rápida, mediante ejemplos de código, al lenguaje JavaScript. Después de este capítulo introductorio, nos sumergimos en JavaScript en el nivel más bajo: El <a href="capitulo-2" target="_blank" rel="noopener noreferrer">Capítulo 2</a> explica cosas como los comentarios de JavaScript, el punto y coma y el conjunto de caracteres Unicode. El <a href="capitulo-3" target="_blank" rel="noopener noreferrer">Capítulo 3</a> empieza a ponerse más interesante: explica las variables de JavaScript y los valores que se pueden asignar a esas variables.</p>
     <p>He aquí algunos ejemplos de código para ilustrar los aspectos más destacados de esos dos capítulos:</p>
@@ -314,7 +314,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro"
       <p class="ml-5 xs:ml-6 sm:ml-7 md:ml-8">Cubre herramientas y extensiones del lenguaje que merece la pena conocer porque se utilizan ampliamente y pueden convertirle en un programador más productivo.</p>
     </div>
   </section>
-  <section>
+  <section id="4">
     <h2>1.4 Ejemplo: Histogramas de frecuencia de caracteres</h2>
     <p>Este capítulo concluye con un programa JavaScript corto pero no trivial. El <a href="#ejemplo1-1">Ejemplo 1-1</a> es un programa Node que lee texto de la entrada estándar, calcula un histograma de frecuencia de caracteres a partir de ese texto, y luego imprime el histograma. Usted podría invocar el programa así para analizar la frecuencia de caracteres de su propio código fuente:</p>
     <pre class="language-js">
@@ -426,7 +426,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro"
     // Crea un objeto Histograma a partir de la entrada estándar, luego imprime el histograma.
     histogramFromStdin().then(histogram => &#123 console.log(histogram.toString()); });</code></pre>
   </section>
-  <section class="py-4 xs:py-5 sm:py-6">
+  <section id="5" class="py-4 xs:py-5 sm:py-6">
     <h2>1.5 Resumen</h2>
     <p>Este libro explica JavaScript de abajo arriba. Esto significa que empezamos con detalles de bajo nivel como comentarios, identificadores, variables y tipos; luego pasamos a expresiones, sentencias, objetos y funciones; y finalmente cubrimos las abstracciones de alto nivel del lenguaje como clases y módulos. Me tomo muy en serio la palabra <em>definitive</em> que aparece en el título de este libro, y los capítulos siguientes explican el lenguaje con un nivel de detalle que, al principio, puede parecer desconcertante. Sin embargo, el verdadero dominio de JavaScript requiere una comprensión de los detalles, y espero que dedique tiempo a leer este libro de principio a fin. Pero, por favor, no sienta que tiene que hacerlo en su primera lectura. Si se siente atascado en una sección, simplemente pase a la siguiente. Podrá volver y dominar los detalles una vez que tenga un conocimiento práctico de la lengua en su conjunto.</p>
   </section>
