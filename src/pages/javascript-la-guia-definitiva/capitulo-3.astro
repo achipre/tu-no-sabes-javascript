@@ -36,7 +36,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>El formato numérico de JavaScript permite representar exactamente todos los números enteros comprendidos entre -9 007'199 254'740 992 (-2<sup class="bg-inherit px-0 m-0">53</sup>) y 9 007'199 254'740 992 (2<sup class="bg-inherit px-0 m-0">53</sup>), ambos inclusive. Si utiliza valores enteros mayores que éste, puede perder precisión en los dígitos finales. Tenga en cuenta, sin embargo, que ciertas operaciones en JavaScript (como la indexación de matrices y el método bitwise descritos en el <a href="capitulo-4">Capítulo 4</a>) se realizan con enteros de 32 bits. Si necesita representar exactamente enteros mayores, consulte <a href="#2-5">§3.2.5</a>.</p>
     <p>Cuando un número aparece directamente en un programa JavaScript, se denomina <em>literal numérico</em>. JavaScript admite literales numéricos en varios formatos, como se describe en las secciones siguientes. Tenga en cuenta que cualquier literal numérico puede ir precedido de un signo menos (<codeinline>-</codeinline>) para que el número sea negativo.</p>
   </section>
-  <section class="py-4 xs:py-5 sm:py-6">
+  <section id="2-1" class="py-4 xs:py-5 sm:py-6">
     <h3>3.2.1 Literales enteros</h3>
     <p>En un programa JavaScript, un número entero de base-10 se escribe como una secuencia de dígitos. Por ejemplo:</p>
     <pre class="language-js">
@@ -52,7 +52,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <code class="language-js">0b10101   // => 21: (1*16 + 0*8 + 1*4 + 0*2 + 1*1)
     0o377     // => 255: (3*64 + 7*8 + 7*1)</code></pre>
   </section>
-  <section>
+  <section id="2-2">
     <h3>3.2.2 Literales en coma flotante</h3>
     <p>Los literales de coma flotante pueden tener punto decimal; utilizan la sintaxis tradicional de los números reales. Un valor real se representa como la parte integral del número, seguida de un punto decimal y la parte fraccionaria del número.</p>
     <p>Los literales de coma flotante también pueden representarse mediante notación exponencial: un número real seguido de la letra e (o E), seguido de un signo más o menos opcional, seguido de un exponente entero. Esta notación representa el número real multiplicado por 10 a la potencia del exponente.</p>
@@ -77,7 +77,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       <p>En el momento de escribir este artículo, a principios de 2020, los guiones bajos en literales numéricos aún no están formalmente estandarizados como parte de JavaScript. Pero se encuentran en fases avanzadas del proceso de estandarización y están implementados por los principales navegadores y por Node.</p>
     </article>
   </section>
-  <section class="py-4 xs:py-5 sm:py-6">
+  <section id="2-3" class="py-4 xs:py-5 sm:py-6">
     <h3>3.2.3 Aritmética en JavaScript</h3>
     <p>Los programas JavaScript trabajan con números utilizando los operadores aritméticos que proporciona el lenguaje. Estos incluyen <codeinline>+</codeinline> para la suma, <codeinline>-</codeinline> para la resta, <codeinline>*</codeinline> para la multiplicación, <codeinline>/</codeinline> para la división y <codeinline>%</codeinline> para el módulo (resto después de la división). ES2016 añade <codeinline>**</codeinline> para la expo- nenciación. Para más información sobre estos y otros operadores, véase el <a href="capitulo-4">Capítulo 4</a>.</p>
     <p>Además de estos operadores aritméticos básicos, JavaScript admite operaciones matemáticas más complejas mediante un conjunto de funciones y constantes definidas como propiedades del objeto <codeinline>Math</codeinline>:</p>
@@ -157,7 +157,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     zero === negz     // => true: cero y cero negativo son iguales
     1/zero === 1/negz // => false: Infinity y -Infinity no son iguales</code></pre>
   </section>
-  <section>
+  <section id="2-4">
     <h3>3.2.4 Errores de redondeo y de Punto flotante binaria</h3>
     <p>Existen infinitos números reales, pero sólo un número finito de ellos (18'437 736'874 454'810 627, para ser exactos) pueden representarse exactamente con el formato de coma flotante de JavaScript. Esto significa que cuando se trabaja con números reales en JavaScript, la representación del número será a menudo una aproximación del número real.</p>
     <p>La representación en coma flotante IEEE-754 que utiliza JavaScript (y casi todos los demás lenguajes de programación modernos) es una representación binaria, que puede representar exactamente fracciones como <codeinline>1/2</codeinline>, <codeinline>1/8</codeinline> y <codeinline>1/1024</codeinline>. Por desgracia, las fracciones que utilizamos con más frecuencia (sobre todo al realizar cálculos financieros) son fracciones decimales. Por desgracia, las fracciones que utilizamos con más frecuencia (sobre todo al realizar cálculos financieros) son fracciones decimales: <codeinline>1/10</codeinline>, <codeinline>1/100</codeinline>, etc. Las representaciones binarias en coma flotante no pueden representar exactamente números tan sencillos como <codeinline>0.1</codeinline>.</p>
@@ -204,7 +204,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     0 === 0n  // => false: el === comprueba también la igualdad de tipos</code></pre>
     <p>Los operadores bit a bit (descritos en <a href="capitulo-4#8-3">§4.8.3</a>) funcionan generalmente con operandos BigInt. Sin embargo, ninguna de las funciones del objeto <codeinline>Math</codeinline> acepta operandos BigInt.</p>
   </section>
-  <section>
+  <section id="2-6">
     <h3>3.2.6 Fechas y horarios</h3>
     <p>JavaScript define una clase Date sencilla para representar y manipular los números que representan fechas y horas. Las fechas de JavaScript son objetos, pero también tienen una representación numérica como marca de <em>timestamp</em> el número de milisegundos transcurridos desde el 1 de enero de 1970:</p>
     <pre class="language-js">
@@ -230,7 +230,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       <p>Sin embargo, en ES6, las string son <em>iterables</em> y si utiliza el bucle <codeinline>for/of</codeinline> o el operador <codeinline>...</codeinline> con una cadena, iterará los caracteres reales de la cadena, no los valores de 16 bits.</p>
     </article>
   </section>
-  <section>
+  <section id="3-1">
     <h3>3.3.1 Literales de cadena</h3>
     <p>Para incluir un string en un programa JavaScript, basta con encerrar los caracteres de la cadena dentro de un par coincidente de comillas simples o dobles o de puntos suspensivos (<codeinline>'</codeinline> o <codeinline>"</codeinline> o <codeinline>`</codeinline>). Las comillas dobles y los puntos suspensivos pueden incluirse en cadenas delimitadas por comillas simples, y lo mismo ocurre con las cadenas delimitadas por comillas dobles y puntos suspensivos. He aquí algunos ejemplos de literales de cadena:</p>
     <pre class="language-js">
@@ -258,7 +258,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <pre class="language-js">
     <code class="language-js">&lt;button onclick="alert('Gracias')">Cliquear Aqui&lt;/button></code></pre>
   </section>
-  <section class="py-4 xs:py-5 sm:py-6">
+  <section id="3-2" class="py-4 xs:py-5 sm:py-6">
     <h3>3.3.2 Secuencias de escape en literales de cadena</h3>
     <p>El carácter de barra invertida (<codeinline>\</codeinline>) tiene un propósito especial en las cadenas de JavaScript. Combinado con el carácter que le sigue, representa un carácter que no es representable de otro modo dentro de la cadena. Por ejemplo, <codeinline>\n</codeinline> es una <em>secuencia de escape</em> que representa un carácter de nueva línea.</p>
     <p>Otro ejemplo, mencionado anteriormente, es el escape <codeinline>\'</codeinline>, que representa el carácter de comilla simple (o apóstrofo). Esta secuencia de escape es útil cuando se necesita incluir un apóstrofo en una cadena literal que está contenida entre comillas simples. Puede entender por qué se llaman secuencias de escape: la barra invertida le permite escapar de la interpretación habitual del carácter de comilla simple. En lugar de utilizarla para marcar el final de la cadena, se utiliza como apóstrofe:</p>
@@ -332,7 +332,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     </div>
     <p>Si el carácter <codeinline>\</codeinline> precede a cualquier carácter distinto de los mostrados en la <a href="#tabla3-1">Tabla 3-1</a>, la barra invertida simplemente se ignora (aunque futuras versiones del lenguaje pueden, por supuesto, definir nuevas secuencias de escape). Por ejemplo, <codeinline>\#</codeinline> es lo mismo que <codeinline>#</codeinline>. Por último, como se señaló anteriormente, ES5 permite una barra invertida antes de un salto de línea para romper una cadena literal a través de múltiples líneas.</p>
   </section>
-  <section>
+  <section id="3-3">
     <h3>3.3.3 Trabajar con cuerdas</h3>
     <p>Una de las funciones integradas de JavaScript es la posibilidad de <em>concatenar</em> cadenas. Si utiliza el operador <codeiinline>+</codeiinline> con números, los suma. Pero si utiliza este operador con cadenas, las une añadiendo la segunda a la primera. Por ejemplo:</p>
     <pre class="language-js">
@@ -397,7 +397,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     s[0]          // => "h"
     s[s.length-1] // => "o"</code></pre>
   </section>
-  <section class="py-4 xs:py-5 sm:py-6">
+  <section id="3-4" class="py-4 xs:py-5 sm:py-6">
     <h3>3.3.4 Literales de plantilla</h3>
     <p>En ES6 y versiones posteriores, los literales de cadena pueden delimitarse con barras invertidas:</p>
     <pre class="language-js">
@@ -425,7 +425,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p>Observe que aunque la parte de la etiqueta de un literal de plantilla etiquetado es una función, no se utilizan paréntesis en su invocación. En este caso muy específico, los caracteres de marca sustituyen a los paréntesis de apertura y cierre.</p>
     <p>La capacidad de definir sus propias funciones de etiqueta de plantilla es una característica poderosa de Java-Script. Estas funciones no necesitan devolver cadenas, y pueden utilizarse como con- estructores, como si se definiera una nueva sintaxis literal para el lenguaje. Veremos un ejemplo en <a href="capitulo-14#5">§14.5</a>.</p>
   </section>
-  <section>
+  <section id="3-5">
     <h3>3.3.5 Coincidencia de patrones</h3>
     <p>JavaScript define un tipo de datos conocido como <em>expresión regular</em> (o RegExp) para describir y comparar patrones en cadenas de texto. Las RegExp no son uno de los tipos de datos fundamentales de JavaScript, pero tienen una sintaxis literal como los números y las cadenas, por lo que a veces parecen fundamentales. La gramática de las expresiones regulares literales es compleja y la API que definen no es trivial. Se documentan en detalle en <a href="capitulo-11#3">§11.3</a>. Debido a que las RegExps son poderosas y comúnmente usadas para el procesamiento de texto, esta sección proporciona una breve visión general.</p>
     <p>El texto entre un par de barras constituye un literal de expresión regular. La segunda barra del par también puede ir seguida de una o varias letras, que modifican el significado del patrón. Por ejemplo:</p>
@@ -483,7 +483,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     }</code></pre>
     <p>Encontrará más información sobre estos operadores en <a href="capitulo-4#10">§4.10</a>.</p>
   </section>
-  <section>
+  <section id="5">
     <h2>3.5 null e undefined</h2>
     <p><codeinline>null</codeinline> es una palabra clave del lenguaje que se evalúa a un valor especial que se utiliza normalmente para indicar la ausencia de un valor. Al utilizar el operador <codeinline>typeof</codeinline> en <codeinline>null</codeinline> se obtiene la cadena "object", lo que indica que <codeinline>null</codeinline> puede considerarse un valor especial de objeto que indica "no object". En la práctica, sin embargo, <codeinline>null</codeinline> suele considerarse el único miembro de su propio tipo, y puede utilizarse para indicar "sin valor" tanto para números y cadenas como para objetos. La mayoría de los lenguajes de programación tienen un equivalente a <codeinline>null</codeinline> en JavaScript: es posible que lo conozca como <codeinline>NULL</codeinline>, <codeinline>nil</codeinline> o <codeinline>None</codeinline>.</p>
     <p>JavaScript también tiene un segundo valor que indica ausencia de valor. El valor <codeinline>undefined</codeinline> representa un tipo más profundo de ausencia. Es el valor de las variables que no se han inicializado y el valor que se obtiene al consultar el valor de una propiedad de objeto o un elemento de matriz que no existe. El valor <codeinline>undefined</codeinline> es también el valor de retorno de las funciones que no devuelven explícitamente un valor y el valor de los parámetros de función para los que no se pasa ningún argumento. <codeinline>undefined</codeinline> es una constante global predefinida (no una palabra clave del lenguaje como <codeinline>null</codeinline>, aunque esto no es una distinción importante en la práctica) que se inicializa al valor <codeinline>undefined</codeinline>. Si aplica el operador <codeinline>typeof</codeinline> al valor <codeinline>undefined</codeinline>, devuelve "undefined", indicando que este valor es el único miembro de un tipo especial.</p>
@@ -748,7 +748,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <p><a href="capitulo-4#9-1">§4.9.1</a> explica exactamente qué conversiones realiza el operador <codeinline>==</codeinline> para determinar si dos valores deben considerarse iguales.</p>
     <p>Tenga en cuenta que la convertibilidad de un valor en otro no implica la igualdad de esos dos valores. Si se utiliza <codeinline>undefined</codeinline> donde se espera un valor booleano, por ejemplo, se convertirá a <codeinline>false</codeinline>. Pero esto no significa que <codeinline>undefined == false</codeinline>. Los operadores y sentencias de JavaScript esperan valores de varios tipos y realizan conversiones a esos tipos. La sentencia <codeinline>if</codeinline> convierte <codeinline>undefined</codeinline> en <codeinline>false</codeinline>, pero el operador <codeinline>==</codeinline> nunca intenta convertir sus operandos en booleanos.</p>
   </section>
-  <section>
+  <section id="9-2">
     <h3>3.9.2 Conversiones explícitas</h3>
     <p>Aunque JavaScript realiza muchas conversiones de tipo de forma automática, puede que a veces necesite realizar una conversión explícita, o puede que prefiera hacer las conversiones explícitas para que su código sea más claro.</p>
     <p>La forma más sencilla de realizar una conversión de tipo explícita es utilizar las funciones <codeinline>Boolean()</codeinline>, <codeinline>Number()</codeinline> y <codeinline>String()</codeinline>:</p>
@@ -803,7 +803,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     parseInt("077", 8)  // => 63: (7*8 + 7)
     parseInt("077", 10) // => 77: (7*10 + 7)</code></pre>
   </section>
-  <section class="py-4 xs:py-5 sm:py-6">
+  <section id="9-3" class="py-4 xs:py-5 sm:py-6">
     <h3>3.9.3 Conversiones de objeto a primitivo</h3>
     <p>Las secciones anteriores han explicado cómo se pueden convertir explícitamente valores de un tipo a otro tipo y han explicado las conversiones implícitas de JavaScript de valores de un tipo primitivo a otro tipo primitivo. Esta sección cubre las reglas que JavaScript utiliza para convertir objetos en valores primitivos. Es larga y oscura, por lo que si es la primera vez que lee este capítulo, no dude en saltar a <a href="#10">§3.10</a>.</p>
     <p>Una de las razones de la complejidad de las conversiones de objetos a primitivas de JavaScript es que algunos tipos de objetos tienen más de una representación primitiva. Los objetos de fecha, por ejemplo, pueden representarse como cadenas o como marcas de tiempo numéricas. La especificación de JavaScript define tres algoritmos fundamentales para convertir objetos en valores primitivos:</p>
@@ -885,7 +885,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     </p>
     <p>Antes de poder utilizar una variable o constante en un programa JavaScript, hay que <em>declararla</em>. En ES6 y posteriores, esto se hace con las palabras clave <codeinline>let</codeinline> y <codeinline>const</codeinline>, que explicamos a continuación. Antes de ES6, las variables se declaraban con <codeinline>var</codeinline>, que es más idiosincrásico y se explica más adelante en esta sección.</p>
   </section>
-  <section class="py-4 xs:py-5 sm:py-6">
+  <section id="10-1" class="py-4 xs:py-5 sm:py-6">
     <h3>3.10.1 Declaraciones con let y const</h3>
     <p>En el JavaScript moderno (ES6 y posteriores), las variables se declaran con la palabra clave <codeinline>let</codeinline>, así:</p>
     <pre class="language-js">
@@ -944,7 +944,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
     <code class="language-js">let i = 10;
     i = "ten";</code></pre>
   </section>
-  <section>
+  <section id="10-2">
     <h3>3.10.2 Declaraciones de variables con var</h3>
     <p>En las versiones de JavaScript anteriores a ES6, la única forma de declarar una variable es con la palabra clave <codeinline>var</codeinline>, y no hay forma de declarar constantes. La sintaxis de <codeinline>var</codeinline> es igual que la sintaxis de <codeinline>let</codeinline>:</p>
     <pre class="language-js">
@@ -987,7 +987,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro";
       </div>
     </nota>
   </section>
-  <section class="py-4 xs:py-5 sm:py-6">
+  <section id="10-3" class="py-4 xs:py-5 sm:py-6">
     <h3>3.10.3 Desestructuración Asignación</h3>
     <p>ES6 implementa un tipo de declaración compuesta y una sintaxis de asignación conocida como <em>asignación desestructurada</em>. En una asignación de desestructuración, el valor situado a la derecha del signo igual es una matriz o un objeto (un valor "estructurado"), y el lado izquierdo especifica uno o más nombres de variables utilizando una sintaxis que imita la sintaxis literal de matrices y objetos. Cuando se produce una asignación de desestructuración, se extraen ("desestructuran") uno o más valores del valor de la derecha y se almacenan en las variables nombradas a la izquierda. La asignación desestructurante es quizás la más utilizada para ini- tializar variables como parte de una declaración <codeinline>const</codeinline>, <codeinline>let</codeinline> o <codeinline>var</codeinline>, pero también puede hacerse en expresiones de asignación regulares (con variables que ya han sido declaradas). Y, como veremos en <a href="capitulo-8#3-5">§8.3.5</a>, la desestructuración también puede utilizarse al definir los parámetros de una función.</p>
     <p>A continuación se presentan asignaciones de desestructuración sencillas utilizando matrices de valores:</p>

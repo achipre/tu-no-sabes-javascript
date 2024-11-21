@@ -5,8 +5,7 @@ export const Sidebar = ({direction}) => {
 	const [isOpen, setIsOpen] = useState(true);
 	const handleAside = () => setIsOpen(!isOpen)
 
-	console.log(isOpen);
-	
+	console.log("direction; " + direction);
 	
 	return (
 		
@@ -15,7 +14,7 @@ export const Sidebar = ({direction}) => {
 		<div className="overflow-y-auto py-5 px-3 h-full bg-[#f6e4c5] dark:bg-amber-900">
 			<ul className="space-y-2">
 				<li className="list-none flex gap-2">
-					<a href="/javascript-la-guia-definitiva" className={`group flex flex-1 items-center p-2 text-lg font-bold text-amber-900  rounded-sm dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva' ? 'dark:bg-[#FFF8E8] dark:text-amber-900 bg-amber-900 text-[#fff8e8]' : 'dark:text-[#fff8e8]'}`}>
+					<a href="/javascript-la-guia-definitiva" className={`group flex flex-1 items-center p-2 text-lg font-bold  rounded-sm dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva' ? 'bg-amber-900 text-[#fff8e8] dark:bg-[#fff8e8] dark:text-amber-900' : 'dark:text-[#fff8e8] text-amber-900'}`}>
 						<svg version="1.1" x="0px" y="0px" className={`w-6 h-6 transition duration-500 group-hover:fill-[#FFF8E8] dark:group-hover:fill-amber-900 ${direction === '/javascript-la-guia-definitiva' ? 'fill-[#fff8e8] dark:fill-amber-900' : 'fill-amber-900 dark:fill-[#fff8e8]'}`} viewBox="0 0 64 64"  width="64" height="64">
 							<path d="M32 0c-2.977 0 -9.441 33.766 -9.441 38.698s4.509 8.93 9.441 8.93 9.441 -3.998 9.441 -8.93S34.977 0 32 0"/>
 							<path d="M39.253 4.864c1.143 3.783 2.221 8.38 2.945 11.678 1.783 8.125 3.708 18.905 3.708 22.156 0 7.261 -6.368 13.395 -13.906 13.395s-13.906 -6.134 -13.906 -13.395c0 -3.25 1.925 -14.031 3.708 -22.156 0.724 -3.298 1.802 -7.895 2.945 -11.678 -8.056 1.729 -14.095 8.889 -14.095 17.462v23.814C10.652 56.004 18.648 64 28.513 64h6.975c9.864 0 17.86 -7.996 17.86 -17.86V22.326c0 -8.572 -6.04 -15.733 -14.095 -17.462M16.372 52.837h-0.001c-1.641 0 -2.976 -1.335 -2.976 -2.977 0.001 -1.642 1.336 -2.977 2.977 -2.977 1.641 0 2.977 1.335 2.977 2.977s-1.335 2.977 -2.977 2.977m9.908 6.698c0 -1.138 -0.36 -2.218 -1.04 -3.124l3.57 -2.682c1.266 1.686 1.936 3.693 1.936 5.806zm11.44 0h-4.465c0 -2.113 0.669 -4.12 1.936 -5.806l3.57 2.682c-0.681 0.906 -1.04 1.986 -1.04 3.124m9.908 -6.698h-0.001c-1.641 0 -2.976 -1.335 -2.976 -2.977 0.001 -1.642 1.336 -2.977 2.977 -2.977 1.641 0 2.977 1.335 2.977 2.977s-1.335 2.977 -2.977 2.977"/>
@@ -27,7 +26,7 @@ export const Sidebar = ({direction}) => {
 					<ButtonAside handleAside={handleAside} />
 				</li>
 				<li className="list-none">
-					<a href="/javascript-la-guia-definitiva/capitulo-1" className={`group flex items-center p-2 text-base rounded-sm font-normal transition-colors duration-500 text-amber-900 dark:text-[#FFF8E8] dark:hover:text-amber-900 hover:text-[#FFF8E8] dark:hover:bg-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva/capitulo-1' ? 'dark:bg-[#FFF8E8] dark:text-amber-900 bg-amber-900 text-[#fff8e8]' : ''}`}>
+					<a href="/javascript-la-guia-definitiva/capitulo-1" className={`group flex items-center p-2 text-base rounded-sm font-bold transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] dark:hover:bg-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva/capitulo-1' ? 'bg-amber-900 text-[#fff8e8] dark:bg-[#fff8e8] dark:text-amber-900' : 'dark:text-[#fff8e8] text-amber-900'}`}>
 						<span className="ml-3 flex-1">1. Introducción a JavaScript</span>
 						{isOpen ? <svg aria-hidden="true" className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
 						: <svg fill="currentColor" width="24" height="24" viewBox="0 0 24 24" >
@@ -36,10 +35,10 @@ export const Sidebar = ({direction}) => {
 					</a>
 					<ul id="dropdown-pages" className={`${isOpen && (direction === '/javascript-la-guia-definitiva/capitulo-1') ? "": "hidden"} py-2 space-y-2`}>
 						<li className="list-none">
-							<a href="/javascript-la-guia-definitiva/capitulo-1#1" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">1.1 Explorar JavaScript</a>
+							<a href="/javascript-la-guia-definitiva/capitulo-1#1" className="flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">1.1 Explorar JavaScript</a>
 						</li>
 						<li className="list-none">
-							<a href="/javascript-la-guia-definitiva/capitulo-1#2" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">1.2 Hola Mundo</a>
+							<a href="/javascript-la-guia-definitiva/capitulo-1#2" className="flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">1.2 Hola Mundo</a>
 						</li>
 						<li className="list-none">
 							<a href="/javascript-la-guia-definitiva/capitulo-1#3" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">1.3 Un recorrido por JavaScript</a>
@@ -53,7 +52,7 @@ export const Sidebar = ({direction}) => {
 					</ul>
 				</li>
 				<li className="list-none">
-					<a href="/javascript-la-guia-definitiva/capitulo-2" className={`group flex items-center p-2 text-base rounded-sm font-normal transition-colors duration-500 text-amber-900 dark:text-[#FFF8E8] dark:hover:text-amber-900 hover:text-[#FFF8E8] dark:hover:bg-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva/capitulo-2' ? 'dark:bg-[#FFF8E8] dark:text-amber-900 bg-amber-900 text-[#fff8e8]' : ''}`}>
+					<a href="/javascript-la-guia-definitiva/capitulo-2" className={`group flex items-center p-2 text-base rounded-sm font-bold transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] dark:hover:bg-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva/capitulo-2' ? 'bg-amber-900 text-[#fff8e8] dark:bg-[#fff8e8] dark:text-amber-900' : 'dark:text-[#fff8e8] text-amber-900'}`}>
 						<span className="ml-3 flex-1">2. Estructura léxica</span>
 						{isOpen ? <svg aria-hidden="true" className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
 						: <svg fill="currentColor" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -62,39 +61,39 @@ export const Sidebar = ({direction}) => {
 					</a>
 					<ul id="dropdown-pages" className={`${isOpen && (direction === '/javascript-la-guia-definitiva/capitulo-2') ? "": "hidden"} py-2 space-y-2`}>
 						<li className="list-none">
-							<a href="#" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">2.1 El texto de un programa JavaScript</a>
+							<a href="#1" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">2.1 El texto de un programa JavaScript</a>
 						</li>
 						<li className="list-none">
-							<a href="#" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">2.2 Comentarios</a>
+							<a href="#2" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">2.2 Comentarios</a>
 						</li>
 						<li className="list-none">
-							<a href="#" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">2.3 Literales</a>
+							<a href="#3" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">2.3 Literales</a>
 						</li>
 						<li className="list-none">
-							<a href="#" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">2.4 Identificadores y palabras reservadas</a>
+							<a href="#4" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">2.4 Identificadores y palabras reservadas</a>
 						</li>
 						<li className="list-none">
-							<a href="#" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">2.4.1 Palabras reservadas</a>
+							<a href="#4-1" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">2.4.1 Palabras reservadas</a>
 						</li>
 						<li className="list-none">
-							<a href="#" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">2.5 Unicode</a>
+							<a href="#5" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">2.5 Unicode</a>
 						</li>
 						<li className="list-none">
-							<a href="#" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">2.5.1 Secuencias de Escape Unicode</a>
+							<a href="#5-1" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">2.5.1 Secuencias de Escape Unicode</a>
 						</li>
 						<li className="list-none">
-							<a href="#" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">2.5.2 Normalización Unicode</a>
+							<a href="#5-2" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">2.5.2 Normalización Unicode</a>
 						</li>
 						<li className="list-none">
-							<a href="#" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">2.6 Punto y coma opcional</a>
+							<a href="#6" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">2.6 Punto y coma opcional</a>
 						</li>
 						<li className="list-none">
-							<a href="#" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">2.7 Resumen</a>
+							<a href="#7" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">2.7 Resumen</a>
 						</li>
 					</ul>
 				</li>
 				<li className="list-none">
-					<a href="/javascript-la-guia-definitiva/capitulo-3" className={`group flex items-center p-2 text-base rounded-sm font-normal transition-colors duration-500 text-amber-900 dark:text-[#FFF8E8] dark:hover:text-amber-900 hover:text-[#FFF8E8] dark:hover:bg-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva/capitulo-3' ? 'dark:bg-[#FFF8E8] dark:text-amber-900 bg-amber-900 text-[#fff8e8]' : ''}`}>
+					<a href="/javascript-la-guia-definitiva/capitulo-3" className={`group flex items-center p-2 text-base rounded-sm font-bold transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] dark:hover:bg-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva/capitulo-3' ? 'bg-amber-900 text-[#fff8e8] dark:bg-[#fff8e8] dark:text-amber-900' : 'dark:text-[#fff8e8] text-amber-900'}`}>
 						<span className="ml-3 flex-1">3. Tipos, valores y variables</span>
 						{isOpen ? <svg aria-hidden="true" className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
 						:  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -102,20 +101,95 @@ export const Sidebar = ({direction}) => {
 						</svg>
 					}
 					</a>
-					<ul id="dropdown-sales" className="hidden py-2 space-y-2">
-						<li>
-							<a href="#" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">Products</a>
+					<ul id="dropdown-pages" className={`${isOpen && (direction === '/javascript-la-guia-definitiva/capitulo-3') ? "": "hidden"} py-2 space-y-2`}>
+						<li className="list-none">
+							<a href="#1" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">3.1 Visión general y definiciones</a>
 						</li>
-						<li>
-							<a href="#" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">Billing</a>
+						<li className="list-none">
+							<a href="#2" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">3.2 Números</a>
 						</li>
-						<li>
-							<a href="#" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">Invoice</a>
+						<li className="list-none">
+							<a href="#2-1" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">3.2.1 Literales enteros</a>
+						</li>
+						<li className="list-none">
+							<a href="#2-2" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">3.2.2 Literales en coma flotante</a>
+						</li>
+						<li className="list-none">
+							<a href="#2-3" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">3.2.3 Aritmética en JavaScript</a>
+						</li>
+						<li className="list-none">
+							<a href="#2-4" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">3.2.4 Errores de redondeo y de Punto flotante binaria</a>
+						</li>
+						<li className="list-none">
+							<a href="#2-5" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">3.2.5 Enteros de precisión arbitraria con BigInt</a>
+						</li>
+						<li className="list-none">
+							<a href="#2-6" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">3.2.6 Fechas y horarios</a>
+						</li>
+						<li className="list-none">
+							<a href="#3" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">3.3 Texto</a>
+						</li>
+						<li className="list-none">
+							<a href="#3-1" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">3.3.1 Literales de cadena</a>
+						</li>
+						<li className="list-none">
+							<a href="#3-2" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">3.3.2 Secuencias de escape en literales de cadena</a>
+						</li>
+						<li className="list-none">
+							<a href="#3-3" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">3.3.3 Trabajar con cuerdas</a>
+						</li>
+						<li className="list-none">
+							<a href="#3-4" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">3.3.4 Literales de plantilla</a>
+						</li>
+						<li className="list-none">
+							<a href="#3-5" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">3.3.5 Coincidencia de patrones</a>
+						</li>
+						<li className="list-none">
+							<a href="#4" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">3.4 Valores booleanos</a>
+						</li>
+						<li className="list-none">
+							<a href="#5" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">3.5 null e undefined</a>
+						</li>
+						<li className="list-none">
+							<a href="#6" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">3.6 Symbols</a>
+						</li>
+						<li className="list-none">
+							<a href="#7" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">3.7 El objeto global</a>
+						</li>
+						<li className="list-none">
+							<a href="#8" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">3.8 Valores primitivos inmutables y referencias a objetos mutables</a>
+						</li>
+						<li className="list-none">
+							<a href="#9" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">3.9 Conversiones de tipo</a>
+						</li>
+						<li className="list-none">
+							<a href="#9-1" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">3.9.1 Conversiones e igualdad</a>
+						</li>
+						<li className="list-none">
+							<a href="#9-2" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">3.9.2 Conversiones explícitas</a>
+						</li>
+						<li className="list-none">
+							<a href="#9-3" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">3.9.3 Conversiones de objeto a primitivo</a>
+						</li>
+						<li className="list-none">
+							<a href="#10" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">3.10 Declaración y asignación de variables</a>
+						</li>
+						<li className="list-none">
+							<a href="#10-1" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">3.10.1 Declaraciones con let y const</a>
+						</li>
+						<li className="list-none">
+							<a href="#10-2" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">3.10.2 Declaraciones de variables con var</a>
+						</li>
+						<li className="list-none">
+							<a href="#10-3" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">3.10.3 Desestructuración Asignación</a>
+						</li>
+						<li className="list-none">
+							<a href="#11" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">3.11 Resumen</a>
 						</li>
 					</ul>
 				</li>
 				<li className="list-none">
-					<a href="/javascript-la-guia-definitiva/capitulo-4" className={`group flex items-center p-2 text-base rounded-sm font-normal transition-colors duration-500 text-amber-900 dark:text-[#FFF8E8] dark:hover:text-amber-900 hover:text-[#FFF8E8] dark:hover:bg-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva/capitulo-4' ? 'dark:bg-[#FFF8E8] dark:text-amber-900 bg-amber-900 text-[#fff8e8]' : ''}`}>
+					<a href="/javascript-la-guia-definitiva/capitulo-4" className={`group flex items-center p-2 text-base rounded-sm font-bold transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] dark:hover:bg-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva/capitulo-4' ? 'bg-amber-900 text-[#fff8e8] dark:bg-[#fff8e8] dark:text-amber-900' : 'dark:text-[#fff8e8] text-amber-900'}`}>
 						<span className="ml-3 flex-1">4. Expresiones y operadores</span>
 						{isOpen ? <svg aria-hidden="true" className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
 						: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -123,9 +197,140 @@ export const Sidebar = ({direction}) => {
 						</svg>
 						}
 					</a>
+					<ul id="dropdown-pages" className={`${isOpen && (direction === '/javascript-la-guia-definitiva/capitulo-4') ? "": "hidden"} py-2 space-y-2`}>
+						<li className="list-none">
+							<a href="#1" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">4.1 Expresiones primarias</a>
+						</li>
+						<li className="list-none">
+							<a href="#2" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">4.2 Inicializadores de objetos y arrays</a>
+						</li>
+						<li className="list-none">
+							<a href="#3" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">4.3 Definir expresiones de funciones</a>
+						</li>
+						<li className="list-none">
+							<a href="#4" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">4.4 Expresiones de acceso a la propiedad</a>
+						</li>
+						<li className="list-none">
+							<a href="#4-1" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">4.4.1 Acceso condicional a la propiedad</a>
+						</li>
+						<li className="list-none">
+							<a href="#5" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">4.5 Expresiones de invocación</a>
+						</li>
+						<li className="list-none">
+							<a href="#5-1" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">4.5.1 Invocación condicional</a>
+						</li>
+						<li className="list-none">
+							<a href="#6" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">4.6 Expresiones de creación de objetos</a>
+						</li>
+						<li className="list-none">
+							<a href="#7" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">4.7 Visión general del operador</a>
+						</li>
+						<li className="list-none">
+							<a href="#7-1" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">4.7.1 Número de operandos</a>
+						</li>
+						<li className="list-none">
+							<a href="#7-2" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">4.7.2 Tipo de operando y resultado</a>
+						</li>
+						<li className="list-none">
+							<a href="#7-3" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">4.7.3 Efectos secundarios del operador</a>
+						</li>
+						<li className="list-none">
+							<a href="#7-4" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">4.7.4 Precedencia del operador</a>
+						</li>
+						<li className="list-none">
+							<a href="#7-5" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">4.7.5 Asociatividad de operadores</a>
+						</li>
+						<li className="list-none">
+							<a href="#7-6" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">4.7.6 Orden de evaluación</a>
+						</li>
+						<li className="list-none">
+							<a href="#8" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">4.8 Expresiones aritméticas</a>
+						</li>
+						<li className="list-none">
+							<a href="#8-1" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">4.8.1 Operador de +</a>
+						</li>
+						<li className="list-none">
+							<a href="#8-2" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">4.8.2 Operadores aritméticos unarios</a>
+						</li>
+						<li className="list-none">
+							<a href="#8-3" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">4.8.3 Operadores bit a bit</a>
+						</li>
+						<li className="list-none">
+							<a href="#9" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">4.9 Expresiones relacionales</a>
+						</li>
+						<li className="list-none">
+							<a href="#9-1" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">4.9.1 Operadores de igualdad y desigualdad</a>
+						</li>
+						<li className="list-none">
+							<a href="#9-2" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">9.2 Operadores de comparación</a>
+						</li>
+						<li className="list-none">
+							<a href="#9-3" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">4.9.3 El operador in</a>
+						</li>
+						<li className="list-none">
+							<a href="#9-4" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">4.9.4 El operador instanceof</a>
+						</li>
+						<li className="list-none">
+							<a href="#10" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">4.10 Expresiones lógicas</a>
+						</li>
+						<li className="list-none">
+							<a href="#10-1" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">4.10.1 Expresión lógica AND (&&)</a>
+						</li>
+						<li className="list-none">
+							<a href="#10-2" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">4.10.2 Expresión lógica OR (||)</a>
+						</li>
+						<li className="list-none">
+							<a href="#10-3" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">4.10.3 Expresión lógica NOT (!)</a>
+						</li>
+						<li className="list-none">
+							<a href="#11" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">4.11 Expresiones de asignación</a>
+						</li>
+						<li className="list-none">
+							<a href="#11-1" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">4.11.1 Asignación con operación</a>
+						</li>
+						<li className="list-none">
+							<a href="#12" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">4.12 Expresiones de evaluación</a>
+						</li>
+						<li className="list-none">
+							<a href="#12-1" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">4.12.1 eval()</a>
+						</li>
+						<li className="list-none">
+							<a href="#12-2" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">4.12.2 Global eval()</a>
+						</li>
+						<li className="list-none">
+							<a href="#12-3" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">4.12.3 eval() estricto</a>
+						</li>
+						<li className="list-none">
+							<a href="#13" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">4.13 Operadores varios</a>
+						</li>
+						<li className="list-none">
+							<a href="#13-1" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">4.13.1 El operador condicional (?:)</a>
+						</li>
+						<li className="list-none">
+							<a href="#13-2" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">4.13.2 El primero definido (??)</a>
+						</li>
+						<li className="list-none">
+							<a href="#13-3" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">4.13.3 El operador typeof</a>
+						</li>
+						<li className="list-none">
+							<a href="#13-4" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">4.13.4 El operador delete</a>
+						</li>
+						<li className="list-none">
+							<a href="#13-5" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">4.13.5 El operador await</a>
+						</li>
+						<li className="list-none">
+							<a href="#13-6" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">4.13.6 El operador void</a>
+						</li>
+						<li className="list-none">
+							<a href="#13-7" className="group flex items-center p-2 pl-16 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#fadf9f] hover:bg-amber-900">4.13.7 El operador coma (,)</a>
+						</li>
+						<li className="list-none">
+							<a href="#14" className="group flex items-center p-2 pl-11 w-full text-base font-normal text-amber-900 rounded-sm group dark:text-white dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900">4.14 Resumen</a>
+						</li>
+					</ul>
 				</li>
 				<li className="list-none">
-					<a href="/javascript-la-guia-definitiva/capitulo-5" className={`group flex items-center p-2 text-base rounded-sm font-normal transition-colors duration-500 text-amber-900 dark:text-[#FFF8E8] dark:hover:text-amber-900 hover:text-[#FFF8E8] dark:hover:bg-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva/capitulo-5' ? 'dark:bg-[#FFF8E8] dark:text-amber-900 bg-amber-900 text-[#fff8e8]' : ''}`}>
+					<a href="/javascript-la-guia-definitiva/capitulo-5" className={`group flex items-center p-2 text-base rounded-sm font-bold transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] dark:hover:bg-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva/capitulo-5' ? 'bg-amber-900 text-[#fff8e8] dark:bg-[#fff8e8] dark:text-amber-900' : 'dark:text-[#fff8e8] text-amber-900'}`}>
 						<span className="ml-3 flex-1">5. Declaraciones</span>
 						{isOpen ? <svg aria-hidden="true" className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
 						: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -146,7 +351,7 @@ export const Sidebar = ({direction}) => {
 					</ul>
 				</li>
 				<li className="list-none">
-					<a href="/javascript-la-guia-definitiva/capitulo-6" className={`group flex items-center p-2 text-base rounded-sm font-normal transition-colors duration-500 text-amber-900 dark:text-[#FFF8E8] dark:hover:text-amber-900 hover:text-[#FFF8E8] dark:hover:bg-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva/capitulo-6' ? 'dark:bg-[#FFF8E8] dark:text-amber-900 bg-amber-900 text-[#fff8e8]' : ''}`}>
+					<a href="/javascript-la-guia-definitiva/capitulo-6" className={`group flex items-center p-2 text-base rounded-sm font-bold transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] dark:hover:bg-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva/capitulo-6' ? 'bg-amber-900 text-[#fff8e8] dark:bg-[#fff8e8] dark:text-amber-900' : 'dark:text-[#fff8e8] text-amber-900'}`}>
 						<span className="ml-3 flex-1">6. Objetos</span>
 						{isOpen ? <svg aria-hidden="true" className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
 						: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -167,7 +372,7 @@ export const Sidebar = ({direction}) => {
 					</ul>
 				</li>
 				<li className="list-none">
-					<a href="/javascript-la-guia-definitiva/capitulo-7" className={`group flex items-center p-2 text-base rounded-sm font-normal transition-colors duration-500 text-amber-900 dark:text-[#FFF8E8] dark:hover:text-amber-900 hover:text-[#FFF8E8] dark:hover:bg-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva/capitulo-7' ? 'dark:bg-[#FFF8E8] dark:text-amber-900 bg-amber-900 text-[#fff8e8]' : ''}`}>
+					<a href="/javascript-la-guia-definitiva/capitulo-7" className={`group flex items-center p-2 text-base rounded-sm font-bold transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] dark:hover:bg-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva/capitulo-7' ? 'bg-amber-900 text-[#fff8e8] dark:bg-[#fff8e8] dark:text-amber-900' : 'dark:text-[#fff8e8] text-amber-900'}`}>
 						<span className="ml-3 flex-1">7. Arrays</span>
 						{isOpen ? <svg aria-hidden="true" className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
 						: <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
@@ -188,7 +393,7 @@ export const Sidebar = ({direction}) => {
 					</ul>
 				</li>
 				<li className="list-none">
-					<a href="/javascript-la-guia-definitiva/capitulo-8" className={`group flex items-center p-2 text-base rounded-sm font-normal transition-colors duration-500 text-amber-900 dark:text-[#FFF8E8] dark:hover:text-amber-900 hover:text-[#FFF8E8] dark:hover:bg-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva/capitulo-8' ? 'dark:bg-[#FFF8E8] dark:text-amber-900 bg-amber-900 text-[#fff8e8]' : ''}`}>
+					<a href="/javascript-la-guia-definitiva/capitulo-8" className={`group flex items-center p-2 text-base rounded-sm font-bold transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] dark:hover:bg-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva/capitulo-8' ? 'bg-amber-900 text-[#fff8e8] dark:bg-[#fff8e8] dark:text-amber-900' : 'dark:text-[#fff8e8] text-amber-900'}`}>
 						<span className="ml-3 flex-1">8. Funciones</span>
 						{isOpen ? <svg aria-hidden="true" className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
 						: <svg fill="currentColor" width="24" height="24" viewBox="0 0 24 24" >
@@ -210,7 +415,7 @@ export const Sidebar = ({direction}) => {
 					</ul>
 				</li>
 				<li className="list-none">
-					<a href="/javascript-la-guia-definitiva/capitulo-9" className={`group flex items-center p-2 text-base rounded-sm font-normal transition-colors duration-500 text-amber-900 dark:text-[#FFF8E8] dark:hover:text-amber-900 hover:text-[#FFF8E8] dark:hover:bg-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva/capitulo-9' ? 'dark:bg-[#FFF8E8] dark:text-amber-900 bg-amber-900 text-[#fff8e8]' : ''}`}>
+					<a href="/javascript-la-guia-definitiva/capitulo-9" className={`group flex items-center p-2 text-base rounded-sm font-bold transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] dark:hover:bg-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva/capitulo-9' ? 'bg-amber-900 text-[#fff8e8] dark:bg-[#fff8e8] dark:text-amber-900' : 'dark:text-[#fff8e8] text-amber-900'}`}>
 						<span className="ml-3 flex-1">9. Clases</span>
 						{isOpen ? <svg aria-hidden="true" className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
 						: <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24" >
@@ -231,7 +436,7 @@ export const Sidebar = ({direction}) => {
 					</ul>
 				</li>
 				<li className="list-none">
-					<a href="/javascript-la-guia-definitiva/capitulo-10" className={`group flex items-center p-2 text-base rounded-sm font-normal transition-colors duration-500 text-amber-900 dark:text-[#FFF8E8] dark:hover:text-amber-900 hover:text-[#FFF8E8] dark:hover:bg-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva/capitulo-10' ? 'dark:bg-[#FFF8E8] dark:text-amber-900 bg-amber-900 text-[#fff8e8]' : ''}`}>
+					<a href="/javascript-la-guia-definitiva/capitulo-10" className={`group flex items-center p-2 text-base rounded-sm font-bold transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] dark:hover:bg-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva/capitulo-10' ? 'bg-amber-900 text-[#fff8e8] dark:bg-[#fff8e8] dark:text-amber-900' : 'dark:text-[#fff8e8] text-amber-900'}`}>
 						<span className="ml-3 flex-1">10. Módulos</span>
 						{isOpen ? <svg aria-hidden="true" className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
 						: <svg  width="24" height="24" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -253,7 +458,7 @@ export const Sidebar = ({direction}) => {
 					</ul>
 				</li>
 				<li className="list-none">
-					<a href="/javascript-la-guia-definitiva/capitulo-11" className={`group flex items-center p-2 text-base rounded-sm font-normal transition-colors duration-500 text-amber-900 dark:text-[#FFF8E8] dark:hover:text-amber-900 hover:text-[#FFF8E8] dark:hover:bg-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva/capitulo-11' ? 'dark:bg-[#FFF8E8] dark:text-amber-900 bg-amber-900 text-[#fff8e8]' : ''}`}>
+					<a href="/javascript-la-guia-definitiva/capitulo-11" className={`group flex items-center p-2 text-base rounded-sm font-bold transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] dark:hover:bg-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva/capitulo-11' ? 'bg-amber-900 text-[#fff8e8] dark:bg-[#fff8e8] dark:text-amber-900' : 'dark:text-[#fff8e8] text-amber-900'}`}>
 						<span className="ml-3 flex-1">11. La biblioteca estándar de JavaScript</span>
 						{isOpen ? <svg aria-hidden="true" className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
 						: <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24" >
@@ -276,7 +481,7 @@ export const Sidebar = ({direction}) => {
 					</ul>
 				</li>
 				<li className="list-none">
-						<a href="/javascript-la-guia-definitiva/capitulo-12" className={`group flex items-center p-2 text-base rounded-sm font-normal transition-colors duration-500 text-amber-900 dark:text-[#FFF8E8] dark:hover:text-amber-900 hover:text-[#FFF8E8] dark:hover:bg-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva/capitulo-12' ? 'dark:bg-[#FFF8E8] dark:text-amber-900 bg-amber-900 text-[#fff8e8]' : ''}`}>
+						<a href="/javascript-la-guia-definitiva/capitulo-12" className={`group flex items-center p-2 text-base rounded-sm font-bold transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] dark:hover:bg-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva/capitulo-12' ? 'bg-amber-900 text-[#fff8e8] dark:bg-[#fff8e8] dark:text-amber-900' : 'dark:text-[#fff8e8] text-amber-900'}`}>
 							<span className="ml-3 flex-1">12. Iteradores y generadores</span>
 							{isOpen ? <svg aria-hidden="true" className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
 							: <svg width="24" height="25" fill="currentColor" viewBox="0 0 24 25" >
@@ -299,7 +504,7 @@ export const Sidebar = ({direction}) => {
 						</ul>
 				</li>
 				<li className="list-none">
-						<a href="/javascript-la-guia-definitiva/capitulo-13" className={`group flex items-center p-2 text-base rounded-sm font-normal transition-colors duration-500 text-amber-900 dark:text-[#FFF8E8] dark:hover:text-amber-900 hover:text-[#FFF8E8] dark:hover:bg-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva/capitulo-13' ? 'dark:bg-[#FFF8E8] dark:text-amber-900 bg-amber-900 text-[#fff8e8]' : ''}`}>
+						<a href="/javascript-la-guia-definitiva/capitulo-13" className={`group flex items-center p-2 text-base rounded-sm font-bold transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] dark:hover:bg-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva/capitulo-13' ? 'bg-amber-900 text-[#fff8e8] dark:bg-[#fff8e8] dark:text-amber-900' : 'dark:text-[#fff8e8] text-amber-900'}`}>
 							<span className="ml-3 flex-1">13. JavaScript asíncrono</span>
 							{isOpen ? <svg aria-hidden="true" className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
 							: <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24" >
@@ -322,7 +527,7 @@ export const Sidebar = ({direction}) => {
 						</ul>
 				</li>
 				<li className="list-none">
-						<a href="/javascript-la-guia-definitiva/capitulo-14" className={`group flex items-center p-2 text-base rounded-sm font-normal transition-colors duration-500 text-amber-900 dark:text-[#FFF8E8] dark:hover:text-amber-900 hover:text-[#FFF8E8] dark:hover:bg-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva/capitulo-14' ? 'dark:bg-[#FFF8E8] dark:text-amber-900 bg-amber-900 text-[#fff8e8]' : ''}`}>
+						<a href="/javascript-la-guia-definitiva/capitulo-14" className={`group flex items-center p-2 text-base rounded-sm font-bold transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] dark:hover:bg-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva/capitulo-14' ? 'bg-amber-900 text-[#fff8e8] dark:bg-[#fff8e8] dark:text-amber-900' : 'dark:text-[#fff8e8] text-amber-900'}`}>
 							<span className="ml-3 flex-1">14. Metaprogramación</span>
 							{isOpen ? <svg aria-hidden="true" className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
 							: <svg width="24" height="25" fill="currentColor" viewBox="0 0 24 25" >
@@ -345,7 +550,7 @@ export const Sidebar = ({direction}) => {
 						</ul>
 				</li>
 				<li className="list-none">
-						<a href="/javascript-la-guia-definitiva/capitulo-15" className={`group flex items-center p-2 text-base rounded-sm font-normal transition-colors duration-500 text-amber-900 dark:text-[#FFF8E8] dark:hover:text-amber-900 hover:text-[#FFF8E8] dark:hover:bg-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva/capitulo-15' ? 'dark:bg-[#FFF8E8] dark:text-amber-900 bg-amber-900 text-[#fff8e8]' : ''}`}>
+						<a href="/javascript-la-guia-definitiva/capitulo-15" className={`group flex items-center p-2 text-base rounded-sm font-bold transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] dark:hover:bg-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva/capitulo-15' ? 'bg-amber-900 text-[#fff8e8] dark:bg-[#fff8e8] dark:text-amber-900' : 'dark:text-[#fff8e8] text-amber-900'}`}>
 							<span className="ml-3 flex-1">15. JavaScript en los navegadores web</span>
 							{isOpen ? <svg aria-hidden="true" className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
 							: <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24" >
@@ -368,7 +573,7 @@ export const Sidebar = ({direction}) => {
 						</ul>
 				</li>
 				<li className="list-none">
-						<a href="/javascript-la-guia-definitiva/capitulo-16" className={`group flex items-center p-2 text-base rounded-sm font-normal transition-colors duration-500 text-amber-900 dark:text-[#FFF8E8] dark:hover:text-amber-900 hover:text-[#FFF8E8] dark:hover:bg-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva/capitulo-16' ? 'dark:bg-[#FFF8E8] dark:text-amber-900 bg-amber-900 text-[#fff8e8]' : ''}`}>
+						<a href="/javascript-la-guia-definitiva/capitulo-16" className={`group flex items-center p-2 text-base rounded-sm font-bold transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] dark:hover:bg-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva/capitulo-16' ? 'bg-amber-900 text-[#fff8e8] dark:bg-[#fff8e8] dark:text-amber-900' : 'dark:text-[#fff8e8] text-amber-900'}`}>
 							<span className="ml-3 flex-1">16. JavaScript del lado del servidor con Node</span>
 							{isOpen ? <svg aria-hidden="true" className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
 							: <svg width="24" height="25" fill="currentColor" viewBox="0 0 24 25" >
@@ -391,7 +596,7 @@ export const Sidebar = ({direction}) => {
 						</ul>
 				</li>
 				<li className="list-none">
-						<a href="/javascript-la-guia-definitiva/capitulo-17" className={`group flex items-center p-2 text-base rounded-sm font-normal transition-colors duration-500 text-amber-900 dark:text-[#FFF8E8] dark:hover:text-amber-900 hover:text-[#FFF8E8] dark:hover:bg-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva/capitulo-17' ? 'dark:bg-[#FFF8E8] dark:text-amber-900 bg-amber-900 text-[#fff8e8]' : ''}`}>
+						<a href="/javascript-la-guia-definitiva/capitulo-17" className={`group flex items-center p-2 text-base rounded-sm font-bold transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] dark:hover:bg-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva/capitulo-17' ? 'bg-amber-900 text-[#fff8e8] dark:bg-[#fff8e8] dark:text-amber-900' : 'dark:text-[#fff8e8] text-amber-900'}`}>
 							<span className="ml-3 flex-1">17. Herramientas y extensiones de JavaScript</span>
 							{isOpen ? <svg aria-hidden="true" className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
 							: <svg width="25" height="25" viewBox="0 0 25 25" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

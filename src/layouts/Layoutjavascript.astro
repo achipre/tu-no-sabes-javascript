@@ -7,7 +7,7 @@ console.log(pathname);
 
 ---
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth bg-[#fff8e8] dark:bg-amber-900">
+<html lang="es" class="scroll-smooth">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content="Astro description" />
@@ -17,9 +17,9 @@ console.log(pathname);
 		<title>{title}</title>
 		<ViewTransitions />
 	</head>
-	<body class="max-w-5xl mx-auto p-2 xs:px-3 sm:px-6 sm:py-8 md:px-10 font-khand text-amber-900 dark:text-[#fff8e8]">
+	<body class="max-w-5xl mx-auto p-2 xs:px-3 sm:px-6 sm:py-8 md:px-10 font-khand text-amber-900">
 		<Sidebar client:visible transition:persist direction={pathname} />
-		<main>
+		<main class="sm:px-12 xl:px-0">
 			<slot />
 		</main>
 		<script src="./prism.js"></script>
@@ -30,7 +30,7 @@ console.log(pathname);
   @tailwind components;
   @tailwind utilities;
 	html {
-		/* background-color: #FFF8E8; */
+		background-color: #FFF8E8;
 		border-color: #78350f;
 	}
   @layer base{
@@ -66,10 +66,10 @@ console.log(pathname);
       @apply font-bold text-3xl sm:text-4xl md:text-5xl
     }
     h2 {
-      @apply font-semibold leading-6 text-amber-900 dark:text-[#fff8e8] text-2xl sm:text-3xl md:text-4xl
+      @apply font-semibold leading-6 text-amber-900 text-2xl sm:text-3xl md:text-4xl
     }
     h3 {
-      @apply font-semibold leading-6 text-amber-900 dark:text-[#fff8e8] text-xl sm:text-[1.7rem] md:text-[2rem]
+      @apply font-semibold leading-6 text-amber-900 text-xl sm:text-[1.7rem] md:text-[2rem]
     }
 		p {
 			@apply  text-lg leading-6 sm:text-xl md:text-2xl

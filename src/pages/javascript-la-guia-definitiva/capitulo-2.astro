@@ -49,13 +49,13 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro"
       </li>
     </ul>
   </section>
-  <section class="fadeIn py-4 xs:py-5 sm:py-6">
+  <section id="1" class="fadeIn py-4 xs:py-5 sm:py-6">
     <h2>2.1 El texto de un programa JavaScript</h2>
     <p>JavaScript es un lenguaje que distingue entre mayúsculas y minúsculas. Esto significa que las palabras clave, variables, nombres de funciones y otros <em>identificadores</em> del lenguaje deben escribirse siempre con mayúsculas y minúsculas. La palabra clave <codeinline>while</codeinline>, por ejemplo, debe escribirse "while", no "While" o "WHILE". Del mismo modo, <codeinline>online</codeinline>, <codeinline>Online</codeinline>, <codeinline>OnLine</codeinline> y <codeinline>ONLINE</codeinline> son cuatro nombres de variable distintos.</p>
     <p>JavaScript ignora los espacios que aparecen entre los tokens de los programas. En su mayor parte, JavaScript también ignora los saltos de línea (pero vea <a href="capitulo-2#6">§2.6</a> para una excepción). Dado que puede utilizar espacios y saltos de línea libremente en sus programas, puede formatear y aplicar sangrías a sus programas de una forma ordenada y coherente que facilite la lectura y comprensión del código.</p>
     <p>Además del carácter de espacio normal (<codeinline>\u0020</codeinline>), JavaScript también reconoce tabuladores, diversos caracteres de control ASCII y varios caracteres de espacio Unicode como espacio en blanco. JavaScript reconoce las nuevas líneas, los retornos de carro y una secuencia de retorno de carro/salto de línea como terminadores de línea.</p>
   </section>
-  <section>
+  <section id="2">
     <h2>2.2 Comentarios</h2>
     <p>JavaScript admite dos estilos de comentarios. Cualquier texto entre <codeinline>//</codeinline> y el final de una línea se trata como un comentario y JavaScript lo ignora. Cualquier texto entre los caracteres <codeinline>/*</codeinline> y <codeinline>*/</codeinline> también se trata como un comentario; estos comentarios pueden abarcar varias líneas pero no pueden anidarse. Las siguientes líneas de código son comentarios JavaScript legales:
     </p>
@@ -67,7 +67,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro"
       * de cada línea no son una parte obligatoria de la sintaxis; ¡sólo tienen un aspecto atractivo! 
       */</code></pre>
   </section>
-  <section class="py-4 xs:py-5 sm:py-6">
+  <section id="3" class="py-4 xs:py-5 sm:py-6">
     <h2>2.3 Literales</h2>
     <p>Un <em>literal</em> es un valor de datos que aparece directamente en un programa. Los siguientes son todos literales:</p>
     <pre class="language-js">
@@ -80,7 +80,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro"
     null              // Ausencia de un objeto</code></pre>
     <p>Encontrará información detallada sobre los literales numéricos y de cadena en el <a href="capitulo-3">Capítulo 3</a>.</p>
   </section>
-  <section>
+  <section id="4">
     <h2>2.4 Identificadores y palabras reservadas</h2>
     <p>Un <em>identificador</em> es simplemente un nombre. En JavaScript, los identificadores se utilizan para nombrar constantes, variables, propiedades, funciones y clases y para proporcionar etiquetas para ciertos bucles en el código JavaScript. Un identificador JavaScript debe comenzar con una letra, un guión bajo (<codeinline>_</codeinline>) o un signo de dólar (<codeinline>$</codeinline>). Los caracteres siguientes pueden ser letras, dígitos, guiones bajos o signos de dólar. (Los dígitos no están permitidos como primer carácter para que JavaScript pueda distinguir fácilmente los identificadores de los números). Todos estos son identificadores legales:</p>
     <pre class="language-js">
@@ -92,7 +92,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro"
     <p>Como cualquier lenguaje, JavaScript reserva ciertos identificadores para uso del propio lenguaje. Estas "palabras reservadas" no pueden utilizarse como identificadores normales. Se enumeran en la siguiente sección.
     </p>
   </section>
-  <section class="py-4 xs:py-5 sm:py-6">
+  <section id="4-1" class="py-4 xs:py-5 sm:py-6">
     <h3>2.4.1 Palabras reservadas</h3>
     <p>Las siguientes palabras forman parte del lenguaje JavaScript. Muchas de ellas (como <codeinline>if</codeinline>, <codeinline>while</codeinline> y <codeinline>for</codeinline>) son palabras clave reservadas que no deben utilizarse como nombres de constantes, variables, funciones o clases (aunque todas pueden utilizarse como nombres de propiedades dentro de un objeto). Otras (como <codeinline>from</codeinline>, <codeinline>of</codeinline>, <codeinline>get</codeinline> y <codeinline>set</codeinline>) se utilizan en contextos limitados sin ambigüedad sintáctica y son perfectamente legales como identificadores. Otras palabras clave (como <codeinline>let</codeinline>) no pueden reservarse completamente para mantener la compatibilidad con programas antiguos, por lo que existen reglas complejas que regulan cuándo pueden utilizarse como identificadores y cuándo no. (<codeinline>let</codeinline> puede usarse como nombre de variable si se declara con <codeinline>var</codeinline> fuera de una clase, por ejemplo, pero no si se declara dentro de una clase o con <codeinline>const</codeinline>). Lo más sencillo es evitar el uso de cualquiera de estas palabras como identificadores, excepto <codeinline>from</codeinline>, <codeinline>set</codeinline> y <codeinline>target</codeinline>, que son seguras y ya son de uso común.</p>
     <pre class="language-js">
@@ -108,14 +108,14 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro"
     enum  implements  interface  package  private  protected  public</pre>
     <p>Por razones históricas, los <codeinline>arguments</codeinline> y <codeinline>eval</codeinline> no están permitidos como identificadores en determinadas circunstancias y es mejor evitarlos por completo.</p>
   </section>
-  <section>
+  <section id="5">
     <h2>2.5 Unicode</h2>
     <p>Los programas JavaScript se escriben utilizando el conjunto de caracteres Unicode, por lo que puede utilizar cualquier carácter Unicode en cadenas y comentarios. Por motivos de portabilidad y facilidad de edición, es habitual utilizar sólo letras y dígitos ASCII en los identificadores. Pero esto es sólo una convención de programación, y el lenguaje permite letras, dígitos e ideogramas Unicode (pero no emojis) en los identificadores. Esto significa que los programadores pueden utilizar símbolos matemáticos y palabras de lenguas distintas del inglés como constantes y variables:</p>
     <pre class="language-js">
     <code class="language-js">const π = 3,14; 
     const sí = true;</code></pre>
   </section>
-  <section class="py-4 xs:py-5 sm:py-6">
+  <section id="5-1" class="py-4 xs:py-5 sm:py-6">
     <h3>2.5.1 Secuencias de Escape Unicode</h3>
     <p>Algunos equipos y programas informáticos no pueden mostrar, introducir o procesar correctamente el conjunto completo de caracteres Unicode. Para ayudar a los programadores y sistemas que utilizan tecnología más antigua, JavaScript define secuencias de escape que nos permiten escribir caracteres Unicode utilizando sólo caracteres ASCII. Estos escapes Unicode comienzan con los caracteres <codeinline>\u</codeinline> y van seguidos de exactamente cuatro dígitos hexadecimales (utilizando letras mayúsculas o minúsculas A-F) o de uno a seis dígitos hexadecimales encerrados entre llaves. Estos escapes Unicode pueden aparecer en literales de cadenas JavaScript, literales de expresiones regulares e identificadores (pero no en palabras clave del lenguaje). El escape Unicode para el carácter "é", por ejemplo, es <codeinline>\u00E9;</codeinline> aquí hay tres formas diferentes de escribir un nombre de variable que incluya este carácter:</p>
     <pre class="language-js">
@@ -128,7 +128,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro"
     <p>Los escapes Unicode también pueden aparecer en comentarios, pero como los comentarios se ignoran, simplemente se tratan como caracteres ASCII en ese contexto y no se interpretan como Unicode.
     </p>
   </section>
-  <section>
+  <section id="5-2">
     <h3>2.5.2 Normalización Unicode</h3>
     <p>Si utiliza caracteres no ASCII en sus programas JavaScript, debe tener en cuenta que Unicode permite más de una forma de codificar el mismo carácter. La cadena "é", por ejemplo, puede codificarse como un único carácter Unicode <codeinline>\u00E9</codeinline> o como una "e" ASCII normal seguida del acento agudo <codeinline>\u0301</codeinline>. Estas dos codificaciones suelen tener exactamente el mismo aspecto cuando se muestran en un editor de texto, pero tienen codificaciones binarias diferentes, lo que significa que JavaScript las considera diferentes, lo que puede dar lugar a programas muy confusos:</p>
     <pre class="language-js">
@@ -139,7 +139,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro"
     <p>El estándar Unicode define la codificación preferida para todos los caracteres y especifica un procedimiento de normalización para convertir el texto a una forma canónica adecuada para la comparación. JavaScript asume que el código fuente que está interpretando ya ha sido normalizado y <em>no</em> realiza ninguna normalización por sí mismo. Si planea utilizar caracteres Unicode en sus programas JavaScript, debe asegurarse de que su editor o alguna otra herramienta realice la normalización Unicode de su código fuente para evitar que termine con identificadores diferentes pero visualmente indistinguibles.
     </p>
   </section>
-  <section class="py-4 xs:py-5 sm:py-6">
+  <section id="6" class="py-4 xs:py-5 sm:py-6">
     <h2>2.6 Punto y coma opcional</h2>
     <p>Como muchos lenguajes de programación, JavaScript utiliza el punto y coma (<codeinline>;</codeinline>) para separar las sentencias (véase el <a href="capitulo-5">Capítulo 5</a>) entre sí. Esto es importante para dejar claro el significado del código: sin un separador, el final de una sentencia puede parecer el principio de la siguiente, o viceversa. En JavaScript, normalmente se puede omitir el punto y coma entre dos sentencias si éstas están escritas en líneas separadas. (También puede omitir el punto y coma al final de un programa o si el siguiente elemento del programa es una llave de cierre: <codeinline>}</codeinline>.) Muchos programadores de JavaScript (y el código de este libro) utilizan el punto y coma para marcar explícitamente el final de las sentencias, incluso cuando no es necesario. Otro estilo es omitir el punto y coma siempre que sea posible, usándolo sólo en las pocas situaciones que lo requieran. Sea cual sea el estilo que elija, hay algunos detalles que debe entender sobre los puntos y comas opcionales en JavaScript.</p>
     <p>Considere el siguiente código. Dado que las dos sentencias aparecen en líneas separadas, puede omitirse el primer punto y coma:</p>
@@ -185,7 +185,7 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro"
     <p>Esto significa que no debe insertar un salto de línea entre <codeinline>return</codeinline>, <codeinline>break</codeinline> o <codeinline>continue</codeinline> y la expresión que sigue a la palabra clave. Si insertas un salto de línea, es probable que tu código falle de una forma no obvia y difícil de depurar.</p>
     <p>La segunda excepción son los operadores <codeinline>++</codeinline> y <codeinline>--</codeinline> (<a href="capitulo-4#8">§4.8</a>). Estos operadores pueden ser prefijos que aparecen antes de una expresión o postfijos que aparecen después de una expresión. Si desea utilizar cualquiera de estos operadores como operadores postfijos, deben aparecer en la misma línea que la expresión a la que se aplican. La tercera excepción se refiere a las funciones definidas mediante la sintaxis concisa "flecha": la propia flecha <codeinline>=></codeinline> debe aparecer en la misma línea que la lista de parámetros.</p>
   </section>
-  <section class="pb-4 xs:pb-5 sm:pb-6">
+  <section id="7" class="pb-4 xs:pb-5 sm:pb-6">
     <h2>2.7 Resumen</h2>
     <p>Este capítulo ha mostrado cómo se escriben los programas JavaScript en el nivel más bajo. El siguiente capítulo nos lleva un paso más arriba e introduce los tipos y valores primitivos (números, cadenas, etc.) que sirven como unidades básicas de cálculo para los programas Java-Script.</p>
   </section>
