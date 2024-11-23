@@ -62,19 +62,20 @@ const { pathname } = Astro.url;
 			src: url(/font/code/VictorMono-Variable-Italic.ttf);
 		}
     h1 {
-      @apply font-bold text-3xl sm:text-4xl md:text-5xl
+      @apply font-bold text-3xl sm:text-4xl md:text-5xl pb-4 xs:pb-6 sm:pb-7 md:pb-8
     }
     h2 {
-      @apply font-semibold leading-6 text-amber-900 text-2xl sm:text-3xl md:text-4xl
+      @apply font-semibold leading-6 text-amber-900 text-2xl sm:text-3xl md:text-4xl pt-4 xs:pt-6 sm:pt-7 md:pt-8 pb-1  sm:pb-2
     }
     h3 {
-      @apply font-semibold leading-6 text-amber-900 text-xl sm:text-[1.7rem] md:text-[2rem] pt-6 pb-4
+      @apply font-semibold italic leading-6 text-amber-900 text-xl sm:text-[1.5rem] md:text-[1.8rem] pt-4 xs:pt-6 sm:pt-7 md:pt-8 pb-1  sm:pb-2
     }
+		
     h4 {
       @apply font-semibold italic leading-6 text-amber-900 text-lg sm:text-[1.5rem] md:text-[1.8rem] pt-6 pb-4
     }
 		p {
-			@apply  text-lg leading-6 sm:text-xl md:text-2xl py-2
+			@apply  text-lg leading-6 sm:text-xl md:text-2xl indent-6 xs:indent-7 sm:indent-8 md:indent-9
 		}
 		a {
 			@apply no-underline text-[#F05454]
@@ -101,7 +102,7 @@ const { pathname } = Astro.url;
 			@apply absolute opacity-0 bg-[#f6e4c5] h-8 border-[1px] -top-8 text-nowrap px-2 rounded-full -translate-x-1/2 leading-8 shadow-lg border-amber-900
 		}
 		strong {
-			@apply font-medium
+			@apply font-black
 		}
 		codeinline {
 			@apply font-victor text-amber-700 px-2 rounded-sm bg-[#f6e4c5] text-xs xs:text-sm sm:text-base md:text-lg inline-block -translate-y-[2px] selection:text-[#f6e4c5] selection:bg-amber-700
@@ -113,13 +114,13 @@ const { pathname } = Astro.url;
 			@apply bg-white font-mono border-[1px] drop-shadow-sm shadow-[0_0_0_2px_#ffffff,0_0_0_3px_#78350f] border-amber-900 p-[2px] mx-1 text-xs xs:text-sm sm:text-base md:text-lg dark:text-amber-900
 		}
 		ul {
-			@apply text-lg leading-6 font-medium list-disc sm:text-xl md:text-2xl
+			@apply text-lg leading-6 font-medium list-disc sm:text-xl md:text-2xl py-1  sm:py-2
 		}
 		ul > p {
 			@apply pb-4 xs:pb-5 sm:pb-6
 		}
 		li {
-			@apply list-disc list-inside
+			@apply list-none list-inside
 		}
 		em {
 			@apply italic
