@@ -13,6 +13,38 @@ export const Sidebar = ({direction}) => {
 		
 		<div className="overflow-y-auto py-5 px-3 h-full bg-[#f6e4c5] dark:bg-amber-900">
 			<ul className="space-y-2">
+				<div className="flex gap-2">
+					<li className="list-none flex-1 gap-2">
+						<a href="/" className={`group flex flex-1 items-center p-2 text-lg font-bold  rounded-sm dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900 `}>
+							<svg className={`w-6 h-6 m-auto fill-[#FFF8E8] transition duration-500 group-hover:fill-[#FFF8E8] dark:group-hover:fill-amber-900`} width="64px" height="64px" viewBox="0 0 4.16 4.16" enable-background="new 0 0 52 52" xml:space="preserve">
+								<path d="M3.92 2.16h-0.4v1.76c0 0.048 -0.032 0.08 -0.08 0.08H2.64c-0.048 0 -0.08 -0.032 -0.08 -0.08V2.56H1.6v1.36c0 0.048 -0.032 0.08 -0.08 0.08H0.72c-0.048 0 -0.08 -0.032 -0.08 -0.08V2.16H0.24c-0.032 0 -0.064 -0.016 -0.072 -0.048 -0.016 -0.032 -0.008 -0.064 0.016 -0.088l1.84 -1.84c0.032 -0.032 0.088 -0.032 0.112 0l1.84 1.84c0.024 0.024 0.024 0.056 0.016 0.088s-0.04 0.048 -0.072 0.048"/>
+							</svg>
+						</a>
+					</li>
+					<li className="list-none flex-1 gap-2">
+						<a href="/javascript-la-guia-definitiva" className={`group flex flex-1 items-center p-2 text-lg font-bold  rounded-sm dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900 `}>
+							<svg version="1.1" x="0px" y="0px" className={`w-6 h-6 m-auto fill-[#FFF8E8] transition duration-500 group-hover:fill-[#FFF8E8] dark:group-hover:fill-amber-900`} viewBox="0 0 64 64"  width="64" height="64">
+								<path d="M32 0c-2.977 0 -9.441 33.766 -9.441 38.698s4.509 8.93 9.441 8.93 9.441 -3.998 9.441 -8.93S34.977 0 32 0"/>
+								<path d="M39.253 4.864c1.143 3.783 2.221 8.38 2.945 11.678 1.783 8.125 3.708 18.905 3.708 22.156 0 7.261 -6.368 13.395 -13.906 13.395s-13.906 -6.134 -13.906 -13.395c0 -3.25 1.925 -14.031 3.708 -22.156 0.724 -3.298 1.802 -7.895 2.945 -11.678 -8.056 1.729 -14.095 8.889 -14.095 17.462v23.814C10.652 56.004 18.648 64 28.513 64h6.975c9.864 0 17.86 -7.996 17.86 -17.86V22.326c0 -8.572 -6.04 -15.733 -14.095 -17.462M16.372 52.837h-0.001c-1.641 0 -2.976 -1.335 -2.976 -2.977 0.001 -1.642 1.336 -2.977 2.977 -2.977 1.641 0 2.977 1.335 2.977 2.977s-1.335 2.977 -2.977 2.977m9.908 6.698c0 -1.138 -0.36 -2.218 -1.04 -3.124l3.57 -2.682c1.266 1.686 1.936 3.693 1.936 5.806zm11.44 0h-4.465c0 -2.113 0.669 -4.12 1.936 -5.806l3.57 2.682c-0.681 0.906 -1.04 1.986 -1.04 3.124m9.908 -6.698h-0.001c-1.641 0 -2.976 -1.335 -2.976 -2.977 0.001 -1.642 1.336 -2.977 2.977 -2.977 1.641 0 2.977 1.335 2.977 2.977s-1.335 2.977 -2.977 2.977"/>
+								<path d="M11.418 3.232c-2.325 -2.325 -6.094 -2.325 -8.419 0 -2.325 2.325 -2.325 6.095 0 8.419 1.386 1.385 3.284 1.945 5.084 1.679 0.806 -1.834 1.859 -3.563 3.139 -5.129 0.775 -0.948 1.625 -1.826 2.538 -2.628z"/>
+								<path d="M61.001 3.232c-2.325 -2.325 -6.095 -2.325 -8.42 0L50.24 5.574a22.325 22.325 0 0 1 2.538 2.628c1.28 1.566 2.333 3.295 3.139 5.129 1.8 0.266 3.699 -0.294 5.084 -1.679 2.325 -2.325 2.325 -6.095 0 -8.419"/>
+							</svg>
+						</a>
+					</li>
+					<li className="list-none flex-1 gap-2">
+						<a href="/como-superar-una-entrevista" className={`group flex flex-1 items-center p-2 text-lg font-bold  rounded-sm dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900 `}>
+							<svg x="0px" y="0px" className={`w-6 h-6 m-auto fill-[#FFF8E8] transition duration-500 group-hover:fill-[#FFF8E8] dark:group-hover:fill-amber-900`} viewBox="0 0 64 64" fill="#FFF8E8">
+								<path d="m43.857 3.997 1.604 -2.211c1.409 -1.94 4.13 -2.363 6.059 -0.954l5.257 3.837c1.929 1.409 2.352 4.13 0.943 6.059l-1.723 2.352c-3.208 -3.956 -7.37 -7.11 -12.139 -9.083M8.003 13.08c3.208 -3.956 7.37 -7.11 12.139 -9.083l-1.604 -2.211C17.129 -0.155 14.409 -0.577 12.48 0.832L7.223 4.669c-1.929 1.409 -2.352 4.13 -0.943 6.059zm44.59 19.444c0 11.356 -9.238 20.593 -20.593 20.593 -11.356 0 -20.593 -9.238 -20.593 -20.593s9.238 -20.593 20.593 -20.593 20.593 9.238 20.593 20.593m-7.045 0c0 -0.898 -0.728 -1.626 -1.626 -1.626h-9.767a2.694 2.694 0 0 0 -1.972 -1.066l-4.042 -11.225c-0.203 -0.562 -0.823 -0.86 -1.386 -0.653a1.083 1.083 0 0 0 -0.653 1.386l4.039 11.217c-0.521 0.495 -0.851 1.19 -0.851 1.965 0 1.497 1.213 2.71 2.71 2.71 0.883 0 1.66 -0.429 2.156 -1.084h9.767c0.897 0 1.626 -0.728 1.626 -1.626m6.319 23.639c1.994 3.122 2.547 6.178 1.138 7.359 -1.517 1.279 -4.834 -0.098 -7.76 -3.089a18.808 18.808 0 0 1 -0.965 -1.073l-0.531 -0.628c-3.588 1.626 -7.566 2.514 -11.749 2.514 -4.184 0 -8.161 -0.889 -11.749 -2.514l-0.531 0.628a18.649 18.649 0 0 1 -0.965 1.073c-2.926 2.991 -6.243 4.368 -7.76 3.089 -1.409 -1.181 -0.856 -4.238 1.138 -7.359 0.369 -0.585 0.802 -1.171 1.268 -1.756 -6.2 -5.268 -10.123 -13.115 -10.123 -21.883 0 -6.644 2.254 -12.757 6.048 -17.624 3.122 -4.032 7.316 -7.197 12.139 -9.094 3.262 -1.301 6.817 -2.005 10.535 -2.005 3.717 0 7.273 0.705 10.535 2.005 4.823 1.897 9.018 5.062 12.139 9.094 3.793 4.867 6.048 10.98 6.048 17.624 0 8.768 -3.924 16.615 -10.123 21.883 0.466 0.585 0.9 1.171 1.268 1.756m2.894 -23.639c0 -12.55 -10.211 -22.761 -22.761 -22.761 -12.551 0 -22.761 10.211 -22.761 22.761 0 12.55 10.21 22.761 22.761 22.761 12.55 0 22.761 -10.211 22.761 -22.761"/>
+							</svg>
+						</a>
+					</li>
+					<li className="list-none flex-1 gap-2">
+						<a href="/descifra-la-carrera-tecnologica" className={`group flex flex-1 items-center p-2 text-lg font-bold  rounded-sm dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900 `}>
+							<svg className={`w-6 h-6 m-auto fill-[#FFF8E8] transition duration-500 group-hover:fill-[#FFF8E8] dark:group-hover:fill-amber-900`} x="0px" y="0px" viewBox="0 0 64 64" xml:space="preserve" width="64" height="64"><path d="M58.407 43.993h-18.288l-1.119 2.958h19.406c0.832 0 1.506 -0.674 1.506 -1.506s-0.674 -1.452 -1.506 -1.452"/><path d="M37.109 59.698h-6.454v-5.755h-8.39v5.755h-6.454c-1.188 0 -2.151 0.963 -2.151 2.151S14.624 64 15.812 64h21.298c1.188 0 2.151 -0.963 2.151 -2.151s-0.963 -2.151 -2.151 -2.151"/><path d="M37.109 24.847c3.084 0 5.593 -2.509 5.593 -5.593s-2.509 -5.593 -5.593 -5.593 -5.593 2.509 -5.593 5.593 2.509 5.593 5.593 5.593"/><path d="M45.714 19.254c0 4.041 -2.8 7.438 -6.561 8.358v9.39a1.506 1.506 0 0 0 1.506 1.506h10.649a1.506 1.506 0 0 0 1.506 -1.506V1.506A1.506 1.506 0 0 0 51.308 0h-10.649a1.506 1.506 0 0 0 -1.506 1.506v9.39c3.761 0.92 6.561 4.317 6.561 8.358"/><path d="m33.56 50.931 3.55 -6.938h-14.198c-5.881 0 -10.649 -4.714 -10.649 -10.595s4.768 -10.649 10.649 -10.649h6.338a8.555 8.555 0 0 1 -0.745 -3.496c0 -1.202 0.249 -2.348 0.696 -3.388h-7.58c-9.683 0 -17.533 7.85 -17.533 17.533s7.85 17.533 17.533 17.533z"/></svg>
+						</a>
+					</li>
+					<ButtonAside handleAside={handleAside} />
+				</div>
 				<li className="list-none flex gap-2">
 					<a href="/javascript-la-guia-definitiva" className={`group flex flex-1 items-center p-2 text-lg font-bold  rounded-sm dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva' ? 'bg-amber-900 text-[#fff8e8] dark:bg-[#fff8e8] dark:text-amber-900' : 'dark:text-[#fff8e8] text-amber-900'}`}>
 						<svg version="1.1" x="0px" y="0px" className={`w-6 h-6 transition duration-500 group-hover:fill-[#FFF8E8] dark:group-hover:fill-amber-900 ${direction === '/javascript-la-guia-definitiva' ? 'fill-[#fff8e8] dark:fill-amber-900' : 'fill-amber-900 dark:fill-[#fff8e8]'}`} viewBox="0 0 64 64"  width="64" height="64">
@@ -23,7 +55,7 @@ export const Sidebar = ({direction}) => {
 						</svg>
 						<span className="ml-3">JavaScript: La guía definitiva</span>
 					</a>
-					<ButtonAside handleAside={handleAside} />
+					
 				</li>
 				<li className="list-none">
 					<a href="/javascript-la-guia-definitiva/capitulo-1" className={`group flex items-center p-2 text-base rounded-sm font-bold transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] dark:hover:bg-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva/capitulo-1' ? 'bg-amber-900 text-[#fff8e8] dark:bg-[#fff8e8] dark:text-amber-900' : 'dark:text-[#fff8e8] text-amber-900'}`}>
