@@ -5,8 +5,6 @@ export const Sidebar = ({direction}) => {
 	const [isOpen, setIsOpen] = useState(true);
 	const handleAside = () => setIsOpen(!isOpen)
 
-	console.log("direction; " + direction);
-	
 	return (
 		
 	<aside className={`hidden sm:block fixed top-0 left-0 ${isOpen ? "translate-x-0": "-translate-x-[284px]"} z-40 w-[348px]  h-screen transition-transform`} ariaabel="Sidenav">
@@ -16,7 +14,7 @@ export const Sidebar = ({direction}) => {
 				<div className="flex gap-2">
 					<li className="list-none flex-1 gap-2">
 						<a href="/" className={`group flex flex-1 items-center p-2 text-lg font-bold  rounded-sm dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900 `}>
-							<svg className={`w-6 h-6 m-auto fill-[#FFF8E8] transition duration-500 group-hover:fill-[#FFF8E8] dark:group-hover:fill-amber-900`} width="64px" height="64px" viewBox="0 0 4.16 4.16" enable-background="new 0 0 52 52" xml:space="preserve">
+							<svg className={`w-6 h-6 m-auto fill-[#FFF8E8] transition duration-500 group-hover:fill-[#FFF8E8] dark:group-hover:fill-amber-900`} width="64px" height="64px" viewBox="0 0 4.16 4.16" enableBackground="new 0 0 52 52" >
 								<path d="M3.92 2.16h-0.4v1.76c0 0.048 -0.032 0.08 -0.08 0.08H2.64c-0.048 0 -0.08 -0.032 -0.08 -0.08V2.56H1.6v1.36c0 0.048 -0.032 0.08 -0.08 0.08H0.72c-0.048 0 -0.08 -0.032 -0.08 -0.08V2.16H0.24c-0.032 0 -0.064 -0.016 -0.072 -0.048 -0.016 -0.032 -0.008 -0.064 0.016 -0.088l1.84 -1.84c0.032 -0.032 0.088 -0.032 0.112 0l1.84 1.84c0.024 0.024 0.024 0.056 0.016 0.088s-0.04 0.048 -0.072 0.048"/>
 							</svg>
 						</a>
@@ -40,7 +38,7 @@ export const Sidebar = ({direction}) => {
 					</li>
 					<li className="list-none flex-1 gap-2">
 						<a href="/descifra-la-carrera-tecnologica" className={`group flex flex-1 items-center p-2 text-lg font-bold  rounded-sm dark:hover:bg-[#FFF8E8] transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] hover:bg-amber-900 `}>
-							<svg className={`w-6 h-6 m-auto fill-[#FFF8E8] transition duration-500 group-hover:fill-[#FFF8E8] dark:group-hover:fill-amber-900`} x="0px" y="0px" viewBox="0 0 64 64" xml:space="preserve" width="64" height="64"><path d="M58.407 43.993h-18.288l-1.119 2.958h19.406c0.832 0 1.506 -0.674 1.506 -1.506s-0.674 -1.452 -1.506 -1.452"/><path d="M37.109 59.698h-6.454v-5.755h-8.39v5.755h-6.454c-1.188 0 -2.151 0.963 -2.151 2.151S14.624 64 15.812 64h21.298c1.188 0 2.151 -0.963 2.151 -2.151s-0.963 -2.151 -2.151 -2.151"/><path d="M37.109 24.847c3.084 0 5.593 -2.509 5.593 -5.593s-2.509 -5.593 -5.593 -5.593 -5.593 2.509 -5.593 5.593 2.509 5.593 5.593 5.593"/><path d="M45.714 19.254c0 4.041 -2.8 7.438 -6.561 8.358v9.39a1.506 1.506 0 0 0 1.506 1.506h10.649a1.506 1.506 0 0 0 1.506 -1.506V1.506A1.506 1.506 0 0 0 51.308 0h-10.649a1.506 1.506 0 0 0 -1.506 1.506v9.39c3.761 0.92 6.561 4.317 6.561 8.358"/><path d="m33.56 50.931 3.55 -6.938h-14.198c-5.881 0 -10.649 -4.714 -10.649 -10.595s4.768 -10.649 10.649 -10.649h6.338a8.555 8.555 0 0 1 -0.745 -3.496c0 -1.202 0.249 -2.348 0.696 -3.388h-7.58c-9.683 0 -17.533 7.85 -17.533 17.533s7.85 17.533 17.533 17.533z"/></svg>
+							<svg className={`w-6 h-6 m-auto fill-[#FFF8E8] transition duration-500 group-hover:fill-[#FFF8E8] dark:group-hover:fill-amber-900`} x="0px" y="0px" viewBox="0 0 64 64" width="64" height="64"><path d="M58.407 43.993h-18.288l-1.119 2.958h19.406c0.832 0 1.506 -0.674 1.506 -1.506s-0.674 -1.452 -1.506 -1.452"/><path d="M37.109 59.698h-6.454v-5.755h-8.39v5.755h-6.454c-1.188 0 -2.151 0.963 -2.151 2.151S14.624 64 15.812 64h21.298c1.188 0 2.151 -0.963 2.151 -2.151s-0.963 -2.151 -2.151 -2.151"/><path d="M37.109 24.847c3.084 0 5.593 -2.509 5.593 -5.593s-2.509 -5.593 -5.593 -5.593 -5.593 2.509 -5.593 5.593 2.509 5.593 5.593 5.593"/><path d="M45.714 19.254c0 4.041 -2.8 7.438 -6.561 8.358v9.39a1.506 1.506 0 0 0 1.506 1.506h10.649a1.506 1.506 0 0 0 1.506 -1.506V1.506A1.506 1.506 0 0 0 51.308 0h-10.649a1.506 1.506 0 0 0 -1.506 1.506v9.39c3.761 0.92 6.561 4.317 6.561 8.358"/><path d="m33.56 50.931 3.55 -6.938h-14.198c-5.881 0 -10.649 -4.714 -10.649 -10.595s4.768 -10.649 10.649 -10.649h6.338a8.555 8.555 0 0 1 -0.745 -3.496c0 -1.202 0.249 -2.348 0.696 -3.388h-7.58c-9.683 0 -17.533 7.85 -17.533 17.533s7.85 17.533 17.533 17.533z"/></svg>
 						</a>
 					</li>
 					<ButtonAside handleAside={handleAside} />
@@ -53,7 +51,15 @@ export const Sidebar = ({direction}) => {
 							<path d="M11.418 3.232c-2.325 -2.325 -6.094 -2.325 -8.419 0 -2.325 2.325 -2.325 6.095 0 8.419 1.386 1.385 3.284 1.945 5.084 1.679 0.806 -1.834 1.859 -3.563 3.139 -5.129 0.775 -0.948 1.625 -1.826 2.538 -2.628z"/>
 							<path d="M61.001 3.232c-2.325 -2.325 -6.095 -2.325 -8.42 0L50.24 5.574a22.325 22.325 0 0 1 2.538 2.628c1.28 1.566 2.333 3.295 3.139 5.129 1.8 0.266 3.699 -0.294 5.084 -1.679 2.325 -2.325 2.325 -6.095 0 -8.419"/>
 						</svg>
-						<span className="ml-3">JavaScript: La guía definitiva</span>
+						<span className="ml-3 flex-1">JavaScript: La guía definitiva</span>
+						{isOpen ? ""
+						: <svg version="1.1" x="0px" y="0px" className={`w-6 h-6 transition duration-500 group-hover:fill-[#FFF8E8] dark:group-hover:fill-amber-900 ${direction === '/javascript-la-guia-definitiva' ? 'fill-[#fff8e8] dark:fill-amber-900' : 'fill-amber-900 dark:fill-[#fff8e8]'}`} viewBox="0 0 64 64"  width="64" height="64">
+							<path d="M32 0c-2.977 0 -9.441 33.766 -9.441 38.698s4.509 8.93 9.441 8.93 9.441 -3.998 9.441 -8.93S34.977 0 32 0"/>
+							<path d="M39.253 4.864c1.143 3.783 2.221 8.38 2.945 11.678 1.783 8.125 3.708 18.905 3.708 22.156 0 7.261 -6.368 13.395 -13.906 13.395s-13.906 -6.134 -13.906 -13.395c0 -3.25 1.925 -14.031 3.708 -22.156 0.724 -3.298 1.802 -7.895 2.945 -11.678 -8.056 1.729 -14.095 8.889 -14.095 17.462v23.814C10.652 56.004 18.648 64 28.513 64h6.975c9.864 0 17.86 -7.996 17.86 -17.86V22.326c0 -8.572 -6.04 -15.733 -14.095 -17.462M16.372 52.837h-0.001c-1.641 0 -2.976 -1.335 -2.976 -2.977 0.001 -1.642 1.336 -2.977 2.977 -2.977 1.641 0 2.977 1.335 2.977 2.977s-1.335 2.977 -2.977 2.977m9.908 6.698c0 -1.138 -0.36 -2.218 -1.04 -3.124l3.57 -2.682c1.266 1.686 1.936 3.693 1.936 5.806zm11.44 0h-4.465c0 -2.113 0.669 -4.12 1.936 -5.806l3.57 2.682c-0.681 0.906 -1.04 1.986 -1.04 3.124m9.908 -6.698h-0.001c-1.641 0 -2.976 -1.335 -2.976 -2.977 0.001 -1.642 1.336 -2.977 2.977 -2.977 1.641 0 2.977 1.335 2.977 2.977s-1.335 2.977 -2.977 2.977"/>
+							<path d="M11.418 3.232c-2.325 -2.325 -6.094 -2.325 -8.419 0 -2.325 2.325 -2.325 6.095 0 8.419 1.386 1.385 3.284 1.945 5.084 1.679 0.806 -1.834 1.859 -3.563 3.139 -5.129 0.775 -0.948 1.625 -1.826 2.538 -2.628z"/>
+							<path d="M61.001 3.232c-2.325 -2.325 -6.095 -2.325 -8.42 0L50.24 5.574a22.325 22.325 0 0 1 2.538 2.628c1.28 1.566 2.333 3.295 3.139 5.129 1.8 0.266 3.699 -0.294 5.084 -1.679 2.325 -2.325 2.325 -6.095 0 -8.419"/>
+						</svg>
+						}
 					</a>
 					
 				</li>
