@@ -73,7 +73,10 @@ export const Sidebar = ({direction}) => {
 					<li className="list-none" key={indice.indice}>
 						<a href={indice.url} className={`group flex items-center p-2 gap-x-2 text-base rounded-sm font-bold transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] dark:hover:bg-[#FFF8E8] hover:bg-amber-900 ${direction === indice.url ? 'bg-amber-900 text-[#fff8e8] dark:bg-[#fff8e8] dark:text-amber-900' : 'dark:text-[#fff8e8] text-amber-900'}`}>
 							<span className="ml-3 flex-1">{indice.title}</span>
-							{isOpen ? <svg aria-hidden="true" className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
+							{isOpen ? 
+								indice.indice == 17 ?
+									"" :
+									<svg aria-hidden="true" className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
 							: <svg fill="currentColor" width="24" height="24" viewBox="0 0 24 24" >
 							<path d={indice.svg} />
 							</svg> }
