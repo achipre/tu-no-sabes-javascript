@@ -61,7 +61,6 @@ export const Sidebar = ({direction}) => {
 						</svg>
 						}
 					</a>
-					
 				</li>
 				<li className="list-none">
 					<a href="/javascript-la-guia-definitiva/capitulo-1" className={`group flex items-center p-2 text-base rounded-sm font-bold transition-colors duration-500 dark:hover:text-amber-900 hover:text-[#FFF8E8] dark:hover:bg-[#FFF8E8] hover:bg-amber-900 ${direction === '/javascript-la-guia-definitiva/capitulo-1' ? 'bg-amber-900 text-[#fff8e8] dark:bg-[#fff8e8] dark:text-amber-900' : 'dark:text-[#fff8e8] text-amber-900'}`}>
