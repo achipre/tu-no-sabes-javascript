@@ -1,14 +1,10 @@
 import { useState } from "react";
 import { ButtonAside } from "./ButtonAside";
 export const Sidebar = ({direction}) => {
-
 	const [isOpen, setIsOpen] = useState(true);
 	const handleAside = () => setIsOpen(!isOpen)
-
 	return (
-		
 	<aside className={`hidden sm:block fixed top-0 left-0 ${isOpen ? "translate-x-0": "-translate-x-[284px]"} z-40 w-[348px]  h-screen transition-transform`} ariaabel="Sidenav">
-		
 		<div className="overflow-y-auto py-5 px-3 h-full bg-[#f6e4c5] dark:bg-amber-900">
 			<ul className="space-y-2">
 				<div className="flex gap-2">

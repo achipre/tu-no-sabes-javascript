@@ -77,7 +77,7 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     </p>
     <ul>
       <li><strong>O (big 0):</strong>
-        En el mundo académico, big O describe un límite superior en el tiempo. Un algoritmo que imprime todos los valores de una matriz podría describirse como <code>O(N)</code>, pero también podría describirse como <code>O(N<sup>2</sup>)</code>, <code>O(N<sup>3</sup>)</code> o <code>0(2<sup>N</sup>)</code> (o muchos otros tiempos big O). El algoritmo es al menos tan rápido como cada uno de ellos, por lo que son límites superiores del tiempo de ejecución. Esto es similar a una relación menor-que-o-igual-a. Si Bob tiene X años (voy a suponer que nadie vive más de 130 años), entonces se podría decir <code class="language-js">X &#60= 130</code>. También sería correcto decir que <code class="language-js">X &#60= 1000</code> o <code class="language-js">X &#60= 1'000.000</code>. Es técnicamente cierto (aunque no terriblemente útil). Del mismo modo, un algoritmo sencillo para imprimir los valores de una matriz es <code>O(N)</code>, así como <code class="laguage-js">O(N<sup>3</sup>)</code> o cualquier tiempo de ejecución mayor que <code>O(N)</code>.
+        En el mundo académico, big O describe un límite superior en el tiempo. Un algoritmo que imprime todos los valores de una matriz podría describirse como <code>O(N)</code>, pero también podría describirse como <code>O(N<sup>2</sup>)</code>, <code>O(N<sup>3</sup>)</code> o <code>0(2<sup>N</sup>)</code> (o muchos otros tiempos big O). El algoritmo es al menos tan rápido como cada uno de ellos, por lo que son límites superiores del tiempo de ejecución. Esto es similar a una relación menor-que-o-igual-a. Si Bob tiene X años (voy a suponer que nadie vive más de 130 años), entonces se podría decir <code>X &#60= 130</code>. También sería correcto decir que <code>X &#60= 1000</code> o <code>X &#60= 1'000.000</code>. Es técnicamente cierto (aunque no terriblemente útil). Del mismo modo, un algoritmo sencillo para imprimir los valores de una matriz es <code>O(N)</code>, así como <code class="laguage-js">O(N<sup>3</sup>)</code> o cualquier tiempo de ejecución mayor que <code>O(N)</code>.
       </li>
       <li><strong>Ω (big omega):</strong>
         En el mundo académico, Ω es el concepto equivalente pero para el límite inferior. Imprimir los valores de una matriz es <code>Ω(N)</code>, así como <code>Ω(log N)</code> y <code>Ω(1)</code>. Después de todo, sabes que no será más rápido que esos tiempos de ejecución.
@@ -143,8 +143,8 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       El espacio de pila en las llamadas recursivas también cuenta. Por ejemplo, un código como éste requeriría <code>O(n)</code> de tiempo y <code>O(n)</code> de espacio.
     </p>
-    <pre>
-      <code class="language-js">
+    <pre class="language-js">
+      <code>
         int sum(int n) &#123/*Ex 1.*/
           if (n &#60= 0) &#123
             return 0;
@@ -156,8 +156,8 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       Cada llamada añade un nivel a la pila.
     </p>
-    <pre>
-      <code class="language-js">
+    <pre class="language-js">
+      <code>
         sum(4)
         -> sum(3)
           -> sum(2)
@@ -171,8 +171,8 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       Sin embargo, que haya un total de n llamadas no significa que se necesite <code>O(n)</code> espacio. Considere la siguiente función, que añade elementos adyacentes entre O y n:
     </p>
-    <pre>
-      <code class="language-js">
+    <pre class="language-js">
+      <code>
         int pairSumSequence(int n) &#123/* Ex 2.*/
           int sum = 0;
           for (int i= 0; i &#60 n; i++) &#123
@@ -207,30 +207,27 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <div class="flex gap-12">
       <div class="flex-grow">
         <p class="font-bold">Minimo y Maximo 1</p>
-        <pre class="pb-12">
-          <code class="language-js">
-            int min = Integer.MAX_VALUE;
-            int max = Integer.MIN_VALUE; 
-            for (int x : array) &#123
-            if (x &#60 min) min x; 
-            if (x > max) max = x;
-          }
-          </code>
+        <pre class="language-js">
+          <code>
+    int min = Integer.MAX_VALUE;
+    int max = Integer.MIN_VALUE; 
+    for (int x : array) &#123
+      if (x &#60 min) min x; 
+      if (x > max) max = x;
+    }</code>
         </pre>
       </div>
       <div class="flex-grow">
         <p class="font-bold">Minimo y Maximo 2</p>
-        <pre>
-          <code class="language-js">
-            int min = Integer.MAX_VALUE;
-            int max = Integer.MIN_VALUE;
-            for (int x : array) &#123
-              if (x &#60 min) min = x;
-            }
-            for (int x : array) &#123
-              if (x > max) max = x;
-            }
-          </code>
+        <pre class="language-js">
+    <code>int min = Integer.MAX_VALUE;
+    int max = Integer.MIN_VALUE;
+    for (int x : array) &#123
+      if (x &#60 min) min = x;
+    }
+    for (int x : array) &#123
+      if (x > max) max = x;
+    }</code>
         </pre>
       </div>
     </div>
@@ -304,27 +301,22 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <div class="flex gap-12">
       <div class="flex-grow">
         <p class="font-bold">Suma en Tiempo de Ejecución: O(A + B)</p>
-        <pre class="">
-          <code class="language-js">
-            for (int a : arrA) &#123 
-              print(a);
-            }
-            for (int b : arrB) &#123
-              print(b);
-            }   
-          </code>
-        </pre>
+      <pre class="language-js">
+    <code>for (int a : arrA) &#123 
+      print(a);
+    }
+    for (int b : arrB) &#123
+      print(b);
+    }</code></pre>
       </div>
       <div class="flex-grow">
         <p class="font-bold">Multiplicación en Runtime: O(A * B)</p>
-        <pre>
-          <code class="language-js">
-            for (int a : arrA) &#123
-              for (int b : arrB) &#123
-                print(a + "," + b);
-              }
-            }
-          </code>
+        <pre class="language-js">
+    <code>for (int a : arrA) &#123
+      for (int b : arrB) &#123
+        print(a + "," + b);
+      }
+    }</code>
         </pre>
       </div>
     </div>
@@ -388,10 +380,10 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       Es habitual ver tiempos de ejecución <code>O(log N)</code>. ¿De dónde viene esto?
     </p>
     <p>
-      Veamos un ejemplo: la búsqueda binaria. En la búsqueda binaria, buscamos un ejemplo x en una matriz ordenada de N-elementos. Primero comparamos x con el punto medio de la matriz. <code class="language-js">If x == middle</code>, entonces retornamos. <code class="language-js">If x &#60 middle</code>, buscamos en el lado izquierdo de la matriz. <code class="language-js">If x > middle</code>, buscamos en el lado derecho de la matriz.
+      Veamos un ejemplo: la búsqueda binaria. En la búsqueda binaria, buscamos un ejemplo x en una matriz ordenada de N-elementos. Primero comparamos x con el punto medio de la matriz. <code>If x == middle</code>, entonces retornamos. <code>If x &#60 middle</code>, buscamos en el lado izquierdo de la matriz. <code>If x > middle</code>, buscamos en el lado derecho de la matriz.
     </p>
-    <pre>
-      <code class="language-js">
+    <pre class="language-js">
+      <code>
         search 9 within &#123 1, 5, 8, 9, 11, 13, 15, 19, 21 } 
           compare 9 to 11 -> smaller.
           search 9 within &#123 1, 5, 8, 9, 11 }
@@ -407,8 +399,8 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       El tiempo de ejecución total es entonces una cuestión de cuántos pasos (dividiendo N por 2 cada vez) podemos tomar hasta que N se convierte en 1.
     </p>
-    <pre>
-      <code class="language-js">
+    <pre class="language-js">
+      <code>
         N = 16 
         N = 8         /* divide by 2 */
         N = 4         /* divide by 2 */
@@ -419,8 +411,8 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       Podríamos verlo a la inversa (yendo de 1 a 16 en lugar de 16 a 1). ¿Cuántas veces podemos multiplicar 1 por 2 hasta obtener N?
     </p>
-    <pre>
-      <code class="language-js">
+    <pre class="language-js">
+      <code>
         N = 1         
         N = 2         /* multiply by 2 */
         N = 4         /* multiply by 2 */
@@ -431,7 +423,7 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       ¿Qué es kin la expresión <code>2<sup>k</sup> = N</code>? Esto es exactamente lo que expresa <code>log</code>.
     </p>
-    <pre>
+    <pre class="language-js">
       <code>
         2<sup>4</sup> = 16 -> log<sub>2</sub>16 = 4
         log<sub>2</sub>N = k -> 2<sup>k</sup> = N
@@ -452,8 +444,8 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       Esta es una pregunta complicada. ¿Cuál es el tiempo de ejecución de este código?
     </p>
-    <pre>
-      <code class="language-js">
+    <pre class="language-js">
+      <code>
         int f(int n) &#123
           if (n &#60= 1) &#123
             return 1;
@@ -557,8 +549,8 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       ¿Cuál es el tiempo de ejecución del siguiente código?
     </p>
-    <pre>
-      <code class="language-js">
+    <pre class="language-js">
+      <code>
         void foo(int[] array) &#123
           int sum = 0;
           int product = 1;
@@ -581,8 +573,8 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       ¿Cuál es el tiempo de ejecución del siguiente código?
     </p>
-    <pre>
-      <code class="language-js">
+    <pre class="language-js">
+      <code>
         void printPairs(int[] array) &#123
           for (int i = 0; i &#60 array.length; i++) &#123
             for (int j = 0; j &#60 array.length; j++) &#123
@@ -604,8 +596,8 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       Se trata de un código muy similar al del ejemplo anterior, pero ahora el bucle for interior comienza en <code>i + 1</code>.
     </p>
-    <pre>
-      <code class="language-js">
+    <pre class="language-js">
+      <code>
         void printUnorderedPairs(int[] array) &#123
           for (int i = 0; i &#60 array.length; i++) &#123
             for (int j = i + 1; j &#60 array.length; j++) &#123
@@ -629,8 +621,8 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       Por lo tanto, el número total de pasos es:
     </p>
-    <pre>
-      <code class="language-js">
+    <pre class="language-js">
+      <code>
         (N-1) + (N-2) + (N-3) + ... + 2 + 1
             = 1 + 2 + 3 + ... + N-1
             = sum of 1 through N-1
@@ -652,8 +644,8 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       El código itera a través de los siguientes pares <code>(i, j)</code> cuando <code>N = 8</code>:
     </p>
-    <pre>
-      <code class="language-js">
+    <pre class="language-js">
+      <code>
         (0, 1) (0, 2) (0, 3) (0, 4) (0, 5) (0, 6) (0, 7) 
                (1, 2) (1, 3) (1, 4) (1, 5) (1, 6) (1,'7) 
                       (2, 3) (2, 4) (2, 5) (2, 6) (2, 7) 
@@ -686,8 +678,8 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       Es similar al anterior, pero ahora tenemos dos matrices diferentes.
     </p>
-    <pre>
-      <code class="language-js">
+    <pre class="language-js">
+      <code>
         void printUnorderedPairs(int[] arrayA, int[] arrayB) &#123
           for (int i = 0; i &#60 arrayA.length; i++) &#123
             for (int j = 0; j &#60 arrayB.length; j++) &#123
@@ -705,8 +697,8 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       Ahora tenemos esto:
     </p>
-    <pre>
-      <code class="language-js">
+    <pre class="language-js">
+      <code>
         void printUnorderedPairs(int[] arrayA, int[] arrayB) &#123
           for (int i= 0; i &#60 arrayA.length; i++) &#123
             for (int j = 0; j &#60 arrayB.length; j++) &#123
@@ -728,19 +720,16 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       ¿Qué pasa con este extraño trozo de código?
     </p>
-    <pre>
-      <code class="language-js">
-        void printUnorderedPairs(int[] arrayA, int[] arrayB) &#123
-          for (int i = 0; i &#60 arrayA.length; i++) &#123
-            for (int j = 0; j &#60 arrayB.length; j++) &#123
-              for (int k= 0; k &#60 100000; k++) &#123
-                System.out.println(arrayA[i] + "," + arrayB[j]);
-              }
-            }
-          }
+    <pre class="language-js">
+      <code>void printUnorderedPairs(int[] arrayA, int[] arrayB) &#123
+    for (int i = 0; i &#60 arrayA.length; i++) &#123
+      for (int j = 0; j &#60 arrayB.length; j++) &#123
+        for (int k= 0; k &#60 100000; k++) &#123
+          System.out.println(arrayA[i] + "," + arrayB[j]);
         }
-      </code>
-    </pre>
+      }
+    }
+  }</code></pre>
     <p>
       Aquí no ha cambiado nada. 100.000 unidades de trabajo siguen siendo constantes, por lo que el tiempo de ejecución es <code>0(ab)</code>.
     </p>
@@ -750,8 +739,8 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       El siguiente código invierte una matriz. ¿Cuál es su tiempo de ejecución?
     </p>
-    <pre>
-      <code class="language-js">
+    <pre class="language-js">
+      <code>
         void reverse(int[] array) &#123
           for (int i= 0; i &#60 array.length / 2; i++) &#123
             int other = array.length - i - 1;
@@ -837,8 +826,8 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       El siguiente código simple suma los valores de todos los nodos de un árbol de búsqueda binario equilibrado. ¿Cuál es su tiempo de ejecución?
     </p>
-    <pre>
-      <code class="language-js">
+    <pre class="language-js">
+      <code>
         int sum(Node node) &#123
           if (node == null) &#123
             return 0;
@@ -892,7 +881,7 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       Let <code>P = 2<sup>log N</sup></code>. Por la definición de <code>log<sub>2</sub></code>, podemos escribirlo como <code>log<sub>2</sub>P = log<sub>2</sub>N</code>. Esto significa que <code>P = N</code>.
 
     </p>
-    <pre>
+    <pre class="language-js">
       <code>
         Let P = 2<sup>log N</sup> 
             -> log<sub>2</sub>P = log<sub>2</sub>N 
@@ -915,8 +904,8 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       ¿Cuál es la complejidad temporal de esta función?
     </p>
-    <pre>
-      <code class="language-js">
+    <pre class="language-js">
+      <code>
         boolean isPrime(int n) &#123
           for (int x = 2; x * x &#60= n; x++) &#123
             if (n % X == 0) &#123
@@ -939,8 +928,8 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       Este bucle for es realmente algo como esto
     </p>
-    <pre>
-      <code class="language-js">
+    <pre class="language-js">
+      <code>
         boolean isPrime(int n) &#123
           for (int x = 2; x &#60= sqrt(n); x++) &#123
             if (n % X == 0) &#123
@@ -960,8 +949,8 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       ¡El siguiente código calcula <code>n!</code> (n factorial). ¿Cuál es su complejidad temporal?
     </p>
-    <pre>
-      <code class="language-js">
+    <pre class="language-js">
+      <code>
         int factorial(int n) &#123
           if (n &#60 0) &#123
             return -1;
@@ -982,8 +971,8 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       Este código cuenta todas las permutaciones de una cadena.
     </p>
-    <pre>
-      <code class="language-js">
+    <pre class="language-js">
+      <code>
         void permutation(String str) &#123
           permutation(str, "");
         }
@@ -1051,8 +1040,8 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       El siguiente código calcula el enésimo número de Fibonacci.
     </p>
-    <pre>
-      <code class="language-js">
+    <pre class="language-js">
+      <code>
         int fib(int n) &#123
           if (n &#60= 0) return 0;
           else if (n == 1) return 1; 
@@ -1078,8 +1067,8 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       El siguiente código imprime todos los números Fibonacci desde O hasta n. ¿Cuál es su complejidad temporal?
     </p>
-    <pre>
-      <code class="language-js">
+    <pre class="language-js">
+      <code>
         void allFib(int n) &#123
           for (int i= 0; i &#60 n; i++) &#123 
             System.out.println(i + ": "+ fib(i))
@@ -1104,7 +1093,7 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       En su lugar, vamos a caminar a través de cada llamada.
     </p>
-    <pre>
+    <pre class="language-js">
       <code>
         fib(1) -> 2<sup>1</sup> steps 
         fib(2) -> 2<sup>2</sup> steps
@@ -1127,8 +1116,8 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       El siguiente código imprime todos los números Fibonacci de O a n. Sin embargo, esta vez, almacena (es decir, guarda en caché) los valores calculados previamente en una matriz de enteros. Si ya se ha calculado, sólo devuelve la caché. ¿Cuál es su tiempo de ejecución?
     </p>
-    <pre>
-      <code class="language-js">
+    <pre class="language-js">
+      <code>
         void allFib(int n) &#123
           int[] memo = new int[n + 1];
           for(inti= 0;i &#60 n;i++)&#123
@@ -1148,8 +1137,8 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       Veamos lo que hace este algoritmo.
     </p>
-    <pre>
-      <code class="language-js">
+    <pre class="language-js">
+      <code>
         fib(1) -> return 1
         fib(2)
           fib(1) -> return 1 
@@ -1184,8 +1173,8 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       La siguiente función imprime las potencias de 2 desde 1 hasta n (inclusive). Por ejemplo, si n es 4, imprimiría 1, 2 y 4. ¿Cuál es su tiempo de ejecución?
     </p>
-    <pre>
-      <code class="language-js">
+    <pre class="language-js">
+      <code>
         int powers0f2(int n) &#123
           if (n &#60 1) &#123
             return 0;
@@ -1210,8 +1199,8 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
     <p>
       Recorramos una llamada como <code>powersOf2(50)</code>.
     </p>
-    <pre>
-      <code class="language-js">
+    <pre class="language-js">
+      <code>
         powers0f2(50)
           -> powers0f2(25)
             -> powers0f2(12)
@@ -1271,8 +1260,8 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       <li class="font-semibold list-none">
         Vl.1 El siguiente código calcula el producto de <code class="font-light">a</code> y <code class="font-light">b</code>. ¿Cuál es su tiempo de ejecución?
       </li>
-      <pre>
-        <code class="language-js">
+      <pre class="language-js">
+        <code>
           int product(int a, int b) &#123
             int sum = 0;
             for (int i= 0; i &#60 b; i++) &#123
@@ -1285,8 +1274,8 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       <li class="font-semibold list-none">
         Vl.2 El siguiente código calcula <code class="font-light">a<sup>b</sup></code>. ¿Cuál es su tiempo de ejecución?
       </li>
-      <pre>
-        <code class="language-js">
+      <pre class="language-js">
+        <code>
           int power(int a, int b) &#123
             if (b &#60 0) &#123
               return 0; // error
@@ -1301,8 +1290,8 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       <li class="font-semibold list-none">
         Vl.3 El siguiente código calcula <code class="font-light">a % b</code>. ¿Cuál es su tiempo de ejecución?
       </li>
-      <pre>
-        <code class="language-js">
+      <pre class="language-js">
+        <code>
           int mod(int a, int b) &#123 
             if (b &#60= 0) &#123
               return -1;
@@ -1315,8 +1304,8 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       <li class="font-semibold list-none">
         Vl.4 El siguiente código realiza la división de enteros. ¿Cuál es su tiempo de ejecución (suponiendo que a y b son ambos positivos)?
       </li>
-      <pre>
-        <code class="language-js">
+      <pre class="language-js">
+        <code>
           int div(int a, int b) &#123
             int count = 0;
             int sum = b;
@@ -1331,8 +1320,8 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       <li class="font-semibold list-none">
         Vl.5 El siguiente código calcula la raíz cuadrada [entera] de un número. Si el número no es un cuadrado perfecto (no hay raíz cuadrada entera), entonces devuelve -1. Lo hace por conjeturas sucesivas. Si n es 100, primero adivina SO. ¿Demasiado alto? Prueba con algo más bajo, a medio camino entre 1 y SO. ¿Cuál es su tiempo de ejecución?
       </li>
-      <pre>
-        <code class="language-js">
+      <pre class="language-js">
+        <code>
           int sqrt(int n) &#123
             return sqrt_helper(n, 1, n);
           }
@@ -1353,8 +1342,8 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       <li class="font-semibold list-none">
         Vl.6 El siguiente código calcula la raíz cuadrada [entera] de un número. Si el número no es cuadrado perfecto (no hay raíz cuadrada entera), entonces devuelve -1. Lo hace probando con números cada vez más grandes hasta que encuentra el valor correcto (o es demasiado alto). ¿Cuál es su tiempo de ejecución?
       </li>
-      <pre>
-        <code class="language-js">
+      <pre class="language-js">
+        <code>
           int sqrt(int n) &#123
             for (int guess = 1; guess * guess &#60= n; guess++) &#123
               if (guess * guess == n) &#123
@@ -1374,8 +1363,8 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       <li class="font-semibold list-none">
         Vl.9 El método <code class="font-light">appendToNew</code> añade un valor a un array creando un nuevo array más largo y devolviendo este array más largo. Has utilizado el método <code class="font-light">appendToNew</code> para crear una función <code class="font-light">copyArray</code> que llama repetidamente a <code class="font-light">appendToNew</code>. ¿Cuánto tarda en copiarse un array?
       </li>
-      <pre>
-        <code class="language-js">
+      <pre class="language-js">
+        <code>
           int[] copyArray(int[] array) &#123
             int[] copy= new int[0];
             for (int value : array) &#123
@@ -1398,8 +1387,8 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       <li class="font-semibold list-none">
         Vl.10 El siguiente código suma los dígitos de un número. ¿Cuál es su tiempo O grande?
       </li>
-      <pre>
-        <code class="language-js">
+      <pre class="language-js">
+        <code>
           int sumDigits(int n) &#123
             int sum = 0;
             while (n > 0) &#123
@@ -1412,8 +1401,8 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       <li class="font-semibold list-none">
         Vl.11 El siguiente código imprime todas las cadenas de longitud k en las que los caracteres están ordenados. Para ello, genera todas las cadenas de longitud k y comprueba si cada una está ordenada. ¿Cuál es su tiempo de ejecución?
       </li>
-      <pre>
-        <code class="language-js">
+      <pre class="language-js">
+        <code>
           int numChars = 26;
           void printSortedStrings(int remaining) &#123
             printSortedStrings(remaining, "");
@@ -1448,8 +1437,8 @@ import Layoutcracking from "../../layouts/Layoutcracking.astro"
       <li class="font-semibold list-none">
         Vl.12 El siguiente código calcula la intersección (el número de elementos en común) de dos matrices. Asume que ninguna de las dos matrices tiene duplicados. Calcula la intersección ordenando una matriz (matriz <code class="font-light">b</code>) y luego iterando a través de la matriz a comprobando (mediante búsqueda binaria) si cada valor está en b. ¿Cuál es su tiempo de ejecución?
       </li>
-      <pre>
-        <code class="language-js">
+      <pre class="language-js">
+        <code>
           int intersection(int[] a, int[] b) &#123 
             mergesort(b);
               int intersect = 0;
