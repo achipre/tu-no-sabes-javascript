@@ -1,6 +1,7 @@
 ---
 import Layoutjavascript from "../../layouts/Layoutjavascript.astro"
 import Navegation from "../../components/Navegation.astro"
+import Dot from "../../components/react/Dot"
 ---
 <Layoutjavascript title="JavaScript: La guia definitiva">
   <Navegation capAnterior="#" capSiguiente="javascript-la-guia-definitiva/capitulo-1" />
@@ -12,38 +13,50 @@ import Navegation from "../../components/Navegation.astro"
       <p>Este libro está dirigido a programadores que deseen aprender JavaScript y a desarrolladores web dispuestos a llevar su comprensión y dominio del lenguaje al siguiente nivel.</p>
       <ul>
         <p>Los temas incluyen:</p>
-        <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
-          <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
-          <p>
+        <li class="flex">
+          <span class="w-3 xs:w-4 sm:w-5">
+            <Dot />
+          </span>
+          <p class="ml-2 xs:ml-3 sm:ml-4">
             Tipos, variables, operadores, sentencias, objetos y matrices
           </p>
         </li>
-        <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
-          <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
-          <p>
+        <li class="flex">
+          <span class="w-3 xs:w-4 sm:w-5">
+            <Dot />
+          </span>
+          <p class="ml-2 xs:ml-3 sm:ml-4">
             Funciones, clases, módulos, iteradores, generadores, promesas, y async/await
           </p>
         </li>
-        <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
-          <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <li class="flex gap-2 xs:gap-3 sm:gap-4">
+          <span class="w-3 xs:w-4 sm:w-5">
+            <Dot />
+          </span> 
           <p>
             Biblioteca estándar de JavaScript: estructuras de datos, expresiones regulares, JSON, internacionalización y URL
           </p>
         </li>
-        <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
-          <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <li class="font-normal flex gap-2 xs:gap-3 sm:gap-4">
+          <span class="w-3 xs:w-4 sm:w-5">
+            <Dot />
+          </span>
           <p>
             La plataforma web: documentos, componentes, gráficos, redes, almacenamiento e hilos.
           </p>
         </li>
-        <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
-          <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <li class="font-normal flex gap-2 xs:gap-3 sm:gap-4">
+          <span class="w-3 xs:w-4 sm:w-5">
+            <Dot />
+          </span>
           <p>
             Node.js: buffers, ficheros, streams, threads, procesos hijo, clientes web y servidores web
           </p>
         </li>
-        <li class="font-normal list-none flex gap-2 xs:gap-3 sm:gap-4">
-          <span class="text-lg xs:text-xs sm:text-base md:text-lg">⏺</span>
+        <li class="font-normal flex gap-2 xs:gap-3 sm:gap-4">
+          <span class="w-3 xs:w-4 sm:w-5">
+            <Dot />
+          </span>
           <p>
             Herramientas y extensiones del lenguaje en las que confían los desarrolladores profesionales de JavaScript
           </p>
