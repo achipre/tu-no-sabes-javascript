@@ -180,37 +180,38 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro"
     (x > 3) || (y &lt; 3)        // => false: ninguna de las comparaciones es verdadera. || es OR
     !(x === y)                // => true: ! invierte un valor booleano</code></pre>
     
-    <p>Si las expresiones de JavaScript son como frases, las <em>sentencias</em> de JavaScript son como sentencias completas. Las sentencias son el tema del <a href="capitulo-5" target="_blank" rel="noopener noreferrer">Capítulo 5</a>. A grandes rasgos, una expresión es algo que calcula un valor pero no hace nada: no altera el estado del programa de ninguna manera. Las sentencias, por otro lado, no tienen un valor, pero alteran el estado. Ya has visto declaraciones de variables y sentencias de asignación. La otra gran categoría de sentencias son las <em>estructuras de control</em>, como las condicionales y los bucles. Verás ejemplos más adelante, después de que cubramos las funciones.</p>
-    <p>Una <em>función</em> es un bloque de código JavaScript con nombre y parámetros que se define una vez y se puede invocar una y otra vez. Las funciones no se tratan formalmente hasta el <a href="capitulo-8" target="_blank" rel="noopener noreferrer">Capítulo 8</a>, pero al igual que los objetos y las matrices, las verás muchas veces antes de llegar a ese capítulo. He aquí algunos ejemplos sencillos:</p>
+    <p>Si las expresiones de JavaScript son como frases, las <em>sentencias</em> de JavaScript son como oraciones completas. Las sentencias son el tema del <a href="capitulo-5" target="_blank" rel="noopener noreferrer">Capítulo 5</a>. A grandes rasgos, una expresión es algo que calcula un valor pero no hace nada: no altera el estado del programa de ninguna manera. Las sentencias, por otro lado, no tienen un valor, pero alteran el estado. Ya has visto declaraciones de variables y sentencias de asignación. La otra gran categoría de sentencias son las <em>estructuras de control</em>, como las condicionales y los bucles. Verás ejemplos más adelante, después de que cubramos las funciones.</p>
+    <p>Una <em>función</em> es un bloque de código JavaScript nombrado y parametrizado que se define una vez y se puede invocar una y otra vez. Las funciones no se tratan formalmente hasta el <a href="capitulo-8" target="_blank" rel="noopener noreferrer">Capítulo 8</a>, pero al igual que los objetos y las matrices, las verás muchas veces antes de llegar a ese capítulo. He aquí algunos ejemplos sencillos:</p>
     <pre class="language-js">
     <code  class="language-js">// Las funciones son bloques parametrizados de código JavaScript que podemos invocar
-    function plus1(x) &#123          // Define una función llamada "plus1" con el parámetro "x"
-    return x + 1;                // Devuelve un valor uno mayor que el valor pasado
-    }                            // Las funciones se encierran entre llaves
+    function plus1(x) &#123         // Define una función llamada "plus1" con el parámetro "x"
+      return x + 1;             // Devuelve un valor uno mayor que el valor pasado
+    }                           // Las funciones se encierran entre llaves
 
-    plus1(y)                     // => 4: y es 3, por lo que esta invocación devuelve 3+1
+    plus1(y)                    // => 4: y es 3, por lo que esta invocación devuelve 3+1
 
-    let square = function(x) &#123   // Las funciones son valores y pueden asignarse a vars
-    return x * x;                // Calcula el valor de la función
-    };                           // El punto y coma marca el final de la asignación
+    let square = function(x) &#123  // Las funciones son valores y pueden asignarse a vars
+      return x * x;             // Calcula el valor de la función
+    };                          // El punto y coma marca el final de la asignación
 
-    square(plus1(y))             // => 16: invocar dos funciones en una expresión</code></pre>
-    <p>En ES6 y posteriores, existe una sintaxis abreviada para definir funciones. Esta sintaxis concisa utiliza <codeinline>=></codeinline>  para separar la lista de argumentos del cuerpo de la función, por lo que las funciones definidas de este modo se conocen como <em>funciones flecha</em>. Las funciones en flecha se utilizan normalmente cuando se desea pasar una función sin nombre como argumento a otra función. El código anterior tiene este aspecto cuando se reescribe para utilizar funciones de flecha:</p>
+    square(plus1(y))            // => 16: invocar dos funciones en una expresión</code></pre>
+    <p>En ES6 y posteriores, existe una sintaxis abreviada para definir funciones. Esta sintaxis concisa utiliza <codeinline>=></codeinline>  para separar la lista de argumentos del cuerpo de la función, por lo que las funciones definidas de este modo se conocen como <em>funciones flecha</em>. Las funciones flecha se utilizan normalmente cuando se desea pasar una función sin nombre como argumento a otra función. El código anterior tiene este aspecto cuando se reescribe para utilizar funciones de flecha:</p>
     <pre class="language-js">
-    <code  class="language-js">const plus1 = x => x + 1;   // La entrada x se asigna a la salida x + 1
-    const square = x => x * x;  // // La entrada x corresponde a la salida x * x
+    <code  class="language-js">const plus1 = x => x + 1;   // La entrada x se mapea a la salida x + 1
+    const square = x => x * x;  // La entrada x se mapea a la salida x * x
     plus1(y)                    // => 4: la invocación de la función es la misma
     square(plus1(y))            // => 16</code></pre>
     <p>Cuando utilizamos funciones con objetos, obtenemos <em>métodos</em>:</p>
     <pre class="language-js">
-    <code  class="language-js">// Cuando se asignan funciones a las propiedades de un objeto, llamamos a
-    // los "métodos". Todos los objetos JavaScript (incluidos los arrays) tienen métodos:
+    <code  class="language-js">// Cuando las funciones se asignan a las propiedades de un objeto, las llamamos
+    // "métodos". Todos los objetos JavaScript (incluidos los arrays) tienen métodos:
     let a = [];                 // Crear un array vacío
     a.push(1,2,3);              // El método push() añade elementos a un array
-    a.reverse();                // Otro método: invertir el orden de los elementos
+    a.reverse();                // Otro método: invierte el orden de los elementos
+
 
     // También podemos definir nuestros propios métodos. La palabra clave "this" se refiere al objeto
-    // sobre el que se define el método: en este caso, el array de puntos de antes.
+    // sobre el que se define el método: en este caso, el array de points de antes.
     points.dist = function() &#123  // Definir un método para calcular la distancia entre puntos
       let p1 = this[0];         // Primer elemento del array sobre el que se invoca
       let p2 = this[1];         // Segundo elemento del objeto "this
@@ -241,11 +242,11 @@ import Layoutjavascript from "../../layouts/Layoutjavascript.astro"
       }                     // Este es el final del bucle.
       return sum;           // Devuelve la suma
     }
-    sum(primes)             // => 28: suma de los 5 primeros primos 2+3+5+7+11
+    sum(primos)             // => 28: suma de los 5 primeros primos 2+3+5+7+11
 
     function factorial(n) &#123 // Una función para calcular factoriales
       let product = 1;      // Empezar con un producto de 1
-      while(n > 1) &#123        // Repite las sentencias en &#123} mientras expr en () sea
+      while(n > 1) &#123        // Repite las sentencias en &#123} mientras sea true
         product *= n;       // Atajo para product = product * n;
         n--;                // Atajo para n = n- 1
       }                     // Fin del bucle
